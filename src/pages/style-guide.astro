@@ -1,0 +1,752 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_TITLE } from '../consts';
+
+const colors = [
+	{ token: '--color-text',           label: 'Text',           hex: '#2B2B28' },
+	{ token: '--color-text-secondary', label: 'Text Secondary', hex: '#6B6862' },
+	{ token: '--color-text-muted',     label: 'Text Muted',     hex: '#9C9890' },
+	{ token: '--color-accent',         label: 'Accent',         hex: '#BF6A3A' },
+	{ token: '--color-accent-hover',   label: 'Accent Hover',   hex: '#A85A30' },
+	{ token: '--color-bg',             label: 'Background',     hex: '#FAFAF7' },
+	{ token: '--color-bg-panel',       label: 'Panel',          hex: '#F1EFE9' },
+	{ token: '--color-bg-emphasis',    label: 'Emphasis',       hex: '#E8E5DD' },
+	{ token: '--color-bg-inverse',     label: 'Inverse',        hex: '#2B2B28' },
+	{ token: '--color-border',         label: 'Border',         hex: '#DDD9D1' },
+	{ token: '--color-divider',        label: 'Divider',        hex: '#CCC8BF' },
+];
+
+const typeScale = [
+	{ token: '--text-display', label: 'Display',  sample: 'Budget spreadsheets' },
+	{ token: '--text-h1',      label: 'H1',       sample: 'Page heading' },
+	{ token: '--text-h2',      label: 'H2',       sample: 'Section heading' },
+	{ token: '--text-h3',      label: 'H3',       sample: 'Subsection heading' },
+	{ token: '--text-body-lg', label: 'Body Lg',  sample: 'Introductory paragraph text at a comfortable reading size.' },
+	{ token: '--text-body',    label: 'Body',     sample: 'Standard paragraph text for articles and general content.' },
+	{ token: '--text-small',   label: 'Small',    sample: 'Captions, labels, metadata' },
+	{ token: '--text-stat',    label: 'Stat',     sample: '$2,400' },
+];
+
+const spacingScale = [
+	{ token: '--space-2xs', label: '2xs', px: '4' },
+	{ token: '--space-xs',  label: 'xs',  px: '8' },
+	{ token: '--space-sm',  label: 'sm',  px: '16' },
+	{ token: '--space-md',  label: 'md',  px: '24' },
+	{ token: '--space-lg',  label: 'lg',  px: '40' },
+	{ token: '--space-xl',  label: 'xl',  px: '64' },
+	{ token: '--space-2xl', label: '2xl', px: '96' },
+];
+---
+
+<BaseLayout title={`Style Guide — ${SITE_TITLE}`} description="Living reference for SimplySheetDesign components, tokens, and patterns.">
+	<div class="guide">
+
+		<header class="guide-header">
+			<h1>Style Guide</h1>
+			<p class="guide-intro">Living reference for every component, token, and pattern in the design system. Add new items here as they're built.</p>
+		</header>
+
+		<!-- ============ COLORS ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Colors</h2>
+			<div class="color-grid">
+				{colors.map((c) => (
+					<div class="color-card">
+						<div class="color-swatch" style={`background-color: var(${c.token})`} />
+						<div class="color-info">
+							<span class="color-label">{c.label}</span>
+							<code class="color-token">{c.token}</code>
+							<span class="color-hex">{c.hex}</span>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- ============ TYPE SCALE ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Type Scale</h2>
+			<div class="type-list">
+				{typeScale.map((t) => (
+					<div class="type-row">
+						<div class="type-meta">
+							<span class="type-label">{t.label}</span>
+							<code class="type-token">{t.token}</code>
+						</div>
+						<div class="type-sample" style={`font-size: var(${t.token})`}>
+							{t.sample}
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- ============ FONT WEIGHTS ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Font Weights</h2>
+			<div class="weight-list">
+				<p style="font-weight: var(--weight-normal)">400 Normal — The quick brown fox jumps over the lazy dog</p>
+				<p style="font-weight: var(--weight-medium)">500 Medium — The quick brown fox jumps over the lazy dog</p>
+				<p style="font-weight: var(--weight-semibold)">600 Semibold — The quick brown fox jumps over the lazy dog</p>
+				<p style="font-weight: var(--weight-bold)">700 Bold — The quick brown fox jumps over the lazy dog</p>
+			</div>
+		</section>
+
+		<!-- ============ SPACING ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Spacing Scale</h2>
+			<div class="spacing-list">
+				{spacingScale.map((s) => (
+					<div class="spacing-row">
+						<code class="spacing-token">{s.token}</code>
+						<span class="spacing-px">{s.px}px</span>
+						<div class="spacing-bar" style={`width: var(${s.token})`} />
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- ============ HEADLINE TREATMENTS ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Headline Treatments</h2>
+			<p class="section-desc">Selective color-highlighting on key phrases, not the entire headline.</p>
+
+			<div class="headline-demo">
+				<h1 class="demo-display">Budget spreadsheets that <span class="accent">actually get used</span></h1>
+			</div>
+
+			<div class="headline-demo">
+				<h2 class="demo-h2">Your money stays between <span class="accent">you and your spreadsheet</span></h2>
+			</div>
+
+			<div class="headline-demo">
+				<h2 class="demo-h2">One spreadsheet. <span class="accent">Twelve months.</span> That's it.</h2>
+			</div>
+		</section>
+
+		<!-- ============ STATS BAR ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Stats Bar</h2>
+			<p class="section-desc">Large bold numbers with small uppercase labels, separated by thin vertical dividers. Used on the homepage.</p>
+		</section>
+
+		<div class="stats-demo">
+			<div class="stats">
+				<div class="stats-inner">
+					<div class="stat">
+						<div class="stat-number">1</div>
+						<div class="stat-label">Spreadsheet</div>
+					</div>
+					<div class="stat">
+						<div class="stat-number">15 min</div>
+						<div class="stat-label">Weekly upkeep</div>
+					</div>
+					<div class="stat">
+						<div class="stat-number">$0</div>
+						<div class="stat-label">Forever</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ============ SECTION PANELS ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Section Panels</h2>
+			<p class="section-desc">Sections transition using soft background color panels instead of hard borders. Alternating between default and panel backgrounds.</p>
+		</section>
+
+		<div class="panel-demo-default">
+			<p class="panel-label">Default background <code>--color-bg</code></p>
+			<p class="panel-body">Content on the standard page background. Clean and open.</p>
+		</div>
+		<div class="panel-demo-panel">
+			<p class="panel-label">Panel background <code>--color-bg-panel</code></p>
+			<p class="panel-body">Content on the panel background. A subtle shift that creates rhythm without hard lines.</p>
+		</div>
+		<div class="panel-demo-emphasis">
+			<p class="panel-label">Emphasis background <code>--color-bg-emphasis</code></p>
+			<p class="panel-body">Content on the emphasis background. Stronger contrast for callouts.</p>
+		</div>
+		<div class="panel-demo-inverse">
+			<p class="panel-label">Inverse background <code>--color-bg-inverse</code></p>
+			<p class="panel-body">Light text on the dark inverse background.</p>
+		</div>
+
+		<!-- ============ BUTTONS ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Buttons</h2>
+			<div class="button-row">
+				<button class="btn btn-primary">Primary button</button>
+				<button class="btn btn-secondary">Secondary button</button>
+				<button class="btn btn-ghost">Ghost button</button>
+			</div>
+			<div class="button-row" style="margin-top: var(--space-sm)">
+				<button class="btn btn-primary btn-sm">Small primary</button>
+				<button class="btn btn-secondary btn-sm">Small secondary</button>
+				<button class="btn btn-ghost btn-sm">Small ghost</button>
+			</div>
+		</section>
+
+		<!-- ============ ARTICLE CARD ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Article Card</h2>
+			<p class="section-desc">Used on the /articles listing page. Hover to see the interaction.</p>
+
+			<ul class="article-list">
+				<li>
+					<a href="#" class="article-card">
+						<h3 class="article-title">Why a spreadsheet instead of an app</h3>
+						<p class="article-desc">Most budgeting apps want you to link your bank account, learn their interface, and pay a subscription. A spreadsheet skips all of that.</p>
+						<p class="article-date"><FormattedDate date={new Date('2026-06-23')} /></p>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="article-card">
+						<h3 class="article-title">The 15-minute weekly budget check-in</h3>
+						<p class="article-desc">You don't need to track every coffee. Once a week, sit down for 15 minutes, enter your totals, and move on with your life.</p>
+						<p class="article-date"><FormattedDate date={new Date('2026-06-16')} /></p>
+					</a>
+				</li>
+			</ul>
+		</section>
+
+		<!-- ============ FORMATTED DATE ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Formatted Date</h2>
+			<p class="section-desc">Consistent date formatting across the site.</p>
+			<div class="date-demo">
+				<FormattedDate date={new Date('2026-06-23')} /> &middot;
+				<FormattedDate date={new Date('2026-01-01')} /> &middot;
+				<FormattedDate date={new Date('2025-12-25')} />
+			</div>
+		</section>
+
+		<!-- ============ PROSE ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Prose / Article Body</h2>
+			<p class="section-desc">How long-form article content renders. Applied via the <code>.prose</code> class.</p>
+
+			<div class="prose">
+				<h2>A second-level heading inside an article</h2>
+				<p>This is body text at the standard reading size. It should feel comfortable for long reading sessions. The line height is generous, the measure is constrained, and the color is warm charcoal rather than harsh black.</p>
+				<h3>A third-level heading</h3>
+				<p>Here's a paragraph with <strong>bold text</strong>, <em>italic text</em>, and an <a href="#">inline link</a>. These should all feel natural and not pull attention away from reading flow.</p>
+				<blockquote>A blockquote for when you want to set a line apart. Slightly larger, slightly muted, with a left border.</blockquote>
+				<ul>
+					<li>An unordered list item</li>
+					<li>Another list item with enough text to wrap onto a second line so you can check the spacing</li>
+					<li>A third item</li>
+				</ul>
+				<p>And a final paragraph with some <code>inline code</code> to show that treatment too.</p>
+			</div>
+		</section>
+
+		<!-- ============ HEADER ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Header / Navigation</h2>
+			<p class="section-desc">The site header is visible at the top of this page. It uses the <code>HeaderLink</code> component with an active state on the current page, and a site title link on the left.</p>
+		</section>
+
+		<!-- ============ FOOTER ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Footer</h2>
+			<p class="section-desc">The site footer is visible at the bottom of this page. A single copyright line, muted text, with a top border.</p>
+		</section>
+
+		<!-- ============ RADII ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Border Radii</h2>
+			<div class="radii-row">
+				<div class="radius-demo" style="border-radius: var(--radius-sm)">
+					<code>--radius-sm</code>
+					<span>6px</span>
+				</div>
+				<div class="radius-demo" style="border-radius: var(--radius-md)">
+					<code>--radius-md</code>
+					<span>12px</span>
+				</div>
+			</div>
+		</section>
+
+	</div>
+</BaseLayout>
+
+<style>
+	/* ——— Guide layout ——— */
+
+	.guide {
+		max-width: var(--max-width);
+		margin: 0 auto;
+	}
+
+	.guide-header {
+		padding: var(--space-xl) var(--space-md) var(--space-lg);
+	}
+
+	.guide-header h1 {
+		font-size: var(--text-h1);
+		font-weight: var(--weight-bold);
+		margin-bottom: var(--space-xs);
+	}
+
+	.guide-intro {
+		font-size: var(--text-body-lg);
+		color: var(--color-text-secondary);
+		max-width: 50ch;
+	}
+
+	.guide-section {
+		padding: var(--space-xl) var(--space-md) var(--space-md);
+	}
+
+	.section-title {
+		font-size: var(--text-h2);
+		font-weight: var(--weight-semibold);
+		margin-bottom: var(--space-2xs);
+	}
+
+	.section-desc {
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-md);
+		max-width: 60ch;
+	}
+
+	.section-desc code {
+		padding: 2px 6px;
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-sm);
+		font-size: 0.9em;
+	}
+
+	/* ——— Colors ——— */
+
+	.color-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+		gap: var(--space-sm);
+	}
+
+	.color-card {
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		overflow: hidden;
+	}
+
+	.color-swatch {
+		height: 4.5rem;
+	}
+
+	.color-info {
+		padding: var(--space-xs);
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.color-label {
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+	}
+
+	.color-token {
+		font-size: 0.7rem;
+		color: var(--color-text-muted);
+		background: none;
+		padding: 0;
+	}
+
+	.color-hex {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+		font-family: monospace;
+	}
+
+	/* ——— Type scale ——— */
+
+	.type-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+	}
+
+	.type-row {
+		border-bottom: 1px solid var(--color-border);
+		padding-bottom: var(--space-md);
+	}
+
+	.type-row:last-child {
+		border-bottom: none;
+	}
+
+	.type-meta {
+		display: flex;
+		align-items: baseline;
+		gap: var(--space-sm);
+		margin-bottom: var(--space-xs);
+	}
+
+	.type-label {
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text-secondary);
+		min-width: 5rem;
+	}
+
+	.type-token {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+		background: none;
+		padding: 0;
+	}
+
+	.type-sample {
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+	}
+
+	/* ——— Font weights ——— */
+
+	.weight-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+	}
+
+	.weight-list p {
+		font-size: var(--text-body-lg);
+		margin-bottom: 0;
+	}
+
+	/* ——— Spacing ——— */
+
+	.spacing-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+	}
+
+	.spacing-row {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+	}
+
+	.spacing-token {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+		min-width: 8rem;
+		text-align: right;
+		background: none;
+		padding: 0;
+	}
+
+	.spacing-px {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		min-width: 3rem;
+	}
+
+	.spacing-bar {
+		height: 0.75rem;
+		background: var(--color-accent);
+		border-radius: var(--radius-sm);
+		opacity: 0.7;
+	}
+
+	/* ——— Headline treatments ——— */
+
+	.headline-demo {
+		padding: var(--space-lg) 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.headline-demo:last-child {
+		border-bottom: none;
+	}
+
+	.demo-display {
+		font-size: var(--text-display);
+		font-weight: var(--weight-bold);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+	}
+
+	.demo-h2 {
+		font-size: var(--text-h2);
+		font-weight: var(--weight-semibold);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+	}
+
+	.accent {
+		color: var(--color-accent);
+	}
+
+	/* ——— Stats bar ——— */
+
+	.stats-demo {
+		margin-bottom: var(--space-sm);
+	}
+
+	.stats {
+		background: var(--color-bg-panel);
+		padding: var(--space-xl) var(--space-md);
+	}
+
+	.stats-inner {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		display: flex;
+		justify-content: center;
+		gap: var(--space-xl);
+	}
+
+	.stat {
+		text-align: center;
+		padding: 0 var(--space-lg);
+	}
+
+	.stat + .stat {
+		border-left: 1px solid var(--color-divider);
+	}
+
+	.stat-number {
+		font-size: var(--text-stat);
+		font-weight: var(--weight-bold);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+	}
+
+	.stat-label {
+		margin-top: var(--space-xs);
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		letter-spacing: var(--tracking-wide);
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+	}
+
+	/* ——— Section panels ——— */
+
+	.panel-demo-default,
+	.panel-demo-panel,
+	.panel-demo-emphasis,
+	.panel-demo-inverse {
+		padding: var(--space-lg) var(--space-md);
+	}
+
+	.panel-demo-default {
+		background: var(--color-bg);
+	}
+
+	.panel-demo-panel {
+		background: var(--color-bg-panel);
+	}
+
+	.panel-demo-emphasis {
+		background: var(--color-bg-emphasis);
+	}
+
+	.panel-demo-inverse {
+		background: var(--color-bg-inverse);
+		color: var(--color-bg);
+	}
+
+	.panel-demo-inverse code {
+		color: var(--color-bg);
+		opacity: 0.6;
+	}
+
+	.panel-label {
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+		margin-bottom: var(--space-2xs);
+	}
+
+	.panel-label code {
+		font-weight: var(--weight-normal);
+		opacity: 0.6;
+		font-size: 0.85em;
+	}
+
+	.panel-body {
+		color: inherit;
+		opacity: 0.75;
+	}
+
+	/* ——— Buttons ——— */
+
+	.button-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+		align-items: center;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		line-height: 1;
+		padding: 0.75rem 1.5rem;
+		border-radius: var(--radius-sm);
+		border: 1px solid transparent;
+		cursor: pointer;
+		transition: background 0.15s, color 0.15s, border-color 0.15s;
+	}
+
+	.btn-sm {
+		font-size: var(--text-small);
+		padding: 0.5rem 1rem;
+	}
+
+	.btn-primary {
+		background: var(--color-accent);
+		color: white;
+		border-color: var(--color-accent);
+	}
+
+	.btn-primary:hover {
+		background: var(--color-accent-hover);
+		border-color: var(--color-accent-hover);
+	}
+
+	.btn-secondary {
+		background: transparent;
+		color: var(--color-text);
+		border-color: var(--color-border);
+	}
+
+	.btn-secondary:hover {
+		border-color: var(--color-text-muted);
+	}
+
+	.btn-ghost {
+		background: transparent;
+		color: var(--color-text-secondary);
+		border-color: transparent;
+	}
+
+	.btn-ghost:hover {
+		color: var(--color-text);
+		background: var(--color-bg-panel);
+	}
+
+	/* ——— Article cards ——— */
+
+	.article-list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		max-width: var(--max-width-narrow);
+	}
+
+	.article-card {
+		display: block;
+		padding: var(--space-md);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		transition: background 0.15s;
+	}
+
+	.article-card:hover {
+		background: var(--color-bg-panel);
+	}
+
+	.article-title {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+
+	.article-desc {
+		font-size: var(--text-body);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-2xs);
+	}
+
+	.article-date {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+	}
+
+	/* ——— Formatted date demo ——— */
+
+	.date-demo {
+		font-size: var(--text-body);
+		color: var(--color-text-secondary);
+	}
+
+	/* ——— Prose section ——— */
+
+	.guide-section .prose {
+		max-width: var(--max-width-narrow);
+		padding: var(--space-md);
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
+	}
+
+	/* ——— Border radii ——— */
+
+	.radii-row {
+		display: flex;
+		gap: var(--space-lg);
+		flex-wrap: wrap;
+	}
+
+	.radius-demo {
+		width: 10rem;
+		height: 7rem;
+		border: 2px solid var(--color-border);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-2xs);
+	}
+
+	.radius-demo code {
+		font-size: 0.75rem;
+		color: var(--color-text-secondary);
+		background: none;
+		padding: 0;
+	}
+
+	.radius-demo span {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+	}
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 640px) {
+		.stats-inner {
+			flex-direction: column;
+			gap: var(--space-lg);
+			align-items: center;
+		}
+		.stat + .stat {
+			border-left: none;
+			border-top: 1px solid var(--color-divider);
+			padding-top: var(--space-lg);
+		}
+		.stat {
+			padding: 0;
+		}
+		.color-grid {
+			grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+		}
+	}
+</style>
