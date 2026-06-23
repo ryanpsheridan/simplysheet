@@ -1,28 +1,28 @@
 :root {
   /* ——— Colors ——— */
 
-  /* Text — warm charcoal, never pure black */
-  --color-text:           #2B2B28;
-  --color-text-secondary: #6B6862;
-  --color-text-muted:     #9C9890;
+  /* Text — dark navy-charcoal */
+  --color-text:           #1A1A2E;
+  --color-text-secondary: #555566;
+  --color-text-muted:     #8B8B9A;
 
-  /* Accent — warm terracotta, grounded and confident */
-  --color-accent:         #BF6A3A;
-  --color-accent-hover:   #A85A30;
+  /* Accent — teal, clean and professional */
+  --color-accent:         #00856F;
+  --color-accent-hover:   #006B59;
 
-  /* Backgrounds — slightly warm off-whites for soft panel transitions */
-  --color-bg:             #FAFAF7;
-  --color-bg-panel:       #F1EFE9;
-  --color-bg-emphasis:    #E8E5DD;
-  --color-bg-inverse:     #2B2B28;
+  /* Backgrounds — clean whites and cool grays */
+  --color-bg:             #FFFFFF;
+  --color-bg-panel:       #F5F5F7;
+  --color-bg-emphasis:    #EAEAED;
+  --color-bg-inverse:     #1A1A2E;
 
   /* Borders & dividers */
-  --color-border:         #DDD9D1;
-  --color-divider:        #CCC8BF;
+  --color-border:         #E0E0E5;
+  --color-divider:        #D0D0D8;
 
   /* ——— Typography ——— */
 
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
 
   /* Scale — fluid where it matters, fixed where it doesn't */
   --text-display:   clamp(2.5rem, 5vw + 0.5rem, 4.25rem);
