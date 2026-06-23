@@ -18,7 +18,7 @@ const articles = (await getCollection('articles'))
 	<section class="why">
 		<div class="why-inner">
 			<h2 class="why-heading">Why this site exists</h2>
-			<p class="why-body">I've spent the past 18 months answering budgeting questions on Reddit — irregular income, debt payoff, couples merging finances, the anxiety that comes with not knowing where you stand. I kept linking to the same spreadsheets I'd built for myself. This site is a better home for that advice than a comment thread.</p>
+			<p class="why-body">I've spent the past 18 months in Reddit budgeting threads, helping people work through irregular income, debt payoff plans, merging finances as a couple, and the low-grade dread of not knowing where you stand. Along the way I built spreadsheets to solve these problems for myself, and started sharing them when people asked. This site gives that advice a permanent home instead of leaving it scattered across comment threads.</p>
 		</div>
 	</section>
 
@@ -41,9 +41,14 @@ const articles = (await getCollection('articles'))
 
 	<section class="templates">
 		<div class="templates-inner">
-			<p class="templates-lead">If a template would help</p>
-			<p class="templates-body">I sell a handful of budgeting spreadsheets on Etsy — the same ones I built for myself and reference in the articles. They're Google Sheets and Excel files, nothing fancy, just formulas that work.</p>
-			<a href="https://simplysheetdesign.etsy.com" class="templates-link">See the spreadsheets on Etsy</a>
+			<h2 class="templates-heading">Explore templates to help you budget</h2>
+			<ul class="templates-list">
+				<li><a href="https://simplysheetdesign.etsy.com/listing/1854773368">Budget Spreadsheet</a></li>
+				<li><a href="https://simplysheetdesign.etsy.com/listing/4396395102">Couples Budget Spreadsheet</a></li>
+				<li><a href="https://simplysheetdesign.etsy.com/listing/4485879930">Debt Payoff Tracker</a></li>
+				<li><a href="https://simplysheetdesign.etsy.com/listing/4483664616">Savings Goals Tracker</a></li>
+			</ul>
+			<a href="https://simplysheetdesign.etsy.com" class="templates-cta">Explore all on Etsy</a>
 		</div>
 	</section>
 </BaseLayout>
@@ -150,26 +155,42 @@ const articles = (await getCollection('articles'))
 		margin: 0 auto;
 		text-align: center;
 	}
-	.templates-lead {
-		font-size: var(--text-h3);
+	.templates-heading {
+		font-size: var(--text-h2);
 		font-weight: var(--weight-semibold);
-		color: var(--color-text);
-		margin-bottom: var(--space-xs);
-	}
-	.templates-body {
-		font-size: var(--text-body);
-		color: var(--color-text-secondary);
-		line-height: var(--leading-normal);
+		letter-spacing: var(--tracking-tight);
 		margin-bottom: var(--space-md);
 	}
-	.templates-link {
-		display: inline-block;
-		font-size: var(--text-body);
+	.templates-list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		margin-bottom: var(--space-lg);
+	}
+	.templates-list a {
+		font-size: var(--text-body-lg);
 		font-weight: var(--weight-medium);
-		color: var(--color-accent);
 		text-decoration: none;
 	}
-	.templates-link:hover {
+	.templates-list a:hover {
 		text-decoration: underline;
+	}
+	.templates-cta {
+		display: inline-block;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		color: white;
+		background: var(--color-accent);
+		padding: 0.75rem 1.5rem;
+		border-radius: var(--radius-sm);
+		text-decoration: none;
+		transition: background 0.15s;
+	}
+	.templates-cta:hover {
+		background: var(--color-accent-hover);
+		color: white;
 	}
 </style>
