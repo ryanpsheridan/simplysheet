@@ -1,39 +1,50 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const articles = (await getCollection('articles'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 6);
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
 	<section class="hero">
-		<h1 class="hero-headline">Budget spreadsheets that <span class="accent">actually get used</span></h1>
-		<p class="hero-sub">One Google Sheet. Twelve months. You fill in what you spent, and it tells you where you stand. No app to learn, no subscription to forget about.</p>
+		<h1 class="hero-headline">Practical budgeting help for people who use Google Sheets and Excel</h1>
+		<p class="hero-sub">Straightforward answers to real budgeting questions. No apps to download, no accounts to sync. Just spreadsheets, plain advice, and the stuff that actually helps you understand where your money goes.</p>
 	</section>
 
-	<section class="stats">
-		<div class="stats-inner">
-			<div class="stat">
-				<div class="stat-number">1</div>
-				<div class="stat-label">Spreadsheet</div>
-			</div>
-			<div class="stat">
-				<div class="stat-number">15 min</div>
-				<div class="stat-label">Weekly upkeep</div>
-			</div>
-			<div class="stat">
-				<div class="stat-number">$0</div>
-				<div class="stat-label">Forever</div>
-			</div>
+	<section class="why">
+		<div class="why-inner">
+			<h2 class="why-heading">Why this site exists</h2>
+			<p class="why-body">I've spent the past 18 months answering budgeting questions on Reddit — irregular income, debt payoff, couples merging finances, the anxiety that comes with not knowing where you stand. I kept linking to the same spreadsheets I'd built for myself. This site is a better home for that advice than a comment thread.</p>
 		</div>
 	</section>
 
-	<section class="section">
-		<h2 class="section-heading">You already know how spreadsheets work</h2>
-		<p class="section-body">Most budgeting tools ask you to change your habits and learn their system. This one meets you in a row-and-column grid you've used a hundred times. The formulas are already written. You just type numbers.</p>
+	<section class="latest">
+		<div class="latest-inner">
+			<h2 class="latest-heading">Latest articles</h2>
+			<ul class="article-list">
+				{articles.map((article) => (
+					<li>
+						<a href={`/articles/${article.id}/`} class="article-card">
+							<h3 class="article-title">{article.data.title}</h3>
+							<p class="article-desc">{article.data.description}</p>
+							<p class="article-date"><FormattedDate date={article.data.pubDate} /></p>
+						</a>
+					</li>
+				))}
+			</ul>
+		</div>
 	</section>
 
-	<section class="section section--panel">
-		<h2 class="section-heading">Your money stays between you and your spreadsheet</h2>
-		<p class="section-body">No bank linking, no account syncing, no third party reading your transactions. It's a file on your Google Drive. That's it.</p>
+	<section class="templates">
+		<div class="templates-inner">
+			<p class="templates-lead">If a template would help</p>
+			<p class="templates-body">I sell a handful of budgeting spreadsheets on Etsy — the same ones I built for myself and reference in the articles. They're Google Sheets and Excel files, nothing fancy, just formulas that work.</p>
+			<a href="https://simplysheetdesign.etsy.com" class="templates-link">See the spreadsheets on Etsy</a>
+		</div>
 	</section>
 </BaseLayout>
 
@@ -51,10 +62,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
-		max-width: 16ch;
-	}
-	.hero-headline .accent {
-		color: var(--color-accent);
+		max-width: 20ch;
 	}
 	.hero-sub {
 		margin-top: var(--space-md);
@@ -64,79 +72,104 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		max-width: var(--max-width-narrow);
 	}
 
-	.stats {
+	.why {
 		background: var(--color-bg-panel);
 		padding: var(--space-xl) var(--space-md);
 	}
-	.stats-inner {
-		max-width: var(--max-width);
+	.why-inner {
+		max-width: var(--max-width-narrow);
 		margin: 0 auto;
-		display: flex;
-		justify-content: center;
-		gap: var(--space-xl);
 	}
-	.stat {
-		text-align: center;
-		padding: 0 var(--space-lg);
-	}
-	.stat + .stat {
-		border-left: 1px solid var(--color-divider);
-	}
-	.stat-number {
-		font-size: var(--text-stat);
-		font-weight: var(--weight-bold);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-	}
-	.stat-label {
-		margin-top: var(--space-xs);
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		letter-spacing: var(--tracking-wide);
-		text-transform: uppercase;
-		color: var(--color-text-muted);
-	}
-
-	.section {
-		padding: var(--space-section) var(--space-md);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-	}
-	.section--panel {
-		background: var(--color-bg-panel);
-	}
-	.section-heading {
+	.why-heading {
 		font-size: var(--text-h2);
 		font-weight: var(--weight-semibold);
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-		max-width: 28ch;
+		margin-bottom: var(--space-sm);
 	}
-	.section-body {
-		margin-top: var(--space-md);
+	.why-body {
 		font-size: var(--text-body-lg);
 		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
-		max-width: var(--max-width-narrow);
 	}
 
-	@media (max-width: 640px) {
-		.stats-inner {
-			flex-direction: column;
-			gap: var(--space-lg);
-			align-items: center;
-		}
-		.stat + .stat {
-			border-left: none;
-			border-top: 1px solid var(--color-divider);
-			padding-top: var(--space-lg);
-		}
-		.stat {
-			padding: 0;
-		}
+	.latest {
+		padding: var(--space-section) var(--space-md);
+	}
+	.latest-inner {
+		max-width: var(--max-width);
+		margin: 0 auto;
+	}
+	.latest-heading {
+		font-size: var(--text-h2);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--space-lg);
+	}
+	.article-list {
+		list-style: none;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+		gap: var(--space-sm);
+	}
+	.article-card {
+		display: block;
+		padding: var(--space-md);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		border: 1px solid var(--color-border);
+		transition: background 0.15s, border-color 0.15s;
+	}
+	.article-card:hover {
+		background: var(--color-bg-panel);
+		border-color: var(--color-divider);
+	}
+	.article-title {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+	.article-desc {
+		font-size: var(--text-body);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-xs);
+	}
+	.article-date {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+	}
+
+	.templates {
+		background: var(--color-bg-panel);
+		padding: var(--space-xl) var(--space-md);
+	}
+	.templates-inner {
+		max-width: var(--max-width-narrow);
+		margin: 0 auto;
+		text-align: center;
+	}
+	.templates-lead {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+	}
+	.templates-body {
+		font-size: var(--text-body);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-normal);
+		margin-bottom: var(--space-md);
+	}
+	.templates-link {
+		display: inline-block;
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+	.templates-link:hover {
+		text-decoration: underline;
 	}
 </style>

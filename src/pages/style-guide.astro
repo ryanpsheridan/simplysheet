@@ -18,7 +18,7 @@ const colors = [
 ];
 
 const typeScale = [
-	{ token: '--text-display', label: 'Display',  sample: 'Budget spreadsheets' },
+	{ token: '--text-display', label: 'Display',  sample: 'Practical budgeting help' },
 	{ token: '--text-h1',      label: 'H1',       sample: 'Page heading' },
 	{ token: '--text-h2',      label: 'H2',       sample: 'Section heading' },
 	{ token: '--text-h3',      label: 'H3',       sample: 'Subsection heading' },
@@ -110,59 +110,80 @@ const spacingScale = [
 		<!-- ============ HEADLINE TREATMENTS ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Headline Treatments</h2>
-			<p class="section-desc">Selective color-highlighting on key phrases, not the entire headline.</p>
+			<p class="section-desc">Hero headlines use the display size. Section headings use H2. Accent color highlights key phrases sparingly.</p>
 
 			<div class="headline-demo">
-				<h1 class="demo-display">Budget spreadsheets that <span class="accent">actually get used</span></h1>
+				<h1 class="demo-display">Practical budgeting help for people who use <span class="accent">Google Sheets and Excel</span></h1>
 			</div>
 
 			<div class="headline-demo">
-				<h2 class="demo-h2">Your money stays between <span class="accent">you and your spreadsheet</span></h2>
-			</div>
-
-			<div class="headline-demo">
-				<h2 class="demo-h2">One spreadsheet. <span class="accent">Twelve months.</span> That's it.</h2>
+				<h2 class="demo-h2">How do you budget when your <span class="accent">income changes every month</span></h2>
 			</div>
 		</section>
 
-		<!-- ============ STATS BAR ============ -->
+		<!-- ============ ARTICLE CARD ============ -->
 		<section class="guide-section">
-			<h2 class="section-title">Stats Bar</h2>
-			<p class="section-desc">Large bold numbers with small uppercase labels, separated by thin vertical dividers. Used on the homepage.</p>
+			<h2 class="section-title">Article Card</h2>
+			<p class="section-desc">Used on the homepage grid and /articles listing. Cards have a subtle border and hover state.</p>
+
+			<ul class="article-list">
+				<li>
+					<a href="#" class="article-card">
+						<h3 class="article-title">How to budget when your income changes every month</h3>
+						<p class="article-desc">A straightforward approach to budgeting on irregular income — freelancers, gig workers, commission earners.</p>
+						<p class="article-date"><FormattedDate date={new Date('2026-06-23')} /></p>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="article-card">
+						<h3 class="article-title">The 15-minute weekly budget check-in</h3>
+						<p class="article-desc">You don't need to track every coffee. Once a week, sit down for 15 minutes, enter your totals, and move on.</p>
+						<p class="article-date"><FormattedDate date={new Date('2026-06-16')} /></p>
+					</a>
+				</li>
+			</ul>
 		</section>
 
-		<div class="stats-demo">
-			<div class="stats">
-				<div class="stats-inner">
-					<div class="stat">
-						<div class="stat-number">1</div>
-						<div class="stat-label">Spreadsheet</div>
-					</div>
-					<div class="stat">
-						<div class="stat-number">15 min</div>
-						<div class="stat-label">Weekly upkeep</div>
-					</div>
-					<div class="stat">
-						<div class="stat-number">$0</div>
-						<div class="stat-label">Forever</div>
-					</div>
-				</div>
-			</div>
+		<!-- ============ RELATED ARTICLES ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Related Articles</h2>
+			<p class="section-desc">Shown at the bottom of each article for internal linking. Pulls the 2-3 most recent articles excluding the current one.</p>
+
+			<aside class="related-demo">
+				<h2 class="related-heading">Related articles</h2>
+				<ul class="related-list">
+					<li><a href="#">How to budget when your income changes every month</a></li>
+					<li><a href="#">Budgeting as a couple without losing your mind</a></li>
+					<li><a href="#">What to do when you're afraid to look at your bank account</a></li>
+				</ul>
+			</aside>
+		</section>
+
+		<!-- ============ TEMPLATES SECTION ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Templates Section</h2>
+			<p class="section-desc">A quiet product mention near the bottom of the homepage. Framed as "if a template would help" — no storefront energy.</p>
+		</section>
+
+		<div class="templates-demo">
+			<p class="templates-lead">If a template would help</p>
+			<p class="templates-body">I sell a handful of budgeting spreadsheets on Etsy — the same ones I built for myself and reference in the articles. They're Google Sheets and Excel files, nothing fancy, just formulas that work.</p>
+			<a href="#" class="templates-link">See the spreadsheets on Etsy</a>
 		</div>
 
 		<!-- ============ SECTION PANELS ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Section Panels</h2>
-			<p class="section-desc">Sections transition using soft background color panels instead of hard borders. Alternating between default and panel backgrounds.</p>
+			<p class="section-desc">Sections transition using soft background color panels instead of hard borders.</p>
 		</section>
 
 		<div class="panel-demo-default">
 			<p class="panel-label">Default background <code>--color-bg</code></p>
-			<p class="panel-body">Content on the standard page background. Clean and open.</p>
+			<p class="panel-body">Content on the standard page background.</p>
 		</div>
 		<div class="panel-demo-panel">
 			<p class="panel-label">Panel background <code>--color-bg-panel</code></p>
-			<p class="panel-body">Content on the panel background. A subtle shift that creates rhythm without hard lines.</p>
+			<p class="panel-body">Content on the panel background. A subtle shift that creates rhythm.</p>
 		</div>
 		<div class="panel-demo-emphasis">
 			<p class="panel-label">Emphasis background <code>--color-bg-emphasis</code></p>
@@ -170,7 +191,7 @@ const spacingScale = [
 		</div>
 		<div class="panel-demo-inverse">
 			<p class="panel-label">Inverse background <code>--color-bg-inverse</code></p>
-			<p class="panel-body">Light text on the dark inverse background.</p>
+			<p class="panel-body">Light text on the dark inverse background. Used for the footer.</p>
 		</div>
 
 		<!-- ============ BUTTONS ============ -->
@@ -188,70 +209,42 @@ const spacingScale = [
 			</div>
 		</section>
 
-		<!-- ============ ARTICLE CARD ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Article Card</h2>
-			<p class="section-desc">Used on the /articles listing page. Hover to see the interaction.</p>
-
-			<ul class="article-list">
-				<li>
-					<a href="#" class="article-card">
-						<h3 class="article-title">Why a spreadsheet instead of an app</h3>
-						<p class="article-desc">Most budgeting apps want you to link your bank account, learn their interface, and pay a subscription. A spreadsheet skips all of that.</p>
-						<p class="article-date"><FormattedDate date={new Date('2026-06-23')} /></p>
-					</a>
-				</li>
-				<li>
-					<a href="#" class="article-card">
-						<h3 class="article-title">The 15-minute weekly budget check-in</h3>
-						<p class="article-desc">You don't need to track every coffee. Once a week, sit down for 15 minutes, enter your totals, and move on with your life.</p>
-						<p class="article-date"><FormattedDate date={new Date('2026-06-16')} /></p>
-					</a>
-				</li>
-			</ul>
-		</section>
-
-		<!-- ============ FORMATTED DATE ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Formatted Date</h2>
-			<p class="section-desc">Consistent date formatting across the site.</p>
-			<div class="date-demo">
-				<FormattedDate date={new Date('2026-06-23')} /> &middot;
-				<FormattedDate date={new Date('2026-01-01')} /> &middot;
-				<FormattedDate date={new Date('2025-12-25')} />
-			</div>
-		</section>
-
 		<!-- ============ PROSE ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Prose / Article Body</h2>
-			<p class="section-desc">How long-form article content renders. Applied via the <code>.prose</code> class.</p>
+			<p class="section-desc">How long-form article content renders. Applied via the <code>.prose</code> class. Articles use semantic H2s that mirror how people phrase questions to Google.</p>
 
 			<div class="prose">
-				<h2>A second-level heading inside an article</h2>
-				<p>This is body text at the standard reading size. It should feel comfortable for long reading sessions. The line height is generous, the measure is constrained, and the color is warm charcoal rather than harsh black.</p>
-				<h3>A third-level heading</h3>
-				<p>Here's a paragraph with <strong>bold text</strong>, <em>italic text</em>, and an <a href="#">inline link</a>. These should all feel natural and not pull attention away from reading flow.</p>
-				<blockquote>A blockquote for when you want to set a line apart. Slightly larger, slightly muted, with a left border.</blockquote>
+				<h2>How do you budget when your income changes every month</h2>
+				<p>Start with your baseline — the lowest amount you've earned in the past six months. Build your budget around that number, not your average and definitely not your best month.</p>
+				<h3>List your non-negotiable expenses first</h3>
+				<p>Rent, utilities, groceries, insurance, minimum debt payments. These get funded before anything else. Write them down with <strong>real numbers</strong> from last month, not estimates.</p>
+				<blockquote>The point isn't to predict your income. It's to stop pretending it's predictable and plan around that reality instead.</blockquote>
 				<ul>
 					<li>An unordered list item</li>
 					<li>Another list item with enough text to wrap onto a second line so you can check the spacing</li>
 					<li>A third item</li>
 				</ul>
-				<p>And a final paragraph with some <code>inline code</code> to show that treatment too.</p>
+				<p>A paragraph with <code>inline code</code> and an <a href="#">inline link</a> styled naturally within the reading flow.</p>
 			</div>
 		</section>
 
-		<!-- ============ HEADER ============ -->
+		<!-- ============ SCHEMA.ORG ============ -->
 		<section class="guide-section">
-			<h2 class="section-title">Header / Navigation</h2>
-			<p class="section-desc">The site header is visible at the top of this page. It uses the <code>HeaderLink</code> component with an active state on the current page, and a site title link on the left.</p>
+			<h2 class="section-title">Schema.org Structured Data</h2>
+			<p class="section-desc">Each article page includes JSON-LD <code>Article</code> structured data with headline, description, dates, author (Ryan Sheridan), and publisher (SimplySheetDesign). This helps Google and AI assistants understand and surface content.</p>
 		</section>
 
-		<!-- ============ FOOTER ============ -->
+		<!-- ============ CONTENT STRATEGY ============ -->
 		<section class="guide-section">
-			<h2 class="section-title">Footer</h2>
-			<p class="section-desc">The site footer is visible at the bottom of this page. A single copyright line, muted text, with a top border.</p>
+			<h2 class="section-title">Content Strategy Notes</h2>
+			<p class="section-desc">Articles are structured for SEO and AEO (Answer Engine Optimization). Each article frontmatter supports an optional <code>relatedProduct</code> field with <code>name</code> and <code>url</code> for structured product mentions.</p>
+			<div class="strategy-list">
+				<p><strong>H2s as questions:</strong> mirror how people phrase searches ("How do I budget with irregular income")</p>
+				<p><strong>Direct answer first:</strong> answer the question plainly near the top, then go deep</p>
+				<p><strong>One product mention max:</strong> mid-article, advice-first voice, no pitch language</p>
+				<p><strong>Related articles:</strong> 2-3 links at the bottom for internal linking and session depth</p>
+			</div>
 		</section>
 
 		<!-- ============ RADII ============ -->
@@ -267,6 +260,17 @@ const spacingScale = [
 					<span>12px</span>
 				</div>
 			</div>
+		</section>
+
+		<!-- ============ HEADER & FOOTER ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Header / Navigation</h2>
+			<p class="section-desc">Minimal header: site name linking home, and "Articles" link. No other navigation items.</p>
+		</section>
+
+		<section class="guide-section">
+			<h2 class="section-title">Footer</h2>
+			<p class="section-desc">Dark navy inverse background with muted copyright text. Visible at the bottom of this page.</p>
 		</section>
 
 	</div>
@@ -487,49 +491,116 @@ const spacingScale = [
 		color: var(--color-accent);
 	}
 
-	/* ——— Stats bar ——— */
+	/* ——— Article cards ——— */
 
-	.stats-demo {
+	.article-list {
+		list-style: none;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+		gap: var(--space-sm);
+		max-width: var(--max-width);
+	}
+
+	.article-card {
+		display: block;
+		padding: var(--space-md);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		border: 1px solid var(--color-border);
+		transition: background 0.15s, border-color 0.15s;
+	}
+
+	.article-card:hover {
+		background: var(--color-bg-panel);
+		border-color: var(--color-divider);
+	}
+
+	.article-title {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+
+	.article-desc {
+		font-size: var(--text-body);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-xs);
+	}
+
+	.article-date {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+	}
+
+	/* ——— Related articles ——— */
+
+	.related-demo {
+		padding: var(--space-lg) var(--space-md);
+		border-top: 1px solid var(--color-border);
+		max-width: var(--max-width-narrow);
+	}
+
+	.related-heading {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
 		margin-bottom: var(--space-sm);
 	}
 
-	.stats {
+	.related-list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+	}
+
+	.related-list a {
+		font-size: var(--text-body);
+		text-decoration: none;
+	}
+
+	.related-list a:hover {
+		text-decoration: underline;
+	}
+
+	/* ——— Templates section ——— */
+
+	.templates-demo {
 		background: var(--color-bg-panel);
 		padding: var(--space-xl) var(--space-md);
-	}
-
-	.stats-inner {
-		max-width: var(--max-width);
-		margin: 0 auto;
-		display: flex;
-		justify-content: center;
-		gap: var(--space-xl);
-	}
-
-	.stat {
 		text-align: center;
-		padding: 0 var(--space-lg);
+		margin-bottom: var(--space-sm);
 	}
 
-	.stat + .stat {
-		border-left: 1px solid var(--color-divider);
-	}
-
-	.stat-number {
-		font-size: var(--text-stat);
-		font-weight: var(--weight-bold);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
+	.templates-lead {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
 		color: var(--color-text);
+		margin-bottom: var(--space-xs);
 	}
 
-	.stat-label {
-		margin-top: var(--space-xs);
-		font-size: var(--text-small);
+	.templates-body {
+		font-size: var(--text-body);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-normal);
+		margin-bottom: var(--space-md);
+		max-width: var(--max-width-narrow);
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.templates-link {
+		display: inline-block;
+		font-size: var(--text-body);
 		font-weight: var(--weight-medium);
-		letter-spacing: var(--tracking-wide);
-		text-transform: uppercase;
-		color: var(--color-text-muted);
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+
+	.templates-link:hover {
+		text-decoration: underline;
 	}
 
 	/* ——— Section panels ——— */
@@ -641,50 +712,16 @@ const spacingScale = [
 		background: var(--color-bg-panel);
 	}
 
-	/* ——— Article cards ——— */
+	/* ——— Content strategy ——— */
 
-	.article-list {
-		list-style: none;
-		padding: 0;
+	.strategy-list {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-xs);
-		max-width: var(--max-width-narrow);
 	}
 
-	.article-card {
-		display: block;
-		padding: var(--space-md);
-		border-radius: var(--radius-md);
-		text-decoration: none;
-		transition: background 0.15s;
-	}
-
-	.article-card:hover {
-		background: var(--color-bg-panel);
-	}
-
-	.article-title {
-		font-size: var(--text-h3);
-		font-weight: var(--weight-semibold);
-		color: var(--color-text);
-		margin-bottom: var(--space-2xs);
-	}
-
-	.article-desc {
-		font-size: var(--text-body);
-		color: var(--color-text-secondary);
-		margin-bottom: var(--space-2xs);
-	}
-
-	.article-date {
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-	}
-
-	/* ——— Formatted date demo ——— */
-
-	.date-demo {
+	.strategy-list p {
+		margin-bottom: 0;
 		font-size: var(--text-body);
 		color: var(--color-text-secondary);
 	}
@@ -732,21 +769,11 @@ const spacingScale = [
 	/* ——— Responsive ——— */
 
 	@media (max-width: 640px) {
-		.stats-inner {
-			flex-direction: column;
-			gap: var(--space-lg);
-			align-items: center;
-		}
-		.stat + .stat {
-			border-left: none;
-			border-top: 1px solid var(--color-divider);
-			padding-top: var(--space-lg);
-		}
-		.stat {
-			padding: 0;
-		}
 		.color-grid {
 			grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+		}
+		.article-list {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>
