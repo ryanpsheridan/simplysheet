@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<section class="hero">
+		<h1 class="hero-headline">Budget spreadsheets that <span class="accent">actually get used</span></h1>
+		<p class="hero-sub">One Google Sheet. Twelve months. You fill in what you spent, and it tells you where you stand. No app to learn, no subscription to forget about.</p>
+	</section>
+
+	<section class="stats">
+		<div class="stats-inner">
+			<div class="stat">
+				<div class="stat-number">1</div>
+				<div class="stat-label">Spreadsheet</div>
+			</div>
+			<div class="stat">
+				<div class="stat-number">15 min</div>
+				<div class="stat-label">Weekly upkeep</div>
+			</div>
+			<div class="stat">
+				<div class="stat-number">$0</div>
+				<div class="stat-label">Forever</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<h2 class="section-heading">You already know how spreadsheets work</h2>
+		<p class="section-body">Most budgeting tools ask you to change your habits and learn their system. This one meets you in a row-and-column grid you've used a hundred times. The formulas are already written. You just type numbers.</p>
+	</section>
+
+	<section class="section section--panel">
+		<h2 class="section-heading">Your money stays between you and your spreadsheet</h2>
+		<p class="section-body">No bank linking, no account syncing, no third party reading your transactions. It's a file on your Google Drive. That's it.</p>
+	</section>
+</BaseLayout>
+
+<style>
+	.hero {
+		padding: var(--space-section) var(--space-md);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+	.hero-headline {
+		font-size: var(--text-display);
+		font-weight: var(--weight-bold);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		max-width: 16ch;
+	}
+	.hero-headline .accent {
+		color: var(--color-accent);
+	}
+	.hero-sub {
+		margin-top: var(--space-md);
+		font-size: var(--text-body-lg);
+		line-height: var(--leading-snug);
+		color: var(--color-text-secondary);
+		max-width: var(--max-width-narrow);
+	}
+
+	.stats {
+		background: var(--color-bg-panel);
+		padding: var(--space-xl) var(--space-md);
+	}
+	.stats-inner {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		display: flex;
+		justify-content: center;
+		gap: var(--space-xl);
+	}
+	.stat {
+		text-align: center;
+		padding: 0 var(--space-lg);
+	}
+	.stat + .stat {
+		border-left: 1px solid var(--color-divider);
+	}
+	.stat-number {
+		font-size: var(--text-stat);
+		font-weight: var(--weight-bold);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+	}
+	.stat-label {
+		margin-top: var(--space-xs);
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		letter-spacing: var(--tracking-wide);
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+	}
+
+	.section {
+		padding: var(--space-section) var(--space-md);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+	.section--panel {
+		background: var(--color-bg-panel);
+	}
+	.section-heading {
+		font-size: var(--text-h2);
+		font-weight: var(--weight-semibold);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		max-width: 28ch;
+	}
+	.section-body {
+		margin-top: var(--space-md);
+		font-size: var(--text-body-lg);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		max-width: var(--max-width-narrow);
+	}
+
+	@media (max-width: 640px) {
+		.stats-inner {
+			flex-direction: column;
+			gap: var(--space-lg);
+			align-items: center;
+		}
+		.stat + .stat {
+			border-left: none;
+			border-top: 1px solid var(--color-divider);
+			padding-top: var(--space-lg);
+		}
+		.stat {
+			padding: 0;
+		}
+	}
+</style>
