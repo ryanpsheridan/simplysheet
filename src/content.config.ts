@@ -10,6 +10,7 @@ const articles = defineCollection({
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		image: z.string().optional(),
+		cardImage: z.string().optional(),
 		tags: z.array(z.string()).default([]),
 		faq: z.array(z.object({
 			question: z.string(),

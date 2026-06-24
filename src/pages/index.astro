@@ -76,9 +76,9 @@ const templates = [
 				<div class="articles-grid">
 					{rest.map((article) => (
 						<a href={`/articles/${article.id}/`} class="article-card">
-							{article.data.image && (
+							{(article.data.cardImage || article.data.image) && (
 								<div class="article-card-thumb">
-									<img src={article.data.image} alt="" width="600" height="340" loading="lazy" />
+									<img src={article.data.cardImage ?? article.data.image} alt="" width="600" height="340" loading="lazy" />
 								</div>
 							)}
 							<div class="article-card-body">
@@ -247,7 +247,7 @@ const templates = [
 		background: var(--color-bg);
 		border-radius: var(--radius-md);
 		padding: var(--space-md);
-		margin: 0.75rem;
+		margin: var(--space-md);
 		display: flex;
 		flex-direction: column;
 	}
