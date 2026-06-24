@@ -29,57 +29,57 @@
 
   <!-- Abstract gradient background -->
   <rect width="960" height="540" fill="url(#bg)"/>
-  <ellipse cx="250" cy="150" rx="280" ry="200" fill="url(#blob1)" filter="url(#blur1)"/>
-  <ellipse cx="700" cy="100" rx="280" ry="200" fill="url(#blob2)" filter="url(#blur2)"/>
-  <ellipse cx="500" cy="60" rx="200" ry="160" fill="url(#blob3)" filter="url(#blur3)"/>
-  <circle cx="150" cy="350" r="140" fill="#2D9D78" fill-opacity="0.06" filter="url(#blur2)"/>
-  <circle cx="830" cy="80" r="120" fill="#196EDD" fill-opacity="0.08" filter="url(#blur3)"/>
+  <ellipse cx="250" cy="120" rx="280" ry="180" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="700" cy="80" rx="280" ry="180" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="500" cy="30" rx="200" ry="140" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="120" cy="300" r="140" fill="#2D9D78" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="850" cy="60" r="120" fill="#196EDD" fill-opacity="0.08" filter="url(#blur3)"/>
 
-  <!-- White card rising from bottom -->
-  <rect x="240" y="120" width="480" height="440" rx="8" fill="white"/>
+  <!-- White card rising from bottom — 75% of container -->
+  <rect x="120" y="135" width="720" height="420" rx="10" fill="white"/>
 
   <!-- Header -->
-  <text x="276" y="164" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522">Monthly income</text>
+  <text x="164" y="176" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Monthly income</text>
 
   <!-- Bar chart -->
   <!-- Y-axis labels -->
-  <text x="276" y="202" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C">$6k</text>
-  <text x="276" y="252" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C">$4k</text>
-  <text x="276" y="302" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C">$2k</text>
-  <text x="276" y="352" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C">$0</text>
+  <text x="164" y="218" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">$6k</text>
+  <text x="164" y="273" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">$4k</text>
+  <text x="164" y="328" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">$2k</text>
+  <text x="164" y="383" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">$0</text>
 
   <!-- Grid lines -->
-  <line x1="306" y1="198" x2="660" y2="198" stroke="#F0EDEA" stroke-width="1"/>
-  <line x1="306" y1="248" x2="660" y2="248" stroke="#F0EDEA" stroke-width="1"/>
-  <line x1="306" y1="298" x2="660" y2="298" stroke="#F0EDEA" stroke-width="1"/>
-  <line x1="306" y1="348" x2="660" y2="348" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="200" y1="214" x2="796" y2="214" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="200" y1="269" x2="796" y2="269" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="200" y1="324" x2="796" y2="324" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="200" y1="379" x2="796" y2="379" stroke="#F0EDEA" stroke-width="1"/>
 
   <!-- Bars (varying heights for irregular income) -->
-  <rect x="320" y="218" width="36" height="130" rx="3" fill="#2D9D78" fill-opacity="0.2"/>
-  <rect x="370" y="238" width="36" height="110" rx="3" fill="#2D9D78" fill-opacity="0.2"/>
-  <rect x="420" y="198" width="36" height="150" rx="3" fill="#2D9D78" fill-opacity="0.2"/>
-  <rect x="470" y="268" width="36" height="80" rx="3" fill="#2D9D78" fill-opacity="0.2"/>
-  <rect x="520" y="208" width="36" height="140" rx="3" fill="#2D9D78"/>
-  <rect x="570" y="248" width="36" height="100" rx="3" fill="#2D9D78" fill-opacity="0.2"/>
-  <rect x="620" y="228" width="36" height="120" rx="3" fill="#2D9D78" fill-opacity="0.2"/>
+  <rect x="220" y="239" width="56" height="140" rx="4" fill="#2D9D78" fill-opacity="0.2"/>
+  <rect x="300" y="259" width="56" height="120" rx="4" fill="#2D9D78" fill-opacity="0.2"/>
+  <rect x="380" y="214" width="56" height="165" rx="4" fill="#2D9D78" fill-opacity="0.2"/>
+  <rect x="460" y="289" width="56" height="90" rx="4" fill="#2D9D78" fill-opacity="0.2"/>
+  <rect x="540" y="224" width="56" height="155" rx="4" fill="#2D9D78"/>
+  <rect x="620" y="269" width="56" height="110" rx="4" fill="#2D9D78" fill-opacity="0.2"/>
+  <rect x="700" y="249" width="56" height="130" rx="4" fill="#2D9D78" fill-opacity="0.2"/>
 
   <!-- Month labels -->
-  <text x="328" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C" text-anchor="middle">Jan</text>
-  <text x="378" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C" text-anchor="middle">Feb</text>
-  <text x="428" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C" text-anchor="middle">Mar</text>
-  <text x="478" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C" text-anchor="middle">Apr</text>
-  <text x="528" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#2A2522" text-anchor="middle">May</text>
-  <text x="578" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C" text-anchor="middle">Jun</text>
-  <text x="628" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C" text-anchor="middle">Jul</text>
+  <text x="248" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C" text-anchor="middle">Jan</text>
+  <text x="328" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C" text-anchor="middle">Feb</text>
+  <text x="408" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C" text-anchor="middle">Mar</text>
+  <text x="488" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C" text-anchor="middle">Apr</text>
+  <text x="568" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#2A2522" text-anchor="middle">May</text>
+  <text x="648" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C" text-anchor="middle">Jun</text>
+  <text x="728" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C" text-anchor="middle">Jul</text>
 
   <!-- Baseline indicator -->
-  <line x1="306" y1="258" x2="660" y2="258" stroke="#2D9D78" stroke-width="1" stroke-dasharray="4 3"/>
-  <text x="660" y="254" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#2D9D78" text-anchor="end">Baseline</text>
+  <line x1="200" y1="279" x2="796" y2="279" stroke="#2D9D78" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="796" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#2D9D78" text-anchor="end">Baseline</text>
 
   <!-- Summary row -->
-  <line x1="276" y1="388" x2="684" y2="388" stroke="#F0EDEA" stroke-width="1"/>
-  <text x="276" y="414" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Average</text>
-  <text x="276" y="440" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#2A2522">$4,280</text>
-  <text x="420" y="414" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">This month</text>
-  <text x="420" y="440" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#2D9D78">$5,100</text>
+  <line x1="164" y1="420" x2="796" y2="420" stroke="#F0EDEA" stroke-width="1"/>
+  <text x="164" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Average</text>
+  <text x="164" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#2A2522">$4,280</text>
+  <text x="420" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">This month</text>
+  <text x="420" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#2D9D78">$5,100</text>
 </svg>

@@ -134,25 +134,26 @@ hr {
 }
 
 .btn-primary {
-	background: var(--color-accent);
+	background: var(--color-bg-inverse);
 	color: white;
-	border-color: var(--color-accent);
+	border-color: var(--color-bg-inverse);
 }
 
 .btn-primary:hover {
-	background: var(--color-accent-hover);
-	border-color: var(--color-accent-hover);
+	background: var(--color-text-secondary);
+	border-color: var(--color-text-secondary);
 	color: white;
 }
 
 .btn-secondary {
 	background: transparent;
-	color: var(--color-text);
-	border-color: var(--color-divider);
+	color: var(--color-bg-inverse);
+	border-color: var(--color-bg-inverse);
 }
 
 .btn-secondary:hover {
-	border-color: var(--color-text-muted);
+	background: var(--color-bg-inverse);
+	color: white;
 }
 
 .btn-ghost {
@@ -176,6 +177,17 @@ hr {
 a:hover > .arrow,
 button:hover > .arrow {
 	transform: translateX(3px);
+}
+
+@media (max-width: 960px) {
+	.btn {
+		font-size: var(--text-body);
+		padding: 0.75rem 1.5rem;
+	}
+	.btn-sm {
+		font-size: var(--text-small);
+		padding: 0.625rem 1.25rem;
+	}
 }
 
 .sr-only {

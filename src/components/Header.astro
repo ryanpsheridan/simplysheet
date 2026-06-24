@@ -5,7 +5,7 @@ import { SITE_TITLE } from '../consts';
 <header>
 	<nav>
 		<a class="site-title" href="/">
-			<img src="/images/logo-svg.svg" alt="SimplySheetDesign logo" class="site-logo" width="28" height="30" />
+			<img src="/images/logo-svg.svg" alt="SimplySheetDesign logo" class="site-logo" width="34" height="36" />
 			<span class="site-title-text">{SITE_TITLE}</span>
 		</a>
 		<button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
@@ -63,16 +63,20 @@ import { SITE_TITLE } from '../consts';
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		font-size: var(--text-body);
+		font-size: var(--text-body-lg);
 		font-weight: var(--weight-semibold);
 		color: var(--color-text);
 		text-decoration: none;
 		letter-spacing: var(--tracking-tight);
+		transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	header.scrolled .site-title {
+		font-size: var(--text-body);
 	}
 	.site-logo {
 		display: block;
 		flex-shrink: 0;
-		transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		transform-origin: left center;
 	}
 	header.scrolled .site-logo {
