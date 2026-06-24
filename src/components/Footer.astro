@@ -4,21 +4,150 @@ const year = new Date().getFullYear();
 
 <footer>
 	<div class="footer-inner">
-		<p>&copy; {year} SimplySheetDesign</p>
+		<div class="footer-top">
+			<div class="footer-brand">
+				<a href="/" class="footer-logo-link">
+					<img src="/images/logo-svg.svg" alt="SimplySheetDesign logo" class="footer-logo" width="28" height="30" />
+					<span>SimplySheetDesign</span>
+				</a>
+				<p class="footer-tagline">Budget spreadsheets that actually get used.</p>
+			</div>
+
+			<nav class="footer-nav" aria-label="Footer navigation">
+				<div class="footer-col">
+					<h3 class="footer-heading">Site</h3>
+					<ul>
+						<li><a href="/">Home</a></li>
+						<li><a href="/articles">Articles</a></li>
+						<li><a href="/about">About</a></li>
+					</ul>
+				</div>
+				<div class="footer-col">
+					<h3 class="footer-heading">Templates</h3>
+					<ul>
+						<li><a href="https://simplysheetdesign.etsy.com/listing/1854773368">Budget Spreadsheet</a></li>
+						<li><a href="https://simplysheetdesign.etsy.com/listing/4396395102">Couples Budget</a></li>
+						<li><a href="https://simplysheetdesign.etsy.com/listing/4485879930">Debt Payoff Tracker</a></li>
+						<li><a href="https://simplysheetdesign.etsy.com/listing/4483664616">Savings Goals Tracker</a></li>
+					</ul>
+				</div>
+				<div class="footer-col">
+					<h3 class="footer-heading">Shop</h3>
+					<ul>
+						<li><a href="https://simplysheetdesign.etsy.com">Etsy Store</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<div class="footer-bottom">
+			<p>&copy; {year} SimplySheetDesign</p>
+		</div>
 	</div>
 </footer>
+
 <style>
 	footer {
 		border-top: 1px solid var(--color-border);
-		padding: var(--space-lg) var(--space-md);
+		padding: var(--space-xl) var(--space-md) var(--space-lg);
+		background: var(--color-bg-panel);
 	}
 	.footer-inner {
 		max-width: var(--max-width);
 		margin: 0 auto;
 	}
-	footer p {
+
+	/* ——— Top section ——— */
+
+	.footer-top {
+		display: flex;
+		justify-content: space-between;
+		gap: var(--space-xl);
+		padding-bottom: var(--space-lg);
+		border-bottom: 1px solid var(--color-divider);
+	}
+
+	/* ——— Brand column ——— */
+
+	.footer-brand {
+		flex-shrink: 0;
+	}
+	.footer-logo-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: var(--text-body);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		text-decoration: none;
+		letter-spacing: var(--tracking-tight);
+	}
+	.footer-logo {
+		display: block;
+	}
+	.footer-tagline {
+		margin-top: var(--space-xs);
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+	}
+
+	/* ——— Nav columns ——— */
+
+	.footer-nav {
+		display: flex;
+		gap: var(--space-xl);
+	}
+	.footer-col ul {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2xs);
+	}
+	.footer-heading {
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+	}
+	.footer-col a {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+	.footer-col a:hover {
+		color: var(--color-text);
+	}
+
+	/* ——— Bottom bar ——— */
+
+	.footer-bottom {
+		padding-top: var(--space-md);
+	}
+	.footer-bottom p {
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
 		margin: 0;
+	}
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 768px) {
+		.footer-top {
+			flex-direction: column;
+			gap: var(--space-lg);
+		}
+		.footer-nav {
+			gap: var(--space-lg);
+			flex-wrap: wrap;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.footer-nav {
+			flex-direction: column;
+			gap: var(--space-md);
+		}
 	}
 </style>
