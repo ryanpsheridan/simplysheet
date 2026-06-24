@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BudgetingStyleQuiz from '../../components/BudgetingStyleQuiz.astro';
+import { SITE_TITLE } from '../../consts';
+
+const title = "What's Your Budgeting Style?";
+const description = 'Take this quick quiz to discover your budgeting personality and get personalized tips to improve your finances.';
+---
+
+<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+	<main>
+		<article>
+			<header class="quiz-header">
+				<h1>What's Your Budgeting Style?</h1>
+				<p class="quiz-intro">Answer 7 quick questions about your money habits and we'll tell you which budgeting personality fits you best, along with a practical tip to help you improve.</p>
+			</header>
+
+			<BudgetingStyleQuiz />
+
+			<div class="quiz-callout">
+				<p class="quiz-callout-text">No matter your style, the right spreadsheet can help you stay on track. Browse all of our <a href="https://simplysheetdesign.etsy.com">budget templates</a> to find the one that fits how you manage money.</p>
+			</div>
+		</article>
+	</main>
+</BaseLayout>
+
+<style>
+	.quiz-header {
+		margin-bottom: var(--space-sm);
+	}
+	.quiz-header h1 {
+		font-size: var(--text-h1);
+		font-weight: var(--weight-bold);
+	}
+	.quiz-intro {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+	.quiz-callout {
+		margin-top: var(--space-xl);
+		padding: var(--space-md);
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
+	}
+	.quiz-callout-text {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+	.quiz-callout-text a {
+		font-weight: var(--weight-medium);
+	}
+</style>

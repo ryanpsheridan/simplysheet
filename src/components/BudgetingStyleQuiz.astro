@@ -1,0 +1,405 @@
+---
+const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="quiz" id={id}>
+	<div class="quiz-questions" id={`${id}-questions`}>
+		<div class="quiz-progress">
+			<span class="quiz-progress-text" id={`${id}-progress`}>Question 1 of 7</span>
+			<div class="quiz-progress-bar"><div class="quiz-progress-fill" id={`${id}-fill`}></div></div>
+		</div>
+		<div class="quiz-question" id={`${id}-q`}>
+			<h3 class="quiz-question-text" id={`${id}-qtext`}></h3>
+			<div class="quiz-options" id={`${id}-opts`}></div>
+		</div>
+	</div>
+
+	<div class="quiz-result" id={`${id}-result`} hidden>
+		<div class="quiz-result-bg"></div>
+		<div class="quiz-result-content">
+			<span class="quiz-result-label">Your budgeting style</span>
+			<h2 class="quiz-result-title" id={`${id}-style`}></h2>
+			<p class="quiz-result-desc" id={`${id}-desc`}></p>
+			<div class="quiz-result-tip" id={`${id}-tip`}></div>
+			<div class="quiz-result-rec" id={`${id}-rec`}></div>
+			<a class="btn btn-primary quiz-result-cta" id={`${id}-cta`} href="#" target="_blank" rel="noopener noreferrer">View template</a>
+			<button class="quiz-retake" id={`${id}-retake`}>Retake quiz</button>
+		</div>
+	</div>
+</div>
+
+<style>
+	.quiz {
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: var(--space-md);
+		margin: var(--space-lg) 0;
+		background: var(--color-bg-surface);
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* ——— Progress ——— */
+
+	.quiz-progress {
+		margin-bottom: var(--space-md);
+	}
+	.quiz-progress-text {
+		display: block;
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-xs);
+	}
+	.quiz-progress-bar {
+		height: 4px;
+		background: var(--color-bg-panel);
+		border-radius: 2px;
+		overflow: hidden;
+	}
+	.quiz-progress-fill {
+		height: 100%;
+		background: var(--color-accent);
+		border-radius: 2px;
+		width: 14.28%;
+		transition: width 0.3s ease;
+	}
+
+	/* ——— Question ——— */
+
+	.quiz-question-text {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		line-height: var(--leading-snug);
+		color: var(--color-text);
+		margin-bottom: var(--space-md);
+	}
+	.quiz-options {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+	}
+	.quiz-option {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		background: none;
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-md);
+		padding: 0.75rem 1rem;
+		cursor: pointer;
+		text-align: left;
+		transition: color 0.15s, border-color 0.15s, background 0.15s;
+		line-height: var(--leading-snug);
+	}
+	.quiz-option:hover {
+		color: var(--color-text);
+		border-color: var(--color-text-muted);
+	}
+	.quiz-option.selected {
+		color: var(--color-bg);
+		background: var(--color-bg-inverse);
+		border-color: var(--color-bg-inverse);
+	}
+
+	/* ——— Result ——— */
+
+	.quiz-result {
+		position: relative;
+		min-height: 20rem;
+	}
+	.quiz-result[hidden] {
+		display: none;
+	}
+	.quiz-result-bg {
+		position: absolute;
+		inset: -2rem;
+		z-index: 0;
+		background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+		overflow: hidden;
+	}
+	.quiz-result-bg::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(ellipse 50% 45% at 30% 25%, rgba(25, 110, 221, 0.35) 0%, transparent 70%),
+			radial-gradient(ellipse 45% 40% at 75% 20%, rgba(18, 89, 184, 0.25) 0%, transparent 70%),
+			radial-gradient(ellipse 40% 35% at 50% 10%, rgba(126, 87, 194, 0.2) 0%, transparent 70%),
+			radial-gradient(circle at 15% 65%, rgba(25, 110, 221, 0.06) 0%, transparent 50%),
+			radial-gradient(circle at 85% 15%, rgba(126, 87, 194, 0.08) 0%, transparent 50%);
+		animation: quizBlobs 8s ease-in-out infinite;
+	}
+	.quiz-result-bg::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+		opacity: 0.1;
+		mix-blend-mode: multiply;
+	}
+	@keyframes quizBlobs {
+		0%, 100% { transform: scale(1) translate(0, 0); }
+		33% { transform: scale(1.05) translate(2%, -1%); }
+		66% { transform: scale(0.97) translate(-1%, 2%); }
+	}
+	.quiz-result-content {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: var(--space-lg) var(--space-sm);
+		animation: quizReveal 0.5s ease;
+	}
+	@keyframes quizReveal {
+		from { opacity: 0; transform: translateY(1rem); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+	.quiz-result-label {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-accent);
+		margin-bottom: var(--space-xs);
+	}
+	.quiz-result-title {
+		font-size: var(--text-h1);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		margin-bottom: var(--space-sm);
+	}
+	.quiz-result-desc {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		max-width: 32rem;
+		margin: 0 0 var(--space-md);
+	}
+	.quiz-result-tip {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: var(--space-sm);
+		max-width: 28rem;
+		margin-bottom: var(--space-sm);
+		text-align: left;
+	}
+	.quiz-result-rec {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-md);
+		max-width: 28rem;
+	}
+	.quiz-result-cta {
+		margin-bottom: var(--space-sm);
+	}
+	.quiz-retake {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-muted);
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.375rem 0;
+		transition: color 0.15s;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		text-decoration-color: transparent;
+	}
+	.quiz-retake:hover {
+		color: var(--color-text);
+		text-decoration-color: var(--color-text);
+	}
+
+	@media (max-width: 480px) {
+		.quiz-result-title {
+			font-size: var(--text-h2);
+		}
+	}
+</style>
+
+<script is:inline define:vars={{ id }}>
+(function () {
+	var root = document.getElementById(id);
+	if (!root) return;
+
+	var questions = [
+		{
+			q: "What's the first thing you do after getting paid?",
+			opts: [
+				{ text: "Move money into savings and bill accounts right away", style: "planner" },
+				{ text: "Check that my direct deposit went through, then move on", style: "saver" },
+				{ text: "Start thinking about what I want to buy", style: "spender" },
+				{ text: "Honestly, I try not to think about it", style: "avoider" }
+			]
+		},
+		{
+			q: "How do you feel when you check your bank balance?",
+			opts: [
+				{ text: "Confident. I already know roughly what it should be.", style: "planner" },
+				{ text: "Good. I like watching it grow.", style: "saver" },
+				{ text: "A little nervous, but I check anyway.", style: "spender" },
+				{ text: "I avoid checking unless I absolutely have to.", style: "avoider" }
+			]
+		},
+		{
+			q: "An unexpected $500 expense comes up. What do you do?",
+			opts: [
+				{ text: "Pull from my emergency fund without stress", style: "planner" },
+				{ text: "Cover it from savings, but it bothers me", style: "saver" },
+				{ text: "Put it on a credit card and figure it out later", style: "spender" },
+				{ text: "Feel overwhelmed and push it off as long as possible", style: "avoider" }
+			]
+		},
+		{
+			q: "How would you describe your approach to budgeting?",
+			opts: [
+				{ text: "I track every dollar and review my budget regularly", style: "planner" },
+				{ text: "I keep it simple: spend less than I earn", style: "saver" },
+				{ text: "I have tried budgets but they never stick", style: "spender" },
+				{ text: "I do not really have a budget", style: "avoider" }
+			]
+		},
+		{
+			q: "A friend invites you on a last-minute weekend trip. How do you decide?",
+			opts: [
+				{ text: "Check my discretionary budget to see if I can swing it", style: "planner" },
+				{ text: "Probably say no unless it is really cheap", style: "saver" },
+				{ text: "Say yes first, worry about cost later", style: "spender" },
+				{ text: "Say I will think about it, then never respond", style: "avoider" }
+			]
+		},
+		{
+			q: "What is your relationship with financial goals?",
+			opts: [
+				{ text: "I have clear goals with timelines and dollar amounts", style: "planner" },
+				{ text: "My main goal is always to save more", style: "saver" },
+				{ text: "I set goals but get sidetracked by things I want now", style: "spender" },
+				{ text: "I know I should set goals but have not gotten around to it", style: "avoider" }
+			]
+		},
+		{
+			q: "When you see a sale on something you like but do not need, you usually...",
+			opts: [
+				{ text: "Check if it fits the budget before deciding", style: "planner" },
+				{ text: "Skip it. A deal is not a deal if I was not going to buy it.", style: "saver" },
+				{ text: "Grab it. It is on sale, so I am saving money, right?", style: "spender" },
+				{ text: "Feel conflicted and leave the tab open for a week", style: "avoider" }
+			]
+		}
+	];
+
+	var styles = {
+		planner: {
+			name: "The Planner",
+			desc: "You like having a system and knowing exactly where your money goes. Structure gives you confidence, and you feel most at ease when every dollar has a job. Your strength is discipline, and your challenge is staying flexible when plans change.",
+			tip: "Tip: Schedule a monthly \"budget review\" to adjust your plan based on real spending. A budget that adapts is one that lasts.",
+			rec: "You would get the most out of a detailed budget spreadsheet with category tracking and monthly review dashboards.",
+			cta: "Browse budget templates",
+			url: "https://www.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel"
+		},
+		saver: {
+			name: "The Saver",
+			desc: "You are naturally frugal and feel best when your savings are growing. You are great at saying no to impulse buys, but sometimes you might hold back too much on things that would genuinely improve your life.",
+			tip: "Tip: Set a small \"fun money\" line item in your budget so you can enjoy spending guilt-free. Saving is the goal, not the whole picture.",
+			rec: "A savings goals tracker can help you channel your saving instincts into clear targets with visible progress.",
+			cta: "View savings tracker",
+			url: "https://www.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets"
+		},
+		spender: {
+			name: "The Spender",
+			desc: "You enjoy the present and believe money is meant to be used. You are generous and spontaneous, which makes life fun. Your challenge is building habits that balance today's enjoyment with tomorrow's security.",
+			tip: "Tip: Try the 24-hour rule for non-essential purchases over $50. If you still want it tomorrow, go for it.",
+			rec: "A simple daily expense tracker can help you see patterns without feeling restricted. Awareness is the first step.",
+			cta: "View budget spreadsheet",
+			url: "https://www.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel"
+		},
+		avoider: {
+			name: "The Avoider",
+			desc: "Money stresses you out, so you tend to put off financial decisions. This is more common than you think, and the good news is that even small steps can build big momentum. You do not need to overhaul everything at once.",
+			tip: "Tip: Start with just one habit: check your bank balance every morning. That is it. Familiarity reduces anxiety over time.",
+			rec: "A straightforward budget spreadsheet with minimal setup can make the first step feel approachable instead of overwhelming.",
+			cta: "View simple budget template",
+			url: "https://www.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel"
+		}
+	};
+
+	var currentQ = 0;
+	var answers = [];
+
+	var questionsEl = document.getElementById(id + '-questions');
+	var resultEl = document.getElementById(id + '-result');
+	var progressText = document.getElementById(id + '-progress');
+	var progressFill = document.getElementById(id + '-fill');
+	var qText = document.getElementById(id + '-qtext');
+	var optsEl = document.getElementById(id + '-opts');
+	var styleEl = document.getElementById(id + '-style');
+	var descEl = document.getElementById(id + '-desc');
+	var tipEl = document.getElementById(id + '-tip');
+	var recEl = document.getElementById(id + '-rec');
+	var ctaEl = document.getElementById(id + '-cta');
+	var retakeBtn = document.getElementById(id + '-retake');
+
+	function renderQuestion() {
+		var q = questions[currentQ];
+		progressText.textContent = 'Question ' + (currentQ + 1) + ' of ' + questions.length;
+		progressFill.style.width = ((currentQ + 1) / questions.length * 100) + '%';
+		qText.textContent = q.q;
+		optsEl.innerHTML = '';
+		q.opts.forEach(function (opt) {
+			var btn = document.createElement('button');
+			btn.className = 'quiz-option';
+			btn.textContent = opt.text;
+			btn.addEventListener('click', function () {
+				answers.push(opt.style);
+				if (currentQ < questions.length - 1) {
+					currentQ++;
+					renderQuestion();
+				} else {
+					showResult();
+				}
+			});
+			optsEl.appendChild(btn);
+		});
+	}
+
+	function showResult() {
+		var tally = { planner: 0, saver: 0, spender: 0, avoider: 0 };
+		answers.forEach(function (s) { tally[s]++; });
+		var winner = 'planner';
+		Object.keys(tally).forEach(function (k) {
+			if (tally[k] > tally[winner]) winner = k;
+		});
+
+		var s = styles[winner];
+		styleEl.textContent = s.name;
+		descEl.textContent = s.desc;
+		tipEl.textContent = s.tip;
+		recEl.textContent = s.rec;
+		ctaEl.textContent = s.cta;
+		ctaEl.href = s.url;
+
+		questionsEl.hidden = true;
+		resultEl.hidden = false;
+	}
+
+	retakeBtn.addEventListener('click', function () {
+		currentQ = 0;
+		answers = [];
+		resultEl.hidden = true;
+		questionsEl.hidden = false;
+		renderQuestion();
+	});
+
+	renderQuestion();
+})();
+</script>
