@@ -12,8 +12,8 @@ const allArticles = (await getCollection('articles'))
 		return { ...article, readTime };
 	});
 
-const featured = allArticles[0];
-const rest = allArticles.slice(1, 7);
+const latest = allArticles.slice(0, 2);
+const rest = allArticles.slice(2, 8);
 
 const templates = [
 	{
@@ -44,26 +44,28 @@ const templates = [
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	{featured && (
-		<section class="featured">
-			<div class="featured-inner">
-				<a href={`/articles/${featured.id}/`} class="featured-link">
-					<div class="featured-text">
-						<span class="featured-label">Latest</span>
-						<h2 class="featured-title">{featured.data.title}</h2>
-						<p class="featured-desc">{featured.data.description}</p>
-						<p class="featured-meta">
-							<FormattedDate date={featured.data.pubDate} />
-							<span>&middot;</span>
-							<span>{featured.readTime} min read</span>
-						</p>
-					</div>
-					{(featured.data.featuredImage || featured.data.image) && (
-						<div class="featured-image">
-							<img src={featured.data.featuredImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" />
-						</div>
-					)}
-				</a>
+	{latest.length > 0 && (
+		<section class="latest">
+			<div class="latest-inner">
+				<span class="latest-label">Latest</span>
+				<div class="latest-grid">
+					{latest.map((article) => (
+						<a href={`/articles/${article.id}/`} class="latest-card">
+							{(article.data.cardImage || article.data.image) && (
+								<div class="latest-card-thumb">
+									<img src={article.data.cardImage ?? article.data.image} alt="" width="960" height="540" loading="lazy" />
+								</div>
+							)}
+							<h2 class="latest-card-title">{article.data.title}</h2>
+							<p class="latest-card-desc">{article.data.description}</p>
+							<p class="latest-card-meta">
+								<FormattedDate date={article.data.pubDate} />
+								<span>&middot;</span>
+								<span>{article.readTime} min read</span>
+							</p>
+						</a>
+					))}
+				</div>
 			</div>
 		</section>
 	)}
@@ -76,9 +78,9 @@ const templates = [
 				<div class="articles-grid">
 					{rest.map((article) => (
 						<a href={`/articles/${article.id}/`} class="article-card">
-							{(article.data.cardImage || article.data.image) && (
+							{article.data.image && (
 								<div class="article-card-thumb">
-									<img src={article.data.cardImage ?? article.data.image} alt="" width="600" height="340" loading="lazy" />
+									<img src={article.data.image} alt="" width="600" height="340" loading="lazy" />
 								</div>
 							)}
 							<div class="article-card-body">
@@ -135,64 +137,61 @@ const templates = [
 </BaseLayout>
 
 <style>
-	/* ——— Featured article ——— */
+	/* ——— Latest articles (2-col) ——— */
 
-	.featured {
+	.latest {
 		padding: var(--space-section) var(--space-md);
 	}
-	.featured-inner {
+	.latest-inner {
 		max-width: var(--max-width);
 		margin: 0 auto;
 	}
-	.featured-link {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: var(--space-xl);
-		align-items: center;
-		text-decoration: none;
-	}
-	.featured-image {
-		border-radius: var(--radius-md);
-		overflow: hidden;
-		background: var(--color-bg-panel);
-	}
-	.featured-image img {
-		display: block;
-		width: 100%;
-		height: auto;
-	}
-	.featured-text {
-		display: flex;
-		flex-direction: column;
-	}
-	.featured-label {
+	.latest-label {
 		display: inline-block;
 		font-size: var(--text-xs);
 		font-weight: var(--weight-semibold);
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-wide);
 		color: var(--color-accent);
-		margin-bottom: var(--space-sm);
+		margin-bottom: var(--space-md);
 	}
-	.featured-title {
-		font-size: var(--text-h1);
-		font-weight: var(--weight-bold);
-		line-height: var(--leading-tight);
+	.latest-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-md);
+	}
+	.latest-card {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+	}
+	.latest-card-thumb {
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		margin-bottom: var(--space-md);
+		background: var(--color-bg-panel);
+	}
+	.latest-card-thumb img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+	.latest-card-title {
+		font-size: var(--text-h2);
+		font-weight: var(--weight-semibold);
+		line-height: var(--leading-snug);
 		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
-		margin-bottom: var(--space-sm);
-		transition: color 0.15s;
+		margin-bottom: var(--space-xs);
 	}
-	.featured-link:hover .featured-title {
-		color: var(--color-accent);
+	.latest-card-desc {
+		font-size: var(--text-small);
+		line-height: var(--leading-snug);
+		color: var(--color-text-secondary);
+		margin: 0 0 auto;
+		padding-bottom: var(--space-sm);
 	}
-	.featured-desc {
-		font-size: var(--text-body);
-		line-height: var(--leading-normal);
-		color: var(--color-text);
-		margin-bottom: var(--space-sm);
-	}
-	.featured-meta {
+	.latest-card-meta {
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
 		margin: 0;
@@ -247,14 +246,11 @@ const templates = [
 		position: relative;
 		z-index: 1;
 		background: var(--color-bg-surface);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-md);
 		padding: var(--space-md);
 		margin: var(--space-md) 0 0 var(--space-md);
 		display: flex;
 		flex-direction: column;
-	}
-	.article-card:hover .article-card-title {
-		color: var(--color-accent);
 	}
 	.article-card-title {
 		font-size: var(--text-h3);
@@ -421,11 +417,8 @@ const templates = [
 	/* ——— Responsive ——— */
 
 	@media (max-width: 960px) {
-		.featured-link {
+		.latest-grid {
 			grid-template-columns: 1fr;
-		}
-		.featured-image {
-			order: -1;
 		}
 		.articles-grid {
 			grid-template-columns: 1fr;
