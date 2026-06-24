@@ -123,6 +123,7 @@ hr {
 	border-radius: var(--radius-full);
 	border: 1px solid transparent;
 	cursor: pointer;
+	gap: 0.375rem;
 	text-decoration: none;
 	transition: background 0.15s, color 0.15s, border-color 0.15s;
 }

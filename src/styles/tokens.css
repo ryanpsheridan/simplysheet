@@ -1,21 +1,21 @@
 :root {
   /* ——— Colors ——— */
 
-  --color-text:           #242424;
-  --color-text-secondary: #6B6B6B;
-  --color-text-muted:     #757575;
+  --color-text:           #2A2522;
+  --color-text-secondary: #6E6560;
+  --color-text-muted:     #8A817C;
 
   --color-accent:         #196EDD;
   --color-accent-hover:   #1259B8;
 
-  --color-bg:             #FAFAFB;
+  --color-bg:             #FAF9F7;
   --color-bg-surface:     #FFFFFF;
-  --color-bg-panel:       #F2F2F7;
-  --color-bg-emphasis:    #EFEFEF;
-  --color-bg-inverse:     #242424;
+  --color-bg-panel:       #F3F1EE;
+  --color-bg-emphasis:    #EDEAE7;
+  --color-bg-inverse:     #2A2522;
 
-  --color-border:         #F2F2F2;
-  --color-divider:        #E6E6E6;
+  --color-border:         #F0EDEA;
+  --color-divider:        #E3DFDB;
 
   /* ——— Typography ——— */
 
