@@ -99,144 +99,88 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 	<body>
 		<Header />
 
-		<div class="breadcrumb-bar">
-			<div class="breadcrumb-inner">
-				<a href="/" class="breadcrumb-link">Home</a>
-				<span class="breadcrumb-sep">&rsaquo;</span>
-				<a href="/articles" class="breadcrumb-link">Articles</a>
-			</div>
-		</div>
+		<main class="article-main">
+			<article>
+				<header class="article-header">
+					<h1 class="article-title">{title}</h1>
+					<p class="article-meta">
+						{readTime && <span>{readTime} min read</span>}
+						{readTime && <span class="meta-dot">&middot;</span>}
+						<FormattedDate date={pubDate} />
+						{updatedDate && (
+							<span class="updated">
+								(Updated <FormattedDate date={updatedDate} />)
+							</span>
+						)}
+					</p>
+				</header>
 
-		<div class="article-layout">
-			{tocHeadings.length > 0 && (
-				<aside class="toc-sidebar">
-					<nav class="toc" aria-label="Table of contents">
-						<ul>
-							{tocHeadings.map((h) => (
-								<li>
-									<a href={`#${h.slug}`} class="toc-link">{h.text}</a>
-								</li>
+				{image && (
+					<div class="article-hero-image">
+						<img src={image} alt={title} width="960" height="540" />
+					</div>
+				)}
+
+				<div class="article-actions">
+					<button class="action-btn" id="share-btn" aria-label="Share this article">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+							<polyline points="16 6 12 2 8 6" />
+							<line x1="12" y1="2" x2="12" y2="15" />
+						</svg>
+						<span>Share</span>
+					</button>
+					<a href={emailShareUrl} class="action-btn" aria-label="Share via email">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="2" y="4" width="20" height="16" rx="2" />
+							<path d="M22 4l-10 8L2 4" />
+						</svg>
+						<span>Email</span>
+					</a>
+				</div>
+
+				<div class="prose">
+					<slot />
+				</div>
+
+				{faq && faq.length > 0 && (
+					<section class="faq">
+						<h2 class="faq-heading">Frequently asked questions</h2>
+						<div class="faq-list">
+							{faq.map(({ question, answer }: { question: string; answer: string }) => (
+								<details class="faq-item">
+									<summary class="faq-q">
+										<span>{question}</span>
+										<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="9 18 15 12 9 6" />
+										</svg>
+									</summary>
+									<div class="faq-a-wrap">
+										<p class="faq-a">{answer}</p>
+									</div>
+								</details>
 							))}
-						</ul>
-					</nav>
+						</div>
+					</section>
+				)}
+			</article>
+
+			{related.length > 0 && (
+				<aside class="related">
+					<h2 class="related-heading">Related articles</h2>
+					<ul class="related-list">
+						{related.map((r) => (
+							<li>
+								<a href={`/articles/${r.id}/`}>{r.data.title}</a>
+							</li>
+						))}
+					</ul>
 				</aside>
 			)}
-
-			<main>
-				<article>
-					<header class="article-header">
-						<h1>{title}</h1>
-						<p class="meta">
-							{readTime && <span>{readTime} min read</span>}
-							{readTime && <span class="meta-dot">&middot;</span>}
-							<FormattedDate date={pubDate} />
-							{updatedDate && (
-								<span class="updated">
-									(Updated <FormattedDate date={updatedDate} />)
-								</span>
-							)}
-						</p>
-					</header>
-
-					{image && (
-						<div class="article-hero-image">
-							<img src={image} alt={title} width="960" height="540" />
-						</div>
-					)}
-
-					<div class="article-actions">
-						<button class="action-btn" id="share-btn" aria-label="Share this article">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-								<polyline points="16 6 12 2 8 6" />
-								<line x1="12" y1="2" x2="12" y2="15" />
-							</svg>
-							<span>Share</span>
-						</button>
-						<a href={emailShareUrl} class="action-btn" aria-label="Share via email">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="2" y="4" width="20" height="16" rx="2" />
-								<path d="M22 4l-10 8L2 4" />
-							</svg>
-							<span>Email</span>
-						</a>
-					</div>
-
-					<div class="prose">
-						<slot />
-					</div>
-
-					{faq && faq.length > 0 && (
-						<section class="faq">
-							<h2 class="faq-heading">Frequently asked questions</h2>
-							<div class="faq-list">
-								{faq.map(({ question, answer }: { question: string; answer: string }) => (
-									<details class="faq-item">
-										<summary class="faq-q">
-											<span>{question}</span>
-											<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-												<polyline points="9 18 15 12 9 6" />
-											</svg>
-										</summary>
-										<div class="faq-a-wrap">
-											<p class="faq-a">{answer}</p>
-										</div>
-									</details>
-								))}
-							</div>
-						</section>
-					)}
-				</article>
-
-				{related.length > 0 && (
-					<aside class="related">
-						<h2 class="related-heading">Related articles</h2>
-						<ul class="related-list">
-							{related.map((r) => (
-								<li>
-									<a href={`/articles/${r.id}/`}>{r.data.title}</a>
-								</li>
-							))}
-						</ul>
-					</aside>
-				)}
-			</main>
-		</div>
+		</main>
 		<Footer />
 
 		<script>
-			function initToc() {
-				const links = document.querySelectorAll('.toc-link');
-				if (!links.length) return;
-
-				const ids = Array.from(links).map((l) =>
-					l.getAttribute('href')!.slice(1)
-				);
-				const headings = ids
-					.map((id) => document.getElementById(id))
-					.filter(Boolean) as HTMLElement[];
-
-				function update() {
-					let current = '';
-					for (const h of headings) {
-						if (h.getBoundingClientRect().top <= 100) {
-							current = h.id;
-						}
-					}
-					links.forEach((link) => {
-						link.classList.toggle(
-							'active',
-							link.getAttribute('href') === `#${current}`
-						);
-					});
-				}
-
-				window.addEventListener('scroll', update, { passive: true });
-				update();
-			}
-
-			initToc();
-
 			document.querySelectorAll('.faq-item').forEach((details) => {
 				const summary = details.querySelector('summary');
 				const wrap = details.querySelector('.faq-a-wrap');
@@ -280,111 +224,29 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 </html>
 
 <style>
-	/* ——— Breadcrumb bar ——— */
+	/* ——— Article main ——— */
 
-	.breadcrumb-bar {
-		border-bottom: 1px solid var(--color-border);
-		padding: 0 var(--space-md);
-	}
-
-	.breadcrumb-inner {
-		max-width: var(--max-width);
-		margin: 0 auto;
-		padding: var(--space-xs) 0;
-		display: flex;
-		align-items: center;
-		gap: 0.375rem;
-	}
-
-	.breadcrumb-link {
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text);
-		text-decoration: none;
-		transition: color 0.15s;
-	}
-
-	.breadcrumb-link:hover {
-		color: var(--color-text-secondary);
-	}
-
-	.breadcrumb-sep {
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-	}
-
-	/* ——— Article layout ——— */
-
-	.article-layout {
-		max-width: var(--max-width);
-		margin: 0 auto;
-		display: grid;
-		grid-template-columns: 13rem 1fr;
-		gap: var(--space-xl);
-		padding: 0 var(--space-md);
-	}
-
-	main {
-		width: 100%;
+	.article-main {
 		max-width: var(--max-width-narrow);
-		padding: var(--space-xl) 0 var(--space-xl);
-		margin: 0;
-	}
-
-	/* ——— TOC sidebar ——— */
-
-	.toc-sidebar {
-		padding-top: var(--space-xl);
-		padding-bottom: var(--space-section);
-	}
-
-	.toc {
-		position: sticky;
-		top: 6rem;
-	}
-
-	.toc ul {
-		list-style: none;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2xs);
-		border-left: 1px solid var(--color-border);
-		padding-left: var(--space-sm);
-	}
-
-	.toc-link {
-		display: block;
-		font-size: var(--text-small);
-		line-height: var(--leading-snug);
-		color: var(--color-text-muted);
-		text-decoration: none;
-		padding: var(--space-2xs) 0;
-		transition: color 0.15s;
-	}
-
-	.toc-link:hover {
-		color: var(--color-text);
-	}
-
-	.toc-link.active {
-		color: var(--color-accent);
-		font-weight: var(--weight-medium);
+		margin: 0 auto;
+		padding: var(--space-xl) var(--space-md) var(--space-2xl);
 	}
 
 	/* ——— Article header ——— */
 
 	.article-header {
-		margin-bottom: var(--space-md);
+		margin-bottom: var(--space-lg);
 	}
 
-	.article-header h1 {
-		font-size: var(--text-h1);
+	.article-title {
+		font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
 		font-weight: var(--weight-bold);
-		margin-bottom: var(--space-xs);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--space-sm);
 	}
 
-	.meta {
+	.article-meta {
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
 		margin: 0;
@@ -401,11 +263,14 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 		font-style: italic;
 	}
 
+	/* ——— Hero image ——— */
+
 	.article-hero-image {
 		margin-bottom: var(--space-lg);
 		border-radius: var(--radius-md);
 		overflow: hidden;
 	}
+
 	.article-hero-image img {
 		display: block;
 		width: 100%;
@@ -561,22 +426,5 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 
 	.related-list a:hover {
 		text-decoration: underline;
-	}
-
-	/* ——— Responsive ——— */
-
-	@media (max-width: 960px) {
-		.article-layout {
-			grid-template-columns: 1fr;
-		}
-
-		.toc-sidebar {
-			display: none;
-		}
-
-		main {
-			max-width: 100%;
-			margin: 0 auto;
-		}
 	}
 </style>
