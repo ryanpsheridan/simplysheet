@@ -1,0 +1,365 @@
+---
+interface Props {
+	simplified?: boolean;
+}
+
+const { simplified = false } = Astro.props;
+const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="calc" id={id} data-simplified={simplified ? 'true' : 'false'}>
+	<div class="calc-input-group">
+		<label class="calc-label" for={`${id}-income`}>Monthly take-home income</label>
+		<div class="calc-field">
+			<span class="calc-prefix">$</span>
+			<input
+				type="text"
+				id={`${id}-income`}
+				class="calc-input"
+				inputmode="decimal"
+				placeholder="0"
+				autocomplete="off"
+			/>
+		</div>
+	</div>
+
+	{!simplified && (
+		<div class="calc-split-toggle">
+			<button class="calc-split-btn active" data-split="50-30-20">50 / 30 / 20</button>
+			<button class="calc-split-btn" data-split="60-20-20">60 / 20 / 20</button>
+			<button class="calc-split-btn" data-split="55-25-20">55 / 25 / 20</button>
+			<button class="calc-split-btn" data-split="custom">Custom</button>
+		</div>
+	)}
+
+	{!simplified && (
+		<div class="calc-custom-row" hidden>
+			<div class="calc-custom-field">
+				<label class="calc-custom-label">Needs %</label>
+				<input type="number" class="calc-custom-input" data-role="needs" value="50" min="0" max="100" />
+			</div>
+			<div class="calc-custom-field">
+				<label class="calc-custom-label">Wants %</label>
+				<input type="number" class="calc-custom-input" data-role="wants" value="30" min="0" max="100" />
+			</div>
+			<div class="calc-custom-field">
+				<label class="calc-custom-label">Savings %</label>
+				<input type="number" class="calc-custom-input" data-role="savings" value="20" min="0" max="100" />
+			</div>
+			<p class="calc-custom-total">Total: <span class="calc-custom-total-num">100</span>%</p>
+		</div>
+	)}
+
+	<div class="calc-results">
+		<div class="calc-result">
+			<div class="calc-result-header">
+				<span class="calc-result-label">Needs</span>
+				<span class="calc-result-pct">50%</span>
+			</div>
+			<span class="calc-result-value" data-role="needs">$0</span>
+			<div class="calc-result-bar"><div class="calc-result-fill needs-fill"></div></div>
+		</div>
+		<div class="calc-result">
+			<div class="calc-result-header">
+				<span class="calc-result-label">Wants</span>
+				<span class="calc-result-pct">30%</span>
+			</div>
+			<span class="calc-result-value" data-role="wants">$0</span>
+			<div class="calc-result-bar"><div class="calc-result-fill wants-fill"></div></div>
+		</div>
+		<div class="calc-result">
+			<div class="calc-result-header">
+				<span class="calc-result-label">Savings & Debt</span>
+				<span class="calc-result-pct">20%</span>
+			</div>
+			<span class="calc-result-value" data-role="savings">$0</span>
+			<div class="calc-result-bar"><div class="calc-result-fill savings-fill"></div></div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.calc {
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: var(--space-md);
+		margin: var(--space-lg) 0;
+		background: var(--color-bg);
+	}
+
+	/* ——— Input ——— */
+
+	.calc-label {
+		display: block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+	}
+	.calc-field {
+		display: flex;
+		align-items: center;
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+		transition: border-color 0.15s;
+	}
+	.calc-field:focus-within {
+		border-color: var(--color-accent);
+	}
+	.calc-prefix {
+		padding: 0.625rem 0 0.625rem 0.75rem;
+		font-size: var(--text-body);
+		color: var(--color-text-muted);
+		user-select: none;
+	}
+	.calc-input {
+		flex: 1;
+		border: none;
+		outline: none;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		padding: 0.625rem 0.75rem 0.625rem 0.25rem;
+		color: var(--color-text);
+		background: transparent;
+	}
+	.calc-input::placeholder {
+		color: var(--color-text-muted);
+	}
+
+	/* ——— Split toggle ——— */
+
+	.calc-split-toggle {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+		margin-top: var(--space-md);
+	}
+	.calc-split-btn {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		background: none;
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-full);
+		padding: 0.375rem 0.875rem;
+		cursor: pointer;
+		transition: color 0.15s, border-color 0.15s, background 0.15s;
+	}
+	.calc-split-btn:hover {
+		color: var(--color-text);
+		border-color: var(--color-text-muted);
+	}
+	.calc-split-btn.active {
+		color: var(--color-bg);
+		background: var(--color-bg-inverse);
+		border-color: var(--color-bg-inverse);
+	}
+
+	/* ——— Custom split inputs ——— */
+
+	.calc-custom-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: var(--space-sm);
+		margin-top: var(--space-sm);
+	}
+	.calc-custom-row[hidden] {
+		display: none;
+	}
+	.calc-custom-field {
+		flex: 1;
+		min-width: 5rem;
+	}
+	.calc-custom-label {
+		display: block;
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-custom-input {
+		width: 100%;
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		padding: 0.5rem 0.625rem;
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-sm);
+		color: var(--color-text);
+		background: transparent;
+		outline: none;
+		transition: border-color 0.15s;
+	}
+	.calc-custom-input:focus {
+		border-color: var(--color-accent);
+	}
+	.calc-custom-total {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		margin: 0;
+		padding-bottom: 0.5rem;
+		white-space: nowrap;
+	}
+	.calc-custom-total-num.invalid {
+		color: #c0392b;
+		font-weight: var(--weight-semibold);
+	}
+
+	/* ——— Results ——— */
+
+	.calc-results {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+		margin-top: var(--space-md);
+	}
+	.calc-result-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-result-label {
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+	}
+	.calc-result-pct {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+	.calc-result-value {
+		display: block;
+		font-size: var(--text-h2);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-result-bar {
+		height: 4px;
+		background: var(--color-bg-panel);
+		border-radius: 2px;
+		overflow: hidden;
+	}
+	.calc-result-fill {
+		height: 100%;
+		border-radius: 2px;
+		width: 0;
+		transition: width 0.3s ease;
+	}
+	.needs-fill { background: var(--color-accent); }
+	.wants-fill { background: #6B6B6B; }
+	.savings-fill { background: #242424; }
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 480px) {
+		.calc-custom-row {
+			flex-direction: column;
+		}
+	}
+</style>
+
+<script is:inline define:vars={{ id }}>
+(function () {
+	const root = document.getElementById(id);
+	if (!root) return;
+
+	const simplified = root.dataset.simplified === 'true';
+	const input = root.querySelector('.calc-input');
+	const results = root.querySelectorAll('.calc-result-value');
+	const pcts = root.querySelectorAll('.calc-result-pct');
+	const fills = root.querySelectorAll('.calc-result-fill');
+
+	let split = [50, 30, 20];
+
+	function formatCurrency(n) {
+		return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+	}
+
+	function formatInput(val) {
+		const num = val.replace(/[^0-9.]/g, '');
+		const parts = num.split('.');
+		if (parts[0]) parts[0] = parseInt(parts[0], 10).toLocaleString('en-US');
+		return parts.join('.');
+	}
+
+	function calculate() {
+		const raw = input.value.replace(/[^0-9.]/g, '');
+		const income = parseFloat(raw) || 0;
+		const maxVal = Math.max(split[0], split[1], split[2], 1);
+
+		results.forEach(function (el, i) {
+			el.textContent = formatCurrency(income * split[i] / 100);
+		});
+		pcts.forEach(function (el, i) {
+			el.textContent = split[i] + '%';
+		});
+		fills.forEach(function (el, i) {
+			el.style.width = income > 0 ? (split[i] / maxVal * 100) + '%' : '0';
+		});
+	}
+
+	input.addEventListener('input', function () {
+		var pos = input.selectionStart;
+		var before = input.value.length;
+		input.value = formatInput(input.value);
+		var after = input.value.length;
+		input.setSelectionRange(pos + (after - before), pos + (after - before));
+		calculate();
+	});
+
+	if (simplified) { calculate(); return; }
+
+	var splitBtns = root.querySelectorAll('.calc-split-btn');
+	var customRow = root.querySelector('.calc-custom-row');
+	var customInputs = root.querySelectorAll('.calc-custom-input');
+	var totalNum = root.querySelector('.calc-custom-total-num');
+
+	var presets = {
+		'50-30-20': [50, 30, 20],
+		'60-20-20': [60, 20, 20],
+		'55-25-20': [55, 25, 20],
+	};
+
+	splitBtns.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			splitBtns.forEach(function (b) { b.classList.remove('active'); });
+			btn.classList.add('active');
+			var key = btn.dataset.split;
+
+			if (key === 'custom') {
+				customRow.hidden = false;
+				updateCustom();
+			} else {
+				customRow.hidden = true;
+				split = presets[key].slice();
+				calculate();
+			}
+		});
+	});
+
+	function updateCustom() {
+		var vals = [];
+		customInputs.forEach(function (inp) { vals.push(parseInt(inp.value, 10) || 0); });
+		var total = vals[0] + vals[1] + vals[2];
+		totalNum.textContent = total;
+
+		if (total !== 100) {
+			totalNum.classList.add('invalid');
+		} else {
+			totalNum.classList.remove('invalid');
+			split = vals;
+		}
+		calculate();
+	}
+
+	customInputs.forEach(function (inp) {
+		inp.addEventListener('input', updateCustom);
+	});
+
+	calculate();
+})();
+</script>
