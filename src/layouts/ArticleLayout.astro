@@ -102,7 +102,7 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 		{image && (
 			<section class="article-hero">
 				<img src={image} alt="" class="article-hero-bg" />
-				<div class="article-hero-surface" id="hero-surface">
+				<div class="article-hero-surface">
 					<div class="article-hero-inner">
 						<h1 class="article-title">{title}</h1>
 						<p class="article-meta">
@@ -237,22 +237,6 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 				}
 			});
 		</script>
-		<script>
-			const surface = document.getElementById('hero-surface');
-			if (surface) {
-				let ticking = false;
-				function checkScroll() {
-					surface.classList.toggle('expanded', window.scrollY > 80);
-				}
-				window.addEventListener('scroll', () => {
-					if (!ticking) {
-						requestAnimationFrame(() => { checkScroll(); ticking = false; });
-						ticking = true;
-					}
-				}, { passive: true });
-				checkScroll();
-			}
-		</script>
 	</body>
 </html>
 
@@ -267,8 +251,7 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 	.article-hero-bg {
 		display: block;
 		width: 100%;
-		height: auto;
-		max-height: 320px;
+		height: 200px;
 		object-fit: cover;
 	}
 
@@ -276,14 +259,8 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 		position: relative;
 		z-index: 1;
 		max-width: var(--max-width);
-		margin: -4rem auto 0;
+		margin: -3rem auto 0;
 		padding: 0 var(--space-md);
-		transition: max-width 0.4s ease, padding 0.4s ease, border-radius 0.4s ease;
-	}
-
-	.article-hero-surface.expanded {
-		max-width: 100%;
-		padding: 0;
 	}
 
 	.article-hero-inner {
@@ -292,11 +269,6 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 		padding: var(--space-xl) var(--space-md) var(--space-lg);
 		max-width: var(--max-width-narrow);
 		margin: 0 auto;
-		transition: border-radius 0.4s ease;
-	}
-
-	.article-hero-surface.expanded .article-hero-inner {
-		border-radius: 0;
 	}
 
 	.meta-dot {
