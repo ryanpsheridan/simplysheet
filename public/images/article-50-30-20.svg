@@ -1,37 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E3F2FD"/>
-      <stop offset="100%" stop-color="#BBDEFB"/>
+      <stop offset="0%" stop-color="#196EDD"/>
+      <stop offset="100%" stop-color="#1259B8"/>
     </linearGradient>
-    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#196EDD" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#64B5F6" stop-opacity="0.25"/>
-    </linearGradient>
-    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1259B8" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#90CAF9" stop-opacity="0.15"/>
-    </linearGradient>
-    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#7E57C2" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#CE93D8" stop-opacity="0.1"/>
-    </linearGradient>
-    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="60"/>
-    </filter>
-    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="45"/>
-    </filter>
-    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="55"/>
-    </filter>
   </defs>
+
+  <!-- Background -->
   <rect width="960" height="540" fill="url(#bg)"/>
-  <ellipse cx="300" cy="200" rx="300" ry="230" fill="url(#blob1)" filter="url(#blur1)"/>
-  <ellipse cx="650" cy="380" rx="280" ry="220" fill="url(#blob2)" filter="url(#blur2)"/>
-  <ellipse cx="500" cy="80" rx="220" ry="180" fill="url(#blob3)" filter="url(#blur3)"/>
-  <circle cx="180" cy="420" r="150" fill="#196EDD" fill-opacity="0.06" filter="url(#blur2)"/>
-  <circle cx="820" cy="120" r="130" fill="#7E57C2" fill-opacity="0.08" filter="url(#blur3)"/>
-  <rect x="350" y="180" width="190" height="190" rx="38" fill="white" fill-opacity="0.12" transform="rotate(12, 445, 275)" filter="url(#blur2)"/>
-  <circle cx="650" cy="200" r="55" fill="white" fill-opacity="0.1" filter="url(#blur2)"/>
+
+  <!-- White card -->
+  <rect x="160" y="40" width="640" height="460" rx="12" fill="white"/>
+
+  <!-- Label: Monthly take-home income -->
+  <text x="200" y="88" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Monthly take-home income</text>
+
+  <!-- Input field -->
+  <rect x="200" y="102" width="560" height="48" rx="6" fill="none" stroke="#E3DFDB" stroke-width="1.5"/>
+  <text x="220" y="132" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#8A817C">$</text>
+  <text x="238" y="132" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#2A2522">5,360</text>
+
+  <!-- Needs row -->
+  <text x="200" y="190" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Needs</text>
+  <text x="200" y="218" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#2A2522">$2,680</text>
+  <rect x="200" y="232" width="560" height="6" rx="3" fill="#E8F0FE"/>
+  <rect x="200" y="232" width="560" height="6" rx="3" fill="#196EDD"/>
+
+  <!-- Wants row -->
+  <text x="200" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Wants</text>
+  <text x="200" y="303" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#2A2522">$1,608</text>
+  <rect x="200" y="317" width="560" height="6" rx="3" fill="#E8F0FE"/>
+  <rect x="200" y="317" width="336" height="6" rx="3" fill="#6E6560"/>
+
+  <!-- Savings & Debt row -->
+  <text x="200" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Savings &amp; Debt</text>
+  <text x="200" y="388" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#2A2522">$1,072</text>
+  <rect x="200" y="402" width="560" height="6" rx="3" fill="#E8F0FE"/>
+  <rect x="200" y="402" width="224" height="6" rx="3" fill="#2A2522"/>
 </svg>
