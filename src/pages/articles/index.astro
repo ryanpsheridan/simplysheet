@@ -113,16 +113,8 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 	.article-list li a {
 		display: flex;
 		flex-direction: column;
-		padding: var(--space-md);
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
 		text-decoration: none;
 		height: 100%;
-		transition: border-color 0.15s;
-	}
-	.article-list li a:hover {
-		border-color: var(--color-divider);
 	}
 	.article-list li a:hover .title {
 		color: var(--color-accent);
