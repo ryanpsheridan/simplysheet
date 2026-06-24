@@ -2,6 +2,7 @@
 title: 'Where is my money going? A simple way to finally find out'
 description: "If you've ever looked at your bank account and wondered where it all went, here's the simplest way to find out — and what to do once you know."
 pubDate: 'Jun 23 2026'
+tags: ['expense-tracking']
 relatedProduct:
   name: 'Budget Spreadsheet'
   url: 'https://simplysheetdesign.etsy.com/listing/1854773368'

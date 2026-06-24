@@ -40,10 +40,9 @@ const templates = [
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<section class="hero">
-		<div class="hero-inner">
-			<h1 class="hero-headline">Take control of your budget with spreadsheets you'll actually use</h1>
-			<p class="hero-sub">Clear, actionable budgeting guidance paired with Google Sheets and Excel templates — no apps, no account syncing, no fluff. Just the tools and know-how to understand where your money goes.</p>
+	<section class="intro">
+		<div class="intro-inner">
+			<p class="intro-line">Practical budgeting advice, simple systems, and the tools to help you understand where your money goes.</p>
 		</div>
 	</section>
 
@@ -91,9 +90,17 @@ const templates = [
 		</section>
 	)}
 
+	<section class="about-brief">
+		<div class="about-brief-inner">
+			<h2 class="about-brief-heading">Six years of budgeting in a spreadsheet</h2>
+			<p class="about-brief-body">I started budgeting six years ago with a blank Google Sheet. The one habit that changed everything was tracking expenses daily — that visibility gave me clarity I never had before. After years of refining and sharing with friends, I turned it into a product. With over 12 years of UX and visual design experience, I focused on making it simple enough that people actually use it.</p>
+			<a href="/about" class="about-brief-link">Read the full story &rarr;</a>
+		</div>
+	</section>
+
 	<section class="templates">
 		<div class="templates-inner">
-			<h2 class="templates-heading">Ready-to-use budget templates</h2>
+			<h2 class="templates-heading">Tools I built</h2>
 			<div class="templates-grid">
 				{templates.map((t) => (
 					<a href={t.url} class="template-card">
@@ -107,45 +114,26 @@ const templates = [
 			</div>
 		</div>
 	</section>
-
-	<section class="about-brief">
-		<div class="about-brief-inner">
-			<h2 class="about-brief-heading">About SimplySheetDesign</h2>
-			<p class="about-brief-body">I started budgeting six years ago with a blank Google Sheet. The one habit that changed everything was tracking expenses daily — that visibility gave me clarity I never had before. After years of refining and sharing with friends, I turned it into a product. With over 12 years of UX and visual design experience, I focused on making it simple enough that people actually use it.</p>
-			<a href="/about" class="about-brief-link">Read the full story &rarr;</a>
-		</div>
-	</section>
 </BaseLayout>
 
 <style>
-	/* ——— Hero ——— */
+	/* ——— Intro ——— */
 
-	.hero {
-		padding: var(--space-section) var(--space-md);
+	.intro {
+		padding: var(--space-xl) var(--space-md) var(--space-lg);
 		border-bottom: 1px solid var(--color-border);
 	}
-	.hero-inner {
-		max-width: var(--max-width);
+	.intro-inner {
+		max-width: var(--max-width-narrow);
 		margin: 0 auto;
-		text-align: center;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
 	}
-	.hero-headline {
-		font-size: var(--text-display);
-		font-weight: var(--weight-bold);
-		line-height: var(--leading-tight);
+	.intro-line {
+		font-size: var(--text-h2);
+		font-weight: var(--weight-normal);
+		line-height: var(--leading-snug);
 		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-		max-width: 20ch;
-	}
-	.hero-sub {
-		margin-top: var(--space-md);
-		font-size: var(--text-body);
-		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
-		max-width: 38rem;
+		margin: 0;
 	}
 
 	/* ——— Featured article ——— */
@@ -221,7 +209,6 @@ const templates = [
 		display: block;
 		padding: var(--space-md) 0;
 		text-decoration: none;
-		transition: background 0.15s;
 	}
 	.article-row:hover .article-row-title {
 		color: var(--color-accent);
@@ -259,11 +246,39 @@ const templates = [
 		text-decoration: none;
 	}
 
-	/* ——— Templates (4-col grid) ——— */
+	/* ——— About brief ——— */
+
+	.about-brief {
+		padding: var(--space-section) var(--space-md);
+		border-bottom: 1px solid var(--color-border);
+	}
+	.about-brief-inner {
+		max-width: var(--max-width-narrow);
+		margin: 0 auto;
+	}
+	.about-brief-heading {
+		font-size: var(--text-h2);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--space-md);
+	}
+	.about-brief-body {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+	.about-brief-link {
+		display: inline-block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		text-decoration: none;
+		margin-top: var(--space-xs);
+	}
+
+	/* ——— Tools (4-col grid) ——— */
 
 	.templates {
 		padding: var(--space-section) var(--space-md);
-		border-bottom: 1px solid var(--color-border);
 	}
 	.templates-inner {
 		max-width: var(--max-width);
@@ -306,34 +321,6 @@ const templates = [
 	}
 	.templates-cta-wrap {
 		text-align: center;
-	}
-
-	/* ——— About brief ——— */
-
-	.about-brief {
-		padding: var(--space-section) var(--space-md);
-	}
-	.about-brief-inner {
-		max-width: var(--max-width-narrow);
-		margin: 0 auto;
-	}
-	.about-brief-heading {
-		font-size: var(--text-h3);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--space-sm);
-	}
-	.about-brief-body {
-		font-size: var(--text-small);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-	}
-	.about-brief-link {
-		display: inline-block;
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		text-decoration: none;
-		margin-top: var(--space-xs);
 	}
 
 	/* ——— Responsive ——— */
