@@ -87,4 +87,4 @@ One thing that helps: keep a short list of expenses you can cut immediately when
 
 It's to stop pretending it's predictable.
 
-Most budgeting systems are built for people with a salary. If that's not your situation, you don't need a different app — you need a different starting assumption. Build from the floor, plan for the surplus, save during the good months so the bad ones don't set you back. It's not glamorous, but it works. And after a few months of it, you stop dreading the first of the month.
+Most budgeting systems are built for people with a salary. If that's not your situation, you don't need a different app — you need a different starting assumption. Build from the floor, plan for the surplus, save during the good months so the bad ones don't set you back. It's not glamorous, but it works. And after a few months of it, you stop dreading the first of the month. If you want a ready-made system that handles all of this, take a look at the [Budget Spreadsheet](https://simplysheetdesign.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel) I built for exactly this situation.
