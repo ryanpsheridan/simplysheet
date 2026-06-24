@@ -118,17 +118,16 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 		display: none;
 	}
 	.article-list li a {
-		display: flex;
-		flex-direction: column;
+		position: relative;
 		text-decoration: none;
 		height: 100%;
 		border-radius: var(--radius-md);
 		overflow: hidden;
-		background: var(--color-bg-panel);
 	}
 	.thumb {
-		height: 120px;
-		overflow: hidden;
+		position: absolute;
+		inset: 0;
+		z-index: 0;
 	}
 	.thumb img {
 		display: block;
@@ -138,11 +137,11 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 	}
 	.card-body {
 		position: relative;
+		z-index: 1;
 		background: var(--color-bg);
-		border-radius: var(--radius-md) var(--radius-md) 0 0;
+		border-radius: var(--radius-md);
 		padding: var(--space-md);
-		margin-top: -1rem;
-		flex: 1;
+		margin: 3rem 0.75rem 0.75rem;
 		display: flex;
 		flex-direction: column;
 	}
