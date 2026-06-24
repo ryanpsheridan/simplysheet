@@ -32,6 +32,22 @@
     </filter>
   </defs>
 
+  <style>
+    .exp-bar { animation: exp-pulse 4s ease-in-out infinite; }
+    .exp-1 { animation-delay: 0s; }
+    .exp-2 { animation-delay: 0.3s; }
+    .exp-3 { animation-delay: 0.6s; }
+    .exp-4 { animation-delay: 0.9s; }
+    .exp-5 { animation-delay: 1.2s; }
+    @keyframes exp-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .exp-bar { animation: none; }
+    }
+  </style>
+
   <!-- Abstract gradient background -->
   <rect width="960" height="540" fill="url(#bg)"/>
   <ellipse cx="280" cy="120" rx="300" ry="180" fill="url(#blob1)" filter="url(#blur1)"/>
@@ -43,7 +59,7 @@
   <!-- Grain texture overlay -->
   <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
 
-  <!-- White card — 50% closer to top -->
+  <!-- White card -->
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <!-- Header -->
@@ -57,31 +73,31 @@
   <text x="164" y="196" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Housing</text>
   <text x="796" y="196" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$1,450</text>
   <rect x="164" y="208" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="208" width="476" height="5" rx="2.5" fill="#E86A33"/>
+  <rect class="exp-bar exp-1" x="164" y="208" width="476" height="5" rx="2.5" fill="#E86A33"/>
 
   <!-- Food -->
   <text x="164" y="248" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Food &amp; Dining</text>
   <text x="796" y="248" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$620</text>
   <rect x="164" y="260" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="260" width="204" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.7"/>
+  <rect class="exp-bar exp-2" x="164" y="260" width="204" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.7"/>
 
   <!-- Transportation -->
   <text x="164" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Transportation</text>
   <text x="796" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$485</text>
   <rect x="164" y="312" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="312" width="160" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.5"/>
+  <rect class="exp-bar exp-3" x="164" y="312" width="160" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.5"/>
 
   <!-- Subscriptions -->
   <text x="164" y="352" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Subscriptions</text>
   <text x="796" y="352" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$312</text>
   <rect x="164" y="364" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="364" width="102" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.35"/>
+  <rect class="exp-bar exp-4" x="164" y="364" width="102" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.35"/>
 
   <!-- Shopping -->
   <text x="164" y="404" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Shopping</text>
   <text x="796" y="404" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$280</text>
   <rect x="164" y="416" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="416" width="92" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.25"/>
+  <rect class="exp-bar exp-5" x="164" y="416" width="92" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.25"/>
 
   <!-- Other -->
   <text x="164" y="456" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">+ 4 more categories</text>

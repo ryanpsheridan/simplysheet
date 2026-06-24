@@ -32,6 +32,27 @@
     </filter>
   </defs>
 
+  <style>
+    .bar-needs { animation: pulse-needs 4s ease-in-out infinite; }
+    .bar-wants { animation: pulse-wants 4s ease-in-out infinite 0.5s; }
+    .bar-savings { animation: pulse-savings 4s ease-in-out infinite 1s; }
+    @keyframes pulse-needs {
+      0%, 100% { width: 632px; }
+      50% { width: 580px; }
+    }
+    @keyframes pulse-wants {
+      0%, 100% { width: 380px; }
+      50% { width: 420px; }
+    }
+    @keyframes pulse-savings {
+      0%, 100% { width: 253px; }
+      50% { width: 290px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bar-needs, .bar-wants, .bar-savings { animation: none; }
+    }
+  </style>
+
   <!-- Abstract gradient background -->
   <rect width="960" height="540" fill="url(#bg)"/>
   <ellipse cx="300" cy="120" rx="300" ry="180" fill="url(#blob1)" filter="url(#blur1)"/>
@@ -43,7 +64,7 @@
   <!-- Grain texture overlay -->
   <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
 
-  <!-- White card — 50% closer to top -->
+  <!-- White card -->
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <!-- Label: Monthly take-home income -->
@@ -58,17 +79,17 @@
   <text x="164" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Needs</text>
   <text x="164" y="248" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#2A2522">$2,680</text>
   <rect x="164" y="262" width="632" height="6" rx="3" fill="#E8F0FE"/>
-  <rect x="164" y="262" width="632" height="6" rx="3" fill="#196EDD"/>
+  <rect class="bar-needs" x="164" y="262" width="632" height="6" rx="3" fill="#196EDD"/>
 
   <!-- Wants row -->
   <text x="164" y="304" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Wants</text>
   <text x="164" y="332" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#2A2522">$1,608</text>
   <rect x="164" y="346" width="632" height="6" rx="3" fill="#E8F0FE"/>
-  <rect x="164" y="346" width="380" height="6" rx="3" fill="#6E6560"/>
+  <rect class="bar-wants" x="164" y="346" width="380" height="6" rx="3" fill="#6E6560"/>
 
   <!-- Savings & Debt row -->
   <text x="164" y="388" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Savings &amp; Debt</text>
   <text x="164" y="416" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#2A2522">$1,072</text>
   <rect x="164" y="430" width="632" height="6" rx="3" fill="#E8F0FE"/>
-  <rect x="164" y="430" width="253" height="6" rx="3" fill="#2A2522"/>
+  <rect class="bar-savings" x="164" y="430" width="253" height="6" rx="3" fill="#2A2522"/>
 </svg>
