@@ -4,14 +4,16 @@ import FormattedDate from '../components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const articles = (await getCollection('articles'))
+const allArticles = (await getCollection('articles'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 6)
 	.map((article) => {
 		const wordCount = article.body?.split(/\s+/).filter(Boolean).length ?? 0;
 		const readTime = Math.max(1, Math.ceil(wordCount / 200));
 		return { ...article, readTime };
 	});
+
+const featured = allArticles[0];
+const rest = allArticles.slice(1, 7);
 
 const templates = [
 	{
@@ -45,36 +47,49 @@ const templates = [
 		</div>
 	</section>
 
-	<section class="story">
-		<div class="story-inner">
-			<h2 class="story-heading">Six years of budgeting in a spreadsheet</h2>
-			<p class="story-body">I started budgeting for the first time about six years ago with a basic spreadsheet and very simple formulas. The one habit that changed everything was tracking my expenses daily. It sounds small, but actually seeing where my money went — category by category — gave me clarity I never had before. Using frameworks like the 50/30/20 rule gave me a north star to work toward.</p>
-			<p class="story-body">Over the next couple of years, I kept optimizing. I dialed in how much income was coming in, how much was going to my 401(k) and savings accounts, how I was splitting bills with my spouse, and I built a real-time progress indicator that showed me during the month whether I was ahead or behind on spending. That visibility changed everything — I finally felt comfortable because I knew exactly where I stood.</p>
-			<p class="story-body">When friends and family started asking about my spreadsheet, I shared it, got their feedback, and realized this could help a lot more people. With over 12 years of UX and visual design experience, I cleaned it up and turned it into a real product — focused on being simple, easy to use, and solving one problem well. It's now one of the bestselling budget spreadsheets on Etsy.</p>
-			<a href="/about" class="story-link">Read the full story &rarr;</a>
-		</div>
-	</section>
+	{featured && (
+		<section class="featured">
+			<div class="featured-inner">
+				<span class="featured-label">Latest</span>
+				<a href={`/articles/${featured.id}/`} class="featured-link">
+					<h2 class="featured-title">{featured.data.title}</h2>
+					<p class="featured-desc">{featured.data.description}</p>
+					<p class="featured-meta">
+						<FormattedDate date={featured.data.pubDate} />
+						<span>&middot;</span>
+						<span>{featured.readTime} min read</span>
+					</p>
+				</a>
+			</div>
+		</section>
+	)}
 
-	<section class="latest">
-		<div class="latest-inner">
-			<h2 class="latest-heading">Latest articles</h2>
-			<ul class="article-grid">
-				{articles.map((article) => (
-					<li>
-						<a href={`/articles/${article.id}/`} class="article-card">
-							<h3 class="article-title">{article.data.title}</h3>
-							<p class="article-desc">{article.data.description}</p>
-							<p class="article-meta">
-								<FormattedDate date={article.data.pubDate} />
-								<span>&middot;</span>
-								<span>{article.readTime} min read</span>
-							</p>
-						</a>
-					</li>
-				))}
-			</ul>
-		</div>
-	</section>
+	{rest.length > 0 && (
+		<section class="articles">
+			<div class="articles-inner">
+				<ul class="article-list">
+					{rest.map((article) => (
+						<li>
+							<a href={`/articles/${article.id}/`} class="article-row">
+								<div class="article-row-body">
+									<h3 class="article-row-title">{article.data.title}</h3>
+									<p class="article-row-desc">{article.data.description}</p>
+								</div>
+								<p class="article-row-meta">
+									<FormattedDate date={article.data.pubDate} />
+									<span>&middot;</span>
+									<span>{article.readTime} min read</span>
+								</p>
+							</a>
+						</li>
+					))}
+				</ul>
+				<div class="articles-more">
+					<a href="/articles" class="articles-more-link">All articles &rarr;</a>
+				</div>
+			</div>
+		</section>
+	)}
 
 	<section class="templates">
 		<div class="templates-inner">
@@ -90,6 +105,14 @@ const templates = [
 			<div class="templates-cta-wrap">
 				<a href="https://simplysheetdesign.etsy.com" class="btn btn-primary">Explore all on Etsy</a>
 			</div>
+		</div>
+	</section>
+
+	<section class="about-brief">
+		<div class="about-brief-inner">
+			<h2 class="about-brief-heading">About SimplySheetDesign</h2>
+			<p class="about-brief-body">I started budgeting six years ago with a blank Google Sheet. The one habit that changed everything was tracking expenses daily — that visibility gave me clarity I never had before. After years of refining and sharing with friends, I turned it into a product. With over 12 years of UX and visual design experience, I focused on making it simple enough that people actually use it.</p>
+			<a href="/about" class="about-brief-link">Read the full story &rarr;</a>
 		</div>
 	</section>
 </BaseLayout>
@@ -125,86 +148,48 @@ const templates = [
 		max-width: 38rem;
 	}
 
-	/* ——— Story ——— */
+	/* ——— Featured article ——— */
 
-	.story {
+	.featured {
 		padding: var(--space-section) var(--space-md);
 		border-bottom: 1px solid var(--color-border);
 	}
-	.story-inner {
+	.featured-inner {
 		max-width: var(--max-width-narrow);
 		margin: 0 auto;
 	}
-	.story-heading {
-		font-size: var(--text-h2);
+	.featured-label {
+		display: inline-block;
+		font-size: var(--text-xs);
 		font-weight: var(--weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-accent);
+		margin-bottom: var(--space-sm);
+	}
+	.featured-link {
+		display: block;
+		text-decoration: none;
+	}
+	.featured-title {
+		font-size: var(--text-h1);
+		font-weight: var(--weight-bold);
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--space-md);
+		color: var(--color-text);
+		margin-bottom: var(--space-sm);
+		transition: color 0.15s;
 	}
-	.story-body {
+	.featured-link:hover .featured-title {
+		color: var(--color-accent);
+	}
+	.featured-desc {
 		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
-	}
-	.story-link {
-		display: inline-block;
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		text-decoration: none;
-		margin-top: var(--space-xs);
-	}
-
-	/* ——— Latest articles (3-col grid) ——— */
-
-	.latest {
-		padding: var(--space-section) var(--space-md);
-		border-bottom: 1px solid var(--color-border);
-	}
-	.latest-inner {
-		max-width: var(--max-width);
-		margin: 0 auto;
-	}
-	.latest-heading {
-		font-size: var(--text-h2);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--space-lg);
-	}
-	.article-grid {
-		list-style: none;
-		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-md);
-	}
-	.article-card {
-		display: flex;
-		flex-direction: column;
-		padding: var(--space-md);
-		text-decoration: none;
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		transition: border-color 0.15s;
-		height: 100%;
-	}
-	.article-card:hover {
-		border-color: var(--color-divider);
-	}
-	.article-title {
-		font-size: var(--text-h3);
-		font-weight: var(--weight-semibold);
-		color: var(--color-text);
-		margin-bottom: var(--space-xs);
-	}
-	.article-desc {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
 		margin-bottom: var(--space-sm);
-		line-height: var(--leading-snug);
-		flex: 1;
 	}
-	.article-meta {
+	.featured-meta {
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
 		margin: 0;
@@ -213,10 +198,72 @@ const templates = [
 		gap: 0.375rem;
 	}
 
+	/* ——— Article list ——— */
+
+	.articles {
+		padding: var(--space-lg) var(--space-md) var(--space-section);
+		border-bottom: 1px solid var(--color-border);
+	}
+	.articles-inner {
+		max-width: var(--max-width-narrow);
+		margin: 0 auto;
+	}
+	.article-list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+	}
+	.article-list li {
+		border-top: 1px solid var(--color-border);
+	}
+	.article-row {
+		display: block;
+		padding: var(--space-md) 0;
+		text-decoration: none;
+		transition: background 0.15s;
+	}
+	.article-row:hover .article-row-title {
+		color: var(--color-accent);
+	}
+	.article-row-body {
+		margin-bottom: var(--space-xs);
+	}
+	.article-row-title {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+		transition: color 0.15s;
+	}
+	.article-row-desc {
+		font-size: var(--text-small);
+		line-height: var(--leading-snug);
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+	.article-row-meta {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		margin: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+	.articles-more {
+		padding-top: var(--space-md);
+	}
+	.articles-more-link {
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		text-decoration: none;
+	}
+
 	/* ——— Templates (4-col grid) ——— */
 
 	.templates {
 		padding: var(--space-section) var(--space-md);
+		border-bottom: 1px solid var(--color-border);
 	}
 	.templates-inner {
 		max-width: var(--max-width);
@@ -261,21 +308,43 @@ const templates = [
 		text-align: center;
 	}
 
+	/* ——— About brief ——— */
+
+	.about-brief {
+		padding: var(--space-section) var(--space-md);
+	}
+	.about-brief-inner {
+		max-width: var(--max-width-narrow);
+		margin: 0 auto;
+	}
+	.about-brief-heading {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--space-sm);
+	}
+	.about-brief-body {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+	.about-brief-link {
+		display: inline-block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		text-decoration: none;
+		margin-top: var(--space-xs);
+	}
+
 	/* ——— Responsive ——— */
 
 	@media (max-width: 960px) {
-		.article-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
 		.templates-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
 	@media (max-width: 600px) {
-		.article-grid {
-			grid-template-columns: 1fr;
-		}
 		.templates-grid {
 			grid-template-columns: 1fr;
 		}
