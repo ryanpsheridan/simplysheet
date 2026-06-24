@@ -11,8 +11,10 @@ const articles = (await getCollection('articles'))
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
 	<section class="hero">
-		<h1 class="hero-headline">Take control of your budget with spreadsheets you'll actually use</h1>
-		<p class="hero-sub">Clear, actionable budgeting guidance paired with Google Sheets and Excel templates — no apps, no account syncing, no fluff. Just the tools and know-how to understand where your money goes.</p>
+		<div class="hero-inner">
+			<h1 class="hero-headline">Take control of your budget with spreadsheets you'll actually use</h1>
+			<p class="hero-sub">Clear, actionable budgeting guidance paired with Google Sheets and Excel templates — no apps, no account syncing, no fluff. Just the tools and know-how to understand where your money goes.</p>
+		</div>
 	</section>
 
 	<section class="why">
@@ -48,18 +50,25 @@ const articles = (await getCollection('articles'))
 				<li><a href="https://simplysheetdesign.etsy.com/listing/4485879930">Debt Payoff Tracker</a></li>
 				<li><a href="https://simplysheetdesign.etsy.com/listing/4483664616">Savings Goals Tracker</a></li>
 			</ul>
-			<a href="https://simplysheetdesign.etsy.com" class="templates-cta">Explore all on Etsy</a>
+			<a href="https://simplysheetdesign.etsy.com" class="btn btn-primary">Explore all on Etsy</a>
 		</div>
 	</section>
 </BaseLayout>
 
 <style>
+	/* ——— Hero ——— */
+
 	.hero {
 		padding: var(--space-section) var(--space-md);
+		border-bottom: 1px solid var(--color-border);
+	}
+	.hero-inner {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		text-align: center;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		text-align: center;
 	}
 	.hero-headline {
 		font-size: var(--text-display);
@@ -71,15 +80,17 @@ const articles = (await getCollection('articles'))
 	}
 	.hero-sub {
 		margin-top: var(--space-md);
-		font-size: var(--text-body-lg);
-		line-height: var(--leading-snug);
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
-		max-width: var(--max-width-narrow);
+		max-width: 38rem;
 	}
 
+	/* ——— Why ——— */
+
 	.why {
-		background: var(--color-bg-panel);
-		padding: var(--space-xl) var(--space-md);
+		padding: var(--space-section) var(--space-md);
+		border-bottom: 1px solid var(--color-border);
 	}
 	.why-inner {
 		max-width: var(--max-width-narrow);
@@ -93,13 +104,17 @@ const articles = (await getCollection('articles'))
 		margin-bottom: var(--space-sm);
 	}
 	.why-body {
-		font-size: var(--text-body-lg);
+		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
+		margin: 0;
 	}
+
+	/* ——— Latest articles ——— */
 
 	.latest {
 		padding: var(--space-section) var(--space-md);
+		border-bottom: 1px solid var(--color-border);
 	}
 	.latest-inner {
 		max-width: var(--max-width);
@@ -114,21 +129,23 @@ const articles = (await getCollection('articles'))
 	.article-list {
 		list-style: none;
 		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-		gap: var(--space-sm);
+		display: flex;
+		flex-direction: column;
+	}
+	.article-list li {
+		border-bottom: 1px solid var(--color-border);
+	}
+	.article-list li:last-child {
+		border-bottom: none;
 	}
 	.article-card {
 		display: block;
-		padding: var(--space-md);
-		border-radius: var(--radius-md);
+		padding: var(--space-md) 0;
 		text-decoration: none;
-		border: 1px solid var(--color-border);
-		transition: background 0.15s, border-color 0.15s;
+		transition: opacity 0.15s;
 	}
 	.article-card:hover {
-		background: var(--color-bg-panel);
-		border-color: var(--color-divider);
+		opacity: 0.7;
 	}
 	.article-title {
 		font-size: var(--text-h3);
@@ -137,18 +154,21 @@ const articles = (await getCollection('articles'))
 		margin-bottom: var(--space-2xs);
 	}
 	.article-desc {
-		font-size: var(--text-body);
+		font-size: var(--text-small);
 		color: var(--color-text-secondary);
 		margin-bottom: var(--space-xs);
+		line-height: var(--leading-snug);
 	}
 	.article-date {
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
+		margin: 0;
 	}
 
+	/* ——— Templates ——— */
+
 	.templates {
-		background: var(--color-bg-panel);
-		padding: var(--space-xl) var(--space-md);
+		padding: var(--space-section) var(--space-md);
 	}
 	.templates-inner {
 		max-width: var(--max-width-narrow);
@@ -170,27 +190,13 @@ const articles = (await getCollection('articles'))
 		margin-bottom: var(--space-lg);
 	}
 	.templates-list a {
-		font-size: var(--text-body-lg);
-		font-weight: var(--weight-medium);
-		text-decoration: none;
-	}
-	.templates-list a:hover {
-		text-decoration: underline;
-	}
-	.templates-cta {
-		display: inline-block;
-		font-family: var(--font-sans);
 		font-size: var(--text-body);
 		font-weight: var(--weight-medium);
-		color: white;
-		background: var(--color-accent);
-		padding: 0.75rem 1.5rem;
-		border-radius: var(--radius-sm);
 		text-decoration: none;
-		transition: background 0.15s;
+		color: var(--color-text);
+		transition: color 0.15s;
 	}
-	.templates-cta:hover {
-		background: var(--color-accent-hover);
-		color: white;
+	.templates-list a:hover {
+		color: var(--color-accent);
 	}
 </style>

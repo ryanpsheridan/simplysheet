@@ -1,16 +1,37 @@
 ---
 import { SITE_TITLE } from '../consts';
-import HeaderLink from './HeaderLink.astro';
 ---
 
 <header>
 	<nav>
 		<a class="site-title" href="/">{SITE_TITLE}</a>
-		<div class="nav-links">
-			<HeaderLink href="/articles">Articles</HeaderLink>
-		</div>
+		<button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+			<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+				<line x1="4" y1="7" x2="20" y2="7" />
+				<line x1="4" y1="12" x2="20" y2="12" />
+				<line x1="4" y1="17" x2="20" y2="17" />
+			</svg>
+		</button>
 	</nav>
 </header>
+
+<div class="menu-overlay" id="menu-overlay">
+	<div class="menu-panel">
+		<div class="menu-header">
+			<button class="menu-close" aria-label="Close menu">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+					<line x1="6" y1="6" x2="18" y2="18" />
+					<line x1="6" y1="18" x2="18" y2="6" />
+				</svg>
+			</button>
+		</div>
+		<ul class="menu-links">
+			<li><a href="/">Home</a></li>
+			<li><a href="/articles">Articles</a></li>
+		</ul>
+	</div>
+</div>
+
 <style>
 	header {
 		padding: 0 var(--space-md);
@@ -22,7 +43,7 @@ import HeaderLink from './HeaderLink.astro';
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: 4rem;
+		height: 3.5rem;
 	}
 	.site-title {
 		font-size: var(--text-body);
@@ -31,8 +52,116 @@ import HeaderLink from './HeaderLink.astro';
 		text-decoration: none;
 		letter-spacing: var(--tracking-tight);
 	}
-	.nav-links {
+	.menu-toggle {
 		display: flex;
-		gap: var(--space-xs);
+		align-items: center;
+		justify-content: center;
+		background: none;
+		border: none;
+		cursor: pointer;
+		color: var(--color-text);
+		padding: var(--space-xs);
+		margin-right: calc(-1 * var(--space-xs));
+	}
+
+	/* ——— Slide-out overlay ——— */
+
+	.menu-overlay {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.4);
+		z-index: 100;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.25s ease, visibility 0.25s ease;
+	}
+	.menu-overlay.open {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.menu-panel {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		width: min(20rem, 80vw);
+		background: var(--color-bg);
+		transform: translateX(100%);
+		transition: transform 0.3s ease;
+		padding: var(--space-md) var(--space-md) var(--space-lg);
+		display: flex;
+		flex-direction: column;
+	}
+	.menu-overlay.open .menu-panel {
+		transform: translateX(0);
+	}
+
+	.menu-header {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: var(--space-lg);
+	}
+	.menu-close {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: none;
+		border: none;
+		cursor: pointer;
+		color: var(--color-text);
+		padding: var(--space-xs);
+		margin-right: calc(-1 * var(--space-xs));
+	}
+
+	.menu-links {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+	}
+	.menu-links li {
+		border-bottom: 1px solid var(--color-border);
+	}
+	.menu-links a {
+		display: block;
+		padding: var(--space-sm) 0;
+		font-size: var(--text-body-lg);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+	.menu-links a:hover {
+		color: var(--color-text-secondary);
 	}
 </style>
+
+<script>
+	const toggle = document.querySelector('.menu-toggle');
+	const overlay = document.getElementById('menu-overlay');
+	const closeBtn = document.querySelector('.menu-close');
+
+	function openMenu() {
+		overlay?.classList.add('open');
+		toggle?.setAttribute('aria-expanded', 'true');
+		document.body.style.overflow = 'hidden';
+	}
+
+	function closeMenu() {
+		overlay?.classList.remove('open');
+		toggle?.setAttribute('aria-expanded', 'false');
+		document.body.style.overflow = '';
+	}
+
+	toggle?.addEventListener('click', openMenu);
+	closeBtn?.addEventListener('click', closeMenu);
+
+	overlay?.addEventListener('click', (e) => {
+		if (e.target === overlay) closeMenu();
+	});
+
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') closeMenu();
+	});
+</script>

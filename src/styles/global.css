@@ -73,7 +73,7 @@ p {
 }
 
 .prose blockquote {
-	border-left: 3px solid var(--color-divider);
+	border-left: 2px solid var(--color-divider);
 	padding-left: var(--space-md);
 	color: var(--color-text-secondary);
 	font-size: var(--text-body-lg);
@@ -107,6 +107,62 @@ p {
 hr {
 	border: none;
 	border-top: 1px solid var(--color-border);
+}
+
+/* ——— Buttons ——— */
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--font-sans);
+	font-size: var(--text-small);
+	font-weight: var(--weight-medium);
+	line-height: 1;
+	padding: 0.625rem 1.25rem;
+	border-radius: var(--radius-full);
+	border: 1px solid transparent;
+	cursor: pointer;
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn-sm {
+	font-size: var(--text-xs);
+	padding: 0.5rem 1rem;
+}
+
+.btn-primary {
+	background: var(--color-accent);
+	color: white;
+	border-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+	background: var(--color-accent-hover);
+	border-color: var(--color-accent-hover);
+	color: white;
+}
+
+.btn-secondary {
+	background: transparent;
+	color: var(--color-text);
+	border-color: var(--color-divider);
+}
+
+.btn-secondary:hover {
+	border-color: var(--color-text-muted);
+}
+
+.btn-ghost {
+	background: transparent;
+	color: var(--color-text-secondary);
+	border-color: transparent;
+}
+
+.btn-ghost:hover {
+	color: var(--color-text);
+	background: var(--color-bg-panel);
 }
 
 .sr-only {

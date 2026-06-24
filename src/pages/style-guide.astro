@@ -4,17 +4,17 @@ import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_TITLE } from '../consts';
 
 const colors = [
-	{ token: '--color-text',           label: 'Text',           hex: '#1A1A2E' },
-	{ token: '--color-text-secondary', label: 'Text Secondary', hex: '#555566' },
-	{ token: '--color-text-muted',     label: 'Text Muted',     hex: '#8B8B9A' },
+	{ token: '--color-text',           label: 'Text',           hex: '#242424' },
+	{ token: '--color-text-secondary', label: 'Text Secondary', hex: '#6B6B6B' },
+	{ token: '--color-text-muted',     label: 'Text Muted',     hex: '#B3B3B3' },
 	{ token: '--color-accent',         label: 'Accent',         hex: '#00856F' },
 	{ token: '--color-accent-hover',   label: 'Accent Hover',   hex: '#006B59' },
 	{ token: '--color-bg',             label: 'Background',     hex: '#FFFFFF' },
-	{ token: '--color-bg-panel',       label: 'Panel',          hex: '#F5F5F7' },
-	{ token: '--color-bg-emphasis',    label: 'Emphasis',       hex: '#EAEAED' },
-	{ token: '--color-bg-inverse',     label: 'Inverse',        hex: '#1A1A2E' },
-	{ token: '--color-border',         label: 'Border',         hex: '#E0E0E5' },
-	{ token: '--color-divider',        label: 'Divider',        hex: '#D0D0D8' },
+	{ token: '--color-bg-panel',       label: 'Panel',          hex: '#F7F7F7' },
+	{ token: '--color-bg-emphasis',    label: 'Emphasis',       hex: '#EFEFEF' },
+	{ token: '--color-bg-inverse',     label: 'Inverse',        hex: '#242424' },
+	{ token: '--color-border',         label: 'Border',         hex: '#F2F2F2' },
+	{ token: '--color-divider',        label: 'Divider',        hex: '#E6E6E6' },
 ];
 
 const typeScale = [
@@ -25,7 +25,7 @@ const typeScale = [
 	{ token: '--text-body-lg', label: 'Body Lg',  sample: 'Introductory paragraph text at a comfortable reading size.' },
 	{ token: '--text-body',    label: 'Body',     sample: 'Standard paragraph text for articles and general content.' },
 	{ token: '--text-small',   label: 'Small',    sample: 'Captions, labels, metadata' },
-	{ token: '--text-stat',    label: 'Stat',     sample: '$2,400' },
+	{ token: '--text-xs',      label: 'XS',       sample: 'Fine print, timestamps' },
 ];
 
 const spacingScale = [
@@ -44,7 +44,7 @@ const spacingScale = [
 
 		<header class="guide-header">
 			<h1>Style Guide</h1>
-			<p class="guide-intro">Living reference for every component, token, and pattern in the design system. Add new items here as they're built.</p>
+			<p class="guide-intro">Living reference for every component, token, and pattern in the design system.</p>
 		</header>
 
 		<!-- ============ COLORS ============ -->
@@ -110,7 +110,7 @@ const spacingScale = [
 		<!-- ============ HEADLINE TREATMENTS ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Headline Treatments</h2>
-			<p class="section-desc">Hero headlines use the display size. Section headings use H2. Accent color highlights key phrases sparingly.</p>
+			<p class="section-desc">Hero headlines use the display size. Section headings use H2.</p>
 
 			<div class="headline-demo">
 				<h1 class="demo-display">Practical budgeting help for people who use <span class="accent">Google Sheets and Excel</span></h1>
@@ -121,10 +121,10 @@ const spacingScale = [
 			</div>
 		</section>
 
-		<!-- ============ ARTICLE CARD ============ -->
+		<!-- ============ ARTICLE LIST ============ -->
 		<section class="guide-section">
-			<h2 class="section-title">Article Card</h2>
-			<p class="section-desc">Used on the homepage grid and /articles listing. Cards have a subtle border and hover state.</p>
+			<h2 class="section-title">Article List</h2>
+			<p class="section-desc">Articles are displayed as a clean list with thin dividers between items.</p>
 
 			<ul class="article-list">
 				<li>
@@ -144,64 +144,10 @@ const spacingScale = [
 			</ul>
 		</section>
 
-		<!-- ============ RELATED ARTICLES ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Related Articles</h2>
-			<p class="section-desc">Shown at the bottom of each article for internal linking. Pulls the 2-3 most recent articles excluding the current one.</p>
-
-			<aside class="related-demo">
-				<h2 class="related-heading">Related articles</h2>
-				<ul class="related-list">
-					<li><a href="#">How to budget when your income changes every month</a></li>
-					<li><a href="#">Budgeting as a couple without losing your mind</a></li>
-					<li><a href="#">What to do when you're afraid to look at your bank account</a></li>
-				</ul>
-			</aside>
-		</section>
-
-		<!-- ============ TEMPLATES SECTION ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Templates Section</h2>
-			<p class="section-desc">Product links near the bottom of the homepage. Four named templates, no prices, with a button to explore all on Etsy.</p>
-		</section>
-
-		<div class="templates-demo">
-			<h2 class="templates-heading">Explore templates to help you budget</h2>
-			<ul class="templates-list">
-				<li><a href="#">Budget Spreadsheet</a></li>
-				<li><a href="#">Couples Budget Spreadsheet</a></li>
-				<li><a href="#">Debt Payoff Tracker</a></li>
-				<li><a href="#">Savings Goals Tracker</a></li>
-			</ul>
-			<a href="#" class="templates-cta">Explore all on Etsy</a>
-		</div>
-
-		<!-- ============ SECTION PANELS ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Section Panels</h2>
-			<p class="section-desc">Sections transition using soft background color panels instead of hard borders.</p>
-		</section>
-
-		<div class="panel-demo-default">
-			<p class="panel-label">Default background <code>--color-bg</code></p>
-			<p class="panel-body">Content on the standard page background.</p>
-		</div>
-		<div class="panel-demo-panel">
-			<p class="panel-label">Panel background <code>--color-bg-panel</code></p>
-			<p class="panel-body">Content on the panel background. A subtle shift that creates rhythm.</p>
-		</div>
-		<div class="panel-demo-emphasis">
-			<p class="panel-label">Emphasis background <code>--color-bg-emphasis</code></p>
-			<p class="panel-body">Content on the emphasis background. Stronger contrast for callouts.</p>
-		</div>
-		<div class="panel-demo-inverse">
-			<p class="panel-label">Inverse background <code>--color-bg-inverse</code></p>
-			<p class="panel-body">Light text on the dark inverse background. Used for the footer.</p>
-		</div>
-
 		<!-- ============ BUTTONS ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Buttons</h2>
+			<p class="section-desc">Pill-shaped buttons with three variants. Used for CTAs and actions.</p>
 			<div class="button-row">
 				<button class="btn btn-primary">Primary button</button>
 				<button class="btn btn-secondary">Secondary button</button>
@@ -217,7 +163,7 @@ const spacingScale = [
 		<!-- ============ PROSE ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Prose / Article Body</h2>
-			<p class="section-desc">How long-form article content renders. Applied via the <code>.prose</code> class. Articles use semantic H2s that mirror how people phrase questions to Google.</p>
+			<p class="section-desc">How long-form article content renders. Applied via the <code>.prose</code> class.</p>
 
 			<div class="prose">
 				<h2>How do you budget when your income changes every month</h2>
@@ -234,48 +180,48 @@ const spacingScale = [
 			</div>
 		</section>
 
-		<!-- ============ SCHEMA.ORG ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Schema.org Structured Data</h2>
-			<p class="section-desc">Each article page includes JSON-LD <code>Article</code> structured data with headline, description, dates, author (Ryan Sheridan), and publisher (SimplySheetDesign). This helps Google and AI assistants understand and surface content.</p>
-		</section>
-
-		<!-- ============ CONTENT STRATEGY ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Content Strategy Notes</h2>
-			<p class="section-desc">Articles are structured for SEO and AEO (Answer Engine Optimization). Each article frontmatter supports an optional <code>relatedProduct</code> field with <code>name</code> and <code>url</code> for structured product mentions.</p>
-			<div class="strategy-list">
-				<p><strong>H2s as questions:</strong> mirror how people phrase searches ("How do I budget with irregular income")</p>
-				<p><strong>Direct answer first:</strong> answer the question plainly near the top, then go deep</p>
-				<p><strong>One product mention max:</strong> mid-article, advice-first voice, no pitch language</p>
-				<p><strong>Related articles:</strong> 2-3 links at the bottom for internal linking and session depth</p>
-			</div>
-		</section>
-
-		<!-- ============ RADII ============ -->
+		<!-- ============ BORDER RADII ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Border Radii</h2>
 			<div class="radii-row">
 				<div class="radius-demo" style="border-radius: var(--radius-sm)">
 					<code>--radius-sm</code>
-					<span>6px</span>
+					<span>4px</span>
 				</div>
 				<div class="radius-demo" style="border-radius: var(--radius-md)">
 					<code>--radius-md</code>
-					<span>12px</span>
+					<span>8px</span>
+				</div>
+				<div class="radius-demo" style="border-radius: var(--radius-full)">
+					<code>--radius-full</code>
+					<span>99px</span>
 				</div>
 			</div>
 		</section>
 
-		<!-- ============ HEADER & FOOTER ============ -->
+		<!-- ============ DIVIDERS ============ -->
 		<section class="guide-section">
-			<h2 class="section-title">Header / Navigation</h2>
-			<p class="section-desc">Minimal header: site name linking home, and "Articles" link. No other navigation items.</p>
+			<h2 class="section-title">Dividers</h2>
+			<p class="section-desc">Thin 1px lines separate content sections instead of alternating background colors.</p>
+			<div class="divider-demo">
+				<div class="divider-sample">
+					<p>Content above divider</p>
+					<hr />
+					<p>Content below divider</p>
+				</div>
+			</div>
 		</section>
 
+		<!-- ============ NAVIGATION ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Navigation</h2>
+			<p class="section-desc">Hamburger menu with a slide-out panel from the right. Site title on the left, menu icon on the right.</p>
+		</section>
+
+		<!-- ============ FOOTER ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Footer</h2>
-			<p class="section-desc">Dark navy inverse background with muted copyright text. Visible at the bottom of this page.</p>
+			<p class="section-desc">Minimal footer with a top divider line and muted copyright text.</p>
 		</section>
 
 	</div>
@@ -300,13 +246,14 @@ const spacingScale = [
 	}
 
 	.guide-intro {
-		font-size: var(--text-body-lg);
+		font-size: var(--text-body);
 		color: var(--color-text-secondary);
 		max-width: 50ch;
 	}
 
 	.guide-section {
 		padding: var(--space-xl) var(--space-md) var(--space-md);
+		border-top: 1px solid var(--color-border);
 	}
 
 	.section-title {
@@ -337,7 +284,7 @@ const spacingScale = [
 	}
 
 	.color-card {
-		border: 1px solid var(--color-border);
+		border: 1px solid var(--color-divider);
 		border-radius: var(--radius-md);
 		overflow: hidden;
 	}
@@ -496,29 +443,33 @@ const spacingScale = [
 		color: var(--color-accent);
 	}
 
-	/* ——— Article cards ——— */
+	/* ——— Article list ——— */
 
 	.article-list {
 		list-style: none;
 		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-		gap: var(--space-sm);
+		display: flex;
+		flex-direction: column;
 		max-width: var(--max-width);
+	}
+
+	.article-list li {
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.article-list li:last-child {
+		border-bottom: none;
 	}
 
 	.article-card {
 		display: block;
-		padding: var(--space-md);
-		border-radius: var(--radius-md);
+		padding: var(--space-md) 0;
 		text-decoration: none;
-		border: 1px solid var(--color-border);
-		transition: background 0.15s, border-color 0.15s;
+		transition: opacity 0.15s;
 	}
 
 	.article-card:hover {
-		background: var(--color-bg-panel);
-		border-color: var(--color-divider);
+		opacity: 0.7;
 	}
 
 	.article-title {
@@ -529,221 +480,28 @@ const spacingScale = [
 	}
 
 	.article-desc {
-		font-size: var(--text-body);
+		font-size: var(--text-small);
 		color: var(--color-text-secondary);
 		margin-bottom: var(--space-xs);
+		line-height: var(--leading-snug);
 	}
 
 	.article-date {
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
+		margin: 0;
 	}
 
-	/* ——— Related articles ——— */
+	/* ——— Divider demo ——— */
 
-	.related-demo {
-		padding: var(--space-lg) var(--space-md);
-		border-top: 1px solid var(--color-border);
+	.divider-demo {
 		max-width: var(--max-width-narrow);
 	}
 
-	.related-heading {
-		font-size: var(--text-h3);
-		font-weight: var(--weight-semibold);
-		margin-bottom: var(--space-sm);
-	}
-
-	.related-list {
-		list-style: none;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
-	}
-
-	.related-list a {
-		font-size: var(--text-body);
-		text-decoration: none;
-	}
-
-	.related-list a:hover {
-		text-decoration: underline;
-	}
-
-	/* ——— Templates section ——— */
-
-	.templates-demo {
-		background: var(--color-bg-panel);
-		padding: var(--space-xl) var(--space-md);
-		text-align: center;
-		margin-bottom: var(--space-sm);
-	}
-
-	.templates-heading {
-		font-size: var(--text-h2);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--space-md);
-	}
-
-	.templates-list {
-		list-style: none;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
-		margin-bottom: var(--space-lg);
-	}
-
-	.templates-list a {
-		font-size: var(--text-body-lg);
-		font-weight: var(--weight-medium);
-		text-decoration: none;
-	}
-
-	.templates-list a:hover {
-		text-decoration: underline;
-	}
-
-	.templates-cta {
-		display: inline-block;
-		font-family: var(--font-sans);
-		font-size: var(--text-body);
-		font-weight: var(--weight-medium);
-		color: white;
-		background: var(--color-accent);
-		padding: 0.75rem 1.5rem;
-		border-radius: var(--radius-sm);
-		text-decoration: none;
-		transition: background 0.15s;
-	}
-
-	.templates-cta:hover {
-		background: var(--color-accent-hover);
-		color: white;
-	}
-
-	/* ——— Section panels ——— */
-
-	.panel-demo-default,
-	.panel-demo-panel,
-	.panel-demo-emphasis,
-	.panel-demo-inverse {
-		padding: var(--space-lg) var(--space-md);
-	}
-
-	.panel-demo-default {
-		background: var(--color-bg);
-	}
-
-	.panel-demo-panel {
-		background: var(--color-bg-panel);
-	}
-
-	.panel-demo-emphasis {
-		background: var(--color-bg-emphasis);
-	}
-
-	.panel-demo-inverse {
-		background: var(--color-bg-inverse);
-		color: var(--color-bg);
-	}
-
-	.panel-demo-inverse code {
-		color: var(--color-bg);
-		opacity: 0.6;
-	}
-
-	.panel-label {
-		font-size: var(--text-small);
-		font-weight: var(--weight-semibold);
-		margin-bottom: var(--space-2xs);
-	}
-
-	.panel-label code {
-		font-weight: var(--weight-normal);
-		opacity: 0.6;
-		font-size: 0.85em;
-	}
-
-	.panel-body {
-		color: inherit;
-		opacity: 0.75;
-	}
-
-	/* ——— Buttons ——— */
-
-	.button-row {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-sm);
-		align-items: center;
-	}
-
-	.btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		font-family: var(--font-sans);
-		font-size: var(--text-body);
-		font-weight: var(--weight-medium);
-		line-height: 1;
-		padding: 0.75rem 1.5rem;
-		border-radius: var(--radius-sm);
-		border: 1px solid transparent;
-		cursor: pointer;
-		transition: background 0.15s, color 0.15s, border-color 0.15s;
-	}
-
-	.btn-sm {
-		font-size: var(--text-small);
-		padding: 0.5rem 1rem;
-	}
-
-	.btn-primary {
-		background: var(--color-accent);
-		color: white;
-		border-color: var(--color-accent);
-	}
-
-	.btn-primary:hover {
-		background: var(--color-accent-hover);
-		border-color: var(--color-accent-hover);
-	}
-
-	.btn-secondary {
-		background: transparent;
-		color: var(--color-text);
-		border-color: var(--color-border);
-	}
-
-	.btn-secondary:hover {
-		border-color: var(--color-text-muted);
-	}
-
-	.btn-ghost {
-		background: transparent;
+	.divider-sample p {
+		padding: var(--space-sm) 0;
 		color: var(--color-text-secondary);
-		border-color: transparent;
-	}
-
-	.btn-ghost:hover {
-		color: var(--color-text);
-		background: var(--color-bg-panel);
-	}
-
-	/* ——— Content strategy ——— */
-
-	.strategy-list {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
-	}
-
-	.strategy-list p {
-		margin-bottom: 0;
-		font-size: var(--text-body);
-		color: var(--color-text-secondary);
+		margin: 0;
 	}
 
 	/* ——— Prose section ——— */
@@ -766,7 +524,7 @@ const spacingScale = [
 	.radius-demo {
 		width: 10rem;
 		height: 7rem;
-		border: 2px solid var(--color-border);
+		border: 1px solid var(--color-divider);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -786,14 +544,20 @@ const spacingScale = [
 		color: var(--color-text-muted);
 	}
 
+	/* ——— Buttons ——— */
+
+	.button-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+		align-items: center;
+	}
+
 	/* ——— Responsive ——— */
 
 	@media (max-width: 640px) {
 		.color-grid {
 			grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
-		}
-		.article-list {
-			grid-template-columns: 1fr;
 		}
 	}
 </style>
