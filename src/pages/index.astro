@@ -12,6 +12,29 @@ const articles = (await getCollection('articles'))
 		const readTime = Math.max(1, Math.ceil(wordCount / 200));
 		return { ...article, readTime };
 	});
+
+const templates = [
+	{
+		name: 'Budget Spreadsheet',
+		desc: 'Track income and daily expenses with real-time progress indicators that show where you stand each month.',
+		url: 'https://simplysheetdesign.etsy.com/listing/1854773368',
+	},
+	{
+		name: 'Couples Budget Spreadsheet',
+		desc: 'Split bills, track shared and personal expenses, and manage savings together. Built for two incomes.',
+		url: 'https://simplysheetdesign.etsy.com/listing/4396395102',
+	},
+	{
+		name: 'Debt Payoff Tracker',
+		desc: 'See your total debt, log payments, and watch your balances drop month by month with clear visual progress.',
+		url: 'https://simplysheetdesign.etsy.com/listing/4485879930',
+	},
+	{
+		name: 'Savings Goals Tracker',
+		desc: 'Set multiple savings goals, automate contributions, and track your progress toward each one.',
+		url: 'https://simplysheetdesign.etsy.com/listing/4483664616',
+	},
+];
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -35,7 +58,7 @@ const articles = (await getCollection('articles'))
 	<section class="latest">
 		<div class="latest-inner">
 			<h2 class="latest-heading">Latest articles</h2>
-			<ul class="article-list">
+			<ul class="article-grid">
 				{articles.map((article) => (
 					<li>
 						<a href={`/articles/${article.id}/`} class="article-card">
@@ -56,13 +79,17 @@ const articles = (await getCollection('articles'))
 	<section class="templates">
 		<div class="templates-inner">
 			<h2 class="templates-heading">Ready-to-use budget templates</h2>
-			<ul class="templates-list">
-				<li><a href="https://simplysheetdesign.etsy.com/listing/1854773368">Budget Spreadsheet</a></li>
-				<li><a href="https://simplysheetdesign.etsy.com/listing/4396395102">Couples Budget Spreadsheet</a></li>
-				<li><a href="https://simplysheetdesign.etsy.com/listing/4485879930">Debt Payoff Tracker</a></li>
-				<li><a href="https://simplysheetdesign.etsy.com/listing/4483664616">Savings Goals Tracker</a></li>
-			</ul>
-			<a href="https://simplysheetdesign.etsy.com" class="btn btn-primary">Explore all on Etsy</a>
+			<div class="templates-grid">
+				{templates.map((t) => (
+					<a href={t.url} class="template-card">
+						<h3 class="template-name">{t.name}</h3>
+						<p class="template-desc">{t.desc}</p>
+					</a>
+				))}
+			</div>
+			<div class="templates-cta-wrap">
+				<a href="https://simplysheetdesign.etsy.com" class="btn btn-primary">Explore all on Etsy</a>
+			</div>
 		</div>
 	</section>
 </BaseLayout>
@@ -128,7 +155,7 @@ const articles = (await getCollection('articles'))
 		margin-top: var(--space-xs);
 	}
 
-	/* ——— Latest articles ——— */
+	/* ——— Latest articles (3-col grid) ——— */
 
 	.latest {
 		padding: var(--space-section) var(--space-md);
@@ -144,26 +171,25 @@ const articles = (await getCollection('articles'))
 		letter-spacing: var(--tracking-tight);
 		margin-bottom: var(--space-lg);
 	}
-	.article-list {
+	.article-grid {
 		list-style: none;
 		padding: 0;
-		display: flex;
-		flex-direction: column;
-	}
-	.article-list li {
-		border-bottom: 1px solid var(--color-border);
-	}
-	.article-list li:last-child {
-		border-bottom: none;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-md);
 	}
 	.article-card {
-		display: block;
-		padding: var(--space-md) 0;
+		display: flex;
+		flex-direction: column;
+		padding: var(--space-md);
 		text-decoration: none;
-		transition: opacity 0.15s;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		transition: border-color 0.15s;
+		height: 100%;
 	}
 	.article-card:hover {
-		opacity: 0.7;
+		border-color: var(--color-divider);
 	}
 	.article-title {
 		font-size: var(--text-h3);
@@ -174,8 +200,9 @@ const articles = (await getCollection('articles'))
 	.article-desc {
 		font-size: var(--text-small);
 		color: var(--color-text-secondary);
-		margin-bottom: 0.75rem;
+		margin-bottom: var(--space-sm);
 		line-height: var(--leading-snug);
+		flex: 1;
 	}
 	.article-meta {
 		font-size: var(--text-small);
@@ -186,38 +213,71 @@ const articles = (await getCollection('articles'))
 		gap: 0.375rem;
 	}
 
-	/* ——— Templates ——— */
+	/* ——— Templates (4-col grid) ——— */
 
 	.templates {
 		padding: var(--space-section) var(--space-md);
 	}
 	.templates-inner {
-		max-width: var(--max-width-narrow);
+		max-width: var(--max-width);
 		margin: 0 auto;
-		text-align: center;
 	}
 	.templates-heading {
 		font-size: var(--text-h2);
 		font-weight: var(--weight-semibold);
 		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--space-md);
-	}
-	.templates-list {
-		list-style: none;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
 		margin-bottom: var(--space-lg);
 	}
-	.templates-list a {
-		font-size: var(--text-body);
-		font-weight: var(--weight-medium);
-		text-decoration: none;
-		color: var(--color-text);
-		transition: color 0.15s;
+	.templates-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--space-md);
+		margin-bottom: var(--space-lg);
 	}
-	.templates-list a:hover {
-		color: var(--color-accent);
+	.template-card {
+		display: block;
+		padding: var(--space-md);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		transition: border-color 0.15s;
+	}
+	.template-card:hover {
+		border-color: var(--color-divider);
+	}
+	.template-name {
+		font-size: var(--text-body);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+	}
+	.template-desc {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-snug);
+		margin: 0;
+	}
+	.templates-cta-wrap {
+		text-align: center;
+	}
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 960px) {
+		.article-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.templates-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.article-grid {
+			grid-template-columns: 1fr;
+		}
+		.templates-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
