@@ -17,10 +17,13 @@ const articles = (await getCollection('articles'))
 		</div>
 	</section>
 
-	<section class="why">
-		<div class="why-inner">
-			<h2 class="why-heading">Built from real budgeting questions</h2>
-			<p class="why-body">Every article and template here started with a real question — from Reddit threads, DMs, and my own finances. Irregular income, debt payoff strategies, merging money as a couple: I've worked through these problems hands-on and built spreadsheets that solve them. This is that advice in one place, organized and easy to act on.</p>
+	<section class="story">
+		<div class="story-inner">
+			<h2 class="story-heading">Six years of budgeting in a spreadsheet</h2>
+			<p class="story-body">I started budgeting for the first time about six years ago with a basic spreadsheet and very simple formulas. The one habit that changed everything was tracking my expenses daily. It sounds small, but actually seeing where my money went — category by category — gave me clarity I never had before. Using frameworks like the 50/30/20 rule gave me a north star to work toward.</p>
+			<p class="story-body">Over the next couple of years, I kept optimizing. I dialed in how much income was coming in, how much was going to my 401(k) and savings accounts, how I was splitting bills with my spouse, and I built a real-time progress indicator that showed me during the month whether I was ahead or behind on spending. That visibility changed everything — I finally felt comfortable because I knew exactly where I stood.</p>
+			<p class="story-body">When friends and family started asking about my spreadsheet, I shared it, got their feedback, and realized this could help a lot more people. With over 12 years of UX and visual design experience, I cleaned it up and turned it into a real product — focused on being simple, easy to use, and solving one problem well. It's now one of the bestselling budget spreadsheets on Etsy.</p>
+			<a href="/about" class="story-link">Read the full story &rarr;</a>
 		</div>
 	</section>
 
@@ -86,28 +89,34 @@ const articles = (await getCollection('articles'))
 		max-width: 38rem;
 	}
 
-	/* ——— Why ——— */
+	/* ——— Story ——— */
 
-	.why {
+	.story {
 		padding: var(--space-section) var(--space-md);
 		border-bottom: 1px solid var(--color-border);
 	}
-	.why-inner {
+	.story-inner {
 		max-width: var(--max-width-narrow);
 		margin: 0 auto;
 	}
-	.why-heading {
+	.story-heading {
 		font-size: var(--text-h2);
 		font-weight: var(--weight-semibold);
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--space-sm);
+		margin-bottom: var(--space-md);
 	}
-	.why-body {
+	.story-body {
 		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
-		margin: 0;
+	}
+	.story-link {
+		display: inline-block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		text-decoration: none;
+		margin-top: var(--space-xs);
 	}
 
 	/* ——— Latest articles ——— */
