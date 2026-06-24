@@ -26,7 +26,7 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 ---
 
 <BaseLayout title={`Articles — ${SITE_TITLE}`} description="Straightforward writing about budgeting, spreadsheets, and managing your money without the stress.">
-	<main>
+	<main class="articles-page">
 		<h1>Articles</h1>
 
 		{visibleTags.length > 0 && (
@@ -59,6 +59,11 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 </BaseLayout>
 
 <style>
+	.articles-page {
+		max-width: var(--max-width);
+		padding: var(--space-xl) var(--space-md) var(--space-2xl);
+	}
+
 	h1 {
 		margin-bottom: var(--space-sm);
 	}
@@ -93,27 +98,31 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 		border-color: var(--color-bg-inverse);
 	}
 
-	/* ——— Article list ——— */
+	/* ——— Article grid ——— */
 
 	.article-list {
 		list-style: none;
 		padding: 0;
-		display: flex;
-		flex-direction: column;
-	}
-	.article-list li {
-		border-bottom: 1px solid var(--color-border);
-	}
-	.article-list li:last-child {
-		border-bottom: none;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-md);
 	}
 	.article-list li[hidden] {
 		display: none;
 	}
 	.article-list li a {
-		display: block;
-		padding: var(--space-md) 0;
+		display: flex;
+		flex-direction: column;
+		padding: var(--space-md);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
 		text-decoration: none;
+		height: 100%;
+		transition: border-color 0.15s;
+	}
+	.article-list li a:hover {
+		border-color: var(--color-divider);
 	}
 	.article-list li a:hover .title {
 		color: var(--color-accent);
@@ -128,7 +137,8 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 	.description {
 		font-size: var(--text-small);
 		color: var(--color-text-secondary);
-		margin-bottom: 0.75rem;
+		margin: 0 0 auto;
+		padding-bottom: var(--space-sm);
 		line-height: var(--leading-snug);
 	}
 	.meta {
@@ -146,6 +156,12 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
 		padding: var(--space-lg) 0;
+	}
+
+	@media (max-width: 960px) {
+		.article-list {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
 
