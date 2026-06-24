@@ -141,14 +141,11 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 		position: relative;
 		z-index: 1;
 		background: var(--color-bg-surface);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-md);
 		padding: var(--space-md);
 		margin: var(--space-md) 0 0 var(--space-md);
 		display: flex;
 		flex-direction: column;
-	}
-	.article-list li a:hover .title {
-		color: var(--color-accent);
 	}
 	.title {
 		font-size: var(--text-h3);
