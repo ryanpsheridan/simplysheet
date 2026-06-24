@@ -19,7 +19,7 @@ type Props = CollectionEntry<'articles'>['data'] & {
 	readTime?: number;
 };
 
-const { title, description, pubDate, updatedDate, id, headings = [], readTime, faq } = Astro.props;
+const { title, description, pubDate, updatedDate, image, id, headings = [], readTime, faq } = Astro.props;
 
 const tocHeadings = headings.filter((h) => h.depth === 2);
 
@@ -137,6 +137,12 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 							)}
 						</p>
 					</header>
+
+					{image && (
+						<div class="article-hero-image">
+							<img src={image} alt={title} width="960" height="540" />
+						</div>
+					)}
 
 					<div class="article-actions">
 						<button class="action-btn" id="share-btn" aria-label="Share this article">
@@ -393,6 +399,17 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 
 	.updated {
 		font-style: italic;
+	}
+
+	.article-hero-image {
+		margin-bottom: var(--space-lg);
+		border-radius: var(--radius-md);
+		overflow: hidden;
+	}
+	.article-hero-image img {
+		display: block;
+		width: 100%;
+		height: auto;
 	}
 
 	/* ——— Share / actions ——— */
