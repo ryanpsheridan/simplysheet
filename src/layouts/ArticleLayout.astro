@@ -163,14 +163,21 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 					{faq && faq.length > 0 && (
 						<section class="faq">
 							<h2 class="faq-heading">Frequently asked questions</h2>
-							<dl class="faq-list">
+							<div class="faq-list">
 								{faq.map(({ question, answer }: { question: string; answer: string }) => (
-									<div class="faq-item">
-										<dt class="faq-q">{question}</dt>
-										<dd class="faq-a">{answer}</dd>
-									</div>
+									<details class="faq-item">
+										<summary class="faq-q">
+											<span>{question}</span>
+											<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+												<polyline points="9 18 15 12 9 6" />
+											</svg>
+										</summary>
+										<div class="faq-a-wrap">
+											<p class="faq-a">{answer}</p>
+										</div>
+									</details>
 								))}
-							</dl>
+							</div>
 						</section>
 					)}
 				</article>
@@ -223,6 +230,25 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 			}
 
 			initToc();
+
+			document.querySelectorAll('.faq-item').forEach((details) => {
+				const summary = details.querySelector('summary');
+				const wrap = details.querySelector('.faq-a-wrap');
+				if (!summary || !wrap) return;
+
+				summary.addEventListener('click', (e) => {
+					e.preventDefault();
+					if (details.open) {
+						wrap.style.gridTemplateRows = '0fr';
+						wrap.addEventListener('transitionend', () => {
+							details.open = false;
+							wrap.style.gridTemplateRows = '';
+						}, { once: true });
+					} else {
+						details.open = true;
+					}
+				});
+			});
 
 			const shareBtn = document.getElementById('share-btn');
 			shareBtn?.addEventListener('click', async () => {
@@ -419,24 +445,65 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 	.faq-list {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-md);
 	}
 
 	.faq-item {
-		padding-bottom: var(--space-md);
 		border-bottom: 1px solid var(--color-border);
 	}
 
 	.faq-item:last-child {
-		padding-bottom: 0;
 		border-bottom: none;
 	}
 
 	.faq-q {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-sm);
+		width: 100%;
+		padding: var(--space-md) 0;
 		font-size: var(--text-body);
 		font-weight: var(--weight-semibold);
 		color: var(--color-text);
-		margin-bottom: var(--space-xs);
+		cursor: pointer;
+		list-style: none;
+		transition: color 0.15s;
+	}
+
+	.faq-q::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq-q::marker {
+		display: none;
+		content: '';
+	}
+
+	.faq-q:hover {
+		color: var(--color-text-secondary);
+	}
+
+	.faq-arrow {
+		flex-shrink: 0;
+		transition: transform 300ms ease;
+	}
+
+	.faq-item[open] .faq-arrow {
+		transform: rotate(98deg);
+	}
+
+	.faq-a-wrap {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 300ms ease;
+	}
+
+	.faq-item[open] .faq-a-wrap {
+		grid-template-rows: 1fr;
+	}
+
+	.faq-a-wrap > .faq-a {
+		overflow: hidden;
 	}
 
 	.faq-a {
@@ -444,6 +511,7 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
 		margin: 0;
+		padding-bottom: var(--space-md);
 	}
 
 	/* ——— Related articles ——— */
