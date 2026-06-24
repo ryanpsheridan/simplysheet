@@ -19,7 +19,8 @@ type Props = CollectionEntry<'articles'>['data'] & {
 	readTime?: number;
 };
 
-const { title, description, pubDate, updatedDate, image, id, headings = [], readTime, faq } = Astro.props;
+const { title, description, pubDate, updatedDate, image, cardImage, id, headings = [], readTime, faq } = Astro.props;
+const heroImage = cardImage || image;
 
 const tocHeadings = headings.filter((h) => h.depth === 2);
 
@@ -98,44 +99,28 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 	</head>
 	<body>
 		<Header />
-
-		{image && (
-			<section class="article-hero">
-				<img src={image} alt="" class="article-hero-bg" />
-				<div class="article-hero-surface">
-					<div class="article-hero-inner">
-						<h1 class="article-title">{title}</h1>
-						<p class="article-meta">
-							{readTime && <span>{readTime} min read</span>}
-							{readTime && <span class="meta-dot">&middot;</span>}
-							<FormattedDate date={pubDate} />
-							{updatedDate && (
-								<span class="updated">
-									(Updated <FormattedDate date={updatedDate} />)
-								</span>
-							)}
-						</p>
-					</div>
-				</div>
-			</section>
-		)}
+		<div class="reading-progress" id="reading-progress"></div>
 
 		<main class="article-main">
 			<article>
-				{!image && (
-					<header class="article-header">
-						<h1 class="article-title">{title}</h1>
-						<p class="article-meta">
-							{readTime && <span>{readTime} min read</span>}
-							{readTime && <span class="meta-dot">&middot;</span>}
-							<FormattedDate date={pubDate} />
-							{updatedDate && (
-								<span class="updated">
-									(Updated <FormattedDate date={updatedDate} />)
-								</span>
-							)}
-						</p>
-					</header>
+				<header class="article-header">
+					<h1 class="article-title">{title}</h1>
+					<p class="article-meta">
+						{readTime && <span>{readTime} min read</span>}
+						{readTime && <span class="meta-dot">&middot;</span>}
+						<FormattedDate date={pubDate} />
+						{updatedDate && (
+							<span class="updated">
+								(Updated <FormattedDate date={updatedDate} />)
+							</span>
+						)}
+					</p>
+				</header>
+
+				{heroImage && (
+					<div class="article-hero-img">
+						<img src={heroImage} alt="" />
+					</div>
 				)}
 
 				<div class="article-actions">
@@ -169,7 +154,7 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 									<summary class="faq-q">
 										<span>{question}</span>
 										<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-											<polyline points="9 18 15 12 9 6" />
+											<polyline points="6 9 12 15 18 9" />
 										</svg>
 									</summary>
 									<div class="faq-a-wrap">
@@ -236,39 +221,59 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 					}
 				}
 			});
+
+			const progressBar = document.getElementById('reading-progress');
+			if (progressBar) {
+				let pTicking = false;
+				window.addEventListener('scroll', () => {
+					if (!pTicking) {
+						requestAnimationFrame(() => {
+							const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+							const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+							progressBar.style.width = `${Math.min(progress, 100)}%`;
+							pTicking = false;
+						});
+						pTicking = true;
+					}
+				}, { passive: true });
+			}
 		</script>
 	</body>
 </html>
 
 <style>
-	/* ——— Hero banner ——— */
+	/* ——— Reading progress bar ——— */
 
-	.article-hero {
-		position: relative;
-		overflow: visible;
+	.reading-progress {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 4px;
+		background: var(--color-bg-inverse);
+		width: 0%;
+		z-index: 60;
+		transition: width 50ms linear;
+		display: none;
 	}
 
-	.article-hero-bg {
+	@media (max-width: 960px) {
+		.reading-progress {
+			display: block;
+		}
+	}
+
+	/* ——— Article hero image ——— */
+
+	.article-hero-img {
+		margin-bottom: var(--space-lg);
+		border-radius: var(--radius-md);
+		overflow: hidden;
+	}
+
+	.article-hero-img img {
 		display: block;
 		width: 100%;
-		height: 200px;
-		object-fit: cover;
-	}
-
-	.article-hero-surface {
-		position: relative;
-		z-index: 1;
-		max-width: var(--max-width);
-		margin: -3rem auto 0;
-		padding: 0 var(--space-md);
-	}
-
-	.article-hero-inner {
-		background: var(--color-bg);
-		border-radius: var(--radius-md) var(--radius-md) 0 0;
-		padding: var(--space-xl) var(--space-md) var(--space-lg);
-		max-width: var(--max-width-narrow);
-		margin: 0 auto;
+		height: auto;
 	}
 
 	.meta-dot {
@@ -354,7 +359,7 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 	}
 
 	.faq-heading {
-		font-size: var(--text-h3);
+		font-size: var(--text-h2);
 		font-weight: var(--weight-semibold);
 		margin-bottom: var(--space-md);
 	}
@@ -397,7 +402,7 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 	}
 
 	.faq-q:hover {
-		color: var(--color-text-secondary);
+		color: var(--color-text-muted);
 	}
 
 	.faq-arrow {
@@ -406,7 +411,7 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 	}
 
 	.faq-item[open] .faq-arrow {
-		transform: rotate(98deg);
+		transform: rotate(180deg);
 	}
 
 	.faq-a-wrap {

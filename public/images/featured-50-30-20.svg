@@ -29,38 +29,38 @@
 
   <!-- Abstract gradient background -->
   <rect width="960" height="540" fill="url(#bg)"/>
-  <ellipse cx="300" cy="160" rx="300" ry="200" fill="url(#blob1)" filter="url(#blur1)"/>
-  <ellipse cx="700" cy="100" rx="260" ry="180" fill="url(#blob2)" filter="url(#blur2)"/>
-  <ellipse cx="480" cy="50" rx="220" ry="160" fill="url(#blob3)" filter="url(#blur3)"/>
-  <circle cx="150" cy="300" r="120" fill="#196EDD" fill-opacity="0.06" filter="url(#blur2)"/>
-  <circle cx="820" cy="80" r="130" fill="#7E57C2" fill-opacity="0.08" filter="url(#blur3)"/>
+  <ellipse cx="300" cy="120" rx="300" ry="180" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="700" cy="80" rx="260" ry="160" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="480" cy="30" rx="220" ry="140" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="120" cy="250" r="120" fill="#196EDD" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="850" cy="60" r="130" fill="#7E57C2" fill-opacity="0.08" filter="url(#blur3)"/>
 
-  <!-- White card rising from bottom -->
-  <rect x="240" y="140" width="480" height="420" rx="8" fill="white"/>
+  <!-- White card rising from bottom — 75% of container -->
+  <rect x="120" y="135" width="720" height="420" rx="10" fill="white"/>
 
   <!-- Label: Monthly take-home income -->
-  <text x="276" y="184" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522">Monthly take-home income</text>
+  <text x="164" y="184" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Monthly take-home income</text>
 
   <!-- Input field -->
-  <rect x="276" y="196" width="408" height="44" rx="6" fill="none" stroke="#E3DFDB" stroke-width="1.5"/>
-  <text x="294" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#8A817C">$</text>
-  <text x="308" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#2A2522">5,360</text>
+  <rect x="164" y="200" width="632" height="48" rx="6" fill="none" stroke="#E3DFDB" stroke-width="1.5"/>
+  <text x="184" y="230" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#8A817C">$</text>
+  <text x="200" y="230" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#2A2522">5,360</text>
 
   <!-- Needs row -->
-  <text x="276" y="276" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Needs</text>
-  <text x="276" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#2A2522">$2,680</text>
-  <rect x="276" y="312" width="408" height="5" rx="2.5" fill="#E8F0FE"/>
-  <rect x="276" y="312" width="408" height="5" rx="2.5" fill="#196EDD"/>
+  <text x="164" y="290" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Needs</text>
+  <text x="164" y="318" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#2A2522">$2,680</text>
+  <rect x="164" y="332" width="632" height="6" rx="3" fill="#E8F0FE"/>
+  <rect x="164" y="332" width="632" height="6" rx="3" fill="#196EDD"/>
 
   <!-- Wants row -->
-  <text x="276" y="350" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Wants</text>
-  <text x="276" y="374" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#2A2522">$1,608</text>
-  <rect x="276" y="386" width="408" height="5" rx="2.5" fill="#E8F0FE"/>
-  <rect x="276" y="386" width="245" height="5" rx="2.5" fill="#6E6560"/>
+  <text x="164" y="370" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Wants</text>
+  <text x="164" y="398" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#2A2522">$1,608</text>
+  <rect x="164" y="412" width="632" height="6" rx="3" fill="#E8F0FE"/>
+  <rect x="164" y="412" width="380" height="6" rx="3" fill="#6E6560"/>
 
   <!-- Savings & Debt row -->
-  <text x="276" y="424" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Savings &amp; Debt</text>
-  <text x="276" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#2A2522">$1,072</text>
-  <rect x="276" y="460" width="408" height="5" rx="2.5" fill="#E8F0FE"/>
-  <rect x="276" y="460" width="163" height="5" rx="2.5" fill="#2A2522"/>
+  <text x="164" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Savings &amp; Debt</text>
+  <text x="164" y="478" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#2A2522">$1,072</text>
+  <rect x="164" y="492" width="632" height="6" rx="3" fill="#E8F0FE"/>
+  <rect x="164" y="492" width="253" height="6" rx="3" fill="#2A2522"/>
 </svg>
