@@ -44,58 +44,51 @@ const templates = [
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<section class="intro">
-		<div class="intro-inner">
-			<p class="intro-line">Practical budgeting advice, simple systems, and the tools to help you understand where your money goes.</p>
+	<section class="editorial">
+		<div class="editorial-inner">
+			<div class="editorial-grid">
+				{featured && (
+					<div class="editorial-featured">
+						<span class="featured-label">Latest</span>
+						<a href={`/articles/${featured.id}/`} class="featured-link">
+							<h2 class="featured-title">{featured.data.title}</h2>
+							<p class="featured-desc">{featured.data.description}</p>
+							<p class="featured-meta">
+								<FormattedDate date={featured.data.pubDate} />
+								<span>&middot;</span>
+								<span>{featured.readTime} min read</span>
+							</p>
+						</a>
+					</div>
+				)}
+				{rest.length > 0 && (
+					<div class="editorial-sidebar">
+						<ul class="article-list">
+							{rest.map((article) => (
+								<li>
+									<a href={`/articles/${article.id}/`} class="article-row">
+										<h3 class="article-row-title">{article.data.title}</h3>
+										<p class="article-row-meta">
+											<FormattedDate date={article.data.pubDate} />
+											<span>&middot;</span>
+											<span>{article.readTime} min read</span>
+										</p>
+									</a>
+								</li>
+							))}
+						</ul>
+						<div class="articles-more">
+							<a href="/articles" class="articles-more-link">All articles <span class="arrow">&rarr;</span></a>
+						</div>
+					</div>
+				)}
+			</div>
 		</div>
 	</section>
 
-	{featured && (
-		<section class="featured">
-			<div class="featured-inner">
-				<span class="featured-label">Latest</span>
-				<a href={`/articles/${featured.id}/`} class="featured-link">
-					<h2 class="featured-title">{featured.data.title}</h2>
-					<p class="featured-desc">{featured.data.description}</p>
-					<p class="featured-meta">
-						<FormattedDate date={featured.data.pubDate} />
-						<span>&middot;</span>
-						<span>{featured.readTime} min read</span>
-					</p>
-				</a>
-			</div>
-		</section>
-	)}
-
-	{rest.length > 0 && (
-		<section class="articles">
-			<div class="articles-inner">
-				<ul class="article-list">
-					{rest.map((article) => (
-						<li>
-							<a href={`/articles/${article.id}/`} class="article-row">
-								<div class="article-row-body">
-									<h3 class="article-row-title">{article.data.title}</h3>
-									<p class="article-row-desc">{article.data.description}</p>
-								</div>
-								<p class="article-row-meta">
-									<FormattedDate date={article.data.pubDate} />
-									<span>&middot;</span>
-									<span>{article.readTime} min read</span>
-								</p>
-							</a>
-						</li>
-					))}
-				</ul>
-				<div class="articles-more">
-					<a href="/articles" class="articles-more-link">All articles <span class="arrow">&rarr;</span></a>
-				</div>
-			</div>
-		</section>
-	)}
-
 	<section class="about-brief">
 		<div class="about-brief-inner">
+			<p class="about-brief-tagline">Practical budgeting advice, simple systems, and the tools to help you understand where your money goes.</p>
 			<h2 class="about-brief-heading">Six years of budgeting in a spreadsheet</h2>
 			<p class="about-brief-body">I started budgeting six years ago with a blank Google Sheet. The one habit that changed everything was tracking expenses daily — that visibility gave me clarity I never had before. After years of refining and sharing with friends, I turned it into a product. With over 12 years of UX and visual design experience, I focused on making it simple enough that people actually use it.</p>
 			<a href="/about" class="about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
@@ -127,34 +120,24 @@ const templates = [
 </BaseLayout>
 
 <style>
-	/* ——— Intro ——— */
+	/* ——— Editorial (articles hero) ——— */
 
-	.intro {
-		padding: var(--space-xl) var(--space-md) var(--space-lg);
-		border-bottom: 1px solid var(--color-border);
-	}
-	.intro-inner {
-		max-width: var(--max-width-narrow);
-		margin: 0 auto;
-	}
-	.intro-line {
-		font-size: var(--text-h2);
-		font-weight: var(--weight-normal);
-		line-height: var(--leading-snug);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
-
-	/* ——— Featured article ——— */
-
-	.featured {
+	.editorial {
 		padding: var(--space-section) var(--space-md);
 		border-bottom: 1px solid var(--color-border);
 	}
-	.featured-inner {
-		max-width: var(--max-width-narrow);
+	.editorial-inner {
+		max-width: var(--max-width);
 		margin: 0 auto;
+	}
+	.editorial-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--space-xl);
+		align-items: start;
+	}
+	.editorial-featured {
+		padding-right: var(--space-lg);
 	}
 	.featured-label {
 		display: inline-block;
@@ -196,48 +179,40 @@ const templates = [
 		gap: 0.375rem;
 	}
 
-	/* ——— Article list ——— */
+	/* ——— Sidebar article list ——— */
 
-	.articles {
-		padding: var(--space-lg) var(--space-md) var(--space-section);
-		border-bottom: 1px solid var(--color-border);
-	}
-	.articles-inner {
-		max-width: var(--max-width-narrow);
-		margin: 0 auto;
+	.editorial-sidebar {
+		border-left: 1px solid var(--color-border);
+		padding-left: var(--space-lg);
 	}
 	.article-list {
 		list-style: none;
 		padding: 0;
+		margin: 0;
 		display: flex;
 		flex-direction: column;
 	}
-	.article-list li {
+	.article-list li + li {
 		border-top: 1px solid var(--color-border);
 	}
 	.article-row {
 		display: block;
-		padding: var(--space-md) 0;
+		padding: var(--space-sm) 0;
 		text-decoration: none;
+	}
+	.article-list li:first-child .article-row {
+		padding-top: 0;
 	}
 	.article-row:hover .article-row-title {
 		color: var(--color-accent);
 	}
-	.article-row-body {
-		margin-bottom: var(--space-xs);
-	}
 	.article-row-title {
-		font-size: var(--text-h3);
+		font-size: var(--text-body);
 		font-weight: var(--weight-semibold);
 		color: var(--color-text);
 		margin-bottom: var(--space-2xs);
-		transition: color 0.15s;
-	}
-	.article-row-desc {
-		font-size: var(--text-small);
 		line-height: var(--leading-snug);
-		color: var(--color-text-secondary);
-		margin: 0;
+		transition: color 0.15s;
 	}
 	.article-row-meta {
 		font-size: var(--text-small);
@@ -248,7 +223,9 @@ const templates = [
 		gap: 0.375rem;
 	}
 	.articles-more {
-		padding-top: var(--space-md);
+		padding-top: var(--space-sm);
+		border-top: 1px solid var(--color-border);
+		margin-top: var(--space-sm);
 	}
 	.articles-more-link {
 		font-size: var(--text-small);
@@ -266,6 +243,16 @@ const templates = [
 	.about-brief-inner {
 		max-width: var(--max-width-narrow);
 		margin: 0 auto;
+	}
+	.about-brief-tagline {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-normal);
+		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-lg);
+		padding-bottom: var(--space-lg);
+		border-bottom: 1px solid var(--color-border);
 	}
 	.about-brief-heading {
 		font-size: var(--text-h2);
@@ -357,6 +344,19 @@ const templates = [
 	/* ——— Responsive ——— */
 
 	@media (max-width: 960px) {
+		.editorial-grid {
+			grid-template-columns: 1fr;
+			gap: var(--space-lg);
+		}
+		.editorial-featured {
+			padding-right: 0;
+		}
+		.editorial-sidebar {
+			border-left: none;
+			padding-left: 0;
+			border-top: 1px solid var(--color-border);
+			padding-top: var(--space-lg);
+		}
 		.templates-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
