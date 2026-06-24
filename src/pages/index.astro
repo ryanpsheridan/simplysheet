@@ -91,11 +91,13 @@ const templates = [
 		</section>
 	)}
 
-	<section class="about-brief">
+	<section class="about-brief" id="about-brief">
 		<div class="about-brief-inner">
-			<h2 class="about-brief-heading">Six years of budgeting in a spreadsheet</h2>
-			<p class="about-brief-body">I started budgeting six years ago with a blank Google Sheet. The one habit that changed everything was tracking expenses daily — that visibility gave me clarity I never had before. After years of refining and sharing with friends, I turned it into a product. With over 12 years of UX and visual design experience, I focused on making it simple enough that people actually use it.</p>
-			<a href="/about" class="about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
+			<div class="about-brief-label">Overview</div>
+			<div class="about-brief-content">
+				<p class="about-brief-body">I started budgeting six years ago with a blank Google Sheet. <span class="about-fade">The one habit that changed everything was tracking expenses daily — that visibility gave me clarity I never had before. After years of refining and sharing with friends, I turned it into a product. With over 12 years of UX and visual design experience, I focused on making it simple enough that people actually use it.</span></p>
+				<a href="/about" class="about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
+			</div>
 		</div>
 	</section>
 
@@ -257,31 +259,55 @@ const templates = [
 	/* ——— About brief ——— */
 
 	.about-brief {
-		padding: var(--space-section) var(--space-md);
-		background: var(--color-bg-surface);
-		border-bottom: 1px solid var(--color-border);
+		padding: clamp(5rem, 12vw, 8rem) var(--space-md);
+		background: var(--color-bg-inverse);
+		color: #FFFFFF;
 	}
 	.about-brief-inner {
-		max-width: var(--max-width-narrow);
+		max-width: var(--max-width);
 		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: var(--space-xl);
+		align-items: start;
 	}
-	.about-brief-heading {
-		font-size: var(--text-h2);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--space-md);
+	.about-brief-label {
+		font-size: var(--text-small);
+		color: rgba(255, 255, 255, 0.4);
+		padding-top: 0.35em;
+	}
+	.about-brief-content {
+		max-width: 38rem;
 	}
 	.about-brief-body {
-		font-size: var(--text-body);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
+		font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.25rem);
+		font-weight: var(--weight-normal);
+		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-tight);
+		color: #FFFFFF;
+		margin: 0;
+	}
+	.about-fade {
+		color: rgba(255, 255, 255, 0.25);
+		transition: color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	.about-brief.revealed .about-fade {
+		color: rgba(255, 255, 255, 0.5);
 	}
 	.about-brief-link {
 		display: inline-block;
 		font-size: var(--text-small);
 		font-weight: var(--weight-medium);
 		text-decoration: none;
-		margin-top: var(--space-xs);
+		color: rgba(255, 255, 255, 0.5);
+		margin-top: var(--space-md);
+		transition: color 0.15s;
+	}
+	.about-brief-link:hover {
+		color: #FFFFFF;
+	}
+	.about-brief-link .arrow {
+		color: inherit;
 	}
 
 	/* ——— Tools (4-col grid) ——— */
@@ -362,6 +388,10 @@ const templates = [
 		.articles-grid {
 			grid-template-columns: 1fr;
 		}
+		.about-brief-inner {
+			grid-template-columns: 1fr;
+			gap: var(--space-md);
+		}
 		.templates-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
@@ -373,3 +403,19 @@ const templates = [
 		}
 	}
 </style>
+
+<script>
+	const section = document.getElementById('about-brief');
+	if (section) {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					section.classList.add('revealed');
+					observer.disconnect();
+				}
+			},
+			{ threshold: 0.3 }
+		);
+		observer.observe(section);
+	}
+</script>
