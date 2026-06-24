@@ -260,8 +260,8 @@ const templates = [
 
 	.about-brief {
 		padding: clamp(5rem, 12vw, 8rem) var(--space-md);
-		background: var(--color-bg-inverse);
-		color: #FFFFFF;
+		background: var(--color-bg-panel);
+		color: var(--color-text);
 	}
 	.about-brief-inner {
 		max-width: var(--max-width);
@@ -273,7 +273,7 @@ const templates = [
 	}
 	.about-brief-label {
 		font-size: var(--text-small);
-		color: rgba(255, 255, 255, 0.4);
+		color: var(--color-text-muted);
 		padding-top: 0.35em;
 	}
 	.about-brief-content {
@@ -284,27 +284,27 @@ const templates = [
 		font-weight: var(--weight-normal);
 		line-height: 1.5;
 		letter-spacing: var(--tracking-tight);
-		color: #FFFFFF;
+		color: var(--color-text);
 		margin: 0;
 	}
 	:global(.about-brief-body .word) {
-		color: rgba(255, 255, 255, 0.2);
+		color: var(--color-divider);
 		transition: color 0.15s ease;
 	}
 	:global(.about-brief-body .word.lit) {
-		color: rgba(255, 255, 255, 0.9);
+		color: var(--color-text);
 	}
 	.about-brief-link {
 		display: inline-block;
 		font-size: var(--text-small);
 		font-weight: var(--weight-medium);
 		text-decoration: none;
-		color: rgba(255, 255, 255, 0.5);
+		color: var(--color-text-muted);
 		margin-top: var(--space-md);
 		transition: color 0.15s;
 	}
 	.about-brief-link:hover {
-		color: #FFFFFF;
+		color: var(--color-text);
 	}
 	.about-brief-link .arrow {
 		color: inherit;
