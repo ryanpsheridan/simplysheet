@@ -93,9 +93,9 @@ const templates = [
 
 	<section class="about-brief" id="about-brief">
 		<div class="about-brief-inner">
-			<div class="about-brief-label">Overview</div>
+			<div class="about-brief-label">My story</div>
 			<div class="about-brief-content">
-				<p class="about-brief-body">I started budgeting six years ago with a blank Google Sheet. <span class="about-fade">The one habit that changed everything was tracking expenses daily — that visibility gave me clarity I never had before. After years of refining and sharing with friends, I turned it into a product. With over 12 years of UX and visual design experience, I focused on making it simple enough that people actually use it.</span></p>
+				<p class="about-brief-body" id="about-text">I started budgeting six years ago with a blank Google Sheet. The one habit that changed everything was tracking expenses daily — that visibility gave me clarity I never had before. After years of refining and sharing with friends, I turned it into a product. With over 12 years of UX and visual design experience, I focused on making it simple enough that people actually use it.</p>
 				<a href="/about" class="about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
 			</div>
 		</div>
@@ -280,19 +280,19 @@ const templates = [
 		max-width: 38rem;
 	}
 	.about-brief-body {
-		font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.25rem);
+		font-size: clamp(1.25rem, 2vw + 0.4rem, 1.75rem);
 		font-weight: var(--weight-normal);
-		line-height: var(--leading-snug);
+		line-height: 1.5;
 		letter-spacing: var(--tracking-tight);
 		color: #FFFFFF;
 		margin: 0;
 	}
-	.about-fade {
-		color: rgba(255, 255, 255, 0.25);
-		transition: color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+	.about-brief-body .word {
+		color: rgba(255, 255, 255, 0.2);
+		transition: color 0.15s ease;
 	}
-	.about-brief.revealed .about-fade {
-		color: rgba(255, 255, 255, 0.5);
+	.about-brief-body .word.lit {
+		color: rgba(255, 255, 255, 0.9);
 	}
 	.about-brief-link {
 		display: inline-block;
@@ -405,17 +405,34 @@ const templates = [
 </style>
 
 <script>
-	const section = document.getElementById('about-brief');
-	if (section) {
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				if (entry.isIntersecting) {
-					section.classList.add('revealed');
-					observer.disconnect();
-				}
-			},
-			{ threshold: 0.3 }
-		);
-		observer.observe(section);
+	const textEl = document.getElementById('about-text');
+	if (textEl) {
+		const raw = textEl.textContent || '';
+		textEl.innerHTML = raw.split(/(\s+)/).map(part =>
+			/\S/.test(part) ? `<span class="word">${part}</span>` : part
+		).join('');
+
+		const words = textEl.querySelectorAll('.word');
+		const section = document.getElementById('about-brief');
+		let ticking = false;
+
+		function updateWords() {
+			if (!section) return;
+			const rect = section.getBoundingClientRect();
+			const vh = window.innerHeight;
+			const start = vh * 0.85;
+			const end = vh * 0.15;
+			const progress = Math.max(0, Math.min(1, (start - rect.top) / (start - end)));
+			const litCount = Math.round(progress * words.length);
+			words.forEach((w, i) => w.classList.toggle('lit', i < litCount));
+		}
+
+		window.addEventListener('scroll', () => {
+			if (!ticking) {
+				requestAnimationFrame(() => { updateWords(); ticking = false; });
+				ticking = true;
+			}
+		}, { passive: true });
+		updateWords();
 	}
 </script>
