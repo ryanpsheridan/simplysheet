@@ -74,6 +74,11 @@ const templates = [
 				<div class="articles-grid">
 					{rest.map((article) => (
 						<a href={`/articles/${article.id}/`} class="article-card">
+							{article.data.image && (
+								<div class="article-card-thumb">
+									<img src={article.data.image} alt={article.data.title} width="600" height="340" loading="lazy" />
+								</div>
+							)}
 							<h3 class="article-card-title">{article.data.title}</h3>
 							<p class="article-card-desc">{article.data.description}</p>
 							<p class="article-card-meta">
@@ -212,6 +217,19 @@ const templates = [
 		display: flex;
 		flex-direction: column;
 		text-decoration: none;
+	}
+	.article-card-thumb {
+		aspect-ratio: 16 / 9;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		margin-bottom: var(--space-sm);
+		background: var(--color-bg-panel);
+	}
+	.article-card-thumb img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 	.article-card:hover .article-card-title {
 		color: var(--color-accent);
