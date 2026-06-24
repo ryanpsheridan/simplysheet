@@ -213,7 +213,7 @@ const templates = [
 		flex-direction: column;
 		padding: var(--space-md);
 		background: var(--color-bg-surface);
-		border: 1px solid transparent;
+		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
 		text-decoration: none;
 		transition: border-color 0.15s;
@@ -287,11 +287,11 @@ const templates = [
 		color: #FFFFFF;
 		margin: 0;
 	}
-	.about-brief-body .word {
+	:global(.about-brief-body .word) {
 		color: rgba(255, 255, 255, 0.2);
 		transition: color 0.15s ease;
 	}
-	.about-brief-body .word.lit {
+	:global(.about-brief-body .word.lit) {
 		color: rgba(255, 255, 255, 0.9);
 	}
 	.about-brief-link {
@@ -335,7 +335,7 @@ const templates = [
 		display: flex;
 		flex-direction: column;
 		background: var(--color-bg-surface);
-		border: 1px solid transparent;
+		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
 		text-decoration: none;
 		overflow: hidden;
