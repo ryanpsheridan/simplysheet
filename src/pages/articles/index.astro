@@ -118,10 +118,12 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 		display: none;
 	}
 	.article-list li a {
+		display: flex;
+		flex-direction: column;
 		position: relative;
 		text-decoration: none;
 		height: 100%;
-		border-radius: 1rem;
+		border-radius: 0.75rem;
 		overflow: hidden;
 	}
 	.thumb {

@@ -225,9 +225,11 @@ const templates = [
 		margin-bottom: var(--space-md);
 	}
 	.article-card {
+		display: flex;
+		flex-direction: column;
 		position: relative;
 		text-decoration: none;
-		border-radius: 1rem;
+		border-radius: 0.75rem;
 		overflow: hidden;
 	}
 	.article-card-thumb {
@@ -414,6 +416,9 @@ const templates = [
 	@media (max-width: 960px) {
 		.featured-link {
 			grid-template-columns: 1fr;
+		}
+		.featured-image {
+			order: -1;
 		}
 		.articles-grid {
 			grid-template-columns: 1fr;
