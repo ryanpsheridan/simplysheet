@@ -14,8 +14,11 @@ type Props = CollectionEntry<'articles'>;
 
 const article = Astro.props;
 const { Content, headings } = await render(article);
+
+const wordCount = article.body?.split(/\s+/).filter(Boolean).length ?? 0;
+const readTime = Math.max(1, Math.ceil(wordCount / 200));
 ---
 
-<ArticleLayout {...article.data} id={article.id} headings={headings}>
+<ArticleLayout {...article.data} id={article.id} headings={headings} readTime={readTime}>
 	<Content />
 </ArticleLayout>
