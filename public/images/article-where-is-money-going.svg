@@ -1,16 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
-  <rect width="960" height="540" fill="#E86A33"/>
-  <g transform="translate(480, 200)" text-anchor="middle">
-    <text font-family="system-ui, -apple-system, sans-serif" font-size="120" font-weight="700" fill="rgba(255,255,255,0.15)" letter-spacing="-4">?</text>
-  </g>
-  <g transform="translate(480, 310)" text-anchor="middle">
-    <rect x="-140" y="-30" width="280" height="60" rx="8" fill="rgba(255,255,255,0.12)"/>
-    <text font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="rgba(255,255,255,0.9)" dy="6">Expense Tracking</text>
-  </g>
-  <g transform="translate(320, 390)">
-    <rect width="320" height="8" rx="4" fill="rgba(255,255,255,0.35)"/>
-    <rect width="220" height="8" rx="4" fill="rgba(255,255,255,0.2)" y="24"/>
-    <rect width="280" height="8" rx="4" fill="rgba(255,255,255,0.35)" y="48"/>
-    <rect width="160" height="8" rx="4" fill="rgba(255,255,255,0.2)" y="72"/>
-  </g>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3E0"/>
+      <stop offset="100%" stop-color="#FFE0B2"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E86A33" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF9A5C" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D84315" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FF8A65" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#CE93D8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#F3E5F5" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="700" cy="200" rx="300" ry="250" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="250" cy="380" rx="280" ry="200" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="480" cy="100" rx="250" ry="200" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="800" cy="420" r="140" fill="#E86A33" fill-opacity="0.08" filter="url(#blur2)"/>
+  <circle cx="120" cy="150" r="100" fill="#CE93D8" fill-opacity="0.1" filter="url(#blur3)"/>
+  <rect x="200" y="180" width="180" height="180" rx="36" fill="white" fill-opacity="0.14" transform="rotate(-12, 290, 270)"/>
+  <rect x="580" y="280" width="150" height="150" rx="32" fill="white" fill-opacity="0.1" transform="rotate(20, 655, 355)"/>
+  <circle cx="680" cy="160" r="50" fill="white" fill-opacity="0.12"/>
+  <circle cx="400" cy="400" r="70" fill="white" fill-opacity="0.08"/>
 </svg>
