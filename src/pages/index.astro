@@ -143,7 +143,7 @@ const templates = [
 		text-decoration: none;
 	}
 	.featured-image {
-		border-radius: var(--radius-lg);
+		border-radius: var(--radius-md);
 		overflow: hidden;
 		background: var(--color-bg-panel);
 	}
@@ -166,7 +166,7 @@ const templates = [
 		margin-bottom: var(--space-sm);
 	}
 	.featured-title {
-		font-size: var(--text-display);
+		font-size: var(--text-h1);
 		font-weight: var(--weight-bold);
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
@@ -213,15 +213,13 @@ const templates = [
 		flex-direction: column;
 		padding: var(--space-md);
 		background: var(--color-bg-surface);
-		border: none;
-		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
 		text-decoration: none;
-		box-shadow: var(--shadow-card);
-		transition: box-shadow 0.2s ease, transform 0.2s ease;
+		transition: border-color 0.15s;
 	}
 	.article-card:hover {
-		box-shadow: var(--shadow-card-hover);
-		transform: translateY(-2px);
+		border-color: var(--color-divider);
 	}
 	.article-card:hover .article-card-title {
 		color: var(--color-accent);
@@ -337,16 +335,14 @@ const templates = [
 		display: flex;
 		flex-direction: column;
 		background: var(--color-bg-surface);
-		border: none;
-		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
 		text-decoration: none;
 		overflow: hidden;
-		box-shadow: var(--shadow-card);
-		transition: box-shadow 0.2s ease, transform 0.2s ease;
+		transition: border-color 0.15s;
 	}
 	.template-card:hover {
-		box-shadow: var(--shadow-card-hover);
-		transform: translateY(-2px);
+		border-color: var(--color-divider);
 	}
 	.template-thumb {
 		aspect-ratio: 3 / 2;
