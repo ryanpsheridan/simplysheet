@@ -217,16 +217,14 @@ const templates = [
 	}
 	.article-card {
 		position: relative;
-		display: flex;
-		flex-direction: column;
 		text-decoration: none;
 		border-radius: var(--radius-md);
 		overflow: hidden;
-		background: var(--color-bg-panel);
 	}
 	.article-card-thumb {
-		height: 120px;
-		overflow: hidden;
+		position: absolute;
+		inset: 0;
+		z-index: 0;
 	}
 	.article-card-thumb img {
 		display: block;
@@ -236,11 +234,11 @@ const templates = [
 	}
 	.article-card-body {
 		position: relative;
+		z-index: 1;
 		background: var(--color-bg);
-		border-radius: var(--radius-md) var(--radius-md) 0 0;
+		border-radius: var(--radius-md);
 		padding: var(--space-md);
-		margin-top: -1rem;
-		flex: 1;
+		margin: 3rem 0.75rem 0.75rem;
 		display: flex;
 		flex-direction: column;
 	}
