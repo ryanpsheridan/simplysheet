@@ -42,6 +42,11 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 			{articles.map((article) => (
 				<li data-tags={JSON.stringify(article.data.tags ?? [])}>
 					<a href={`/articles/${article.id}/`}>
+						{article.data.image && (
+							<div class="thumb">
+								<img src={article.data.image} alt={article.data.title} width="600" height="340" loading="lazy" />
+							</div>
+						)}
 						<h2 class="title">{article.data.title}</h2>
 						<p class="description">{article.data.description}</p>
 						<p class="meta">
@@ -115,6 +120,19 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 		flex-direction: column;
 		text-decoration: none;
 		height: 100%;
+	}
+	.thumb {
+		aspect-ratio: 16 / 9;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		margin-bottom: var(--space-sm);
+		background: var(--color-bg-panel);
+	}
+	.thumb img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 	.article-list li a:hover .title {
 		color: var(--color-accent);
