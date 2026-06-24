@@ -58,9 +58,9 @@ const templates = [
 							<span>{featured.readTime} min read</span>
 						</p>
 					</div>
-					{featured.data.image && (
+					{(featured.data.featuredImage || featured.data.image) && (
 						<div class="featured-image">
-							<img src={featured.data.image} alt={featured.data.title} width="960" height="540" />
+							<img src={featured.data.featuredImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" />
 						</div>
 					)}
 				</a>

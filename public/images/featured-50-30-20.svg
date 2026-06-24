@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E3F2FD"/>
+      <stop offset="100%" stop-color="#BBDEFB"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#196EDD" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#64B5F6" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1259B8" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#90CAF9" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7E57C2" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#CE93D8" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+  </defs>
+
+  <!-- Abstract gradient background -->
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="300" cy="200" rx="300" ry="230" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="650" cy="380" rx="280" ry="220" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="500" cy="80" rx="220" ry="180" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="180" cy="420" r="150" fill="#196EDD" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="820" cy="120" r="130" fill="#7E57C2" fill-opacity="0.08" filter="url(#blur3)"/>
+
+  <!-- White card -->
+  <rect x="240" y="60" width="480" height="420" rx="8" fill="white"/>
+
+  <!-- Label: Monthly take-home income -->
+  <text x="276" y="104" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522">Monthly take-home income</text>
+
+  <!-- Input field -->
+  <rect x="276" y="116" width="408" height="44" rx="6" fill="none" stroke="#E3DFDB" stroke-width="1.5"/>
+  <text x="294" y="144" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#8A817C">$</text>
+  <text x="308" y="144" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#2A2522">5,360</text>
+
+  <!-- Needs row -->
+  <text x="276" y="196" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Needs</text>
+  <text x="276" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#2A2522">$2,680</text>
+  <rect x="276" y="232" width="408" height="5" rx="2.5" fill="#E8F0FE"/>
+  <rect x="276" y="232" width="408" height="5" rx="2.5" fill="#196EDD"/>
+
+  <!-- Wants row -->
+  <text x="276" y="270" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Wants</text>
+  <text x="276" y="294" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#2A2522">$1,608</text>
+  <rect x="276" y="306" width="408" height="5" rx="2.5" fill="#E8F0FE"/>
+  <rect x="276" y="306" width="245" height="5" rx="2.5" fill="#6E6560"/>
+
+  <!-- Savings & Debt row -->
+  <text x="276" y="344" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Savings &amp; Debt</text>
+  <text x="276" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#2A2522">$1,072</text>
+  <rect x="276" y="380" width="408" height="5" rx="2.5" fill="#E8F0FE"/>
+  <rect x="276" y="380" width="163" height="5" rx="2.5" fill="#2A2522"/>
+</svg>
