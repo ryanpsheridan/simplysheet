@@ -165,6 +165,18 @@ hr {
 	background: var(--color-bg-panel);
 }
 
+/* ——— Arrow nudge ——— */
+
+.arrow {
+	display: inline-block;
+	transition: transform 150ms ease;
+}
+
+a:hover > .arrow,
+button:hover > .arrow {
+	transform: translateX(3px);
+}
+
 .sr-only {
 	position: absolute;
 	width: 1px;

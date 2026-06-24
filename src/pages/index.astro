@@ -84,7 +84,7 @@ const templates = [
 					))}
 				</ul>
 				<div class="articles-more">
-					<a href="/articles" class="articles-more-link">All articles &rarr;</a>
+					<a href="/articles" class="articles-more-link">All articles <span class="arrow">&rarr;</span></a>
 				</div>
 			</div>
 		</section>
@@ -94,7 +94,7 @@ const templates = [
 		<div class="about-brief-inner">
 			<h2 class="about-brief-heading">Six years of budgeting in a spreadsheet</h2>
 			<p class="about-brief-body">I started budgeting six years ago with a blank Google Sheet. The one habit that changed everything was tracking expenses daily — that visibility gave me clarity I never had before. After years of refining and sharing with friends, I turned it into a product. With over 12 years of UX and visual design experience, I focused on making it simple enough that people actually use it.</p>
-			<a href="/about" class="about-brief-link">Read the full story &rarr;</a>
+			<a href="/about" class="about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
 		</div>
 	</section>
 
@@ -250,6 +250,7 @@ const templates = [
 
 	.about-brief {
 		padding: var(--space-section) var(--space-md);
+		background: var(--color-bg-panel);
 		border-bottom: 1px solid var(--color-border);
 	}
 	.about-brief-inner {
