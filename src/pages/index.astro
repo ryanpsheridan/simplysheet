@@ -13,7 +13,7 @@ const allArticles = (await getCollection('articles'))
 	});
 
 const featured = allArticles[0];
-const rest = allArticles.slice(1, 4);
+const rest = allArticles.slice(1, 7);
 
 const templates = [
 	{
@@ -48,11 +48,6 @@ const templates = [
 		<section class="featured">
 			<div class="featured-inner">
 				<a href={`/articles/${featured.id}/`} class="featured-link">
-					{featured.data.image && (
-						<div class="featured-image">
-							<img src={featured.data.image} alt={featured.data.title} width="960" height="540" />
-						</div>
-					)}
 					<div class="featured-text">
 						<span class="featured-label">Latest</span>
 						<h2 class="featured-title">{featured.data.title}</h2>
@@ -63,6 +58,11 @@ const templates = [
 							<span>{featured.readTime} min read</span>
 						</p>
 					</div>
+					{featured.data.image && (
+						<div class="featured-image">
+							<img src={featured.data.image} alt={featured.data.title} width="960" height="540" />
+						</div>
+					)}
 				</a>
 			</div>
 		</section>
@@ -127,8 +127,7 @@ const templates = [
 	/* ——— Featured article ——— */
 
 	.featured {
-		padding: var(--space-section) var(--space-md);
-		border-bottom: 1px solid var(--color-border);
+		padding: var(--space-section) var(--space-md) 0;
 	}
 	.featured-inner {
 		max-width: var(--max-width);
@@ -259,7 +258,7 @@ const templates = [
 
 	.about-brief {
 		padding: var(--space-section) var(--space-md);
-		background: var(--color-bg-panel);
+		background: var(--color-bg-surface);
 		border-bottom: 1px solid var(--color-border);
 	}
 	.about-brief-inner {
