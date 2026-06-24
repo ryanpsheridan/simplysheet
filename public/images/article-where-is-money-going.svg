@@ -25,6 +25,11 @@
     <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur stdDeviation="65"/>
     </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
   </defs>
   <rect width="960" height="540" fill="url(#bg)"/>
   <ellipse cx="700" cy="200" rx="300" ry="250" fill="url(#blob1)" filter="url(#blur1)"/>
@@ -36,4 +41,5 @@
   <rect x="580" y="280" width="150" height="150" rx="32" fill="white" fill-opacity="0.1" transform="rotate(20, 655, 355)" filter="url(#blur2)"/>
   <circle cx="680" cy="160" r="50" fill="white" fill-opacity="0.12" filter="url(#blur2)"/>
   <circle cx="400" cy="400" r="70" fill="white" fill-opacity="0.08" filter="url(#blur2)"/>
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
 </svg>

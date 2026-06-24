@@ -182,6 +182,10 @@ const templates = [
 		display: block;
 		width: 100%;
 		height: auto;
+		transition: transform 0.3s ease;
+	}
+	.hero-featured:hover .hero-featured-thumb img {
+		transform: scale(1.03);
 	}
 	.hero-featured-label {
 		display: inline-block;
@@ -198,6 +202,12 @@ const templates = [
 		line-height: var(--leading-snug);
 		color: var(--color-text);
 		margin-bottom: var(--space-xs);
+		text-decoration: underline transparent;
+		text-underline-offset: 3px;
+		transition: text-decoration-color 100ms ease;
+	}
+	.hero-featured:hover .hero-featured-title {
+		text-decoration-color: var(--color-text);
 	}
 	.hero-featured-meta {
 		font-size: var(--text-small);
@@ -254,6 +264,10 @@ const templates = [
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+	.article-card:hover .article-card-thumb img {
+		transform: scale(1.03);
 	}
 	.article-card-body {
 		position: relative;
@@ -271,7 +285,12 @@ const templates = [
 		color: var(--color-text);
 		line-height: var(--leading-snug);
 		margin-bottom: var(--space-xs);
-		transition: color 0.15s;
+		text-decoration: underline transparent;
+		text-underline-offset: 3px;
+		transition: text-decoration-color 100ms ease;
+	}
+	.article-card:hover .article-card-title {
+		text-decoration-color: var(--color-text);
 	}
 	.article-card-desc {
 		font-size: var(--text-small);

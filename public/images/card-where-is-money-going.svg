@@ -25,6 +25,11 @@
     <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur stdDeviation="55"/>
     </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
   </defs>
 
   <!-- Abstract gradient background -->
@@ -35,48 +40,50 @@
   <circle cx="120" cy="300" r="130" fill="#E86A33" fill-opacity="0.06" filter="url(#blur2)"/>
   <circle cx="850" cy="60" r="120" fill="#7E57C2" fill-opacity="0.08" filter="url(#blur3)"/>
 
-  <!-- White card rising from bottom — 75% of container -->
-  <rect x="120" y="135" width="720" height="420" rx="10" fill="white"/>
+  <!-- Grain texture overlay -->
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
+
+  <!-- White card — 50% closer to top -->
+  <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <!-- Header -->
-  <text x="164" y="176" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">June spending</text>
-  <text x="164" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#2A2522">$3,847</text>
+  <text x="164" y="108" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">June spending</text>
+  <text x="164" y="144" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#2A2522">$3,847</text>
 
   <!-- Divider -->
-  <line x1="164" y1="228" x2="796" y2="228" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="164" y1="162" x2="796" y2="162" stroke="#F0EDEA" stroke-width="1"/>
 
-  <!-- Category rows -->
   <!-- Housing -->
-  <text x="164" y="262" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Housing</text>
-  <text x="796" y="262" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$1,450</text>
-  <rect x="164" y="274" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="274" width="476" height="5" rx="2.5" fill="#E86A33"/>
+  <text x="164" y="196" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Housing</text>
+  <text x="796" y="196" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$1,450</text>
+  <rect x="164" y="208" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
+  <rect x="164" y="208" width="476" height="5" rx="2.5" fill="#E86A33"/>
 
   <!-- Food -->
-  <text x="164" y="310" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Food &amp; Dining</text>
-  <text x="796" y="310" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$620</text>
-  <rect x="164" y="322" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="322" width="204" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.7"/>
+  <text x="164" y="248" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Food &amp; Dining</text>
+  <text x="796" y="248" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$620</text>
+  <rect x="164" y="260" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
+  <rect x="164" y="260" width="204" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.7"/>
 
   <!-- Transportation -->
-  <text x="164" y="358" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Transportation</text>
-  <text x="796" y="358" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$485</text>
-  <rect x="164" y="370" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="370" width="160" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.5"/>
+  <text x="164" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Transportation</text>
+  <text x="796" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$485</text>
+  <rect x="164" y="312" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
+  <rect x="164" y="312" width="160" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.5"/>
 
   <!-- Subscriptions -->
-  <text x="164" y="406" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Subscriptions</text>
-  <text x="796" y="406" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$312</text>
-  <rect x="164" y="418" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="418" width="102" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.35"/>
+  <text x="164" y="352" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Subscriptions</text>
+  <text x="796" y="352" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$312</text>
+  <rect x="164" y="364" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
+  <rect x="164" y="364" width="102" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.35"/>
 
   <!-- Shopping -->
-  <text x="164" y="454" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Shopping</text>
-  <text x="796" y="454" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$280</text>
-  <rect x="164" y="466" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
-  <rect x="164" y="466" width="92" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.25"/>
+  <text x="164" y="404" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Shopping</text>
+  <text x="796" y="404" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$280</text>
+  <rect x="164" y="416" width="632" height="5" rx="2.5" fill="#F0EDEA"/>
+  <rect x="164" y="416" width="92" height="5" rx="2.5" fill="#E86A33" fill-opacity="0.25"/>
 
   <!-- Other -->
-  <text x="164" y="502" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">+ 4 more categories</text>
-  <text x="796" y="502" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560" text-anchor="end">$700</text>
+  <text x="164" y="456" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">+ 4 more categories</text>
+  <text x="796" y="456" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560" text-anchor="end">$700</text>
 </svg>
