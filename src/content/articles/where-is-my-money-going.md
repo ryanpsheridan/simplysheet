@@ -3,6 +3,17 @@ title: 'Where is my money going? A simple way to finally find out'
 description: "If you've ever looked at your bank account and wondered where it all went, here's the simplest way to find out — and what to do once you know."
 pubDate: 'Jun 23 2026'
 tags: ['expense-tracking']
+faq:
+  - question: 'How long do I need to track my spending before I see useful patterns?'
+    answer: 'About three months. A single month can be misleading because it might miss irregular expenses like annual subscriptions or seasonal spending. Three months gives you a reliable average to work from.'
+  - question: 'Do I need a budgeting app to track my spending?'
+    answer: 'No. A simple spreadsheet works just as well, and often better, because you can customize categories to match how you actually spend. The best tool is whichever one you will use consistently.'
+  - question: 'What if I forget to log a few days of spending?'
+    answer: 'Go back through your bank or credit card transactions and fill in what you missed. A few gaps will not ruin the data. What matters is that most of your spending is captured over the full tracking period.'
+  - question: 'Should I track cash spending too?'
+    answer: 'Yes, if you regularly spend cash. Even rough estimates help. If most of your spending is on cards, the occasional untracked cash purchase will not significantly affect your totals.'
+  - question: 'What do I do once I can see where my money is going?'
+    answer: 'Look at each category and decide whether the amount still makes sense for your priorities. You are not cutting everything, just making informed choices one category at a time based on real numbers instead of guesses.'
 relatedProduct:
   name: 'Budget Spreadsheet'
   url: 'https://simplysheetdesign.etsy.com/listing/1854773368'

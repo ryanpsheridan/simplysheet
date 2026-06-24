@@ -159,6 +159,20 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 					<div class="prose">
 						<slot />
 					</div>
+
+					{faq && faq.length > 0 && (
+						<section class="faq">
+							<h2 class="faq-heading">Frequently asked questions</h2>
+							<dl class="faq-list">
+								{faq.map(({ question, answer }: { question: string; answer: string }) => (
+									<div class="faq-item">
+										<dt class="faq-q">{question}</dt>
+										<dd class="faq-a">{answer}</dd>
+									</div>
+								))}
+							</dl>
+						</section>
+					)}
 				</article>
 
 				{related.length > 0 && (
@@ -386,6 +400,50 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 	.action-btn:hover {
 		color: var(--color-text);
 		border-color: var(--color-text-muted);
+	}
+
+	/* ——— FAQ section ——— */
+
+	.faq {
+		margin-top: var(--space-2xl);
+		padding-top: var(--space-lg);
+		border-top: 1px solid var(--color-border);
+	}
+
+	.faq-heading {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		margin-bottom: var(--space-md);
+	}
+
+	.faq-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+	}
+
+	.faq-item {
+		padding-bottom: var(--space-md);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.faq-item:last-child {
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+
+	.faq-q {
+		font-size: var(--text-body);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+	}
+
+	.faq-a {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0;
 	}
 
 	/* ——— Related articles ——— */

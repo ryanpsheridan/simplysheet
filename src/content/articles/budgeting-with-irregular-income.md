@@ -3,6 +3,17 @@ title: 'How to budget when your income changes every month'
 description: 'A straightforward approach to budgeting on irregular income — freelancers, gig workers, commission earners, or anyone whose paychecks vary.'
 pubDate: 'Jun 23 2026'
 tags: ['irregular-income']
+faq:
+  - question: 'How do I figure out my baseline income if I just started freelancing?'
+    answer: 'Use the lowest month you have and subtract another 10 to 15 percent as a cushion. If you have fewer than three months of data, estimate conservatively based on the work you have lined up and treat anything above that as surplus.'
+  - question: 'How much should I set aside for taxes on irregular income?'
+    answer: 'A safe starting point is 25 to 30 percent of every payment you receive. For a more precise number, divide what you paid in taxes last year by your total gross income and add two to three percentage points as a buffer.'
+  - question: 'What is a good buffer size for irregular income?'
+    answer: 'Two to three months of non-negotiable expenses is a solid target. Once you reach that, you can shift more surplus toward financial goals or discretionary spending.'
+  - question: 'Can I still use the 50/30/20 rule with irregular income?'
+    answer: 'Yes, but apply the percentages to your baseline income, not the amount you earned that particular month. Surplus above the baseline gets its own allocation: roughly half to your buffer, a portion to goals, and the rest to discretionary spending.'
+  - question: 'What should I do during a month where I earn less than my baseline?'
+    answer: 'Pull from your buffer first. If the buffer is not built up yet, immediately cut everything that is not on your non-negotiable list for the month and pause any discretionary spending until income recovers.'
 relatedProduct:
   name: 'Budget Spreadsheet'
   url: 'https://simplysheetdesign.etsy.com/listing/1854773368'
