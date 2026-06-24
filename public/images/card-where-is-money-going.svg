@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3E0"/>
+      <stop offset="100%" stop-color="#FFE0B2"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E86A33" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF9A5C" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D84315" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FF8A65" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7E57C2" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#CE93D8" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+  </defs>
+
+  <!-- Abstract gradient background -->
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="280" cy="160" rx="300" ry="200" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="680" cy="100" rx="260" ry="180" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="500" cy="50" rx="220" ry="160" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="160" cy="350" r="130" fill="#E86A33" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="820" cy="80" r="120" fill="#7E57C2" fill-opacity="0.08" filter="url(#blur3)"/>
+
+  <!-- White card rising from bottom -->
+  <rect x="240" y="120" width="480" height="440" rx="8" fill="white"/>
+
+  <!-- Header -->
+  <text x="276" y="164" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522">June spending</text>
+  <text x="276" y="194" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#2A2522">$3,847</text>
+
+  <!-- Divider -->
+  <line x1="276" y1="210" x2="684" y2="210" stroke="#F0EDEA" stroke-width="1"/>
+
+  <!-- Category rows -->
+  <!-- Housing -->
+  <text x="276" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Housing</text>
+  <text x="684" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$1,450</text>
+  <rect x="276" y="250" width="408" height="4" rx="2" fill="#F0EDEA"/>
+  <rect x="276" y="250" width="308" height="4" rx="2" fill="#E86A33"/>
+
+  <!-- Food -->
+  <text x="276" y="284" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Food &amp; Dining</text>
+  <text x="684" y="284" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$620</text>
+  <rect x="276" y="294" width="408" height="4" rx="2" fill="#F0EDEA"/>
+  <rect x="276" y="294" width="132" height="4" rx="2" fill="#E86A33" fill-opacity="0.7"/>
+
+  <!-- Transportation -->
+  <text x="276" y="328" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Transportation</text>
+  <text x="684" y="328" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$485</text>
+  <rect x="276" y="338" width="408" height="4" rx="2" fill="#F0EDEA"/>
+  <rect x="276" y="338" width="103" height="4" rx="2" fill="#E86A33" fill-opacity="0.5"/>
+
+  <!-- Subscriptions -->
+  <text x="276" y="372" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Subscriptions</text>
+  <text x="684" y="372" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$312</text>
+  <rect x="276" y="382" width="408" height="4" rx="2" fill="#F0EDEA"/>
+  <rect x="276" y="382" width="66" height="4" rx="2" fill="#E86A33" fill-opacity="0.35"/>
+
+  <!-- Shopping -->
+  <text x="276" y="416" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Shopping</text>
+  <text x="684" y="416" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$280</text>
+  <rect x="276" y="426" width="408" height="4" rx="2" fill="#F0EDEA"/>
+  <rect x="276" y="426" width="60" height="4" rx="2" fill="#E86A33" fill-opacity="0.25"/>
+
+  <!-- Other -->
+  <text x="276" y="460" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">+ 4 more categories</text>
+  <text x="684" y="460" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560" text-anchor="end">$700</text>
+</svg>
