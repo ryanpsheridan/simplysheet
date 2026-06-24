@@ -2,6 +2,7 @@
 title: 'How to budget when your income changes every month'
 description: 'A straightforward approach to budgeting on irregular income — freelancers, gig workers, commission earners, or anyone whose paychecks vary.'
 pubDate: 'Jun 23 2026'
+image: '/images/article-irregular-income.svg'
 tags: ['irregular-income']
 faq:
   - question: 'How do I figure out my baseline income if I just started freelancing?'

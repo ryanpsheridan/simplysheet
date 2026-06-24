@@ -2,6 +2,7 @@
 title: 'Where is my money going? A simple way to finally find out'
 description: "If you've ever looked at your bank account and wondered where it all went, here's the simplest way to find out — and what to do once you know."
 pubDate: 'Jun 23 2026'
+image: '/images/article-where-is-money-going.svg'
 tags: ['expense-tracking']
 faq:
   - question: 'How long do I need to track my spending before I see useful patterns?'
