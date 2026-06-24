@@ -72,6 +72,11 @@ import { SITE_TITLE } from '../consts';
 	.site-logo {
 		display: block;
 		flex-shrink: 0;
+		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		transform-origin: left center;
+	}
+	header.scrolled .site-logo {
+		transform: scale(0.75);
 	}
 	.site-title-text {
 		display: inline-block;
