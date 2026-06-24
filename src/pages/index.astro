@@ -308,7 +308,8 @@ const templates = [
 	.template-card {
 		display: flex;
 		flex-direction: column;
-		border: 1px solid var(--color-border);
+		background: var(--color-bg-surface);
+		border: 1px solid transparent;
 		border-radius: var(--radius-md);
 		text-decoration: none;
 		overflow: hidden;
@@ -316,7 +317,6 @@ const templates = [
 	}
 	.template-card:hover {
 		border-color: var(--color-divider);
-		background: var(--color-bg-surface);
 	}
 	.template-thumb {
 		aspect-ratio: 3 / 2;
