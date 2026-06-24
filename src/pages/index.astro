@@ -20,21 +20,25 @@ const templates = [
 		name: 'Budget Spreadsheet',
 		desc: 'Track income and daily expenses with real-time progress indicators that show where you stand each month.',
 		url: 'https://simplysheetdesign.etsy.com/listing/1854773368',
+		image: '',
 	},
 	{
 		name: 'Couples Budget Spreadsheet',
 		desc: 'Split bills, track shared and personal expenses, and manage savings together. Built for two incomes.',
 		url: 'https://simplysheetdesign.etsy.com/listing/4396395102',
+		image: '',
 	},
 	{
 		name: 'Debt Payoff Tracker',
 		desc: 'See your total debt, log payments, and watch your balances drop month by month with clear visual progress.',
 		url: 'https://simplysheetdesign.etsy.com/listing/4485879930',
+		image: '',
 	},
 	{
 		name: 'Savings Goals Tracker',
 		desc: 'Set multiple savings goals, automate contributions, and track your progress toward each one.',
 		url: 'https://simplysheetdesign.etsy.com/listing/4483664616',
+		image: '',
 	},
 ];
 ---
@@ -104,6 +108,12 @@ const templates = [
 			<div class="templates-grid">
 				{templates.map((t) => (
 					<a href={t.url} class="template-card">
+						<div class="template-thumb">
+							{t.image
+								? <img src={t.image} alt={`${t.name} preview`} width="600" height="400" loading="lazy" />
+								: <svg class="template-placeholder-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 16l5-5 4 4 4-4 5 5" /><circle cx="8.5" cy="8.5" r="1.5" /></svg>
+							}
+						</div>
 						<h3 class="template-name">{t.name}</h3>
 						<p class="template-desc">{t.desc}</p>
 					</a>
@@ -298,27 +308,47 @@ const templates = [
 		margin-bottom: var(--space-lg);
 	}
 	.template-card {
-		display: block;
-		padding: var(--space-md);
+		display: flex;
+		flex-direction: column;
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
 		text-decoration: none;
+		overflow: hidden;
 		transition: border-color 0.15s;
 	}
 	.template-card:hover {
 		border-color: var(--color-divider);
+	}
+	.template-thumb {
+		aspect-ratio: 3 / 2;
+		background: var(--color-bg-panel);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+	.template-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+	.template-placeholder-icon {
+		color: var(--color-divider);
 	}
 	.template-name {
 		font-size: var(--text-body);
 		font-weight: var(--weight-semibold);
 		color: var(--color-text);
 		margin-bottom: var(--space-xs);
+		padding: var(--space-md) var(--space-md) 0;
 	}
 	.template-desc {
 		font-size: var(--text-small);
 		color: var(--color-text-secondary);
 		line-height: var(--leading-snug);
 		margin: 0;
+		padding: 0 var(--space-md) var(--space-md);
 	}
 	.templates-cta-wrap {
 		text-align: center;
