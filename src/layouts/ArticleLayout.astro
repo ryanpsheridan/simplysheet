@@ -102,19 +102,20 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 		{image && (
 			<section class="article-hero">
 				<img src={image} alt="" class="article-hero-bg" />
-				<div class="article-hero-overlay"></div>
-				<div class="article-hero-content">
-					<h1 class="article-hero-title">{title}</h1>
-					<p class="article-hero-meta">
-						{readTime && <span>{readTime} min read</span>}
-						{readTime && <span class="meta-dot">&middot;</span>}
-						<FormattedDate date={pubDate} />
-						{updatedDate && (
-							<span class="updated">
-								(Updated <FormattedDate date={updatedDate} />)
-							</span>
-						)}
-					</p>
+				<div class="article-hero-surface" id="hero-surface">
+					<div class="article-hero-inner">
+						<h1 class="article-title">{title}</h1>
+						<p class="article-meta">
+							{readTime && <span>{readTime} min read</span>}
+							{readTime && <span class="meta-dot">&middot;</span>}
+							<FormattedDate date={pubDate} />
+							{updatedDate && (
+								<span class="updated">
+									(Updated <FormattedDate date={updatedDate} />)
+								</span>
+							)}
+						</p>
+					</div>
 				</div>
 			</section>
 		)}
@@ -236,6 +237,22 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 				}
 			});
 		</script>
+		<script>
+			const surface = document.getElementById('hero-surface');
+			if (surface) {
+				let ticking = false;
+				function checkScroll() {
+					surface.classList.toggle('expanded', window.scrollY > 80);
+				}
+				window.addEventListener('scroll', () => {
+					if (!ticking) {
+						requestAnimationFrame(() => { checkScroll(); ticking = false; });
+						ticking = true;
+					}
+				}, { passive: true });
+				checkScroll();
+			}
+		</script>
 	</body>
 </html>
 
@@ -244,55 +261,46 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 
 	.article-hero {
 		position: relative;
-		overflow: hidden;
-		display: flex;
-		align-items: flex-end;
-		min-height: 320px;
+		overflow: visible;
 	}
 
 	.article-hero-bg {
-		position: absolute;
-		inset: 0;
+		display: block;
 		width: 100%;
-		height: 100%;
+		height: auto;
+		max-height: 320px;
 		object-fit: cover;
 	}
 
-	.article-hero-overlay {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.1) 60%, transparent 100%);
-	}
-
-	.article-hero-content {
+	.article-hero-surface {
 		position: relative;
 		z-index: 1;
+		max-width: var(--max-width);
+		margin: -4rem auto 0;
+		padding: 0 var(--space-md);
+		transition: max-width 0.4s ease, padding 0.4s ease, border-radius 0.4s ease;
+	}
+
+	.article-hero-surface.expanded {
+		max-width: 100%;
+		padding: 0;
+	}
+
+	.article-hero-inner {
+		background: var(--color-bg);
+		border-radius: var(--radius-md) var(--radius-md) 0 0;
+		padding: var(--space-xl) var(--space-md) var(--space-lg);
 		max-width: var(--max-width-narrow);
 		margin: 0 auto;
-		width: 100%;
-		padding: var(--space-2xl) var(--space-md) var(--space-xl);
+		transition: border-radius 0.4s ease;
 	}
 
-	.article-hero-title {
-		font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
-		font-weight: var(--weight-bold);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		color: white;
-		margin-bottom: var(--space-sm);
-	}
-
-	.article-hero-meta {
-		font-size: var(--text-small);
-		color: rgba(255, 255, 255, 0.75);
-		margin: 0;
-		display: flex;
-		align-items: center;
-		gap: 0.375rem;
+	.article-hero-surface.expanded .article-hero-inner {
+		border-radius: 0;
 	}
 
 	.meta-dot {
-		color: inherit;
+		color: var(--color-text-muted);
 	}
 
 	.updated {
@@ -304,13 +312,14 @@ const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encod
 	.article-main {
 		max-width: var(--max-width-narrow);
 		margin: 0 auto;
-		padding: var(--space-xl) var(--space-md) var(--space-2xl);
+		padding: 0 var(--space-md) var(--space-2xl);
 	}
 
 	/* ——— Fallback header (no image) ——— */
 
 	.article-header {
 		margin-bottom: var(--space-lg);
+		padding-top: var(--space-xl);
 	}
 
 	.article-title {
