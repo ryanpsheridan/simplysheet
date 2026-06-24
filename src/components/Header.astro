@@ -4,7 +4,10 @@ import { SITE_TITLE } from '../consts';
 
 <header>
 	<nav>
-		<a class="site-title" href="/">{SITE_TITLE}</a>
+		<a class="site-title" href="/">
+			<img src="/images/logo-svg.svg" alt="" class="site-logo" width="28" height="30" />
+			{SITE_TITLE}
+		</a>
 		<button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
 			<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
 				<line x1="4" y1="7" x2="20" y2="7" />
@@ -47,11 +50,17 @@ import { SITE_TITLE } from '../consts';
 		height: 3.5rem;
 	}
 	.site-title {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 		font-size: var(--text-body);
 		font-weight: var(--weight-semibold);
 		color: var(--color-text);
 		text-decoration: none;
 		letter-spacing: var(--tracking-tight);
+	}
+	.site-logo {
+		display: block;
 	}
 	.menu-toggle {
 		display: flex;
