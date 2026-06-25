@@ -18,9 +18,10 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 
 	<div class="quiz-result" id={`${id}-result`} hidden>
 		<div class="quiz-result-icon" id={`${id}-icon`}></div>
-		<span class="quiz-result-label">Your budget type</span>
+		<span class="quiz-result-label">Your budgeting style</span>
 		<h2 class="quiz-result-title" id={`${id}-style`}></h2>
 		<p class="quiz-result-desc" id={`${id}-desc`}></p>
+		<h3 class="quiz-tip-label">Your Pro-Tip for Growth</h3>
 		<div class="quiz-result-tip" id={`${id}-tip`}></div>
 		<p class="quiz-result-rec" id={`${id}-rec`}></p>
 		<div class="quiz-result-actions">
@@ -67,17 +68,17 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 	/* ——— Question ——— */
 
 	.quiz-question-text {
-		font-size: var(--text-h2);
+		font-size: var(--text-h1);
 		font-weight: var(--weight-semibold);
 		line-height: var(--leading-snug);
 		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
-		margin-bottom: var(--space-md);
+		margin-bottom: var(--space-lg);
 	}
 	.quiz-options {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-xs);
+		gap: 0.625rem;
 	}
 	.quiz-option {
 		font-family: var(--font-sans);
@@ -85,20 +86,27 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		font-weight: var(--weight-medium);
 		color: var(--color-text-secondary);
 		background: var(--color-bg-panel);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-full);
-		padding: 1rem 1.5rem;
-		min-height: 3rem;
+		border: 1.5px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: 1rem 1.25rem;
+		min-height: 3.25rem;
 		cursor: pointer;
 		text-align: left;
-		transition: color 0.15s, border-color 0.15s, background 0.15s;
+		transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.1s ease;
 		line-height: var(--leading-snug);
 		width: 100%;
 	}
 	.quiz-option:hover {
 		color: var(--color-text);
-		border-color: var(--color-text-muted);
+		border-color: var(--color-accent);
 		background: var(--color-bg-emphasis);
+	}
+	.quiz-option:active,
+	.quiz-option.selected {
+		background: var(--color-accent);
+		color: white;
+		border-color: var(--color-accent);
+		transform: scale(0.98);
 	}
 
 	/* ——— Result ——— */
@@ -146,6 +154,12 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		margin: 0 0 var(--space-md);
 		max-width: 36rem;
 	}
+	.quiz-tip-label {
+		font-size: var(--text-body);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin: 0 0 var(--space-xs);
+	}
 	.quiz-result-tip {
 		font-size: var(--text-body);
 		line-height: var(--leading-normal);
@@ -165,12 +179,13 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 	}
 	.quiz-result-actions {
 		display: flex;
-		gap: var(--space-sm);
-		align-items: center;
-		flex-wrap: wrap;
+		flex-direction: column;
+		gap: var(--space-xs);
+		max-width: 36rem;
 	}
-	.quiz-result-cta {
-		align-self: flex-start;
+	.quiz-result-actions .btn {
+		text-align: center;
+		justify-content: center;
 	}
 
 	@media (max-width: 480px) {
@@ -178,14 +193,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 			font-size: var(--text-h2);
 		}
 		.quiz-question-text {
-			font-size: var(--text-h3);
-		}
-		.quiz-result-actions {
-			flex-direction: column;
-			align-items: stretch;
-		}
-		.quiz-result-actions .btn {
-			text-align: center;
+			font-size: var(--text-h2);
 		}
 	}
 </style>
@@ -328,13 +336,18 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 			btn.className = 'quiz-option';
 			btn.textContent = opt.text;
 			btn.addEventListener('click', function () {
-				answers.push(opt.style);
-				if (currentQ < questions.length - 1) {
-					currentQ++;
-					renderQuestion();
-				} else {
-					showResult();
-				}
+				btn.classList.add('selected');
+				var allBtns = optsEl.querySelectorAll('.quiz-option');
+				allBtns.forEach(function (b) { b.disabled = true; });
+				setTimeout(function () {
+					answers.push(opt.style);
+					if (currentQ < questions.length - 1) {
+						currentQ++;
+						renderQuestion();
+					} else {
+						showResult();
+					}
+				}, 250);
 			});
 			optsEl.appendChild(btn);
 		});
@@ -350,7 +363,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 
 		var s = styles[winner];
 		iconEl.innerHTML = '<span class="material-symbols-rounded">' + s.icon + '</span>';
-		styleEl.textContent = s.name;
+		styleEl.textContent = 'Your Budgeting Style: ' + s.name;
 		descEl.textContent = s.desc;
 		tipEl.innerHTML = '<span class="quiz-tip-icon">💡</span> ' + s.tip.replace(/^Tip:\s*/, '');
 		recEl.textContent = s.rec;

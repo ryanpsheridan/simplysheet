@@ -477,8 +477,8 @@ const templates = [
 			if (!section) return;
 			const rect = section.getBoundingClientRect();
 			const vh = window.innerHeight;
-			const start = vh * 0.75;
-			const end = vh * -0.1;
+			const start = vh * 0.9;
+			const end = vh * 0.15;
 			const progress = Math.max(0, Math.min(1, (start - rect.top) / (start - end)));
 			const litCount = Math.round(progress * words.length);
 			words.forEach((w, i) => w.classList.toggle('lit', i < litCount));
