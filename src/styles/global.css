@@ -134,25 +134,25 @@ hr {
 }
 
 .btn-primary {
-	background: var(--color-bg-inverse);
+	background: #000000;
 	color: white;
-	border-color: var(--color-bg-inverse);
+	border-color: #000000;
 }
 
 .btn-primary:hover {
-	background: var(--color-text-secondary);
-	border-color: var(--color-text-secondary);
+	background: #333333;
+	border-color: #333333;
 	color: white;
 }
 
 .btn-secondary {
 	background: transparent;
-	color: var(--color-bg-inverse);
-	border-color: var(--color-bg-inverse);
+	color: #000000;
+	border-color: #000000;
 }
 
 .btn-secondary:hover {
-	background: var(--color-bg-inverse);
+	background: #000000;
 	color: white;
 }
 

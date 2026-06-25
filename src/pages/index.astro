@@ -47,14 +47,14 @@ const templates = [
 	<section class="hero">
 		<div class="hero-inner">
 			<div class="hero-text">
-				<h1 class="hero-title">Budgeting tools that actually get used</h1>
-				<p class="hero-desc">Simple spreadsheets and straightforward guidance to help you take control of your money — no complicated apps, no guesswork.</p>
+				<h1 class="hero-title">A simpler way to manage your personal finances.</h1>
+				<p class="hero-desc">Whether you are paying off debt or navigating an irregular income, find the guidance and tools you need to organize your money, stay on track, and move forward with confidence.</p>
 			</div>
 			{featured && (
 				<a href={`/articles/${featured.id}/`} class="hero-featured">
-					{(featured.data.cardImage || featured.data.image) && (
+					{(featured.data.image || featured.data.cardImage) && (
 						<div class="hero-featured-thumb">
-							<img src={featured.data.cardImage ?? featured.data.image} alt="" width="960" height="540" />
+							<img src={featured.data.image ?? featured.data.cardImage} alt="" width="960" height="540" />
 						</div>
 					)}
 					<span class="hero-featured-label">Latest</span>
@@ -95,7 +95,7 @@ const templates = [
 					))}
 				</div>
 				<div class="articles-more">
-					<a href="/articles" class="articles-more-link">All articles <span class="arrow">&rarr;</span></a>
+					<a href="/articles" class="btn btn-secondary">All articles <span class="arrow">&rarr;</span></a>
 				</div>
 			</div>
 		</section>
@@ -106,7 +106,7 @@ const templates = [
 			<div class="about-brief-label">My story</div>
 			<div class="about-brief-content">
 				<p class="about-brief-body" id="about-text">I started budgeting with a blank Google Sheet. Tracking expenses daily gave me clarity I never had before. After years of refining, I turned it into a product — designed to be simple enough that people actually use it.</p>
-				<a href="/about" class="about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
+				<a href="/about" class="btn btn-secondary about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
 			</div>
 		</div>
 	</section>
@@ -244,10 +244,9 @@ const templates = [
 		text-decoration: none;
 		border-radius: 0.75rem;
 		overflow: hidden;
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		transition: box-shadow 0.2s ease;
 	}
 	.article-card:hover {
-		transform: translateY(-4px);
 		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 	}
 	.article-card-thumb {
@@ -302,11 +301,6 @@ const templates = [
 	.articles-more {
 		padding-top: var(--space-sm);
 	}
-	.articles-more-link {
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		text-decoration: none;
-	}
 
 	/* ——— About brief ——— */
 
@@ -324,7 +318,8 @@ const templates = [
 		align-items: start;
 	}
 	.about-brief-label {
-		font-size: var(--text-small);
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
 		color: var(--color-text-muted);
 		padding-top: 0.35em;
 	}
@@ -340,26 +335,14 @@ const templates = [
 		margin: 0;
 	}
 	:global(.about-brief-body .word) {
-		color: var(--color-divider);
+		color: var(--color-text-muted);
 		transition: color 0.4s ease;
 	}
 	:global(.about-brief-body .word.lit) {
 		color: var(--color-text);
 	}
 	.about-brief-link {
-		display: inline-block;
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		text-decoration: none;
-		color: var(--color-text-muted);
 		margin-top: var(--space-md);
-		transition: color 0.15s;
-	}
-	.about-brief-link:hover {
-		color: var(--color-text);
-	}
-	.about-brief-link .arrow {
-		color: inherit;
 	}
 
 	/* ——— Tools (4-col grid) ——— */
@@ -391,10 +374,11 @@ const templates = [
 		border-radius: var(--radius-md);
 		text-decoration: none;
 		overflow: hidden;
-		transition: border-color 0.15s;
+		transition: border-color 0.15s, box-shadow 0.2s ease;
 	}
 	.template-card:hover {
 		border-color: var(--color-divider);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 	}
 	.template-thumb {
 		aspect-ratio: 3 / 2;
@@ -426,6 +410,10 @@ const templates = [
 	.external-arrow {
 		flex-shrink: 0;
 		color: var(--color-text);
+		transition: transform 150ms ease;
+	}
+	.template-card:hover .external-arrow {
+		transform: translateX(3px);
 	}
 	.template-desc {
 		font-size: var(--text-small);
@@ -482,7 +470,7 @@ const templates = [
 			if (!section) return;
 			const rect = section.getBoundingClientRect();
 			const vh = window.innerHeight;
-			const start = vh * 0.5;
+			const start = vh * 0.75;
 			const end = vh * -0.1;
 			const progress = Math.max(0, Math.min(1, (start - rect.top) / (start - end)));
 			const litCount = Math.round(progress * words.length);
