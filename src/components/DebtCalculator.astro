@@ -109,6 +109,9 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		padding: var(--space-md);
 		margin: var(--space-lg) 0;
 		background: var(--color-bg-surface);
+		max-width: 100%;
+		overflow: hidden;
+		box-sizing: border-box;
 	}
 
 	/* ——— Inputs (global for dynamically added rows) ——— */
@@ -207,8 +210,18 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	}
 	.calc :global(.debt-row-fields) {
 		display: grid;
-		grid-template-columns: 1.5fr 1fr 1fr 1fr;
+		grid-template-columns: 1fr;
 		gap: var(--space-sm);
+	}
+	@media (min-width: 600px) {
+		.calc :global(.debt-row-fields) {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+	@media (min-width: 860px) {
+		.calc :global(.debt-row-fields) {
+			grid-template-columns: 1.5fr 1fr 1fr 1fr;
+		}
 	}
 
 	/* ——— Add button ——— */
@@ -372,9 +385,6 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	/* ——— Responsive ——— */
 
 	@media (max-width: 768px) {
-		.calc :global(.debt-row-fields) {
-			grid-template-columns: 1fr 1fr;
-		}
 		.debt-results-grid {
 			grid-template-columns: 1fr;
 		}
