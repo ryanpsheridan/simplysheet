@@ -32,21 +32,6 @@
     </filter>
   </defs>
 
-  <style>
-    .exp-bar { animation: exp-pulse 4s ease-in-out infinite; }
-    .exp-1 { animation-delay: 0s; }
-    .exp-2 { animation-delay: 0.3s; }
-    .exp-3 { animation-delay: 0.6s; }
-    .exp-4 { animation-delay: 0.9s; }
-    .exp-5 { animation-delay: 1.2s; }
-    @keyframes exp-pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .exp-bar { animation: none; }
-    }
-  </style>
 
   <!-- Abstract gradient background -->
   <rect width="960" height="540" fill="url(#bg)"/>

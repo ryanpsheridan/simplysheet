@@ -32,26 +32,6 @@
     </filter>
   </defs>
 
-  <style>
-    .bar-needs { animation: pulse-needs 4s ease-in-out infinite; }
-    .bar-wants { animation: pulse-wants 4s ease-in-out infinite 0.5s; }
-    .bar-savings { animation: pulse-savings 4s ease-in-out infinite 1s; }
-    @keyframes pulse-needs {
-      0%, 100% { width: 632px; }
-      50% { width: 580px; }
-    }
-    @keyframes pulse-wants {
-      0%, 100% { width: 380px; }
-      50% { width: 420px; }
-    }
-    @keyframes pulse-savings {
-      0%, 100% { width: 253px; }
-      50% { width: 290px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .bar-needs, .bar-wants, .bar-savings { animation: none; }
-    }
-  </style>
 
   <!-- Abstract gradient background -->
   <rect width="960" height="540" fill="url(#bg)"/>

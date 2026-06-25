@@ -52,9 +52,9 @@ const templates = [
 			</div>
 			{featured && (
 				<a href={`/articles/${featured.id}/`} class="hero-featured">
-					{(featured.data.image || featured.data.cardImage) && (
+					{(featured.data.cardImage || featured.data.image) && (
 						<div class="hero-featured-thumb">
-							<img src={featured.data.image ?? featured.data.cardImage} alt="" width="960" height="540" />
+							<img src={featured.data.cardImage ?? featured.data.image} alt="" width="960" height="540" />
 						</div>
 					)}
 					<span class="hero-featured-label">Latest</span>

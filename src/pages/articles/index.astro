@@ -42,9 +42,9 @@ const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 			{articles.map((article) => (
 				<li data-tags={JSON.stringify(article.data.tags ?? [])}>
 					<a href={`/articles/${article.id}/`}>
-						{(article.data.image || article.data.cardImage) && (
+						{(article.data.cardImage || article.data.image) && (
 							<div class="thumb">
-								<img src={article.data.image ?? article.data.cardImage} alt="" width="600" height="340" loading="lazy" />
+								<img src={article.data.cardImage ?? article.data.image} alt="" width="600" height="340" loading="lazy" />
 							</div>
 						)}
 						<div class="card-body">
