@@ -39,7 +39,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 				<span class="impact-stat-value" id={`${id}-time`}>3 years sooner</span>
 			</div>
 		</div>
-		<p class="impact-note">Based on $30,000 across three debts at varying rates with minimum payments totaling $600/mo.</p>
+		<p class="impact-note">Based on $30,000 across three debts at varying rates with minimum payments totaling $600/mo. Your results will differ.</p>
 	</div>
 
 	<a href="https://www.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets" class="impact-cta" target="_blank" rel="noopener noreferrer">
@@ -250,9 +250,9 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	var strategy = 'avalanche';
 
 	var DEBTS = [
-		{ balance: 4500, rate: 0.219, minPay: 90 },
-		{ balance: 8500, rate: 0.156, minPay: 170 },
-		{ balance: 17000, rate: 0.042, minPay: 340 }
+		{ balance: 2800, rate: 0.049, minPay: 75 },
+		{ balance: 9200, rate: 0.219, minPay: 185 },
+		{ balance: 18000, rate: 0.129, minPay: 340 }
 	];
 
 	function simulate(debts, extra) {
@@ -321,16 +321,17 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		return years + (years === 1 ? ' yr' : ' yrs') + ' ' + mos + (mos === 1 ? ' mo' : ' mos') + ' sooner';
 	}
 
+	var baselineResult = simulate(DEBTS.slice(), 0);
+
 	function update() {
 		var extra = parseInt(slider.value, 10);
 		amountEl.textContent = '$' + extra.toLocaleString('en-US');
 
 		var debts = sortedDebts(strategy);
-		var baseline = simulate(sortedDebts(strategy), 0);
 		var withExtra = simulate(debts, extra);
 
-		var interestSaved = Math.round(baseline.totalInterest - withExtra.totalInterest);
-		var monthsSaved = baseline.months - withExtra.months;
+		var interestSaved = Math.round(baselineResult.totalInterest - withExtra.totalInterest);
+		var monthsSaved = baselineResult.months - withExtra.months;
 
 		savedEl.textContent = '$' + interestSaved.toLocaleString('en-US');
 		timeEl.textContent = formatTime(monthsSaved);
