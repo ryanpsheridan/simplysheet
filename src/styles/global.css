@@ -26,6 +26,8 @@ main {
 
 h1, h2, h3, h4, h5, h6 {
 	margin: 0 0 0.5rem 0;
+	font-family: var(--font-heading);
+	font-weight: var(--weight-medium);
 	color: var(--color-text);
 	line-height: var(--leading-tight);
 	letter-spacing: var(--tracking-tight);
@@ -157,7 +159,6 @@ p {
 }
 .product-card-name {
 	font-size: var(--text-body);
-	font-weight: var(--weight-semibold);
 	color: var(--color-text);
 	margin: 0 0 var(--space-xs);
 	padding: var(--space-xs) var(--space-md) 0;
