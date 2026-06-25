@@ -42,8 +42,8 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		<p class="compare-note" id={`${id}-note`}></p>
 	</div>
 
-	<a href="https://www.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets" class="visualizer-cta" target="_blank" rel="noopener noreferrer">
-		Get the Debt Payoff Tracker Spreadsheet
+	<a href="https://www.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets" class="btn btn-primary visualizer-cta" target="_blank" rel="noopener noreferrer">
+		Get the Debt Payoff Tracker
 		<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
 	</a>
 </div>
@@ -166,11 +166,11 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	}
 
 	.compare-fill--avalanche {
-		background: var(--color-text);
+		background: var(--color-accent);
 	}
 
 	.compare-fill--snowball {
-		background: var(--color-text-muted);
+		background: #C5783E;
 	}
 
 	.compare-context {
@@ -180,6 +180,10 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		text-align: center;
 		margin: var(--space-md) 0 0;
 		line-height: var(--leading-normal);
+	}
+
+	:global(.compare-pct) {
+		color: var(--color-accent);
 	}
 
 	.compare-note {
@@ -196,23 +200,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	/* ——— CTA ——— */
 
 	.visualizer-cta {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.375rem;
 		width: 100%;
-		padding: 0.875rem;
-		font-family: var(--font-sans);
-		font-size: var(--text-body);
-		font-weight: var(--weight-semibold);
-		color: var(--color-bg);
-		background: var(--color-btn);
-		border-radius: var(--radius-sm);
-		text-decoration: none;
-		transition: background 0.15s;
-	}
-	.visualizer-cta:hover {
-		background: var(--color-btn-hover);
 	}
 </style>
 
@@ -243,7 +231,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		} else {
 			var advantage = Math.round((1 - avalPct / snowPct) * 100);
 			if (advantage < 1) advantage = 1;
-			contextEl.textContent = 'Avalanche is saving roughly ' + advantage + '% more in interest than Snowball.';
+			contextEl.innerHTML = 'Avalanche is saving roughly <strong class="compare-pct">' + advantage + '%</strong> more in interest than Snowball.';
 
 			if (t >= 1) {
 				noteEl.textContent = 'The exact dollar amount of these savings depends on your specific interest rates. Use the Debt Payoff Tracker to see your precise savings.';
