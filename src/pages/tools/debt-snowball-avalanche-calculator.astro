@@ -3,16 +3,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import DebtCalculator from '../../components/DebtCalculator.astro';
 import { SITE_TITLE } from '../../consts';
 
-const title = 'Debt Snowball vs. Avalanche Calculator';
-const description = 'Compare snowball and avalanche debt payoff methods side by side. Enter your debts and see which approach saves more money and gets you debt-free faster.';
+const title = 'How Much Could Extra Payments Save You?';
+const description = 'See how much interest you could save and how much sooner you could be debt-free by putting extra money toward your debt each month.';
 ---
 
 <BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
 	<main>
 		<article>
 			<header class="calc-header">
-				<h1>Debt Snowball vs. Avalanche Calculator</h1>
-				<p class="calc-intro">Enter each debt below with its current balance, interest rate, and minimum payment. Add an extra monthly payment if you have one. The calculator will simulate both the snowball method (smallest balance first) and the avalanche method (highest rate first), then show you exactly how they compare on time and total interest.</p>
+				<h1>How much could extra payments save you?</h1>
+				<p class="calc-intro">Most people know that paying more than the minimum helps. But it can be hard to feel how much of a difference even a small extra payment makes until you see the numbers. Drag the slider below to find out.</p>
 			</header>
 
 			<DebtCalculator />
