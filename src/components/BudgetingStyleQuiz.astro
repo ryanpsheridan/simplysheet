@@ -80,14 +80,14 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		flex-direction: column;
 		gap: 0.625rem;
 	}
-	.quiz-option {
+	:global(.quiz-option) {
 		font-family: var(--font-sans);
-		font-size: 1rem;
+		font-size: 1.0625rem;
 		font-weight: var(--weight-medium);
 		color: var(--color-text-secondary);
 		background: var(--color-bg-panel);
 		border: 1.5px solid var(--color-border);
-		border-radius: var(--radius-md);
+		border-radius: 0.5rem;
 		padding: 1rem 1.25rem;
 		min-height: 3.25rem;
 		cursor: pointer;
@@ -95,14 +95,16 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.1s ease;
 		line-height: var(--leading-snug);
 		width: 100%;
+		display: block;
+		box-sizing: border-box;
 	}
-	.quiz-option:hover {
+	:global(.quiz-option:hover) {
 		color: var(--color-text);
 		border-color: var(--color-accent);
 		background: var(--color-bg-emphasis);
 	}
-	.quiz-option:active,
-	.quiz-option.selected {
+	:global(.quiz-option:active),
+	:global(.quiz-option.selected) {
 		background: var(--color-accent);
 		color: white;
 		border-color: var(--color-accent);
@@ -128,7 +130,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		margin-bottom: var(--space-md);
 		background: #E8F0FE;
 	}
-	.quiz-result-icon .material-symbols-rounded {
+	:global(.quiz-result-icon .material-symbols-rounded) {
 		font-size: 28px;
 		color: var(--color-accent);
 	}
