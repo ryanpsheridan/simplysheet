@@ -21,7 +21,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		<span class="quiz-result-label">Your budgeting style</span>
 		<h2 class="quiz-result-title" id={`${id}-style`}></h2>
 		<p class="quiz-result-desc" id={`${id}-desc`}></p>
-		<h3 class="quiz-tip-label">Your Pro-Tip for Growth</h3>
+		<h3 class="quiz-tip-label">Your Pro-Tip for Growth 💡</h3>
 		<div class="quiz-result-tip" id={`${id}-tip`}></div>
 		<p class="quiz-result-rec" id={`${id}-rec`}></p>
 		<div class="quiz-result-actions">
@@ -387,7 +387,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		tipEl.style.background = s.tipBg;
 		styleEl.textContent = 'Your Budgeting Style: ' + s.name;
 		descEl.textContent = s.desc;
-		tipEl.innerHTML = '<span class="quiz-tip-icon">💡</span> ' + s.tip.replace(/^Tip:\s*/, '');
+		tipEl.innerHTML = s.tip.replace(/^Tip:\s*/, '');
 		recEl.textContent = s.rec;
 		ctaEl.textContent = 'Browse budget templates';
 		ctaEl.href = 'https://simplysheetdesign.etsy.com';
