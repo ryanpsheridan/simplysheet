@@ -57,7 +57,7 @@ const templates = [
 							<img src={featured.data.cardImage ?? featured.data.image} alt="" width="960" height="540" />
 						</div>
 					)}
-					<span class="hero-featured-label">Latest Article</span>
+					<span class="hero-featured-label">Featured Article</span>
 					<h2 class="hero-featured-title">{featured.data.title}</h2>
 					<p class="hero-featured-meta">
 						<FormattedDate date={featured.data.pubDate} />
@@ -74,6 +74,7 @@ const templates = [
 	{rest.length > 0 && (
 		<section class="articles">
 			<div class="articles-inner">
+				<h2 class="articles-section-heading">Latest articles</h2>
 				<div class="articles-grid">
 					{rest.map((article) => (
 						<a href={`/articles/${article.id}/`} class="article-card">
@@ -224,6 +225,12 @@ const templates = [
 
 	/* ——— Articles 3-col grid ——— */
 
+	.articles-section-heading {
+		font-size: var(--text-h2);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--space-md);
+	}
 	.articles {
 		padding: var(--space-lg) var(--space-md) var(--space-section);
 	}

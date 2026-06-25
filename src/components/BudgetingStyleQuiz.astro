@@ -81,23 +81,24 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 	}
 	.quiz-option {
 		font-family: var(--font-sans);
-		font-size: var(--text-body);
+		font-size: 1rem;
 		font-weight: var(--weight-medium);
 		color: var(--color-text-secondary);
-		background: none;
-		border: 1px solid var(--color-divider);
+		background: var(--color-bg-panel);
+		border: 1px solid var(--color-border);
 		border-radius: var(--radius-full);
-		padding: 0.875rem 1.5rem;
-		min-height: 2.75rem;
+		padding: 1rem 1.5rem;
+		min-height: 3rem;
 		cursor: pointer;
 		text-align: left;
 		transition: color 0.15s, border-color 0.15s, background 0.15s;
 		line-height: var(--leading-snug);
+		width: 100%;
 	}
 	.quiz-option:hover {
 		color: var(--color-text);
 		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
+		background: var(--color-bg-emphasis);
 	}
 
 	/* ——— Result ——— */
@@ -150,7 +151,6 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		line-height: var(--leading-normal);
 		color: var(--color-text);
 		background: linear-gradient(135deg, #EEF4FF 0%, #F0F7FF 100%);
-		border-left: 3px solid var(--color-accent);
 		border-radius: var(--radius-md);
 		padding: var(--space-md);
 		margin-bottom: var(--space-md);
@@ -199,64 +199,64 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		{
 			q: "What is the first thing you do after getting paid?",
 			opts: [
-				{ text: "Move money into savings and bill accounts right away", style: "planner" },
-				{ text: "Check that my direct deposit went through, then move on", style: "saver" },
-				{ text: "Start thinking about what I want to buy", style: "spender" },
-				{ text: "Honestly, I try not to think about it", style: "avoider" }
+				{ text: "Move money into savings and bills right away", style: "planner" },
+				{ text: "Check my deposit, then move on", style: "saver" },
+				{ text: "Think about what I want to buy", style: "spender" },
+				{ text: "Try not to think about it", style: "avoider" }
 			]
 		},
 		{
 			q: "How do you feel when you check your bank balance?",
 			opts: [
-				{ text: "Confident. I already know roughly what it should be.", style: "planner" },
-				{ text: "Good. I like watching it grow.", style: "saver" },
-				{ text: "A little nervous, but I check anyway.", style: "spender" },
-				{ text: "I avoid checking unless I absolutely have to.", style: "avoider" }
+				{ text: "Confident — I know what it should be", style: "planner" },
+				{ text: "Good — I like watching it grow", style: "saver" },
+				{ text: "A little nervous, but I check anyway", style: "spender" },
+				{ text: "I avoid checking unless I have to", style: "avoider" }
 			]
 		},
 		{
 			q: "An unexpected $500 expense comes up. What do you do?",
 			opts: [
-				{ text: "Pull from my emergency fund without stress", style: "planner" },
-				{ text: "Cover it from savings, but it bothers me", style: "saver" },
-				{ text: "Put it on a credit card and figure it out later", style: "spender" },
-				{ text: "Feel overwhelmed and push it off as long as possible", style: "avoider" }
+				{ text: "Pull from my emergency fund", style: "planner" },
+				{ text: "Use savings, but it bothers me", style: "saver" },
+				{ text: "Put it on a credit card", style: "spender" },
+				{ text: "Feel overwhelmed and put it off", style: "avoider" }
 			]
 		},
 		{
 			q: "How would you describe your approach to budgeting?",
 			opts: [
-				{ text: "I track every dollar and review my budget regularly", style: "planner" },
-				{ text: "I keep it simple: spend less than I earn", style: "saver" },
+				{ text: "I track every dollar regularly", style: "planner" },
+				{ text: "Keep it simple — spend less than I earn", style: "saver" },
 				{ text: "I have tried budgets but they never stick", style: "spender" },
 				{ text: "I do not really have a budget", style: "avoider" }
 			]
 		},
 		{
-			q: "A friend invites you on a last-minute weekend trip. How do you decide?",
+			q: "A friend invites you on a last-minute trip. How do you decide?",
 			opts: [
-				{ text: "Check my discretionary budget to see if I can swing it", style: "planner" },
-				{ text: "Probably say no unless it is really cheap", style: "saver" },
-				{ text: "Say yes first, worry about cost later", style: "spender" },
-				{ text: "Say I will think about it, then never respond", style: "avoider" }
+				{ text: "Check if my budget can handle it", style: "planner" },
+				{ text: "Say no unless it is really cheap", style: "saver" },
+				{ text: "Say yes, worry about cost later", style: "spender" },
+				{ text: "Say I will think about it, then never reply", style: "avoider" }
 			]
 		},
 		{
 			q: "What is your relationship with financial goals?",
 			opts: [
-				{ text: "I have clear goals with timelines and dollar amounts", style: "planner" },
+				{ text: "Clear goals with timelines and amounts", style: "planner" },
 				{ text: "My main goal is always to save more", style: "saver" },
-				{ text: "I set goals but get sidetracked by things I want now", style: "spender" },
-				{ text: "I know I should set goals but have not gotten around to it", style: "avoider" }
+				{ text: "I set goals but get sidetracked", style: "spender" },
+				{ text: "I know I should set goals but have not yet", style: "avoider" }
 			]
 		},
 		{
-			q: "You see a sale on something you like but do not need. You usually...",
+			q: "You see a sale on something you want but do not need. You usually...",
 			opts: [
-				{ text: "Check if it fits the budget before deciding", style: "planner" },
-				{ text: "Skip it. A deal is not a deal if I was not going to buy it.", style: "saver" },
-				{ text: "Grab it. It is on sale, so I am saving money, right?", style: "spender" },
-				{ text: "Feel conflicted and leave the tab open for a week", style: "avoider" }
+				{ text: "Check if it fits the budget first", style: "planner" },
+				{ text: "Skip it — a deal is not a deal if I was not buying it", style: "saver" },
+				{ text: "Grab it — it is on sale!", style: "spender" },
+				{ text: "Leave the tab open for a week", style: "avoider" }
 			]
 		}
 	];
