@@ -17,6 +17,17 @@ const description = 'Take this quick quiz to discover your budgeting personality
 
 			<BudgetingStyleQuiz />
 
+			<div class="quiz-article-link">
+				<a href="/articles/budgeting-styles/">
+					<img src="/images/card-budgeting-styles.svg" alt="The 4 Budgeting Styles" width="960" height="540" loading="lazy" />
+					<div class="quiz-article-link-text">
+						<span class="quiz-article-link-label">Related article</span>
+						<span class="quiz-article-link-title">The 4 Budgeting Styles: Which One Are You?</span>
+						<span class="quiz-article-link-desc">Learn what each budgeting style looks like, what trips each one up, and how to build a system that works with your natural tendencies.</span>
+					</div>
+				</a>
+			</div>
+
 			<section class="quiz-why">
 				<h2>Why knowing your budget type matters</h2>
 				<p>Most people struggle with budgeting not because they lack willpower, but because they are using an approach that does not match how they naturally think about money. A system built for a Planner will feel suffocating to a Spender. A minimal setup designed for an Avoider will leave a Saver wanting more detail.</p>
@@ -58,6 +69,52 @@ const description = 'Take this quick quiz to discover your budgeting personality
 	}
 	.quiz-callout-text a {
 		font-weight: var(--weight-medium);
+	}
+	.quiz-article-link {
+		margin-top: var(--space-xl);
+	}
+	.quiz-article-link a {
+		display: block;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		text-decoration: none;
+		color: inherit;
+		transition: border-color 0.15s, box-shadow 0.15s;
+	}
+	.quiz-article-link a:hover {
+		border-color: var(--color-text-muted);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+	}
+	.quiz-article-link img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+	.quiz-article-link-text {
+		padding: var(--space-md);
+	}
+	.quiz-article-link-label {
+		display: block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-2xs);
+	}
+	.quiz-article-link-title {
+		display: block;
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+	}
+	.quiz-article-link-desc {
+		display: block;
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
 	}
 	.quiz-why {
 		margin-top: var(--space-xl);

@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3E5F5"/>
+      <stop offset="100%" stop-color="#E1BEE7"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7E57C2" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#B39DDB" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5C35A8" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#CE93D8" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#196EDD" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#90CAF9" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <!-- Abstract gradient background -->
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="250" cy="130" rx="280" ry="180" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="720" cy="90" rx="260" ry="160" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="480" cy="40" rx="200" ry="140" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="130" cy="320" r="130" fill="#7E57C2" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="840" cy="70" r="110" fill="#196EDD" fill-opacity="0.08" filter="url(#blur3)"/>
+
+  <!-- Grain texture overlay -->
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
+
+  <!-- White card -->
+  <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
+
+  <!-- Header -->
+  <text x="164" y="108" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Your budget type</text>
+
+  <!-- Four type cards -->
+  <!-- Planner -->
+  <rect x="164" y="128" width="296" height="192" rx="8" fill="#F3E5F5"/>
+  <rect x="180" y="148" width="36" height="36" rx="8" fill="#7E57C2" fill-opacity="0.15"/>
+  <text x="198" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#7E57C2" text-anchor="middle">&#128203;</text>
+  <text x="228" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">The Planner</text>
+  <text x="180" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Structured, disciplined, detail-oriented</text>
+  <rect x="180" y="216" width="260" height="4" rx="2" fill="#E1BEE7"/>
+  <rect x="180" y="216" width="220" height="4" rx="2" fill="#7E57C2" fill-opacity="0.6"/>
+  <text x="180" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">Every dollar has a job</text>
+  <rect x="180" y="252" width="260" height="4" rx="2" fill="#E1BEE7"/>
+  <rect x="180" y="252" width="180" height="4" rx="2" fill="#7E57C2" fill-opacity="0.4"/>
+  <text x="180" y="276" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">Reviews budget monthly</text>
+  <rect x="180" y="288" width="260" height="4" rx="2" fill="#E1BEE7"/>
+  <rect x="180" y="288" width="240" height="4" rx="2" fill="#7E57C2" fill-opacity="0.5"/>
+
+  <!-- Saver -->
+  <rect x="500" y="128" width="296" height="192" rx="8" fill="#E8F5E9"/>
+  <rect x="516" y="148" width="36" height="36" rx="8" fill="#2D9D78" fill-opacity="0.15"/>
+  <text x="534" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#2D9D78" text-anchor="middle">&#128176;</text>
+  <text x="564" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">The Saver</text>
+  <text x="516" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Frugal, goal-driven, cautious</text>
+  <rect x="516" y="216" width="260" height="4" rx="2" fill="#C8E6C9"/>
+  <rect x="516" y="216" width="240" height="4" rx="2" fill="#2D9D78" fill-opacity="0.6"/>
+  <text x="516" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">Watches savings grow</text>
+  <rect x="516" y="252" width="260" height="4" rx="2" fill="#C8E6C9"/>
+  <rect x="516" y="252" width="200" height="4" rx="2" fill="#2D9D78" fill-opacity="0.4"/>
+  <text x="516" y="276" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">Says no to impulse buys</text>
+  <rect x="516" y="288" width="260" height="4" rx="2" fill="#C8E6C9"/>
+  <rect x="516" y="288" width="250" height="4" rx="2" fill="#2D9D78" fill-opacity="0.5"/>
+
+  <!-- Spender -->
+  <rect x="164" y="340" width="296" height="192" rx="8" fill="#FFF3E0"/>
+  <rect x="180" y="360" width="36" height="36" rx="8" fill="#E86A33" fill-opacity="0.15"/>
+  <text x="198" y="384" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#E86A33" text-anchor="middle">&#128717;</text>
+  <text x="228" y="384" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">The Spender</text>
+  <text x="180" y="412" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Spontaneous, generous, present-focused</text>
+  <rect x="180" y="428" width="260" height="4" rx="2" fill="#FFE0B2"/>
+  <rect x="180" y="428" width="200" height="4" rx="2" fill="#E86A33" fill-opacity="0.6"/>
+  <text x="180" y="452" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">Enjoys experiences today</text>
+  <rect x="180" y="464" width="260" height="4" rx="2" fill="#FFE0B2"/>
+  <rect x="180" y="464" width="160" height="4" rx="2" fill="#E86A33" fill-opacity="0.4"/>
+  <text x="180" y="488" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">Generous with others</text>
+  <rect x="180" y="500" width="260" height="4" rx="2" fill="#FFE0B2"/>
+  <rect x="180" y="500" width="230" height="4" rx="2" fill="#E86A33" fill-opacity="0.5"/>
+
+  <!-- Avoider -->
+  <rect x="500" y="340" width="296" height="192" rx="8" fill="#E3F2FD"/>
+  <rect x="516" y="360" width="36" height="36" rx="8" fill="#196EDD" fill-opacity="0.15"/>
+  <text x="534" y="384" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#196EDD" text-anchor="middle">&#128580;</text>
+  <text x="564" y="384" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">The Avoider</text>
+  <text x="516" y="412" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6E6560">Overwhelmed, hesitant, small-steps</text>
+  <rect x="516" y="428" width="260" height="4" rx="2" fill="#BBDEFB"/>
+  <rect x="516" y="428" width="140" height="4" rx="2" fill="#196EDD" fill-opacity="0.6"/>
+  <text x="516" y="452" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">Puts off financial decisions</text>
+  <rect x="516" y="464" width="260" height="4" rx="2" fill="#BBDEFB"/>
+  <rect x="516" y="464" width="100" height="4" rx="2" fill="#196EDD" fill-opacity="0.4"/>
+  <text x="516" y="488" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">Benefits from small habits</text>
+  <rect x="516" y="500" width="260" height="4" rx="2" fill="#BBDEFB"/>
+  <rect x="516" y="500" width="170" height="4" rx="2" fill="#196EDD" fill-opacity="0.5"/>
+</svg>
