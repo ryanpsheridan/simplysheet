@@ -138,25 +138,25 @@ hr {
 }
 
 .btn-primary {
-	background: #000000;
+	background: var(--color-btn);
 	color: white;
-	border-color: #000000;
+	border-color: var(--color-btn);
 }
 
 .btn-primary:hover {
-	background: #333333;
-	border-color: #333333;
+	background: var(--color-btn-hover);
+	border-color: var(--color-btn-hover);
 	color: white;
 }
 
 .btn-secondary {
 	background: transparent;
-	color: #000000;
-	border-color: #000000;
+	color: var(--color-btn);
+	border-color: var(--color-btn);
 }
 
 .btn-secondary:hover {
-	background: #000000;
+	background: var(--color-btn);
 	color: white;
 }
 

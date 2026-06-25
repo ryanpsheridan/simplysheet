@@ -14,8 +14,13 @@
   --color-bg-emphasis:    #EDEAE7;
   --color-bg-inverse:     #2A2522;
 
+  --color-btn:            #000000;
+  --color-btn-hover:      #333333;
+
   --color-border:         #E8E4E0;
   --color-divider:        #D9D4CF;
+
+  --color-accent-light:   #EEF4FF;
 
   /* ——— Typography ——— */
 
