@@ -3,6 +3,15 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div class="impact-slider" id={id}>
+	<div class="strategy-section">
+		<span class="strategy-label">Strategy</span>
+		<div class="strategy-toggle" id={`${id}-toggle`}>
+			<button class="strategy-btn active" data-strategy="avalanche">Avalanche</button>
+			<button class="strategy-btn" data-strategy="snowball">Snowball</button>
+		</div>
+		<p class="strategy-hint">Avalanche focuses on interest savings; Snowball focuses on quick wins.</p>
+	</div>
+
 	<label class="slider-label" for={`${id}-range`}>Extra monthly payment</label>
 	<div class="slider-amount" id={`${id}-amount`}>$200</div>
 	<input
@@ -30,7 +39,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 				<span class="impact-stat-value" id={`${id}-time`}>3 years sooner</span>
 			</div>
 		</div>
-		<p class="impact-note">Based on $30,000 in debt at a 7% average rate with minimum payments of $600/mo.</p>
+		<p class="impact-note">Based on $30,000 across three debts at varying rates with minimum payments totaling $600/mo.</p>
 	</div>
 
 	<a href="https://www.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets" class="impact-cta" target="_blank" rel="noopener noreferrer">
@@ -47,6 +56,56 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		margin: var(--space-lg) 0;
 		background: var(--color-bg-surface);
 	}
+
+	/* ——— Strategy toggle ——— */
+
+	.strategy-section {
+		text-align: center;
+		margin-bottom: var(--space-lg);
+	}
+
+	.strategy-label {
+		display: block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-xs);
+	}
+
+	.strategy-toggle {
+		display: inline-flex;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+	}
+
+	.strategy-btn {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		padding: 0.5rem 1.25rem;
+		border: none;
+		background: var(--color-bg);
+		color: var(--color-text-secondary);
+		cursor: pointer;
+		transition: background 0.15s, color 0.15s;
+	}
+	.strategy-btn:not(:last-child) {
+		border-right: 1px solid var(--color-border);
+	}
+	.strategy-btn.active {
+		background: var(--color-btn);
+		color: var(--color-bg);
+	}
+
+	.strategy-hint {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		margin: var(--space-xs) 0 0;
+		line-height: var(--leading-normal);
+	}
+
+	/* ——— Slider ——— */
 
 	.slider-label {
 		display: block;
@@ -106,6 +165,8 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		margin-bottom: var(--space-lg);
 	}
 
+	/* ——— Impact card ——— */
+
 	.impact-card {
 		background: var(--color-bg);
 		border: 1px solid var(--color-border);
@@ -147,6 +208,8 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		line-height: var(--leading-normal);
 	}
 
+	/* ——— CTA ——— */
+
 	.impact-cta {
 		display: flex;
 		align-items: center;
@@ -181,56 +244,106 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	var amountEl = document.getElementById(id + '-amount');
 	var savedEl = document.getElementById(id + '-saved');
 	var timeEl = document.getElementById(id + '-time');
+	var toggleEl = document.getElementById(id + '-toggle');
+	var btns = toggleEl.querySelectorAll('.strategy-btn');
 
-	var BALANCE = 30000;
-	var RATE = 0.07;
-	var MIN_PAYMENT = 600;
+	var strategy = 'avalanche';
 
-	function simulate(extra) {
-		var balance = BALANCE;
+	var DEBTS = [
+		{ balance: 4500, rate: 0.219, minPay: 90 },
+		{ balance: 8500, rate: 0.156, minPay: 170 },
+		{ balance: 17000, rate: 0.042, minPay: 340 }
+	];
+
+	function simulate(debts, extra) {
+		var accounts = debts.map(function (d) {
+			return { balance: d.balance, rate: d.rate, minPay: d.minPay, interest: 0 };
+		});
 		var totalInterest = 0;
-		var months = 0;
-		var monthlyRate = RATE / 12;
+		var month = 0;
+		var rollingExtra = extra;
 
-		while (balance > 0 && months < 1200) {
-			months++;
-			var interest = balance * monthlyRate;
-			totalInterest += interest;
-			balance += interest;
-			var payment = Math.min(MIN_PAYMENT + extra, balance);
-			balance -= payment;
-			if (balance < 0.01) balance = 0;
+		while (month < 1200) {
+			var allPaid = true;
+			for (var i = 0; i < accounts.length; i++) {
+				if (accounts[i].balance > 0) { allPaid = false; break; }
+			}
+			if (allPaid) break;
+			month++;
+
+			for (var i = 0; i < accounts.length; i++) {
+				var a = accounts[i];
+				if (a.balance <= 0) continue;
+				var interest = a.balance * a.rate / 12;
+				a.balance += interest;
+				a.interest += interest;
+				totalInterest += interest;
+				var payment = Math.min(a.minPay, a.balance);
+				a.balance -= payment;
+				if (a.balance < 0.01) {
+					rollingExtra += a.minPay;
+					a.balance = 0;
+				}
+			}
+
+			var pool = rollingExtra;
+			for (var i = 0; i < accounts.length; i++) {
+				var a = accounts[i];
+				if (a.balance <= 0 || pool <= 0) continue;
+				var apply = Math.min(pool, a.balance);
+				a.balance -= apply;
+				pool -= apply;
+				if (a.balance < 0.01) {
+					rollingExtra += a.minPay;
+					a.balance = 0;
+				}
+			}
 		}
+		return { months: month, totalInterest: totalInterest };
+	}
 
-		return { months: months, totalInterest: totalInterest };
+	function sortedDebts(method) {
+		var copy = DEBTS.map(function (d) { return { balance: d.balance, rate: d.rate, minPay: d.minPay }; });
+		if (method === 'avalanche') {
+			copy.sort(function (a, b) { return b.rate - a.rate; });
+		} else {
+			copy.sort(function (a, b) { return a.balance - b.balance; });
+		}
+		return copy;
+	}
+
+	function formatTime(monthsSaved) {
+		if (monthsSaved <= 0) return 'Same timeline';
+		if (monthsSaved < 12) return monthsSaved + (monthsSaved === 1 ? ' month sooner' : ' months sooner');
+		var years = Math.floor(monthsSaved / 12);
+		var mos = monthsSaved % 12;
+		if (mos === 0) return years + (years === 1 ? ' year sooner' : ' years sooner');
+		return years + (years === 1 ? ' yr' : ' yrs') + ' ' + mos + (mos === 1 ? ' mo' : ' mos') + ' sooner';
 	}
 
 	function update() {
 		var extra = parseInt(slider.value, 10);
 		amountEl.textContent = '$' + extra.toLocaleString('en-US');
 
-		var baseline = simulate(0);
-		var withExtra = simulate(extra);
+		var debts = sortedDebts(strategy);
+		var baseline = simulate(sortedDebts(strategy), 0);
+		var withExtra = simulate(debts, extra);
 
 		var interestSaved = Math.round(baseline.totalInterest - withExtra.totalInterest);
 		var monthsSaved = baseline.months - withExtra.months;
 
 		savedEl.textContent = '$' + interestSaved.toLocaleString('en-US');
-
-		if (monthsSaved <= 0) {
-			timeEl.textContent = 'Same timeline';
-		} else if (monthsSaved < 12) {
-			timeEl.textContent = monthsSaved + (monthsSaved === 1 ? ' month sooner' : ' months sooner');
-		} else {
-			var years = Math.floor(monthsSaved / 12);
-			var mos = monthsSaved % 12;
-			if (mos === 0) {
-				timeEl.textContent = years + (years === 1 ? ' year sooner' : ' years sooner');
-			} else {
-				timeEl.textContent = years + (years === 1 ? ' yr' : ' yrs') + ' ' + mos + (mos === 1 ? ' mo' : ' mos') + ' sooner';
-			}
-		}
+		timeEl.textContent = formatTime(monthsSaved);
 	}
+
+	btns.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			btns.forEach(function (b) { b.classList.remove('active'); });
+			btn.classList.add('active');
+			strategy = btn.dataset.strategy;
+			update();
+		});
+	});
 
 	slider.addEventListener('input', update);
 	update();
