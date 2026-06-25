@@ -98,10 +98,12 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		display: block;
 		box-sizing: border-box;
 	}
-	:global(.quiz-option:hover) {
-		color: var(--color-text);
-		border-color: var(--color-accent);
-		background: var(--color-bg-emphasis);
+	@media (hover: hover) {
+		:global(.quiz-option:hover) {
+			color: var(--color-text);
+			border-color: var(--color-accent);
+			background: var(--color-bg-emphasis);
+		}
 	}
 	:global(.quiz-option:active),
 	:global(.quiz-option.selected) {
@@ -370,7 +372,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		tipEl.innerHTML = '<span class="quiz-tip-icon">💡</span> ' + s.tip.replace(/^Tip:\s*/, '');
 		recEl.textContent = s.rec;
 		ctaEl.textContent = 'Browse budget templates';
-		ctaEl.href = s.url;
+		ctaEl.href = 'https://simplysheetdesign.etsy.com';
 
 		questionsEl.hidden = true;
 		resultEl.hidden = false;

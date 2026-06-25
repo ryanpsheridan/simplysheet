@@ -57,6 +57,8 @@ Most people aren't 100% one budgeting style. You might be a Planner when it come
 
 Budgeting advice often fails not because the advice is wrong, but because it doesn't match how the person actually thinks about money. A detailed, category-by-category system might feel reassuring to a Planner and completely overwhelming to an Avoider. A strict savings goal might motivate a Saver and feel punishing to a Spender. Matching the system to the person, instead of forcing the person to fit the system, is usually the difference between a budget that sticks and one that gets abandoned by February.
 
-Not sure which one you are? [Take the 60-second quiz](/quiz/budgeting-style/) to find out, and get one tip suited to your specific style.
+Not sure which one you are?
+
+<a href="/quiz/budgeting-style/" class="btn btn-primary">Take the 60-second quiz</a>
 
 Looking for a spreadsheet that fits your style? [Browse all budget templates](https://simplysheetdesign.etsy.com) on the shop.
