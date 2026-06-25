@@ -213,14 +213,9 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		grid-template-columns: 1fr;
 		gap: var(--space-sm);
 	}
-	@media (min-width: 600px) {
+	@media (min-width: 480px) {
 		.calc :global(.debt-row-fields) {
 			grid-template-columns: 1fr 1fr;
-		}
-	}
-	@media (min-width: 860px) {
-		.calc :global(.debt-row-fields) {
-			grid-template-columns: 1.5fr 1fr 1fr 1fr;
 		}
 	}
 
@@ -386,12 +381,6 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 
 	@media (max-width: 768px) {
 		.debt-results-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	@media (max-width: 480px) {
-		.calc :global(.debt-row-fields) {
 			grid-template-columns: 1fr;
 		}
 	}
@@ -643,7 +632,10 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		var absDiff = Math.abs(interestDiff);
 		var absMonths = Math.abs(monthDiff);
 
-		if (absDiff < 50 && absMonths <= 1) {
+		if (extra === 0 && absDiff < 50 && absMonths <= 1) {
+			compEl.textContent = 'Without an extra monthly payment, both methods produce the same result because each debt is simply paid at its minimum.';
+			recEl.textContent = 'Try adding an extra monthly payment above to see how the two methods compare. That is where the ordering makes a difference.';
+		} else if (absDiff < 50 && absMonths <= 1) {
 			compEl.textContent = 'Both methods land within ' + formatCurrency(absDiff) + ' and ' + absMonths + ' month' + (absMonths === 1 ? '' : 's') + ' of each other.';
 			recEl.textContent = 'The two approaches are close enough that the choice comes down to personal preference rather than the math. Pick whichever ordering feels more motivating to you.';
 		} else if (interestDiff > 0) {
