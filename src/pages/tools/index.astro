@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../../consts';
+
+const title = 'Free Budgeting Tools';
+const description = 'Free calculators and tools to help you manage your money. Compare debt payoff strategies, find your ideal budget split, and more.';
+
+const tools = [
+	{
+		name: '50/30/20 Budget Calculator',
+		desc: 'Enter your take-home pay and see how much to spend on needs, wants, and savings each month.',
+		url: '/tools/50-30-20-budget-calculator',
+	},
+	{
+		name: 'Debt Snowball vs. Avalanche Calculator',
+		desc: 'Compare snowball and avalanche debt payoff methods side by side to see which saves more money and time.',
+		url: '/tools/debt-snowball-avalanche-calculator',
+	},
+];
+---
+
+<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+	<main>
+		<header class="tools-header">
+			<h1>Tools</h1>
+			<p class="tools-intro">Free calculators to help you make clearer decisions about your money.</p>
+		</header>
+
+		<div class="tools-grid">
+			{tools.map((tool) => (
+				<a href={tool.url} class="tool-card">
+					<h2 class="tool-name">{tool.name}</h2>
+					<p class="tool-desc">{tool.desc}</p>
+					<span class="tool-link">Open tool <span class="arrow">&rarr;</span></span>
+				</a>
+			))}
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.tools-header {
+		margin-bottom: var(--space-lg);
+	}
+	.tools-header h1 {
+		font-size: var(--text-h1);
+		font-weight: var(--weight-bold);
+	}
+	.tools-intro {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+	.tools-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-md);
+	}
+	.tool-card {
+		display: flex;
+		flex-direction: column;
+		padding: var(--space-lg);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		background: var(--color-bg-surface);
+		transition: border-color 0.15s, box-shadow 0.2s ease;
+	}
+	.tool-card:hover {
+		border-color: var(--color-divider);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+	}
+	.tool-name {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin: 0 0 var(--space-xs);
+	}
+	.tool-desc {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0 0 auto;
+		padding-bottom: var(--space-md);
+	}
+	.tool-link {
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-accent);
+	}
+	@media (max-width: 600px) {
+		.tools-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

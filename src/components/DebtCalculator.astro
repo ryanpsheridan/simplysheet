@@ -210,8 +210,13 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	}
 	.calc :global(.debt-row-fields) {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr;
 		gap: var(--space-sm);
+	}
+	@media (min-width: 600px) {
+		.calc :global(.debt-row-fields) {
+			grid-template-columns: 1fr 1fr;
+		}
 	}
 	@media (min-width: 860px) {
 		.calc :global(.debt-row-fields) {
