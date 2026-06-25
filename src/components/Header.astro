@@ -76,11 +76,6 @@ import { SITE_TITLE } from '../consts';
 		color: var(--color-text);
 		text-decoration: none;
 		letter-spacing: var(--tracking-tight);
-		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		transform-origin: left center;
-	}
-	header.scrolled .site-title {
-		transform: scale(0.85);
 	}
 	.site-logo {
 		display: block;
@@ -219,9 +214,11 @@ import { SITE_TITLE } from '../consts';
 		if (!ticking) {
 			requestAnimationFrame(() => {
 				const currentY = window.scrollY;
-				const scrollingUp = currentY < lastScrollY;
-				header?.classList.toggle('scrolled', currentY > 20 && !scrollingUp);
-				lastScrollY = currentY;
+				const delta = currentY - lastScrollY;
+				if (Math.abs(delta) > 5) {
+					header?.classList.toggle('scrolled', currentY > 20 && delta > 0);
+					lastScrollY = currentY;
+				}
 				ticking = false;
 			});
 			ticking = true;
