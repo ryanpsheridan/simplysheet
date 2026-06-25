@@ -210,8 +210,13 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	}
 	.calc :global(.debt-row-fields) {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: 1fr 1fr;
 		gap: var(--space-sm);
+	}
+	@media (max-width: 480px) {
+		.calc :global(.debt-row-fields) {
+			grid-template-columns: 1fr;
+		}
 	}
 
 	/* ——— Add button ——— */
@@ -538,6 +543,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		var month = 0;
 		var maxMonths = 1200;
 		var payoffOrder = [];
+		var rollingExtra = extra;
 
 		while (month < maxMonths) {
 			var allPaid = true;
@@ -547,7 +553,6 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 			if (allPaid) break;
 
 			month++;
-			var freed = 0;
 
 			for (var i = 0; i < accounts.length; i++) {
 				var a = accounts[i];
@@ -562,14 +567,14 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 				a.balance -= payment;
 
 				if (a.balance <= 0.005) {
-					freed += a.minPay - payment;
 					a.balance = 0;
 					a.paidOffMonth = month;
+					rollingExtra += a.minPay;
 					payoffOrder.push({ name: a.name, month: month, interest: a.interestPaid });
 				}
 			}
 
-			var extraPool = extra + freed;
+			var extraPool = rollingExtra;
 			for (var i = 0; i < accounts.length; i++) {
 				var a = accounts[i];
 				if (a.balance <= 0 || extraPool <= 0) continue;
@@ -579,6 +584,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 				if (a.balance <= 0.005) {
 					a.balance = 0;
 					a.paidOffMonth = month;
+					rollingExtra += a.minPay;
 					payoffOrder.push({ name: a.name, month: month, interest: a.interestPaid });
 				}
 			}
