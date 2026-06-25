@@ -8,6 +8,12 @@ import { SITE_TITLE } from '../consts';
 			<img src="/images/logo-svg.svg" alt="SimplySheetDesign logo" class="site-logo" width="34" height="36" />
 			<span class="site-title-text">{SITE_TITLE}</span>
 		</a>
+		<ul class="nav-links">
+			<li><a href="/articles">Articles</a></li>
+			<li><a href="/calculators/50-30-20-budget-calculator">Calculators</a></li>
+			<li><a href="/quiz/budgeting-style">Find Your Budget Type</a></li>
+			<li><a href="/about">About</a></li>
+		</ul>
 		<button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
 			<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
 				<line x1="4" y1="7" x2="20" y2="7" />
@@ -31,6 +37,8 @@ import { SITE_TITLE } from '../consts';
 		<ul class="menu-links">
 			<li><a href="/">Home</a></li>
 			<li><a href="/articles">Articles</a></li>
+			<li><a href="/calculators/50-30-20-budget-calculator">Calculators</a></li>
+			<li><a href="/quiz/budgeting-style">Find Your Budget Type</a></li>
 			<li><a href="/about">About</a></li>
 		</ul>
 	</div>
@@ -82,8 +90,30 @@ import { SITE_TITLE } from '../consts';
 		display: inline-block;
 		white-space: nowrap;
 	}
-	.menu-toggle {
+
+	/* ——— Desktop nav links ——— */
+
+	.nav-links {
+		list-style: none;
 		display: flex;
+		align-items: center;
+		gap: var(--space-md);
+		padding: 0;
+		margin: 0;
+	}
+	.nav-links a {
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+	.nav-links a:hover {
+		color: var(--color-text);
+	}
+
+	.menu-toggle {
+		display: none;
 		align-items: center;
 		justify-content: center;
 		background: none;
@@ -164,6 +194,17 @@ import { SITE_TITLE } from '../consts';
 	}
 	.menu-links a:hover {
 		color: var(--color-text-secondary);
+	}
+
+	/* ——— Tablet and below: hide desktop nav, show hamburger ——— */
+
+	@media (max-width: 960px) {
+		.nav-links {
+			display: none;
+		}
+		.menu-toggle {
+			display: flex;
+		}
 	}
 </style>
 
