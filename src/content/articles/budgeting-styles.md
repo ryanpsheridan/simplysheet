@@ -61,4 +61,16 @@ Not sure which one you are?
 
 <a href="/quiz/budgeting-style/" class="btn btn-primary">Take the 60-second quiz</a>
 
-Looking for a spreadsheet that fits your style? [Browse all budget templates](https://simplysheetdesign.etsy.com) on the shop.
+<div class="product-cards">
+<a href="https://www.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel" class="product-card" target="_blank" rel="noopener noreferrer">
+<div class="product-card-thumb"><img src="/images/featured budget thumbnail- budget template.jpg" alt="Budget Template preview" width="600" height="400" loading="lazy" /></div>
+<span class="product-card-badge">Best Seller</span>
+<h3 class="product-card-name">Budget Template</h3>
+<p class="product-card-desc">Track income and daily expenses with real-time progress indicators that show where you stand each month.</p>
+</a>
+<a href="https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets" class="product-card" target="_blank" rel="noopener noreferrer">
+<div class="product-card-thumb"><img src="/images/featured budget thumbnail-couples.jpg" alt="Couples Budget Spreadsheet preview" width="600" height="400" loading="lazy" /></div>
+<h3 class="product-card-name">Couples Budget Spreadsheet</h3>
+<p class="product-card-desc">Split bills, track shared and personal expenses, and manage savings together. Built for two incomes.</p>
+</a>
+</div>
