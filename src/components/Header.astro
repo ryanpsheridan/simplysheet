@@ -5,7 +5,7 @@ import { SITE_TITLE } from '../consts';
 <header>
 	<nav>
 		<a class="site-title" href="/">
-			<img src="/images/logo-svg.svg" alt="SimplySheetDesign logo" class="site-logo" width="24" height="26" />
+			<img src="/images/logo-svg.svg" alt="Simply Sheet Design logo" class="site-logo" width="24" height="26" />
 			<span class="site-title-text">{SITE_TITLE}</span>
 		</a>
 		<ul class="nav-links">
@@ -205,16 +205,23 @@ import { SITE_TITLE } from '../consts';
 		.menu-toggle {
 			display: flex;
 		}
+		.site-title {
+			font-size: var(--text-h3);
+		}
 	}
 </style>
 
 <script>
 	const header = document.querySelector('header');
+	let lastScrollY = 0;
 	let ticking = false;
 	window.addEventListener('scroll', () => {
 		if (!ticking) {
 			requestAnimationFrame(() => {
-				header?.classList.toggle('scrolled', window.scrollY > 20);
+				const currentY = window.scrollY;
+				const scrollingUp = currentY < lastScrollY;
+				header?.classList.toggle('scrolled', currentY > 20 && !scrollingUp);
+				lastScrollY = currentY;
 				ticking = false;
 			});
 			ticking = true;
