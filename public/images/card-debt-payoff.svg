@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E3F2FD"/>
+      <stop offset="100%" stop-color="#BBDEFB"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1565C0" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#42A5F5" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0D47A1" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#90CAF9" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4527A0" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#B39DDB" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <!-- Abstract gradient background -->
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="240" cy="120" rx="280" ry="180" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="730" cy="80" rx="260" ry="160" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="490" cy="30" rx="200" ry="140" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="140" cy="310" r="130" fill="#1565C0" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="850" cy="60" r="110" fill="#4527A0" fill-opacity="0.08" filter="url(#blur3)"/>
+
+  <!-- Grain texture overlay -->
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
+
+  <!-- White card -->
+  <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
+
+  <!-- Header -->
+  <text x="164" y="108" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Debt payoff tracker</text>
+
+  <!-- Column headers -->
+  <text x="164" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#8A817C">ACCOUNT</text>
+  <text x="420" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#8A817C">BALANCE</text>
+  <text x="560" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#8A817C">APR</text>
+  <text x="660" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#8A817C">MIN PMT</text>
+  <text x="780" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#8A817C">STATUS</text>
+
+  <line x1="164" y1="158" x2="796" y2="158" stroke="#F0EDEA" stroke-width="1"/>
+
+  <!-- Row 1 — Credit Card (focus) -->
+  <rect x="150" y="166" width="660" height="30" rx="4" fill="#E3F2FD" fill-opacity="0.5"/>
+  <text x="164" y="186" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Chase credit card</text>
+  <text x="420" y="186" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522">$4,280</text>
+  <text x="560" y="186" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#C62828">22.9%</text>
+  <text x="660" y="186" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">$95</text>
+  <rect x="748" y="174" width="62" height="20" rx="10" fill="#E3F2FD"/>
+  <text x="779" y="188" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#1565C0" text-anchor="middle">Focus</text>
+
+  <!-- Row 2 — Car Loan -->
+  <text x="164" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Car loan</text>
+  <text x="420" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">$8,400</text>
+  <text x="560" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">5.9%</text>
+  <text x="660" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">$220</text>
+  <rect x="748" y="212" width="62" height="20" rx="10" fill="#FFF3E0"/>
+  <text x="779" y="226" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#E86A33" text-anchor="middle">Next</text>
+
+  <!-- Row 3 — Personal Loan -->
+  <text x="164" y="262" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Personal loan</text>
+  <text x="420" y="262" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">$2,100</text>
+  <text x="560" y="262" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">8.5%</text>
+  <text x="660" y="262" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">$75</text>
+  <rect x="748" y="250" width="62" height="20" rx="10" fill="#F0EDEA"/>
+  <text x="779" y="264" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C" text-anchor="middle">Min</text>
+
+  <!-- Row 4 — Student Loan -->
+  <text x="164" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Student loan</text>
+  <text x="420" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">$12,600</text>
+  <text x="560" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">4.5%</text>
+  <text x="660" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">$140</text>
+  <rect x="748" y="288" width="62" height="20" rx="10" fill="#F0EDEA"/>
+  <text x="779" y="302" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8A817C" text-anchor="middle">Min</text>
+
+  <!-- Totals -->
+  <line x1="164" y1="326" x2="796" y2="326" stroke="#F0EDEA" stroke-width="1"/>
+
+  <text x="164" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Total debt</text>
+  <text x="164" y="396" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#2A2522">$27,380</text>
+
+  <text x="420" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Paid off this year</text>
+  <text x="420" y="396" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#2E7D32">$3,820</text>
+
+  <!-- Progress bar -->
+  <text x="164" y="440" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#8A817C">PROGRESS</text>
+  <rect x="164" y="452" width="632" height="8" rx="4" fill="#F0EDEA"/>
+  <rect x="164" y="452" width="78" height="8" rx="4" fill="#1565C0"/>
+  <text x="164" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6E6560">12% paid off</text>
+</svg>

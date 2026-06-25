@@ -1,0 +1,47 @@
+---
+title: "How to Pay Off Multiple Debts Without Losing Track of Everything"
+description: "Choosing snowball or avalanche isn't usually the hard part of paying off debt. Keeping track of balances, rates, and progress across accounts is. Here's why that matters more than the method."
+pubDate: 'Jun 25 2026'
+image: '/images/article-debt-payoff.svg'
+cardImage: '/images/card-debt-payoff.svg'
+tags: ['debt-payoff']
+schema:
+  "@context": "https://schema.org"
+  "@type": "Article"
+  headline: "How to Pay Off Multiple Debts Without Losing Track of Everything"
+  description: "Choosing snowball or avalanche isn't usually the hard part of paying off debt. Keeping track of balances, rates, and progress across accounts is."
+---
+
+## Why does paying off debt feel harder than it should, even with a plan?
+
+Most debt advice starts with a method. Pay off the smallest balance first for momentum, or pay off the highest interest rate first to save money. Both are reasonable strategies, and there are good arguments for each.
+
+The part that actually trips people up usually isn't picking a method. It's keeping an accurate picture of multiple balances, rates, and minimum payments at the same time, especially when that information is scattered across two or three different apps and statements that update on their own schedules. By the time you've checked four account balances, you've already lost the thread of which one you were planning to focus on this month.
+
+## What does losing track actually look like in practice?
+
+It rarely looks dramatic. It looks like missing that one balance crept up because a minimum payment didn't fully cover that month's interest. It looks like forgetting which card had the better rate, so an extra payment goes to the wrong place. It looks like making real progress on paper but not feeling it, because there's no single place showing the totals moving in the right direction.
+
+Someone might be carrying three balances: a credit card, a car loan, and a personal loan. They check the credit card app one day, glance at the car loan statement another day, and forget to check the personal loan for two months because it doesn't send notifications. An extra payment goes toward the card that already had the lower rate, simply because it was the one open on the screen that day. Nobody made a bad decision, the information was just never in one place at the same time.
+
+None of this is about discipline. It's about visibility. When the information lives in four separate places, it's hard to act consistently even with the best intentions.
+
+## Does the payoff method even matter if tracking is the real issue?
+
+It matters less than people think, at least at the start. Snowball and avalanche are both fine choices, and there are good arguments for each. For many people, the difference between the two ends up being less important than simply tracking consistently and following through on whichever method they choose. A clear, current view of every balance, rate, and minimum payment makes either method easier to follow. Without that view, even the mathematically optimal method is hard to execute, because you're working from memory or from whichever app happened to sync most recently.
+
+## What's actually worth tracking?
+
+A short list covers most of it. Current balance on each account. Interest rate on each account. Minimum payment on each account. And some sense of total progress over time, even something as simple as the combined balance dropping month over month. That last part matters more than it sounds like it should, seeing the total number move down tends to be what keeps people going months in, long after the initial motivation from making a plan has faded.
+
+A simple [shared sheet](https://simplysheetdesign.etsy.com) tends to work well here for the same reason it works for budgeting in general. It's one place, updated by hand, that shows the real numbers without needing four logins to piece together the same picture.
+
+## How do you actually get started?
+
+List every debt in one place, balance, rate, and minimum payment, before deciding on a method at all. Once that's in front of you, snowball or avalanche becomes a much easier decision, because you're choosing based on a real, current picture instead of a half-remembered one. The tracking is what makes the method work, not the other way around.
+
+This is the same idea behind tracking spending in general, you can't make good decisions about money you can't see clearly. [Where Is My Money Going?](/articles/where-is-my-money-going) covers that same principle from the budgeting side, if debt is only part of the picture.
+
+---
+
+Related: [The 50/30/20 Rule, Explained](/articles/50-30-20-rule)
