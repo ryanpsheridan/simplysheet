@@ -102,6 +102,12 @@ const templates = [
 		</section>
 	)}
 
+	<section class="quiz-banner">
+		<div class="quiz-banner-inner">
+			<a href="/quiz/budgeting-style" class="quiz-banner-link">Curious which budgeting style fits you best? Take the 60-second quiz <span class="arrow">&rarr;</span></a>
+		</div>
+	</section>
+
 	<section class="about-brief" id="about-brief">
 		<div class="about-brief-inner">
 			<div class="about-brief-label">My story</div>
@@ -307,6 +313,37 @@ const templates = [
 	}
 	.articles-more {
 		padding-top: var(--space-sm);
+	}
+
+	/* ——— Quiz banner ——— */
+
+	.quiz-banner {
+		padding: var(--space-lg) var(--space-md);
+		background: var(--color-bg-panel);
+		border-top: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+		text-align: center;
+	}
+	.quiz-banner-inner {
+		max-width: var(--max-width);
+		margin: 0 auto;
+	}
+	.quiz-banner-link {
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+	.quiz-banner-link:hover {
+		color: var(--color-text);
+	}
+	.quiz-banner-link .arrow {
+		display: inline-block;
+		transition: transform 0.15s ease;
+	}
+	.quiz-banner-link:hover .arrow {
+		transform: translateX(3px);
 	}
 
 	/* ——— About brief ——— */
