@@ -150,7 +150,7 @@ const templates = [
 							}
 						</div>
 						{t.badge && <span class="template-badge">{t.badge}</span>}
-						<h3 class="template-name">{t.name} <svg class="external-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></h3>
+						<h3 class="template-name">{t.name}</h3>
 						<p class="template-desc">{t.desc}</p>
 					</a>
 				))}
@@ -497,14 +497,6 @@ const templates = [
 	}
 	.template-card:not(:has(.template-badge)) .template-name {
 		padding-top: var(--space-md);
-	}
-	.external-arrow {
-		flex-shrink: 0;
-		color: var(--color-text);
-		transition: transform 150ms ease;
-	}
-	.template-card:hover .external-arrow {
-		transform: translateX(3px);
 	}
 	.template-desc {
 		font-size: var(--text-small);
