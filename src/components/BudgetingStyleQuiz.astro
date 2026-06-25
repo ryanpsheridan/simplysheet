@@ -193,6 +193,9 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 	}
 
 	@media (max-width: 480px) {
+		.quiz {
+			padding: var(--space-md);
+		}
 		.quiz-result-title {
 			font-size: var(--text-h3);
 		}
@@ -277,6 +280,9 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		planner: {
 			name: "The Planner",
 			icon: "event_note",
+			color: "#7E57C2",
+			iconBg: "#F3E5F5",
+			tipBg: "linear-gradient(135deg, #F3E5F5 0%, #EDE7F6 100%)",
 			desc: "You like having a system and knowing exactly where your money goes. Structure gives you confidence, and you feel most at ease when every dollar has a job. Your strength is discipline, and your challenge is staying flexible when plans change.",
 			tip: "Tip: Schedule a monthly \"budget review\" to adjust your plan based on real spending. A budget that adapts is one that lasts.",
 			rec: "You would get the most out of a detailed budget spreadsheet with category tracking and monthly review dashboards.",
@@ -286,6 +292,9 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		saver: {
 			name: "The Saver",
 			icon: "savings",
+			color: "#2D9D78",
+			iconBg: "#E8F5E9",
+			tipBg: "linear-gradient(135deg, #E8F5E9 0%, #E0F2F1 100%)",
 			desc: "You are naturally frugal and feel best when your savings are growing. You are great at saying no to impulse buys, but sometimes you might hold back too much on things that would genuinely improve your life.",
 			tip: "Tip: Set a small \"fun money\" line item in your budget so you can enjoy spending guilt-free. Saving is the goal, not the whole picture.",
 			rec: "A savings goals tracker can help you channel your saving instincts into clear targets with visible progress.",
@@ -295,6 +304,9 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		spender: {
 			name: "The Spender",
 			icon: "shopping_bag",
+			color: "#E86A33",
+			iconBg: "#FFF3E0",
+			tipBg: "linear-gradient(135deg, #FFF3E0 0%, #FFF8E1 100%)",
 			desc: "You enjoy the present and believe money is meant to be used. You are generous and spontaneous, which makes life fun. Your challenge is building habits that balance today's enjoyment with tomorrow's security.",
 			tip: "Tip: Try the 24-hour rule for non-essential purchases over $50. If you still want it tomorrow, go for it.",
 			rec: "A simple daily expense tracker can help you see patterns without feeling restricted. Awareness is the first step.",
@@ -304,6 +316,9 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		avoider: {
 			name: "The Avoider",
 			icon: "visibility_off",
+			color: "#196EDD",
+			iconBg: "#E3F2FD",
+			tipBg: "linear-gradient(135deg, #E3F2FD 0%, #EEF4FF 100%)",
 			desc: "Money stresses you out, so you tend to put off financial decisions. This is more common than you think, and the good news is that even small steps can build big momentum. You do not need to overhaul everything at once.",
 			tip: "Tip: Start with just one habit: check your bank balance every morning. That is it. Familiarity reduces anxiety over time.",
 			rec: "A straightforward budget spreadsheet with minimal setup can make the first step feel approachable instead of overwhelming.",
@@ -367,6 +382,9 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 
 		var s = styles[winner];
 		iconEl.innerHTML = '<span class="material-symbols-rounded">' + s.icon + '</span>';
+		iconEl.style.background = s.iconBg;
+		iconEl.querySelector('.material-symbols-rounded').style.color = s.color;
+		tipEl.style.background = s.tipBg;
 		styleEl.textContent = 'Your Budgeting Style: ' + s.name;
 		descEl.textContent = s.desc;
 		tipEl.innerHTML = '<span class="quiz-tip-icon">💡</span> ' + s.tip.replace(/^Tip:\s*/, '');

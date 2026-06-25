@@ -9,7 +9,7 @@ faq:
   - question: 'Are budgeting apps bad?'
     answer: 'No. Budgeting apps are genuinely powerful and work well for many people. The distinction is between automation and awareness. Apps automate the data, which is useful, but for some people the manual effort of a spreadsheet is what builds the habit of actually paying attention to spending.'
   - question: 'Do I need to enter every single transaction manually?'
-    answer: 'Not necessarily. The goal is awareness, not busywork. Most people find that entering transactions once a day or a few times a week is enough to stay connected to their spending. The point is that you notice the numbers, not that you log every penny in real time.'
+    answer: 'Not necessarily. The goal is awareness, not busywork. Most people find that entering transactions once a day or a few times a week is enough to stay connected to their spending. That said, if you are just starting out with budgeting, tracking every single transaction for at least the first two to four weeks is a great idea. It gives you a solid baseline and builds the awareness that makes budgeting stick long term. After that initial period, you can decide what frequency works for you.'
   - question: 'Can I use a spreadsheet and an app together?'
     answer: 'Yes. Some people use an app for automatic transaction tracking and a spreadsheet for weekly reviews and planning. The two approaches are not mutually exclusive, and combining them can give you both convenience and awareness.'
   - question: 'What if I have never used a spreadsheet before?'
@@ -57,7 +57,7 @@ The challenge isn't tracking money, it's building a system simple enough to keep
 
 It does, and it's an underrated part of the comparison. Many budgeting apps run on a monthly or yearly subscription, which is worth it for people who lean on the automation. But not everyone needs that level of functionality just to stay aware of where their money is going.
 
-A basic spreadsheet can be entirely free in Google Sheets, and even a paid template is usually a one-time cost rather than an ongoing one. For someone just getting started, that lower barrier alone can make it easier to begin, since there's no account to connect and no new platform to learn.
+A basic spreadsheet can be entirely free in Google Sheets, and even a [paid template](https://simplysheetdesign.etsy.com) is usually a one-time cost rather than an ongoing one. For someone just getting started, that lower barrier alone can make it easier to begin, since there's no account to connect and no new platform to learn.
 
 ## So is a spreadsheet actually better than an app?
 
