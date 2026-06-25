@@ -180,6 +180,11 @@ button:hover > .arrow {
 }
 
 @media (max-width: 960px) {
+	:root {
+		--text-h1: 2rem;
+		--text-h2: 1.625rem;
+		--text-h3: 1.375rem;
+	}
 	.btn {
 		font-size: var(--text-body);
 		padding: 0.75rem 1.5rem;

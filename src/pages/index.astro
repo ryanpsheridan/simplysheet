@@ -57,7 +57,7 @@ const templates = [
 							<img src={featured.data.cardImage ?? featured.data.image} alt="" width="960" height="540" />
 						</div>
 					)}
-					<span class="hero-featured-label">Latest</span>
+					<span class="hero-featured-label">Latest Article</span>
 					<h2 class="hero-featured-title">{featured.data.title}</h2>
 					<p class="hero-featured-meta">
 						<FormattedDate date={featured.data.pubDate} />
@@ -335,11 +335,11 @@ const templates = [
 		margin: 0;
 	}
 	:global(.about-brief-body .word) {
-		color: var(--color-text-muted);
-		transition: color 0.4s ease;
+		color: #A09890;
+		transition: color 0.15s ease;
 	}
 	:global(.about-brief-body .word.lit) {
-		color: var(--color-text);
+		color: #000000;
 	}
 	.about-brief-link {
 		margin-top: var(--space-md);
@@ -461,7 +461,7 @@ const templates = [
 
 		const words = textEl.querySelectorAll<HTMLSpanElement>('.word');
 		words.forEach((w, i) => {
-			w.style.transitionDelay = `${i * 8}ms`;
+			w.style.transitionDelay = `${i * 3}ms`;
 		});
 		const section = document.getElementById('about-brief');
 		let ticking = false;
