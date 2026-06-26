@@ -547,7 +547,7 @@ const templates = [
 			if (!section) return;
 			const rect = section.getBoundingClientRect();
 			const vh = window.innerHeight;
-			const start = vh * 0.65;
+			const start = vh * 0.45;
 			const end = vh * 0.15;
 			const progress = Math.max(0, Math.min(1, (start - rect.top) / (start - end)));
 			const litCount = Math.round(progress * words.length);

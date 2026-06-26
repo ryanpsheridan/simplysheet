@@ -227,18 +227,12 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 
 		if (extra === 0) {
 			contextEl.textContent = 'Drag the slider to see how extra payments affect each strategy differently.';
-			noteEl.textContent = '';
 		} else {
 			var advantage = Math.round((1 - avalPct / snowPct) * 100);
 			if (advantage < 1) advantage = 1;
 			contextEl.innerHTML = 'Avalanche is saving roughly <strong class="compare-pct">' + advantage + '%</strong> more in interest than Snowball.';
-
-			if (t >= 1) {
-				noteEl.textContent = 'The exact dollar amount of these savings depends on your specific interest rates. Use the Debt Payoff Tracker to see your precise savings.';
-			} else {
-				noteEl.textContent = '';
-			}
 		}
+		noteEl.textContent = 'The exact savings depend on your specific interest rates and balances. Use the Debt Payoff Tracker to see your precise numbers.';
 	}
 
 	slider.addEventListener('input', update);
