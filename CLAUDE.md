@@ -4,6 +4,18 @@
 
 Astro-based personal finance content site. Articles in `src/content/articles/` (`.md` or `.mdx`). Design tokens in `src/styles/tokens.css`. Google Fonts loaded in `src/components/BaseHead.astro`.
 
+## SEO — Always Top of Mind
+
+The primary goal of this site is organic Google discovery. Every change — new articles, layout updates, content edits — should support that. Specifically:
+
+- Every article must have a unique, descriptive `title` and `description` in frontmatter (these become `<title>` and `<meta name="description">`).
+- Use a clear, keyword-relevant slug for the article filename.
+- Article content should use a logical heading hierarchy (`##` for main sections, `###` for subsections). Never skip heading levels.
+- Internal links between articles improve crawlability — include them naturally in article body text where relevant.
+- If the article has FAQ content, include it in the `faq` frontmatter array. This renders as collapsible Q&A with structured markup that search engines can surface.
+- The `schema` field in frontmatter provides JSON-LD structured data. Always include it with `@type: Article`, a `headline`, and a `description`.
+- The site already has a sitemap (`/sitemap-index.xml`), canonical URLs, and Open Graph tags — these are handled automatically by `BaseHead.astro`.
+
 ## When a New Article Is Submitted
 
 Every time an article is provided, automatically do all of the following:
@@ -20,6 +32,8 @@ Every time an article is provided, automatically do all of the following:
 4. **Use a unique color scheme** for each article's SVGs. Do not reuse an existing article's palette. See the color registry below.
 5. **Verify all internal article links** actually exist by cross-referencing slugs in `src/content/articles/`. Remove or unlink any references to articles that don't exist.
 6. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
+7. **Update related articles cross-links** — review existing articles and add natural internal links to/from the new article where topically relevant. Internal cross-linking improves both user navigation and SEO crawlability. The "Related articles" section at the bottom of each page is auto-generated (3 most recent), but in-body links between related topics are more valuable.
+8. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
 
 ## SVG Color Registry
 
