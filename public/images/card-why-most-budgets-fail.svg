@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8E1"/>
+      <stop offset="100%" stop-color="#FFECB3"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F9A825" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FFD54F" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF8F00" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FFCA28" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7E57C2" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#CE93D8" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <!-- Abstract gradient background -->
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="280" cy="120" rx="300" ry="180" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="680" cy="80" rx="260" ry="160" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="500" cy="30" rx="220" ry="140" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="120" cy="300" r="130" fill="#F9A825" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="850" cy="60" r="120" fill="#7E57C2" fill-opacity="0.08" filter="url(#blur3)"/>
+
+  <!-- Grain texture overlay -->
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
+
+  <!-- White card -->
+  <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
+
+  <!-- Header -->
+  <text x="164" y="108" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Monthly budget</text>
+  <text x="796" y="108" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8A817C" text-anchor="end">3 categories</text>
+
+  <!-- Total -->
+  <text x="164" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#2A2522">$4,200</text>
+  <text x="164" y="170" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8A817C">take-home income</text>
+
+  <!-- Divider -->
+  <line x1="164" y1="190" x2="796" y2="190" stroke="#F0EDEA" stroke-width="1"/>
+
+  <!-- Needs -->
+  <text x="164" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#2A2522">Needs</text>
+  <text x="796" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$2,100</text>
+  <text x="796" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C" text-anchor="end">50%</text>
+  <rect x="164" y="254" width="632" height="6" rx="3" fill="#F0EDEA"/>
+  <rect x="164" y="254" width="316" height="6" rx="3" fill="#F9A825"/>
+
+  <!-- Wants -->
+  <text x="164" y="296" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#2A2522">Wants</text>
+  <text x="796" y="296" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$1,260</text>
+  <text x="796" y="316" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C" text-anchor="end">30%</text>
+  <rect x="164" y="326" width="632" height="6" rx="3" fill="#F0EDEA"/>
+  <rect x="164" y="326" width="190" height="6" rx="3" fill="#F9A825" fill-opacity="0.6"/>
+
+  <!-- Savings -->
+  <text x="164" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#2A2522">Savings</text>
+  <text x="796" y="368" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522" text-anchor="end">$840</text>
+  <text x="796" y="388" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C" text-anchor="end">20%</text>
+  <rect x="164" y="398" width="632" height="6" rx="3" fill="#F0EDEA"/>
+  <rect x="164" y="398" width="126" height="6" rx="3" fill="#F9A825" fill-opacity="0.35"/>
+
+  <!-- Footer note -->
+  <line x1="164" y1="430" x2="796" y2="430" stroke="#F0EDEA" stroke-width="1"/>
+  <text x="164" y="460" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8A817C">Weekly check-in</text>
+  <text x="796" y="460" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2D9D78" font-weight="500" text-anchor="end">On track</text>
+</svg>

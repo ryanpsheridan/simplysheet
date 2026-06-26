@@ -2,6 +2,8 @@
 title: 'Why Most Budgets Fail (And How to Build One That Lasts)'
 description: "Most budgets don't fail because people lack discipline. They fail because the system doesn't fit how people actually manage money. Here's what usually goes wrong, and what tends to work instead."
 pubDate: 'Jun 26 2026'
+image: '/images/article-why-most-budgets-fail.svg'
+cardImage: '/images/card-why-most-budgets-fail.svg'
 tags: ['expense-tracking']
 schema:
   '@context': 'https://schema.org'
@@ -36,7 +38,7 @@ This is the same idea behind [why awareness tends to beat automation](/articles/
 
 Simple doesn't mean basic, it means easier to maintain. A budget with three or four broad categories that you actually check every week will outperform a budget with eighteen categories you stopped opening in March. The goal was never to build the most sophisticated system possible, it was to build one that's still running six months from now.
 
-This is also where the tool itself matters less than people expect. Whether that's a [spreadsheet or an app](/articles/why-spreadsheets-beat-apps), the deciding factor is almost always whether the system fits how much time and attention someone is actually willing to give it, not which one has more features.
+This is also where the tool itself matters less than people expect. Whether it's a spreadsheet or an app, the deciding factor is almost always whether the system fits how much time and attention someone is actually willing to give it, not which one has more features.
 
 ## What should you do if budgeting has never worked for you before?
 
