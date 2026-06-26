@@ -2,6 +2,7 @@
   /* ——— Colors ——— */
 
   --color-text:           #2A2522;
+  --color-text-heading:   #000000;
   --color-text-secondary: #6E6560;
   --color-text-muted:     #8A817C;
 
@@ -49,6 +50,7 @@
 
   /* Tracking */
   --tracking-tight:  -0.02em;
+  --tracking-heading: 0.1px;
   --tracking-normal:  0;
   --tracking-wide:    0.04em;
 
