@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import BudgetCalculator from '../../components/BudgetCalculator.astro';
 import { SITE_TITLE } from '../../consts';
 
@@ -9,6 +10,7 @@ const description = 'Free 50/30/20 budget calculator. Enter your take-home pay a
 
 <BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
 	<main>
+		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: '50/30/20 Budget Calculator' }]} />
 		<article>
 			<header class="calc-header">
 				<h1>50/30/20 Budget Calculator</h1>

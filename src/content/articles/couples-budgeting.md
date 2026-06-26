@@ -40,6 +40,17 @@ This is common, and it's not actually a problem to solve, it's something to plan
 
 This is usually where a simple [shared spreadsheet](https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets) earns its place over juggling separate apps or separate mental tallies. One shared sheet means both people are reacting to the same numbers, which removes a surprising amount of the friction before it has a chance to turn into an argument.
 
+<div class="article-interstitial">
+<a href="https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets" class="interstitial-link" target="_blank" rel="noopener noreferrer">
+<img src="/images/featured budget thumbnail-couples.jpg" alt="Couples Budget Spreadsheet preview" width="600" height="400" loading="lazy" class="interstitial-img" />
+<div class="interstitial-body">
+<p class="interstitial-label">Built for two incomes</p>
+<p class="interstitial-title">Couples Budget Spreadsheet</p>
+<p class="interstitial-desc">Split bills, track shared and personal expenses, and manage savings together in one shared Google Sheet.</p>
+</div>
+</a>
+</div>
+
 ## What's a reasonable way to start?
 
 Start smaller than feels necessary. Pick one shared view of income and fixed expenses for the current month, agree to look at it together once a week, and let the rest build from there. Most of the tension in couples' finances comes from misalignment, not bad decisions, and misalignment is usually the easiest part to fix once there's one shared place both people are actually looking at.

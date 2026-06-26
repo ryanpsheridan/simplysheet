@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import DebtCalculator from '../../components/DebtCalculator.astro';
 import { SITE_TITLE } from '../../consts';
 
@@ -9,6 +10,7 @@ const description = 'See how much interest you could save and how much sooner yo
 
 <BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
 	<main>
+		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: 'Debt Strategy Comparison' }]} />
 		<article>
 			<header class="calc-header">
 				<h1>How much could extra payments save you?</h1>

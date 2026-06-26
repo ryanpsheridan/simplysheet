@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { SITE_TITLE } from '../../consts';
 
 const title = 'Free Budgeting Tools';
@@ -21,6 +22,7 @@ const tools = [
 
 <BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
 	<main>
+		<Breadcrumbs crumbs={[{ label: 'Tools' }]} />
 		<header class="tools-header">
 			<h1>Tools</h1>
 			<p class="tools-intro">Free calculators to help you make clearer decisions about your money.</p>

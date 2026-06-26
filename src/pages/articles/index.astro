@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_TITLE } from '../../consts';
 
@@ -59,6 +60,7 @@ const templates = [
 
 <BaseLayout title={`Articles — ${SITE_TITLE}`} description="Straightforward writing about budgeting, spreadsheets, and managing your money without the stress.">
 	<main class="articles-page">
+		<Breadcrumbs crumbs={[{ label: 'Articles' }]} />
 		<div class="articles-header">
 			<h1>Articles</h1>
 			<button class="filter-toggle" id="filter-toggle" aria-label="Filter and sort articles">

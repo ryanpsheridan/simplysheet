@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import BudgetingStyleQuiz from '../../components/BudgetingStyleQuiz.astro';
 import { SITE_TITLE } from '../../consts';
 
@@ -9,6 +10,7 @@ const description = 'Take our 60-second quiz to uncover your unique money person
 
 <BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
 	<main>
+		<Breadcrumbs crumbs={[{ label: 'Budgeting Style Quiz' }]} />
 		<article>
 			<header class="quiz-header">
 				<h1>Find Your Budgeting Style</h1>
