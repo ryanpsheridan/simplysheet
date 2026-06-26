@@ -25,7 +25,7 @@
 
   /* ——— Typography ——— */
 
-  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-heading: "Urbanist", system-ui, -apple-system, sans-serif;
 
   --text-display:   clamp(2.5rem, 3.5vw + 0.75rem, 3rem);
