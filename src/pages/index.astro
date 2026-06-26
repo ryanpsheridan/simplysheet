@@ -22,8 +22,9 @@ const allArticles = (await getCollection('articles'))
 		return { ...article, readTime };
 	});
 
-const featured = allArticles[0];
-const rest = allArticles.slice(1, 7);
+const featuredSlug = '50-30-20-budget-rule';
+const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
+const rest = allArticles.filter((a) => a.id !== featured.id).slice(0, 6);
 
 const templates = [
 	{
