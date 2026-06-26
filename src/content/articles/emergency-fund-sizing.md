@@ -1,0 +1,67 @@
+---
+title: 'How Much Should You Keep in an Emergency Fund?'
+description: "People often ask how much they should have saved as if there's one correct number. There isn't. Here's how to actually figure out yours."
+pubDate: 'Jun 26 2026'
+tags: ['savings-goals']
+schema:
+  '@context': 'https://schema.org'
+  '@type': 'Article'
+  headline: 'How Much Should You Keep in an Emergency Fund?'
+  description: "People often ask how much they should have saved as if there's one correct number. There isn't. Here's how to actually figure out yours."
+---
+
+People often ask how much they should have in an emergency fund as if there's one correct number. There isn't. The right amount depends on what you're actually trying to protect yourself against, and that's different for almost everyone.
+
+Take two households. The first is a couple with two stable incomes, each with steady jobs in fields that hire consistently. The second is a self-employed person living on one income that varies month to month. Both might be told the same thing, save three to six months of expenses, but that advice means something completely different to each of them. The couple has a backup income if one job disappears. The self-employed person doesn't have a backup at all, and their income isn't even steady in a normal month. The same number doesn't carry the same amount of protection for both of them.
+
+## Why isn't there one right emergency fund amount?
+
+The three-to-six-months guideline comes from a reasonable starting point: it roughly covers the time it tends to take to find a new job after losing one, plus a cushion for whatever else goes wrong along the way. As a rough average across a lot of different situations, it's not a bad number to anchor to.
+
+The problem is that it gets repeated as if it applies evenly to everyone, when it was always meant as a midpoint, not a rule. For the dual-income couple above, three months might be more cushion than they actually need, since losing one income still leaves the other coming in. For the self-employed person, six months might not even be enough, since there's no second income to lean on while they rebuild.
+
+## What expenses actually belong in this calculation?
+
+This is where a lot of the confusion starts. An emergency fund isn't meant to replace your entire current spending, it's meant to cover what you'd genuinely need if income stopped. That's a narrower number than your full monthly budget.
+
+Essential monthly expenses are the ones that don't pause just because income did: housing, utilities, groceries, minimum debt payments, insurance, transportation to get to a job if you find one. Things like dining out, subscriptions, and discretionary spending usually get cut first in an actual emergency, so they don't need to be fully funded in the target number, even though they're a normal part of a regular monthly budget.
+
+For the dual-income couple, essential expenses might be a meaningful amount lower than their full household spending, since some costs are flexible and one income is still coming in if the other stops. For the self-employed person, essential expenses are closer to the full picture, since there's no partial safety net to soften the gap.
+
+Once you know that number, the rest of this becomes a multiplication problem: essential monthly expenses times however many months of coverage actually fits your situation. For example, if your essential monthly expenses are $2,800 and six months makes sense for your situation, your target would be $16,800. The calculator below does that math automatically.
+
+That's exactly what the calculator is for. Instead of assuming everyone needs the same emergency fund, it starts with your essential monthly expenses and lets you explore different coverage periods based on your own situation.
+
+<!-- CALCULATOR_EMBED: emergency-fund -->
+
+## When might three months be enough?
+
+Three months tends to fit situations with some kind of backup already built in. A stable job in a field that hires consistently. A second income in the household that would keep covering essentials if one job ended. A strong support system, family or otherwise, that could help bridge a short gap. Low fixed costs that leave more room to cut quickly if needed.
+
+The dual-income couple in our example is a reasonable fit for the lower end of that range. If one of them lost a job, the other income is still covering a meaningful share of essentials while they look for the next one.
+
+## When might you want closer to six months, or more?
+
+The further you are from having any kind of backup, the more the target should move up. Variable or self-employed income, where even a normal month isn't predictable, let alone a bad one. A single income supporting the household, with nothing else coming in if it stops. A specialized career where finding the next role realistically takes longer than average.
+
+The self-employed person in our example doesn't have a second income or a predictable paycheck to fall back on, which is exactly why six months reads as a minimum rather than a comfortable target. For someone in that position, even pushing toward nine or twelve months isn't overcautious, it's matching the fund to the actual lack of a safety net.
+
+## Should you build this before paying off debt?
+
+There's a real tradeoff here, and no universally correct answer. Putting every spare dollar toward debt instead of savings can save real money in interest. But having zero savings while paying off debt means any unexpected expense, a car repair, a medical bill, becomes new debt instead of something you can absorb.
+
+A common approach is building a small starter emergency fund first, enough to handle unexpected expenses without taking on new debt, then focusing more aggressively on paying down existing debt before continuing to build the larger emergency fund. The right balance depends on how volatile your income is and how much risk you're comfortable carrying while debt gets paid down, which is the same situational thinking that applies to the size of the fund itself.
+
+## What if you can only save a little right now?
+
+Start there anyway. $500 or $1,000 isn't three months of anything, but it's the difference between a flat tire being an inconvenience and a flat tire becoming a credit card balance. The fund doesn't need to be complete to already be doing its job.
+
+For both households in our example, the first real milestone wasn't reaching three or six months, it was building enough to absorb one bad week without it turning into debt. Everything after that is just continuing the same habit at a larger scale.
+
+## So what's the actual answer?
+
+There isn't a single number, and that's the honest takeaway. An emergency fund isn't about hitting three months or six months as a finish line, it's about reducing how much a bad month can actually hurt you. A good emergency fund isn't measured by whether it matches someone else's recommendation. It's measured by whether it gives you enough breathing room to handle life's setbacks without turning them into long-term financial problems.
+
+---
+
+Related: [Where Is My Money Going? A Simple Way to Finally Find Out](/articles/where-is-my-money-going)
