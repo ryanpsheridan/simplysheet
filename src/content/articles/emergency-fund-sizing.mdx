@@ -10,6 +10,8 @@ schema:
   description: "People often ask how much they should have saved as if there's one correct number. There isn't. Here's how to actually figure out yours."
 ---
 
+import EmergencyFundCalculator from '../../components/EmergencyFundCalculator.astro';
+
 People often ask how much they should have in an emergency fund as if there's one correct number. There isn't. The right amount depends on what you're actually trying to protect yourself against, and that's different for almost everyone.
 
 Take two households. The first is a couple with two stable incomes, each with steady jobs in fields that hire consistently. The second is a self-employed person living on one income that varies month to month. Both might be told the same thing, save three to six months of expenses, but that advice means something completely different to each of them. The couple has a backup income if one job disappears. The self-employed person doesn't have a backup at all, and their income isn't even steady in a normal month. The same number doesn't carry the same amount of protection for both of them.
@@ -32,7 +34,7 @@ Once you know that number, the rest of this becomes a multiplication problem: es
 
 That's exactly what the calculator is for. Instead of assuming everyone needs the same emergency fund, it starts with your essential monthly expenses and lets you explore different coverage periods based on your own situation.
 
-<!-- CALCULATOR_EMBED: emergency-fund -->
+<EmergencyFundCalculator />
 
 ## When might three months be enough?
 
