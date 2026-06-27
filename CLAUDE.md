@@ -148,6 +148,9 @@ When building new calculators, follow the pattern in `src/components/BudgetCalcu
 - `formatCurrency` / `formatInput` helper functions for currency display
 - CTA button: `<a href="..." class="btn btn-primary calc-cta">...</a>` (full-width)
 - Place on Tools page (`src/pages/tools/`) and add to the tools index grid
+- Every calculator must exist in **two places**: embedded in the relevant article (via `.mdx` import) and as a **standalone tool page** in `src/pages/tools/` with its own SEO-optimized slug, title, and description
+- Tool page slugs should include "calculator" (e.g. `emergency-fund-calculator`) since that's what people search for
+- The standalone page should include breadcrumbs, a short intro, the calculator component, and a callout linking to the related article
 
 ## Content Schema
 

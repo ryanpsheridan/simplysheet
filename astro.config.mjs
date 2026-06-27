@@ -8,5 +8,6 @@ export default defineConfig({
 	integrations: [mdx(), sitemap()],
 	redirects: {
 		'/articles/debt-payoff': '/articles/how-to-pay-off-debt',
+		'/tools/debt-snowball-avalanche-calculator': '/tools/debt-snowball-vs-avalanche-calculator',
 	},
 });
