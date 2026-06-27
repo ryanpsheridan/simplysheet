@@ -33,6 +33,7 @@ Every time an article is provided, automatically do all of the following:
    image: '/images/article-{slug}.svg'
    cardImage: '/images/card-{slug}.svg'
    ```
+   The `cardImage` is used as the Open Graph / Twitter image for social sharing previews (Facebook, Twitter/X, iMessage, Slack, etc.). Every article **must** have a `cardImage` so link previews display a thumbnail.
 4. **Use a unique color scheme** for each article's SVGs. Do not reuse an existing article's palette. See the color registry below.
 5. **Verify all internal article links** actually exist by cross-referencing slugs in `src/content/articles/`. Remove or unlink any references to articles that don't exist.
 6. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
