@@ -21,9 +21,10 @@ The primary goal of this site is organic Google discovery. Every change — new 
 Every time an article is provided, automatically do all of the following:
 
 1. **Create the article file** in `src/content/articles/` as `.md` (or `.mdx` if it embeds a component).
-2. **Generate two SVG images** and save them in `public/images/`:
+2. **Generate two SVG images** and save them in `public/images/` following the SVG construction rules below:
    - `article-{slug}.svg` — abstract gradient hero image (960x540). Uses blurred ellipse blobs, grain texture overlay, and floating semi-transparent white shapes. No text or UI elements.
    - `card-{slug}.svg` — card thumbnail (960x540). Same gradient background as the hero, but includes a white card with a simple UI mockup relevant to the article topic (progress bars, category rows, etc.).
+   - **Always verify** the generated SVGs render correctly before committing. Open or screenshot them to check that the layout looks right — especially that the white card in card SVGs is properly positioned.
 3. **Include both image paths in frontmatter**:
    ```yaml
    image: '/images/article-{slug}.svg'
@@ -51,6 +52,40 @@ Each article has a unique gradient palette. Check this list before picking color
 | `debt-payoff` | #EDE7F6 | #7E57C2 (purple) |
 | `emergency-fund-sizing` | #E8EAF6 | #5C6BC0 (indigo) |
 | `why-most-budgets-fail` | #FFF8E1 | #F9A825 (amber) |
+
+## SVG Construction Rules
+
+Both SVG types use `width="960" height="540" viewBox="0 0 960 540"`. Follow these specs exactly to keep images consistent across all articles.
+
+### How hero images display on the homepage
+
+On the homepage, the six secondary article cards use the hero image (`article-{slug}.svg`) as a full-bleed background. A white text overlay (`.article-card-body`) anchors to the **bottom-right** corner of the card, covering most of the lower-right area. The gradient peeks through at the **top and left edges** only. This means:
+
+- The hero SVG must have its strongest gradient colors and blobs concentrated in the **upper-left portion** of the image, since that's the only part visible behind the white overlay.
+- Every article must have an `image` field in frontmatter. A missing image means no gradient background, which breaks the card layout.
+- After creating a new article's SVGs, always screenshot the homepage to verify the cards look correct — gradient visible at top-left, white body flush to bottom and right edges.
+
+### Hero image (`article-{slug}.svg`)
+
+- Full-bleed gradient background rect covering 960x540
+- 2–3 blurred ellipses using the article's accent color at varying opacities (0.1–0.5), each with `feGaussianBlur` (stdDeviation 45–65)
+- 1–2 small accent circles at low opacity (0.06–0.1) with blur
+- Optional floating white shapes (rounded rects, circles) at low opacity (0.08–0.14) with blur for depth
+- Grain texture overlay: `feTurbulence` fractalNoise (baseFrequency 0.65) blended with `feBlend mode="multiply"` at opacity 0.12
+- No text, no UI elements, no white card
+
+### Card image (`card-{slug}.svg`)
+
+- Same gradient background and blurred blobs as the hero (can use slightly different positioning)
+- Grain texture overlay (same as hero)
+- **White card**: `<rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>` — this is the exact position for every card. The card intentionally extends past the bottom of the viewBox (y 68 + height 490 = 558 > 540) so it appears anchored to the bottom with no bottom margin.
+- Inside the white card, build a simple UI mockup relevant to the article topic:
+  - Use `font-family="system-ui, -apple-system, sans-serif"` for all text
+  - Header text at y ~108, content starting below
+  - Use the article's accent color for progress bars, highlights, or indicators
+  - Keep inner content padded: x from 164 to 796, y from ~108 to ~460
+  - Use `#2A2522` for primary text, `#8A817C` for secondary/muted text, `#F0EDEA` for dividers and track backgrounds
+- All UI content must stay within the visible viewBox (above y=540). The white card bleeds past the bottom, but text and elements should not.
 
 ## Article Page Structure
 
