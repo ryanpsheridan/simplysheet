@@ -322,6 +322,10 @@ const templates = [
 		color: var(--color-text-secondary);
 		margin: 0 0 auto;
 		padding-bottom: var(--space-sm);
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 	.article-card-tags {
 		display: flex;
