@@ -38,10 +38,10 @@ None of this requires a long meeting. Most couples who keep this up long term do
 
 This is common, and it's not actually a problem to solve, it's something to plan around. One person might be detail-oriented and want to see every transaction. The other might want the short version: are we on track or not. A shared system can hold both. The detail-oriented person can look as closely as they want, and the other person can glance at a total and move on, as long as they're both looking at the same source instead of two different mental versions of the budget.
 
-This is usually where a simple [shared spreadsheet](https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets) earns its place over juggling separate apps or separate mental tallies. One shared sheet means both people are reacting to the same numbers, which removes a surprising amount of the friction before it has a chance to turn into an argument.
+This is usually where a simple [shared spreadsheet](https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets?utm_source=simplysheetdesign_site&utm_medium=article&utm_campaign=couples-budgeting) earns its place over juggling separate apps or separate mental tallies. One shared sheet means both people are reacting to the same numbers, which removes a surprising amount of the friction before it has a chance to turn into an argument.
 
 <div class="article-interstitial">
-<a href="https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets" class="interstitial-link" target="_blank" rel="noopener noreferrer">
+<a href="https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets?utm_source=simplysheetdesign_site&utm_medium=article&utm_campaign=couples-budgeting" class="interstitial-link" target="_blank" rel="noopener noreferrer">
 <img src="/images/featured budget thumbnail-couples.jpg" alt="Couples Budget Spreadsheet preview" width="600" height="400" loading="lazy" class="interstitial-img" />
 <div class="interstitial-body">
 <p class="interstitial-label">Built for two incomes</p>

@@ -90,12 +90,14 @@ const faqSchema = faq?.length ? {
 const articleUrl = Astro.url.toString();
 const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`Check out this article: ${articleUrl}`)}`;
 
+const utmSuffix = `utm_source=simplysheetdesign_site&utm_medium=article&utm_campaign=${id}`;
+
 const allProducts = [
 	{
 		id: 'budget',
 		name: 'Budget Template',
 		desc: 'Track income and daily expenses with real-time progress indicators that show where you stand each month.',
-		url: 'https://www.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel',
+		url: `https://www.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel?${utmSuffix}`,
 		image: '/images/featured budget thumbnail- budget template.jpg',
 		badge: 'Best Seller',
 	},
@@ -103,21 +105,21 @@ const allProducts = [
 		id: 'couples',
 		name: 'Couples Budget Spreadsheet',
 		desc: 'Split bills, track shared and personal expenses, and manage savings together. Built for two incomes.',
-		url: 'https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets',
+		url: `https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets?${utmSuffix}`,
 		image: '/images/featured budget thumbnail-couples.jpg',
 	},
 	{
 		id: 'debt',
 		name: 'Debt Payoff Tracker',
 		desc: 'See your total debt, log payments, and watch your balances drop month by month with clear visual progress.',
-		url: 'https://www.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets',
+		url: `https://www.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets?${utmSuffix}`,
 		image: '/images/featured budget thumbnail-debt-tracker.jpg',
 	},
 	{
 		id: 'savings',
 		name: 'Savings Goals Tracker',
 		desc: 'Set multiple savings goals, automate contributions, and track your progress toward each one.',
-		url: 'https://www.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets',
+		url: `https://www.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets?${utmSuffix}`,
 		image: '/images/featured budget thumbnail-savings goals tracker.jpg',
 	},
 ];
