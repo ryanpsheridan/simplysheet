@@ -38,6 +38,7 @@ Every time an article is provided, automatically do all of the following:
 6. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
 7. **Update related articles cross-links** — review existing articles and add natural internal links to/from the new article where topically relevant. Internal cross-linking improves both user navigation and SEO crawlability. The "Related articles" section at the bottom of each page is auto-generated (3 most recent), but in-body links between related topics are more valuable.
 8. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
+9. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
 
 ## SVG Color Registry
 
