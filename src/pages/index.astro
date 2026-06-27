@@ -66,7 +66,7 @@ const templates = [
 				<a href={`/articles/${featured.id}/`} class="hero-featured">
 					{(featured.data.cardImage || featured.data.image) && (
 						<div class="hero-featured-thumb">
-							<img src={featured.data.cardImage ?? featured.data.image} alt="" width="960" height="540" />
+							<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" />
 						</div>
 					)}
 					<span class="hero-featured-label">Featured Article</span>
@@ -92,7 +92,7 @@ const templates = [
 						<a href={`/articles/${article.id}/`} class="article-card">
 							{article.data.image && (
 								<div class="article-card-thumb">
-									<img src={article.data.image} alt="" width="600" height="340" loading="lazy" />
+									<img src={article.data.image} alt={article.data.title} width="600" height="340" loading="lazy" />
 								</div>
 							)}
 							<div class="article-card-body">
@@ -322,6 +322,10 @@ const templates = [
 		color: var(--color-text-secondary);
 		margin: 0 0 auto;
 		padding-bottom: var(--space-sm);
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 	.article-card-tags {
 		display: flex;

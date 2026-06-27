@@ -75,7 +75,7 @@ const templates = [
 					<a href={`/articles/${article.id}/`}>
 						{(article.data.cardImage || article.data.image) && (
 							<div class="thumb">
-								<img src={article.data.cardImage ?? article.data.image} alt="" width="600" height="340" loading="lazy" />
+								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="600" height="340" loading="lazy" />
 							</div>
 						)}
 						<div class="card-body">
