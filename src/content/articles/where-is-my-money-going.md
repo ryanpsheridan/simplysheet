@@ -18,7 +18,7 @@ faq:
     answer: 'Look at each category and decide whether the amount still makes sense for your priorities. You are not cutting everything, just making informed choices one category at a time based on real numbers instead of guesses.'
 relatedProduct:
   name: 'Budget Spreadsheet'
-  url: 'https://simplysheetdesign.etsy.com/listing/1854773368?utm_source=simplysheetdesign_site&utm_medium=article&utm_campaign=where-is-my-money-going'
+  url: 'https://simplysheetdesign.etsy.com/listing/1854773368'
 ---
 
 If you've ever stared at your bank account a few days before payday and thought "where did it all go," you're not doing anything wrong. Most people don't have a spending problem. They have a visibility problem. The money is going somewhere specific and traceable. It just hasn't been written down anywhere yet.
@@ -53,7 +53,7 @@ Keeping the process simple matters as much as keeping it short. The moment track
 
 A spreadsheet is the most practical tool for this, mainly because it's flexible enough to match how you actually spend instead of forcing your spending into someone else's categories.
 
-You can build one yourself in Google Sheets or Excel from scratch, and plenty of people do. If you'd rather skip the setup work, a [budget spreadsheet with a built-in expense tracker](https://simplysheetdesign.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel?utm_source=simplysheetdesign_site&utm_medium=article&utm_campaign=where-is-my-money-going) already has the categories, totals, and formulas in place, so the only thing left to do is log each day's spending as it happens.
+You can build one yourself in Google Sheets or Excel from scratch, and plenty of people do. If you'd rather skip the setup work, a [budget spreadsheet with a built-in expense tracker](https://simplysheetdesign.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel) already has the categories, totals, and formulas in place, so the only thing left to do is log each day's spending as it happens.
 
 Either way works. What matters is that the tool stays out of your way enough that the daily habit actually survives past week one.
 

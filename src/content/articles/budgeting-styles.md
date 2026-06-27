@@ -16,7 +16,7 @@ faq:
     answer: 'Start by identifying each person''s style, then build a system that respects both. A Planner and Spender couple might agree on fixed savings targets while leaving room for discretionary spending. The key is finding a middle ground rather than expecting one person to fully adopt the other''s approach.'
 relatedProduct:
   name: 'Budget Spreadsheet'
-  url: 'https://simplysheetdesign.etsy.com/listing/1854773368?utm_source=simplysheetdesign_site&utm_medium=article&utm_campaign=budgeting-styles'
+  url: 'https://simplysheetdesign.etsy.com/listing/1854773368'
 ---
 
 Most budgeting advice assumes everyone manages money the same way. They don't. Some people feel calm when every dollar has a job. Others feel calm when they stop looking at their bank account altogether. In our experience, most people tend to lean toward one of four broad budgeting styles: Planner, Saver, Spender, or Avoider. Most people show traits of more than one depending on the situation, but one style usually feels more natural than the others.
@@ -62,13 +62,13 @@ Not sure which one you are?
 <a href="/quiz/budgeting-style/" class="btn btn-primary">Take the 60-second quiz</a>
 
 <div class="product-cards">
-<a href="https://www.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel?utm_source=simplysheetdesign_site&utm_medium=article&utm_campaign=budgeting-styles" class="product-card" target="_blank" rel="noopener noreferrer">
+<a href="https://www.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel" class="product-card" target="_blank" rel="noopener noreferrer">
 <div class="product-card-thumb"><img src="/images/featured budget thumbnail- budget template.jpg" alt="Budget Template preview" width="600" height="400" loading="lazy" /></div>
 <span class="product-card-badge">Best Seller</span>
 <h3 class="product-card-name">Budget Template</h3>
 <p class="product-card-desc">Track income and daily expenses with real-time progress indicators that show where you stand each month.</p>
 </a>
-<a href="https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets?utm_source=simplysheetdesign_site&utm_medium=article&utm_campaign=budgeting-styles" class="product-card" target="_blank" rel="noopener noreferrer">
+<a href="https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets" class="product-card" target="_blank" rel="noopener noreferrer">
 <div class="product-card-thumb"><img src="/images/featured budget thumbnail-couples.jpg" alt="Couples Budget Spreadsheet preview" width="600" height="400" loading="lazy" /></div>
 <h3 class="product-card-name">Couples Budget Spreadsheet</h3>
 <p class="product-card-desc">Split bills, track shared and personal expenses, and manage savings together. Built for two incomes.</p>
