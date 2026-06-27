@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<BaseLayout title={`Page not found — ${SITE_TITLE}`} description="The page you're looking for doesn't exist or has been moved.">
+	<main>
+		<div class="not-found">
+			<h1>Page not found</h1>
+			<p>The page you're looking for doesn't exist or has been moved.</p>
+			<div class="not-found-links">
+				<a href="/" class="btn btn-primary">Go home</a>
+				<a href="/articles" class="btn btn-secondary">Browse articles</a>
+			</div>
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.not-found {
+		max-width: var(--max-width-narrow);
+		margin: 0 auto;
+		padding: clamp(6rem, 16vw, 10rem) var(--space-md);
+		text-align: center;
+	}
+
+	.not-found h1 {
+		font-size: var(--text-display);
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--space-xs);
+	}
+
+	.not-found p {
+		font-size: var(--text-body-lg);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-lg);
+	}
+
+	.not-found-links {
+		display: flex;
+		gap: var(--space-sm);
+		justify-content: center;
+	}
+</style>
