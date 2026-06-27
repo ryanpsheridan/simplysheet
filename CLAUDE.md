@@ -19,6 +19,12 @@ The primary goal of this site is organic Google discovery. Every change — new 
 - Article slugs should match high-volume search phrases when possible (e.g. `how-to-pay-off-debt` instead of `debt-payoff`).
 - The site already has a sitemap (`/sitemap-index.xml`), canonical URLs, and Open Graph tags — these are handled automatically by `BaseHead.astro`.
 
+## Etsy Link Rules
+
+- **Never add UTM parameters or any query strings to Etsy URLs.** All Etsy product links use Share & Save (via `simplysheetdesign.etsy.com`), which gives a 4% fee credit. Appending query parameters breaks that attribution.
+- Click tracking is handled automatically via a client-side GA4 event (`etsy_click`) in `BaseHead.astro`. It fires on every Etsy link click, captures the page slug, page type (`article` / `tool` / `homepage`), and product — no manual setup needed per page.
+- When linking to Etsy products, use the Share & Save URL format: `https://simplysheetdesign.etsy.com/listing/{id}` or `https://simplysheetdesign.etsy.com/listing/{id}/{slug}`. Never use `https://www.etsy.com/listing/...` without confirming Share & Save still works with that format.
+
 ## When a New Article Is Submitted
 
 Every time an article is provided, automatically do all of the following:
