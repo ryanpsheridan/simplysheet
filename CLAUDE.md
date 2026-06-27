@@ -14,6 +14,9 @@ The primary goal of this site is organic Google discovery. Every change — new 
 - Internal links between articles improve crawlability — include them naturally in article body text where relevant.
 - If the article has FAQ content, include it in the `faq` frontmatter array. This renders as collapsible Q&A with structured markup that search engines can surface.
 - The `schema` field in frontmatter provides JSON-LD structured data. Always include it with `@type: Article`, a `headline`, and a `description`.
+- All images must have descriptive, keyword-relevant `alt` text — never use empty `alt=""`. For article images, use the article title as alt text.
+- Article titles and `headline` in schema should be optimized for both SEO (search engines) and AEO (AI engines / answer engines). Use natural question-style or how-to phrasing that matches what people actually search for.
+- Article slugs should match high-volume search phrases when possible (e.g. `how-to-pay-off-debt` instead of `debt-payoff`).
 - The site already has a sitemap (`/sitemap-index.xml`), canonical URLs, and Open Graph tags — these are handled automatically by `BaseHead.astro`.
 
 ## When a New Article Is Submitted
@@ -49,7 +52,7 @@ Each article has a unique gradient palette. Check this list before picking color
 | `where-is-my-money-going` | #FFF3E0 | #E86A33 (orange) |
 | `budgeting-with-irregular-income` | #E8F5E9 | #2D9D78 (green) |
 | `debt-snowball-vs-avalanche` | #E8EDF2 | #2C3E50 (slate) |
-| `debt-payoff` | #EDE7F6 | #7E57C2 (purple) |
+| `how-to-pay-off-debt` | #EDE7F6 | #7E57C2 (purple) |
 | `emergency-fund-sizing` | #E8EAF6 | #5C6BC0 (indigo) |
 | `why-most-budgets-fail` | #FFF8E1 | #F9A825 (amber) |
 

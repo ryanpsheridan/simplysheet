@@ -6,4 +6,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	site: 'https://simplysheetdesign.com',
 	integrations: [mdx(), sitemap()],
+	redirects: {
+		'/articles/debt-payoff': '/articles/how-to-pay-off-debt',
+	},
 });
