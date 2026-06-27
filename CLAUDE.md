@@ -127,6 +127,7 @@ Defined in `TAG_MAP` on `src/pages/index.astro` and `src/pages/articles/index.as
 ## Homepage
 
 - The featured article is pinned by slug in `src/pages/index.astro`: `const featuredSlug = '50-30-20-budget-rule'`. Do not change unless explicitly told to.
+- The six secondary article cards truncate descriptions to **3 lines** with ellipsis (`-webkit-line-clamp: 3`) so all cards stay the same height. Do not remove this.
 
 ## Typography
 
