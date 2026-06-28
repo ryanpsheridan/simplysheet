@@ -49,6 +49,10 @@ const templates = defineCollection({
 			question: z.string(),
 			answer: z.string(),
 		})).optional(),
+		reviews: z.array(z.object({
+			name: z.string(),
+			text: z.string(),
+		})).optional(),
 	}),
 });
 

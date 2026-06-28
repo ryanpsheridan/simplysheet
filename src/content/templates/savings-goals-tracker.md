@@ -30,6 +30,9 @@ faq:
     answer: "Yes. Sinking funds are just savings goals with a specific purpose and timeline. This tracker handles both open-ended savings and deadline-based targets."
   - question: "Can I set up automatic contribution amounts?"
     answer: "You set a target contribution for each goal, and the tracker shows whether you're on pace. Actual deposits are logged manually so you always have an accurate picture."
+reviews:
+  - name: "Brianna"
+    text: "This product is a great way to see where your savings are going. The progress bar is a nice touch and will motivate me. I'm glad I found this shop and this resource!"
 ---
 
 ## How it works

@@ -39,6 +39,13 @@ faq:
     answer: "You own your data — no subscriptions, no ads, no company shutting down. Spreadsheets give you full control and visibility into every formula and calculation."
   - question: "Do I need to know how to use spreadsheets?"
     answer: "No. The template is ready to use out of the box. Just enter your income and start logging expenses — the formulas and progress bars handle everything else."
+reviews:
+  - name: "Melissa"
+    text: "Overall, exactly what I was looking for. The fact it came in both google sheets and excel was great, the instructions were clear, and the fact that it was set as a dark mode was good. All the features I wanted with none of the complicated or bloated functionality"
+  - name: "Cameron"
+    text: "Very helpful. Will be using this forever"
+  - name: "Etsy buyer"
+    text: "This budget template was exactly what I was looking for, it contains everything I need and no extra clutter."
 ---
 
 ## How it works

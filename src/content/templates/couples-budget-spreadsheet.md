@@ -27,6 +27,13 @@ faq:
     answer: "The spreadsheet includes shared categories and individual sections so each partner can track personal spending alongside joint expenses."
   - question: "What if only one person manages the budget?"
     answer: "That works too. The template handles two incomes regardless of who does the data entry."
+reviews:
+  - name: "Rikki"
+    text: "This has been very helpful so far in getting my husband and I organized with our finances. Everything is easy to see on one sheet."
+  - name: "Forrest"
+    text: "Very well put together spreadsheet. I love the colors used and love the functions that help automate everything."
+  - name: "Etsy buyer"
+    text: "The budget template is designed well and easy to set up. Ryan was quick to respond to questions and help. Highly recommend!"
 ---
 
 ## How it works
