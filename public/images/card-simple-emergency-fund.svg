@@ -44,24 +44,24 @@
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <!-- Header -->
-  <text x="164" y="118" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Emergency fund target</text>
-  <text x="164" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#2A2522">$16,800</text>
-  <text x="164" y="188" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8A817C">$2,800/mo × 6 months</text>
+  <text x="164" y="126" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#2A2522">Emergency fund target</text>
+  <text x="164" y="180" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#2A2522">$16,800</text>
+  <text x="164" y="212" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#8A817C">$2,800/mo × 6 months</text>
 
-  <line x1="164" y1="210" x2="796" y2="210" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="164" y1="240" x2="796" y2="240" stroke="#F0EDEA" stroke-width="1"/>
 
   <!-- Progress bar -->
-  <text x="164" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Progress</text>
-  <text x="796" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560" text-anchor="end">56%</text>
-  <rect x="164" y="260" width="632" height="8" rx="4" fill="#F0EDEA"/>
-  <rect x="164" y="260" width="354" height="8" rx="4" fill="#5C6BC0"/>
+  <text x="164" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6E6560">Progress</text>
+  <text x="796" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#6E6560" text-anchor="end">56%</text>
+  <rect x="164" y="300" width="632" height="10" rx="5" fill="#F0EDEA"/>
+  <rect x="164" y="300" width="354" height="10" rx="5" fill="#5C6BC0"/>
 
-  <line x1="164" y1="292" x2="796" y2="292" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="164" y1="340" x2="796" y2="340" stroke="#F0EDEA" stroke-width="1"/>
 
   <!-- Savings status -->
-  <text x="164" y="326" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Saved so far</text>
-  <text x="796" y="326" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#5C6BC0" text-anchor="end">$9,400</text>
+  <text x="164" y="384" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6E6560">Saved so far</text>
+  <text x="796" y="384" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" fill="#5C6BC0" text-anchor="end">$9,400</text>
 
-  <text x="164" y="362" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Remaining</text>
-  <text x="796" y="362" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522" text-anchor="end">$7,400</text>
+  <text x="164" y="432" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6E6560">Remaining</text>
+  <text x="796" y="432" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" fill="#2A2522" text-anchor="end">$7,400</text>
 </svg>
