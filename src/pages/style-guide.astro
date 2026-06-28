@@ -1,7 +1,37 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { getCollection } from 'astro:content';
 import { SITE_TITLE } from '../consts';
+
+const allArticles = (await getCollection('articles'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sampleArticles = allArticles.slice(0, 3).map((a) => {
+	const wordCount = a.body?.split(/\s+/).filter(Boolean).length ?? 0;
+	const readTime = Math.max(1, Math.ceil(wordCount / 200));
+	return { ...a, readTime };
+});
+
+const templates = (await getCollection('templates'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.slice(0, 2)
+	.map((t) => ({
+		name: t.data.title.replace(/ for Google Sheets & Excel$/, ''),
+		desc: t.data.description,
+		url: `/templates/${t.id}/`,
+		image: t.data.heroImage,
+		badge: t.data.badge,
+	}));
+
+const TAG_MAP: Record<string, string> = {
+	'expense-tracking': 'Expense Tracking',
+	'couples-budgeting': 'Couples Budgeting',
+	'debt-payoff': 'Debt Payoff',
+	'savings-goals': 'Savings Goals',
+	'irregular-income': 'Irregular Income',
+	'net-worth': 'Net Worth',
+	'budgeting-styles': 'Budgeting Styles',
+};
 
 const colors = [
 	{ token: '--color-text',           label: 'Text',           hex: '#2A2522' },
@@ -146,6 +176,138 @@ const spacingScale = [
 					</a>
 				</li>
 			</ul>
+		</section>
+
+		<!-- ============ CARDS: EDITORIAL (HOMEPAGE) ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Article Card — Editorial</h2>
+			<p class="section-desc">Used on the homepage. Thumbnail image on top with text below — no containing card or border. Uses the <code>cardImage</code> SVG.</p>
+			<div class="card-demo-grid card-demo-3col">
+				{sampleArticles.map((article) => (
+					<a href={`/articles/${article.id}/`} class="editorial-card">
+						{(article.data.cardImage || article.data.image) && (
+							<div class="editorial-card-thumb">
+								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+							</div>
+						)}
+						{(article.data.tags ?? []).length > 0 && (
+							<div class="demo-card-tags">
+								{(article.data.tags ?? []).map((tag: string) => (
+									<span class="demo-card-tag">{TAG_MAP[tag] ?? tag}</span>
+								))}
+							</div>
+						)}
+						<h3 class="editorial-card-title">{article.data.title}</h3>
+						<p class="editorial-card-desc">{article.data.description}</p>
+						<p class="editorial-card-meta">
+							<FormattedDate date={article.data.pubDate} />
+							<span>&middot;</span>
+							<span>{article.readTime} min read</span>
+						</p>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<!-- ============ CARDS: CONTAINED (ARTICLES INDEX) ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Article Card — Contained</h2>
+			<p class="section-desc">Used on the articles index page. Thumbnail + text inside a bordered card with subtle hover shadow. Uses <code>cardImage</code> SVG.</p>
+			<div class="card-demo-grid card-demo-3col">
+				{sampleArticles.map((article) => (
+					<a href={`/articles/${article.id}/`} class="contained-card">
+						{(article.data.cardImage || article.data.image) && (
+							<div class="contained-card-thumb">
+								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+							</div>
+						)}
+						<div class="contained-card-body">
+							{(article.data.tags ?? []).length > 0 && (
+								<div class="demo-card-tags">
+									{(article.data.tags ?? []).map((tag: string) => (
+										<span class="demo-card-tag">{TAG_MAP[tag] ?? tag}</span>
+									))}
+								</div>
+							)}
+							<h3 class="contained-card-title">{article.data.title}</h3>
+							<p class="contained-card-desc">{article.data.description}</p>
+							<p class="contained-card-meta">
+								<FormattedDate date={article.data.pubDate} />
+								<span>&middot;</span>
+								<span>{article.readTime} min read</span>
+							</p>
+						</div>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<!-- ============ CARDS: GRADIENT OVERLAY (LEGACY) ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Article Card — Gradient Overlay</h2>
+			<p class="section-desc">Hero gradient as full-bleed background with a centered white text overlay. Uses the abstract <code>image</code> SVG. Previously used on the homepage; available for carousels and related content sections.</p>
+			<div class="card-demo-grid card-demo-3col">
+				{sampleArticles.map((article) => (
+					<a href={`/articles/${article.id}/`} class="gradient-card">
+						{article.data.image && (
+							<div class="gradient-card-thumb">
+								<img src={article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+							</div>
+						)}
+						<div class="gradient-card-body">
+							<h3 class="gradient-card-title">{article.data.title}</h3>
+							<p class="gradient-card-desc">{article.data.description}</p>
+							<p class="gradient-card-meta">
+								<FormattedDate date={article.data.pubDate} />
+								<span>&middot;</span>
+								<span>5 min read</span>
+							</p>
+						</div>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<!-- ============ CARDS: PRODUCT / TEMPLATE ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Product Card — Template</h2>
+			<p class="section-desc">Used for spreadsheet templates on the homepage and article pages. Bordered card with optional badge.</p>
+			<div class="card-demo-grid card-demo-2col">
+				{templates.map((t) => (
+					<a href={t.url} class="template-demo-card">
+						<div class="template-demo-thumb">
+							{t.image && <img src={t.image} alt={`${t.name} preview`} width="600" height="400" loading="lazy" />}
+						</div>
+						{t.badge && <span class="template-demo-badge">{t.badge}</span>}
+						<h3 class="template-demo-name">{t.name}</h3>
+						<p class="template-demo-desc">{t.desc}</p>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<!-- ============ CARDS: FEATURED ARTICLE ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Featured Article Card</h2>
+			<p class="section-desc">Used in the homepage hero. Large thumbnail with "Featured Article" label, title, and metadata.</p>
+			<div style="max-width: 32rem;">
+				{sampleArticles[0] && (
+					<a href={`/articles/${sampleArticles[0].id}/`} class="featured-demo">
+						{(sampleArticles[0].data.cardImage || sampleArticles[0].data.image) && (
+							<div class="featured-demo-thumb">
+								<img src={sampleArticles[0].data.cardImage ?? sampleArticles[0].data.image} alt={sampleArticles[0].data.title} width="960" height="540" loading="lazy" />
+							</div>
+						)}
+						<span class="featured-demo-label">Featured Article</span>
+						<h2 class="featured-demo-title">{sampleArticles[0].data.title}</h2>
+						<p class="featured-demo-meta">
+							<FormattedDate date={sampleArticles[0].data.pubDate} />
+							<span>&middot;</span>
+							<span>{sampleArticles[0].readTime} min read</span>
+						</p>
+					</a>
+				)}
+			</div>
 		</section>
 
 		<!-- ============ BUTTONS ============ -->
@@ -545,6 +707,322 @@ const spacingScale = [
 	.radius-demo span {
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
+	}
+
+	/* ——— Card demo grids ——— */
+
+	.card-demo-grid {
+		display: grid;
+		gap: var(--space-md);
+	}
+	.card-demo-3col {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.card-demo-2col {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@media (max-width: 960px) {
+		.card-demo-3col { grid-template-columns: 1fr; }
+	}
+	@media (max-width: 600px) {
+		.card-demo-2col { grid-template-columns: 1fr; }
+	}
+
+	.demo-card-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.375rem;
+		margin-bottom: var(--space-xs);
+	}
+	.demo-card-tag {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-muted);
+		background: var(--color-bg-emphasis);
+		border-radius: var(--radius-full);
+		padding: 0.1875rem 0.625rem;
+		line-height: 1.4;
+	}
+
+	/* ——— Editorial card (homepage style) ——— */
+
+	.editorial-card {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+	}
+	.editorial-card-thumb {
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		margin-bottom: var(--space-sm);
+		background: var(--color-bg-panel);
+	}
+	.editorial-card-thumb img {
+		display: block;
+		width: 100%;
+		height: auto;
+		transition: transform 0.2s ease;
+	}
+	.editorial-card:hover .editorial-card-thumb img {
+		transform: scale(1.02);
+	}
+	.editorial-card-title {
+		font-size: var(--text-h3);
+		color: var(--color-text);
+		line-height: var(--leading-snug);
+		margin-bottom: var(--space-xs);
+		text-decoration: underline transparent;
+		text-underline-offset: 3px;
+		transition: text-decoration-color 100ms ease;
+	}
+	.editorial-card:hover .editorial-card-title {
+		text-decoration-color: var(--color-text);
+	}
+	.editorial-card-desc {
+		font-size: var(--text-small);
+		line-height: var(--leading-snug);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-xs);
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.editorial-card-meta {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		margin: 0;
+		margin-top: auto;
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	/* ——— Contained card (articles index style) ——— */
+
+	.contained-card {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		background: var(--color-bg-surface);
+		transition: box-shadow 0.2s ease;
+	}
+	.contained-card:hover {
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+	}
+	.contained-card-thumb {
+		overflow: hidden;
+	}
+	.contained-card-thumb img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+	.contained-card-body {
+		padding: var(--space-md);
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
+	.contained-card-title {
+		font-size: var(--text-h3);
+		color: var(--color-text);
+		line-height: var(--leading-snug);
+		margin-bottom: var(--space-xs);
+		text-decoration: underline transparent;
+		text-underline-offset: 3px;
+		transition: text-decoration-color 100ms ease;
+	}
+	.contained-card:hover .contained-card-title {
+		text-decoration-color: var(--color-text);
+	}
+	.contained-card-desc {
+		font-size: var(--text-small);
+		line-height: var(--leading-snug);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-xs);
+	}
+	.contained-card-meta {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		margin: 0;
+		margin-top: auto;
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	/* ——— Gradient overlay card (legacy homepage) ——— */
+
+	.gradient-card {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		text-decoration: none;
+		border-radius: 0.75rem;
+		overflow: hidden;
+		transition: box-shadow 0.2s ease;
+		min-height: 20rem;
+	}
+	.gradient-card:hover {
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+	}
+	.gradient-card-thumb {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+	.gradient-card-thumb img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.gradient-card-body {
+		position: relative;
+		z-index: 1;
+		background: var(--color-bg-surface);
+		border-radius: var(--radius-md);
+		padding: var(--space-md);
+		margin: var(--space-md);
+		display: flex;
+		flex-direction: column;
+		width: calc(100% - var(--space-md) * 2);
+		flex: 1;
+	}
+	.gradient-card-title {
+		font-size: var(--text-h3);
+		color: var(--color-text);
+		line-height: var(--leading-snug);
+		margin-bottom: var(--space-xs);
+	}
+	.gradient-card-desc {
+		font-size: var(--text-small);
+		line-height: var(--leading-snug);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-xs);
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.gradient-card-meta {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		margin: 0;
+		margin-top: auto;
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	/* ——— Template / product card demo ——— */
+
+	.template-demo-card {
+		display: flex;
+		flex-direction: column;
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		overflow: hidden;
+		transition: border-color 0.15s, box-shadow 0.2s ease;
+	}
+	.template-demo-card:hover {
+		border-color: var(--color-divider);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+	}
+	.template-demo-thumb {
+		aspect-ratio: 3 / 2;
+		background: var(--color-bg-panel);
+		overflow: hidden;
+	}
+	.template-demo-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+	.template-demo-badge {
+		display: inline-block;
+		align-self: flex-start;
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		color: var(--color-accent);
+		background: var(--color-accent-light);
+		border-radius: var(--radius-full);
+		padding: 0.125rem 0.5rem;
+		line-height: 1.4;
+		margin: var(--space-md) var(--space-md) 0;
+	}
+	.template-demo-name {
+		font-size: var(--text-body);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+		padding: var(--space-xs) var(--space-md) 0;
+	}
+	.template-demo-card:not(:has(.template-demo-badge)) .template-demo-name {
+		padding-top: var(--space-md);
+	}
+	.template-demo-desc {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-snug);
+		margin: 0;
+		padding: 0 var(--space-md) var(--space-md);
+	}
+
+	/* ——— Featured article card demo ——— */
+
+	.featured-demo {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+	}
+	.featured-demo-thumb {
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		margin-bottom: var(--space-md);
+		background: var(--color-bg-panel);
+	}
+	.featured-demo-thumb img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+	.featured-demo-label {
+		display: inline-block;
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-accent);
+		margin-bottom: var(--space-2xs);
+	}
+	.featured-demo-title {
+		font-size: var(--text-h3);
+		line-height: var(--leading-snug);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+		text-decoration: underline transparent;
+		text-underline-offset: 3px;
+		transition: text-decoration-color 100ms ease;
+	}
+	.featured-demo:hover .featured-demo-title {
+		text-decoration-color: var(--color-text);
+	}
+	.featured-demo-meta {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		margin: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
 	}
 
 	/* ——— Buttons ——— */
