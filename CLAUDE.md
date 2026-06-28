@@ -37,8 +37,9 @@ Every time an article is provided, automatically do all of the following:
 5. **Verify all internal article links** actually exist by cross-referencing slugs in `src/content/articles/`. Remove or unlink any references to articles that don't exist.
 6. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
 7. **Update related articles cross-links** — review existing articles and add natural internal links to/from the new article where topically relevant. Internal cross-linking improves both user navigation and SEO crawlability. The "Related articles" section at the bottom of each page is auto-generated (3 most recent), but in-body links between related topics are more valuable.
-8. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
-9. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
+8. **Add natural template page links in body text** — where the article's topic connects to a product (e.g. an article about paying off debt mentioning a [debt payoff tracker](/templates/debt-payoff-tracker/)), weave in 1–2 internal links to the relevant `/templates/` pages. These should read as helpful tool suggestions, not sales pitches. Always link to the internal template page, never directly to Etsy — the template page has its own Etsy CTA. This creates an article → template page → Etsy funnel that keeps users on-site longer and builds internal link equity.
+9. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
+10. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
 
 ## SVG Color Registry
 
@@ -63,11 +64,11 @@ Both SVG types use `width="960" height="540" viewBox="0 0 960 540"`. Follow thes
 
 ### How hero images display on the homepage
 
-On the homepage, the six secondary article cards use the hero image (`article-{slug}.svg`) as a full-bleed background. A white text overlay (`.article-card-body`) anchors to the **bottom-right** corner of the card, covering most of the lower-right area. The gradient peeks through at the **top and left edges** only. This means:
+On the homepage, the six secondary article cards use the hero image (`article-{slug}.svg`) as a full-bleed background. A white text overlay (`.article-card-body`) is **centered** within the card with equal margin on all sides. The gradient peeks through around **all edges** of the white overlay. This means:
 
-- The hero SVG must have its strongest gradient colors and blobs concentrated in the **upper-left portion** of the image, since that's the only part visible behind the white overlay.
+- The hero SVG should have its gradient colors and blobs spread across the image, since the gradient is visible around all four edges of the centered white overlay.
 - Every article must have an `image` field in frontmatter. A missing image means no gradient background, which breaks the card layout.
-- After creating a new article's SVGs, always screenshot the homepage to verify the cards look correct — gradient visible at top-left, white body flush to bottom and right edges.
+- After creating a new article's SVGs, always screenshot the homepage to verify the cards look correct — gradient visible around all edges, white body centered within the card.
 
 ### Hero image (`article-{slug}.svg`)
 

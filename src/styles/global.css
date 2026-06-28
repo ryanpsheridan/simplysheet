@@ -19,7 +19,7 @@ body {
 
 main {
 	width: 100%;
-	max-width: var(--max-width-narrow);
+	max-width: calc(var(--max-width) + var(--space-md) * 2);
 	margin: 0 auto;
 	padding: var(--space-xl) var(--space-md);
 }
@@ -248,7 +248,7 @@ hr {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	font-family: var(--font-sans);
+	font-family: var(--font-heading);
 	font-size: var(--text-small);
 	font-weight: var(--weight-medium);
 	line-height: 1;

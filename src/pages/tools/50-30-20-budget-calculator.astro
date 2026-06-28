@@ -20,13 +20,16 @@ const description = 'Free 50/30/20 budget calculator. Enter your take-home pay a
 			<BudgetCalculator />
 
 			<div class="calc-callout">
-				<p class="calc-callout-text">Now that you know your targets, a <a href="https://simplysheetdesign.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel">budget spreadsheet</a> tracks your actual spending against them every month — so you can see whether you're hitting the split or where you're drifting.</p>
+				<p class="calc-callout-text">Now that you know your targets, a <a href="/templates/budget-spreadsheet/">budget spreadsheet</a> tracks your actual spending against them every month — so you can see whether you're hitting the split or where you're drifting.</p>
 			</div>
 		</article>
 	</main>
 </BaseLayout>
 
 <style>
+	main {
+		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
+	}
 	.calc-header {
 		margin-bottom: var(--space-sm);
 	}

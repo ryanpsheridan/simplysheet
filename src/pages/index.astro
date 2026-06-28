@@ -26,33 +26,16 @@ const featuredSlug = '50-30-20-budget-rule';
 const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
 const rest = allArticles.filter((a) => a.id !== featured.id).slice(0, 6);
 
-const templates = [
-	{
-		name: 'Budget Template',
-		desc: 'Track income and daily expenses with real-time progress indicators that show where you stand each month.',
-		url: 'https://www.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel',
-		image: '/images/featured budget thumbnail- budget template.jpg',
-		badge: 'Best Seller',
-	},
-	{
-		name: 'Couples Budget Spreadsheet',
-		desc: 'Split bills, track shared and personal expenses, and manage savings together. Built for two incomes.',
-		url: 'https://www.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets',
-		image: '/images/featured budget thumbnail-couples.jpg',
-	},
-	{
-		name: 'Debt Payoff Tracker',
-		desc: 'See your total debt, log payments, and watch your balances drop month by month with clear visual progress.',
-		url: 'https://www.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets',
-		image: '/images/featured budget thumbnail-debt-tracker.jpg',
-	},
-	{
-		name: 'Savings Goals Tracker',
-		desc: 'Set multiple savings goals, automate contributions, and track your progress toward each one.',
-		url: 'https://www.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets',
-		image: '/images/featured budget thumbnail-savings goals tracker.jpg',
-	},
-];
+const templates = (await getCollection('templates'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.slice(0, 4)
+	.map((t) => ({
+		name: t.data.title.replace(/ for Google Sheets & Excel$/, ''),
+		desc: t.data.description,
+		url: `/templates/${t.id}/`,
+		image: t.data.heroImage,
+		badge: t.data.badge,
+	}));
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -143,7 +126,7 @@ const templates = [
 			<h2 class="templates-heading">Ready-made spreadsheets</h2>
 			<div class="templates-grid">
 				{templates.map((t) => (
-					<a href={t.url} class="template-card" target="_blank" rel="noopener noreferrer">
+					<a href={t.url} class="template-card">
 						<div class="template-thumb">
 							{t.image
 								? <img src={t.image} alt={`${t.name} preview`} width="600" height="400" loading="lazy" />
@@ -157,7 +140,7 @@ const templates = [
 				))}
 			</div>
 			<div class="templates-cta-wrap">
-				<a href="https://simplysheetdesign.etsy.com" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Explore all on Etsy <svg class="arrow external-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></a>
+				<a href="/templates" class="btn btn-primary">View all templates <span class="arrow">&rarr;</span></a>
 			</div>
 		</div>
 	</section>
@@ -271,7 +254,8 @@ const templates = [
 	.article-card {
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-end;
+		justify-content: center;
+		align-items: center;
 		position: relative;
 		text-decoration: none;
 		border-radius: 0.75rem;
@@ -297,12 +281,13 @@ const templates = [
 		position: relative;
 		z-index: 1;
 		background: var(--color-bg-surface);
-		border-radius: var(--radius-md) 0 0 0;
+		border-radius: var(--radius-md);
 		padding: var(--space-md);
-		margin-left: var(--space-md);
-		margin-top: var(--space-md);
+		margin: var(--space-md);
 		display: flex;
 		flex-direction: column;
+		width: calc(100% - var(--space-md) * 2);
+		flex: 1;
 	}
 	.article-card-title {
 		font-size: var(--text-h3);
@@ -320,8 +305,7 @@ const templates = [
 		font-size: var(--text-small);
 		line-height: var(--leading-snug);
 		color: var(--color-text-secondary);
-		margin: 0 0 auto;
-		padding-bottom: var(--space-sm);
+		margin: 0 0 var(--space-xs);
 		display: -webkit-box;
 		-webkit-line-clamp: 3;
 		-webkit-box-orient: vertical;
@@ -346,6 +330,7 @@ const templates = [
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
 		margin: 0;
+		margin-top: auto;
 		display: flex;
 		align-items: center;
 		gap: 0.375rem;
