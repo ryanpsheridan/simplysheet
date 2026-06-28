@@ -492,9 +492,15 @@ const templates = [
 	}
 
 	@media (max-width: 600px) {
+		.article-list-item {
+			flex-direction: column;
+			gap: var(--space-md);
+		}
 		.article-list-thumb {
-			width: 100px;
-			height: 67px;
+			width: 100%;
+			height: auto;
+			aspect-ratio: 16 / 9;
+			order: -1;
 		}
 		.article-list-title {
 			font-size: 1.05rem;
