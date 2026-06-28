@@ -137,8 +137,7 @@ const templates = (await getCollection('templates'))
 		font-size: var(--text-small);
 		color: var(--color-text-secondary);
 		line-height: var(--leading-snug);
-		margin: 0 0 auto;
-		padding-bottom: var(--space-sm);
+		margin: 0;
 		display: -webkit-box;
 		-webkit-line-clamp: 3;
 		-webkit-box-orient: vertical;
@@ -146,6 +145,7 @@ const templates = (await getCollection('templates'))
 	}
 
 	.template-card-footer {
+		margin-top: auto;
 		padding-top: var(--space-sm);
 		border-top: 1px solid var(--color-border);
 	}
