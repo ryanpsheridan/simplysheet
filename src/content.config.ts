@@ -24,4 +24,33 @@ const articles = defineCollection({
 	}),
 });
 
-export const collections = { articles };
+const templates = defineCollection({
+	loader: glob({ base: './src/content/templates', pattern: '**/*.{md,mdx}' }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		price: z.number(),
+		badge: z.string().optional(),
+		sku: z.string(),
+		platforms: z.array(z.string()).default(['google-sheets', 'excel']),
+		darkListing: z.string().url(),
+		lightListing: z.string().url(),
+		heroImage: z.string(),
+		features: z.array(z.string()).default([]),
+		relatedArticles: z.array(z.string()).default([]),
+		tags: z.array(z.string()).default([]),
+		order: z.number().default(99),
+		bundles: z.array(z.object({
+			name: z.string(),
+			price: z.number(),
+			darkUrl: z.string().url(),
+			lightUrl: z.string().url(),
+		})).optional(),
+		faq: z.array(z.object({
+			question: z.string(),
+			answer: z.string(),
+		})).optional(),
+	}),
+});
+
+export const collections = { articles, templates };
