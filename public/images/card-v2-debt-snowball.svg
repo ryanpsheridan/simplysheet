@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8EDF2"/>
+      <stop offset="100%" stop-color="#F5E6DC"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2C3E50" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#5D7B9A" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78909C" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#B0BEC5" stop-opacity="0.12"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="50"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="600" cy="350" rx="340" ry="260" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="200" cy="150" rx="280" ry="200" fill="url(#blob2)" filter="url(#blur2)"/>
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.1"/>
+
+  <!-- Overlapping circles growing in size — snowball effect — diagonal composition -->
+  <circle cx="200" cy="380" r="32" fill="#2C3E50" opacity="0.75"/>
+  <circle cx="310" cy="330" r="52" fill="#2C3E50" opacity="0.55"/>
+  <circle cx="460" cy="270" r="80" fill="#2C3E50" opacity="0.35"/>
+  <circle cx="660" cy="200" r="120" fill="#2C3E50" opacity="0.18"/>
+
+  <!-- Thin diagonal guide line -->
+  <line x1="160" y1="420" x2="780" y2="120" stroke="#2C3E50" stroke-width="1" opacity="0.08"/>
+
+  <!-- Small accent dot -->
+  <circle cx="130" cy="120" r="6" fill="#78909C" opacity="0.3"/>
+</svg>

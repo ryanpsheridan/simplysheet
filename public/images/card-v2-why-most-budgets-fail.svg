@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8E1"/>
+      <stop offset="100%" stop-color="#FFECB3"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F9A825" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#FFD54F" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F57F17" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFE082" stop-opacity="0.12"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="480" cy="280" rx="350" ry="260" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="800" cy="100" rx="240" ry="180" fill="url(#blob2)" filter="url(#blur2)"/>
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.1"/>
+
+  <!-- Large cropped circle extending off bottom — fracture/break metaphor -->
+  <circle cx="480" cy="520" r="320" fill="none" stroke="#F9A825" stroke-width="2" opacity="0.2"/>
+  <circle cx="480" cy="520" r="240" fill="none" stroke="#F9A825" stroke-width="1.5" opacity="0.12"/>
+
+  <!-- Broken/separated shape fragments — things falling apart -->
+  <rect x="280" y="160" width="160" height="120" rx="6" fill="#F9A825" opacity="0.45" transform="rotate(-8 360 220)"/>
+  <rect x="500" y="140" width="120" height="100" rx="6" fill="#2A2522" opacity="0.1" transform="rotate(4 560 190)"/>
+  <rect x="340" y="310" width="100" height="80" rx="4" fill="#F9A825" opacity="0.2" transform="rotate(12 390 350)"/>
+
+  <!-- Scattered small pieces -->
+  <rect x="660" y="260" width="40" height="40" rx="3" fill="#F9A825" opacity="0.15" transform="rotate(-15 680 280)"/>
+  <rect x="200" y="300" width="30" height="24" rx="2" fill="#2A2522" opacity="0.06" transform="rotate(6 215 312)"/>
+</svg>
