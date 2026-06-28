@@ -48,31 +48,21 @@
 
   <line x1="164" y1="154" x2="796" y2="154" stroke="#F0EDEA" stroke-width="1"/>
 
-  <!-- Avalanche -->
-  <rect x="164" y="182" width="16" height="16" rx="4" fill="#2C3E50"/>
-  <text x="192" y="197" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#2A2522">Avalanche</text>
-  <!-- Skeleton detail -->
-  <rect x="660" y="188" width="136" height="10" rx="5" fill="#E0E0E0"/>
+  <!-- Two strategy indicators -->
+  <rect x="164" y="188" width="16" height="16" rx="4" fill="#2C3E50"/>
+  <rect x="192" y="190" width="100" height="10" rx="5" fill="#EBEBEB"/>
 
-  <!-- Snowball -->
-  <rect x="164" y="226" width="16" height="16" rx="4" fill="#90A4AE"/>
-  <text x="192" y="241" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#2A2522">Snowball</text>
-  <!-- Skeleton detail -->
-  <rect x="660" y="232" width="136" height="10" rx="5" fill="#E0E0E0"/>
+  <rect x="164" y="232" width="16" height="16" rx="4" fill="#90A4AE"/>
+  <rect x="192" y="234" width="100" height="10" rx="5" fill="#EBEBEB"/>
 
-  <line x1="164" y1="272" x2="796" y2="272" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="164" y1="276" x2="796" y2="276" stroke="#F0EDEA" stroke-width="1"/>
 
   <!-- Savings callout -->
-  <rect x="164" y="296" width="120" height="10" rx="5" fill="#E0E0E0"/>
-  <text x="164" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#2C3E50">$287</text>
-  <rect x="296" y="340" width="100" height="28" rx="14" fill="#E8EDF2"/>
-  <text x="346" y="359" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2C3E50" text-anchor="middle">in interest</text>
+  <text x="164" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#2C3E50">$287</text>
+  <rect x="296" y="320" width="100" height="28" rx="14" fill="#E8EDF2"/>
+  <text x="346" y="339" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2C3E50" text-anchor="middle">in interest</text>
 
   <!-- Bar comparison -->
-  <rect x="164" y="400" width="420" height="10" rx="5" fill="#2C3E50" opacity="0.85"/>
-  <rect x="164" y="424" width="480" height="10" rx="5" fill="#90A4AE" opacity="0.7"/>
-
-  <!-- Skeleton legend -->
-  <rect x="164" y="460" width="80" height="8" rx="4" fill="#F0EDEA"/>
-  <rect x="620" y="460" width="176" height="8" rx="4" fill="#F0EDEA"/>
+  <rect x="164" y="388" width="420" height="10" rx="5" fill="#2C3E50" opacity="0.85"/>
+  <rect x="164" y="412" width="480" height="10" rx="5" fill="#90A4AE" opacity="0.7"/>
 </svg>
