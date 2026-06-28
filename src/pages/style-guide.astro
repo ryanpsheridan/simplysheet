@@ -294,65 +294,41 @@ const spacingScale = [
 		<!-- ============ THUMBNAIL COMPARISON ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Thumbnail Style Comparison</h2>
-			<p class="section-desc">Four thumbnail styles compared: Current (centered card), v2 (multi-card collage), v3 (single UI element, varied positioning), v3 + blur (glass blur layer for depth).</p>
+			<p class="section-desc">Current thumbnails (detailed UI) vs. Simplified (same layout, less UI inside the white card). Compare side by side.</p>
 
 			<h3 class="thumb-compare-label">50/30/20 Budget Rule</h3>
-			<div class="thumb-compare-row thumb-compare-4col">
+			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag">Current</span>
 					<img src="/images/featured-50-30-20.svg" alt="Current 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2</span>
-					<img src="/images/card-v2-50-30-20.svg" alt="v2 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-v3">v3</span>
-					<img src="/images/card-v3-50-30-20.svg" alt="v3 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-v3blur">v3 + blur</span>
-					<img src="/images/card-v3-blur-50-30-20.svg" alt="v3 blur 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag thumb-compare-tag-new">Simplified</span>
+					<img src="/images/card-simple-50-30-20.svg" alt="Simplified 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 			</div>
 
 			<h3 class="thumb-compare-label">Emergency Fund Sizing</h3>
-			<div class="thumb-compare-row thumb-compare-4col">
+			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag">Current</span>
 					<img src="/images/card-emergency-fund-sizing.svg" alt="Current emergency fund thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2</span>
-					<img src="/images/card-v2-emergency-fund.svg" alt="v2 emergency fund thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-v3">v3</span>
-					<img src="/images/card-v3-emergency-fund.svg" alt="v3 emergency fund thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-v3blur">v3 + blur</span>
-					<img src="/images/card-v3-blur-emergency-fund.svg" alt="v3 blur emergency fund thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag thumb-compare-tag-new">Simplified</span>
+					<img src="/images/card-simple-emergency-fund.svg" alt="Simplified emergency fund thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 			</div>
 
 			<h3 class="thumb-compare-label">Debt Snowball vs. Avalanche</h3>
-			<div class="thumb-compare-row thumb-compare-4col">
+			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag">Current</span>
 					<img src="/images/card-debt-snowball-vs-avalanche.svg" alt="Current debt snowball thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2</span>
-					<img src="/images/card-v2-debt-snowball.svg" alt="v2 debt snowball thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-v3">v3</span>
-					<img src="/images/card-v3-debt-snowball.svg" alt="v3 debt snowball thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-v3blur">v3 + blur</span>
-					<img src="/images/card-v3-blur-debt-snowball.svg" alt="v3 blur debt snowball thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag thumb-compare-tag-new">Simplified</span>
+					<img src="/images/card-simple-debt-snowball.svg" alt="Simplified debt snowball thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 			</div>
 		</section>
@@ -1155,12 +1131,6 @@ const spacingScale = [
 		gap: var(--space-md);
 		margin-bottom: var(--space-md);
 	}
-	.thumb-compare-4col {
-		grid-template-columns: repeat(4, 1fr);
-	}
-	@media (max-width: 960px) {
-		.thumb-compare-4col { grid-template-columns: repeat(2, 1fr); }
-	}
 	@media (max-width: 768px) {
 		.thumb-compare-row { grid-template-columns: 1fr; }
 	}
@@ -1191,15 +1161,6 @@ const spacingScale = [
 		color: var(--color-accent);
 		background: rgba(238, 244, 255, 0.9);
 	}
-	.thumb-compare-tag-v3 {
-		color: #2E7D32;
-		background: rgba(232, 245, 233, 0.9);
-	}
-	.thumb-compare-tag-v3blur {
-		color: #6A1B9A;
-		background: rgba(243, 229, 245, 0.9);
-	}
-
 	/* ——— Archive ——— */
 
 	.archive-section {

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8EAF6"/>
+      <stop offset="100%" stop-color="#C5CAE9"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5C6BC0" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7986CB" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3949AB" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#9FA8DA" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#26A69A" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#80CBC4" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="280" cy="120" rx="300" ry="180" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="680" cy="80" rx="260" ry="160" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="500" cy="30" rx="220" ry="140" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="120" cy="300" r="130" fill="#5C6BC0" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="850" cy="60" r="120" fill="#26A69A" fill-opacity="0.08" filter="url(#blur3)"/>
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
+
+  <!-- White card -->
+  <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
+
+  <!-- Header -->
+  <text x="164" y="118" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Emergency fund target</text>
+  <text x="164" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#2A2522">$16,800</text>
+  <text x="164" y="188" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8A817C">$2,800/mo × 6 months</text>
+
+  <line x1="164" y1="210" x2="796" y2="210" stroke="#F0EDEA" stroke-width="1"/>
+
+  <!-- Progress bar -->
+  <text x="164" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Progress</text>
+  <text x="796" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560" text-anchor="end">56%</text>
+  <rect x="164" y="260" width="632" height="8" rx="4" fill="#F0EDEA"/>
+  <rect x="164" y="260" width="354" height="8" rx="4" fill="#5C6BC0"/>
+
+  <line x1="164" y1="292" x2="796" y2="292" stroke="#F0EDEA" stroke-width="1"/>
+
+  <!-- Savings status -->
+  <text x="164" y="326" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Saved so far</text>
+  <text x="796" y="326" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#5C6BC0" text-anchor="end">$9,400</text>
+
+  <text x="164" y="362" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6E6560">Remaining</text>
+  <text x="796" y="362" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522" text-anchor="end">$7,400</text>
+</svg>
