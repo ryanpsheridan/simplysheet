@@ -403,13 +403,14 @@ const templateId = Math.random().toString(36).slice(2, 10);
 
 	.product-features {
 		margin-bottom: var(--space-2xl);
-		padding-top: var(--space-lg);
+		padding: var(--space-xl) 0;
 		border-top: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	.product-features h2 {
 		font-size: var(--text-h2);
-		margin-bottom: var(--space-md);
+		margin-bottom: var(--space-lg);
 	}
 
 	.features-grid {
@@ -417,22 +418,22 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		padding: 0;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		gap: var(--space-sm) var(--space-xl);
+		gap: var(--space-md) var(--space-2xl);
 	}
 
 	.features-grid li {
 		display: flex;
 		align-items: flex-start;
-		gap: var(--space-xs);
+		gap: var(--space-sm);
 		font-size: var(--text-body);
-		line-height: var(--leading-snug);
+		line-height: var(--leading-normal);
 		color: var(--color-text);
 	}
 
 	.check-icon {
 		flex-shrink: 0;
 		color: var(--color-accent);
-		margin-top: 0.125rem;
+		margin-top: 0.1875rem;
 	}
 
 	/* ——— Body content ——— */
@@ -534,6 +535,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 	/* ——— FAQ (matches article layout) ——— */
 
 	.faq {
+		max-width: var(--max-width-narrow);
 		margin-bottom: var(--space-2xl);
 		padding-top: var(--space-lg);
 		border-top: 1px solid var(--color-border);
