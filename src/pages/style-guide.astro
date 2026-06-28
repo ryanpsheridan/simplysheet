@@ -40,8 +40,8 @@ const TAG_MAP: Record<string, string> = {
 
 const colors = [
 	{ token: '--color-text',           label: 'Text',           hex: '#2A2522' },
-	{ token: '--color-text-secondary', label: 'Text Secondary', hex: '#6E6560' },
-	{ token: '--color-text-muted',     label: 'Text Muted',     hex: '#8A817C' },
+	{ token: '--color-text-secondary', label: 'Text Secondary', hex: '#6B6B6B' },
+	{ token: '--color-text-muted',     label: 'Text Muted',     hex: '#8C8C8C' },
 	{ token: '--color-accent',         label: 'Accent',         hex: '#196EDD' },
 	{ token: '--color-accent-hover',   label: 'Accent Hover',   hex: '#1259B8' },
 	{ token: '--color-accent-light',   label: 'Accent Light',   hex: '#EEF4FF' },
@@ -568,6 +568,7 @@ const spacingScale = [
 
 	.weight-list p {
 		font-size: var(--text-body-lg);
+		color: var(--color-text);
 		margin-bottom: 0;
 	}
 

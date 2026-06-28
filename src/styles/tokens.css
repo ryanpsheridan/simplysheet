@@ -3,23 +3,23 @@
 
   --color-text:           #2A2522;
   --color-text-heading:   #000000;
-  --color-text-secondary: #5C5856;
-  --color-text-muted:     #7A7570;
+  --color-text-secondary: #6B6B6B;
+  --color-text-muted:     #8C8C8C;
 
   --color-accent:         #196EDD;
   --color-accent-hover:   #1259B8;
 
   --color-bg:             #F5F5F4;
   --color-bg-surface:     #FFFFFF;
-  --color-bg-panel:       #EDECEB;
-  --color-bg-emphasis:    #EDECEB;
+  --color-bg-panel:       #EEEEEE;
+  --color-bg-emphasis:    #EEEEEE;
   --color-bg-inverse:     #2A2522;
 
   --color-btn:            #000000;
   --color-btn-hover:      #333333;
 
-  --color-border:         #DDDCDB;
-  --color-divider:        #D6D5D4;
+  --color-border:         #DEDEDE;
+  --color-divider:        #D5D5D5;
 
   --color-accent-light:   #EEF4FF;
 
