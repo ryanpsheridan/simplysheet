@@ -102,3 +102,5 @@ One thing that helps: keep a short list of expenses you can cut immediately when
 It's to stop pretending it's predictable.
 
 Most budgeting systems are built for people with a salary. If that's not your situation, you don't need a different app — you need a different starting assumption. Build from the floor, plan for the surplus, save during the good months so the bad ones don't set you back. It's not glamorous, but it works. And after a few months of it, you stop dreading the first of the month. If you want a ready-made system that handles all of this, take a look at the [Budget Spreadsheet](/templates/budget-spreadsheet/) I built for exactly this situation.
+
+And if your situation is the opposite — a consistent paycheck, pension, or benefit that doesn't change — [budgeting on a fixed income](/articles/how-to-make-a-budget-work-on-a-fixed-income/) covers how to make the most of a predictable but limited amount.

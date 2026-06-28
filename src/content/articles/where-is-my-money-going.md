@@ -65,4 +65,4 @@ From there, adjusting is straightforward. You're not cutting spending across the
 
 The financial anxiety that comes from not knowing tends to fade quietly once you actually know. Not because the numbers are necessarily great, but because uncertainty is almost always more stressful than the truth, whatever the truth turns out to be.
 
-If your income varies month to month, tracking is still the first step — but your budgeting approach will look a little different. [Budgeting with irregular income](/articles/budgeting-with-irregular-income/) covers what to do once you have the numbers but your paycheck isn't predictable.
+If your income varies month to month, tracking is still the first step — but your budgeting approach will look a little different. [Budgeting with irregular income](/articles/budgeting-with-irregular-income/) covers what to do once you have the numbers but your paycheck isn't predictable. If your income is steady but limited — a pension, Social Security, or a fixed salary — [making a budget work on a fixed income](/articles/how-to-make-a-budget-work-on-a-fixed-income/) covers how to get the most from what's already coming in.

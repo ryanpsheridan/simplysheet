@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECEFF1"/>
+      <stop offset="100%" stop-color="#CFD8DC"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#546E7A" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#78909C" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#37474F" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#90A4AE" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#546E7A" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#B0BEC5" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="48"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="62"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <!-- Abstract gradient background -->
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="260" cy="140" rx="290" ry="200" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="750" cy="100" rx="250" ry="170" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="480" cy="50" rx="210" ry="150" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="150" cy="340" r="120" fill="#546E7A" fill-opacity="0.07" filter="url(#blur2)"/>
+  <circle cx="860" cy="80" r="100" fill="#37474F" fill-opacity="0.09" filter="url(#blur3)"/>
+
+  <!-- Grain texture overlay -->
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
+
+  <!-- White card -->
+  <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
+
+  <!-- Header -->
+  <text x="164" y="108" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Monthly Budget Overview</text>
+
+  <!-- Income section -->
+  <text x="164" y="142" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#8A817C">FIXED INCOME</text>
+  <text x="796" y="142" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#546E7A" text-anchor="end">$2,840.00</text>
+  <line x1="164" y1="152" x2="796" y2="152" stroke="#F0EDEA" stroke-width="1"/>
+
+  <!-- Fixed expenses section -->
+  <text x="164" y="180" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#546E7A">FIXED EXPENSES</text>
+
+  <!-- Fixed row 1 -->
+  <text x="184" y="206" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Rent</text>
+  <text x="796" y="206" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$950.00</text>
+
+  <!-- Fixed row 2 -->
+  <text x="184" y="232" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Insurance</text>
+  <text x="796" y="232" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$285.00</text>
+
+  <!-- Fixed row 3 -->
+  <text x="184" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Car payment</text>
+  <text x="796" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$310.00</text>
+
+  <!-- Fixed subtotal -->
+  <line x1="600" y1="268" x2="796" y2="268" stroke="#F0EDEA" stroke-width="1"/>
+  <text x="600" y="288" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8A817C">Subtotal</text>
+  <text x="796" y="288" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522" text-anchor="end">$1,545.00</text>
+
+  <!-- Variable expenses section -->
+  <text x="164" y="318" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#546E7A">VARIABLE EXPENSES</text>
+
+  <!-- Variable row 1 -->
+  <text x="184" y="344" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Groceries</text>
+  <rect x="440" y="333" width="260" height="16" rx="8" fill="#F0EDEA"/>
+  <rect x="440" y="333" width="195" height="16" rx="8" fill="#546E7A" fill-opacity="0.25"/>
+  <text x="796" y="344" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$380.00</text>
+
+  <!-- Variable row 2 -->
+  <text x="184" y="370" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Dining out</text>
+  <rect x="440" y="359" width="260" height="16" rx="8" fill="#F0EDEA"/>
+  <rect x="440" y="359" width="90" height="16" rx="8" fill="#546E7A" fill-opacity="0.25"/>
+  <text x="796" y="370" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$120.00</text>
+
+  <!-- Variable row 3 -->
+  <text x="184" y="396" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Transportation</text>
+  <rect x="440" y="385" width="260" height="16" rx="8" fill="#F0EDEA"/>
+  <rect x="440" y="385" width="130" height="16" rx="8" fill="#546E7A" fill-opacity="0.25"/>
+  <text x="796" y="396" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$165.00</text>
+
+  <!-- Irregular expenses section -->
+  <text x="164" y="426" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#546E7A">IRREGULAR</text>
+  <rect x="232" y="415" width="60" height="18" rx="9" fill="#ECEFF1"/>
+  <text x="262" y="428" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#546E7A" text-anchor="middle">set aside</text>
+
+  <!-- Irregular row -->
+  <text x="184" y="452" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Car maintenance</text>
+  <text x="796" y="452" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522" text-anchor="end">$50.00</text>
+
+  <!-- Bottom summary -->
+  <line x1="164" y1="472" x2="796" y2="472" stroke="#F0EDEA" stroke-width="1"/>
+  <text x="164" y="498" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8A817C">Remaining</text>
+  <text x="164" y="524" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#546E7A">$580.00</text>
+  <text x="440" y="498" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8A817C">Budget used</text>
+  <text x="440" y="524" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#2A2522">79.6%</text>
+</svg>
