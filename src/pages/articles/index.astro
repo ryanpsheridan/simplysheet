@@ -69,30 +69,57 @@ const templates = [
 			</button>
 		</div>
 
-		<div class="article-list" id="article-list">
-			{articles.map((article) => (
-				<a href={`/articles/${article.id}/`} class="article-list-item" data-tags={JSON.stringify(article.data.tags ?? [])} data-date={article.data.pubDate.valueOf().toString()} data-title={article.data.title}>
-					<div class="article-list-text">
-						<div class="article-list-meta">
-							{(article.data.tags ?? []).map((slug: string) => (
-								<span class="article-list-tag">{TAG_MAP[slug] ?? slug}</span>
-							))}
-							<span class="article-list-date"><FormattedDate date={article.data.pubDate} /></span>
-						</div>
-						<h2 class="article-list-title">{article.data.title}</h2>
-						<p class="article-list-desc">{article.data.description}</p>
-						<span class="article-list-read">{article.readTime} min read</span>
+		<div class="articles-layout">
+			<aside class="articles-sidebar">
+				<div class="sidebar-section">
+					<h3 class="sidebar-label">Topic</h3>
+					<div class="sidebar-tag-filters" role="group" aria-label="Filter articles by topic">
+						<button class="sidebar-pill active" data-tag="all">All</button>
+						{visibleTags.map((tag) => (
+							<button class="sidebar-pill" data-tag={tag.slug}>{tag.label}</button>
+						))}
 					</div>
-					{(article.data.cardImage || article.data.image) && (
-						<div class="article-list-thumb">
-							<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-						</div>
-					)}
-				</a>
-			))}
-		</div>
+				</div>
 
-		<p class="no-results" hidden>No articles match this filter.</p>
+				<div class="sidebar-section">
+					<h3 class="sidebar-label">Sort by</h3>
+					<div class="sidebar-sort-options" role="group" aria-label="Sort articles">
+						<button class="sidebar-pill active" data-sort="newest">Newest first</button>
+						<button class="sidebar-pill" data-sort="oldest">Oldest first</button>
+						<button class="sidebar-pill" data-sort="title">Title A–Z</button>
+					</div>
+				</div>
+
+				<button class="sidebar-reset" id="sidebar-reset">Reset all</button>
+			</aside>
+
+			<div class="articles-main">
+				<div class="article-list" id="article-list">
+					{articles.map((article) => (
+						<a href={`/articles/${article.id}/`} class="article-list-item" data-tags={JSON.stringify(article.data.tags ?? [])} data-date={article.data.pubDate.valueOf().toString()} data-title={article.data.title}>
+							<div class="article-list-text">
+								<div class="article-list-meta">
+									{(article.data.tags ?? []).map((slug: string) => (
+										<span class="article-list-tag">{TAG_MAP[slug] ?? slug}</span>
+									))}
+									<span class="article-list-date"><FormattedDate date={article.data.pubDate} /></span>
+								</div>
+								<h2 class="article-list-title">{article.data.title}</h2>
+								<p class="article-list-desc">{article.data.description}</p>
+								<span class="article-list-read">{article.readTime} min read</span>
+							</div>
+							{(article.data.cardImage || article.data.image) && (
+								<div class="article-list-thumb">
+									<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+								</div>
+							)}
+						</a>
+					))}
+				</div>
+
+				<p class="no-results" hidden>No articles match this filter.</p>
+			</div>
+		</div>
 
 		<section class="resources">
 			<h2 class="resources-heading">More resources</h2>
@@ -170,10 +197,84 @@ const templates = [
 		margin-bottom: 0;
 	}
 
-	/* ——— Filter toggle ——— */
+	/* ——— Layout grid ——— */
+
+	.articles-layout {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: var(--space-xl);
+		align-items: start;
+	}
+	.articles-main {
+		min-width: 0;
+	}
+
+	/* ——— Sidebar filters ——— */
+
+	.articles-sidebar {
+		position: sticky;
+		top: 96px;
+	}
+	.sidebar-section {
+		margin-bottom: var(--space-lg);
+	}
+	.sidebar-label {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text-muted);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		margin: 0 0 var(--space-sm) 0;
+	}
+	.sidebar-tag-filters,
+	.sidebar-sort-options {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+	}
+	.sidebar-pill {
+		display: flex;
+		align-items: center;
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		background: none;
+		border: none;
+		border-radius: var(--radius-sm);
+		padding: var(--space-xs) var(--space-sm);
+		cursor: pointer;
+		text-align: left;
+		transition: color 0.15s, background 0.15s;
+	}
+	.sidebar-pill:hover {
+		color: var(--color-text);
+		background: var(--color-bg-panel);
+	}
+	.sidebar-pill.active {
+		color: var(--color-text);
+		font-weight: var(--weight-semibold);
+		background: var(--color-bg-panel);
+	}
+	.sidebar-reset {
+		font-family: var(--font-sans);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-medium);
+		color: var(--color-accent);
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+		transition: color 0.15s;
+	}
+	.sidebar-reset:hover {
+		color: var(--color-accent-hover);
+	}
+
+	/* ——— Filter toggle (mobile only) ——— */
 
 	.filter-toggle {
-		display: inline-flex;
+		display: none;
 		align-items: center;
 		gap: 0.375rem;
 		font-family: var(--font-sans);
@@ -491,6 +592,18 @@ const templates = [
 		}
 	}
 
+	@media (max-width: 768px) {
+		.articles-layout {
+			grid-template-columns: 1fr;
+		}
+		.articles-sidebar {
+			display: none;
+		}
+		.filter-toggle {
+			display: inline-flex;
+		}
+	}
+
 	@media (max-width: 600px) {
 		.article-list-item {
 			flex-direction: column;
@@ -516,14 +629,26 @@ const templates = [
 	const overlay = document.getElementById('filter-overlay');
 	const closeBtn = document.getElementById('filter-close');
 	const resetBtn = document.getElementById('filter-reset');
-	const tagPills = document.querySelectorAll<HTMLButtonElement>('.tag-filters .tag-pill');
-	const sortPills = document.querySelectorAll<HTMLButtonElement>('.sort-options .tag-pill');
+	const sidebarResetBtn = document.getElementById('sidebar-reset');
+
+	const drawerTagPills = document.querySelectorAll<HTMLButtonElement>('.tag-filters .tag-pill');
+	const drawerSortPills = document.querySelectorAll<HTMLButtonElement>('.sort-options .tag-pill');
+	const sidebarTagPills = document.querySelectorAll<HTMLButtonElement>('.sidebar-tag-filters .sidebar-pill');
+	const sidebarSortPills = document.querySelectorAll<HTMLButtonElement>('.sidebar-sort-options .sidebar-pill');
+
 	const list = document.getElementById('article-list');
 	const items = Array.from(document.querySelectorAll<HTMLAnchorElement>('#article-list .article-list-item'));
 	const noResults = document.querySelector<HTMLParagraphElement>('.no-results');
 
 	let activeTag = 'all';
 	let activeSort = 'newest';
+
+	function syncAllPills() {
+		drawerTagPills.forEach((p) => p.classList.toggle('active', p.dataset.tag === activeTag));
+		drawerSortPills.forEach((p) => p.classList.toggle('active', p.dataset.sort === activeSort));
+		sidebarTagPills.forEach((p) => p.classList.toggle('active', p.dataset.tag === activeTag));
+		sidebarSortPills.forEach((p) => p.classList.toggle('active', p.dataset.sort === activeSort));
+	}
 
 	function openDrawer() {
 		overlay?.classList.add('open');
@@ -546,31 +671,32 @@ const templates = [
 		if (e.key === 'Escape') closeDrawer();
 	});
 
-	tagPills.forEach((pill) => {
-		pill.addEventListener('click', () => {
-			activeTag = pill.dataset.tag!;
-			tagPills.forEach((p) => p.classList.remove('active'));
-			pill.classList.add('active');
-			applyFilterAndSort();
-		});
-	});
+	function setTag(tag: string) {
+		activeTag = tag;
+		syncAllPills();
+		applyFilterAndSort();
+	}
 
-	sortPills.forEach((pill) => {
-		pill.addEventListener('click', () => {
-			activeSort = pill.dataset.sort!;
-			sortPills.forEach((p) => p.classList.remove('active'));
-			pill.classList.add('active');
-			applyFilterAndSort();
-		});
-	});
+	function setSort(sort: string) {
+		activeSort = sort;
+		syncAllPills();
+		applyFilterAndSort();
+	}
 
-	resetBtn?.addEventListener('click', () => {
+	function resetAll() {
 		activeTag = 'all';
 		activeSort = 'newest';
-		tagPills.forEach((p) => p.classList.toggle('active', p.dataset.tag === 'all'));
-		sortPills.forEach((p) => p.classList.toggle('active', p.dataset.sort === 'newest'));
+		syncAllPills();
 		applyFilterAndSort();
-	});
+	}
+
+	drawerTagPills.forEach((p) => p.addEventListener('click', () => setTag(p.dataset.tag!)));
+	drawerSortPills.forEach((p) => p.addEventListener('click', () => setSort(p.dataset.sort!)));
+	sidebarTagPills.forEach((p) => p.addEventListener('click', () => setTag(p.dataset.tag!)));
+	sidebarSortPills.forEach((p) => p.addEventListener('click', () => setSort(p.dataset.sort!)));
+
+	resetBtn?.addEventListener('click', resetAll);
+	sidebarResetBtn?.addEventListener('click', resetAll);
 
 	function applyFilterAndSort() {
 		let visible = 0;
