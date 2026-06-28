@@ -1,7 +1,6 @@
 ---
 title: "Savings Goals Tracker for Google Sheets & Excel"
 description: "Set multiple savings goals, track contributions, and watch your progress toward each one. Perfect for emergency funds, sinking funds, and any savings target."
-price: 9.99
 sku: "2026SFT"
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets"
@@ -21,7 +20,6 @@ tags: ["savings-goals"]
 order: 4
 bundles:
   - name: "Budget + Savings Goals Bundle"
-    price: 24.99
     darkUrl: "https://simplysheetdesign.etsy.com/listing/4514633589/budget-spreadsheet-savings-goals-tracker"
     lightUrl: "https://simplysheetdesign.etsy.com/listing/4514632653/budget-spreadsheet-savings-goals-tracker"
 faq:
@@ -33,10 +31,22 @@ faq:
     answer: "You set a target contribution for each goal, and the tracker shows whether you're on pace. Actual deposits are logged manually so you always have an accurate picture."
 ---
 
-## Track every savings goal in one place
-
-Whether you're building an emergency fund or saving for a vacation, this tracker gives you a clear view of your progress toward each goal.
-
 ## How it works
 
-Create a goal with a target amount and optional deadline, then log contributions as you make them. The dashboard shows your progress across all goals at a glance.
+The spreadsheet has two tabs: **Dashboard** and **Transaction Log**. On the Dashboard, each row is one savings goal. Enter a fund name, target amount, any starting balance you already have saved, an optional target date, and pick a color.
+
+## Logging transactions
+
+Every deposit or withdrawal goes in the **Transaction Log** tab: date, which fund, amount, type (deposit or withdrawal), and an optional note. The Dashboard updates automatically — your total saved, remaining amount, percentage, and progress bar all recalculate.
+
+## What the Dashboard shows
+
+Each fund gets a visual progress bar, a percentage toward your goal, and a status that switches from "In progress" to "Funded" once you reach 100%. The remaining column shows exactly how much more you need — it will never display a negative number.
+
+## What you can track
+
+Emergency funds, vacation savings, car repairs, holiday shopping, down payments — any goal with a dollar amount. Each fund operates independently with its own balance, progress, and transaction history.
+
+## Available in dark and light themes
+
+Both themes are functionally identical. Use the toggle above to switch between them.

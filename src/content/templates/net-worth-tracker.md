@@ -1,7 +1,6 @@
 ---
 title: "Net Worth Tracker for Google Sheets & Excel"
 description: "Track your assets, liabilities, and overall net worth over time. See your full financial picture in one place and watch your wealth grow month by month."
-price: 9.99
 sku: "2026NWT"
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4510784687/net-worth-tracker-for-google-sheets-and"
@@ -27,10 +26,26 @@ faq:
     answer: "Yes. You can include both partners' accounts in the same tracker to see your combined financial picture."
 ---
 
-## See your full financial picture
-
-Net worth is the single best number to track your overall financial health. This tracker makes it easy to log your assets and liabilities each month and watch the trend over time.
-
 ## How it works
 
-List all your accounts — savings, checking, investments, retirement, property on the asset side, and loans, credit cards, mortgages on the liability side. Update balances monthly, and the tracker calculates your net worth and plots it over time.
+The spreadsheet has three tabs: **Dashboard**, **History Log**, and a hidden Data tab for color settings. The Dashboard is split into two sides — assets on the left, liabilities on the right.
+
+## Setting up assets
+
+Each row is one asset. Enter a name (e.g. Checking Account, Brokerage, Primary Home), the current value, a category (Cash & Savings, Investments, Retirement, Real Estate, Vehicles), and pick a color. The sheet auto-calculates what percentage each asset represents of your total and groups them by category.
+
+## Setting up liabilities
+
+Same structure on the right side. Enter each liability — mortgage, car loan, student loan, credit card balance — with its current outstanding amount and category. Percentage of total and group totals calculate automatically.
+
+## Tracking over time
+
+The **History Log** tab is where you record monthly snapshots. At the end of each month, log your total assets, total liabilities, and net worth. The Dashboard shows your current month-over-month change, and the History Log builds a long-term view of your trajectory.
+
+## Summary cards
+
+At the top of the Dashboard, summary cards show total assets, total liabilities, net worth, and the change since last month — all updated automatically as you adjust values.
+
+## Available in dark and light themes
+
+Both themes are functionally identical. Use the toggle above to switch between them.

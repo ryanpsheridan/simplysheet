@@ -1,7 +1,6 @@
 ---
 title: "Couples Budget Spreadsheet for Google Sheets & Excel"
 description: "Split bills, track shared and personal expenses, and manage savings together. Built for two incomes, one shared financial picture."
-price: 20.99
 sku: "2025JBS"
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets"
@@ -29,10 +28,22 @@ faq:
     answer: "That works too. The template handles two incomes regardless of who does the data entry."
 ---
 
-## Built for two incomes, one shared view
-
-Managing money as a couple means balancing shared responsibilities with personal spending. This spreadsheet gives both partners visibility into the full picture without losing individual autonomy.
-
 ## How it works
 
-Enter both incomes, set shared budget categories (rent, groceries, utilities) and personal categories for each partner, then log expenses as they happen. The dashboard shows combined totals, individual contributions, and progress toward shared goals.
+Enter both partner names in the overview section — they'll populate dynamically throughout the sheet. Set your budget period, date range, and currency, then add categories across five sections: **Income**, **Bills**, **Expenses**, **Debt**, and **Savings**. Each category gets an expected amount for what you plan to spend or receive.
+
+## The expense tracker
+
+The expense tracker at the bottom of the sheet works the same as the solo version, with one addition: a **Partner** field. For each expense, select which partner made the purchase or mark it as "Joint" for shared costs. Names are color-coded for quick scanning.
+
+## What you'll see
+
+Progress bars track spending against your expected amounts in real time. The overview shows combined income, total spending, and how much is left — broken down so both partners can see where the money is going.
+
+## Built-in categories
+
+Pre-filled with common categories for couples — joint bills, shared expenses, individual spending — but fully customizable. Add or remove rows to match how you actually split things.
+
+## Available in dark and light themes
+
+Both themes are functionally identical. Use the toggle above to switch between them.

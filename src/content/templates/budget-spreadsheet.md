@@ -1,7 +1,6 @@
 ---
 title: "Budget Spreadsheet for Google Sheets & Excel"
 description: "Track your income and daily expenses with real-time progress indicators that show exactly where you stand each month. Works with Google Sheets and Microsoft Excel."
-price: 17.99
 badge: "Best Seller"
 sku: "2025BT1"
 platforms: ["google-sheets", "excel"]
@@ -25,11 +24,9 @@ tags: ["expense-tracking"]
 order: 1
 bundles:
   - name: "Budget + Debt Payoff Bundle"
-    price: 24.99
     darkUrl: "https://simplysheetdesign.etsy.com/listing/4494305330/budget-spreadsheet-debt-payoff-tracker"
     lightUrl: "https://simplysheetdesign.etsy.com/listing/4494306090/budget-spreadsheet-debt-payoff-tracker"
   - name: "Budget + Savings Goals Bundle"
-    price: 24.99
     darkUrl: "https://simplysheetdesign.etsy.com/listing/4514633589/budget-spreadsheet-savings-goals-tracker"
     lightUrl: "https://simplysheetdesign.etsy.com/listing/4514632653/budget-spreadsheet-savings-goals-tracker"
 faq:
@@ -43,14 +40,22 @@ faq:
     answer: "No. The template is ready to use out of the box. Just enter your income and start logging expenses — the formulas and progress bars handle everything else."
 ---
 
-## A clearer way to see where your money goes
-
-Most people don't have a spending problem — they have a visibility problem. This budget spreadsheet gives you a simple, visual system to track what comes in, what goes out, and how close you are to your targets each month.
-
 ## How it works
 
-Enter your monthly income at the top, set category budgets (rent, groceries, transportation, etc.), then log expenses as they happen. The dashboard updates in real time — progress bars fill up as you spend, so you always know exactly where you stand.
+You set a budget period and date range, define your currency, and add categories for five sections: **Income**, **Bills**, **Expenses**, **Debt**, and **Savings**. For each category, you enter an expected amount — what you plan to spend or receive. As the month progresses, actual amounts update automatically based on your logged transactions.
 
-## What's inside
+## The expense tracker
 
-The spreadsheet includes a **monthly overview** with income vs. expenses at a glance, a **daily expense log** where you record each purchase with a date, amount, and category, and **category progress bars** that visually show how much of each budget you've used. Everything auto-calculates — no manual math required.
+At the bottom of the sheet is a daily expense log. Each entry takes four fields: amount, category (auto-populated from your setup), date, and an optional note. As you log expenses, the actual column in your budget updates in real time — no manual totaling required.
+
+## What you'll see
+
+Each budget section has progress bars that fill as you spend. At any point during the month, you can see exactly how much of each category you've used and how much is left. The overview section shows time remaining in your budget period, total income vs. total spending, and the net difference.
+
+## Built-in categories
+
+The template comes pre-filled with common categories — salary, rent, utilities, groceries, dining out, credit cards, emergency fund — but every category is fully editable. Add, rename, or remove any row to match your actual spending.
+
+## Available in dark and light themes
+
+Both themes are functionally identical. Use the toggle above to switch between them and pick the one you prefer.

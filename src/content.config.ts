@@ -29,7 +29,6 @@ const templates = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
-		price: z.number(),
 		badge: z.string().optional(),
 		sku: z.string(),
 		platforms: z.array(z.string()).default(['google-sheets', 'excel']),
@@ -42,7 +41,6 @@ const templates = defineCollection({
 		order: z.number().default(99),
 		bundles: z.array(z.object({
 			name: z.string(),
-			price: z.number(),
 			darkUrl: z.string().url(),
 			lightUrl: z.string().url(),
 		})).optional(),

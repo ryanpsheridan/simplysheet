@@ -28,6 +28,7 @@ const rest = allArticles.filter((a) => a.id !== featured.id).slice(0, 6);
 
 const templates = (await getCollection('templates'))
 	.sort((a, b) => a.data.order - b.data.order)
+	.slice(0, 4)
 	.map((t) => ({
 		name: t.data.title,
 		desc: t.data.description,

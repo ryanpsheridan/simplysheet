@@ -30,7 +30,6 @@ const templates = (await getCollection('templates'))
 						<h2 class="template-name">{t.data.title}</h2>
 						<p class="template-desc">{t.data.description}</p>
 						<div class="template-card-footer">
-							<span class="template-price">${t.data.price.toFixed(2)}</span>
 							<span class="template-link">View details <span class="arrow">&rarr;</span></span>
 						</div>
 					</div>
@@ -147,17 +146,8 @@ const templates = (await getCollection('templates'))
 	}
 
 	.template-card-footer {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		padding-top: var(--space-sm);
 		border-top: 1px solid var(--color-border);
-	}
-
-	.template-price {
-		font-size: var(--text-body);
-		font-weight: var(--weight-semibold);
-		color: var(--color-text);
 	}
 
 	.template-link {

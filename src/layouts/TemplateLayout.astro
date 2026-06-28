@@ -11,7 +11,7 @@ type Props = CollectionEntry<'templates'>['data'] & {
 	id?: string;
 };
 
-const { title, description, price, badge, platforms, darkListing, lightListing, heroImage, features, relatedArticles, bundles, faq, id } = Astro.props;
+const { title, description, badge, platforms, darkListing, lightListing, heroImage, features, relatedArticles, bundles, faq, id } = Astro.props;
 
 const allArticles = await getCollection('articles');
 const linkedArticles = relatedArticles
@@ -36,8 +36,6 @@ const schema = {
 	description,
 	offers: {
 		'@type': 'Offer',
-		price: price.toFixed(2),
-		priceCurrency: 'USD',
 		availability: 'https://schema.org/InStock',
 		url: darkListing,
 		seller: {
@@ -104,7 +102,6 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				<div class="product-info">
 					{badge && <span class="product-badge">{badge}</span>}
 					<h1 class="product-title">{title}</h1>
-					<p class="product-price">${price.toFixed(2)}</p>
 					<p class="product-desc">{description}</p>
 
 					<div class="theme-toggle" id={`theme-toggle-${templateId}`}>
@@ -119,7 +116,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Get this template
+						Get this template on Etsy
 						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
 					</a>
 
@@ -153,7 +150,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				<section class="product-bundles">
 					<h2>Save with a bundle</h2>
 					<div class="bundles-grid">
-						{bundles.map((b: { name: string; price: number; darkUrl: string; lightUrl: string }) => (
+						{bundles.map((b: { name: string; darkUrl: string; lightUrl: string }) => (
 							<a
 								href={b.darkUrl}
 								class="bundle-card"
@@ -163,7 +160,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 								rel="noopener noreferrer"
 							>
 								<span class="bundle-name">{b.name}</span>
-								<span class="bundle-price">${b.price.toFixed(2)}</span>
+								<span class="bundle-link">View on Etsy <span class="arrow">&rarr;</span></span>
 							</a>
 						))}
 					</div>
@@ -312,13 +309,6 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
 		margin-bottom: var(--space-xs);
-	}
-
-	.product-price {
-		font-size: var(--text-h2);
-		font-weight: var(--weight-semibold);
-		color: var(--color-text);
-		margin-bottom: var(--space-sm);
 	}
 
 	.product-desc {
@@ -470,9 +460,9 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		color: var(--color-text);
 	}
 
-	.bundle-price {
-		font-size: var(--text-body);
-		font-weight: var(--weight-semibold);
+	.bundle-link {
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
 		color: var(--color-accent);
 	}
 

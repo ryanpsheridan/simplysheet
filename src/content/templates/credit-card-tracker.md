@@ -1,7 +1,6 @@
 ---
 title: "Credit Card Tracker for Google Sheets & Excel"
 description: "Track credit card balances, payments, and utilization across all your cards. Stay on top of due dates and keep your credit utilization in check."
-price: 9.99
 sku: "CCTDARK"
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4514327629/credit-card-tracker-google-sheets-and"
@@ -27,10 +26,22 @@ faq:
     answer: "Absolutely. The Credit Card Tracker focuses on utilization and due dates, while the Debt Payoff Tracker focuses on paying down balances over time. They complement each other."
 ---
 
-## Keep your credit cards organized
-
-Juggling multiple credit cards means tracking different balances, limits, due dates, and utilization ratios. This tracker puts it all in one view.
-
 ## How it works
 
-Add each credit card with its limit and current balance. The tracker calculates your utilization percentage, tracks payments, and shows due dates so nothing slips through the cracks.
+The spreadsheet has three tabs: **Dashboard**, **Payment Log**, and a hidden Data tab for color settings. On the Dashboard, each row represents one credit card. Enter the card name, credit limit, current balance, APR, minimum payment, due date (as MM/DD), and pick a color.
+
+## Utilization tracking
+
+A utilization threshold dropdown at the top sets when a card gets flagged. The default is 30% — the standard benchmark for maintaining a healthy credit score. Each card shows its individual utilization percentage, and the Dashboard shows your overall utilization across all cards.
+
+## Tracking payments
+
+Every payment goes in the **Payment Log** tab: date, which card, amount, and an optional note. The Dashboard updates automatically — available credit, utilization percentage, and status all recalculate.
+
+## What the Dashboard shows
+
+Each card gets its own utilization bar, available credit amount, days until due date, and a status indicator (healthy, warning, or high based on your threshold). Summary cards at the top show total credit limit, total balance, and overall utilization at a glance.
+
+## Available in dark and light themes
+
+Both themes are functionally identical. Use the toggle above to switch between them.
