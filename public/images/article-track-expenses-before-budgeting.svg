@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE4EC"/>
+      <stop offset="100%" stop-color="#F8BBD0"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C62828" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#E57373" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#AD1457" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#F48FB1" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E65100" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFAB91" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="48"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="62"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="680" cy="180" rx="310" ry="240" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="220" cy="400" rx="270" ry="210" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="500" cy="90" rx="240" ry="190" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="780" cy="440" r="130" fill="#C62828" fill-opacity="0.07" filter="url(#blur2)"/>
+  <circle cx="140" cy="130" r="110" fill="#E65100" fill-opacity="0.09" filter="url(#blur3)"/>
+  <rect x="220" y="200" width="160" height="160" rx="32" fill="white" fill-opacity="0.12" transform="rotate(-10, 300, 280)" filter="url(#blur2)"/>
+  <rect x="600" y="300" width="140" height="140" rx="28" fill="white" fill-opacity="0.1" transform="rotate(18, 670, 370)" filter="url(#blur2)"/>
+  <circle cx="700" cy="140" r="45" fill="white" fill-opacity="0.11" filter="url(#blur2)"/>
+  <circle cx="380" cy="420" r="65" fill="white" fill-opacity="0.08" filter="url(#blur2)"/>
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE4EC"/>
+      <stop offset="100%" stop-color="#F8BBD0"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C62828" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#E57373" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#AD1457" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#F48FB1" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E65100" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#FFAB91" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="58"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="260" cy="100" rx="290" ry="170" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="700" cy="70" rx="250" ry="150" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="480" cy="40" rx="210" ry="130" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="130" cy="280" r="120" fill="#C62828" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="840" cy="50" r="110" fill="#E65100" fill-opacity="0.08" filter="url(#blur3)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
+
+  <!-- White card -->
+  <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
+
+  <!-- Header -->
+  <text x="164" y="108" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522">Expense Tracking Readiness</text>
+  <text x="164" y="138" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8A817C">6 quick questions</text>
+
+  <!-- Divider -->
+  <line x1="164" y1="156" x2="796" y2="156" stroke="#F0EDEA" stroke-width="1"/>
+
+  <!-- Question preview -->
+  <text x="164" y="190" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#2A2522">Have you tracked at least 30 days?</text>
+
+  <!-- Option 1 -->
+  <rect x="164" y="210" width="632" height="44" rx="8" fill="white" stroke="#F0EDEA" stroke-width="1.5"/>
+  <text x="184" y="237" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8A817C">Yes, I have a full month or more</text>
+
+  <!-- Option 2 -->
+  <rect x="164" y="264" width="632" height="44" rx="8" fill="white" stroke="#F0EDEA" stroke-width="1.5"/>
+  <text x="184" y="291" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8A817C">About two weeks so far</text>
+
+  <!-- Option 3 -->
+  <rect x="164" y="318" width="632" height="44" rx="8" fill="white" stroke="#F0EDEA" stroke-width="1.5"/>
+  <text x="184" y="345" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8A817C">I just started</text>
+
+  <!-- Progress bar -->
+  <text x="164" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8A817C">Question 1 of 6</text>
+  <rect x="164" y="412" width="632" height="4" rx="2" fill="#F0EDEA"/>
+  <rect x="164" y="412" width="105" height="4" rx="2" fill="#C62828"/>
+
+  <!-- Result preview label -->
+  <text x="164" y="456" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8A817C">Results: Ready to Budget · Almost There · Keep Tracking</text>
+</svg>

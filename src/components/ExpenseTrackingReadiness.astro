@@ -1,0 +1,381 @@
+---
+const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+
+<div class="quiz" id={id}>
+	<div class="quiz-questions" id={`${id}-questions`}>
+		<div class="quiz-progress">
+			<span class="quiz-progress-text" id={`${id}-progress`}>Question 1 of 6</span>
+			<div class="quiz-progress-bar"><div class="quiz-progress-fill" id={`${id}-fill`}></div></div>
+		</div>
+		<div class="quiz-question" id={`${id}-q`}>
+			<h2 class="quiz-question-text" id={`${id}-qtext`}></h2>
+			<div class="quiz-options" id={`${id}-opts`}></div>
+		</div>
+	</div>
+
+	<div class="quiz-result" id={`${id}-result`} hidden>
+		<div class="quiz-result-icon" id={`${id}-icon`}></div>
+		<span class="quiz-result-label">Your readiness level</span>
+		<h2 class="quiz-result-title" id={`${id}-style`}></h2>
+		<p class="quiz-result-desc" id={`${id}-desc`}></p>
+		<h3 class="quiz-tip-label">Your Next Step</h3>
+		<div class="quiz-result-tip" id={`${id}-tip`}></div>
+		<p class="quiz-result-rec" id={`${id}-rec`}></p>
+		<div class="quiz-result-actions">
+			<button class="btn btn-primary quiz-retake" id={`${id}-retake`}>Retake assessment</button>
+			<a class="btn btn-secondary quiz-result-cta" id={`${id}-cta`} href="#" target="_blank" rel="noopener noreferrer">Browse budget templates</a>
+		</div>
+	</div>
+</div>
+
+<style>
+	.quiz {
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: 2rem;
+		margin: var(--space-lg) 0;
+		background: var(--color-bg-surface);
+	}
+
+	/* ——— Progress ——— */
+
+	.quiz-progress {
+		margin-bottom: var(--space-md);
+	}
+	.quiz-progress-text {
+		display: block;
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-xs);
+	}
+	.quiz-progress-bar {
+		height: 4px;
+		background: var(--color-bg-panel);
+		border-radius: 2px;
+		overflow: hidden;
+	}
+	.quiz-progress-fill {
+		height: 100%;
+		background: var(--color-accent);
+		border-radius: 2px;
+		width: 16.66%;
+		transition: width 0.3s ease;
+	}
+
+	/* ——— Question ——— */
+
+	.quiz-question-text {
+		font-size: var(--text-h1);
+		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		margin-bottom: var(--space-lg);
+	}
+	.quiz-options {
+		display: flex;
+		flex-direction: column;
+		gap: 0.625rem;
+	}
+	:global(.assess-option) {
+		font-family: var(--font-sans);
+		font-size: 1.0625rem;
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		background: #fff;
+		border: 1.5px solid var(--color-border);
+		border-radius: 0.5rem;
+		padding: 1rem 1.25rem;
+		min-height: 3.25rem;
+		cursor: pointer;
+		text-align: left;
+		transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.1s ease;
+		line-height: var(--leading-snug);
+		width: 100%;
+		display: block;
+		box-sizing: border-box;
+	}
+	@media (hover: hover) {
+		:global(.assess-option:hover) {
+			color: var(--color-text);
+			border-color: var(--color-accent);
+			background: var(--color-bg-emphasis);
+		}
+	}
+	:global(.assess-option:active),
+	:global(.assess-option.selected) {
+		background: var(--color-accent);
+		color: white;
+		border-color: var(--color-accent);
+		transform: scale(0.98);
+	}
+
+	/* ——— Result ——— */
+
+	.quiz-result {
+		display: flex;
+		flex-direction: column;
+	}
+	.quiz-result[hidden] {
+		display: none;
+	}
+	.quiz-result-icon {
+		width: 3.5rem;
+		height: 3.5rem;
+		border-radius: 0.75rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: var(--space-md);
+		background: #E8F0FE;
+	}
+	:global(.quiz-result-icon .material-symbols-rounded) {
+		font-size: 28px;
+		color: var(--color-accent);
+	}
+	.quiz-result-label {
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-2xs);
+	}
+	.quiz-result-title {
+		font-size: var(--text-h2);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		margin-bottom: var(--space-sm);
+	}
+	.quiz-result-desc {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-md);
+		max-width: 36rem;
+	}
+	.quiz-tip-label {
+		font-size: var(--text-body);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		margin: 0 0 var(--space-xs);
+	}
+	.quiz-result-tip {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text);
+		background: linear-gradient(135deg, #FCE4EC 0%, #FFF0F5 100%);
+		border-radius: var(--radius-md);
+		padding: var(--space-md);
+		margin-bottom: var(--space-md);
+		max-width: 36rem;
+	}
+	.quiz-result-rec {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-md);
+		max-width: 36rem;
+	}
+	.quiz-result-actions {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		max-width: 36rem;
+	}
+	.quiz-result-actions .btn {
+		text-align: center;
+		justify-content: center;
+	}
+
+	@media (max-width: 480px) {
+		.quiz {
+			padding: var(--space-md);
+		}
+		.quiz-result-title {
+			font-size: var(--text-h3);
+		}
+		.quiz-question-text {
+			font-size: var(--text-h2);
+		}
+	}
+</style>
+
+<script is:inline define:vars={{ id }}>
+(function () {
+	var root = document.getElementById(id);
+	if (!root) return;
+
+	var questions = [
+		{
+			q: "Have you tracked your spending for at least 30 days?",
+			opts: [
+				{ text: "Yes, I have a full month or more of data", score: 2 },
+				{ text: "I have about two weeks so far", score: 1 },
+				{ text: "I just started or haven't begun yet", score: 0 }
+			]
+		},
+		{
+			q: "Do you know which category you spend the most on?",
+			opts: [
+				{ text: "Yes, I could name it and estimate the amount", score: 2 },
+				{ text: "I have a general idea but haven't confirmed it", score: 1 },
+				{ text: "I'm not sure — I'd be guessing", score: 0 }
+			]
+		},
+		{
+			q: "Have you identified your recurring subscriptions and memberships?",
+			opts: [
+				{ text: "Yes, I know what I'm paying for each month", score: 2 },
+				{ text: "I know the big ones but probably missed a few", score: 1 },
+				{ text: "I haven't really looked into it yet", score: 0 }
+			]
+		},
+		{
+			q: "Have any of your expenses surprised you?",
+			opts: [
+				{ text: "Yes, and I've had time to think about why", score: 2 },
+				{ text: "A couple, but I haven't dug into them", score: 1 },
+				{ text: "I don't know yet — I haven't tracked enough to tell", score: 0 }
+			]
+		},
+		{
+			q: "Do you feel like you understand where your money goes each month?",
+			opts: [
+				{ text: "Yes, the overall picture is pretty clear to me", score: 2 },
+				{ text: "Some parts are clear, but there are still gaps", score: 1 },
+				{ text: "Honestly, most of it still feels like a mystery", score: 0 }
+			]
+		},
+		{
+			q: "If you sat down to set budget categories right now, could you assign realistic amounts?",
+			opts: [
+				{ text: "Yes, I'd base them on what I've actually been spending", score: 2 },
+				{ text: "For some categories, but I'd be guessing on others", score: 1 },
+				{ text: "I'd mostly be guessing across the board", score: 0 }
+			]
+		}
+	];
+
+	var results = {
+		ready: {
+			name: "Ready to Build Your First Budget",
+			icon: "check_circle",
+			color: "#2D9D78",
+			iconBg: "#E8F5E9",
+			tipBg: "linear-gradient(135deg, #E8F5E9 0%, #E0F2F1 100%)",
+			desc: "You've done the hard part. You have real data, you understand your patterns, and you know where your money actually goes. A budget built on this foundation is far more likely to stick than one built on assumptions.",
+			tip: "Take your tracked expenses and group them into five or six broad categories. Use your actual averages as starting points — not aspirational targets. You can adjust over time, but starting with reality gives you a budget you can actually follow.",
+			rec: "A budget spreadsheet with category tracking would help you turn your tracked data into an organized monthly plan.",
+			cta: "Browse budget templates",
+			url: "https://simplysheetdesign.etsy.com"
+		},
+		almost: {
+			name: "You're Closer Than You Think",
+			icon: "trending_up",
+			color: "#E86A33",
+			iconBg: "#FFF3E0",
+			tipBg: "linear-gradient(135deg, #FFF3E0 0%, #FFF8E1 100%)",
+			desc: "You've started building awareness, and that matters more than most people realize. A few areas are still fuzzy, which is completely normal at this stage. Another week or two of tracking will fill in the gaps and give you much more confidence.",
+			tip: "Focus on the categories that still feel unclear. Pay extra attention to spending that varies week to week — restaurants, shopping, and entertainment tend to be the hardest to estimate without real data. A couple more weeks will sharpen the picture significantly.",
+			rec: "Keep tracking for now, and when you're ready, a simple budget template can help you organize everything you've learned.",
+			cta: "Browse budget templates",
+			url: "https://simplysheetdesign.etsy.com"
+		},
+		keep_tracking: {
+			name: "Keep Tracking for Another Couple of Weeks",
+			icon: "edit_note",
+			color: "#C62828",
+			iconBg: "#FCE4EC",
+			tipBg: "linear-gradient(135deg, #FCE4EC 0%, #FFF0F5 100%)",
+			desc: "You're at the beginning of the process, and that's a perfectly good place to be. Starting a budget right now would mean guessing at most of your numbers, which is exactly how budgets end up feeling unrealistic. Give yourself time to collect real information first.",
+			tip: "Start with something simple. Write down every expense for the next thirty days — just the date, the amount, and a broad category. Don't try to organize or judge anything yet. The goal right now is awareness, not control. The patterns will start showing up on their own.",
+			rec: "Once you have a month of data, you'll be in a much stronger position to build a budget that actually reflects your life.",
+			cta: "Browse budget templates",
+			url: "https://simplysheetdesign.etsy.com"
+		}
+	};
+
+	var currentQ = 0;
+	var totalScore = 0;
+
+	var questionsEl = document.getElementById(id + '-questions');
+	var resultEl = document.getElementById(id + '-result');
+	var progressText = document.getElementById(id + '-progress');
+	var progressFill = document.getElementById(id + '-fill');
+	var qText = document.getElementById(id + '-qtext');
+	var optsEl = document.getElementById(id + '-opts');
+	var iconEl = document.getElementById(id + '-icon');
+	var styleEl = document.getElementById(id + '-style');
+	var descEl = document.getElementById(id + '-desc');
+	var tipEl = document.getElementById(id + '-tip');
+	var recEl = document.getElementById(id + '-rec');
+	var ctaEl = document.getElementById(id + '-cta');
+	var retakeBtn = document.getElementById(id + '-retake');
+
+	function renderQuestion() {
+		var q = questions[currentQ];
+		progressText.textContent = 'Question ' + (currentQ + 1) + ' of ' + questions.length;
+		progressFill.style.width = ((currentQ + 1) / questions.length * 100) + '%';
+		qText.textContent = q.q;
+		optsEl.innerHTML = '';
+		q.opts.forEach(function (opt) {
+			var btn = document.createElement('button');
+			btn.className = 'assess-option';
+			btn.textContent = opt.text;
+			btn.addEventListener('click', function () {
+				btn.classList.add('selected');
+				var allBtns = optsEl.querySelectorAll('.assess-option');
+				allBtns.forEach(function (b) { b.disabled = true; });
+				setTimeout(function () {
+					totalScore += opt.score;
+					if (currentQ < questions.length - 1) {
+						currentQ++;
+						renderQuestion();
+					} else {
+						showResult();
+					}
+				}, 250);
+			});
+			optsEl.appendChild(btn);
+		});
+	}
+
+	function showResult() {
+		var result;
+		if (totalScore >= 9) {
+			result = results.ready;
+		} else if (totalScore >= 5) {
+			result = results.almost;
+		} else {
+			result = results.keep_tracking;
+		}
+
+		iconEl.innerHTML = '<span class="material-symbols-rounded">' + result.icon + '</span>';
+		iconEl.style.background = result.iconBg;
+		iconEl.querySelector('.material-symbols-rounded').style.color = result.color;
+		tipEl.style.background = result.tipBg;
+		styleEl.textContent = result.name;
+		descEl.textContent = result.desc;
+		tipEl.textContent = result.tip;
+		recEl.textContent = result.rec;
+		ctaEl.textContent = result.cta;
+		ctaEl.href = result.url;
+
+		questionsEl.hidden = true;
+		resultEl.hidden = false;
+	}
+
+	retakeBtn.addEventListener('click', function () {
+		currentQ = 0;
+		totalScore = 0;
+		resultEl.hidden = true;
+		questionsEl.hidden = false;
+		renderQuestion();
+	});
+
+	renderQuestion();
+})();
+</script>
