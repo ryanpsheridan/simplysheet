@@ -46,26 +46,25 @@
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <g clip-path="url(#card-clip)">
-    <!-- Large "74%" stat bleeding off bottom-right -->
-    <text x="820" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="200" font-weight="800" fill="#F9A825" fill-opacity="0.12" text-anchor="end">74%</text>
-
-    <!-- Content top area -->
-    <text x="164" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">People who quit budgeting within</text>
-    <text x="164" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="#2A2522">90 days</text>
-
-    <!-- Three reason rows with status indicators -->
-    <line x1="164" y1="240" x2="796" y2="240" stroke="#F0EDEA" stroke-width="1"/>
-
-    <text x="164" y="284" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">Too complicated</text>
-    <rect x="164" y="296" width="460" height="8" rx="4" fill="#F9A825" opacity="0.85"/>
-
-    <text x="164" y="344" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">Too restrictive</text>
-    <rect x="164" y="356" width="340" height="8" rx="4" fill="#F9A825" opacity="0.5"/>
-
-    <text x="164" y="404" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">No visible progress</text>
-    <rect x="164" y="416" width="260" height="8" rx="4" fill="#F9A825" opacity="0.25"/>
-
-    <!-- Bottom takeaway -->
-    <text x="164" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8A817C">Simpler systems stick longer</text>
+    <!-- Downward trending line chart — jagged decline evoking failure/drop-off -->
+    <polyline
+      points="140,160 260,150 340,200 420,180 500,280 560,260 640,360 720,340 800,440"
+      fill="none"
+      stroke="#F9A825"
+      stroke-width="6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity="0.8"
+    />
+    <!-- Area fill beneath the line -->
+    <polygon
+      points="140,160 260,150 340,200 420,180 500,280 560,260 640,360 720,340 800,440 800,558 140,558"
+      fill="#F9A825"
+      opacity="0.1"
+    />
+    <!-- Accent dots at key inflection points -->
+    <circle cx="340" cy="200" r="8" fill="#F9A825" opacity="0.6"/>
+    <circle cx="500" cy="280" r="8" fill="#F9A825" opacity="0.5"/>
+    <circle cx="640" cy="360" r="8" fill="#F9A825" opacity="0.4"/>
   </g>
 </svg>

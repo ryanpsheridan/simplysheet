@@ -46,30 +46,15 @@
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <g clip-path="url(#card-clip)">
-    <!-- Large donut chart bleeding off top-right corner -->
-    <circle cx="740" cy="120" r="160" fill="none" stroke="#F0EDEA" stroke-width="32"/>
-    <circle cx="740" cy="120" r="160" fill="none" stroke="#E86A33" stroke-width="32" stroke-dasharray="402 603" stroke-linecap="round" transform="rotate(-90 740 120)"/>
-    <circle cx="740" cy="120" r="160" fill="none" stroke="#E86A33" stroke-opacity="0.4" stroke-width="32" stroke-dasharray="251 754" stroke-linecap="round" transform="rotate(55 740 120)"/>
-    <circle cx="740" cy="120" r="160" fill="none" stroke="#E86A33" stroke-opacity="0.15" stroke-width="32" stroke-dasharray="150 855" stroke-linecap="round" transform="rotate(145 740 120)"/>
-
-    <!-- Category breakdown — left side -->
-    <text x="164" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">Top spending categories</text>
-
-    <circle cx="176" cy="195" r="8" fill="#E86A33"/>
-    <text x="196" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">Housing</text>
-    <text x="196" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#2A2522">$1,450</text>
-
-    <circle cx="176" cy="275" r="8" fill="#E86A33" fill-opacity="0.45"/>
-    <text x="196" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">Food</text>
-    <text x="196" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#2A2522">$680</text>
-
-    <circle cx="176" cy="355" r="8" fill="#E86A33" fill-opacity="0.18"/>
-    <text x="196" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">Transport</text>
-    <rect x="196" y="370" width="120" height="14" rx="7" fill="#EBEBEB"/>
-
-    <!-- Divider and total -->
-    <line x1="164" y1="420" x2="500" y2="420" stroke="#F0EDEA" stroke-width="1"/>
-    <text x="164" y="456" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">Total this month</text>
-    <text x="164" y="496" font-family="system-ui, -apple-system, sans-serif" font-size="44" font-weight="700" fill="#E86A33">$3,240</text>
+    <!-- Scattered dots of varying size — like a spending scatter plot -->
+    <circle cx="260" cy="180" r="64" fill="#E86A33" opacity="0.7"/>
+    <circle cx="520" cy="260" r="48" fill="#E86A33" opacity="0.5"/>
+    <circle cx="380" cy="360" r="36" fill="#E86A33" opacity="0.35"/>
+    <circle cx="660" cy="180" r="28" fill="#E86A33" opacity="0.55"/>
+    <circle cx="700" cy="340" r="22" fill="#E86A33" opacity="0.25"/>
+    <circle cx="440" cy="140" r="18" fill="#E86A33" opacity="0.4"/>
+    <circle cx="200" cy="420" r="14" fill="#E86A33" opacity="0.3"/>
+    <circle cx="580" cy="420" r="40" fill="#E86A33" opacity="0.15"/>
+    <circle cx="760" cy="460" r="10" fill="#E86A33" opacity="0.2"/>
   </g>
 </svg>

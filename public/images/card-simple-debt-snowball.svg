@@ -46,17 +46,12 @@
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <g clip-path="url(#card-clip)">
-    <!-- Two thick bars bleeding off right edge -->
-    <rect x="164" y="340" width="800" height="28" rx="14" fill="#2C3E50" opacity="0.85"/>
-    <rect x="164" y="384" width="860" height="28" rx="14" fill="#90A4AE" opacity="0.5"/>
-
-    <!-- Labels for bars -->
-    <text x="164" y="330" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#2A2522">Avalanche</text>
-    <text x="164" y="428" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#2A2522">Snowball</text>
-
-    <!-- Big savings callout — top area -->
-    <text x="164" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">Avalanche saves you</text>
-    <text x="164" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="#2C3E50">$287</text>
-    <text x="164" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#8A817C">in interest over the life of your debt</text>
+    <!-- Stacked horizontal bars descending in size — like debts being knocked out -->
+    <rect x="164" y="120" width="580" height="32" rx="16" fill="#2C3E50" opacity="0.12"/>
+    <rect x="164" y="168" width="480" height="32" rx="16" fill="#2C3E50" opacity="0.2"/>
+    <rect x="164" y="216" width="380" height="32" rx="16" fill="#2C3E50" opacity="0.35"/>
+    <rect x="164" y="264" width="280" height="32" rx="16" fill="#2C3E50" opacity="0.5"/>
+    <rect x="164" y="312" width="180" height="32" rx="16" fill="#2C3E50" opacity="0.7"/>
+    <rect x="164" y="360" width="90" height="32" rx="16" fill="#2C3E50" opacity="0.9"/>
   </g>
 </svg>

@@ -46,24 +46,10 @@
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <g clip-path="url(#card-clip)">
-    <!-- Large progress ring bleeding off left edge -->
-    <circle cx="180" cy="340" r="180" fill="none" stroke="#F0EDEA" stroke-width="24"/>
-    <circle cx="180" cy="340" r="180" fill="none" stroke="#5C6BC0" stroke-width="24" stroke-dasharray="634 497" stroke-linecap="round" transform="rotate(-90 180 340)"/>
-
-    <!-- Right side content -->
-    <text x="440" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#6E6560">Emergency fund goal</text>
-    <text x="440" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="700" fill="#2A2522">$16,800</text>
-    <text x="440" y="252" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#8A817C">$2,800/mo × 6 months</text>
-
-    <line x1="440" y1="280" x2="796" y2="280" stroke="#F0EDEA" stroke-width="1"/>
-
-    <text x="440" y="320" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Saved so far</text>
-    <text x="796" y="320" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#5C6BC0" text-anchor="end">$9,400</text>
-
-    <text x="440" y="358" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Remaining</text>
-    <text x="796" y="358" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#2A2522" text-anchor="end">$7,400</text>
-
-    <text x="440" y="396" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">Monthly savings</text>
-    <rect x="710" y="384" width="86" height="14" rx="7" fill="#EBEBEB"/>
+    <!-- Concentric arcs — like a target/shield being filled, evoking savings layers -->
+    <circle cx="480" cy="340" r="220" fill="none" stroke="#5C6BC0" stroke-width="40" stroke-opacity="0.12" stroke-dasharray="690 700"/>
+    <circle cx="480" cy="340" r="160" fill="none" stroke="#5C6BC0" stroke-width="40" stroke-opacity="0.3" stroke-dasharray="502 510"/>
+    <circle cx="480" cy="340" r="100" fill="none" stroke="#5C6BC0" stroke-width="40" stroke-opacity="0.6" stroke-dasharray="314 320"/>
+    <circle cx="480" cy="340" r="40" fill="#5C6BC0" fill-opacity="0.85"/>
   </g>
 </svg>
