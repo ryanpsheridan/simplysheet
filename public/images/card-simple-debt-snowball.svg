@@ -30,6 +30,9 @@
       <feColorMatrix type="saturate" values="0"/>
       <feBlend in="SourceGraphic" mode="multiply"/>
     </filter>
+    <clipPath id="card-clip">
+      <rect x="120" y="68" width="720" height="490" rx="10"/>
+    </clipPath>
   </defs>
 
   <rect width="960" height="540" fill="url(#bg)"/>
@@ -40,25 +43,20 @@
   <circle cx="860" cy="80" r="130" fill="#78909C" fill-opacity="0.06" filter="url(#blur3)"/>
   <rect width="960" height="540" filter="url(#grain)" opacity="0.1"/>
 
-  <!-- White card -->
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
-  <!-- Layout: big savings number centered, horizontal bar chart below -->
+  <g clip-path="url(#card-clip)">
+    <!-- Two thick bars bleeding off right edge -->
+    <rect x="164" y="340" width="800" height="28" rx="14" fill="#2C3E50" opacity="0.85"/>
+    <rect x="164" y="384" width="860" height="28" rx="14" fill="#90A4AE" opacity="0.5"/>
 
-  <text x="480" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560" text-anchor="middle">Avalanche saves you</text>
-  <text x="480" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="#2C3E50" text-anchor="middle">$287</text>
-  <text x="480" y="232" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#8A817C" text-anchor="middle">in interest over the life of your debt</text>
+    <!-- Labels for bars -->
+    <text x="164" y="330" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#2A2522">Avalanche</text>
+    <text x="164" y="428" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#2A2522">Snowball</text>
 
-  <line x1="164" y1="268" x2="796" y2="268" stroke="#F0EDEA" stroke-width="1"/>
-
-  <!-- Horizontal bar chart — two labeled rows -->
-  <text x="164" y="314" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#2A2522">Avalanche</text>
-  <rect x="164" y="328" width="632" height="14" rx="7" fill="#F0EDEA"/>
-  <rect x="164" y="328" width="460" height="14" rx="7" fill="#2C3E50" opacity="0.85"/>
-  <rect x="636" y="314" width="76" height="14" rx="7" fill="#EBEBEB"/>
-
-  <text x="164" y="386" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#2A2522">Snowball</text>
-  <rect x="164" y="400" width="632" height="14" rx="7" fill="#F0EDEA"/>
-  <rect x="164" y="400" width="520" height="14" rx="7" fill="#90A4AE" opacity="0.6"/>
-  <rect x="636" y="386" width="76" height="14" rx="7" fill="#EBEBEB"/>
+    <!-- Big savings callout — top area -->
+    <text x="164" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">Avalanche saves you</text>
+    <text x="164" y="224" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="#2C3E50">$287</text>
+    <text x="164" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#8A817C">in interest over the life of your debt</text>
+  </g>
 </svg>

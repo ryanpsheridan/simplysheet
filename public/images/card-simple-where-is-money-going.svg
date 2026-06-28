@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3E0"/>
+      <stop offset="100%" stop-color="#FFE0B2"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E86A33" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FFB74D" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#BF360C" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FFCC80" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="blob3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E86A33" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFB74D" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+    <clipPath id="card-clip">
+      <rect x="120" y="68" width="720" height="490" rx="10"/>
+    </clipPath>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="260" cy="140" rx="280" ry="200" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="720" cy="380" rx="260" ry="180" fill="url(#blob2)" filter="url(#blur2)"/>
+  <ellipse cx="500" cy="50" rx="200" ry="150" fill="url(#blob3)" filter="url(#blur3)"/>
+  <circle cx="140" cy="420" r="140" fill="#E86A33" fill-opacity="0.06" filter="url(#blur2)"/>
+  <circle cx="840" cy="100" r="120" fill="#BF360C" fill-opacity="0.07" filter="url(#blur3)"/>
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.12"/>
+
+  <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
+
+  <g clip-path="url(#card-clip)">
+    <!-- Large donut chart bleeding off top-right corner -->
+    <circle cx="740" cy="120" r="160" fill="none" stroke="#F0EDEA" stroke-width="32"/>
+    <circle cx="740" cy="120" r="160" fill="none" stroke="#E86A33" stroke-width="32" stroke-dasharray="402 603" stroke-linecap="round" transform="rotate(-90 740 120)"/>
+    <circle cx="740" cy="120" r="160" fill="none" stroke="#E86A33" stroke-opacity="0.4" stroke-width="32" stroke-dasharray="251 754" stroke-linecap="round" transform="rotate(55 740 120)"/>
+    <circle cx="740" cy="120" r="160" fill="none" stroke="#E86A33" stroke-opacity="0.15" stroke-width="32" stroke-dasharray="150 855" stroke-linecap="round" transform="rotate(145 740 120)"/>
+
+    <!-- Category breakdown — left side -->
+    <text x="164" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">Top spending categories</text>
+
+    <circle cx="176" cy="195" r="8" fill="#E86A33"/>
+    <text x="196" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">Housing</text>
+    <text x="196" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#2A2522">$1,450</text>
+
+    <circle cx="176" cy="275" r="8" fill="#E86A33" fill-opacity="0.45"/>
+    <text x="196" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">Food</text>
+    <text x="196" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#2A2522">$680</text>
+
+    <circle cx="176" cy="355" r="8" fill="#E86A33" fill-opacity="0.18"/>
+    <text x="196" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#2A2522">Transport</text>
+    <rect x="196" y="370" width="120" height="14" rx="7" fill="#EBEBEB"/>
+
+    <!-- Divider and total -->
+    <line x1="164" y1="420" x2="500" y2="420" stroke="#F0EDEA" stroke-width="1"/>
+    <text x="164" y="456" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">Total this month</text>
+    <text x="164" y="496" font-family="system-ui, -apple-system, sans-serif" font-size="44" font-weight="700" fill="#E86A33">$3,240</text>
+  </g>
+</svg>
