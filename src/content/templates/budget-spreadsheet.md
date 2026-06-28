@@ -7,6 +7,7 @@ platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel"
 lightListing: "https://simplysheetdesign.etsy.com/listing/1870004217/budget-spreadsheet-for-google-excel"
 heroImage: "/images/featured budget thumbnail- budget template.jpg"
+lightImage: "/images/featured budget thumbnail- budget template light.jpg"
 features:
   - "Monthly income and expense tracking with category breakdowns"
   - "Real-time progress bars that update as you log spending"

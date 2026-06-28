@@ -96,7 +96,7 @@ const templateMap = new Map(allTemplateEntries.map((t) => [t.id, t]));
 const allProducts = [
 	{
 		id: 'budget',
-		name: templateMap.get('budget-spreadsheet')?.data.title ?? 'Budget Template',
+		name: (templateMap.get('budget-spreadsheet')?.data.title ?? 'Budget Template').replace(/ for Google Sheets & Excel$/, ''),
 		desc: templateMap.get('budget-spreadsheet')?.data.description ?? '',
 		url: '/templates/budget-spreadsheet/',
 		image: templateMap.get('budget-spreadsheet')?.data.heroImage ?? '/images/featured budget thumbnail- budget template.jpg',
@@ -104,21 +104,21 @@ const allProducts = [
 	},
 	{
 		id: 'couples',
-		name: templateMap.get('couples-budget-spreadsheet')?.data.title ?? 'Couples Budget Spreadsheet',
+		name: (templateMap.get('couples-budget-spreadsheet')?.data.title ?? 'Couples Budget Spreadsheet').replace(/ for Google Sheets & Excel$/, ''),
 		desc: templateMap.get('couples-budget-spreadsheet')?.data.description ?? '',
 		url: '/templates/couples-budget-spreadsheet/',
 		image: templateMap.get('couples-budget-spreadsheet')?.data.heroImage ?? '/images/featured budget thumbnail-couples.jpg',
 	},
 	{
 		id: 'debt',
-		name: templateMap.get('debt-payoff-tracker')?.data.title ?? 'Debt Payoff Tracker',
+		name: (templateMap.get('debt-payoff-tracker')?.data.title ?? 'Debt Payoff Tracker').replace(/ for Google Sheets & Excel$/, ''),
 		desc: templateMap.get('debt-payoff-tracker')?.data.description ?? '',
 		url: '/templates/debt-payoff-tracker/',
 		image: templateMap.get('debt-payoff-tracker')?.data.heroImage ?? '/images/featured budget thumbnail-debt-tracker.jpg',
 	},
 	{
 		id: 'savings',
-		name: templateMap.get('savings-goals-tracker')?.data.title ?? 'Savings Goals Tracker',
+		name: (templateMap.get('savings-goals-tracker')?.data.title ?? 'Savings Goals Tracker').replace(/ for Google Sheets & Excel$/, ''),
 		desc: templateMap.get('savings-goals-tracker')?.data.description ?? '',
 		url: '/templates/savings-goals-tracker/',
 		image: templateMap.get('savings-goals-tracker')?.data.heroImage ?? '/images/featured budget thumbnail-savings goals tracker.jpg',
@@ -364,7 +364,7 @@ const recommendedProducts = uniqueProductIds.length >= 2
 	/* ——— Article main ——— */
 
 	.article-main {
-		max-width: var(--max-width-narrow);
+		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
 		margin: 0 auto;
 		padding: var(--space-lg) var(--space-md) var(--space-2xl);
 	}

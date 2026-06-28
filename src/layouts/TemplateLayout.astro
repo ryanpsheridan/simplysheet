@@ -11,7 +11,7 @@ type Props = CollectionEntry<'templates'>['data'] & {
 	id?: string;
 };
 
-const { title, description, badge, platforms, darkListing, lightListing, heroImage, features, relatedArticles, bundles, faq, id } = Astro.props;
+const { title, description, badge, platforms, darkListing, lightListing, heroImage, lightImage, features, relatedArticles, bundles, faq, id } = Astro.props;
 
 const allArticles = await getCollection('articles');
 const linkedArticles = relatedArticles
@@ -97,7 +97,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 
 			<section class="product-hero">
 				<div class="product-image">
-					<img src={heroImage} alt={`${title} preview`} width="960" height="640" />
+					<img src={heroImage} alt={`${title} preview`} width="960" height="640" id={`hero-img-${templateId}`} />
 				</div>
 				<div class="product-info">
 					{badge && <span class="product-badge">{badge}</span>}
@@ -211,7 +211,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 									<img src={t.data.heroImage} alt={`${t.data.title} preview`} width="600" height="400" loading="lazy" />
 								</div>
 								{t.data.badge && <span class="template-badge">{t.data.badge}</span>}
-								<h3 class="template-name">{t.data.title}</h3>
+								<h3 class="template-name">{t.data.title.replace(/ for Google Sheets & Excel$/, '')}</h3>
 								<p class="template-desc">{t.data.description}</p>
 							</a>
 						))}
@@ -221,9 +221,10 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		</main>
 		<Footer />
 
-		<script is:inline define:vars={{ templateId, darkListing, lightListing }}>
+		<script is:inline define:vars={{ templateId, darkListing, lightListing, heroImage, lightImage }}>
 			const toggle = document.getElementById(`theme-toggle-${templateId}`);
 			const cta = document.getElementById(`cta-${templateId}`);
+			const heroImg = document.getElementById(`hero-img-${templateId}`);
 
 			if (toggle && cta) {
 				toggle.addEventListener('click', (e) => {
@@ -235,6 +236,10 @@ const templateId = Math.random().toString(36).slice(2, 10);
 
 					const theme = btn.dataset.theme;
 					cta.href = theme === 'light' ? lightListing : darkListing;
+
+					if (heroImg && lightImage) {
+						heroImg.src = theme === 'light' ? lightImage : heroImage;
+					}
 
 					document.querySelectorAll('.bundle-card').forEach((card) => {
 						card.href = theme === 'light' ? card.dataset.lightUrl : card.dataset.darkUrl;
@@ -266,7 +271,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 
 <style>
 	.template-main {
-		max-width: var(--max-width);
+		max-width: calc(var(--max-width) + var(--space-md) * 2);
 		margin: 0 auto;
 		padding: var(--space-lg) var(--space-md) var(--space-2xl);
 	}

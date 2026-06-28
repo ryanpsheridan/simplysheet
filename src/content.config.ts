@@ -35,6 +35,7 @@ const templates = defineCollection({
 		darkListing: z.string().url(),
 		lightListing: z.string().url(),
 		heroImage: z.string(),
+		lightImage: z.string().optional(),
 		features: z.array(z.string()).default([]),
 		relatedArticles: z.array(z.string()).default([]),
 		tags: z.array(z.string()).default([]),

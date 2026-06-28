@@ -27,7 +27,7 @@ const templates = (await getCollection('templates'))
 					</div>
 					<div class="template-card-body">
 						{t.data.badge && <span class="template-badge">{t.data.badge}</span>}
-						<h2 class="template-name">{t.data.title}</h2>
+						<h2 class="template-name">{t.data.title.replace(/ for Google Sheets & Excel$/, '')}</h2>
 						<p class="template-desc">{t.data.description}</p>
 						<div class="template-card-footer">
 							<span class="template-link">View details <span class="arrow">&rarr;</span></span>
@@ -48,7 +48,7 @@ const templates = (await getCollection('templates'))
 
 <style>
 	.templates-page {
-		max-width: var(--max-width);
+		max-width: calc(var(--max-width) + var(--space-md) * 2);
 		margin: 0 auto;
 		padding: var(--space-lg) var(--space-md) var(--space-2xl);
 	}
@@ -138,7 +138,7 @@ const templates = (await getCollection('templates'))
 		color: var(--color-text-secondary);
 		line-height: var(--leading-snug);
 		margin: 0 0 auto;
-		padding-bottom: var(--space-md);
+		padding-bottom: var(--space-sm);
 		display: -webkit-box;
 		-webkit-line-clamp: 3;
 		-webkit-box-orient: vertical;
