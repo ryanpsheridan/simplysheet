@@ -22,7 +22,9 @@ tags: ["couples-budgeting"]
 order: 2
 faq:
   - question: "Can we customize the income split?"
-    answer: "Yes. You can set any split ratio for shared expenses — 50/50, 60/40, proportional to income, or any custom arrangement."
+    answer: "Yes — you manually enter each partner's expected and actual amounts for every category, so you have full control over how costs are divided. There's no preset ratio to select; you simply allocate whatever amount makes sense for each person."
+  - question: "Is this easy to share with a partner?"
+    answer: "Yes. Google Sheets is the easiest option since it's browser-based — both partners can view and edit the same sheet in real time from any device. The Excel version works too, but sharing requires emailing the file or syncing through OneDrive."
   - question: "Does each person get their own view?"
     answer: "The spreadsheet includes shared categories and individual sections so each partner can track personal spending alongside joint expenses."
   - question: "What if only one person manages the budget?"

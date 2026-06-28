@@ -29,7 +29,7 @@ faq:
   - question: "Does it calculate interest?"
     answer: "The tracker logs interest charges as part of your payment history so you can see exactly how much goes to principal vs. interest over time."
   - question: "How many debts can I track?"
-    answer: "There's no hard limit. The template is designed to handle as many accounts as you need."
+    answer: "The template supports 30+ individual debts — more than enough for most people to track every credit card, loan, and balance in one place."
 ---
 
 ## How it works
@@ -38,7 +38,7 @@ The spreadsheet has three tabs: **Dashboard**, **Payment Log**, and a hidden Dat
 
 ## Avalanche vs. snowball
 
-A dropdown at the top lets you switch between two payoff strategies. **Avalanche** ranks debts by highest interest rate first — saves the most money over time. **Snowball** ranks by smallest balance first — builds momentum with quick wins. The priority column updates automatically when you switch.
+A dropdown at the top lets you switch between two payoff strategies. **Avalanche** ranks debts by highest interest rate first — saves the most money over time. **Snowball** ranks by smallest balance first — builds momentum with quick wins. The priority column updates automatically when you switch. Not sure which strategy is right for you? Read our [guide to snowball vs. avalanche methods](/articles/debt-snowball-vs-avalanche/) or try the [debt snowball vs. avalanche calculator](/tools/debt-snowball-vs-avalanche-calculator/) to compare payoff timelines side by side.
 
 ## Tracking payments
 
