@@ -46,22 +46,26 @@
   <!-- Header -->
   <text x="164" y="126" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#2A2522">Emergency fund target</text>
   <text x="164" y="180" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#2A2522">$16,800</text>
-  <text x="164" y="212" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#8A817C">$2,800/mo × 6 months</text>
+  <!-- Skeleton subtitle -->
+  <rect x="164" y="200" width="160" height="10" rx="5" fill="#E8E8E8"/>
 
-  <line x1="164" y1="240" x2="796" y2="240" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="164" y1="236" x2="796" y2="236" stroke="#F0EDEA" stroke-width="1"/>
 
   <!-- Progress bar -->
-  <text x="164" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6E6560">Progress</text>
-  <text x="796" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#6E6560" text-anchor="end">56%</text>
-  <rect x="164" y="300" width="632" height="10" rx="5" fill="#F0EDEA"/>
-  <rect x="164" y="300" width="354" height="10" rx="5" fill="#5C6BC0"/>
+  <rect x="164" y="264" width="64" height="10" rx="5" fill="#E0E0E0"/>
+  <rect x="764" y="264" width="32" height="10" rx="5" fill="#D8D8D8"/>
+  <rect x="164" y="292" width="632" height="10" rx="5" fill="#F0EDEA"/>
+  <rect x="164" y="292" width="354" height="10" rx="5" fill="#5C6BC0"/>
 
-  <line x1="164" y1="340" x2="796" y2="340" stroke="#F0EDEA" stroke-width="1"/>
+  <line x1="164" y1="332" x2="796" y2="332" stroke="#F0EDEA" stroke-width="1"/>
 
-  <!-- Savings status -->
-  <text x="164" y="384" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6E6560">Saved so far</text>
-  <text x="796" y="384" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" fill="#5C6BC0" text-anchor="end">$9,400</text>
+  <!-- Skeleton detail rows -->
+  <rect x="164" y="364" width="88" height="10" rx="5" fill="#E0E0E0"/>
+  <rect x="740" y="364" width="56" height="10" rx="5" fill="#C5CAE9"/>
 
-  <text x="164" y="432" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6E6560">Remaining</text>
-  <text x="796" y="432" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" fill="#2A2522" text-anchor="end">$7,400</text>
+  <rect x="164" y="404" width="72" height="10" rx="5" fill="#E0E0E0"/>
+  <rect x="740" y="404" width="56" height="10" rx="5" fill="#D8D8D8"/>
+
+  <!-- Skeleton footer -->
+  <rect x="164" y="450" width="140" height="10" rx="5" fill="#F0EDEA"/>
 </svg>
