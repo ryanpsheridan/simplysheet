@@ -44,17 +44,17 @@
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <!-- Header -->
-  <text x="164" y="126" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#2A2522">Emergency fund target</text>
-  <text x="164" y="186" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#2A2522">$16,800</text>
-  <rect x="164" y="206" width="160" height="10" rx="5" fill="#EBEBEB"/>
+  <text x="164" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#2A2522">Emergency fund target</text>
 
-  <line x1="164" y1="244" x2="796" y2="244" stroke="#F0EDEA" stroke-width="1"/>
+  <!-- Big number — hero element -->
+  <text x="164" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="#2A2522">$16,800</text>
+  <rect x="164" y="260" width="200" height="10" rx="5" fill="#EBEBEB"/>
 
-  <!-- Progress bar -->
-  <rect x="164" y="296" width="632" height="10" rx="5" fill="#F0EDEA"/>
-  <rect x="164" y="296" width="354" height="10" rx="5" fill="#5C6BC0"/>
+  <!-- Large progress bar -->
+  <rect x="164" y="330" width="632" height="14" rx="7" fill="#F0EDEA"/>
+  <rect x="164" y="330" width="354" height="14" rx="7" fill="#5C6BC0"/>
 
-  <!-- Skeleton row -->
-  <rect x="164" y="360" width="88" height="10" rx="5" fill="#EBEBEB"/>
-  <rect x="740" y="360" width="56" height="10" rx="5" fill="#EBEBEB"/>
+  <!-- Minimal skeleton row -->
+  <rect x="164" y="400" width="100" height="10" rx="5" fill="#EBEBEB"/>
+  <rect x="720" y="400" width="76" height="10" rx="5" fill="#EBEBEB"/>
 </svg>
