@@ -43,34 +43,22 @@
   <!-- White card -->
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
-  <!-- Header -->
-  <text x="164" y="126" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#2A2522">Debt payoff comparison</text>
+  <!-- Layout: big savings number centered, horizontal bar chart below -->
 
-  <line x1="164" y1="150" x2="796" y2="150" stroke="#F0EDEA" stroke-width="1"/>
+  <text x="480" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560" text-anchor="middle">Avalanche saves you</text>
+  <text x="480" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="#2C3E50" text-anchor="middle">$287</text>
+  <text x="480" y="232" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#8A817C" text-anchor="middle">in interest over the life of your debt</text>
 
-  <!-- Strategy rows — names real, details skeleton -->
-  <rect x="164" y="176" width="16" height="16" rx="4" fill="#2C3E50"/>
-  <text x="192" y="191" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#2A2522">Avalanche</text>
-  <rect x="620" y="180" width="176" height="12" rx="6" fill="#EBEBEB"/>
+  <line x1="164" y1="268" x2="796" y2="268" stroke="#F0EDEA" stroke-width="1"/>
 
-  <rect x="164" y="218" width="16" height="16" rx="4" fill="#90A4AE"/>
-  <text x="192" y="233" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#2A2522">Snowball</text>
-  <rect x="620" y="222" width="176" height="12" rx="6" fill="#EBEBEB"/>
+  <!-- Horizontal bar chart — two labeled rows -->
+  <text x="164" y="314" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#2A2522">Avalanche</text>
+  <rect x="164" y="328" width="632" height="14" rx="7" fill="#F0EDEA"/>
+  <rect x="164" y="328" width="460" height="14" rx="7" fill="#2C3E50" opacity="0.85"/>
+  <rect x="636" y="314" width="76" height="14" rx="7" fill="#EBEBEB"/>
 
-  <line x1="164" y1="262" x2="796" y2="262" stroke="#F0EDEA" stroke-width="1"/>
-
-  <!-- Savings callout -->
-  <text x="164" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">Avalanche saves</text>
-  <text x="164" y="348" font-family="system-ui, -apple-system, sans-serif" font-size="40" font-weight="700" fill="#2C3E50">$287</text>
-  <text x="310" y="348" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">in interest</text>
-
-  <!-- Comparison bars -->
-  <rect x="164" y="390" width="460" height="12" rx="6" fill="#2C3E50" opacity="0.85"/>
-  <rect x="164" y="416" width="520" height="12" rx="6" fill="#90A4AE" opacity="0.6"/>
-
-  <!-- Legend -->
-  <circle cx="176" cy="462" r="5" fill="#2C3E50"/>
-  <text x="190" y="467" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8A817C">Less interest</text>
-  <circle cx="340" cy="462" r="5" fill="#90A4AE"/>
-  <text x="354" y="467" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8A817C">More interest</text>
+  <text x="164" y="386" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#2A2522">Snowball</text>
+  <rect x="164" y="400" width="632" height="14" rx="7" fill="#F0EDEA"/>
+  <rect x="164" y="400" width="520" height="14" rx="7" fill="#90A4AE" opacity="0.6"/>
+  <rect x="636" y="386" width="76" height="14" rx="7" fill="#EBEBEB"/>
 </svg>
