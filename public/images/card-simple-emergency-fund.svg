@@ -44,17 +44,27 @@
   <rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>
 
   <!-- Header -->
-  <text x="164" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#2A2522">Emergency fund target</text>
+  <text x="164" y="126" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#2A2522">Emergency fund target</text>
+  <text x="164" y="174" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#2A2522">$16,800</text>
+  <text x="164" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#8A817C">$2,800/mo × 6 months</text>
 
-  <!-- Big number — hero element -->
-  <text x="164" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="#2A2522">$16,800</text>
-  <rect x="164" y="260" width="200" height="10" rx="5" fill="#EBEBEB"/>
+  <line x1="164" y1="226" x2="796" y2="226" stroke="#F0EDEA" stroke-width="1"/>
 
-  <!-- Large progress bar -->
-  <rect x="164" y="330" width="632" height="14" rx="7" fill="#F0EDEA"/>
-  <rect x="164" y="330" width="354" height="14" rx="7" fill="#5C6BC0"/>
+  <!-- Progress -->
+  <text x="164" y="262" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#6E6560">Progress</text>
+  <rect x="720" y="250" width="76" height="14" rx="7" fill="#EBEBEB"/>
+  <rect x="164" y="280" width="632" height="12" rx="6" fill="#F0EDEA"/>
+  <rect x="164" y="280" width="354" height="12" rx="6" fill="#5C6BC0"/>
 
-  <!-- Minimal skeleton row -->
-  <rect x="164" y="400" width="100" height="10" rx="5" fill="#EBEBEB"/>
-  <rect x="720" y="400" width="76" height="10" rx="5" fill="#EBEBEB"/>
+  <line x1="164" y1="318" x2="796" y2="318" stroke="#F0EDEA" stroke-width="1"/>
+
+  <!-- Expense rows — labels real, amounts skeleton -->
+  <text x="164" y="354" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Housing</text>
+  <rect x="720" y="342" width="76" height="14" rx="7" fill="#EBEBEB"/>
+
+  <text x="164" y="390" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#2A2522">Groceries</text>
+  <rect x="720" y="378" width="76" height="14" rx="7" fill="#EBEBEB"/>
+
+  <text x="164" y="426" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#6E6560">+ 3 more categories</text>
+  <rect x="720" y="414" width="76" height="14" rx="7" fill="#EBEBEB"/>
 </svg>
