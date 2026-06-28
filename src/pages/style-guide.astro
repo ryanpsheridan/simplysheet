@@ -290,7 +290,6 @@ const spacingScale = [
 							<h3 class="glass-card-title">{article.data.title}</h3>
 							<p class="glass-card-desc">{article.data.description}</p>
 							<div class="glass-card-footer">
-								<span class="glass-card-author">Simply Sheet</span>
 								<FormattedDate date={article.data.pubDate} />
 							</div>
 						</div>
@@ -1044,18 +1043,10 @@ const spacingScale = [
 
 	.glass-card-footer {
 		margin-top: auto;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		font-size: var(--text-xs);
 		color: var(--color-text-muted);
 		padding-top: var(--space-xs);
 		border-top: 1px solid rgba(0, 0, 0, 0.06);
-	}
-
-	.glass-card-author {
-		font-weight: var(--weight-medium);
-		color: var(--color-text-secondary);
 	}
 
 	/* ——— Template / product card demo ——— */
