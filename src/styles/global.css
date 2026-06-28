@@ -248,7 +248,7 @@ hr {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	font-family: var(--font-sans);
+	font-family: var(--font-heading);
 	font-size: var(--text-small);
 	font-weight: var(--weight-medium);
 	line-height: 1;

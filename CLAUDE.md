@@ -64,11 +64,11 @@ Both SVG types use `width="960" height="540" viewBox="0 0 960 540"`. Follow thes
 
 ### How hero images display on the homepage
 
-On the homepage, the six secondary article cards use the hero image (`article-{slug}.svg`) as a full-bleed background. A white text overlay (`.article-card-body`) anchors to the **bottom-right** corner of the card, covering most of the lower-right area. The gradient peeks through at the **top and left edges** only. This means:
+On the homepage, the six secondary article cards use the hero image (`article-{slug}.svg`) as a full-bleed background. A white text overlay (`.article-card-body`) is **centered** within the card with equal margin on all sides. The gradient peeks through around **all edges** of the white overlay. This means:
 
-- The hero SVG must have its strongest gradient colors and blobs concentrated in the **upper-left portion** of the image, since that's the only part visible behind the white overlay.
+- The hero SVG should have its gradient colors and blobs spread across the image, since the gradient is visible around all four edges of the centered white overlay.
 - Every article must have an `image` field in frontmatter. A missing image means no gradient background, which breaks the card layout.
-- After creating a new article's SVGs, always screenshot the homepage to verify the cards look correct — gradient visible at top-left, white body flush to bottom and right edges.
+- After creating a new article's SVGs, always screenshot the homepage to verify the cards look correct — gradient visible around all edges, white body centered within the card.
 
 ### Hero image (`article-{slug}.svg`)
 

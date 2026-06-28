@@ -254,7 +254,8 @@ const templates = (await getCollection('templates'))
 	.article-card {
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-end;
+		justify-content: center;
+		align-items: center;
 		position: relative;
 		text-decoration: none;
 		border-radius: 0.75rem;
@@ -280,12 +281,12 @@ const templates = (await getCollection('templates'))
 		position: relative;
 		z-index: 1;
 		background: var(--color-bg-surface);
-		border-radius: var(--radius-md) 0 0 0;
+		border-radius: var(--radius-md);
 		padding: var(--space-md);
-		margin-left: var(--space-md);
-		margin-top: var(--space-md);
+		margin: var(--space-md);
 		display: flex;
 		flex-direction: column;
+		width: calc(100% - var(--space-md) * 2);
 	}
 	.article-card-title {
 		font-size: var(--text-h3);
