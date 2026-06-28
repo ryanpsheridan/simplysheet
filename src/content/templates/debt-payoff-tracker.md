@@ -6,7 +6,7 @@ platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4485880320/debt-payoff-tracker-for-google-sheets"
 heroImage: "/images/featured budget thumbnail-debt-tracker.jpg"
-lightImage: "/images/featured budget thumbnail-debt-tracker light.jpg"
+lightImage: "/images/featured budget thumbnail-debt-tracker-light-theme.jpg"
 features:
   - "Track multiple debts in one place"
   - "Visual progress bars for each balance"

@@ -6,7 +6,7 @@ platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4396403062/couples-budget-spreadsheet-joint-finance"
 heroImage: "/images/featured budget thumbnail-couples.jpg"
-lightImage: "/images/featured budget thumbnail-couples light.jpg"
+lightImage: "/images/featured budget thumbnail-couples-light-theme.jpg"
 features:
   - "Dual income tracking for both partners"
   - "Shared and personal expense categories"

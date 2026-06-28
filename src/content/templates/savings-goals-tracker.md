@@ -6,7 +6,7 @@ platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4483665538/sinking-funds-tracker-google-sheets"
 heroImage: "/images/featured budget thumbnail-savings goals tracker.jpg"
-lightImage: "/images/featured budget thumbnail-savings goals tracker light.jpg"
+lightImage: "/images/featured budget thumbnail-savings goals tracker-light-theme.jpg"
 features:
   - "Track multiple savings goals simultaneously"
   - "Visual progress bars for each goal"

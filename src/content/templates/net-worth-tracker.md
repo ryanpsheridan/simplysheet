@@ -6,7 +6,7 @@ platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4510784687/net-worth-tracker-for-google-sheets-and"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4510785369/net-worth-tracker-for-google-sheets-and"
 heroImage: "/images/featured budget thumbnail-net worth tracker.jpg"
-lightImage: "/images/featured budget thumbnail-net worth tracker light.jpg"
+lightImage: "/images/featured budget thumbnail-net worth tracker-light-theme.jpg"
 features:
   - "Track all assets and liabilities in one place"
   - "Monthly net worth snapshots"

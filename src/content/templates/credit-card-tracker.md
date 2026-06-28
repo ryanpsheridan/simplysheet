@@ -6,7 +6,7 @@ platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4514327629/credit-card-tracker-google-sheets-and"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4514328028/credit-card-tracker-google-sheets-and"
 heroImage: "/images/featured budget thumbnail-credit card tracker.jpg"
-lightImage: "/images/featured budget thumbnail-credit card tracker light.jpg"
+lightImage: "/images/featured budget thumbnail-credit card tracker-light-theme.jpg"
 features:
   - "Track multiple credit cards in one view"
   - "Balance and credit limit tracking"
