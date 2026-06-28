@@ -985,6 +985,9 @@ const spacingScale = [
 		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 		transform: translateY(-2px);
 	}
+	.glass-card:hover .glass-card-panel {
+		background: rgba(255, 255, 255, 1);
+	}
 
 	.glass-card-bg {
 		position: absolute;
@@ -1007,6 +1010,7 @@ const spacingScale = [
 		border-radius: 0.5rem;
 		margin: 0.5rem;
 		padding: var(--space-md);
+		transition: background 0.2s ease;
 		display: flex;
 		flex-direction: column;
 		flex: 1;
