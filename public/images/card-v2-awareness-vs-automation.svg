@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E0F2F1"/>
+      <stop offset="100%" stop-color="#B2DFDB"/>
+    </linearGradient>
+    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00897B" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#4DB6AC" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00695C" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#80CBC4" stop-opacity="0.12"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="250" cy="270" rx="300" ry="220" fill="url(#blob1)" filter="url(#blur1)"/>
+  <ellipse cx="720" cy="350" rx="280" ry="200" fill="url(#blob2)" filter="url(#blur2)"/>
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.1"/>
+
+  <!-- Two overlapping circles — duality of awareness vs automation — centered -->
+  <circle cx="380" cy="270" r="160" fill="none" stroke="#00897B" stroke-width="2" opacity="0.35"/>
+  <circle cx="380" cy="270" r="160" fill="#00897B" opacity="0.06"/>
+
+  <circle cx="580" cy="270" r="160" fill="none" stroke="#2A2522" stroke-width="2" opacity="0.15"/>
+  <circle cx="580" cy="270" r="160" fill="#2A2522" opacity="0.03"/>
+
+  <!-- Intersection emphasis -->
+  <ellipse cx="480" cy="270" rx="60" ry="140" fill="#00897B" opacity="0.12"/>
+
+  <!-- Small accent elements -->
+  <circle cx="160" cy="120" r="4" fill="#00897B" opacity="0.4"/>
+  <circle cx="820" cy="420" r="6" fill="#2A2522" opacity="0.12"/>
+  <line x1="140" y1="470" x2="340" y2="470" stroke="#00897B" stroke-width="1" opacity="0.1"/>
+</svg>

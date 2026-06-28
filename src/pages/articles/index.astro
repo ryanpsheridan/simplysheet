@@ -69,35 +69,28 @@ const templates = [
 			</button>
 		</div>
 
-		<ul class="article-list" id="article-list">
+		<div class="article-list" id="article-list">
 			{articles.map((article) => (
-				<li data-tags={JSON.stringify(article.data.tags ?? [])} data-date={article.data.pubDate.valueOf().toString()} data-title={article.data.title}>
-					<a href={`/articles/${article.id}/`}>
-						{(article.data.cardImage || article.data.image) && (
-							<div class="thumb">
-								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="600" height="340" loading="lazy" />
-							</div>
-						)}
-						<div class="card-body">
-							{(article.data.tags ?? []).length > 0 && (
-								<div class="card-tags">
-									{(article.data.tags ?? []).map((slug: string) => (
-										<span class="card-tag">{TAG_MAP[slug] ?? slug}</span>
-									))}
-								</div>
-							)}
-							<h2 class="title">{article.data.title}</h2>
-							<p class="description">{article.data.description}</p>
-							<p class="meta">
-								<FormattedDate date={article.data.pubDate} />
-								<span>&middot;</span>
-								<span>{article.readTime} min read</span>
-							</p>
+				<a href={`/articles/${article.id}/`} class="article-list-item" data-tags={JSON.stringify(article.data.tags ?? [])} data-date={article.data.pubDate.valueOf().toString()} data-title={article.data.title}>
+					<div class="article-list-text">
+						<div class="article-list-meta">
+							{(article.data.tags ?? []).map((slug: string) => (
+								<span class="article-list-tag">{TAG_MAP[slug] ?? slug}</span>
+							))}
+							<span class="article-list-date"><FormattedDate date={article.data.pubDate} /></span>
 						</div>
-					</a>
-				</li>
+						<h2 class="article-list-title">{article.data.title}</h2>
+						<p class="article-list-desc">{article.data.description}</p>
+						<span class="article-list-read">{article.readTime} min read</span>
+					</div>
+					{(article.data.cardImage || article.data.image) && (
+						<div class="article-list-thumb">
+							<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+						</div>
+					)}
+				</a>
 			))}
-		</ul>
+		</div>
 
 		<p class="no-results" hidden>No articles match this filter.</p>
 
@@ -319,86 +312,93 @@ const templates = [
 		color: var(--color-accent-hover);
 	}
 
-	/* ——— Article grid ——— */
+	/* ——— Article list — single column ——— */
 
 	.article-list {
-		list-style: none;
-		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-md);
+		display: flex;
+		flex-direction: column;
 	}
-	.article-list li[hidden] {
+	.article-list-item {
+		display: flex;
+		gap: var(--space-lg);
+		align-items: flex-start;
+		padding: var(--space-lg) 0;
+		border-bottom: 1px solid var(--color-border);
+		text-decoration: none;
+		color: inherit;
+		transition: opacity 0.15s ease;
+	}
+	.article-list-item:first-child {
+		padding-top: 0;
+	}
+	.article-list-item:last-child {
+		border-bottom: none;
+	}
+	.article-list-item:hover {
+		opacity: 0.75;
+	}
+	.article-list-item[hidden] {
 		display: none;
 	}
-	.article-list li a {
-		display: flex;
-		flex-direction: column;
-		text-decoration: none;
-		height: 100%;
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		overflow: hidden;
-		background: var(--color-bg-surface);
-		transition: box-shadow 0.2s ease;
-	}
-	.article-list li a:hover {
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-	}
-	.thumb {
-		overflow: hidden;
-	}
-	.thumb img {
-		display: block;
-		width: 100%;
-		height: auto;
-	}
-	.card-body {
-		padding: var(--space-md);
-		display: flex;
-		flex-direction: column;
+	.article-list-text {
 		flex: 1;
+		min-width: 0;
 	}
-	.card-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.375rem;
-		margin-bottom: var(--space-xs);
-	}
-	.card-tag {
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		color: var(--color-text-muted);
-		background: var(--color-bg-emphasis);
-		border-radius: var(--radius-full);
-		padding: 0.1875rem 0.625rem;
-		line-height: 1.4;
-	}
-	.title {
-		font-size: var(--text-h3);
-		color: var(--color-text);
-		margin-bottom: var(--space-xs);
-		text-decoration: underline transparent;
-		text-underline-offset: 3px;
-		transition: text-decoration-color 100ms ease;
-	}
-	.article-list li a:hover .title {
-		text-decoration-color: var(--color-text);
-	}
-	.description {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		margin: 0 0 auto;
-		padding-bottom: var(--space-sm);
-		line-height: var(--leading-snug);
-	}
-	.meta {
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-		margin: 0;
+	.article-list-meta {
 		display: flex;
 		align-items: center;
-		gap: 0.375rem;
+		gap: var(--space-xs);
+		margin-bottom: var(--space-xs);
+	}
+	.article-list-tag {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		color: var(--color-accent);
+	}
+	.article-list-tag + .article-list-date::before {
+		content: '·';
+		margin-right: var(--space-xs);
+		color: var(--color-text-muted);
+	}
+	.article-list-date {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+	.article-list-title {
+		font-family: var(--font-heading);
+		font-size: 1.25rem;
+		font-weight: var(--weight-bold);
+		line-height: 1.3;
+		margin: 0 0 var(--space-xs) 0;
+		color: var(--color-text);
+	}
+	.article-list-desc {
+		font-size: var(--text-body);
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.article-list-read {
+		display: inline-block;
+		margin-top: var(--space-xs);
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+	.article-list-thumb {
+		flex-shrink: 0;
+		width: 160px;
+		height: 107px;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+	}
+	.article-list-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	/* ——— Empty state ——— */
@@ -486,15 +486,19 @@ const templates = [
 	}
 
 	@media (max-width: 960px) {
-		.article-list {
-			grid-template-columns: 1fr;
-		}
 		.resources-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
 	@media (max-width: 600px) {
+		.article-list-thumb {
+			width: 100px;
+			height: 67px;
+		}
+		.article-list-title {
+			font-size: 1.05rem;
+		}
 		.resources-grid {
 			grid-template-columns: 1fr;
 		}
@@ -509,7 +513,7 @@ const templates = [
 	const tagPills = document.querySelectorAll<HTMLButtonElement>('.tag-filters .tag-pill');
 	const sortPills = document.querySelectorAll<HTMLButtonElement>('.sort-options .tag-pill');
 	const list = document.getElementById('article-list');
-	const items = Array.from(document.querySelectorAll<HTMLLIElement>('#article-list li'));
+	const items = Array.from(document.querySelectorAll<HTMLAnchorElement>('#article-list .article-list-item'));
 	const noResults = document.querySelector<HTMLParagraphElement>('.no-results');
 
 	let activeTag = 'all';
