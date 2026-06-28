@@ -28,7 +28,7 @@ const templates = (await getCollection('templates'))
 		badge: t.data.badge,
 	}));
 
-const GRADIENT_ANGLES = ['135deg', '225deg', '160deg', '200deg', '120deg', '240deg'];
+const GRADIENT_ANGLES = ['135deg', '135deg', '135deg', '135deg', '135deg', '135deg'];
 
 const ARTICLE_COLORS: Record<string, { bg: string; accent: string; accent2?: string }> = {
 	'50-30-20-budget-rule':           { bg: '#E3F2FD', accent: '#196EDD', accent2: '#90CAF9' },
@@ -262,68 +262,17 @@ const spacingScale = [
 			</div>
 		</section>
 
-		<!-- ============ CARDS: GRADIENT OVERLAY (LEGACY) ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Article Card — Gradient Overlay</h2>
-			<p class="section-desc">Hero gradient as full-bleed background with a centered white text overlay. Uses the abstract <code>image</code> SVG. Previously used on the homepage; available for carousels and related content sections.</p>
-			<div class="card-demo-grid card-demo-3col">
-				{sampleArticles.map((article) => (
-					<a href={`/articles/${article.id}/`} class="gradient-card">
-						{article.data.image && (
-							<div class="gradient-card-thumb">
-								<img src={article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-							</div>
-						)}
-						<div class="gradient-card-body">
-							<h3 class="gradient-card-title">{article.data.title}</h3>
-							<p class="gradient-card-desc">{article.data.description}</p>
-							<p class="gradient-card-meta">
-								<FormattedDate date={article.data.pubDate} />
-								<span>&middot;</span>
-								<span>5 min read</span>
-							</p>
-						</div>
-					</a>
-				))}
-			</div>
-		</section>
-
 		<!-- ============ CARDS: GLASS OVERLAY ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Article Card — Glass Overlay</h2>
-			<p class="section-desc">Gradient background with a frosted-glass white panel (slight blue tint, 96% opacity). Masonry-style grid with varied card heights. Read time badge at top, bold title, description, and metadata.</p>
-			<div class="glass-grid">
-				{masonryArticles.map((article, i) => (
-					<a href={`/articles/${article.id}/`} class={`glass-card ${i === 1 || i === 4 ? 'glass-card-tall' : ''}`}>
-						{article.data.image && (
-							<div class="glass-card-bg">
-								<img src={article.data.image} alt="" width="960" height="540" loading="lazy" />
-							</div>
-						)}
-						<div class="glass-card-panel">
-							<span class="glass-card-read">{article.readTime} min read</span>
-							<h3 class="glass-card-title">{article.data.title}</h3>
-							<p class="glass-card-desc">{article.data.description}</p>
-							<div class="glass-card-footer">
-								<FormattedDate date={article.data.pubDate} />
-							</div>
-						</div>
-					</a>
-				))}
-			</div>
-		</section>
-
-		<!-- ============ CARDS: GLASS OVERLAY v2 ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Article Card — Glass Overlay v2</h2>
-			<p class="section-desc">Each card gets a unique multi-stop gradient background derived from the article's accent color palette, with the hero SVG layered on top at low opacity for texture. More visual variety than the uniform SVG-only approach.</p>
+			<p class="section-desc">Each card gets a unique multi-stop gradient background derived from the article's accent color palette, with the hero SVG layered on top at low opacity for texture. Consistent top-left light source across all cards.</p>
 			<div class="glass2-grid">
 				{masonryArticles.map((article, i) => {
 					const palette = ARTICLE_COLORS[article.id] ?? { bg: '#E8EAF6', accent: '#5C6BC0', accent2: '#9FA8DA' };
 					const angle = GRADIENT_ANGLES[i % GRADIENT_ANGLES.length];
 					return (
 						<a href={`/articles/${article.id}/`} class="glass2-card">
-							<div class="glass2-card-bg" style={`background: linear-gradient(${angle}, ${palette.bg} 0%, ${palette.accent2 ?? palette.bg} 40%, ${palette.accent} 100%);`}>
+							<div class="glass2-card-bg" style={`background: linear-gradient(${angle}, ${palette.bg} 0%, ${palette.accent2 ?? palette.bg} 50%, ${palette.accent}e6 100%);`}>
 								{article.data.image && (
 									<img src={article.data.image} alt="" width="960" height="540" loading="lazy" />
 								)}
@@ -345,10 +294,10 @@ const spacingScale = [
 		<!-- ============ THUMBNAIL COMPARISON ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Thumbnail Style Comparison</h2>
-			<p class="section-desc">Current thumbnails (single centered white card, uniform layout) vs. v2 thumbnails (multi-card compositions, overlapping elements, varied data visualizations). Compare side by side.</p>
+			<p class="section-desc">Four thumbnail styles compared: Current (centered card), v2 (multi-card collage), v3 (single UI element, varied positioning), v3 + blur (glass blur layer for depth).</p>
 
 			<h3 class="thumb-compare-label">50/30/20 Budget Rule</h3>
-			<div class="thumb-compare-row">
+			<div class="thumb-compare-row thumb-compare-4col">
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag">Current</span>
 					<img src="/images/featured-50-30-20.svg" alt="Current 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
@@ -357,10 +306,18 @@ const spacingScale = [
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2</span>
 					<img src="/images/card-v2-50-30-20.svg" alt="v2 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
 				</div>
+				<div class="thumb-compare-item">
+					<span class="thumb-compare-tag thumb-compare-tag-v3">v3</span>
+					<img src="/images/card-v3-50-30-20.svg" alt="v3 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
+				</div>
+				<div class="thumb-compare-item">
+					<span class="thumb-compare-tag thumb-compare-tag-v3blur">v3 + blur</span>
+					<img src="/images/card-v3-blur-50-30-20.svg" alt="v3 blur 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
+				</div>
 			</div>
 
 			<h3 class="thumb-compare-label">Emergency Fund Sizing</h3>
-			<div class="thumb-compare-row">
+			<div class="thumb-compare-row thumb-compare-4col">
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag">Current</span>
 					<img src="/images/card-emergency-fund-sizing.svg" alt="Current emergency fund thumbnail" width="960" height="540" loading="lazy" />
@@ -369,10 +326,18 @@ const spacingScale = [
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2</span>
 					<img src="/images/card-v2-emergency-fund.svg" alt="v2 emergency fund thumbnail" width="960" height="540" loading="lazy" />
 				</div>
+				<div class="thumb-compare-item">
+					<span class="thumb-compare-tag thumb-compare-tag-v3">v3</span>
+					<img src="/images/card-v3-emergency-fund.svg" alt="v3 emergency fund thumbnail" width="960" height="540" loading="lazy" />
+				</div>
+				<div class="thumb-compare-item">
+					<span class="thumb-compare-tag thumb-compare-tag-v3blur">v3 + blur</span>
+					<img src="/images/card-v3-blur-emergency-fund.svg" alt="v3 blur emergency fund thumbnail" width="960" height="540" loading="lazy" />
+				</div>
 			</div>
 
 			<h3 class="thumb-compare-label">Debt Snowball vs. Avalanche</h3>
-			<div class="thumb-compare-row">
+			<div class="thumb-compare-row thumb-compare-4col">
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag">Current</span>
 					<img src="/images/card-debt-snowball-vs-avalanche.svg" alt="Current debt snowball thumbnail" width="960" height="540" loading="lazy" />
@@ -380,6 +345,14 @@ const spacingScale = [
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2</span>
 					<img src="/images/card-v2-debt-snowball.svg" alt="v2 debt snowball thumbnail" width="960" height="540" loading="lazy" />
+				</div>
+				<div class="thumb-compare-item">
+					<span class="thumb-compare-tag thumb-compare-tag-v3">v3</span>
+					<img src="/images/card-v3-debt-snowball.svg" alt="v3 debt snowball thumbnail" width="960" height="540" loading="lazy" />
+				</div>
+				<div class="thumb-compare-item">
+					<span class="thumb-compare-tag thumb-compare-tag-v3blur">v3 + blur</span>
+					<img src="/images/card-v3-blur-debt-snowball.svg" alt="v3 blur debt snowball thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 			</div>
 		</section>
@@ -504,6 +477,35 @@ const spacingScale = [
 		<section class="guide-section">
 			<h2 class="section-title">Footer</h2>
 			<p class="section-desc">Minimal footer with a top divider line and muted copyright text.</p>
+		</section>
+
+		<!-- ============ ARCHIVE ============ -->
+		<section class="guide-section archive-section">
+			<h2 class="section-title">Archive</h2>
+			<p class="section-desc">Deprecated card styles kept for reference.</p>
+
+			<h3 class="archive-label">Article Card — Gradient Overlay</h3>
+			<p class="section-desc">Hero gradient as full-bleed background with a centered white text overlay. Uses the abstract <code>image</code> SVG. Previously used on the homepage.</p>
+			<div class="card-demo-grid card-demo-3col">
+				{sampleArticles.map((article) => (
+					<a href={`/articles/${article.id}/`} class="gradient-card">
+						{article.data.image && (
+							<div class="gradient-card-thumb">
+								<img src={article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+							</div>
+						)}
+						<div class="gradient-card-body">
+							<h3 class="gradient-card-title">{article.data.title}</h3>
+							<p class="gradient-card-desc">{article.data.description}</p>
+							<p class="gradient-card-meta">
+								<FormattedDate date={article.data.pubDate} />
+								<span>&middot;</span>
+								<span>5 min read</span>
+							</p>
+						</div>
+					</a>
+				))}
+			</div>
 		</section>
 
 	</div>
@@ -1040,108 +1042,6 @@ const spacingScale = [
 
 	/* ——— Glass overlay card ——— */
 
-	.glass-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		grid-auto-rows: minmax(18rem, auto);
-		gap: var(--space-md);
-	}
-	.glass-card-tall {
-		grid-row: span 2;
-	}
-	@media (max-width: 960px) {
-		.glass-grid { grid-template-columns: repeat(2, 1fr); }
-	}
-	@media (max-width: 600px) {
-		.glass-grid { grid-template-columns: 1fr; }
-		.glass-card-tall { grid-row: span 1; }
-	}
-
-	.glass-card {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-		border-radius: 1rem;
-		overflow: hidden;
-		text-decoration: none;
-		min-height: 18rem;
-		transition: box-shadow 0.2s ease, transform 0.2s ease;
-	}
-	.glass-card:hover {
-		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-		transform: translateY(-2px);
-	}
-	.glass-card:hover .glass-card-panel {
-		background: rgba(240, 245, 255, 0.98);
-	}
-
-	.glass-card-bg {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-	}
-	.glass-card-bg img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.glass-card-panel {
-		position: relative;
-		z-index: 1;
-		background: rgba(240, 245, 255, 0.96);
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
-		border-radius: 0.5rem;
-		margin: 0.5rem;
-		padding: var(--space-md);
-		transition: background 0.2s ease;
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-	}
-
-	.glass-card-read {
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		margin-bottom: var(--space-sm);
-	}
-
-	.glass-card-title {
-		font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem);
-		font-weight: var(--weight-bold);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-		margin-bottom: var(--space-xs);
-	}
-
-	.glass-card-desc {
-		font-size: var(--text-small);
-		line-height: var(--leading-snug);
-		color: var(--color-text-secondary);
-		margin: 0 0 var(--space-sm);
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-	.glass-card-tall .glass-card-desc {
-		-webkit-line-clamp: 5;
-	}
-
-	.glass-card-footer {
-		margin-top: auto;
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		padding-top: var(--space-xs);
-		border-top: 1px solid rgba(0, 0, 0, 0.06);
-	}
-
-	/* ——— Glass overlay v2 card ——— */
-
 	.glass2-grid {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
@@ -1255,6 +1155,12 @@ const spacingScale = [
 		gap: var(--space-md);
 		margin-bottom: var(--space-md);
 	}
+	.thumb-compare-4col {
+		grid-template-columns: repeat(4, 1fr);
+	}
+	@media (max-width: 960px) {
+		.thumb-compare-4col { grid-template-columns: repeat(2, 1fr); }
+	}
 	@media (max-width: 768px) {
 		.thumb-compare-row { grid-template-columns: 1fr; }
 	}
@@ -1284,6 +1190,30 @@ const spacingScale = [
 	.thumb-compare-tag-new {
 		color: var(--color-accent);
 		background: rgba(238, 244, 255, 0.9);
+	}
+	.thumb-compare-tag-v3 {
+		color: #2E7D32;
+		background: rgba(232, 245, 233, 0.9);
+	}
+	.thumb-compare-tag-v3blur {
+		color: #6A1B9A;
+		background: rgba(243, 229, 245, 0.9);
+	}
+
+	/* ——— Archive ——— */
+
+	.archive-section {
+		opacity: 0.6;
+		transition: opacity 0.2s;
+	}
+	.archive-section:hover {
+		opacity: 1;
+	}
+	.archive-label {
+		font-size: var(--text-body);
+		font-weight: var(--weight-semibold);
+		margin-bottom: var(--space-xs);
+		margin-top: var(--space-md);
 	}
 
 	/* ——— Template / product card demo ——— */

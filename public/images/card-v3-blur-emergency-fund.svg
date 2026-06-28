@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E8EAF6"/>
+      <stop offset="100%" stop-color="#C5CAE9"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="16" flood-color="#000" flood-opacity="0.06"/>
+    </filter>
+    <filter id="glass" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="780" cy="120" rx="280" ry="200" fill="#5C6BC0" fill-opacity="0.12" filter="url(#blur1)"/>
+  <ellipse cx="180" cy="420" rx="240" ry="180" fill="#3949AB" fill-opacity="0.10" filter="url(#blur1)"/>
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.10"/>
+
+  <!-- Glass overlay -->
+  <rect x="220" y="20" width="760" height="480" rx="16" fill="white" fill-opacity="0.72" filter="url(#glass)"/>
+
+  <!-- Main card -->
+  <rect x="280" y="60" width="720" height="440" rx="14" fill="white" fill-opacity="0.92" filter="url(#shadow)"/>
+
+  <text x="320" y="104" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8C8C8C">Emergency fund goal</text>
+  <text x="320" y="144" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#2A2522" letter-spacing="-0.5">$16,800</text>
+
+  <circle cx="880" cy="120" r="52" fill="none" stroke="#F0F0F0" stroke-width="10"/>
+  <circle cx="880" cy="120" r="52" fill="none" stroke="#5C6BC0" stroke-width="10" stroke-dasharray="184 143" stroke-linecap="round" transform="rotate(-90 880 120)"/>
+  <text x="880" y="116" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#2A2522" text-anchor="middle">56%</text>
+  <text x="880" y="134" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8C8C8C" text-anchor="middle">funded</text>
+
+  <line x1="320" y1="172" x2="960" y2="172" stroke="#F0F0F0" stroke-width="1"/>
+
+  <circle cx="334" cy="206" r="5" fill="#5C6BC0"/>
+  <text x="350" y="211" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Housing</text>
+  <text x="920" y="211" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522" text-anchor="end">$1,200</text>
+
+  <circle cx="334" cy="246" r="5" fill="#7986CB"/>
+  <text x="350" y="251" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Groceries</text>
+  <text x="920" y="251" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522" text-anchor="end">$520</text>
+
+  <circle cx="334" cy="286" r="5" fill="#9FA8DA"/>
+  <text x="350" y="291" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Insurance</text>
+  <text x="920" y="291" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522" text-anchor="end">$380</text>
+
+  <circle cx="334" cy="326" r="5" fill="#C5CAE9"/>
+  <text x="350" y="331" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#2A2522">Transportation</text>
+  <text x="920" y="331" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522" text-anchor="end">$340</text>
+
+  <circle cx="334" cy="366" r="5" fill="#E8EAF6"/>
+  <text x="350" y="371" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6B6B6B">Utilities + other</text>
+  <text x="920" y="371" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6B6B6B" text-anchor="end">$360</text>
+
+  <rect x="320" y="404" width="200" height="36" rx="18" fill="#EDE7F6"/>
+  <text x="338" y="427" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#5C6BC0">× 6 months = $16,800</text>
+
+  <!-- Floating badge -->
+  <rect x="40" y="420" width="200" height="80" rx="14" fill="white" fill-opacity="0.88" filter="url(#shadow)"/>
+  <text x="64" y="450" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8C8C8C">Current savings</text>
+  <text x="64" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#5C6BC0" letter-spacing="-0.5">$9,400</text>
+</svg>

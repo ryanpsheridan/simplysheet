@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E8EDF2"/>
+      <stop offset="100%" stop-color="#CFD8DC"/>
+    </linearGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="16" flood-color="#000" flood-opacity="0.06"/>
+    </filter>
+    <filter id="glass" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <ellipse cx="200" cy="140" rx="260" ry="180" fill="#2C3E50" fill-opacity="0.10" filter="url(#blur1)"/>
+  <ellipse cx="760" cy="400" rx="240" ry="160" fill="#546E7A" fill-opacity="0.08" filter="url(#blur1)"/>
+  <rect width="960" height="540" filter="url(#grain)" opacity="0.10"/>
+
+  <!-- Glass overlay -->
+  <rect x="100" y="60" width="700" height="480" rx="16" fill="white" fill-opacity="0.72" filter="url(#glass)"/>
+
+  <!-- Card -->
+  <rect x="160" y="100" width="640" height="500" rx="14" fill="white" fill-opacity="0.92" filter="url(#shadow)"/>
+
+  <rect x="196" y="136" width="80" height="28" rx="14" fill="#E8EDF2"/>
+  <text x="236" y="155" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#2C3E50" text-anchor="middle">Snowball</text>
+
+  <text x="196" y="192" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8C8C8C">Pay off smallest balance first</text>
+
+  <rect x="196" y="216" width="568" height="72" rx="10" fill="#F8F9FA"/>
+  <text x="216" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522">Credit Card</text>
+  <text x="744" y="244" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2C3E50" text-anchor="end">$340</text>
+  <rect x="216" y="256" width="508" height="5" rx="2.5" fill="#E0E0E0"/>
+  <rect x="216" y="256" width="457" height="5" rx="2.5" fill="#4CAF50"/>
+  <text x="216" y="278" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8C8C8C">90% paid · 2 mo left</text>
+
+  <rect x="196" y="300" width="568" height="72" rx="10" fill="#F8F9FA"/>
+  <text x="216" y="328" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522">Medical Bill</text>
+  <text x="744" y="328" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2C3E50" text-anchor="end">$2,100</text>
+  <rect x="216" y="340" width="508" height="5" rx="2.5" fill="#E0E0E0"/>
+  <rect x="216" y="340" width="203" height="5" rx="2.5" fill="#2C3E50"/>
+  <text x="216" y="362" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8C8C8C">40% paid · 8 mo left</text>
+
+  <rect x="196" y="384" width="568" height="72" rx="10" fill="#F8F9FA"/>
+  <text x="216" y="412" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2A2522">Car Loan</text>
+  <text x="744" y="412" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2C3E50" text-anchor="end">$8,400</text>
+  <rect x="216" y="424" width="508" height="5" rx="2.5" fill="#E0E0E0"/>
+  <rect x="216" y="424" width="76" height="5" rx="2.5" fill="#90A4AE"/>
+  <text x="216" y="446" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8C8C8C">15% paid · queued</text>
+
+  <text x="196" y="492" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#8C8C8C">Total remaining</text>
+  <text x="764" y="492" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#2A2522" text-anchor="end">$10,840</text>
+</svg>
