@@ -61,7 +61,7 @@ Either way works. What matters is that the tool stays out of your way enough tha
 
 This is where the real value shows up. Once you have a few months of real numbers in front of you, patterns tend to be obvious in a way they never were from memory alone. Maybe dining out is double what you assumed. Maybe a handful of small subscriptions add up to a surprising monthly total. Maybe nothing is actually wrong, and the anxiety was bigger than the actual numbers.
 
-From there, adjusting is straightforward. You're not cutting spending across the board and hoping it works. You're looking at specific categories with specific totals and deciding, one at a time, what still earns a place in your budget.
+From there, adjusting is straightforward. You're not cutting spending across the board and hoping it works. You're looking at specific categories with specific totals and deciding, one at a time, what still earns a place in your budget. If you're not sure whether you've tracked enough to start budgeting, a quick [readiness assessment](/tools/expense-tracking-readiness/) can help you decide.
 
 The financial anxiety that comes from not knowing tends to fade quietly once you actually know. Not because the numbers are necessarily great, but because uncertainty is almost always more stressful than the truth, whatever the truth turns out to be.
 

@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ExpenseTrackingReadiness from '../../components/ExpenseTrackingReadiness.astro';
+import { SITE_TITLE } from '../../consts';
+
+const title = 'Expense Tracking Readiness Assessment';
+const description = 'Answer 6 quick questions to find out if you have tracked enough spending to build a realistic budget, or if another couple of weeks of tracking would give you a stronger foundation.';
+---
+
+<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+	<main>
+		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: 'Expense Tracking Readiness' }]} />
+		<article>
+			<header class="calc-header">
+				<h1>Expense Tracking Readiness Assessment</h1>
+				<p class="calc-intro">Most people jump into budgeting before they have enough information to set realistic numbers. This short assessment helps you figure out whether you've tracked enough spending to build a budget that actually reflects your life, or whether another couple of weeks of observation would give you a much stronger starting point.</p>
+			</header>
+
+			<ExpenseTrackingReadiness />
+
+			<div class="calc-callout">
+				<p class="calc-callout-text">For a deeper look at why tracking before budgeting matters, <a href="/articles/track-expenses-before-budgeting/">Track Your Expenses for 30 Days Before You Build a Budget</a> walks through the full process. When you're ready to build your first budget, a <a href="/templates/budget-spreadsheet/">budget spreadsheet</a> can help you turn your tracked data into an organized monthly plan.</p>
+			</div>
+		</article>
+	</main>
+</BaseLayout>
+
+<style>
+	main {
+		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
+	}
+	.calc-header {
+		margin-bottom: var(--space-sm);
+	}
+	.calc-header h1 {
+		font-size: var(--text-h1);
+	}
+	.calc-intro {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+	.calc-callout {
+		margin-top: var(--space-xl);
+		padding: var(--space-md);
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
+	}
+	.calc-callout-text {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+	.calc-callout-text a {
+		font-weight: var(--weight-medium);
+	}
+</style>
