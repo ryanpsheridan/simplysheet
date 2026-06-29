@@ -234,8 +234,8 @@ const recommendedProducts = uniqueProductIds.length >= 2
 				{recommendedProducts.map((t) => (
 					<div class="product-row">
 						<div class="product-text">
-							<h3 class="product-name">{t.name}</h3>
 							{t.badge && <span class="product-badge">{t.badge}</span>}
+							<h3 class="product-name">{t.name}</h3>
 							<p class="product-desc">{t.desc}</p>
 						</div>
 						<a href={t.url} class="btn btn-secondary product-cta">View template <span class="arrow">&rarr;</span></a>
@@ -531,6 +531,7 @@ const recommendedProducts = uniqueProductIds.length >= 2
 		font-weight: var(--weight-semibold);
 		color: var(--color-accent);
 		background: var(--color-accent-light);
+		border: 1px solid #C8D8E8;
 		border-radius: var(--radius-full);
 		padding: 0.125rem 0.5rem;
 		line-height: 1.4;
