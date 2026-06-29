@@ -72,7 +72,7 @@ Simple systems also tend to hold up better than complicated ones. A spreadsheet 
 
 Not by trying to cut everything at once.
 
-Start by tracking where your money goes for one month, without trying to change anything yet. [Thirty days is usually enough to see your real patterns clearly](/articles/30-day-expense-tracking/).
+Start by tracking where your money goes for one month, without trying to change anything yet. [Thirty days is usually enough to see your real patterns clearly](/articles/track-expenses-before-budgeting/).
 
 Once you can see that, you'll know which expenses are genuinely fixed, which ones have some flexibility, and where small adjustments are likely to make the biggest difference.
 
