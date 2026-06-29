@@ -2,6 +2,7 @@
 title: "Couples Budget Spreadsheet for Google Sheets & Excel"
 description: "Split bills, track shared and personal expenses, and manage savings together. Built for two incomes, one shared financial picture."
 sku: "2025JBS"
+price: 20.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4396403062/couples-budget-spreadsheet-joint-finance"

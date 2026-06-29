@@ -11,7 +11,7 @@ type Props = CollectionEntry<'templates'>['data'] & {
 	id?: string;
 };
 
-const { title, description, badge, platforms, darkListing, lightListing, heroImage, lightImage, features, relatedArticles, bundles, faq, reviews, id } = Astro.props;
+const { title, description, badge, platforms, darkListing, lightListing, heroImage, lightImage, features, relatedArticles, bundles, faq, reviews, id, price, sku } = Astro.props;
 
 const allArticles = await getCollection('articles');
 const linkedArticles = relatedArticles
@@ -29,18 +29,55 @@ const platformLabels: Record<string, string> = {
 	'excel': 'Excel',
 };
 
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://simplysheetdesign.com';
+const imageUrl = `${siteUrl}${heroImage}`;
+
+const reviewSchema = reviews?.map((r: { name: string; text: string }) => ({
+	'@type': 'Review',
+	author: { '@type': 'Person', name: r.name },
+	reviewBody: r.text,
+	reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
+}));
+
+const aggregateRating = reviews?.length ? {
+	'@type': 'AggregateRating',
+	ratingValue: 5,
+	reviewCount: reviews.length,
+	bestRating: 5,
+	worstRating: 1,
+} : undefined;
+
 const schema = {
 	'@context': 'https://schema.org',
 	'@type': 'Product',
 	name: title,
 	description,
+	image: imageUrl,
+	sku,
+	brand: {
+		'@type': 'Brand',
+		name: SITE_TITLE,
+	},
+	...(reviewSchema?.length ? { review: reviewSchema } : {}),
+	...(aggregateRating ? { aggregateRating } : {}),
 	offers: {
 		'@type': 'Offer',
+		price: price.toFixed(2),
+		priceCurrency: 'USD',
 		availability: 'https://schema.org/InStock',
 		url: darkListing,
 		seller: {
 			'@type': 'Organization',
 			name: SITE_TITLE,
+		},
+		shippingDetails: {
+			'@type': 'OfferShippingDetails',
+			doesNotShip: true,
+		},
+		hasMerchantReturnPolicy: {
+			'@type': 'MerchantReturnPolicy',
+			applicableCountry: 'US',
+			returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
 		},
 	},
 };

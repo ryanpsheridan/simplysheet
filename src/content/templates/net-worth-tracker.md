@@ -2,6 +2,7 @@
 title: "Net Worth Tracker for Google Sheets & Excel"
 description: "Track your assets, liabilities, and overall net worth over time. See your full financial picture in one place and watch your wealth grow month by month."
 sku: "2026NWT"
+price: 9.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4510784687/net-worth-tracker-for-google-sheets-and"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4510785369/net-worth-tracker-for-google-sheets-and"

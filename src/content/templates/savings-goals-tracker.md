@@ -2,6 +2,7 @@
 title: "Savings Goals Tracker for Google Sheets & Excel"
 description: "Set multiple savings goals, track contributions, and watch your progress toward each one. Perfect for emergency funds, sinking funds, and any savings target."
 sku: "2026SFT"
+price: 9.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4483665538/sinking-funds-tracker-google-sheets"

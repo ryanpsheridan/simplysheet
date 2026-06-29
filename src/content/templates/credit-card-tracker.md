@@ -2,6 +2,7 @@
 title: "Credit Card Tracker for Google Sheets & Excel"
 description: "Track credit card balances, payments, and utilization across all your cards. Stay on top of due dates and keep your credit utilization in check."
 sku: "CCTDARK"
+price: 9.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4514327629/credit-card-tracker-google-sheets-and"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4514328028/credit-card-tracker-google-sheets-and"

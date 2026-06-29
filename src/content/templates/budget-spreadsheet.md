@@ -3,6 +3,7 @@ title: "Budget Spreadsheet for Google Sheets & Excel"
 description: "Track your income and daily expenses with real-time progress indicators that show exactly where you stand each month. Works with Google Sheets and Microsoft Excel."
 badge: "Best Seller"
 sku: "2025BT1"
+price: 17.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel"
 lightListing: "https://simplysheetdesign.etsy.com/listing/1870004217/budget-spreadsheet-for-google-excel"

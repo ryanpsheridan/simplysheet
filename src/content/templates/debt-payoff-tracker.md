@@ -2,6 +2,7 @@
 title: "Debt Payoff Tracker for Google Sheets & Excel"
 description: "See your total debt, log payments, and watch your balances drop month by month with clear visual progress. Track credit cards, loans, and any other debt."
 sku: "2026SDT1"
+price: 9.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4485880320/debt-payoff-tracker-for-google-sheets"

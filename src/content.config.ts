@@ -31,6 +31,7 @@ const templates = defineCollection({
 		description: z.string(),
 		badge: z.string().optional(),
 		sku: z.string(),
+		price: z.number(),
 		platforms: z.array(z.string()).default(['google-sheets', 'excel']),
 		darkListing: z.string().url(),
 		lightListing: z.string().url(),
