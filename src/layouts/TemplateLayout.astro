@@ -216,6 +216,34 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				</section>
 			)}
 
+			{reviews && reviews.length > 0 && (
+				<section class="product-reviews" id={`reviews-${templateId}`}>
+					<div class="reviews-quote-col">
+						<div class="review-stars" aria-label="5 out of 5 stars">
+							{Array.from({ length: 5 }).map(() => (
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+							))}
+						</div>
+						<div class="reviews-quote-stack">
+							{reviews.map((r: { name: string; text: string }, i: number) => (
+								<p class={`reviews-quote${i === 0 ? ' is-active' : ''}`} data-review-quote>{r.text}</p>
+							))}
+						</div>
+					</div>
+					<div class="reviews-name-col">
+						<span class="reviews-eyebrow">What people are saying</span>
+						<ul class="reviews-name-list">
+							{reviews.map((r: { name: string; text: string }, i: number) => (
+								<li class={`reviews-name-item${i === 0 ? ' is-active' : ''}`} data-review-name>
+									<span class="reviews-name-progress"><span class="reviews-name-progress-fill"></span></span>
+									<span class="reviews-name-text">{r.name}</span>
+								</li>
+							))}
+						</ul>
+					</div>
+				</section>
+			)}
+
 			{linkedArticles.length > 0 && (
 				<section class="product-articles">
 					<h2>Related articles</h2>
@@ -246,44 +274,6 @@ const templateId = Math.random().toString(36).slice(2, 10);
 								</div>
 							</details>
 						))}
-					</div>
-				</section>
-			)}
-
-			{reviews && reviews.length > 0 && (
-				<section class="product-reviews">
-					<div class="reviews-inner">
-						<div class="reviews-label">What people are saying</div>
-						<div class="reviews-content">
-							<div class="reviews-track" id={`reviews-track-${templateId}`}>
-								{reviews.map((r: { name: string; text: string }) => (
-									<blockquote class="review-card">
-										<div class="review-stars" aria-label="5 out of 5 stars">
-											{Array.from({ length: 5 }).map(() => (
-												<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-											))}
-										</div>
-										<p class="review-text">{r.text}</p>
-										<cite class="review-name">{r.name}</cite>
-									</blockquote>
-								))}
-							</div>
-							{reviews.length > 1 && (
-								<div class="reviews-nav">
-									<button class="reviews-arrow" id={`reviews-prev-${templateId}`} aria-label="Previous review">
-										<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
-									</button>
-									<div class="reviews-dots" id={`reviews-dots-${templateId}`}>
-										{reviews.map((_: unknown, i: number) => (
-											<button class="reviews-dot" data-index={i} aria-label={`Go to review ${i + 1}`}></button>
-										))}
-									</div>
-									<button class="reviews-arrow" id={`reviews-next-${templateId}`} aria-label="Next review">
-										<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
-									</button>
-								</div>
-							)}
-						</div>
 					</div>
 				</section>
 			)}
@@ -359,38 +349,50 @@ const templateId = Math.random().toString(36).slice(2, 10);
 			});
 		</script>
 
-		{reviews && reviews.length > 1 && (
+		{reviews && reviews.length > 0 && (
 			<script is:inline define:vars={{ templateId }}>
-				const track = document.getElementById(`reviews-track-${templateId}`);
-				const prevBtn = document.getElementById(`reviews-prev-${templateId}`);
-				const nextBtn = document.getElementById(`reviews-next-${templateId}`);
-				const dots = Array.from(document.querySelectorAll(`#reviews-dots-${templateId} .reviews-dot`));
+				const reviewsSection = document.getElementById(`reviews-${templateId}`);
+				const nameItems = Array.from(reviewsSection.querySelectorAll('[data-review-name]'));
+				const quoteEls = Array.from(reviewsSection.querySelectorAll('[data-review-quote]'));
+				const DURATION = 5000;
+				let activeIndex = 0;
+				let startTime = performance.now();
+				let rafId = null;
 
-				function updateDots() {
-					if (!track) return;
-					const index = Math.round(track.scrollLeft / track.clientWidth);
-					dots.forEach((d, i) => d.classList.toggle('active', i === index));
+				function setActive(index) {
+					activeIndex = index;
+					startTime = performance.now();
+					nameItems.forEach((el, i) => {
+						el.classList.toggle('is-active', i === index);
+						const fill = el.querySelector('.reviews-name-progress-fill');
+						if (fill) {
+							fill.style.transition = 'none';
+							fill.style.width = i < index ? '100%' : '0%';
+						}
+					});
+					quoteEls.forEach((el, i) => el.classList.toggle('is-active', i === index));
 				}
 
-				function goTo(index) {
-					if (!track) return;
-					track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' });
+				function tick(now) {
+					const elapsed = now - startTime;
+					const progress = Math.min(1, elapsed / DURATION);
+					const fill = nameItems[activeIndex]?.querySelector('.reviews-name-progress-fill');
+					if (fill) {
+						fill.style.transition = 'none';
+						fill.style.width = `${progress * 100}%`;
+					}
+					if (progress >= 1) {
+						setActive((activeIndex + 1) % nameItems.length);
+					}
+					rafId = requestAnimationFrame(tick);
 				}
 
-				prevBtn?.addEventListener('click', () => {
-					const index = Math.max(0, Math.round(track.scrollLeft / track.clientWidth) - 1);
-					goTo(index);
-				});
-				nextBtn?.addEventListener('click', () => {
-					const index = Math.min(dots.length - 1, Math.round(track.scrollLeft / track.clientWidth) + 1);
-					goTo(index);
-				});
-				dots.forEach((d) => d.addEventListener('click', () => goTo(Number(d.dataset.index))));
-				track?.addEventListener('scroll', () => {
-					window.requestAnimationFrame(updateDots);
+				nameItems.forEach((el, i) => {
+					el.addEventListener('click', () => setActive(i));
 				});
 
-				updateDots();
+				setActive(0);
+				rafId = requestAnimationFrame(tick);
 			</script>
 		)}
 	</body>
@@ -772,119 +774,111 @@ const templateId = Math.random().toString(36).slice(2, 10);
 	/* ——— Reviews ——— */
 
 	.product-reviews {
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
-	}
-	.reviews-inner {
 		display: grid;
-		grid-template-columns: 1fr 2fr;
-		gap: var(--space-xl);
+		grid-template-columns: 2fr 1fr;
+		gap: var(--space-2xl);
+		padding-top: var(--space-lg);
+		padding-bottom: var(--space-lg);
+		border-top: 1px solid var(--color-border);
 		align-items: start;
 	}
-	.reviews-label {
-		font-size: var(--text-body);
-		font-weight: var(--weight-medium);
-		color: var(--color-text-muted);
-		padding-top: 0.35em;
-	}
-	.reviews-content {
-		max-width: 38rem;
-		min-width: 0;
-	}
-	.reviews-track {
-		display: flex;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		gap: var(--space-md);
-		scrollbar-width: none;
-		min-width: 0;
-	}
-	.reviews-track::-webkit-scrollbar {
-		display: none;
-	}
-	.review-card {
-		flex: 0 0 100%;
-		min-width: 0;
-		scroll-snap-align: start;
-		background: var(--color-bg-panel);
-		border-radius: var(--radius-md);
-		padding: var(--space-lg);
-		margin: 0;
+	.reviews-quote-col {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-sm);
-		min-height: 9rem;
+		gap: var(--space-md);
 	}
 	.review-stars {
 		display: flex;
 		gap: 0.125rem;
 		color: #F9A825;
 	}
-	.review-text {
-		font-size: clamp(1.125rem, 1.2vw + 0.4rem, 1.3rem);
+	.reviews-quote-stack {
+		position: relative;
+	}
+	.reviews-quote {
+		grid-area: 1 / 1;
+		font-size: clamp(1.375rem, 1.8vw + 0.6rem, 1.75rem);
 		font-weight: var(--weight-normal);
 		line-height: 1.5;
 		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
 		margin: 0;
+		display: none;
+		opacity: 0;
+		transform: translateY(6px);
+		transition: opacity 0.4s ease, transform 0.4s ease;
 	}
-	.review-name {
-		font-size: var(--text-small);
-		font-style: normal;
+	.reviews-quote.is-active {
+		display: block;
+		opacity: 1;
+		transform: translateY(0);
+	}
+	.reviews-name-col {
+		position: sticky;
+		top: var(--space-lg);
+	}
+	.reviews-eyebrow {
+		display: block;
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
 		color: var(--color-text-muted);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		margin-bottom: var(--space-md);
 	}
-
-	.reviews-nav {
-		display: flex;
-		align-items: center;
-		gap: var(--space-md);
-		margin-top: var(--space-md);
-	}
-	.reviews-arrow {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.25rem;
-		height: 2.25rem;
-		border-radius: var(--radius-full);
-		border: 1px solid var(--color-border);
-		background: var(--color-bg);
-		color: var(--color-text);
-		cursor: pointer;
-		flex-shrink: 0;
-		transition: border-color 0.15s, background 0.15s;
-	}
-	.reviews-arrow:hover {
-		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
-	}
-	.reviews-dots {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
-	.reviews-dot {
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: var(--radius-full);
-		background: var(--color-border);
-		border: none;
-		cursor: pointer;
+	.reviews-name-list {
+		list-style: none;
+		margin: 0;
 		padding: 0;
-		transition: background 0.15s, transform 0.15s;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
 	}
-	.reviews-dot.active {
-		background: var(--color-accent);
-		transform: scale(1.3);
+	.reviews-name-item {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		cursor: pointer;
+		transition: color 0.3s ease;
+	}
+	.reviews-name-item.is-active {
+		color: var(--color-text);
+		font-weight: var(--weight-semibold);
+	}
+	.reviews-name-progress {
+		position: relative;
+		width: 1.5rem;
+		height: 2px;
+		background: var(--color-border);
+		border-radius: 2px;
+		overflow: hidden;
+		flex-shrink: 0;
+	}
+	.reviews-name-progress-fill {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 0%;
+		background: var(--color-text);
+	}
+	.reviews-name-item.is-active .reviews-name-progress-fill {
+		transition: width linear;
 	}
 
-	@media (max-width: 700px) {
-		.reviews-inner {
+	@media (max-width: 720px) {
+		.product-reviews {
 			grid-template-columns: 1fr;
-			gap: var(--space-sm);
 		}
-		.reviews-content {
-			max-width: none;
+		.reviews-name-col {
+			position: static;
+			order: -1;
+		}
+		.reviews-name-list {
+			flex-direction: row;
+			flex-wrap: wrap;
 		}
 	}
 
