@@ -49,6 +49,10 @@ reviews:
     text: "Very helpful. Will be using this forever"
   - name: "Etsy buyer"
     text: "This budget template was exactly what I was looking for, it contains everything I need and no extra clutter."
+  - name: "Marlorie"
+    text: "Great product to use to balance the budget."
+  - name: "Brianna"
+    text: "Perfect for what I needed without being overwhelming. The instructions were very helpful. Seeing my income, expenses, etc. into percentages is great. I am trying to figure out which percentage style (50-30-20, etc.) works best for me, and this gives a great visual guide. I recommend for anyone seeking to jumpstart on taking their finances seriously!"
 ---
 
 ## How it works
