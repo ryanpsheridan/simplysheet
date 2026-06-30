@@ -11,7 +11,7 @@ type Props = CollectionEntry<'templates'>['data'] & {
 	id?: string;
 };
 
-const { title, description, badge, platforms, darkListing, lightListing, heroImage, lightImage, features, relatedArticles, bundles, faq, reviews, id, price, sku } = Astro.props;
+const { title, description, badge, platforms, darkListing, lightListing, heroImage, lightImage, midImage, midImageLight, features, relatedArticles, bundles, faq, reviews, id, price, sku } = Astro.props;
 
 const allArticles = await getCollection('articles');
 const linkedArticles = relatedArticles
@@ -179,6 +179,12 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				</section>
 			)}
 
+			{midImage && (
+				<section class="product-mid-image">
+					<img src={midImage} alt={`${title} preview`} width="960" height="540" id={`mid-img-${templateId}`} loading="lazy" />
+				</section>
+			)}
+
 			<div class="product-body prose">
 				<slot />
 			</div>
@@ -277,10 +283,11 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		</main>
 		<Footer />
 
-		<script is:inline define:vars={{ templateId, darkListing, lightListing, heroImage, lightImage }}>
+		<script is:inline define:vars={{ templateId, darkListing, lightListing, heroImage, lightImage, midImage, midImageLight }}>
 			const toggle = document.getElementById(`theme-toggle-${templateId}`);
 			const cta = document.getElementById(`cta-${templateId}`);
 			const heroImg = document.getElementById(`hero-img-${templateId}`);
+			const midImg = document.getElementById(`mid-img-${templateId}`);
 
 			if (toggle && cta) {
 				toggle.addEventListener('click', (e) => {
@@ -295,6 +302,10 @@ const templateId = Math.random().toString(36).slice(2, 10);
 
 					if (heroImg && lightImage) {
 						heroImg.src = theme === 'light' ? lightImage : heroImage;
+					}
+
+					if (midImg && midImageLight) {
+						midImg.src = theme === 'light' ? midImageLight : midImage;
 					}
 
 					document.querySelectorAll('.bundle-card').forEach((card) => {
@@ -471,6 +482,24 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		flex-shrink: 0;
 		color: var(--color-accent);
 		margin-top: 0.1875rem;
+	}
+
+	/* ——— Mid-page product image ——— */
+
+	.product-mid-image {
+		display: flex;
+		justify-content: center;
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
+		padding: var(--space-xl);
+		margin-bottom: var(--space-2xl);
+	}
+
+	.product-mid-image img {
+		display: block;
+		max-width: 36rem;
+		width: 100%;
+		height: auto;
 	}
 
 	/* ——— Body content ——— */

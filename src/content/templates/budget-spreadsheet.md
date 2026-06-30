@@ -7,8 +7,10 @@ price: 17.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel"
 lightListing: "https://simplysheetdesign.etsy.com/listing/1870004217/budget-spreadsheet-for-google-excel"
-heroImage: "/images/featured budget thumbnail- budget template.jpg"
-lightImage: "/images/featured budget thumbnail- budget template-light-theme.jpg"
+heroImage: "/images/featured budget thumbnail- budget template-right-positioned.png"
+lightImage: "/images/featured budget thumbnail- budget template-light-theme-right-positioned.png"
+midImage: "/images/featured budget thumbnail- budget template.png"
+midImageLight: "/images/featured budget thumbnail- budget template-light-theme.png"
 features:
   - "Monthly income and expense tracking with category breakdowns"
   - "Real-time progress bars that update as you log spending"
