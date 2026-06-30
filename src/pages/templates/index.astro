@@ -97,14 +97,12 @@ const templates = (await getCollection('templates'))
 		aspect-ratio: 3 / 2;
 		background: var(--color-bg-panel);
 		overflow: hidden;
-		padding: var(--space-md) 0;
-		box-sizing: border-box;
 	}
 
 	.template-thumb img {
 		width: 100%;
 		height: 100%;
-		object-fit: contain;
+		object-fit: cover;
 		display: block;
 	}
 
