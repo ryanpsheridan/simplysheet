@@ -33,11 +33,12 @@ const platformLabels: Record<string, string> = {
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://simplysheetdesign.com';
 const imageUrl = `${siteUrl}${heroImage}`;
 
-const reviewSchema = reviews?.map((r: { name: string; text: string }) => ({
+const reviewSchema = reviews?.map((r: { name: string; text: string; date?: string }) => ({
 	'@type': 'Review',
 	author: { '@type': 'Person', name: r.name },
 	reviewBody: r.text,
 	reviewRating: { '@type': 'Rating', ratingValue: 5, bestRating: 5 },
+	...(r.date ? { datePublished: r.date } : {}),
 }));
 
 const aggregateRating = reviews?.length ? {
@@ -848,10 +849,9 @@ const templateId = Math.random().toString(36).slice(2, 10);
 	}
 	.product-reviews.is-multi .review-entry {
 		position: absolute;
-		top: 50%;
+		top: 0;
 		left: 0;
 		right: 0;
-		transform: translateY(-50%);
 		opacity: 0;
 		pointer-events: none;
 		transition: opacity 0.6s ease;

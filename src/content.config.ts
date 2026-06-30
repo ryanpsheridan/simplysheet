@@ -55,6 +55,7 @@ const templates = defineCollection({
 		reviews: z.array(z.object({
 			name: z.string(),
 			text: z.string(),
+			date: z.string().optional(),
 		})).optional(),
 	}),
 });

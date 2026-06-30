@@ -61,14 +61,19 @@ reviews:
     text: "Visually appealing and incredibly useful."
   - name: "Anastasia"
     text: "Highly recommend this budget spreadsheet. It's super affordable (one time purchase with free updates!!), easy to use, stylish, and comes with everything you need to start budgeting. Best part: incredible customer service! When I messaged Ryan asking for a specific thing I needed my Excel worksheet, he created it and send it to me (for free!). He is so nice and always ready to help. When I had questions, he got back to me right away. If I can give it 10 stars, I would. Highly recommend!"
+    date: "2026-01-17"
   - name: "Etsy buyer"
     text: "Great product and easy to use"
+    date: "2026-01-09"
   - name: "Matthew"
     text: "Awesome product! Was recommended this from a friend and it did not disappoint! Try it! You're going to love it!"
+    date: "2026-01-03"
   - name: "Scottie"
     text: "This budget is super helpful as is, and after messaging the shop, they even added a few extra fields that will really help my mom when using this. Overall amazing product and experience!"
+    date: "2026-02-20"
   - name: "Marissa"
     text: "Amazing resource! I love the visuals, it has great instructions and is easy to use. Ryan was so helpful when I wanted to add something. Definitely worth it!"
+    date: "2026-02-08"
 ---
 
 ## How it works
