@@ -1,5 +1,9 @@
 ---
 import { SITE_TITLE } from '../consts';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+	href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`);
 ---
 
 <header>
@@ -11,9 +15,9 @@ import { SITE_TITLE } from '../consts';
 			</a>
 			<span class="nav-divider"></span>
 			<ul class="nav-links">
-				<li><a href="/articles">Articles</a></li>
-				<li><a href="/templates">Templates</a></li>
-				<li><a href="/tools">Tools</a></li>
+				<li><a href="/articles" aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a></li>
+				<li><a href="/templates" aria-current={isActive('/templates') ? 'page' : undefined}>Templates</a></li>
+				<li><a href="/tools" aria-current={isActive('/tools') ? 'page' : undefined}>Tools</a></li>
 			</ul>
 		</div>
 		<a href="/quiz/budgeting-style" class="nav-cta">Find Your Budget Style</a>
@@ -38,11 +42,11 @@ import { SITE_TITLE } from '../consts';
 			</button>
 		</div>
 		<ul class="menu-links">
-			<li><a href="/">Home</a></li>
-			<li><a href="/articles">Articles</a></li>
-			<li><a href="/templates">Templates</a></li>
-			<li><a href="/tools">Tools</a></li>
-			<li><a href="/quiz/budgeting-style">Budgeting Style Quiz</a></li>
+			<li><a href="/" aria-current={isActive('/') ? 'page' : undefined}>Home</a></li>
+			<li><a href="/articles" aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a></li>
+			<li><a href="/templates" aria-current={isActive('/templates') ? 'page' : undefined}>Templates</a></li>
+			<li><a href="/tools" aria-current={isActive('/tools') ? 'page' : undefined}>Tools</a></li>
+			<li><a href="/quiz/budgeting-style" aria-current={isActive('/quiz/budgeting-style') ? 'page' : undefined}>Budgeting Style Quiz</a></li>
 		</ul>
 	</div>
 </div>
@@ -126,6 +130,20 @@ import { SITE_TITLE } from '../consts';
 	}
 	.nav-links a:hover {
 		color: var(--color-text);
+	}
+	.nav-links a[aria-current="page"] {
+		color: var(--color-text);
+		position: relative;
+	}
+	.nav-links a[aria-current="page"]::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -0.5rem;
+		height: 2px;
+		background: var(--color-accent);
+		border-radius: var(--radius-full);
 	}
 
 	/* ——— Quiz CTA button ——— */
@@ -229,6 +247,9 @@ import { SITE_TITLE } from '../consts';
 	}
 	.menu-links a:hover {
 		color: var(--color-text-secondary);
+	}
+	.menu-links a[aria-current="page"] {
+		color: var(--color-accent);
 	}
 
 	/* ——— Tablet and below: hide desktop nav, show hamburger ——— */

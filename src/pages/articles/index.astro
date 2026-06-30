@@ -69,29 +69,6 @@ const templates = [
 		</div>
 
 		<div class="articles-layout">
-			<aside class="articles-sidebar">
-				<div class="sidebar-section">
-					<h3 class="sidebar-label">Topic</h3>
-					<div class="sidebar-tag-filters" role="group" aria-label="Filter articles by topic">
-						<button class="sidebar-pill active" data-tag="all">All</button>
-						{visibleTags.map((tag) => (
-							<button class="sidebar-pill" data-tag={tag.slug}>{tag.label}</button>
-						))}
-					</div>
-				</div>
-
-				<div class="sidebar-section">
-					<h3 class="sidebar-label">Sort by</h3>
-					<div class="sidebar-sort-options" role="group" aria-label="Sort articles">
-						<button class="sidebar-pill active" data-sort="newest">Newest first</button>
-						<button class="sidebar-pill" data-sort="oldest">Oldest first</button>
-						<button class="sidebar-pill" data-sort="title">Title A–Z</button>
-					</div>
-				</div>
-
-				<button class="sidebar-reset" id="sidebar-reset">Reset all</button>
-			</aside>
-
 			<div class="articles-main">
 				<div class="article-list" id="article-list">
 					{articles.map((article) => (
@@ -117,6 +94,27 @@ const templates = [
 
 				<p class="no-results" hidden>No articles match this filter.</p>
 			</div>
+
+			<aside class="articles-sidebar">
+				<details class="sidebar-section">
+					<summary class="sidebar-label">Topic</summary>
+					<div class="sidebar-tag-filters" role="group" aria-label="Filter articles by topic">
+						<button class="sidebar-pill active" data-tag="all">All</button>
+						{visibleTags.map((tag) => (
+							<button class="sidebar-pill" data-tag={tag.slug}>{tag.label}</button>
+						))}
+					</div>
+				</details>
+				<details class="sidebar-section">
+					<summary class="sidebar-label">Sort by</summary>
+					<div class="sidebar-sort-options" role="group" aria-label="Sort articles">
+						<button class="sidebar-pill active" data-sort="newest">Newest first</button>
+						<button class="sidebar-pill" data-sort="oldest">Oldest first</button>
+						<button class="sidebar-pill" data-sort="title">Title A–Z</button>
+					</div>
+				</details>
+				<button class="sidebar-reset" id="sidebar-reset">Reset all</button>
+			</aside>
 		</div>
 
 		<section class="resources">
@@ -199,7 +197,7 @@ const templates = [
 
 	.articles-layout {
 		display: grid;
-		grid-template-columns: 1fr 2fr;
+		grid-template-columns: 2fr 1fr;
 		gap: var(--space-xl);
 		align-items: start;
 	}
@@ -215,6 +213,8 @@ const templates = [
 	}
 	.sidebar-section {
 		margin-bottom: var(--space-lg);
+		border-bottom: 1px solid var(--color-border);
+		padding-bottom: var(--space-sm);
 	}
 	.sidebar-label {
 		font-size: var(--text-xs);
@@ -223,12 +223,21 @@ const templates = [
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-wide);
 		margin: 0 0 var(--space-sm) 0;
+		cursor: pointer;
+		list-style: none;
+	}
+	.sidebar-label::-webkit-details-marker {
+		display: none;
+	}
+	.sidebar-section[open] .sidebar-label {
+		margin-bottom: var(--space-sm);
 	}
 	.sidebar-tag-filters,
 	.sidebar-sort-options {
 		display: flex;
 		flex-direction: column;
 		gap: 0.125rem;
+		margin-top: var(--space-sm);
 	}
 	.sidebar-pill {
 		display: flex;
