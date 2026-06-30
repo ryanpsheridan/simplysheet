@@ -65,6 +65,10 @@ reviews:
     text: "Great product and easy to use"
   - name: "Matthew"
     text: "Awesome product! Was recommended this from a friend and it did not disappoint! Try it! You're going to love it!"
+  - name: "Scottie"
+    text: "This budget is super helpful as is, and after messaging the shop, they even added a few extra fields that will really help my mom when using this. Overall amazing product and experience!"
+  - name: "Marissa"
+    text: "Amazing resource! I love the visuals, it has great instructions and is easy to use. Ryan was so helpful when I wanted to add something. Definitely worth it!"
 ---
 
 ## How it works
