@@ -28,7 +28,7 @@ const allArticles = await getCollection('articles');
 const related = allArticles
 	.filter((a) => a.id !== id)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
+	.slice(0, 4);
 
 const schema = {
 	'@context': 'https://schema.org',
