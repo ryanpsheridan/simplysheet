@@ -217,7 +217,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 			)}
 
 			{reviews && reviews.length > 0 && (
-				<section class="product-reviews" id={`reviews-${templateId}`}>
+				<section class={`product-reviews${reviews.length > 1 ? ' is-multi' : ' is-single'}`} id={`reviews-${templateId}`}>
 					<div class="reviews-quote-col">
 						<div class="review-stars" aria-label="5 out of 5 stars">
 							{Array.from({ length: 5 }).map(() => (
@@ -229,18 +229,21 @@ const templateId = Math.random().toString(36).slice(2, 10);
 								<p class={`reviews-quote${i === 0 ? ' is-active' : ''}`} data-review-quote>{r.text}</p>
 							))}
 						</div>
+						{reviews.length === 1 && <cite class="reviews-single-name">{reviews[0].name}</cite>}
 					</div>
-					<div class="reviews-name-col">
-						<span class="reviews-eyebrow">What people are saying</span>
-						<ul class="reviews-name-list">
-							{reviews.map((r: { name: string; text: string }, i: number) => (
-								<li class={`reviews-name-item${i === 0 ? ' is-active' : ''}`} data-review-name>
-									<span class="reviews-name-progress"><span class="reviews-name-progress-fill"></span></span>
-									<span class="reviews-name-text">{r.name}</span>
-								</li>
-							))}
-						</ul>
-					</div>
+					{reviews.length > 1 && (
+						<div class="reviews-name-col">
+							<span class="reviews-eyebrow">What people are saying</span>
+							<ul class="reviews-name-list">
+								{reviews.map((r: { name: string; text: string }, i: number) => (
+									<li class={`reviews-name-item${i === 0 ? ' is-active' : ''}`} data-review-name>
+										<span class="reviews-name-progress"><span class="reviews-name-progress-fill"></span></span>
+										<span class="reviews-name-text">{r.name}</span>
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
 				</section>
 			)}
 
@@ -349,19 +352,21 @@ const templateId = Math.random().toString(36).slice(2, 10);
 			});
 		</script>
 
-		{reviews && reviews.length > 0 && (
+		{reviews && reviews.length > 1 && (
 			<script is:inline define:vars={{ templateId }}>
 				const reviewsSection = document.getElementById(`reviews-${templateId}`);
 				const nameItems = Array.from(reviewsSection.querySelectorAll('[data-review-name]'));
 				const quoteEls = Array.from(reviewsSection.querySelectorAll('[data-review-quote]'));
 				const DURATION = 5000;
 				let activeIndex = 0;
-				let startTime = performance.now();
-				let rafId = null;
+				let elapsed = 0;
+				let lastTick = performance.now();
+				let paused = false;
 
 				function setActive(index) {
 					activeIndex = index;
-					startTime = performance.now();
+					elapsed = 0;
+					lastTick = performance.now();
 					nameItems.forEach((el, i) => {
 						el.classList.toggle('is-active', i === index);
 						const fill = el.querySelector('.reviews-name-progress-fill');
@@ -374,25 +379,33 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				}
 
 				function tick(now) {
-					const elapsed = now - startTime;
-					const progress = Math.min(1, elapsed / DURATION);
-					const fill = nameItems[activeIndex]?.querySelector('.reviews-name-progress-fill');
-					if (fill) {
-						fill.style.transition = 'none';
-						fill.style.width = `${progress * 100}%`;
+					if (!paused) {
+						elapsed += now - lastTick;
+						const progress = Math.min(1, elapsed / DURATION);
+						const fill = nameItems[activeIndex]?.querySelector('.reviews-name-progress-fill');
+						if (fill) {
+							fill.style.transition = 'none';
+							fill.style.width = `${progress * 100}%`;
+						}
+						if (progress >= 1) {
+							setActive((activeIndex + 1) % nameItems.length);
+						}
 					}
-					if (progress >= 1) {
-						setActive((activeIndex + 1) % nameItems.length);
-					}
-					rafId = requestAnimationFrame(tick);
+					lastTick = now;
+					requestAnimationFrame(tick);
 				}
 
 				nameItems.forEach((el, i) => {
 					el.addEventListener('click', () => setActive(i));
 				});
 
+				reviewsSection.addEventListener('mouseenter', () => { paused = true; });
+				reviewsSection.addEventListener('mouseleave', () => { paused = false; lastTick = performance.now(); });
+				reviewsSection.addEventListener('focusin', () => { paused = true; });
+				reviewsSection.addEventListener('focusout', () => { paused = false; lastTick = performance.now(); });
+
 				setActive(0);
-				rafId = requestAnimationFrame(tick);
+				requestAnimationFrame(tick);
 			</script>
 		)}
 	</body>
@@ -782,6 +795,9 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		border-top: 1px solid var(--color-border);
 		align-items: start;
 	}
+	.product-reviews.is-single {
+		grid-template-columns: 1fr;
+	}
 	.reviews-quote-col {
 		display: flex;
 		flex-direction: column;
@@ -813,9 +829,10 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		opacity: 1;
 		transform: translateY(0);
 	}
-	.reviews-name-col {
-		position: sticky;
-		top: var(--space-lg);
+	.reviews-single-name {
+		font-size: var(--text-small);
+		font-style: normal;
+		color: var(--color-text-muted);
 	}
 	.reviews-eyebrow {
 		display: block;
