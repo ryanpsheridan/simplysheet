@@ -245,14 +245,15 @@ const templateId = Math.random().toString(36).slice(2, 10);
 					{reviews.length > 1 && (
 						<div class="reviews-name-col">
 							<span class="reviews-eyebrow">What people are saying</span>
-							<ul class="reviews-name-list">
-								{reviews.map((r: { name: string; text: string }, i: number) => (
-									<li class={`reviews-name-item${i === 0 ? ' is-active' : ''}`} data-review-name>
-										<span class="reviews-name-progress"><span class="reviews-name-progress-fill"></span></span>
-										<span class="reviews-name-text">{r.name}</span>
-									</li>
-								))}
-							</ul>
+							<span class="reviews-progress-track"><span class="reviews-progress-fill" data-review-progress></span></span>
+							<div class="reviews-nav">
+								<button type="button" class="reviews-nav-btn" data-review-prev aria-label="Previous review">
+									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+								</button>
+								<button type="button" class="reviews-nav-btn" data-review-next aria-label="Next review">
+									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+								</button>
+							</div>
 						</div>
 					)}
 				</section>
@@ -367,8 +368,10 @@ const templateId = Math.random().toString(36).slice(2, 10);
 			<script is:inline define:vars={{ templateId }}>
 				const reviewsSection = document.getElementById(`reviews-${templateId}`);
 				const stackEl = reviewsSection.querySelector('.reviews-quote-stack');
-				const nameItems = Array.from(reviewsSection.querySelectorAll('[data-review-name]'));
 				const entryEls = Array.from(reviewsSection.querySelectorAll('[data-review-entry]'));
+				const progressFill = reviewsSection.querySelector('[data-review-progress]');
+				const prevBtn = reviewsSection.querySelector('[data-review-prev]');
+				const nextBtn = reviewsSection.querySelector('[data-review-next]');
 				const mobileQuery = window.matchMedia('(max-width: 720px)');
 				const DURATION = 5000;
 				let activeIndex = 0;
@@ -385,42 +388,39 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				}
 
 				function setActive(index) {
-					activeIndex = index;
+					activeIndex = (index + entryEls.length) % entryEls.length;
 					elapsed = 0;
 					lastTick = performance.now();
-					nameItems.forEach((el, i) => {
-						el.classList.toggle('is-active', i === index);
-						const fill = el.querySelector('.reviews-name-progress-fill');
-						if (fill) {
-							fill.style.transition = 'none';
-							fill.style.width = i < index || (manualMode && i === index) ? '100%' : '0%';
-						}
-					});
-					entryEls.forEach((el, i) => el.classList.toggle('is-active', i === index));
+					if (progressFill) {
+						progressFill.style.transition = 'none';
+						progressFill.style.width = manualMode ? '100%' : '0%';
+					}
+					entryEls.forEach((el, i) => el.classList.toggle('is-active', i === activeIndex));
 				}
 
 				function tick(now) {
 					if (!manualMode && inView && !mobileQuery.matches) {
 						elapsed += now - lastTick;
 						const progress = Math.min(1, elapsed / DURATION);
-						const fill = nameItems[activeIndex]?.querySelector('.reviews-name-progress-fill');
-						if (fill) {
-							fill.style.transition = 'none';
-							fill.style.width = `${progress * 100}%`;
+						if (progressFill) {
+							progressFill.style.transition = 'none';
+							progressFill.style.width = `${progress * 100}%`;
 						}
 						if (progress >= 1) {
-							setActive((activeIndex + 1) % nameItems.length);
+							setActive(activeIndex + 1);
 						}
 					}
 					lastTick = now;
 					requestAnimationFrame(tick);
 				}
 
-				nameItems.forEach((el, i) => {
-					el.addEventListener('click', () => {
-						manualMode = true;
-						setActive(i);
-					});
+				prevBtn?.addEventListener('click', () => {
+					manualMode = true;
+					setActive(activeIndex - 1);
+				});
+				nextBtn?.addEventListener('click', () => {
+					manualMode = true;
+					setActive(activeIndex + 1);
 				});
 
 				const observer = new IntersectionObserver((entries) => {
@@ -707,9 +707,14 @@ const templateId = Math.random().toString(36).slice(2, 10);
 	/* ——— Related articles ——— */
 
 	.product-articles {
+		max-width: var(--max-width-narrow);
 		margin-bottom: var(--space-2xl);
 		padding-top: var(--space-lg);
 		border-top: 1px solid var(--color-border);
+	}
+	.product-reviews + .product-articles {
+		border-top: none;
+		padding-top: 0;
 	}
 
 	.product-articles h2 {
@@ -876,9 +881,6 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		margin: 0;
 	}
 	.reviews-entry-name {
-		display: none;
-	}
-	.product-reviews.is-single .reviews-entry-name {
 		display: block;
 		font-size: var(--text-small);
 		font-style: normal;
@@ -894,13 +896,42 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		letter-spacing: var(--tracking-wide);
 		margin-bottom: var(--space-md);
 	}
-	.reviews-name-list {
-		list-style: none;
-		margin: 0;
-		padding: 0;
+	.reviews-progress-track {
+		display: block;
+		width: 10rem;
+		height: 4px;
+		background: var(--color-border);
+		border-radius: 2px;
+		overflow: hidden;
+	}
+	.reviews-progress-fill {
+		display: block;
+		height: 100%;
+		width: 0%;
+		background: var(--color-text);
+		transition: width linear;
+	}
+	.reviews-nav {
 		display: flex;
-		flex-direction: column;
 		gap: var(--space-sm);
+		margin-top: var(--space-md);
+	}
+	.reviews-nav-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: 50%;
+		border: 1px solid var(--color-border);
+		background: transparent;
+		color: var(--color-text);
+		cursor: pointer;
+		transition: border-color 0.2s ease, color 0.2s ease;
+		padding: 0;
+	}
+	.reviews-nav-btn:hover {
+		border-color: var(--color-text);
 	}
 	.reviews-etsy-link {
 		display: inline-flex;
@@ -928,40 +959,6 @@ const templateId = Math.random().toString(36).slice(2, 10);
 	.reviews-etsy-link:hover .arrow {
 		transform: translateX(2px);
 	}
-	.reviews-name-item {
-		display: flex;
-		align-items: center;
-		gap: var(--space-sm);
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-		cursor: pointer;
-		transition: color 0.3s ease;
-	}
-	.reviews-name-item.is-active {
-		color: var(--color-text);
-		font-weight: var(--weight-semibold);
-	}
-	.reviews-name-progress {
-		position: relative;
-		width: 1.5rem;
-		height: 2px;
-		background: var(--color-border);
-		border-radius: 2px;
-		overflow: hidden;
-		flex-shrink: 0;
-	}
-	.reviews-name-progress-fill {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 0%;
-		background: var(--color-text);
-	}
-	.reviews-name-item.is-active .reviews-name-progress-fill {
-		transition: width linear;
-	}
-
 	@media (max-width: 720px) {
 		.product-reviews {
 			grid-template-columns: 1fr;
