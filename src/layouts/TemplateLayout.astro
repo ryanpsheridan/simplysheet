@@ -233,14 +233,16 @@ const templateId = Math.random().toString(36).slice(2, 10);
 								</div>
 							))}
 						</div>
-						<a
-							class="reviews-etsy-link"
-							href="https://www.etsy.com/shop/SimplySheetDesign?ref=dashboard-header#reviews"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							See all Etsy reviews <span class="arrow">&rarr;</span>
-						</a>
+						{reviews.length === 1 && (
+							<a
+								class="btn btn-secondary btn-sm reviews-etsy-link"
+								href="https://www.etsy.com/shop/SimplySheetDesign?ref=dashboard-header#reviews"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								See all Etsy reviews <span class="arrow">&rarr;</span>
+							</a>
+						)}
 					</div>
 					{reviews.length > 1 && (
 						<div class="reviews-name-col">
@@ -255,6 +257,16 @@ const templateId = Math.random().toString(36).slice(2, 10);
 								</button>
 							</div>
 						</div>
+					)}
+					{reviews.length > 1 && (
+						<a
+							class="btn btn-secondary btn-sm reviews-etsy-link"
+							href="https://www.etsy.com/shop/SimplySheetDesign?ref=dashboard-header#reviews"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							See all Etsy reviews <span class="arrow">&rarr;</span>
+						</a>
 					)}
 				</section>
 			)}
@@ -844,6 +856,20 @@ const templateId = Math.random().toString(36).slice(2, 10);
 	.product-reviews.is-single {
 		grid-template-columns: 1fr;
 	}
+	.product-reviews.is-multi {
+		grid-template-areas: "quote nav" "quote cta";
+	}
+	.product-reviews.is-multi .reviews-quote-col {
+		grid-area: quote;
+	}
+	.product-reviews.is-multi .reviews-name-col {
+		grid-area: nav;
+	}
+	.product-reviews.is-multi .reviews-etsy-link {
+		grid-area: cta;
+		align-self: start;
+		margin-top: var(--space-xl);
+	}
 	.reviews-quote-col {
 		position: relative;
 		display: flex;
@@ -941,34 +967,14 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		transform: scale(0.95);
 	}
 	.reviews-etsy-link {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--space-xs);
-		font-size: var(--text-small);
-		font-weight: var(--weight-semibold);
-		color: var(--color-text);
-		text-decoration: none;
-		border-bottom: 1px solid var(--color-border);
-		padding-bottom: 2px;
 		width: fit-content;
-	}
-	.product-reviews.is-multi .reviews-etsy-link {
-		position: absolute;
-		left: 0;
-		bottom: 0;
-	}
-	.reviews-etsy-link:hover {
-		color: var(--color-primary, var(--color-text));
-	}
-	.reviews-etsy-link .arrow {
-		transition: transform 0.2s ease;
-	}
-	.reviews-etsy-link:hover .arrow {
-		transform: translateX(2px);
 	}
 	@media (max-width: 720px) {
 		.product-reviews {
 			grid-template-columns: 1fr;
+		}
+		.product-reviews.is-multi {
+			grid-template-areas: "quote" "cta";
 		}
 		.reviews-name-col {
 			display: none;
@@ -980,7 +986,6 @@ const templateId = Math.random().toString(36).slice(2, 10);
 			gap: clamp(2.5rem, 8vw, 3.5rem);
 		}
 		.product-reviews.is-multi .reviews-etsy-link {
-			position: static;
 			margin-top: var(--space-lg);
 		}
 		.product-reviews.is-multi .review-entry {
