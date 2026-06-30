@@ -370,10 +370,11 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				const stackEl = reviewsSection.querySelector('.reviews-quote-stack');
 				const entryEls = Array.from(reviewsSection.querySelectorAll('[data-review-entry]'));
 				const progressFill = reviewsSection.querySelector('[data-review-progress]');
+				const progressTrack = reviewsSection.querySelector('.reviews-progress-track');
 				const prevBtn = reviewsSection.querySelector('[data-review-prev]');
 				const nextBtn = reviewsSection.querySelector('[data-review-next]');
 				const mobileQuery = window.matchMedia('(max-width: 720px)');
-				const DURATION = 5000;
+				const DURATION = 6500;
 				let activeIndex = 0;
 				let elapsed = 0;
 				let lastTick = performance.now();
@@ -393,7 +394,10 @@ const templateId = Math.random().toString(36).slice(2, 10);
 					lastTick = performance.now();
 					if (progressFill) {
 						progressFill.style.transition = 'none';
-						progressFill.style.width = manualMode ? '100%' : '0%';
+						progressFill.style.width = '0%';
+					}
+					if (progressTrack) {
+						progressTrack.style.display = manualMode ? 'none' : 'block';
 					}
 					entryEls.forEach((el, i) => el.classList.toggle('is-active', i === activeIndex));
 				}
@@ -708,7 +712,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 
 	.product-articles {
 		max-width: var(--max-width-narrow);
-		margin-bottom: var(--space-2xl);
+		margin: 0 auto var(--space-2xl);
 		padding-top: var(--space-lg);
 		border-top: 1px solid var(--color-border);
 	}
@@ -754,7 +758,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 
 	.faq {
 		max-width: var(--max-width-narrow);
-		margin-bottom: var(--space-2xl);
+		margin: 0 auto var(--space-2xl);
 		padding-top: var(--space-lg);
 		border-top: 1px solid var(--color-border);
 	}
@@ -927,11 +931,14 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		background: transparent;
 		color: var(--color-text);
 		cursor: pointer;
-		transition: border-color 0.2s ease, color 0.2s ease;
+		transition: border-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
 		padding: 0;
 	}
 	.reviews-nav-btn:hover {
 		border-color: var(--color-text);
+	}
+	.reviews-nav-btn:active {
+		transform: scale(0.95);
 	}
 	.reviews-etsy-link {
 		display: inline-flex;
