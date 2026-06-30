@@ -39,6 +39,8 @@ reviews:
     text: "Very well put together spreadsheet. I love the colors used and love the functions that help automate everything."
   - name: "Etsy buyer"
     text: "The budget template is designed well and easy to set up. Ryan was quick to respond to questions and help. Highly recommend!"
+  - name: "Bri"
+    text: "Very easy download and easy to use."
 ---
 
 ## How it works
