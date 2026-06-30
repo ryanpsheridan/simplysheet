@@ -53,6 +53,12 @@ reviews:
     text: "Great product to use to balance the budget."
   - name: "Brianna"
     text: "Perfect for what I needed without being overwhelming. The instructions were very helpful. Seeing my income, expenses, etc. into percentages is great. I am trying to figure out which percentage style (50-30-20, etc.) works best for me, and this gives a great visual guide. I recommend for anyone seeking to jumpstart on taking their finances seriously!"
+  - name: "Kevin"
+    text: "10/10 would purchase again. This is amazing for tracking budget."
+  - name: "Danielle"
+    text: "Excellent product and wonderful customer service."
+  - name: "Kelly"
+    text: "Visually appealing and incredibly useful."
 ---
 
 ## How it works

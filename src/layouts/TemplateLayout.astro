@@ -371,7 +371,8 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				function syncStackHeight() {
 					if (mobileQuery.matches) return;
 					const max = Math.max(...entryEls.map((el) => el.offsetHeight));
-					stackEl.style.height = `${max}px`;
+					const minHeight = window.innerHeight * 0.8;
+					stackEl.style.height = `${Math.max(max, minHeight)}px`;
 				}
 
 				function setActive(index) {
@@ -847,9 +848,10 @@ const templateId = Math.random().toString(36).slice(2, 10);
 	}
 	.product-reviews.is-multi .review-entry {
 		position: absolute;
-		top: 0;
+		top: 50%;
 		left: 0;
 		right: 0;
+		transform: translateY(-50%);
 		opacity: 0;
 		pointer-events: none;
 		transition: opacity 0.6s ease;
