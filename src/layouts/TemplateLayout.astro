@@ -185,9 +185,14 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				</section>
 			)}
 
-			<div class="product-body prose">
-				<slot />
-			</div>
+			<section class="product-howto">
+				<div class="product-body prose">
+					<slot />
+				</div>
+				<div class="product-howto-visual">
+					<img src={heroImage} alt={`${title} preview`} width="960" height="640" loading="lazy" />
+				</div>
+			</section>
 
 			{bundles && bundles.length > 0 && (
 				<section class="product-bundles">
@@ -507,11 +512,41 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		}
 	}
 
+	/* ——— How it works (sticky visual) ——— */
+
+	.product-howto {
+		display: grid;
+		grid-template-columns: minmax(0, var(--max-width-narrow)) 1fr;
+		gap: var(--space-xl);
+		align-items: start;
+		margin-bottom: var(--space-2xl);
+	}
+
+	.product-howto-visual {
+		position: sticky;
+		top: 6rem;
+		overflow: visible;
+	}
+
+	.product-howto-visual img {
+		display: block;
+		width: 160%;
+		max-width: none;
+		height: auto;
+		margin-left: auto;
+	}
+
+	@media (max-width: 960px) {
+		.product-howto-visual {
+			display: none;
+		}
+	}
+
 	/* ——— Body content ——— */
 
 	.product-body {
 		max-width: var(--max-width-narrow);
-		margin-bottom: var(--space-2xl);
+		margin-bottom: 0;
 	}
 
 	/* ——— Bundles ——— */
