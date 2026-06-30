@@ -170,7 +170,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 			{features.length > 0 && (
 				<section class="product-features">
 					<h2>What's included</h2>
-					<ul class="features-grid">
+					<ul class="features-list">
 						{features.map((f: string) => (
 							<li>
 								<svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
@@ -589,28 +589,33 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		padding: var(--space-xl) 0;
 		border-top: 1px solid var(--color-border);
 		border-bottom: 1px solid var(--color-border);
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		gap: var(--space-2xl);
+		align-items: start;
 	}
 
 	.product-features h2 {
 		font-size: var(--text-h2);
-		margin-bottom: var(--space-lg);
+		margin: 0;
 	}
 
-	.features-grid {
+	.features-list {
 		list-style: none;
 		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: var(--space-md) var(--space-2xl);
+		margin: 0;
+		border-top: 1px solid var(--color-border);
 	}
 
-	.features-grid li {
+	.features-list li {
 		display: flex;
 		align-items: flex-start;
 		gap: var(--space-sm);
 		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text);
+		padding: var(--space-md) 0;
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	.check-icon {
@@ -1105,8 +1110,9 @@ const templateId = Math.random().toString(36).slice(2, 10);
 			grid-template-columns: 1fr;
 			gap: var(--space-lg);
 		}
-		.features-grid {
+		.product-features {
 			grid-template-columns: 1fr;
+			gap: var(--space-md);
 		}
 	}
 
