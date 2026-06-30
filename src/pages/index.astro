@@ -514,11 +514,13 @@ const templates = (await getCollection('templates'))
 		align-items: center;
 		justify-content: center;
 		overflow: hidden;
+		padding: var(--space-md) 0;
+		box-sizing: border-box;
 	}
 	.template-thumb img {
 		width: 100%;
 		height: 100%;
-		object-fit: cover;
+		object-fit: contain;
 		display: block;
 	}
 	.template-placeholder-icon {
