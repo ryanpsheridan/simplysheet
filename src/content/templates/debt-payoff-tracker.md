@@ -6,8 +6,10 @@ price: 9.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4485880320/debt-payoff-tracker-for-google-sheets"
-heroImage: "/images/featured budget thumbnail-debt-tracker.jpg"
-lightImage: "/images/featured budget thumbnail-debt-tracker-light-theme.jpg"
+heroImage: "/images/featured budget thumbnail-debt-tracker-right-positioned.png"
+lightImage: "/images/featured budget thumbnail-debt-tracker-light-theme-right-positioned.png"
+midImage: "/images/featured budget thumbnail-debt-tracker.png"
+midImageLight: "/images/featured budget thumbnail-debt-tracker-light-theme.png"
 features:
   - "Track multiple debts in one place"
   - "Visual progress bars for each balance"

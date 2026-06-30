@@ -36,7 +36,7 @@ Every time an article is provided, automatically do all of the following:
 4. **Use a unique color scheme** for each article's SVGs. Do not reuse an existing article's palette. See the color registry below.
 5. **Verify all internal article links** actually exist by cross-referencing slugs in `src/content/articles/`. Remove or unlink any references to articles that don't exist.
 6. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
-7. **Update related articles cross-links** — review existing articles and add natural internal links to/from the new article where topically relevant. Internal cross-linking improves both user navigation and SEO crawlability. The "Related articles" section at the bottom of each page is auto-generated (3 most recent), but in-body links between related topics are more valuable.
+7. **Update related articles cross-links** — review existing articles and add natural internal links to/from the new article where topically relevant. Internal cross-linking improves both user navigation and SEO crawlability. The "Related articles" section at the bottom of each page is auto-generated (4 most recent), but in-body links between related topics are more valuable.
 8. **Add natural template page links in body text** — where the article's topic connects to a product (e.g. an article about paying off debt mentioning a [debt payoff tracker](/templates/debt-payoff-tracker/)), weave in 1–2 internal links to the relevant `/templates/` pages. These should read as helpful tool suggestions, not sales pitches. Always link to the internal template page, never directly to Etsy — the template page has its own Etsy CTA. This creates an article → template page → Etsy funnel that keeps users on-site longer and builds internal link equity.
 9. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
 10. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
@@ -97,7 +97,7 @@ On the homepage, the six secondary article cards use the hero image (`article-{s
 Every article page renders in this order (handled by `src/layouts/ArticleLayout.astro`):
 
 1. Article content
-2. Related articles (3 most recent, excluding current)
+2. Related articles (4 most recent, excluding current)
 3. FAQ section (if `faq` array exists in frontmatter)
 4. Two recommended product cards (selected by article tag)
 

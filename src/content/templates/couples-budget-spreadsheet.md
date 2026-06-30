@@ -6,8 +6,10 @@ price: 20.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4396403062/couples-budget-spreadsheet-joint-finance"
-heroImage: "/images/featured budget thumbnail-couples.jpg"
-lightImage: "/images/featured budget thumbnail-couples-light-theme.jpg"
+heroImage: "/images/featured budget thumbnail-couples-right-positioned.png"
+lightImage: "/images/featured budget thumbnail-couples-light-theme-right-positioned.png"
+midImage: "/images/featured budget thumbnail-couples.png"
+midImageLight: "/images/featured budget thumbnail-couples-light-theme.png"
 features:
   - "Dual income tracking for both partners"
   - "Shared and personal expense categories"

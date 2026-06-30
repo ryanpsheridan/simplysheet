@@ -28,7 +28,7 @@ const allArticles = await getCollection('articles');
 const related = allArticles
 	.filter((a) => a.id !== id)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
+	.slice(0, 4);
 
 const schema = {
 	'@context': 'https://schema.org',
@@ -98,7 +98,7 @@ const allProducts = [
 		name: (templateMap.get('budget-spreadsheet')?.data.title ?? 'Budget Template').replace(/ for Google Sheets & Excel$/, ''),
 		desc: templateMap.get('budget-spreadsheet')?.data.description ?? '',
 		url: '/templates/budget-spreadsheet/',
-		image: templateMap.get('budget-spreadsheet')?.data.heroImage ?? '/images/featured budget thumbnail- budget template.jpg',
+		image: templateMap.get('budget-spreadsheet')?.data.heroImage ?? '/images/featured budget thumbnail- budget template-right-positioned.png',
 		badge: templateMap.get('budget-spreadsheet')?.data.badge,
 	},
 	{
@@ -106,21 +106,21 @@ const allProducts = [
 		name: (templateMap.get('couples-budget-spreadsheet')?.data.title ?? 'Couples Budget Spreadsheet').replace(/ for Google Sheets & Excel$/, ''),
 		desc: templateMap.get('couples-budget-spreadsheet')?.data.description ?? '',
 		url: '/templates/couples-budget-spreadsheet/',
-		image: templateMap.get('couples-budget-spreadsheet')?.data.heroImage ?? '/images/featured budget thumbnail-couples.jpg',
+		image: templateMap.get('couples-budget-spreadsheet')?.data.heroImage ?? '/images/featured budget thumbnail-couples-right-positioned.png',
 	},
 	{
 		id: 'debt',
 		name: (templateMap.get('debt-payoff-tracker')?.data.title ?? 'Debt Payoff Tracker').replace(/ for Google Sheets & Excel$/, ''),
 		desc: templateMap.get('debt-payoff-tracker')?.data.description ?? '',
 		url: '/templates/debt-payoff-tracker/',
-		image: templateMap.get('debt-payoff-tracker')?.data.heroImage ?? '/images/featured budget thumbnail-debt-tracker.jpg',
+		image: templateMap.get('debt-payoff-tracker')?.data.heroImage ?? '/images/featured budget thumbnail-debt-tracker-right-positioned.png',
 	},
 	{
 		id: 'savings',
 		name: (templateMap.get('savings-goals-tracker')?.data.title ?? 'Savings Goals Tracker').replace(/ for Google Sheets & Excel$/, ''),
 		desc: templateMap.get('savings-goals-tracker')?.data.description ?? '',
 		url: '/templates/savings-goals-tracker/',
-		image: templateMap.get('savings-goals-tracker')?.data.heroImage ?? '/images/featured budget thumbnail-savings goals tracker.jpg',
+		image: templateMap.get('savings-goals-tracker')?.data.heroImage ?? '/images/featured budget thumbnail-savings goals tracker-right-positioned.png',
 	},
 ];
 
@@ -233,12 +233,17 @@ const recommendedProducts = uniqueProductIds.length >= 2
 			<section class="recommended-products">
 				{recommendedProducts.map((t) => (
 					<div class="product-row">
-						<div class="product-text">
-							{t.badge && <span class="product-badge">{t.badge}</span>}
-							<h3 class="product-name">{t.name}</h3>
-							<p class="product-desc">{t.desc}</p>
+						<a href={t.url} class="product-thumb">
+							<img src={t.image} alt={`${t.name} preview`} width="600" height="400" loading="lazy" />
+						</a>
+						<div class="product-content">
+							<div class="product-text">
+								{t.badge && <span class="product-badge">{t.badge}</span>}
+								<h3 class="product-name">{t.name}</h3>
+								<p class="product-desc">{t.desc}</p>
+							</div>
+							<a href={t.url} class="btn btn-secondary product-cta">View template <span class="arrow">&rarr;</span></a>
 						</div>
-						<a href={t.url} class="btn btn-secondary product-cta">View template <span class="arrow">&rarr;</span></a>
 					</div>
 				))}
 			</section>
@@ -498,10 +503,10 @@ const recommendedProducts = uniqueProductIds.length >= 2
 	}
 
 	.product-row {
-		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
-		gap: var(--space-md);
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		align-items: stretch;
+		gap: var(--space-lg);
 		padding: var(--space-lg) 0;
 		border-bottom: 1px solid var(--color-border);
 	}
@@ -513,8 +518,33 @@ const recommendedProducts = uniqueProductIds.length >= 2
 		padding-bottom: 0;
 	}
 
+	.product-thumb {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		border-radius: var(--radius-md);
+		background: var(--color-bg-panel);
+		overflow: hidden;
+		padding: var(--space-md);
+	}
+
+	.product-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		display: block;
+	}
+
+	.product-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-width: 0;
+	}
+
 	.product-text {
-		flex: 1;
 		min-width: 0;
 	}
 
@@ -546,17 +576,19 @@ const recommendedProducts = uniqueProductIds.length >= 2
 	}
 
 	.product-cta {
-		flex-shrink: 0;
-		align-self: center;
+		align-self: flex-start;
+		margin-top: var(--space-md);
 	}
 
-	@media (max-width: 480px) {
+	@media (max-width: 600px) {
 		.product-row {
-			flex-direction: column;
+			grid-template-columns: 1fr;
 			gap: var(--space-sm);
 		}
 		.product-cta {
 			align-self: flex-start;
+			width: 100%;
+			justify-content: center;
 		}
 	}
 

@@ -6,8 +6,10 @@ price: 9.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4514327629/credit-card-tracker-google-sheets-and"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4514328028/credit-card-tracker-google-sheets-and"
-heroImage: "/images/featured budget thumbnail-credit card tracker.jpg"
-lightImage: "/images/featured budget thumbnail-credit card tracker-light-theme.jpg"
+heroImage: "/images/featured budget thumbnail-credit card tracker-right-positioned.png"
+lightImage: "/images/featured budget thumbnail-credit card tracker-light-theme-right-positioned.png"
+midImage: "/images/featured budget thumbnail-credit card tracker.png"
+midImageLight: "/images/featured budget thumbnail-credit card tracker-light-theme.png"
 features:
   - "Track multiple credit cards in one view"
   - "Balance and credit limit tracking"
