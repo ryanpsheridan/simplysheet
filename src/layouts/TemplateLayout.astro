@@ -366,7 +366,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				let activeIndex = 0;
 				let elapsed = 0;
 				let lastTick = performance.now();
-				let pausedByHover = false;
+				let manualMode = false;
 				let inView = false;
 
 				function syncStackHeight() {
@@ -385,14 +385,14 @@ const templateId = Math.random().toString(36).slice(2, 10);
 						const fill = el.querySelector('.reviews-name-progress-fill');
 						if (fill) {
 							fill.style.transition = 'none';
-							fill.style.width = i < index ? '100%' : '0%';
+							fill.style.width = i < index || (manualMode && i === index) ? '100%' : '0%';
 						}
 					});
 					entryEls.forEach((el, i) => el.classList.toggle('is-active', i === index));
 				}
 
 				function tick(now) {
-					if (!pausedByHover && inView && !mobileQuery.matches) {
+					if (!manualMode && inView && !mobileQuery.matches) {
 						elapsed += now - lastTick;
 						const progress = Math.min(1, elapsed / DURATION);
 						const fill = nameItems[activeIndex]?.querySelector('.reviews-name-progress-fill');
@@ -409,13 +409,11 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				}
 
 				nameItems.forEach((el, i) => {
-					el.addEventListener('click', () => setActive(i));
+					el.addEventListener('click', () => {
+						manualMode = true;
+						setActive(i);
+					});
 				});
-
-				reviewsSection.addEventListener('mouseenter', () => { pausedByHover = true; });
-				reviewsSection.addEventListener('mouseleave', () => { pausedByHover = false; lastTick = performance.now(); });
-				reviewsSection.addEventListener('focusin', () => { pausedByHover = true; });
-				reviewsSection.addEventListener('focusout', () => { pausedByHover = false; lastTick = performance.now(); });
 
 				const observer = new IntersectionObserver((entries) => {
 					entries.forEach((entry) => {
