@@ -233,6 +233,9 @@ const templateId = Math.random().toString(36).slice(2, 10);
 								</div>
 							))}
 						</div>
+						{reviews.length > 1 && (
+							<span class="reviews-progress-track"><span class="reviews-progress-fill" data-review-progress></span></span>
+						)}
 						{reviews.length === 1 && (
 							<a
 								class="btn btn-secondary btn-sm reviews-etsy-link"
@@ -247,7 +250,6 @@ const templateId = Math.random().toString(36).slice(2, 10);
 					{reviews.length > 1 && (
 						<div class="reviews-name-col">
 							<span class="reviews-eyebrow">What people are saying</span>
-							<span class="reviews-progress-track"><span class="reviews-progress-fill" data-review-progress></span></span>
 							<div class="reviews-nav">
 								<button type="button" class="reviews-nav-btn" data-review-prev aria-label="Previous review">
 									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -255,6 +257,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 								<button type="button" class="reviews-nav-btn" data-review-next aria-label="Next review">
 									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
 								</button>
+								<span class="reviews-count" data-review-count>1 of {reviews.length}</span>
 							</div>
 						</div>
 					)}
@@ -383,6 +386,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 				const entryEls = Array.from(reviewsSection.querySelectorAll('[data-review-entry]'));
 				const progressFill = reviewsSection.querySelector('[data-review-progress]');
 				const progressTrack = reviewsSection.querySelector('.reviews-progress-track');
+				const countEl = reviewsSection.querySelector('[data-review-count]');
 				const prevBtn = reviewsSection.querySelector('[data-review-prev]');
 				const nextBtn = reviewsSection.querySelector('[data-review-next]');
 				const mobileQuery = window.matchMedia('(max-width: 720px)');
@@ -410,6 +414,9 @@ const templateId = Math.random().toString(36).slice(2, 10);
 					}
 					if (progressTrack) {
 						progressTrack.style.display = manualMode ? 'none' : 'block';
+					}
+					if (countEl) {
+						countEl.textContent = `${activeIndex + 1} of ${entryEls.length}`;
 					}
 					entryEls.forEach((el, i) => el.classList.toggle('is-active', i === activeIndex));
 				}
@@ -728,7 +735,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		padding-top: var(--space-lg);
 		border-top: 1px solid var(--color-border);
 	}
-	.product-reviews + .product-articles {
+	.product-reviews.is-multi + .product-articles {
 		border-top: none;
 		padding-top: 0;
 	}
@@ -930,6 +937,7 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		display: block;
 		width: 10rem;
 		height: 4px;
+		margin-top: var(--space-md);
 		background: var(--color-border);
 		border-radius: 2px;
 		overflow: hidden;
@@ -943,8 +951,14 @@ const templateId = Math.random().toString(36).slice(2, 10);
 	}
 	.reviews-nav {
 		display: flex;
+		align-items: center;
 		gap: var(--space-sm);
 		margin-top: var(--space-md);
+	}
+	.reviews-count {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		margin-left: var(--space-xs);
 	}
 	.reviews-nav-btn {
 		display: flex;
