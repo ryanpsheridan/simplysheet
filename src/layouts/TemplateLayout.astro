@@ -219,17 +219,19 @@ const templateId = Math.random().toString(36).slice(2, 10);
 			{reviews && reviews.length > 0 && (
 				<section class={`product-reviews${reviews.length > 1 ? ' is-multi' : ' is-single'}`} id={`reviews-${templateId}`}>
 					<div class="reviews-quote-col">
-						<div class="review-stars" aria-label="5 out of 5 stars">
-							{Array.from({ length: 5 }).map(() => (
-								<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-							))}
-						</div>
 						<div class="reviews-quote-stack">
 							{reviews.map((r: { name: string; text: string }, i: number) => (
-								<p class={`reviews-quote${i === 0 ? ' is-active' : ''}`} data-review-quote>{r.text}</p>
+								<div class={`review-entry${i === 0 ? ' is-active' : ''}`} data-review-entry>
+									<div class="review-stars" aria-label="5 out of 5 stars">
+										{Array.from({ length: 5 }).map(() => (
+											<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+										))}
+									</div>
+									<p class="reviews-quote" data-review-quote>{r.text}</p>
+									<cite class="reviews-entry-name">{r.name}</cite>
+								</div>
 							))}
 						</div>
-						{reviews.length === 1 && <cite class="reviews-single-name">{reviews[0].name}</cite>}
 					</div>
 					{reviews.length > 1 && (
 						<div class="reviews-name-col">
@@ -355,13 +357,22 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		{reviews && reviews.length > 1 && (
 			<script is:inline define:vars={{ templateId }}>
 				const reviewsSection = document.getElementById(`reviews-${templateId}`);
+				const stackEl = reviewsSection.querySelector('.reviews-quote-stack');
 				const nameItems = Array.from(reviewsSection.querySelectorAll('[data-review-name]'));
-				const quoteEls = Array.from(reviewsSection.querySelectorAll('[data-review-quote]'));
+				const entryEls = Array.from(reviewsSection.querySelectorAll('[data-review-entry]'));
+				const mobileQuery = window.matchMedia('(max-width: 720px)');
 				const DURATION = 5000;
 				let activeIndex = 0;
 				let elapsed = 0;
 				let lastTick = performance.now();
-				let paused = false;
+				let pausedByHover = false;
+				let inView = false;
+
+				function syncStackHeight() {
+					if (mobileQuery.matches) return;
+					const max = Math.max(...entryEls.map((el) => el.offsetHeight));
+					stackEl.style.height = `${max}px`;
+				}
 
 				function setActive(index) {
 					activeIndex = index;
@@ -375,11 +386,11 @@ const templateId = Math.random().toString(36).slice(2, 10);
 							fill.style.width = i < index ? '100%' : '0%';
 						}
 					});
-					quoteEls.forEach((el, i) => el.classList.toggle('is-active', i === index));
+					entryEls.forEach((el, i) => el.classList.toggle('is-active', i === index));
 				}
 
 				function tick(now) {
-					if (!paused) {
+					if (!pausedByHover && inView && !mobileQuery.matches) {
 						elapsed += now - lastTick;
 						const progress = Math.min(1, elapsed / DURATION);
 						const fill = nameItems[activeIndex]?.querySelector('.reviews-name-progress-fill');
@@ -399,12 +410,30 @@ const templateId = Math.random().toString(36).slice(2, 10);
 					el.addEventListener('click', () => setActive(i));
 				});
 
-				reviewsSection.addEventListener('mouseenter', () => { paused = true; });
-				reviewsSection.addEventListener('mouseleave', () => { paused = false; lastTick = performance.now(); });
-				reviewsSection.addEventListener('focusin', () => { paused = true; });
-				reviewsSection.addEventListener('focusout', () => { paused = false; lastTick = performance.now(); });
+				reviewsSection.addEventListener('mouseenter', () => { pausedByHover = true; });
+				reviewsSection.addEventListener('mouseleave', () => { pausedByHover = false; lastTick = performance.now(); });
+				reviewsSection.addEventListener('focusin', () => { pausedByHover = true; });
+				reviewsSection.addEventListener('focusout', () => { pausedByHover = false; lastTick = performance.now(); });
+
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach((entry) => {
+						inView = entry.isIntersecting;
+						if (inView) lastTick = performance.now();
+					});
+				}, { threshold: 0.5 });
+				observer.observe(reviewsSection);
+
+				let resizeTimer;
+				window.addEventListener('resize', () => {
+					clearTimeout(resizeTimer);
+					resizeTimer = setTimeout(syncStackHeight, 150);
+				});
 
 				setActive(0);
+				syncStackHeight();
+				if (document.fonts && document.fonts.ready) {
+					document.fonts.ready.then(syncStackHeight);
+				}
 				requestAnimationFrame(tick);
 			</script>
 		)}
@@ -807,32 +836,45 @@ const templateId = Math.random().toString(36).slice(2, 10);
 		display: flex;
 		gap: 0.125rem;
 		color: #F9A825;
+		margin-bottom: var(--space-md);
 	}
 	.reviews-quote-stack {
 		position: relative;
 	}
+	.review-entry {
+		display: flex;
+		flex-direction: column;
+	}
+	.product-reviews.is-multi .review-entry {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.6s ease;
+	}
+	.product-reviews.is-multi .review-entry.is-active {
+		opacity: 1;
+		pointer-events: auto;
+	}
 	.reviews-quote {
-		grid-area: 1 / 1;
 		font-size: clamp(1.375rem, 1.8vw + 0.6rem, 1.75rem);
 		font-weight: var(--weight-normal);
 		line-height: 1.5;
 		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
 		margin: 0;
+	}
+	.reviews-entry-name {
 		display: none;
-		opacity: 0;
-		transform: translateY(6px);
-		transition: opacity 0.4s ease, transform 0.4s ease;
 	}
-	.reviews-quote.is-active {
+	.product-reviews.is-single .reviews-entry-name {
 		display: block;
-		opacity: 1;
-		transform: translateY(0);
-	}
-	.reviews-single-name {
 		font-size: var(--text-small);
 		font-style: normal;
 		color: var(--color-text-muted);
+		margin-top: var(--space-md);
 	}
 	.reviews-eyebrow {
 		display: block;
@@ -890,12 +932,26 @@ const templateId = Math.random().toString(36).slice(2, 10);
 			grid-template-columns: 1fr;
 		}
 		.reviews-name-col {
-			position: static;
-			order: -1;
+			display: none;
 		}
-		.reviews-name-list {
-			flex-direction: row;
-			flex-wrap: wrap;
+		.reviews-quote-stack {
+			height: auto !important;
+			display: flex;
+			flex-direction: column;
+			gap: clamp(2.5rem, 8vw, 3.5rem);
+		}
+		.product-reviews.is-multi .review-entry {
+			position: static;
+			opacity: 1;
+			pointer-events: auto;
+			transition: none;
+		}
+		.reviews-entry-name {
+			display: block;
+			font-size: var(--text-small);
+			font-style: normal;
+			color: var(--color-text-muted);
+			margin-top: var(--space-md);
 		}
 	}
 
