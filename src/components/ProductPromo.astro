@@ -1,0 +1,43 @@
+---
+import { getEntry } from 'astro:content';
+
+interface Props {
+	slug: string;
+	variant?: 'card' | 'interstitial';
+	label?: string;
+}
+
+const { slug, variant = 'card', label } = Astro.props;
+
+const template = await getEntry('templates', slug);
+if (!template) {
+	throw new Error(`ProductPromo: no template found for slug "${slug}"`);
+}
+
+const { title, description, badge, midImage } = template.data;
+const name = title.replace(/ for Google Sheets & Excel$/, '');
+const url = `/templates/${slug}/`;
+const alt = `${name} preview`;
+---
+
+{variant === 'interstitial' ? (
+	<div class="article-interstitial">
+		<a href={url} class="interstitial-link">
+			<img src={midImage} alt={alt} width="600" height="400" loading="lazy" class="interstitial-img" />
+			<div class="interstitial-body">
+				{label && <p class="interstitial-label">{label}</p>}
+				<p class="interstitial-title">{name}</p>
+				<p class="interstitial-desc">{description}</p>
+			</div>
+		</a>
+	</div>
+) : (
+	<a href={url} class="product-card">
+		<div class="product-card-thumb">
+			<img src={midImage} alt={alt} width="600" height="400" loading="lazy" />
+		</div>
+		{badge && <span class="product-card-badge">{badge}</span>}
+		<h3 class="product-card-name">{name}</h3>
+		<p class="product-card-desc">{description}</p>
+	</a>
+)}
