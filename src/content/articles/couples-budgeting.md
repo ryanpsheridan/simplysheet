@@ -42,7 +42,7 @@ This is usually where a simple [shared couples budget spreadsheet](/templates/co
 
 <div class="article-interstitial">
 <a href="/templates/couples-budget-spreadsheet/" class="interstitial-link">
-<img src="/images/featured budget thumbnail-couples.jpg" alt="Couples Budget Spreadsheet preview" width="600" height="400" loading="lazy" class="interstitial-img" />
+<img src="/images/featured budget thumbnail-couples.png" alt="Couples Budget Spreadsheet preview" width="600" height="400" loading="lazy" class="interstitial-img" />
 <div class="interstitial-body">
 <p class="interstitial-label">Built for two incomes</p>
 <p class="interstitial-title">Couples Budget Spreadsheet</p>

@@ -63,13 +63,13 @@ Not sure which one you are?
 
 <div class="product-cards">
 <a href="/templates/budget-spreadsheet/" class="product-card">
-<div class="product-card-thumb"><img src="/images/featured budget thumbnail- budget template.jpg" alt="Budget Template preview" width="600" height="400" loading="lazy" /></div>
+<div class="product-card-thumb"><img src="/images/featured budget thumbnail- budget template.png" alt="Budget Template preview" width="600" height="400" loading="lazy" /></div>
 <span class="product-card-badge">Best Seller</span>
 <h3 class="product-card-name">Budget Template</h3>
 <p class="product-card-desc">Track income and daily expenses with real-time progress indicators that show where you stand each month.</p>
 </a>
 <a href="/templates/couples-budget-spreadsheet/" class="product-card">
-<div class="product-card-thumb"><img src="/images/featured budget thumbnail-couples.jpg" alt="Couples Budget Spreadsheet preview" width="600" height="400" loading="lazy" /></div>
+<div class="product-card-thumb"><img src="/images/featured budget thumbnail-couples.png" alt="Couples Budget Spreadsheet preview" width="600" height="400" loading="lazy" /></div>
 <h3 class="product-card-name">Couples Budget Spreadsheet</h3>
 <p class="product-card-desc">Split bills, track shared and personal expenses, and manage savings together. Built for two incomes.</p>
 </a>
