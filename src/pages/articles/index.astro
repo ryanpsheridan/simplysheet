@@ -72,7 +72,7 @@ const templates = [
 			<div class="articles-main">
 				<div class="article-list" id="article-list">
 					{articles.map((article) => (
-						<a href={`/articles/${article.id}/`} class="article-list-item" data-tags={JSON.stringify(article.data.tags ?? [])} data-date={article.data.pubDate.valueOf().toString()} data-title={article.data.title}>
+						<a href={`/articles/${article.id}/`} class="article-list-item" data-tags={JSON.stringify(article.data.tags ?? [])} data-date={article.data.pubDate.valueOf().toString()} data-title={article.data.title} data-desc={article.data.description}>
 							<div class="article-list-text">
 								<div class="article-list-meta">
 									{(article.data.tags ?? []).map((slug: string) => (
@@ -96,6 +96,10 @@ const templates = [
 			</div>
 
 			<aside class="articles-sidebar">
+				<div class="sidebar-search">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+					<input type="search" id="sidebar-search-input" class="search-input" placeholder="Search articles" aria-label="Search articles" />
+				</div>
 				<details class="sidebar-section" open>
 					<summary class="sidebar-label">
 						Topic
@@ -153,6 +157,11 @@ const templates = [
 						<line x1="6" y1="18" x2="18" y2="6" />
 					</svg>
 				</button>
+			</div>
+
+			<div class="sidebar-search">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+				<input type="search" id="drawer-search-input" class="search-input" placeholder="Search articles" aria-label="Search articles" />
 			</div>
 
 			<div class="filter-section">
@@ -216,6 +225,36 @@ const templates = [
 	.articles-sidebar {
 		position: sticky;
 		top: 96px;
+	}
+	.sidebar-search {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-full);
+		padding: 0.5rem 0.875rem;
+		margin-bottom: var(--space-lg);
+		color: var(--color-text-muted);
+		transition: border-color 0.15s;
+	}
+	.sidebar-search:focus-within {
+		border-color: var(--color-text-muted);
+	}
+	.sidebar-search svg {
+		flex-shrink: 0;
+	}
+	.search-input {
+		flex: 1;
+		min-width: 0;
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		color: var(--color-text);
+		background: none;
+		border: none;
+		outline: none;
+	}
+	.search-input::placeholder {
+		color: var(--color-text-muted);
 	}
 	.sidebar-section {
 		margin-bottom: var(--space-lg);
@@ -653,6 +692,7 @@ const templates = [
 	const drawerSortPills = document.querySelectorAll<HTMLButtonElement>('.sort-options .tag-pill');
 	const sidebarTagPills = document.querySelectorAll<HTMLButtonElement>('.sidebar-tag-filters .sidebar-pill');
 	const sidebarSortPills = document.querySelectorAll<HTMLButtonElement>('.sidebar-sort-options .sidebar-pill');
+	const searchInputs = document.querySelectorAll<HTMLInputElement>('.search-input');
 
 	const list = document.getElementById('article-list');
 	const items = Array.from(document.querySelectorAll<HTMLAnchorElement>('#article-list .article-list-item'));
@@ -660,6 +700,7 @@ const templates = [
 
 	let activeTag = 'all';
 	let activeSort = 'newest';
+	let searchQuery = '';
 
 	function syncAllPills() {
 		drawerTagPills.forEach((p) => p.classList.toggle('active', p.dataset.tag === activeTag));
@@ -701,9 +742,19 @@ const templates = [
 		applyFilterAndSort();
 	}
 
+	function setSearch(query: string) {
+		searchQuery = query.trim().toLowerCase();
+		searchInputs.forEach((input) => {
+			if (input.value !== query) input.value = query;
+		});
+		applyFilterAndSort();
+	}
+
 	function resetAll() {
 		activeTag = 'all';
 		activeSort = 'newest';
+		searchQuery = '';
+		searchInputs.forEach((input) => { input.value = ''; });
 		syncAllPills();
 		applyFilterAndSort();
 	}
@@ -712,6 +763,7 @@ const templates = [
 	drawerSortPills.forEach((p) => p.addEventListener('click', () => setSort(p.dataset.sort!)));
 	sidebarTagPills.forEach((p) => p.addEventListener('click', () => setTag(p.dataset.tag!)));
 	sidebarSortPills.forEach((p) => p.addEventListener('click', () => setSort(p.dataset.sort!)));
+	searchInputs.forEach((input) => input.addEventListener('input', () => setSearch(input.value)));
 
 	resetBtn?.addEventListener('click', resetAll);
 	sidebarResetBtn?.addEventListener('click', resetAll);
@@ -721,7 +773,11 @@ const templates = [
 
 		items.forEach((li) => {
 			const tags: string[] = JSON.parse(li.dataset.tags || '[]');
-			const show = activeTag === 'all' || tags.includes(activeTag);
+			const matchesTag = activeTag === 'all' || tags.includes(activeTag);
+			const matchesSearch = !searchQuery
+				|| (li.dataset.title || '').toLowerCase().includes(searchQuery)
+				|| (li.dataset.desc || '').toLowerCase().includes(searchQuery);
+			const show = matchesTag && matchesSearch;
 			li.hidden = !show;
 			if (show) visible++;
 		});
