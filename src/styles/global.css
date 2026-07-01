@@ -58,11 +58,13 @@ p {
 .prose h2 {
 	margin-top: 2em;
 	margin-bottom: 0.75em;
+	scroll-margin-top: 4.5rem;
 }
 
 .prose h3 {
 	margin-top: 1.5em;
 	margin-bottom: 0.5em;
+	scroll-margin-top: 4.5rem;
 }
 
 .prose ul,

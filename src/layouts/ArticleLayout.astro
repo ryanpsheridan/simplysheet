@@ -163,6 +163,17 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 					</a>
 				</div>
 
+				{tocHeadings.length > 1 && (
+					<nav class="toc" aria-label="Table of contents">
+						<p class="toc-heading">On this page</p>
+						<ul class="toc-list">
+							{tocHeadings.map((h) => (
+								<li><a href={`#${h.slug}`}>{h.text}</a></li>
+							))}
+						</ul>
+					</nav>
+				)}
+
 				<div class="prose">
 					<slot />
 				</div>
@@ -367,6 +378,44 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 	.action-btn:hover {
 		color: var(--color-text);
 		border-color: var(--color-text-muted);
+	}
+
+	/* ——— Table of contents ——— */
+
+	.toc {
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: var(--space-md);
+		margin-bottom: var(--space-lg);
+	}
+
+	.toc-heading {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--color-text-muted);
+		margin: 0 0 var(--space-xs);
+	}
+
+	.toc-list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.375rem;
+		margin: 0;
+		padding: 0;
+	}
+
+	.toc-list a {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		text-decoration: none;
+	}
+
+	.toc-list a:hover {
+		color: var(--color-text);
+		text-decoration: underline;
 	}
 
 	/* ——— FAQ section ——— */
