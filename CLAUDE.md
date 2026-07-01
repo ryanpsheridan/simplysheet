@@ -37,7 +37,7 @@ Every time an article is provided, automatically do all of the following:
 5. **Verify all internal article links** actually exist by cross-referencing slugs in `src/content/articles/`. Remove or unlink any references to articles that don't exist.
 6. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
 7. **Update related articles cross-links** — review existing articles and add natural internal links to/from the new article where topically relevant. Internal cross-linking improves both user navigation and SEO crawlability. The "Related articles" section at the bottom of each page is auto-generated (4 most recent), but in-body links between related topics are more valuable.
-8. **Add natural template page links in body text** — where the article's topic connects to a product (e.g. an article about paying off debt mentioning a [debt payoff tracker](/templates/debt-payoff-tracker/)), weave in 1–2 internal links to the relevant `/templates/` pages. These should read as helpful tool suggestions, not sales pitches. Always link to the internal template page, never directly to Etsy — the template page has its own Etsy CTA. This creates an article → template page → Etsy funnel that keeps users on-site longer and builds internal link equity.
+8. **Add natural template page links in body text** — where the article's topic connects to a product (e.g. an article about paying off debt mentioning a [debt payoff tracker](/templates/debt-payoff-tracker/)), weave in 1–2 internal links to the relevant `/templates/` pages. These should read as helpful tool suggestions, not sales pitches. Always link to the internal template page, never directly to Etsy — the template page has its own Etsy CTA. This creates an article → template page → Etsy funnel that keeps users on-site longer and builds internal link equity. If the link deserves a visual promo card mid-article (not just a plain text link), use the `<ProductPromo />` component — see "Product Promo Component" below. **Never hand-type product card HTML into an article** — that's what caused broken images in the past.
 9. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
 10. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
 
@@ -116,6 +116,19 @@ The article's `tags` field determines which two Etsy products appear at the bott
 | `budgeting-styles` | Budget Template | Couples Budget |
 
 When adding a new tag, update the `tagProductMap` in `ArticleLayout.astro` and the `TAG_MAP` in both `src/pages/index.astro` and `src/pages/articles/index.astro`.
+
+## Product Promo Component
+
+`src/components/ProductPromo.astro` is the **only** way to render a product promo anywhere in an article — including the end-of-article row (used automatically by `ArticleLayout.astro`) and any promo you add inside an article body. It looks up the product by slug from the `templates` collection (`src/content/templates/`), so name, description, badge, and image always match the template page — never hand-type this data or its HTML.
+
+- Requires the article to be `.mdx` (component imports don't work in plain `.md`).
+- Import: `import ProductPromo from '../../components/ProductPromo.astro';`
+- `slug` — the template's collection id, e.g. `budget-spreadsheet`, `couples-budget-spreadsheet`, `debt-payoff-tracker`, `savings-goals-tracker`, `net-worth-tracker`, `credit-card-tracker`.
+- `variant`:
+  - `"card"` (default) — vertical card, meant to sit inside a `<div class="product-cards">` wrapper alongside one sibling card for a 2-up grid.
+  - `"interstitial"` — single horizontal card with a `label` prop for a short eyebrow line (e.g. `label="Built for two incomes"`).
+  - `"row"` — used internally by `ArticleLayout.astro` for the automatic end-of-article recommendations; don't use this variant directly in article bodies.
+- If you need a new variant/layout for a promo, add it to this component (with matching CSS in `src/styles/global.css`) rather than writing one-off HTML in an article.
 
 ## Available Tags
 
