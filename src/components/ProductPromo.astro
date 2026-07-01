@@ -3,7 +3,7 @@ import { getEntry } from 'astro:content';
 
 interface Props {
 	slug: string;
-	variant?: 'card' | 'interstitial';
+	variant?: 'card' | 'interstitial' | 'row';
 	label?: string;
 }
 
@@ -14,16 +14,17 @@ if (!template) {
 	throw new Error(`ProductPromo: no template found for slug "${slug}"`);
 }
 
-const { title, description, badge, midImage } = template.data;
+const { title, description, badge, midImage, heroImage } = template.data;
 const name = title.replace(/ for Google Sheets & Excel$/, '');
 const url = `/templates/${slug}/`;
 const alt = `${name} preview`;
+const image = variant === 'row' ? heroImage : midImage;
 ---
 
-{variant === 'interstitial' ? (
+{variant === 'interstitial' && (
 	<div class="article-interstitial">
 		<a href={url} class="interstitial-link">
-			<img src={midImage} alt={alt} width="600" height="400" loading="lazy" class="interstitial-img" />
+			<img src={image} alt={alt} width="600" height="400" loading="lazy" class="interstitial-img" />
 			<div class="interstitial-body">
 				{label && <p class="interstitial-label">{label}</p>}
 				<p class="interstitial-title">{name}</p>
@@ -31,13 +32,31 @@ const alt = `${name} preview`;
 			</div>
 		</a>
 	</div>
-) : (
+)}
+
+{variant === 'card' && (
 	<a href={url} class="product-card">
 		<div class="product-card-thumb">
-			<img src={midImage} alt={alt} width="600" height="400" loading="lazy" />
+			<img src={image} alt={alt} width="600" height="400" loading="lazy" />
 		</div>
 		{badge && <span class="product-card-badge">{badge}</span>}
 		<h3 class="product-card-name">{name}</h3>
 		<p class="product-card-desc">{description}</p>
 	</a>
+)}
+
+{variant === 'row' && (
+	<div class="product-row">
+		<a href={url} class="product-thumb">
+			<img src={image} alt={alt} width="600" height="400" loading="lazy" />
+		</a>
+		<div class="product-content">
+			<div class="product-text">
+				{badge && <span class="product-badge">{badge}</span>}
+				<h3 class="product-name">{name}</h3>
+				<p class="product-desc">{description}</p>
+			</div>
+			<a href={url} class="btn btn-secondary product-cta">View template <span class="arrow">&rarr;</span></a>
+		</div>
+	</div>
 )}
