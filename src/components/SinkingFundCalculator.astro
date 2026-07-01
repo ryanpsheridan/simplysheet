@@ -1,0 +1,805 @@
+---
+const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="sfc" id={id}>
+
+  <!-- Phase 1: Assessment -->
+  <div class="sfc-assess" id={`${id}-assess`}>
+    <div class="sfc-progress">
+      <span class="sfc-progress-text" id={`${id}-ptext`}>Question 1 of 5</span>
+      <div class="sfc-progress-bar">
+        <div class="sfc-progress-fill" id={`${id}-pfill`} style="width:20%"></div>
+      </div>
+    </div>
+    <h2 class="sfc-q-text" id={`${id}-qtext`}></h2>
+    <p class="sfc-q-hint" id={`${id}-qhint`}></p>
+    <div class="sfc-opts" id={`${id}-opts`}></div>
+  </div>
+
+  <!-- Phase 2: Recommendation + Calculator -->
+  <div class="sfc-phase2" id={`${id}-phase2`} hidden>
+
+    <div class="sfc-rec" id={`${id}-rec`}>
+      <div class="sfc-rec-icon" id={`${id}-rec-icon`}></div>
+      <p class="sfc-rec-eyebrow">Assessment result</p>
+      <h2 class="sfc-rec-title" id={`${id}-rec-title`}></h2>
+      <p class="sfc-rec-body" id={`${id}-rec-body`}></p>
+      <p class="sfc-rec-links" id={`${id}-rec-links`}></p>
+    </div>
+
+    <div class="sfc-divider"></div>
+
+    <h3 class="sfc-calc-heading">Calculate your monthly savings</h3>
+
+    <div class="sfc-input-grid">
+      <div class="sfc-field-full">
+        <label class="sfc-label" for={`${id}-name`}>Expense name</label>
+        <input type="text" id={`${id}-name`} class="sfc-text-input" placeholder="e.g. Christmas gifts" autocomplete="off" />
+      </div>
+      <div class="sfc-field">
+        <label class="sfc-label" for={`${id}-amount`}>Target amount</label>
+        <div class="sfc-money-field">
+          <span class="sfc-prefix">$</span>
+          <input type="text" id={`${id}-amount`} class="sfc-money-input" inputmode="decimal" placeholder="0" autocomplete="off" />
+        </div>
+      </div>
+      <div class="sfc-field">
+        <label class="sfc-label" for={`${id}-date`}>Target month</label>
+        <input type="month" id={`${id}-date`} class="sfc-month-input" />
+      </div>
+    </div>
+
+    <div class="sfc-results" id={`${id}-results`} hidden>
+      <div class="sfc-results-grid">
+        <div class="sfc-stat sfc-stat--hero">
+          <span class="sfc-stat-label">Save each month</span>
+          <span class="sfc-stat-value" id={`${id}-monthly`}>—</span>
+        </div>
+        <div class="sfc-stat">
+          <span class="sfc-stat-label">Months remaining</span>
+          <span class="sfc-stat-value" id={`${id}-mcount`}>—</span>
+        </div>
+        <div class="sfc-stat">
+          <span class="sfc-stat-label">Weekly equivalent</span>
+          <span class="sfc-stat-value" id={`${id}-weekly`}>—</span>
+        </div>
+        <div class="sfc-stat">
+          <span class="sfc-stat-label">Every two weeks</span>
+          <span class="sfc-stat-value" id={`${id}-biweekly`}>—</span>
+        </div>
+      </div>
+      <p class="sfc-tip" id={`${id}-tip`}></p>
+    </div>
+
+    <p class="sfc-error" id={`${id}-error`} hidden>Enter a target amount and a future target month to see your savings plan.</p>
+
+    <a href="/templates/savings-goals-tracker/" class="btn btn-primary sfc-cta">
+      Track your savings progress <span class="arrow">&rarr;</span>
+    </a>
+
+    <button class="sfc-retake" id={`${id}-retake`}>&larr; Start over</button>
+  </div>
+</div>
+
+<style>
+  /* ——— Container ——— */
+
+  .sfc {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin: var(--space-lg) 0;
+    background: var(--color-bg-surface);
+  }
+
+  /* ——— Progress ——— */
+
+  .sfc-progress {
+    margin-bottom: var(--space-md);
+  }
+  .sfc-progress-text {
+    display: block;
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xs);
+  }
+  .sfc-progress-bar {
+    height: 4px;
+    background: var(--color-bg-panel);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sfc-progress-fill {
+    height: 100%;
+    background: var(--color-accent);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  /* ——— Question ——— */
+
+  .sfc-q-text {
+    font-size: var(--text-h1);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+  }
+  .sfc-q-hint {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    line-height: var(--leading-normal);
+    margin-bottom: var(--space-md);
+    min-height: 1em;
+  }
+  .sfc-opts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  /* Category pill grid (Q1) */
+  .sfc-opts.sfc-opts--grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xs);
+  }
+
+  /* Option buttons */
+  :global(.sfc-opt) {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
+    background: var(--color-bg-surface);
+    border: 1.5px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    line-height: var(--leading-snug);
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+  }
+  :global(.sfc-opts--grid .sfc-opt) {
+    padding: 0.75rem 0.875rem;
+    font-size: var(--text-small);
+    text-align: center;
+  }
+  @media (hover: hover) {
+    :global(.sfc-opt:hover) {
+      color: var(--color-text);
+      border-color: var(--color-accent);
+      background: var(--color-accent-light);
+    }
+  }
+  :global(.sfc-opt.selected) {
+    background: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+  }
+  :global(.sfc-opt:disabled) {
+    cursor: default;
+  }
+
+  /* ——— Recommendation ——— */
+
+  .sfc-rec {
+    margin-bottom: var(--space-md);
+  }
+  .sfc-rec-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-sm);
+    font-size: 1.5rem;
+  }
+  .sfc-rec-eyebrow {
+    font-size: var(--text-small);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2xs);
+  }
+  .sfc-rec-title {
+    font-size: var(--text-h2);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+  }
+  .sfc-rec-body {
+    font-size: var(--text-body);
+    line-height: var(--leading-normal);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
+    max-width: 36rem;
+  }
+  .sfc-rec-links {
+    font-size: var(--text-body);
+    line-height: var(--leading-normal);
+    color: var(--color-text-secondary);
+    max-width: 36rem;
+    margin: 0;
+  }
+  :global(.sfc-rec-links a) {
+    font-weight: var(--weight-medium);
+  }
+
+  /* ——— Divider ——— */
+
+  .sfc-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: var(--space-md) 0;
+  }
+
+  /* ——— Calculator ——— */
+
+  .sfc-calc-heading {
+    font-size: var(--text-h3);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+  .sfc-input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+  .sfc-field-full {
+    grid-column: 1 / -1;
+  }
+  .sfc-label {
+    display: block;
+    font-size: var(--text-small);
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+  }
+  .sfc-text-input {
+    width: 100%;
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    padding: 0.625rem 0.75rem;
+    color: var(--color-text);
+    background: transparent;
+    box-sizing: border-box;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  .sfc-text-input:focus {
+    border-color: var(--color-accent);
+  }
+  .sfc-text-input::placeholder {
+    color: var(--color-text-muted);
+  }
+  .sfc-money-field {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .sfc-money-field:focus-within {
+    border-color: var(--color-accent);
+  }
+  .sfc-prefix {
+    padding: 0.625rem 0 0.625rem 0.75rem;
+    font-size: var(--text-body);
+    color: var(--color-text-muted);
+    user-select: none;
+  }
+  .sfc-money-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    padding: 0.625rem 0.75rem 0.625rem 0.25rem;
+    color: var(--color-text);
+    background: transparent;
+  }
+  .sfc-money-input::placeholder {
+    color: var(--color-text-muted);
+  }
+  .sfc-month-input {
+    width: 100%;
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    padding: 0.625rem 0.75rem;
+    color: var(--color-text);
+    background: transparent;
+    box-sizing: border-box;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  .sfc-month-input:focus {
+    border-color: var(--color-accent);
+  }
+
+  /* ——— Results ——— */
+
+  .sfc-results {
+    background: var(--color-bg-panel);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+  .sfc-results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+  .sfc-stat {
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm);
+  }
+  .sfc-stat--hero {
+    background: var(--color-bg-inverse);
+  }
+  .sfc-stat--hero .sfc-stat-label,
+  .sfc-stat--hero .sfc-stat-value {
+    color: white;
+  }
+  .sfc-stat-label {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+  }
+  .sfc-stat-value {
+    display: block;
+    font-size: var(--text-h2);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+  }
+  .sfc-tip {
+    font-size: var(--text-small);
+    line-height: var(--leading-normal);
+    color: var(--color-text-secondary);
+    margin: 0;
+    padding-top: var(--space-xs);
+    border-top: 1px solid var(--color-border);
+  }
+  .sfc-error {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-sm);
+  }
+
+  /* ——— CTA + retake ——— */
+
+  .sfc-cta {
+    width: 100%;
+    margin-bottom: var(--space-sm);
+  }
+  .sfc-retake {
+    font-family: var(--font-sans);
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s;
+  }
+  .sfc-retake:hover {
+    color: var(--color-text);
+  }
+
+  /* ——— Responsive ——— */
+
+  @media (max-width: 480px) {
+    .sfc {
+      padding: var(--space-sm);
+    }
+    .sfc-q-text {
+      font-size: var(--text-h2);
+    }
+    .sfc-opts.sfc-opts--grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .sfc-input-grid {
+      grid-template-columns: 1fr;
+    }
+    .sfc-field-full {
+      grid-column: 1;
+    }
+    .sfc-results-grid {
+      grid-template-columns: 1fr;
+    }
+    .sfc-rec-title {
+      font-size: var(--text-h3);
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ id }}>
+(function () {
+  var root = document.getElementById(id);
+  if (!root) return;
+
+  var assessEl = document.getElementById(id + '-assess');
+  var phase2El = document.getElementById(id + '-phase2');
+  var ptextEl = document.getElementById(id + '-ptext');
+  var pfillEl = document.getElementById(id + '-pfill');
+  var qtextEl = document.getElementById(id + '-qtext');
+  var qhintEl = document.getElementById(id + '-qhint');
+  var optsEl  = document.getElementById(id + '-opts');
+  var recIconEl  = document.getElementById(id + '-rec-icon');
+  var recTitleEl = document.getElementById(id + '-rec-title');
+  var recBodyEl  = document.getElementById(id + '-rec-body');
+  var recLinksEl = document.getElementById(id + '-rec-links');
+  var nameEl     = document.getElementById(id + '-name');
+  var amountEl   = document.getElementById(id + '-amount');
+  var dateEl     = document.getElementById(id + '-date');
+  var resultsEl  = document.getElementById(id + '-results');
+  var monthlyEl  = document.getElementById(id + '-monthly');
+  var mcountEl   = document.getElementById(id + '-mcount');
+  var weeklyEl   = document.getElementById(id + '-weekly');
+  var biweeklyEl = document.getElementById(id + '-biweekly');
+  var tipEl      = document.getElementById(id + '-tip');
+  var errorEl    = document.getElementById(id + '-error');
+  var retakeBtn  = document.getElementById(id + '-retake');
+
+  var currentQ = 0;
+  var answers = [];   // string answers per question
+  var selectedCategory = '';
+  var preset = null;  // { name, amount, dateStr }
+
+  var today = new Date();
+  var todayYear  = today.getFullYear();
+  var todayMonth = today.getMonth(); // 0-indexed
+
+  /* ——— Pre-fill presets ——— */
+
+  function monthValue(y, m) { // m is 0-indexed
+    return y + '-' + String(m + 1).padStart(2, '0');
+  }
+  function addMonths(m) {
+    var d = new Date(todayYear, todayMonth + m, 1);
+    return monthValue(d.getFullYear(), d.getMonth());
+  }
+  function nextOccurrence(targetMonth) { // targetMonth 0-indexed
+    var y = todayYear;
+    // If this month is past (or equal to) target, jump to next year
+    if (todayMonth >= targetMonth - 1) y++;
+    return monthValue(y, targetMonth);
+  }
+
+  var PRESETS = {
+    'Christmas':        { name: 'Christmas gifts',  amount: 600,  dateStr: nextOccurrence(11) },
+    'Vacation':         { name: 'Vacation',          amount: 2000, dateStr: nextOccurrence(6)  },
+    'Annual Insurance': { name: 'Annual insurance',  amount: 1200, dateStr: addMonths(6)       },
+    'Car Maintenance':  { name: 'Car maintenance',   amount: 1500, dateStr: addMonths(12)      },
+    'Home Repairs':     { name: 'Home repairs',      amount: 1000, dateStr: addMonths(12)      },
+    'Property Taxes':   { name: 'Property taxes',    amount: 2400, dateStr: nextOccurrence(11) },
+    'Gifts':            { name: 'Gifts',             amount: 300,  dateStr: nextOccurrence(11) },
+    'School Expenses':  { name: 'School expenses',   amount: 500,  dateStr: nextOccurrence(7)  },
+    'Pet Care':         { name: 'Pet care',          amount: 800,  dateStr: addMonths(12)      }
+  };
+
+  /* ——— Questions ——— */
+
+  var CATEGORIES = [
+    'Christmas', 'Vacation', 'Annual Insurance', 'Car Maintenance',
+    'Home Repairs', 'Property Taxes', 'Gifts', 'School Expenses',
+    'Pet Care', 'Other'
+  ];
+
+  var questions = [
+    {
+      text: 'What are you saving for?',
+      hint: '',
+      type: 'grid',
+      opts: CATEGORIES.map(function (c) { return { text: c }; })
+    },
+    {
+      text: 'Do you know roughly when you\'ll need the money?',
+      hint: '',
+      type: 'yn',
+      opts: [
+        { text: 'Yes — I have a date or timeframe in mind' },
+        { text: 'No — it\'s open-ended' }
+      ]
+    },
+    {
+      text: 'Is this something you expected, rather than a surprise?',
+      hint: '',
+      type: 'yn',
+      opts: [
+        { text: 'Yes — I knew this expense was coming' },
+        { text: 'No — it came up unexpectedly' }
+      ]
+    },
+    {
+      text: 'Would paying for this all at once put stress on your monthly budget?',
+      hint: '',
+      type: 'yn',
+      opts: [
+        { text: 'Yes — it would be a stretch' },
+        { text: 'No — I could handle it in one month' }
+      ]
+    },
+    {
+      text: 'Does this happen occasionally rather than every month?',
+      hint: 'Examples that qualify: Christmas, annual insurance, vacation, new tires.\nExamples that don\'t: rent, groceries, utilities.',
+      type: 'yn',
+      opts: [
+        { text: 'Yes — it\'s infrequent or annual' },
+        { text: 'No — it\'s a regular monthly cost' }
+      ]
+    }
+  ];
+
+  /* ——— Recommendations ——— */
+
+  var RECS = {
+    great: {
+      icon: '✓',
+      iconBg: '#E8F5E9',
+      iconColor: '#2D9D78',
+      title: 'Great candidate for a sinking fund',
+      body: 'This is a predictable expense that doesn\'t happen every month and would be easier to handle by saving gradually. A sinking fund is exactly the right tool for this.',
+      links: ''
+    },
+    maybe: {
+      icon: '~',
+      iconBg: '#FFF8E1',
+      iconColor: '#F9A825',
+      title: 'Could work as a sinking fund',
+      body: 'This expense has some of the hallmarks of a sinking fund candidate. Depending on your situation, you might handle it through your regular monthly budget or by setting aside a dedicated amount each month.',
+      links: ''
+    },
+    emergency: {
+      icon: '!',
+      iconBg: '#FEF2F2',
+      iconColor: '#DC2626',
+      title: 'This sounds more like an emergency fund expense',
+      body: 'Sinking funds work best for expenses you can anticipate. This one sounds like it came up unexpectedly — which is exactly what an emergency fund is designed for.',
+      links: 'Learn more about how much to keep in an <a href="/articles/emergency-fund-sizing/">emergency fund</a>.'
+    },
+    monthly: {
+      icon: '↻',
+      iconBg: '#EEF4FF',
+      iconColor: '#196EDD',
+      title: 'This sounds like a regular monthly expense',
+      body: 'Sinking funds work best for occasional, non-monthly costs. If this expense happens every month, it belongs in your regular monthly budget rather than a sinking fund.',
+      links: 'Need help building a budget that sticks? See <a href="/articles/why-most-budgets-fail/">why most budgets fail</a> and what tends to work instead.'
+    }
+  };
+
+  /* ——— Tips ——— */
+
+  var CATEGORY_TIPS = {
+    'Christmas': 'This type of annual expense is exactly what sinking funds are designed for — a small monthly amount means December never feels like a financial sprint.',
+    'Vacation': 'Starting early gives you maximum flexibility. If plans change, you can easily redirect these savings toward another goal.',
+    'Annual Insurance': 'Some insurers offer a discount for paying annually. A sinking fund makes that the easy choice.',
+    'Car Maintenance': 'Spreading vehicle costs across many months means a repair bill never has to blow up a monthly budget.',
+    'Property Taxes': 'Treating property taxes as a monthly sinking fund contribution is one of the smoothest ways to handle a large annual bill.',
+  };
+
+  function getTip(category, months, monthly) {
+    if (CATEGORY_TIPS[category]) return CATEGORY_TIPS[category];
+    if (months < 3) return 'With a short timeline, saving consistently now is key. Consider whether the target date can flex if the monthly amount feels high.';
+    if (monthly > 500) return 'If this monthly amount feels high, extending the target date by a few months can make it much more manageable.';
+    if (months > 12) return 'Starting this early gives you real flexibility. Even if circumstances change, you\'ll have a comfortable cushion built up.';
+    return 'Setting up a recurring transfer right after payday makes this feel automatic — you save before you have a chance to spend.';
+  }
+
+  /* ——— Recommendation logic ——— */
+
+  function classify() {
+    // answers[2] = Q3 (expected?) 'yes'|'no'
+    // answers[4] = Q5 (occasional?) 'yes'|'no'
+    // answers[1] = Q2 (timing?) 'yes'|'no'
+    // answers[3] = Q4 (stresses budget?) 'yes'|'no'
+    var expected   = answers[2];
+    var occasional = answers[4];
+    var timing     = answers[1];
+    var stresses   = answers[3];
+
+    if (expected === 'no')   return 'emergency';
+    if (occasional === 'no') return 'monthly';
+    if (timing === 'yes' && stresses === 'yes') return 'great';
+    return 'maybe';
+  }
+
+  /* ——— Formatting ——— */
+
+  function fmt(n, decimals) {
+    return '$' + n.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
+  }
+
+  function fmtInput(val) {
+    var num = val.replace(/[^0-9.]/g, '');
+    var parts = num.split('.');
+    if (parts[0]) parts[0] = parseInt(parts[0], 10).toLocaleString('en-US');
+    return parts.join('.');
+  }
+
+  /* ——— Render question ——— */
+
+  function renderQuestion() {
+    var q = questions[currentQ];
+    var total = questions.length;
+    ptextEl.textContent = 'Question ' + (currentQ + 1) + ' of ' + total;
+    pfillEl.style.width = ((currentQ + 1) / total * 100) + '%';
+    qtextEl.textContent = q.text;
+    qhintEl.textContent = q.hint || '';
+    qhintEl.style.display = q.hint ? '' : 'none';
+
+    optsEl.innerHTML = '';
+    if (q.type === 'grid') {
+      optsEl.classList.add('sfc-opts--grid');
+    } else {
+      optsEl.classList.remove('sfc-opts--grid');
+    }
+
+    q.opts.forEach(function (opt, i) {
+      var btn = document.createElement('button');
+      btn.className = 'sfc-opt';
+      btn.textContent = opt.text;
+      btn.addEventListener('click', function () {
+        btn.classList.add('selected');
+        optsEl.querySelectorAll('.sfc-opt').forEach(function (b) { b.disabled = true; });
+
+        // Handle Q1 category selection
+        if (currentQ === 0) {
+          selectedCategory = opt.text;
+          preset = PRESETS[opt.text] || null;
+        }
+
+        // Store answer as 'yes'/'no' for Q2-Q5, or category text for Q1
+        if (q.type === 'grid') {
+          answers[currentQ] = opt.text;
+        } else {
+          answers[currentQ] = i === 0 ? 'yes' : 'no';
+        }
+
+        setTimeout(function () {
+          if (currentQ < questions.length - 1) {
+            currentQ++;
+            renderQuestion();
+          } else {
+            showResult();
+          }
+        }, 220);
+      });
+      optsEl.appendChild(btn);
+    });
+  }
+
+  /* ——— Show result + calculator ——— */
+
+  function showResult() {
+    var key = classify();
+    var rec = RECS[key];
+
+    recIconEl.textContent = rec.icon;
+    recIconEl.style.background = rec.iconBg;
+    recIconEl.style.color = rec.iconColor;
+    recTitleEl.textContent = rec.title;
+    recBodyEl.textContent = rec.body;
+    if (rec.links) {
+      recLinksEl.innerHTML = rec.links;
+      recLinksEl.style.display = '';
+    } else {
+      recLinksEl.style.display = 'none';
+    }
+
+    // Pre-fill calculator from preset
+    if (preset) {
+      nameEl.value   = preset.name;
+      amountEl.value = preset.amount.toLocaleString('en-US');
+      dateEl.value   = preset.dateStr;
+    } else {
+      // Other: clear fields
+      nameEl.value   = '';
+      amountEl.value = '';
+      dateEl.value   = '';
+    }
+
+    assessEl.hidden = true;
+    phase2El.hidden = false;
+
+    // Trigger calculation if preset filled in
+    if (preset) calculate();
+  }
+
+  /* ——— Calculate ——— */
+
+  function calculate() {
+    var rawAmount = amountEl.value.replace(/[^0-9.]/g, '');
+    var amount = parseFloat(rawAmount) || 0;
+    var dateVal = dateEl.value; // "YYYY-MM"
+
+    if (!amount || !dateVal) {
+      resultsEl.hidden = true;
+      errorEl.hidden = true;
+      return;
+    }
+
+    var parts = dateVal.split('-');
+    var targetYear  = parseInt(parts[0], 10);
+    var targetMonth = parseInt(parts[1], 10) - 1; // 0-indexed
+    var months = (targetYear - todayYear) * 12 + (targetMonth - todayMonth);
+
+    if (months <= 0) {
+      resultsEl.hidden = true;
+      errorEl.hidden = false;
+      errorEl.textContent = 'Target month must be in the future.';
+      return;
+    }
+
+    errorEl.hidden = true;
+
+    var monthly  = amount / months;
+    var weekly   = monthly * 12 / 52;
+    var biweekly = monthly * 12 / 26;
+
+    monthlyEl.textContent  = fmt(monthly, 0);
+    mcountEl.textContent   = months + (months === 1 ? ' month' : ' months');
+    weeklyEl.textContent   = fmt(weekly, 2);
+    biweeklyEl.textContent = fmt(biweekly, 2);
+    tipEl.textContent      = getTip(selectedCategory, months, monthly);
+
+    resultsEl.hidden = false;
+  }
+
+  /* ——— Input listeners ——— */
+
+  amountEl.addEventListener('input', function () {
+    var pos    = amountEl.selectionStart;
+    var before = amountEl.value.length;
+    amountEl.value = fmtInput(amountEl.value);
+    var after = amountEl.value.length;
+    amountEl.setSelectionRange(pos + (after - before), pos + (after - before));
+    calculate();
+  });
+
+  dateEl.addEventListener('change', calculate);
+  nameEl.addEventListener('input', function () {
+    // Name changes don't affect calculation but keep UX responsive
+  });
+
+  /* ——— Retake ——— */
+
+  retakeBtn.addEventListener('click', function () {
+    currentQ = 0;
+    answers  = [];
+    selectedCategory = '';
+    preset   = null;
+    resultsEl.hidden = true;
+    errorEl.hidden   = true;
+    phase2El.hidden  = true;
+    assessEl.hidden  = false;
+    renderQuestion();
+  });
+
+  /* ——— Init ——— */
+
+  renderQuestion();
+})();
+</script>

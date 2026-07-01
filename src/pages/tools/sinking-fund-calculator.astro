@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SinkingFundCalculator from '../../components/SinkingFundCalculator.astro';
+import { SITE_TITLE } from '../../consts';
+
+const title = 'Sinking Fund Calculator — Monthly Savings Planner';
+const description = 'Find out if your expense is a good candidate for a sinking fund, then calculate exactly how much to save each month to hit your goal on time.';
+---
+
+<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+	<main>
+		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: 'Sinking Fund Calculator' }]} />
+		<article>
+			<header class="calc-header">
+				<h1>Sinking Fund Calculator</h1>
+				<p class="calc-intro">Many expenses that feel like emergencies aren't really surprises — they're things we knew were coming but never planned for. This tool first checks whether your expense is a good candidate for a sinking fund, then calculates exactly how much to set aside each month so the money is ready when you need it.</p>
+			</header>
+
+			<SinkingFundCalculator />
+
+			<div class="calc-callout">
+				<p class="calc-callout-text">For a deeper look at how sinking funds work and why they make budgeting feel easier, read <a href="/articles/sinking-funds-explained/">How Sinking Funds Help You Stop Paying for Emergencies That Aren't Actually Emergencies</a>. Once you have your monthly amounts, a <a href="/templates/savings-goals-tracker/">savings goals tracker</a> can help you monitor multiple funds at once and see which ones are on pace.</p>
+			</div>
+		</article>
+	</main>
+</BaseLayout>
+
+<style>
+	main {
+		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
+	}
+	.calc-header {
+		margin-bottom: var(--space-sm);
+	}
+	.calc-header h1 {
+		font-size: var(--text-h1);
+	}
+	.calc-intro {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+	.calc-callout {
+		margin-top: var(--space-xl);
+		padding: var(--space-md);
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
+	}
+	.calc-callout-text {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+	.calc-callout-text a {
+		font-weight: var(--weight-medium);
+	}
+</style>
