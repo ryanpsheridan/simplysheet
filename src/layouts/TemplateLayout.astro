@@ -30,7 +30,7 @@ const platformLabels: Record<string, string> = {
 	'excel': 'Excel',
 };
 
-const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://simplysheetdesign.com';
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.simplysheetdesign.com';
 const imageUrl = `${siteUrl}${heroImage}`;
 
 const reviewSchema = reviews?.map((r: { name: string; text: string; date?: string }) => ({
