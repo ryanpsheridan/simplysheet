@@ -129,7 +129,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		<Header />
 		<div class="reading-progress" id="reading-progress"></div>
 
-		<main class="article-main">
+		<main class:list={['article-main', { 'has-toc': tocHeadings.length > 1 }]}>
 			<Breadcrumbs crumbs={[{ label: 'Articles', href: '/articles' }, { label: title }]} />
 			<article>
 				<header class="article-header">
@@ -319,9 +319,16 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 	/* ——— Article main ——— */
 
 	.article-main {
+		--toc-rail-width: 260px;
 		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
 		margin: 0 auto;
 		padding: var(--space-lg) var(--space-md) var(--space-2xl);
+	}
+
+	@media (min-width: 1100px) {
+		.article-main.has-toc {
+			max-width: calc(var(--max-width-narrow) + var(--toc-rail-width) + var(--space-xl) + var(--space-md) * 2);
+		}
 	}
 
 	/* ——— Fallback header (no image) ——— */
@@ -411,6 +418,41 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		font-size: var(--text-small);
 		color: var(--color-text-secondary);
 		text-decoration: none;
+	}
+
+	/* ——— Table of contents — sticky rail on wide viewports ——— */
+
+	@media (min-width: 1100px) {
+		.has-toc article {
+			display: grid;
+			grid-template-columns: minmax(0, var(--max-width-narrow)) var(--toc-rail-width);
+			column-gap: var(--space-xl);
+			align-items: start;
+		}
+
+		.has-toc .article-header,
+		.has-toc .article-hero-img,
+		.has-toc .article-actions,
+		.has-toc .prose {
+			grid-column: 1;
+		}
+
+		.has-toc .toc {
+			grid-column: 2;
+			grid-row: 1 / -1;
+			width: var(--toc-rail-width);
+			position: sticky;
+			top: 4.5rem;
+			margin-bottom: 0;
+		}
+
+		.has-toc .related,
+		.has-toc .faq,
+		.has-toc .recommended-products {
+			max-width: var(--max-width-narrow);
+			margin-left: auto;
+			margin-right: auto;
+		}
 	}
 
 	.toc-list a:hover {
