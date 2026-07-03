@@ -272,8 +272,10 @@ const templates = [
 		color: inherit;
 		transition: opacity 0.15s ease;
 	}
-	.article-list-item:hover {
-		opacity: 0.75;
+	@media (hover: hover) {
+		.article-list-item:hover {
+			opacity: 0.75;
+		}
 	}
 	.article-list-item[hidden] {
 		display: none;
@@ -350,26 +352,30 @@ const templates = [
 	.resource-card {
 		display: flex;
 		flex-direction: column;
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
+		gap: var(--space-sm);
 		text-decoration: none;
-		overflow: hidden;
-		transition: border-color 0.15s, background 0.15s;
+		color: inherit;
+		transition: opacity 0.15s ease;
 	}
-	.resource-card:hover {
-		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
+	@media (hover: hover) {
+		.resource-card:hover {
+			opacity: 0.75;
+		}
 	}
 	.resource-thumb {
+		position: relative;
+		width: 100%;
 		aspect-ratio: 3 / 2;
-		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
 		overflow: hidden;
+		background: var(--color-bg-panel);
+		padding: 1.5rem;
 	}
 	.resource-thumb img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		border-radius: var(--radius-sm);
 		display: block;
 	}
 	.resource-badge {
@@ -383,23 +389,17 @@ const templates = [
 		padding: 0.125rem 0.5rem;
 		line-height: 1.4;
 		white-space: nowrap;
-		margin: var(--space-md) var(--space-md) 0;
 	}
 	.resource-name {
 		font-size: var(--text-body);
 		color: var(--color-text);
-		margin-bottom: var(--space-xs);
-		padding: var(--space-xs) var(--space-md) 0;
-	}
-	.resource-card:not(:has(.resource-badge)) .resource-name {
-		padding-top: var(--space-md);
+		margin: 0;
 	}
 	.resource-desc {
 		font-size: var(--text-small);
 		color: var(--color-text-secondary);
 		line-height: var(--leading-snug);
 		margin: 0;
-		padding: 0 var(--space-md) var(--space-md);
 	}
 	.resources-cta-wrap {
 		text-align: center;

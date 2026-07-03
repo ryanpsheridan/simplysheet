@@ -216,8 +216,10 @@ const templates = (await getCollection('templates'))
 		text-decoration: none;
 		transition: opacity 0.15s ease;
 	}
-	.hero-featured:hover {
-		opacity: 0.7;
+	@media (hover: hover) {
+		.hero-featured:hover {
+			opacity: 0.7;
+		}
 	}
 	.hero-featured-thumb {
 		position: relative;
@@ -294,8 +296,10 @@ const templates = (await getCollection('templates'))
 		color: inherit;
 		transition: opacity 0.15s ease;
 	}
-	.home-row-item:hover {
-		opacity: 0.7;
+	@media (hover: hover) {
+		.home-row-item:hover {
+			opacity: 0.7;
+		}
 	}
 	.home-row-thumb {
 		position: relative;
@@ -452,29 +456,33 @@ const templates = (await getCollection('templates'))
 	.template-card {
 		display: flex;
 		flex-direction: column;
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
+		gap: var(--space-sm);
 		text-decoration: none;
-		overflow: hidden;
-		transition: border-color 0.15s, background 0.15s;
+		color: inherit;
+		transition: opacity 0.15s ease;
 	}
-	.template-card:hover {
-		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
+	@media (hover: hover) {
+		.template-card:hover {
+			opacity: 0.7;
+		}
 	}
 	.template-thumb {
+		position: relative;
+		width: 100%;
 		aspect-ratio: 3 / 2;
+		border-radius: var(--radius-md);
+		overflow: hidden;
 		background: var(--color-bg-panel);
+		padding: 1.5rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		overflow: hidden;
 	}
 	.template-thumb img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		border-radius: var(--radius-sm);
 		display: block;
 	}
 	.template-placeholder-icon {
@@ -492,26 +500,20 @@ const templates = (await getCollection('templates'))
 		padding: 0.125rem 0.5rem;
 		line-height: 1.4;
 		white-space: nowrap;
-		margin: var(--space-md) var(--space-md) 0;
 	}
 	.template-name {
 		font-size: var(--text-body);
 		color: var(--color-text);
-		margin-bottom: var(--space-xs);
-		padding: var(--space-xs) var(--space-md) 0;
+		margin: 0;
 		display: flex;
 		align-items: center;
 		gap: 0.375rem;
-	}
-	.template-card:not(:has(.template-badge)) .template-name {
-		padding-top: var(--space-md);
 	}
 	.template-desc {
 		font-size: var(--text-small);
 		color: var(--color-text-secondary);
 		line-height: var(--leading-snug);
 		margin: 0;
-		padding: 0 var(--space-md) var(--space-md);
 	}
 	.templates-cta-wrap {
 		text-align: center;
@@ -550,7 +552,7 @@ const templates = (await getCollection('templates'))
 			grid-template-columns: 1fr;
 		}
 		.tools-row-items {
-			grid-template-columns: repeat(2, 1fr);
+			grid-template-columns: 1fr;
 		}
 		.home-row-item:not(.tool-item) .home-row-title {
 			font-size: 1.25rem;
