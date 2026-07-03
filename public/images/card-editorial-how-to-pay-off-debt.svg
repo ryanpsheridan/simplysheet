@@ -1,37 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
-  <!-- Editorial system · Composition: descending blocks · Palette: coral/terracotta/amber (debt) -->
+  <!-- Editorial system · Mood: tension resolving to level · Composition: crossing bands cropped both edges · Palette: terracotta/coral -->
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F6EDE6"/>
-      <stop offset="100%" stop-color="#EEDFD2"/>
+      <stop offset="0%" stop-color="#F7EFE8"/>
+      <stop offset="55%" stop-color="#F2E4D8"/>
+      <stop offset="100%" stop-color="#EAD8C8"/>
     </linearGradient>
-    <radialGradient id="light" cx="22%" cy="10%" r="80%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
-      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
-      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#6B3A26" flood-opacity="0.13"/>
+    <filter id="bloom" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="70"/>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12"/>
     </filter>
     <filter id="grain">
       <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0"/>
     </filter>
   </defs>
 
-  <!-- Layer 1 · atmosphere -->
   <rect width="960" height="540" fill="url(#bg)"/>
-  <rect width="960" height="540" fill="url(#light)"/>
+  <ellipse cx="710" cy="100" rx="320" ry="190" fill="#FFF7EF" opacity="0.65" filter="url(#bloom)"/>
 
-  <!-- Layer 2+3 · blocks shrinking and descending toward zero -->
-  <g filter="url(#shadow)">
-    <rect x="222" y="168" width="150" height="150" rx="32" fill="#B26A50"/>
-    <rect x="412" y="222" width="118" height="118" rx="27" fill="#C98A6E"/>
-    <rect x="570" y="268" width="90" height="90" rx="22" fill="#DBA98C"/>
-    <rect x="700" y="306" width="66" height="66" rx="17" fill="#E9C8B2"/>
+  <!-- tension: a band descending through the frame -->
+  <g transform="rotate(12 290 285)">
+    <rect x="-300" y="120" width="1200" height="120" rx="60" fill="#DBA98C" opacity="0.35" filter="url(#soft)"/>
+    <rect x="-260" y="200" width="1200" height="170" rx="85" fill="#C98A6E" opacity="0.62"/>
   </g>
-
-  <!-- secondary supporting element · ground line -->
-  <rect x="222" y="404" width="544" height="10" rx="5" fill="#B26A50" opacity="0.10"/>
+  <!-- resolution: a level band it settles into, cropped off the right edge -->
+  <rect x="420" y="356" width="760" height="164" rx="82" fill="#B26A50" opacity="0.92"/>
 
   <rect width="960" height="540" filter="url(#grain)"/>
 </svg>

@@ -38,12 +38,12 @@ const GRADIENT_ANGLES = ['135deg', '135deg', '135deg', '135deg', '135deg', '135d
 
 // Editorial thumbnail system test — see docs/thumbnail-system.md for the full rule stack
 const editorialThumbs = [
-	{ title: '50/30/20 Budget Rule',            composition: 'Balanced columns',   palette: 'Slate / Mist',       v1: '/images/featured-50-30-20.svg',            v2: '/images/card-editorial-50-30-20.svg' },
-	{ title: 'Emergency Fund Sizing',           composition: 'Concentric rings',   palette: 'Forest / Sage',      v1: '/images/card-emergency-fund-sizing.svg',   v2: '/images/card-editorial-emergency-fund-sizing.svg' },
-	{ title: 'How to Pay Off Debt',             composition: 'Descending blocks',  palette: 'Terracotta / Coral', v1: '/images/card-how-to-pay-off-debt.svg',     v2: '/images/card-editorial-how-to-pay-off-debt.svg' },
-	{ title: 'Budgeting with Irregular Income', composition: 'Varying rhythm',     palette: 'Stone / Sky',        v1: '/images/card-irregular-income.svg',        v2: '/images/card-editorial-budgeting-with-irregular-income.svg' },
-	{ title: 'Sinking Funds Explained',         composition: 'Grouped capsules',   palette: 'Emerald / Mint',     v1: '/images/card-sinking-funds-explained.svg', v2: '/images/card-editorial-sinking-funds-explained.svg' },
-	{ title: 'Where Is My Money Going?',        composition: 'Segmented bar',      palette: 'Indigo / Violet',    v1: '/images/card-where-is-money-going.svg',    v2: '/images/card-editorial-where-is-money-going.svg' },
+	{ title: '50/30/20 Budget Rule',            composition: 'Order — layered panels',        palette: 'Slate / Mist',       v1: '/images/featured-50-30-20.svg',            v2: '/images/card-editorial-50-30-20.svg' },
+	{ title: 'Emergency Fund Sizing',           composition: 'Stability — horizon mass',      palette: 'Forest / Sage',      v1: '/images/card-emergency-fund-sizing.svg',   v2: '/images/card-editorial-emergency-fund-sizing.svg' },
+	{ title: 'How to Pay Off Debt',             composition: 'Tension resolving — crossing bands', palette: 'Terracotta / Coral', v1: '/images/card-how-to-pay-off-debt.svg',     v2: '/images/card-editorial-how-to-pay-off-debt.svg' },
+	{ title: 'Budgeting with Irregular Income', composition: 'Uneven rhythm — mist columns',  palette: 'Stone / Sky',        v1: '/images/card-irregular-income.svg',        v2: '/images/card-editorial-budgeting-with-irregular-income.svg' },
+	{ title: 'Sinking Funds Explained',         composition: 'Expansion — corner growth',     palette: 'Emerald / Mint',     v1: '/images/card-sinking-funds-explained.svg', v2: '/images/card-editorial-sinking-funds-explained.svg' },
+	{ title: 'Where Is My Money Going?',        composition: 'Dispersion — mass and fragments', palette: 'Indigo / Violet',  v1: '/images/card-where-is-money-going.svg',    v2: '/images/card-editorial-where-is-money-going.svg' },
 ];
 
 const ARTICLE_COLORS: Record<string, { bg: string; accent: string; accent2?: string }> = {
@@ -310,7 +310,7 @@ const spacingScale = [
 		<!-- ============ THUMBNAIL V2: EDITORIAL SYSTEM ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Thumbnail Style Comparison</h2>
-			<p class="section-desc">Current UI-based thumbnails (v1) vs. the editorial thumbnail system (v2). Three layers per image: atmospheric background, one geometric composition, one subtle financial motif. No fake UI, no text, muted palettes. Full rule stack in <code>docs/thumbnail-system.md</code>.</p>
+			<p class="section-desc">Current UI-based thumbnails (v1) vs. the editorial thumbnail system (v2). Art-directed compositions: one hero form cropped off-frame, translucent overlapping layers, dominant negative space, mood instead of literal finance motifs. Full rule stack in <code>docs/thumbnail-system.md</code>.</p>
 
 			<h3 class="thumb-compare-label">System view — all v2 thumbnails together</h3>
 			<p class="section-desc">The test that matters: viewed side by side, they should read as one design system — cohesive through color, spacing, and proportion, without repeating a composition.</p>

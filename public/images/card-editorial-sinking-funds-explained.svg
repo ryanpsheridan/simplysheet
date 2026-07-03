@@ -1,39 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
-  <!-- Editorial system · Composition: grouped horizontal capsules · Palette: emerald/mint/teal (saving) -->
+  <!-- Editorial system · Mood: quiet expansion · Composition: forms growing out of one corner · Palette: emerald/mint -->
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E6EFEA"/>
-      <stop offset="100%" stop-color="#D6E4DC"/>
+      <stop offset="0%" stop-color="#EAF2ED"/>
+      <stop offset="55%" stop-color="#DFEAE3"/>
+      <stop offset="100%" stop-color="#D1E1D7"/>
     </linearGradient>
-    <radialGradient id="light" cx="22%" cy="10%" r="80%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
-      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
-      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#2C4A3B" flood-opacity="0.11"/>
+    <filter id="bloom" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="70"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8"/>
     </filter>
     <filter id="grain">
       <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0"/>
     </filter>
   </defs>
 
-  <!-- Layer 1 · atmosphere -->
   <rect width="960" height="540" fill="url(#bg)"/>
-  <rect width="960" height="540" fill="url(#light)"/>
+  <ellipse cx="750" cy="100" rx="320" ry="190" fill="#FFFFFF" opacity="0.55" filter="url(#bloom)"/>
 
-  <!-- Layer 2+3 · three funds filling at their own pace -->
-  <g filter="url(#shadow)">
-    <rect x="250" y="152" width="460" height="54" rx="27" fill="#FFFFFF" opacity="0.55"/>
-    <rect x="250" y="242" width="460" height="54" rx="27" fill="#FFFFFF" opacity="0.55"/>
-    <rect x="250" y="332" width="460" height="54" rx="27" fill="#FFFFFF" opacity="0.55"/>
-  </g>
-  <rect x="250" y="152" width="330" height="54" rx="27" fill="#4F7D68"/>
-  <rect x="250" y="242" width="212" height="54" rx="27" fill="#6E9A84"/>
-  <rect x="250" y="332" width="122" height="54" rx="27" fill="#97B8A6"/>
-
-  <!-- secondary supporting element -->
-  <circle cx="782" cy="128" r="56" fill="#4F7D68" opacity="0.10"/>
+  <!-- expansion: each layer larger and lighter, all anchored past the corner -->
+  <rect x="-340" y="120" width="820" height="820" rx="210" fill="#97B8A6" opacity="0.26" filter="url(#soft)"/>
+  <rect x="-340" y="270" width="650" height="650" rx="170" fill="#6E9A84" opacity="0.44"/>
+  <rect x="-340" y="416" width="480" height="480" rx="130" fill="#4F7D68" opacity="0.95"/>
 
   <rect width="960" height="540" filter="url(#grain)"/>
 </svg>
