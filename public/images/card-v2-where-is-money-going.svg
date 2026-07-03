@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
   <defs>
-    <linearGradient id="bg" x1="90%" y1="0%" x2="10%" y2="100%">
-      <stop offset="0%" stop-color="#8A2600"/>
-      <stop offset="100%" stop-color="#D84315"/>
+    <linearGradient id="bg" x1="5%" y1="-10%" x2="95%" y2="110%">
+      <stop offset="0%" stop-color="#0A2472"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
     </linearGradient>
-    <filter id="blurXL" x="-60%" y="-60%" width="220%" height="220%">
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
       <feGaussianBlur stdDeviation="65"/>
     </filter>
-    <filter id="blurL" x="-60%" y="-60%" width="220%" height="220%">
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
       <feGaussianBlur stdDeviation="38"/>
     </filter>
-    <filter id="blurM" x="-80%" y="-80%" width="260%" height="260%">
+    <filter id="blurM" x="-100%" y="-100%" width="300%" height="300%">
       <feGaussianBlur stdDeviation="24"/>
     </filter>
     <filter id="grain">
@@ -21,18 +21,17 @@
 
   <rect width="960" height="540" fill="url(#bg)"/>
 
-  <circle cx="260" cy="120" r="210" fill="#4FC3F7" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
-  <circle cx="440" cy="230" r="170" fill="#B3E5FC" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
-  <circle cx="630" cy="340" r="150" fill="#18FFFF" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
-  <circle cx="760" cy="440" r="120" fill="#4A1400" opacity="0.45" filter="url(#blurXL)"/>
+  <circle cx="-60" cy="-60" r="220" fill="#7C4DFF" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="300" cy="250" r="160" fill="#B39DDB" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="590" cy="380" r="80" fill="#536DFE" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="1020" cy="590" r="190" fill="#050E33" opacity="0.45" filter="url(#blurXL)"/>
 
   <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
 
   <g filter="url(#blurM)">
-  <circle cx="250" cy="200" r="70" fill="#FFFFFF" opacity="0.26"/>
-  <circle cx="380" cy="260" r="46" fill="#FFFFFF" opacity="0.22"/>
-  <circle cx="490" cy="320" r="30" fill="#FFFFFF" opacity="0.19"/>
-  <circle cx="580" cy="370" r="18" fill="#FFFFFF" opacity="0.16"/>
-  <circle cx="650" cy="410" r="9" fill="#FFFFFF" opacity="0.13"/>
+  <circle cx="250" cy="210" r="70" fill="#FFFFFF" opacity="0.24"/>
+  <circle cx="390" cy="280" r="46" fill="#FFFFFF" opacity="0.2"/>
+  <circle cx="500" cy="350" r="30" fill="#FFFFFF" opacity="0.16"/>
+  <circle cx="600" cy="410" r="18" fill="#FFFFFF" opacity="0.14"/>
   </g>
 </svg>
