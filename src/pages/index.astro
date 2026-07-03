@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ThumbTags from '../components/ThumbTags.astro';
+import TagPills from '../components/TagPills.astro';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
@@ -70,10 +70,10 @@ const templates = (await getCollection('templates'))
 					{(featured.data.cardImage || featured.data.image) && (
 						<div class="hero-featured-thumb">
 							<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" />
-							<ThumbTags tags={featured.data.tags} tagMap={TAG_MAP} />
 						</div>
 					)}
 					<span class="hero-featured-label">Featured Article</span>
+					<TagPills tags={featured.data.tags} tagMap={TAG_MAP} />
 					<h2 class="hero-featured-title">{featured.data.title}</h2>
 					<p class="hero-featured-meta">
 						<span>{featured.readTime} min read</span>
@@ -98,10 +98,10 @@ const templates = (await getCollection('templates'))
 								{(article.data.cardImage || article.data.image) && (
 									<div class="home-row-thumb">
 										<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-										<ThumbTags tags={article.data.tags} tagMap={TAG_MAP} />
 									</div>
 								)}
 								<div class="home-row-text">
+									<TagPills tags={article.data.tags} tagMap={TAG_MAP} />
 									<h4 class="home-row-title">{article.data.title}</h4>
 									<span class="home-row-meta">{article.readTime} min read</span>
 								</div>
@@ -226,11 +226,13 @@ const templates = (await getCollection('templates'))
 		overflow: hidden;
 		margin-bottom: var(--space-md);
 		background: var(--color-bg-panel);
+		padding: 1.5rem;
 	}
 	.hero-featured-thumb img {
 		display: block;
 		width: 100%;
 		height: auto;
+		border-radius: var(--radius-sm);
 	}
 	.hero-featured-label {
 		display: inline-block;
@@ -312,12 +314,14 @@ const templates = (await getCollection('templates'))
 		border-radius: var(--radius-md);
 		overflow: hidden;
 		background: var(--color-bg-panel);
+		padding: 1.5rem;
 	}
 	.home-row-thumb img {
 		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		border-radius: var(--radius-sm);
 	}
 	.home-row-text {
 		min-width: 0;

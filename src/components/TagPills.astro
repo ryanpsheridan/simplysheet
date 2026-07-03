@@ -1,0 +1,37 @@
+---
+interface Props {
+	tags?: string[];
+	tagMap: Record<string, string>;
+}
+
+const { tags = [], tagMap } = Astro.props;
+const visible = tags.slice(0, 2);
+---
+
+{visible.length > 0 && (
+	<div class="tag-pills">
+		{visible.map((slug) => (
+			<span class="tag-pill">{tagMap[slug] ?? slug}</span>
+		))}
+	</div>
+)}
+
+<style>
+	.tag-pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: var(--space-2xs);
+	}
+
+	.tag-pill {
+		background: var(--color-bg-panel);
+		color: var(--color-text);
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 1;
+		padding: 6px 10px;
+		border-radius: 999px;
+		white-space: nowrap;
+	}
+</style>
