@@ -26,8 +26,8 @@ const featuredSlug = '50-30-20-budget-rule';
 const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
 const rest = allArticles.filter((a) => a.id !== featured.id);
 
-const latest = rest.slice(0, 4);
-const featuredPicks = rest.slice(4, 8);
+const latest = rest.slice(0, 3);
+const featuredPicks = rest.slice(3, 6);
 
 const tools = [
 	{
@@ -44,16 +44,6 @@ const tools = [
 		name: 'Sinking Fund Calculator',
 		url: '/tools/sinking-fund-calculator/',
 		icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
-	},
-	{
-		name: 'Debt Payoff Calculator',
-		url: '/tools/debt-snowball-vs-avalanche-calculator/',
-		icon: '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
-	},
-	{
-		name: 'Budgeting Style Quiz',
-		url: '/quiz/budgeting-style/',
-		icon: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
 	},
 ];
 
@@ -157,6 +147,12 @@ const templates = (await getCollection('templates'))
 							</div>
 						</a>
 					))}
+					<a href="/tools/" class="home-row-item tool-item">
+						<span class="tool-icon" set:html={`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`} />
+						<div class="home-row-text">
+							<h4 class="home-row-title">View all tools</h4>
+						</div>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -321,7 +317,7 @@ const templates = (await getCollection('templates'))
 	}
 	.home-row-items {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 		gap: var(--space-lg);
 	}
 	.home-row-item {
@@ -371,7 +367,7 @@ const templates = (await getCollection('templates'))
 	/* ——— Tools row ——— */
 
 	.tools-row-items {
-		grid-template-columns: repeat(5, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 	}
 	.tool-item {
 		flex-direction: row;
