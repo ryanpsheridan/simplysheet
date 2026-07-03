@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ThumbTags from '../../components/ThumbTags.astro';
 import { SITE_TITLE } from '../../consts';
 
 const ALL_TAGS = [
@@ -86,6 +87,7 @@ const templates = [
 							{(article.data.cardImage || article.data.image) && (
 								<div class="article-list-thumb">
 									<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+									<ThumbTags tags={article.data.tags} tagMap={TAG_MAP} />
 								</div>
 							)}
 						</a>
@@ -547,6 +549,7 @@ const templates = [
 		color: var(--color-text-muted);
 	}
 	.article-list-thumb {
+		position: relative;
 		flex-shrink: 0;
 		width: 160px;
 		height: 107px;

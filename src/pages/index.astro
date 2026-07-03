@@ -1,7 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ThumbTags from '../components/ThumbTags.astro';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const TAG_MAP: Record<string, string> = {
+	'expense-tracking': 'Expense Tracking',
+	'couples-budgeting': 'Couples Budgeting',
+	'debt-payoff': 'Debt Payoff',
+	'savings-goals': 'Savings Goals',
+	'irregular-income': 'Irregular Income',
+	'net-worth': 'Net Worth',
+	'budgeting-styles': 'Budgeting Styles',
+};
 
 const allArticles = (await getCollection('articles'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -70,6 +81,7 @@ const templates = (await getCollection('templates'))
 					{(featured.data.cardImage || featured.data.image) && (
 						<div class="hero-featured-thumb">
 							<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" />
+							<ThumbTags tags={featured.data.tags} tagMap={TAG_MAP} />
 						</div>
 					)}
 					<span class="hero-featured-label">Featured Article</span>
@@ -97,6 +109,7 @@ const templates = (await getCollection('templates'))
 								{(article.data.cardImage || article.data.image) && (
 									<div class="home-row-thumb">
 										<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+										<ThumbTags tags={article.data.tags} tagMap={TAG_MAP} />
 									</div>
 								)}
 								<div class="home-row-text">
@@ -119,6 +132,7 @@ const templates = (await getCollection('templates'))
 								{(article.data.cardImage || article.data.image) && (
 									<div class="home-row-thumb">
 										<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+										<ThumbTags tags={article.data.tags} tagMap={TAG_MAP} />
 									</div>
 								)}
 								<div class="home-row-text">
@@ -231,6 +245,7 @@ const templates = (await getCollection('templates'))
 		text-decoration: none;
 	}
 	.hero-featured-thumb {
+		position: relative;
 		border-radius: var(--radius-md);
 		overflow: hidden;
 		margin-bottom: var(--space-md);
@@ -321,6 +336,7 @@ const templates = (await getCollection('templates'))
 		opacity: 0.7;
 	}
 	.home-row-thumb {
+		position: relative;
 		width: 100%;
 		aspect-ratio: 3 / 2;
 		border-radius: var(--radius-md);

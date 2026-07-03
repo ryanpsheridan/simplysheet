@@ -6,7 +6,18 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ProductPromo from '../components/ProductPromo.astro';
+import ThumbTags from '../components/ThumbTags.astro';
 import { SITE_TITLE } from '../consts';
+
+const TAG_MAP: Record<string, string> = {
+	'expense-tracking': 'Expense Tracking',
+	'couples-budgeting': 'Couples Budgeting',
+	'debt-payoff': 'Debt Payoff',
+	'savings-goals': 'Savings Goals',
+	'irregular-income': 'Irregular Income',
+	'net-worth': 'Net Worth',
+	'budgeting-styles': 'Budgeting Styles',
+};
 
 interface Heading {
 	depth: number;
@@ -154,6 +165,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 					{heroImage && (
 						<div class="article-hero-img">
 							<img src={heroImage} alt={title} />
+							<ThumbTags tags={tags} tagMap={TAG_MAP} />
 						</div>
 					)}
 
@@ -348,6 +360,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 	/* ——— Article hero image ——— */
 
 	.article-hero-img {
+		position: relative;
 		margin-bottom: var(--space-lg);
 		border-radius: var(--radius-md);
 		overflow: hidden;

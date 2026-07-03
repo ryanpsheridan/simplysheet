@@ -1,0 +1,48 @@
+---
+interface Props {
+	tags?: string[];
+	tagMap: Record<string, string>;
+}
+
+const { tags = [], tagMap } = Astro.props;
+const visible = tags.slice(0, 2);
+---
+
+{visible.length > 0 && (
+	<div class="thumb-tags">
+		{visible.map((slug) => (
+			<span class="thumb-tag">{tagMap[slug] ?? slug}</span>
+		))}
+	</div>
+)}
+
+<style>
+	.thumb-tags {
+		position: absolute;
+		left: var(--space-xs, 8px);
+		right: var(--space-xs, 8px);
+		bottom: var(--space-xs, 8px);
+		display: flex;
+		gap: 6px;
+		z-index: 1;
+	}
+
+	.thumb-tag {
+		background: #FFFFFF;
+		color: #1A1A1A;
+		font-size: 11px;
+		font-weight: 600;
+		line-height: 1;
+		padding: 6px 10px;
+		border-radius: 999px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		min-width: 0;
+		flex-shrink: 1;
+	}
+
+	.thumb-tag:first-child {
+		flex-shrink: 0;
+	}
+</style>
