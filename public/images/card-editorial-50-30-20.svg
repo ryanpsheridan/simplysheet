@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <!-- Editorial system · Composition: balanced columns · Palette: slate/blue/mist (budgeting) -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EAEEF4"/>
+      <stop offset="100%" stop-color="#D9E1EA"/>
+    </linearGradient>
+    <radialGradient id="light" cx="22%" cy="10%" r="80%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#2B3D52" flood-opacity="0.12"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0"/>
+    </filter>
+  </defs>
+
+  <!-- Layer 1 · atmosphere -->
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <rect width="960" height="540" fill="url(#light)"/>
+
+  <!-- Layer 2+3 · balanced columns at 50/30/20 proportion -->
+  <g filter="url(#shadow)">
+    <rect x="240" y="120" width="132" height="300" rx="30" fill="#5C7392"/>
+    <rect x="416" y="240" width="132" height="180" rx="30" fill="#93A9C2"/>
+    <rect x="592" y="300" width="132" height="120" rx="30" fill="#C6D2DF"/>
+  </g>
+
+  <!-- secondary supporting element -->
+  <circle cx="792" cy="132" r="72" fill="none" stroke="#5C7392" stroke-width="1.5" opacity="0.16"/>
+
+  <rect width="960" height="540" filter="url(#grain)"/>
+</svg>

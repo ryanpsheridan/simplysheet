@@ -36,6 +36,16 @@ const listArticles = allArticles.map((a) => {
 
 const GRADIENT_ANGLES = ['135deg', '135deg', '135deg', '135deg', '135deg', '135deg'];
 
+// Editorial thumbnail system test — see docs/thumbnail-system.md for the full rule stack
+const editorialThumbs = [
+	{ title: '50/30/20 Budget Rule',            composition: 'Balanced columns',   palette: 'Slate / Mist',       v1: '/images/featured-50-30-20.svg',            v2: '/images/card-editorial-50-30-20.svg' },
+	{ title: 'Emergency Fund Sizing',           composition: 'Concentric rings',   palette: 'Forest / Sage',      v1: '/images/card-emergency-fund-sizing.svg',   v2: '/images/card-editorial-emergency-fund-sizing.svg' },
+	{ title: 'How to Pay Off Debt',             composition: 'Descending blocks',  palette: 'Terracotta / Coral', v1: '/images/card-how-to-pay-off-debt.svg',     v2: '/images/card-editorial-how-to-pay-off-debt.svg' },
+	{ title: 'Budgeting with Irregular Income', composition: 'Varying rhythm',     palette: 'Stone / Sky',        v1: '/images/card-irregular-income.svg',        v2: '/images/card-editorial-budgeting-with-irregular-income.svg' },
+	{ title: 'Sinking Funds Explained',         composition: 'Grouped capsules',   palette: 'Emerald / Mint',     v1: '/images/card-sinking-funds-explained.svg', v2: '/images/card-editorial-sinking-funds-explained.svg' },
+	{ title: 'Where Is My Money Going?',        composition: 'Segmented bar',      palette: 'Indigo / Violet',    v1: '/images/card-where-is-money-going.svg',    v2: '/images/card-editorial-where-is-money-going.svg' },
+];
+
 const ARTICLE_COLORS: Record<string, { bg: string; accent: string; accent2?: string }> = {
 	'50-30-20-budget-rule':           { bg: '#E3F2FD', accent: '#196EDD', accent2: '#90CAF9' },
 	'awareness-vs-automation':        { bg: '#E0F2F1', accent: '#00897B', accent2: '#80CBC4' },
@@ -297,130 +307,37 @@ const spacingScale = [
 			</div>
 		</section>
 
-		<!-- ============ THUMBNAIL V2: EDITORIAL ============ -->
+		<!-- ============ THUMBNAIL V2: EDITORIAL SYSTEM ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Thumbnail Style Comparison</h2>
-			<p class="section-desc">Current UI-based thumbnails (v1) vs. abstract editorial style (v2). No white cards, no fake UI — just geometric shapes, gradients, and visual metaphors.</p>
+			<p class="section-desc">Current UI-based thumbnails (v1) vs. the editorial thumbnail system (v2). Three layers per image: atmospheric background, one geometric composition, one subtle financial motif. No fake UI, no text, muted palettes. Full rule stack in <code>docs/thumbnail-system.md</code>.</p>
 
-			<h3 class="thumb-compare-label">50/30/20 Budget Rule</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/featured-50-30-20.svg" alt="Current 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-50-30-20.svg" alt="Editorial 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
-				</div>
+			<h3 class="thumb-compare-label">System view — all v2 thumbnails together</h3>
+			<p class="section-desc">The test that matters: viewed side by side, they should read as one design system — cohesive through color, spacing, and proportion, without repeating a composition.</p>
+			<div class="thumb-system-grid">
+				{editorialThumbs.map((t) => (
+					<figure class="thumb-system-item">
+						<img src={t.v2} alt={`Editorial thumbnail — ${t.title}`} width="960" height="540" loading="lazy" />
+						<figcaption>{t.composition} &middot; {t.palette}</figcaption>
+					</figure>
+				))}
 			</div>
 
-			<h3 class="thumb-compare-label">Emergency Fund Sizing</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-emergency-fund-sizing.svg" alt="Current emergency fund thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-emergency-fund.svg" alt="Editorial emergency fund thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-			</div>
-
-			<h3 class="thumb-compare-label">Debt Snowball vs. Avalanche</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-debt-snowball-vs-avalanche.svg" alt="Current debt snowball thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-debt-snowball.svg" alt="Editorial debt snowball thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-			</div>
-
-			<h3 class="thumb-compare-label">Where Is My Money Going?</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-where-is-money-going.svg" alt="Current where is my money going thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-where-is-money-going.svg" alt="Editorial where is my money going thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-			</div>
-
-			<h3 class="thumb-compare-label">Why Most Budgets Fail</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-why-most-budgets-fail.svg" alt="Current why most budgets fail thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-why-most-budgets-fail.svg" alt="Editorial why most budgets fail thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-			</div>
-
-			<h3 class="thumb-compare-label">Budgeting with Irregular Income</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-budgeting-with-irregular-income.svg" alt="Current irregular income thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-budgeting-with-irregular-income.svg" alt="Editorial irregular income thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-			</div>
-
-			<h3 class="thumb-compare-label">Awareness vs. Automation</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-awareness-vs-automation.svg" alt="Current awareness vs automation thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-awareness-vs-automation.svg" alt="Editorial awareness vs automation thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-			</div>
-
-			<h3 class="thumb-compare-label">Budgeting Styles</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-budgeting-styles.svg" alt="Current budgeting styles thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-budgeting-styles.svg" alt="Editorial budgeting styles thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-			</div>
-
-			<h3 class="thumb-compare-label">Couples Budgeting</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-couples-budgeting.svg" alt="Current couples budgeting thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-couples-budgeting.svg" alt="Editorial couples budgeting thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-			</div>
-
-			<h3 class="thumb-compare-label">How to Pay Off Debt</h3>
-			<div class="thumb-compare-row">
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-how-to-pay-off-debt.svg" alt="Current how to pay off debt thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
-					<img src="/images/card-v2-how-to-pay-off-debt.svg" alt="Editorial how to pay off debt thumbnail" width="960" height="540" loading="lazy" />
-				</div>
-			</div>
+			{editorialThumbs.map((t) => (
+				<>
+					<h3 class="thumb-compare-label">{t.title}</h3>
+					<div class="thumb-compare-row">
+						<div class="thumb-compare-item">
+							<span class="thumb-compare-tag">v1 — UI</span>
+							<img src={t.v1} alt={`Current ${t.title} thumbnail`} width="960" height="540" loading="lazy" />
+						</div>
+						<div class="thumb-compare-item">
+							<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Editorial</span>
+							<img src={t.v2} alt={`Editorial ${t.title} thumbnail`} width="960" height="540" loading="lazy" />
+						</div>
+					</div>
+				</>
+			))}
 		</section>
 
 		<!-- ============ CARDS: PRODUCT / TEMPLATE ============ -->
@@ -1332,6 +1249,30 @@ const spacingScale = [
 		}
 	}
 	/* ——— Thumbnail Comparison ——— */
+	.thumb-system-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-sm);
+		margin-bottom: var(--space-lg);
+	}
+	@media (max-width: 768px) {
+		.thumb-system-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+	.thumb-system-item {
+		margin: 0;
+	}
+	.thumb-system-item img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border);
+	}
+	.thumb-system-item figcaption {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		margin-top: var(--space-2xs);
+	}
 	.thumb-compare-label {
 		font-size: var(--text-body);
 		font-weight: var(--weight-semibold);

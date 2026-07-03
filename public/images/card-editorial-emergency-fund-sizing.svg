@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <!-- Editorial system · Composition: concentric rings, centered core · Palette: forest/green/sage (emergency fund) -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E9EFE7"/>
+      <stop offset="100%" stop-color="#D9E3D6"/>
+    </linearGradient>
+    <radialGradient id="light" cx="22%" cy="10%" r="80%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#2E4230" flood-opacity="0.14"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0"/>
+    </filter>
+  </defs>
+
+  <!-- Layer 1 · atmosphere -->
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <rect width="960" height="540" fill="url(#light)"/>
+
+  <!-- Layer 2+3 · protective rings around a centered core -->
+  <g>
+    <circle cx="424" cy="276" r="200" fill="none" stroke="#6D8A6B" stroke-width="2" opacity="0.14"/>
+    <circle cx="424" cy="276" r="146" fill="none" stroke="#6D8A6B" stroke-width="2" opacity="0.24"/>
+    <circle cx="424" cy="276" r="96" fill="none" stroke="#6D8A6B" stroke-width="2.5" opacity="0.38"/>
+    <circle cx="424" cy="276" r="56" fill="#5F7D5D" filter="url(#shadow)"/>
+    <circle cx="424" cy="276" r="15" fill="#F4F7F3"/>
+  </g>
+
+  <!-- secondary supporting element -->
+  <rect x="742" y="118" width="104" height="30" rx="15" fill="#6D8A6B" opacity="0.14"/>
+
+  <rect width="960" height="540" filter="url(#grain)"/>
+</svg>
