@@ -146,7 +146,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   :global(.sfc-opt) {
     font-family: var(--font-sans);
     font-size: 1.0625rem;
-    font-weight: var(--weight-medium);
+    font-weight: var(--weight-normal);
     color: var(--color-text-secondary);
     background: var(--color-bg-surface);
     border: 1.5px solid var(--color-border);
@@ -198,7 +198,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-rec-eyebrow {
     font-size: var(--text-small);
-    font-weight: var(--weight-semibold);
+    font-weight: var(--weight-normal);
     text-transform: uppercase;
     letter-spacing: var(--tracking-wide);
     color: var(--color-text-muted);
@@ -225,7 +225,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     margin: 0;
   }
   :global(.sfc-rec-links a) {
-    font-weight: var(--weight-medium);
+    font-weight: var(--weight-normal);
   }
 
   /* ——— Divider ——— */
@@ -252,7 +252,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   .sfc-label {
     display: block;
     font-size: var(--text-small);
-    font-weight: var(--weight-medium);
+    font-weight: var(--weight-normal);
     color: var(--color-text);
     margin-bottom: var(--space-xs);
   }
@@ -336,21 +336,21 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-stat-label {
     font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
+    font-weight: var(--weight-normal);
     color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: var(--tracking-wide);
   }
   .sfc-stat-value {
     font-size: var(--text-h3);
-    font-weight: var(--weight-semibold);
+    font-weight: var(--weight-normal);
     letter-spacing: var(--tracking-tight);
     color: var(--color-text);
     white-space: nowrap;
   }
   .sfc-stat--hero .sfc-stat-label {
     font-size: var(--text-body);
-    font-weight: var(--weight-semibold);
+    font-weight: var(--weight-normal);
     color: var(--color-text);
     text-transform: none;
     letter-spacing: normal;
@@ -535,32 +535,32 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   var RECS = {
     great: {
       icon: '✓',
-      iconBg: 'var(--color-bg-panel)',
-      iconColor: 'var(--color-text-heading)',
+      iconBg: '#E8F5E9',
+      iconColor: '#2D9D78',
       title: 'Great candidate for a sinking fund',
       body: 'This is a predictable expense that doesn\'t happen every month and would be easier to handle by saving gradually. A sinking fund is exactly the right tool for this.',
       links: ''
     },
     maybe: {
       icon: '~',
-      iconBg: 'var(--color-bg-panel)',
-      iconColor: 'var(--color-text-heading)',
+      iconBg: '#FFF8E1',
+      iconColor: '#F9A825',
       title: 'Could work as a sinking fund',
       body: 'This expense has some of the hallmarks of a sinking fund candidate. Depending on your situation, you might handle it through your regular monthly budget or by setting aside a dedicated amount each month.',
       links: ''
     },
     emergency: {
       icon: '!',
-      iconBg: 'var(--color-bg-panel)',
-      iconColor: 'var(--color-text-heading)',
+      iconBg: '#FEF2F2',
+      iconColor: '#DC2626',
       title: 'This sounds more like an emergency fund expense',
       body: 'Sinking funds work best for expenses you can anticipate. This one sounds like it came up unexpectedly — which is exactly what an emergency fund is designed for.',
       links: 'Learn more about how much to keep in an <a href="/articles/emergency-fund-sizing/">emergency fund</a>.'
     },
     monthly: {
       icon: '↻',
-      iconBg: 'var(--color-bg-panel)',
-      iconColor: 'var(--color-text-heading)',
+      iconBg: '#EEF4FF',
+      iconColor: '#196EDD',
       title: 'This sounds like a regular monthly expense',
       body: 'Sinking funds work best for occasional, non-monthly costs. If this expense happens every month, it belongs in your regular monthly budget rather than a sinking fund.',
       links: 'Need help building a budget that sticks? See <a href="/articles/why-most-budgets-fail/">why most budgets fail</a> and what tends to work instead.'

@@ -11,7 +11,7 @@ type Props = CollectionEntry<'templates'>['data'] & {
 	id?: string;
 };
 
-const { title, description, badge, platforms, darkListing, lightListing, heroImage, lightImage, midImage, midImageLight, features, relatedArticles, bundles, faq, reviews, id, price, sku } = Astro.props;
+const { title, description, badge, platforms, darkListing, lightListing, heroImage, lightImage, features, relatedArticles, bundles, faq, reviews, id, price, sku } = Astro.props;
 
 const allArticles = await getCollection('articles');
 const linkedArticles = relatedArticles
@@ -215,12 +215,6 @@ function featureIcon(text: string): string {
 				</section>
 			)}
 
-			{midImage && (
-				<section class="product-mid-image">
-					<img src={midImage} alt={`${title} preview`} width="960" height="540" id={`mid-img-${templateId}`} loading="lazy" />
-				</section>
-			)}
-
 			<section class="product-howto">
 				<div class="product-body prose">
 					<slot />
@@ -308,37 +302,41 @@ function featureIcon(text: string): string {
 				</section>
 			)}
 
-			{linkedArticles.length > 0 && (
-				<section class="product-articles">
-					<h2>Related articles</h2>
-					<ul class="product-articles-list">
-						{linkedArticles.map((a: any) => (
-							<li>
-								<a href={`/articles/${a.id}/`}>{a.data.title}</a>
-							</li>
-						))}
-					</ul>
-				</section>
-			)}
+			{(linkedArticles.length > 0 || (faq && faq.length > 0)) && (
+				<section class="product-extras">
+					{linkedArticles.length > 0 && (
+						<div class="product-articles">
+							<h2>Related articles</h2>
+							<ul class="product-articles-list">
+								{linkedArticles.map((a: any) => (
+									<li>
+										<a href={`/articles/${a.id}/`}>{a.data.title}</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
 
-			{faq && faq.length > 0 && (
-				<section class="faq">
-					<h2 class="faq-heading">Frequently asked questions</h2>
-					<div class="faq-list">
-						{faq.map(({ question, answer }: { question: string; answer: string }) => (
-							<details class="faq-item">
-								<summary class="faq-q">
-									<span>{question}</span>
-									<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-										<polyline points="6 9 12 15 18 9" />
-									</svg>
-								</summary>
-								<div class="faq-a-wrap">
-									<p class="faq-a">{answer}</p>
-								</div>
-							</details>
-						))}
-					</div>
+					{faq && faq.length > 0 && (
+						<div class="faq">
+							<h2 class="faq-heading">Frequently asked questions</h2>
+							<div class="faq-list">
+								{faq.map(({ question, answer }: { question: string; answer: string }) => (
+									<details class="faq-item">
+										<summary class="faq-q">
+											<span>{question}</span>
+											<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+												<polyline points="6 9 12 15 18 9" />
+											</svg>
+										</summary>
+										<div class="faq-a-wrap">
+											<p class="faq-a">{answer}</p>
+										</div>
+									</details>
+								))}
+							</div>
+						</div>
+					)}
 				</section>
 			)}
 
@@ -362,11 +360,10 @@ function featureIcon(text: string): string {
 		</main>
 		<Footer />
 
-		<script is:inline define:vars={{ templateId, darkListing, lightListing, heroImage, lightImage, midImage, midImageLight }}>
+		<script is:inline define:vars={{ templateId, darkListing, lightListing, heroImage, lightImage }}>
 			const toggle = document.getElementById(`theme-toggle-${templateId}`);
 			const cta = document.getElementById(`cta-${templateId}`);
 			const heroImg = document.getElementById(`hero-img-${templateId}`);
-			const midImg = document.getElementById(`mid-img-${templateId}`);
 
 			if (toggle && cta) {
 				toggle.addEventListener('click', (e) => {
@@ -381,10 +378,6 @@ function featureIcon(text: string): string {
 
 					if (heroImg && lightImage) {
 						heroImg.src = theme === 'light' ? lightImage : heroImage;
-					}
-
-					if (midImg && midImageLight) {
-						midImg.src = theme === 'light' ? midImageLight : midImage;
 					}
 
 					document.querySelectorAll('.bundle-card').forEach((card) => {
@@ -536,7 +529,7 @@ function featureIcon(text: string): string {
 	.product-badge {
 		display: inline-block;
 		font-size: var(--text-xs);
-		font-weight: var(--weight-semibold);
+		font-weight: var(--weight-normal);
 		color: var(--color-text);
 		background: var(--color-surface-tint);
 		border: 1px solid var(--color-divider);
@@ -573,7 +566,7 @@ function featureIcon(text: string): string {
 	.theme-btn {
 		font-family: var(--font-sans);
 		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
+		font-weight: var(--weight-normal);
 		color: var(--color-text-muted);
 		background: none;
 		border: none;
@@ -658,29 +651,6 @@ function featureIcon(text: string): string {
 		margin-top: 0.1875rem;
 	}
 
-	/* ——— Mid-page product image ——— */
-
-	.product-mid-image {
-		display: flex;
-		justify-content: center;
-		background: var(--color-bg-panel);
-		border-radius: var(--radius-md);
-		padding: var(--space-md);
-		margin-bottom: var(--space-2xl);
-	}
-
-	.product-mid-image img {
-		display: block;
-		width: 90%;
-		height: auto;
-	}
-
-	@media (max-width: 600px) {
-		.product-mid-image img {
-			width: 95%;
-		}
-	}
-
 	/* ——— How it works (sticky visual) ——— */
 
 	.product-howto {
@@ -756,21 +726,24 @@ function featureIcon(text: string): string {
 
 	.bundle-link {
 		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
+		font-weight: var(--weight-normal);
 		color: var(--color-link);
 	}
 
-	/* ——— Related articles ——— */
+	/* ——— Related articles + FAQ panel ——— */
 
-	.product-articles {
+	.product-extras {
 		max-width: var(--max-width-narrow);
-		margin: 0 auto var(--space-2xl);
+		margin: var(--space-2xl) auto;
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
+		padding: var(--space-xl) var(--space-lg);
+	}
+
+	.product-articles + .faq {
+		margin-top: var(--space-lg);
 		padding-top: var(--space-lg);
 		border-top: 1px solid var(--color-border);
-	}
-	.product-reviews.is-multi + .product-articles {
-		border-top: none;
-		padding-top: 0;
 	}
 
 	.product-articles h2 {
@@ -808,13 +781,6 @@ function featureIcon(text: string): string {
 
 	/* ——— FAQ (matches article layout) ——— */
 
-	.faq {
-		max-width: var(--max-width-narrow);
-		margin: 0 auto var(--space-2xl);
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
-	}
-
 	.faq-heading {
 		font-size: var(--text-h2);
 		margin-bottom: var(--space-md);
@@ -841,7 +807,7 @@ function featureIcon(text: string): string {
 		width: 100%;
 		padding: var(--space-md) 0;
 		font-size: var(--text-body);
-		font-weight: var(--weight-semibold);
+		font-weight: var(--weight-normal);
 		color: var(--color-text);
 		cursor: pointer;
 		list-style: none;
@@ -888,8 +854,8 @@ function featureIcon(text: string): string {
 		display: grid;
 		grid-template-columns: 2fr 1fr;
 		gap: var(--space-2xl);
-		padding-top: var(--space-lg);
-		padding-bottom: var(--space-lg);
+		padding-top: var(--space-xl);
+		padding-bottom: var(--space-xl);
 		border-top: 1px solid var(--color-border);
 		align-items: start;
 	}
@@ -960,7 +926,7 @@ function featureIcon(text: string): string {
 	.reviews-eyebrow {
 		display: block;
 		font-size: var(--text-xs);
-		font-weight: var(--weight-semibold);
+		font-weight: var(--weight-normal);
 		color: var(--color-text-muted);
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-wide);
@@ -1098,7 +1064,7 @@ function featureIcon(text: string): string {
 		display: inline-block;
 		align-self: flex-start;
 		font-size: var(--text-xs);
-		font-weight: var(--weight-semibold);
+		font-weight: var(--weight-normal);
 		color: var(--color-text);
 		background: var(--color-surface-tint);
 		border: 1px solid var(--color-divider);
@@ -1146,9 +1112,6 @@ function featureIcon(text: string): string {
 			grid-template-columns: 1fr;
 		}
 		.product-howto-visual {
-			display: none;
-		}
-		.product-mid-image {
 			display: none;
 		}
 	}
