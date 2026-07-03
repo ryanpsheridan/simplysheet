@@ -337,7 +337,7 @@ const templates = (await getCollection('templates'))
 		min-width: 0;
 	}
 	.home-row-title {
-		font-size: var(--text-small);
+		font-size: var(--text-body);
 		font-weight: var(--weight-medium);
 		line-height: 1.35;
 		margin: 0 0 var(--space-2xs);
@@ -570,6 +570,9 @@ const templates = (await getCollection('templates'))
 		}
 		.tools-row-items {
 			grid-template-columns: repeat(2, 1fr);
+		}
+		.home-row-item:not(.tool-item) .home-row-title {
+			font-size: 1.25rem;
 		}
 		.templates-grid {
 			grid-template-columns: 1fr;
