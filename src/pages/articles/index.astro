@@ -63,70 +63,56 @@ const templates = [
 		<Breadcrumbs crumbs={[{ label: 'Articles' }]} />
 		<div class="articles-header">
 			<h1>Articles</h1>
-			<button class="filter-toggle" id="filter-toggle" aria-label="Filter and sort articles">
-				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="9" y1="18" x2="15" y2="18"/></svg>
-				Filter &amp; Sort
-			</button>
 		</div>
 
-		<div class="articles-layout">
-			<div class="articles-main">
-				<div class="article-list" id="article-list">
-					{articles.map((article) => (
-						<a href={`/articles/${article.id}/`} class="article-list-item" data-tags={JSON.stringify(article.data.tags ?? [])} data-date={article.data.pubDate.valueOf().toString()} data-title={article.data.title} data-desc={article.data.description}>
-							<div class="article-list-text">
-								<div class="article-list-meta">
-									{(article.data.tags ?? []).map((slug: string) => (
-										<span class="article-list-tag">{TAG_MAP[slug] ?? slug}</span>
-									))}
-								</div>
-								<h2 class="article-list-title">{article.data.title}</h2>
-								<p class="article-list-desc">{article.data.description}</p>
-								<span class="article-list-read">{article.readTime} min read</span>
-							</div>
-							{(article.data.cardImage || article.data.image) && (
-								<div class="article-list-thumb">
-									<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-									<ThumbTags tags={article.data.tags} tagMap={TAG_MAP} />
-								</div>
-							)}
-						</a>
-					))}
+		<div class="articles-filters">
+			<div class="filter-tabs" id="filter-tabs" role="group" aria-label="Filter articles by topic">
+				<button class="filter-tab active" data-tag="all">All articles</button>
+				{visibleTags.map((tag) => (
+					<button class="filter-tab" data-tag={tag.slug}>{tag.label}</button>
+				))}
+			</div>
+			<div class="filter-controls">
+				<div class="filter-select-wrap">
+					<select id="sort-select" class="filter-select" aria-label="Sort articles">
+						<option value="newest">Newest first</option>
+						<option value="oldest">Oldest first</option>
+						<option value="title">Title A–Z</option>
+					</select>
+					<svg class="filter-select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
 				</div>
+				<div class="filter-search">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+					<input type="search" id="search-input" class="search-input" placeholder="Search articles" aria-label="Search articles" />
+				</div>
+			</div>
+		</div>
 
-				<p class="no-results" hidden>No articles match this filter.</p>
+		<div class="articles-main">
+			<div class="article-list" id="article-list">
+				{articles.map((article) => (
+					<a href={`/articles/${article.id}/`} class="article-list-item" data-tags={JSON.stringify(article.data.tags ?? [])} data-date={article.data.pubDate.valueOf().toString()} data-title={article.data.title} data-desc={article.data.description}>
+						<div class="article-list-text">
+							<div class="article-list-meta">
+								{(article.data.tags ?? []).map((slug: string) => (
+									<span class="article-list-tag">{TAG_MAP[slug] ?? slug}</span>
+								))}
+							</div>
+							<h2 class="article-list-title">{article.data.title}</h2>
+							<p class="article-list-desc">{article.data.description}</p>
+							<span class="article-list-read">{article.readTime} min read</span>
+						</div>
+						{(article.data.cardImage || article.data.image) && (
+							<div class="article-list-thumb">
+								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+								<ThumbTags tags={article.data.tags} tagMap={TAG_MAP} />
+							</div>
+						)}
+					</a>
+				))}
 			</div>
 
-			<aside class="articles-sidebar">
-				<div class="sidebar-search">
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-					<input type="search" id="sidebar-search-input" class="search-input" placeholder="Search articles" aria-label="Search articles" />
-				</div>
-				<details class="sidebar-section" open>
-					<summary class="sidebar-label">
-						Topic
-						<svg class="sidebar-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
-					</summary>
-					<div class="sidebar-tag-filters" role="group" aria-label="Filter articles by topic">
-						<button class="sidebar-pill active" data-tag="all">All</button>
-						{visibleTags.map((tag) => (
-							<button class="sidebar-pill" data-tag={tag.slug}>{tag.label}</button>
-						))}
-					</div>
-				</details>
-				<details class="sidebar-section">
-					<summary class="sidebar-label">
-						Sort by
-						<svg class="sidebar-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
-					</summary>
-					<div class="sidebar-sort-options" role="group" aria-label="Sort articles">
-						<button class="sidebar-pill active" data-sort="newest">Newest first</button>
-						<button class="sidebar-pill" data-sort="oldest">Oldest first</button>
-						<button class="sidebar-pill" data-sort="title">Title A–Z</button>
-					</div>
-				</details>
-				<button class="sidebar-reset" id="sidebar-reset">Reset all</button>
-			</aside>
+			<p class="no-results" hidden>No articles match this filter.</p>
 		</div>
 
 		<section class="resources">
@@ -148,48 +134,6 @@ const templates = [
 			</div>
 		</section>
 	</main>
-
-	<div class="filter-overlay" id="filter-overlay">
-		<div class="filter-panel">
-			<div class="filter-panel-header">
-				<h2 class="filter-panel-title">Filter &amp; Sort</h2>
-				<button class="filter-close" id="filter-close" aria-label="Close filters">
-					<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-						<line x1="6" y1="6" x2="18" y2="18" />
-						<line x1="6" y1="18" x2="18" y2="6" />
-					</svg>
-				</button>
-			</div>
-
-			<div class="sidebar-search">
-				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-				<input type="search" id="drawer-search-input" class="search-input" placeholder="Search articles" aria-label="Search articles" />
-			</div>
-
-			<div class="filter-section">
-				<h3 class="filter-label">Topic</h3>
-				<div class="tag-filters" role="group" aria-label="Filter articles by topic">
-					<button class="tag-pill active" data-tag="all">All</button>
-					{visibleTags.map((tag) => (
-						<button class="tag-pill" data-tag={tag.slug}>{tag.label}</button>
-					))}
-				</div>
-			</div>
-
-			<div class="filter-section">
-				<h3 class="filter-label">Sort by</h3>
-				<div class="sort-options" role="group" aria-label="Sort articles">
-					<button class="tag-pill active" data-sort="newest">Newest first</button>
-					<button class="tag-pill" data-sort="oldest">Oldest first</button>
-					<button class="tag-pill" data-sort="title">Title A–Z</button>
-				</div>
-			</div>
-
-			<div class="filter-actions">
-				<button class="filter-reset" id="filter-reset">Reset all</button>
-			</div>
-		</div>
-	</div>
 </BaseLayout>
 
 <style>
@@ -210,39 +154,98 @@ const templates = [
 		margin-bottom: 0;
 	}
 
-	/* ——— Layout grid ——— */
+	/* ——— Main content ——— */
 
-	.articles-layout {
-		display: grid;
-		grid-template-columns: 2fr 1fr;
-		gap: var(--space-xl);
-		align-items: start;
-	}
 	.articles-main {
 		min-width: 0;
 	}
 
-	/* ——— Sidebar filters ——— */
+	/* ——— Filter bar (tabs + dropdowns) ——— */
 
-	.articles-sidebar {
-		position: sticky;
-		top: 96px;
+	.articles-filters {
+		margin-bottom: var(--space-lg);
 	}
-	.sidebar-search {
+	.filter-tabs {
+		display: flex;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		gap: var(--space-xs);
+		margin-bottom: var(--space-sm);
+		scrollbar-width: none;
+	}
+	.filter-tabs::-webkit-scrollbar {
+		display: none;
+	}
+	.filter-tab {
+		flex-shrink: 0;
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		background: var(--color-bg-panel);
+		border: 1px solid transparent;
+		border-radius: var(--radius-full);
+		padding: 0.5rem 1rem;
+		cursor: pointer;
+		transition: color 0.15s, border-color 0.15s, background 0.15s;
+	}
+	.filter-tab:hover {
+		color: var(--color-text);
+	}
+	.filter-tab.active {
+		color: var(--color-bg);
+		background: var(--color-bg-inverse);
+	}
+	.filter-controls {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+	}
+	.filter-select-wrap {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+	.filter-select {
+		appearance: none;
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		color: var(--color-text);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-sm);
+		padding: 0.5rem 2rem 0.5rem 0.875rem;
+		cursor: pointer;
+		transition: border-color 0.15s;
+	}
+	.filter-select:hover,
+	.filter-select:focus-visible {
+		border-color: var(--color-text-muted);
+		outline: none;
+	}
+	.filter-select-chevron {
+		position: absolute;
+		right: 0.75rem;
+		pointer-events: none;
+		color: var(--color-text-muted);
+	}
+	.filter-search {
 		display: flex;
 		align-items: center;
 		gap: var(--space-xs);
 		border: 1px solid var(--color-divider);
-		border-radius: var(--radius-full);
+		border-radius: var(--radius-sm);
 		padding: 0.5rem 0.875rem;
-		margin-bottom: var(--space-lg);
 		color: var(--color-text-muted);
 		transition: border-color 0.15s;
+		flex: 1;
+		min-width: 12rem;
+		max-width: 20rem;
 	}
-	.sidebar-search:focus-within {
+	.filter-search:focus-within {
 		border-color: var(--color-text-muted);
 	}
-	.sidebar-search svg {
+	.filter-search svg {
 		flex-shrink: 0;
 	}
 	.search-input {
@@ -257,228 +260,6 @@ const templates = [
 	}
 	.search-input::placeholder {
 		color: var(--color-text-muted);
-	}
-	.sidebar-section {
-		margin-bottom: var(--space-lg);
-		border-bottom: 1px solid var(--color-border);
-		padding-bottom: var(--space-sm);
-	}
-	.sidebar-label {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-semibold);
-		color: var(--color-text-muted);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wide);
-		margin: 0 0 var(--space-sm) 0;
-		cursor: pointer;
-		list-style: none;
-		transition: color 0.15s;
-	}
-	.sidebar-label::-webkit-details-marker {
-		display: none;
-	}
-	.sidebar-label:hover {
-		color: var(--color-text);
-	}
-	.sidebar-chevron {
-		flex-shrink: 0;
-		transition: transform 0.2s ease;
-	}
-	.sidebar-section[open] .sidebar-label .sidebar-chevron {
-		transform: rotate(180deg);
-	}
-	.sidebar-section[open] .sidebar-label {
-		margin-bottom: var(--space-sm);
-	}
-	.sidebar-tag-filters,
-	.sidebar-sort-options {
-		display: flex;
-		flex-direction: column;
-		gap: 0.125rem;
-		margin-top: var(--space-sm);
-	}
-	.sidebar-pill {
-		display: flex;
-		align-items: center;
-		font-family: var(--font-sans);
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text-secondary);
-		background: none;
-		border: none;
-		border-radius: var(--radius-sm);
-		padding: var(--space-xs) var(--space-sm);
-		cursor: pointer;
-		text-align: left;
-		transition: color 0.15s, background 0.15s;
-	}
-	.sidebar-pill:hover {
-		color: var(--color-text);
-		background: var(--color-bg-panel);
-	}
-	.sidebar-pill.active {
-		color: var(--color-text);
-		font-weight: var(--weight-semibold);
-		background: var(--color-bg-panel);
-	}
-	.sidebar-reset {
-		font-family: var(--font-sans);
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		color: var(--color-link);
-		background: none;
-		border: none;
-		cursor: pointer;
-		padding: 0;
-		transition: color 0.15s;
-	}
-	.sidebar-reset:hover {
-		color: var(--color-link-hover);
-	}
-
-	/* ——— Filter toggle (mobile only) ——— */
-
-	.filter-toggle {
-		display: none;
-		align-items: center;
-		gap: 0.375rem;
-		font-family: var(--font-sans);
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text-secondary);
-		background: none;
-		border: 1px solid var(--color-divider);
-		border-radius: var(--radius-full);
-		padding: 0.5rem 1rem;
-		cursor: pointer;
-		transition: color 0.15s, border-color 0.15s, background 0.15s;
-	}
-	.filter-toggle:hover {
-		color: var(--color-text);
-		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
-	}
-
-	/* ——— Filter drawer overlay ——— */
-
-	.filter-overlay {
-		position: fixed;
-		inset: 0;
-		background: rgba(0, 0, 0, 0.4);
-		z-index: 100;
-		opacity: 0;
-		visibility: hidden;
-		transition: opacity 0.25s ease, visibility 0.25s ease;
-	}
-	.filter-overlay.open {
-		opacity: 1;
-		visibility: visible;
-	}
-
-	.filter-panel {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		width: min(22rem, 85vw);
-		background: var(--color-bg);
-		transform: translateX(100%);
-		transition: transform 0.3s ease;
-		padding: var(--space-md) var(--space-md) var(--space-lg);
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-lg);
-		overflow-y: auto;
-	}
-	.filter-overlay.open .filter-panel {
-		transform: translateX(0);
-	}
-
-	.filter-panel-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	.filter-panel-title {
-		font-size: var(--text-h3);
-		margin: 0;
-	}
-	.filter-close {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: none;
-		border: none;
-		cursor: pointer;
-		color: var(--color-text);
-		padding: var(--space-xs);
-		margin-right: calc(-1 * var(--space-xs));
-	}
-
-	.filter-section {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
-	}
-	.filter-label {
-		font-size: var(--text-small);
-		color: var(--color-text);
-		margin: 0;
-	}
-
-	/* ——— Tag filter pills ——— */
-
-	.tag-filters,
-	.sort-options {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-xs);
-	}
-	.tag-pill {
-		font-family: var(--font-sans);
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text-secondary);
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-divider);
-		border-radius: var(--radius-full);
-		padding: 0.4375rem 0.875rem;
-		cursor: pointer;
-		transition: color 0.15s, border-color 0.15s, background 0.15s;
-	}
-	.tag-pill:hover {
-		color: var(--color-text);
-		border-color: var(--color-text-muted);
-	}
-	.tag-pill.active {
-		color: var(--color-bg);
-		background: var(--color-bg-inverse);
-		border-color: var(--color-bg-inverse);
-	}
-
-	/* ——— Filter actions ——— */
-
-	.filter-actions {
-		margin-top: auto;
-		padding-top: var(--space-md);
-		border-top: 1px solid var(--color-border);
-	}
-	.filter-reset {
-		font-family: var(--font-sans);
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-link);
-		background: none;
-		border: none;
-		cursor: pointer;
-		padding: 0;
-		transition: color 0.15s;
-	}
-	.filter-reset:hover {
-		color: var(--color-link-hover);
 	}
 
 	/* ——— Article list — single column ——— */
@@ -652,18 +433,6 @@ const templates = [
 		}
 	}
 
-	@media (max-width: 768px) {
-		.articles-layout {
-			grid-template-columns: 1fr;
-		}
-		.articles-sidebar {
-			display: none;
-		}
-		.filter-toggle {
-			display: inline-flex;
-		}
-	}
-
 	@media (max-width: 600px) {
 		.article-list-item {
 			flex-direction: column;
@@ -678,21 +447,18 @@ const templates = [
 		.resources-grid {
 			grid-template-columns: 1fr;
 		}
+		.filter-search {
+			min-width: 0;
+			max-width: none;
+			flex-basis: 100%;
+		}
 	}
 </style>
 
 <script>
-	const toggleBtn = document.getElementById('filter-toggle');
-	const overlay = document.getElementById('filter-overlay');
-	const closeBtn = document.getElementById('filter-close');
-	const resetBtn = document.getElementById('filter-reset');
-	const sidebarResetBtn = document.getElementById('sidebar-reset');
-
-	const drawerTagPills = document.querySelectorAll<HTMLButtonElement>('.tag-filters .tag-pill');
-	const drawerSortPills = document.querySelectorAll<HTMLButtonElement>('.sort-options .tag-pill');
-	const sidebarTagPills = document.querySelectorAll<HTMLButtonElement>('.sidebar-tag-filters .sidebar-pill');
-	const sidebarSortPills = document.querySelectorAll<HTMLButtonElement>('.sidebar-sort-options .sidebar-pill');
-	const searchInputs = document.querySelectorAll<HTMLInputElement>('.search-input');
+	const tagButtons = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+	const sortSelect = document.getElementById('sort-select') as HTMLSelectElement | null;
+	const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
 
 	const list = document.getElementById('article-list');
 	const items = Array.from(document.querySelectorAll<HTMLAnchorElement>('#article-list .article-list-item'));
@@ -702,71 +468,23 @@ const templates = [
 	let activeSort = 'newest';
 	let searchQuery = '';
 
-	function syncAllPills() {
-		drawerTagPills.forEach((p) => p.classList.toggle('active', p.dataset.tag === activeTag));
-		drawerSortPills.forEach((p) => p.classList.toggle('active', p.dataset.sort === activeSort));
-		sidebarTagPills.forEach((p) => p.classList.toggle('active', p.dataset.tag === activeTag));
-		sidebarSortPills.forEach((p) => p.classList.toggle('active', p.dataset.sort === activeSort));
-	}
-
-	function openDrawer() {
-		overlay?.classList.add('open');
-		document.body.style.overflow = 'hidden';
-	}
-
-	function closeDrawer() {
-		overlay?.classList.remove('open');
-		document.body.style.overflow = '';
-	}
-
-	toggleBtn?.addEventListener('click', openDrawer);
-	closeBtn?.addEventListener('click', closeDrawer);
-
-	overlay?.addEventListener('click', (e) => {
-		if (e.target === overlay) closeDrawer();
-	});
-
-	document.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape') closeDrawer();
-	});
-
 	function setTag(tag: string) {
 		activeTag = tag;
-		syncAllPills();
+		tagButtons.forEach((b) => b.classList.toggle('active', b.dataset.tag === tag));
 		applyFilterAndSort();
 	}
 
-	function setSort(sort: string) {
-		activeSort = sort;
-		syncAllPills();
+	tagButtons.forEach((b) => b.addEventListener('click', () => setTag(b.dataset.tag!)));
+
+	sortSelect?.addEventListener('change', () => {
+		activeSort = sortSelect.value;
 		applyFilterAndSort();
-	}
+	});
 
-	function setSearch(query: string) {
-		searchQuery = query.trim().toLowerCase();
-		searchInputs.forEach((input) => {
-			if (input.value !== query) input.value = query;
-		});
+	searchInput?.addEventListener('input', () => {
+		searchQuery = searchInput.value.trim().toLowerCase();
 		applyFilterAndSort();
-	}
-
-	function resetAll() {
-		activeTag = 'all';
-		activeSort = 'newest';
-		searchQuery = '';
-		searchInputs.forEach((input) => { input.value = ''; });
-		syncAllPills();
-		applyFilterAndSort();
-	}
-
-	drawerTagPills.forEach((p) => p.addEventListener('click', () => setTag(p.dataset.tag!)));
-	drawerSortPills.forEach((p) => p.addEventListener('click', () => setSort(p.dataset.sort!)));
-	sidebarTagPills.forEach((p) => p.addEventListener('click', () => setTag(p.dataset.tag!)));
-	sidebarSortPills.forEach((p) => p.addEventListener('click', () => setSort(p.dataset.sort!)));
-	searchInputs.forEach((input) => input.addEventListener('input', () => setSearch(input.value)));
-
-	resetBtn?.addEventListener('click', resetAll);
-	sidebarResetBtn?.addEventListener('click', resetAll);
+	});
 
 	function applyFilterAndSort() {
 		let visible = 0;

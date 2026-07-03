@@ -26,8 +26,7 @@ const featuredSlug = '50-30-20-budget-rule';
 const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
 const rest = allArticles.filter((a) => a.id !== featured.id);
 
-const latest = rest.slice(0, 3);
-const featuredPicks = rest.slice(3, 6);
+const latest = rest.slice(0, 6);
 
 const tools = [
 	{
@@ -95,29 +94,6 @@ const templates = (await getCollection('templates'))
 					</div>
 					<div class="home-row-items">
 						{latest.map((article) => (
-							<a href={`/articles/${article.id}/`} class="home-row-item">
-								{(article.data.cardImage || article.data.image) && (
-									<div class="home-row-thumb">
-										<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-										<ThumbTags tags={article.data.tags} tagMap={TAG_MAP} />
-									</div>
-								)}
-								<div class="home-row-text">
-									<h4 class="home-row-title">{article.data.title}</h4>
-									<span class="home-row-meta">{article.readTime} min read</span>
-								</div>
-							</a>
-						))}
-					</div>
-				</div>
-			)}
-			{featuredPicks.length > 0 && (
-				<div class="home-row">
-					<div class="home-row-label">
-						<h3 class="home-row-heading">Featured</h3>
-					</div>
-					<div class="home-row-items">
-						{featuredPicks.map((article) => (
 							<a href={`/articles/${article.id}/`} class="home-row-item">
 								{(article.data.cardImage || article.data.image) && (
 									<div class="home-row-thumb">
@@ -239,6 +215,10 @@ const templates = (await getCollection('templates'))
 		display: flex;
 		flex-direction: column;
 		text-decoration: none;
+		transition: opacity 0.15s ease;
+	}
+	.hero-featured:hover {
+		opacity: 0.7;
 	}
 	.hero-featured-thumb {
 		position: relative;
@@ -266,12 +246,6 @@ const templates = (await getCollection('templates'))
 		line-height: var(--leading-snug);
 		color: var(--color-text);
 		margin-bottom: var(--space-xs);
-		text-decoration: underline transparent;
-		text-underline-offset: 3px;
-		transition: text-decoration-color 100ms ease;
-	}
-	.hero-featured:hover .hero-featured-title {
-		text-decoration-color: var(--color-text);
 	}
 	.hero-featured-meta {
 		font-size: var(--text-small);
@@ -318,7 +292,7 @@ const templates = (await getCollection('templates'))
 	.home-row-items {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-lg);
+		gap: 2rem;
 	}
 	.home-row-item {
 		display: flex;
@@ -385,6 +359,7 @@ const templates = (await getCollection('templates'))
 		color: var(--color-text);
 	}
 	.tool-item .home-row-title {
+		font-size: var(--text-small);
 		-webkit-line-clamp: 2;
 	}
 
