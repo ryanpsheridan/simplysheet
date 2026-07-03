@@ -76,4 +76,5 @@
 
   --radius-sm: 0.125rem;  /*  2px */
   --radius-md: 0.25rem;   /*  4px */
+  --radius-full: 999px;
 }

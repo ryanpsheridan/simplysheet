@@ -434,8 +434,7 @@ function featureIcon(text: string): string {
 				function syncStackHeight() {
 					if (mobileQuery.matches) return;
 					const max = Math.max(...entryEls.map((el) => el.offsetHeight));
-					const minHeight = window.innerHeight * 0.8;
-					stackEl.style.height = `${Math.max(max, minHeight)}px`;
+					stackEl.style.height = `${max}px`;
 				}
 
 				function setActive(index) {
@@ -566,7 +565,7 @@ function featureIcon(text: string): string {
 		display: inline-flex;
 		gap: 0;
 		border: 1px solid var(--color-border);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-full);
 		padding: 0.1875rem;
 		margin-bottom: var(--space-md);
 	}
@@ -578,7 +577,7 @@ function featureIcon(text: string): string {
 		color: var(--color-text-muted);
 		background: none;
 		border: none;
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-full);
 		padding: 0.375rem 1rem;
 		cursor: pointer;
 		transition: color 0.15s, background 0.15s;
@@ -971,7 +970,6 @@ function featureIcon(text: string): string {
 		display: block;
 		width: 10rem;
 		height: 4px;
-		margin-top: var(--space-md);
 		background: var(--color-border);
 		border-radius: 2px;
 		overflow: hidden;
