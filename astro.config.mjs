@@ -12,7 +12,8 @@ export default defineConfig({
 		}),
 	],
 	redirects: {
-		'/articles/debt-payoff': '/articles/how-to-pay-off-debt',
-		'/tools/debt-snowball-avalanche-calculator': '/tools/debt-snowball-vs-avalanche-calculator',
+		'/articles/debt-payoff': '/articles/how-to-pay-off-debt/',
+		'/tools/debt-snowball-avalanche-calculator': '/tools/debt-snowball-vs-avalanche-calculator/',
+		'/calculators/50-30-20-budget-calculator': '/tools/50-30-20-budget-calculator/',
 	},
 });
