@@ -1,47 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#EDE7F6"/>
-      <stop offset="100%" stop-color="#D1C4E9"/>
+    <linearGradient id="bg" x1="90%" y1="0%" x2="10%" y2="100%">
+      <stop offset="0%" stop-color="#1A0E4D"/>
+      <stop offset="100%" stop-color="#512DA8"/>
     </linearGradient>
-    <linearGradient id="blob1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7E57C2" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="#B39DDB" stop-opacity="0.2"/>
-    </linearGradient>
-    <linearGradient id="blob2" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#512DA8" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#D1C4E9" stop-opacity="0.12"/>
-    </linearGradient>
-    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="60"/>
+    <filter id="blurXL" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="65"/>
     </filter>
-    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="45"/>
+    <filter id="blurL" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="38"/>
     </filter>
     <filter id="grain">
-      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
-      <feColorMatrix type="saturate" values="0"/>
-      <feBlend in="SourceGraphic" mode="multiply"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
     </filter>
   </defs>
 
   <rect width="960" height="540" fill="url(#bg)"/>
-  <ellipse cx="400" cy="350" rx="340" ry="260" fill="url(#blob1)" filter="url(#blur1)"/>
-  <ellipse cx="750" cy="120" rx="240" ry="180" fill="url(#blob2)" filter="url(#blur2)"/>
-  <rect width="960" height="540" filter="url(#grain)" opacity="0.1"/>
 
-  <!-- Stepped descent — progress toward zero — left-heavy -->
-  <g transform="translate(120, 100)">
-    <rect x="0" y="0" width="540" height="10" rx="5" fill="#7E57C2" opacity="0.5"/>
-    <rect x="0" y="60" width="420" height="10" rx="5" fill="#7E57C2" opacity="0.4"/>
-    <rect x="0" y="120" width="300" height="10" rx="5" fill="#7E57C2" opacity="0.3"/>
-    <rect x="0" y="180" width="180" height="10" rx="5" fill="#7E57C2" opacity="0.22"/>
-    <rect x="0" y="240" width="80" height="10" rx="5" fill="#7E57C2" opacity="0.15"/>
-  </g>
+  <circle cx="260" cy="120" r="210" fill="#FF8A65" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="440" cy="230" r="170" fill="#FFCCBC" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="630" cy="340" r="150" fill="#FF7043" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="760" cy="440" r="120" fill="#0D0726" opacity="0.45" filter="url(#blurXL)"/>
 
-  <!-- Large cropped arc extending off bottom-right -->
-  <circle cx="820" cy="540" r="200" fill="none" stroke="#7E57C2" stroke-width="2" opacity="0.12"/>
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
 
-  <!-- Small endpoint dot -->
-  <circle cx="160" cy="360" r="8" fill="#7E57C2" opacity="0.35"/>
+  <circle cx="220" cy="330" r="72" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.4"/>
+  <circle cx="360" cy="370" r="52" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.3"/>
+  <circle cx="480" cy="400" r="34" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.24"/>
+  <circle cx="580" cy="420" r="18" fill="#FFFFFF" opacity="0.3"/>
 </svg>
