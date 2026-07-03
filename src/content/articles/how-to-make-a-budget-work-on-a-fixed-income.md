@@ -5,6 +5,17 @@ pubDate: 'Jun 28 2026'
 image: '/images/card-v2-fixed-income.svg'
 cardImage: '/images/card-v2-fixed-income.svg'
 tags: ["expense-tracking"]
+faq:
+  - question: "How is budgeting on a fixed income different from typical budgeting advice?"
+    answer: "Most budgeting advice assumes you can earn more if you need to. On a fixed income that option isn't there, so the focus shifts from increasing income to seeing clearly where your money already goes and which expenses actually have flexibility."
+  - question: "Is the goal to cut spending or just see it more clearly?"
+    answer: "Usually seeing it clearly comes first. For a lot of people on a fixed income, the issue isn't overspending, it's that small, variable expenses are easy to lose track of. Once the pattern is visible, deciding what to change gets much easier."
+  - question: "What expense categories should I look at first?"
+    answer: "Split spending into three groups: fixed expenses that don't change month to month (rent, insurance, loan payments), variable expenses that shift with habits (groceries, dining out), and irregular expenses that are easy to forget (annual subscriptions, car maintenance, medical bills)."
+  - question: "Do the core budgeting principles change on a fixed income?"
+    answer: "The core principles stay the same, but the priorities shift. Getting a clear picture of essential expenses and building even a modest emergency fund matter more, since there's no extra paycheck to absorb a surprise cost."
+  - question: "Where should someone on a fixed income start?"
+    answer: "Track spending for one month without changing anything yet. Thirty days is usually enough to see real patterns and figure out which expenses are genuinely fixed versus flexible."
 schema:
   "@context": "https://schema.org"
   "@type": "Article"
