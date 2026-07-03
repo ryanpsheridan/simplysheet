@@ -133,7 +133,7 @@ const templates = [
 
 <style>
 	.articles-page {
-		max-width: var(--max-width);
+		max-width: calc(var(--max-width) + var(--space-md) * 2);
 		padding: var(--space-xl) var(--space-md) var(--space-2xl);
 	}
 
@@ -316,8 +316,8 @@ const templates = [
 	.article-list-thumb {
 		position: relative;
 		flex-shrink: 0;
-		width: 160px;
-		height: 107px;
+		width: 240px;
+		aspect-ratio: 3 / 2;
 		border-radius: var(--radius-md);
 		overflow: hidden;
 		background: var(--color-bg-panel);
