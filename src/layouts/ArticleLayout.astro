@@ -129,55 +129,57 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		<Header />
 		<div class="reading-progress" id="reading-progress"></div>
 
-		<main class="article-main">
+		<main class:list={['article-main', { 'has-toc': tocHeadings.length > 1 }]}>
 			<Breadcrumbs crumbs={[{ label: 'Articles', href: '/articles' }, { label: title }]} />
-			<article>
-				<header class="article-header">
-					<h1 class="article-title">{title}</h1>
-					<p class="article-meta">
-						{readTime && <span>{readTime} min read</span>}
-					</p>
-				</header>
-
-				{heroImage && (
-					<div class="article-hero-img">
-						<img src={heroImage} alt={title} />
-					</div>
-				)}
-
-				<div class="article-actions">
-					<button class="action-btn" id="share-btn" aria-label="Share this article">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-							<polyline points="16 6 12 2 8 6" />
-							<line x1="12" y1="2" x2="12" y2="15" />
-						</svg>
-						<span>Share</span>
-					</button>
-					<a href={emailShareUrl} class="action-btn" aria-label="Share via email">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-							<rect x="2" y="4" width="20" height="16" rx="2" />
-							<path d="M22 4l-10 8L2 4" />
-						</svg>
-						<span>Email</span>
-					</a>
-				</div>
-
+			<div class="article-grid">
 				{tocHeadings.length > 1 && (
 					<nav class="toc" aria-label="Table of contents">
 						<p class="toc-heading">On this page</p>
 						<ul class="toc-list">
 							{tocHeadings.map((h) => (
-								<li><a href={`#${h.slug}`}>{h.text}</a></li>
+								<li><a href={`#${h.slug}`} data-toc-slug={h.slug}>{h.text}</a></li>
 							))}
 						</ul>
 					</nav>
 				)}
 
-				<div class="prose">
-					<slot />
-				</div>
-			</article>
+				<article>
+					<header class="article-header">
+						<h1 class="article-title">{title}</h1>
+						<p class="article-meta">
+							{readTime && <span>{readTime} min read</span>}
+						</p>
+					</header>
+
+					{heroImage && (
+						<div class="article-hero-img">
+							<img src={heroImage} alt={title} />
+						</div>
+					)}
+
+					<div class="article-actions">
+						<button class="action-btn" id="share-btn" aria-label="Share this article">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+								<polyline points="16 6 12 2 8 6" />
+								<line x1="12" y1="2" x2="12" y2="15" />
+							</svg>
+							<span>Share</span>
+						</button>
+						<a href={emailShareUrl} class="action-btn" aria-label="Share via email">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="2" y="4" width="20" height="16" rx="2" />
+								<path d="M22 4l-10 8L2 4" />
+							</svg>
+							<span>Email</span>
+						</a>
+					</div>
+
+					<div class="prose">
+						<slot />
+					</div>
+				</article>
+			</div>
 
 			{related.length > 0 && (
 				<aside class="related">
@@ -261,6 +263,45 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 				}
 			});
 
+			const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc-list a[data-toc-slug]'));
+			if (tocLinks.length > 0) {
+				const headingEls = tocLinks
+					.map((link) => document.getElementById(link.dataset.tocSlug!))
+					.filter((el): el is HTMLElement => el !== null);
+
+				let currentActive: HTMLAnchorElement | null = null;
+
+				function setActive(link: HTMLAnchorElement | null) {
+					if (link === currentActive) return;
+					currentActive?.classList.remove('active');
+					link?.classList.add('active');
+					currentActive = link;
+				}
+
+				const TOC_SCROLL_OFFSET = 96;
+				let tocTicking = false;
+
+				function updateActiveToc() {
+					let current = tocLinks[0];
+					for (let i = 0; i < headingEls.length; i++) {
+						if (headingEls[i].getBoundingClientRect().top <= TOC_SCROLL_OFFSET) {
+							current = tocLinks[i];
+						}
+					}
+					setActive(current);
+					tocTicking = false;
+				}
+
+				window.addEventListener('scroll', () => {
+					if (!tocTicking) {
+						requestAnimationFrame(updateActiveToc);
+						tocTicking = true;
+					}
+				}, { passive: true });
+
+				updateActiveToc();
+			}
+
 			const progressBar = document.getElementById('reading-progress');
 			if (progressBar) {
 				let pTicking = false;
@@ -319,9 +360,23 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 	/* ——— Article main ——— */
 
 	.article-main {
+		--toc-rail-width: 220px;
+		--toc-gap: calc(var(--space-xl) + 3rem);
 		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
 		margin: 0 auto;
 		padding: var(--space-lg) var(--space-md) var(--space-2xl);
+	}
+
+	@media (min-width: 1100px) {
+		.article-main.has-toc {
+			/* Header's nav is max-width(--max-width) plus its own space-md padding outside that;
+			   mirror the same total width here so the TOC's left edge lines up with the logo/nav. */
+			max-width: calc(var(--max-width) + var(--space-md) * 2);
+		}
+	}
+
+	.article-grid {
+		padding-top: 3rem;
 	}
 
 	/* ——— Fallback header (no image) ——— */
@@ -383,39 +438,70 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 	/* ——— Table of contents ——— */
 
 	.toc {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: var(--space-md);
-		margin-bottom: var(--space-lg);
+		margin-bottom: calc(var(--space-lg) + 3rem);
 	}
 
 	.toc-heading {
-		font-size: var(--text-xs);
+		font-size: var(--text-small);
 		font-weight: var(--weight-semibold);
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		color: var(--color-text-muted);
-		margin: 0 0 var(--space-xs);
+		color: var(--color-text);
+		margin: 0 0 var(--space-sm);
 	}
 
 	.toc-list {
 		list-style: none;
 		display: flex;
 		flex-direction: column;
-		gap: 0.375rem;
 		margin: 0;
 		padding: 0;
+		border-left: 1px solid var(--color-border);
 	}
 
 	.toc-list a {
+		display: block;
+		padding: 0.375rem 0 0.375rem var(--space-sm);
+		margin-left: -1px;
+		border-left: 2px solid transparent;
 		font-size: var(--text-small);
-		color: var(--color-text-secondary);
+		line-height: var(--leading-snug);
+		color: var(--color-text-muted);
 		text-decoration: none;
+		transition: color 0.15s, border-color 0.15s;
 	}
 
 	.toc-list a:hover {
 		color: var(--color-text);
-		text-decoration: underline;
+	}
+
+	.toc-list a.active {
+		color: var(--color-accent);
+		font-weight: var(--weight-medium);
+		border-left-color: var(--color-accent);
+	}
+
+	/* ——— Table of contents — sticky left rail on wide viewports ——— */
+
+	@media (min-width: 1100px) {
+		.has-toc .article-grid {
+			display: grid;
+			grid-template-columns: var(--toc-rail-width) minmax(0, var(--max-width-narrow));
+			column-gap: var(--toc-gap);
+			align-items: start;
+		}
+
+		.has-toc .toc {
+			position: sticky;
+			top: 4.5rem;
+			margin-bottom: 0;
+		}
+
+		.has-toc .related,
+		.has-toc .faq,
+		.has-toc .recommended-products {
+			max-width: var(--max-width-narrow);
+			margin-left: calc(var(--toc-rail-width) + var(--toc-gap));
+			margin-right: auto;
+		}
 	}
 
 	/* ——— FAQ section ——— */
