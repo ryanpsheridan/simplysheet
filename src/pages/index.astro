@@ -197,9 +197,10 @@ const templates = (await getCollection('templates'))
 	}
 	.hero-title {
 		font-size: var(--text-display);
+		font-weight: var(--weight-extrabold);
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
+		color: var(--color-text-heading);
 		margin-bottom: var(--space-sm);
 	}
 	.hero-desc {
@@ -230,7 +231,7 @@ const templates = (await getCollection('templates'))
 		font-weight: var(--weight-semibold);
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-wide);
-		color: var(--color-accent);
+		color: var(--color-link);
 		margin-bottom: var(--space-2xs);
 	}
 	.hero-featured-title {
@@ -322,7 +323,7 @@ const templates = (await getCollection('templates'))
 	.article-list-tag {
 		font-size: var(--text-xs);
 		font-weight: var(--weight-semibold);
-		color: var(--color-accent);
+		color: var(--color-link);
 	}
 	.article-list-title {
 		font-family: var(--font-heading);
@@ -410,13 +411,13 @@ const templates = (await getCollection('templates'))
 		display: inline-block;
 		font-size: var(--text-xs);
 		font-weight: var(--weight-medium);
-		color: var(--color-accent);
+		color: var(--color-link);
 		text-decoration: none;
 		padding-left: var(--space-sm);
 		transition: color 0.15s;
 	}
 	.sidebar-tools-more:hover {
-		color: var(--color-accent-hover);
+		color: var(--color-link-hover);
 	}
 	/* ——— Quiz banner ——— */
 
@@ -475,7 +476,7 @@ const templates = (await getCollection('templates'))
 		margin: 0;
 	}
 	:global(.about-brief-body .word) {
-		color: #A09890;
+		color: #B0B0B0;
 		transition: color 0.15s ease;
 	}
 	:global(.about-brief-body .word.lit) {
@@ -513,11 +514,11 @@ const templates = (await getCollection('templates'))
 		border-radius: var(--radius-md);
 		text-decoration: none;
 		overflow: hidden;
-		transition: border-color 0.15s, box-shadow 0.2s ease;
+		transition: border-color 0.15s, background 0.15s;
 	}
 	.template-card:hover {
-		border-color: var(--color-divider);
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+		border-color: var(--color-text-muted);
+		background: var(--color-bg-panel);
 	}
 	.template-thumb {
 		aspect-ratio: 3 / 2;
@@ -541,9 +542,10 @@ const templates = (await getCollection('templates'))
 		align-self: flex-start;
 		font-size: var(--text-xs);
 		font-weight: var(--weight-semibold);
-		color: var(--color-accent);
-		background: var(--color-accent-light);
-		border-radius: var(--radius-full);
+		color: var(--color-text);
+		background: var(--color-surface-tint);
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-sm);
 		padding: 0.125rem 0.5rem;
 		line-height: 1.4;
 		white-space: nowrap;

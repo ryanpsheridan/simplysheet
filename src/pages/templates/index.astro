@@ -85,12 +85,12 @@ const templates = (await getCollection('templates'))
 		border-radius: var(--radius-md);
 		text-decoration: none;
 		overflow: hidden;
-		transition: border-color 0.15s, box-shadow 0.2s ease;
+		transition: border-color 0.15s, background 0.15s;
 	}
 
 	.template-card:hover {
-		border-color: var(--color-divider);
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+		border-color: var(--color-text-muted);
+		background: var(--color-bg-panel);
 	}
 
 	.template-thumb {
@@ -118,9 +118,10 @@ const templates = (await getCollection('templates'))
 		align-self: flex-start;
 		font-size: var(--text-xs);
 		font-weight: var(--weight-semibold);
-		color: var(--color-accent);
-		background: var(--color-accent-light);
-		border-radius: var(--radius-full);
+		color: var(--color-text);
+		background: var(--color-surface-tint);
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-sm);
 		padding: 0.125rem 0.5rem;
 		line-height: 1.4;
 		margin-bottom: var(--space-xs);
@@ -154,7 +155,7 @@ const templates = (await getCollection('templates'))
 	.template-link {
 		font-size: var(--text-small);
 		font-weight: var(--weight-medium);
-		color: var(--color-accent);
+		color: var(--color-link);
 	}
 
 	.templates-etsy-cta {

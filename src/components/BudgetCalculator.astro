@@ -105,7 +105,7 @@ const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
 		transition: border-color 0.15s;
 	}
 	.calc-field:focus-within {
-		border-color: var(--color-accent);
+		border-color: var(--color-link);
 	}
 	.calc-prefix {
 		padding: 0.625rem 0 0.625rem 0.75rem;
@@ -142,7 +142,7 @@ const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
 		color: var(--color-text-secondary);
 		background: none;
 		border: 1px solid var(--color-divider);
-		border-radius: var(--radius-full);
+		border-radius: var(--radius-sm);
 		padding: 0.375rem 0.875rem;
 		cursor: pointer;
 		transition: color 0.15s, border-color 0.15s, background 0.15s;
@@ -192,7 +192,7 @@ const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
 		transition: border-color 0.15s;
 	}
 	.calc-custom-input:focus {
-		border-color: var(--color-accent);
+		border-color: var(--color-link);
 	}
 	.calc-custom-total {
 		font-size: var(--text-xs);
@@ -249,7 +249,7 @@ const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
 		width: 0;
 		transition: width 0.3s ease;
 	}
-	.needs-fill { background: var(--color-accent); }
+	.needs-fill { background: var(--color-link); }
 	.wants-fill { background: var(--color-text-secondary); }
 	.savings-fill { background: var(--color-text); }
 

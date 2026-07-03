@@ -1,32 +1,32 @@
 :root {
   /* ——— Colors ——— */
 
-  --color-text:           #2A2522;
+  --color-text:           #1A1A1A;
   --color-text-heading:   #000000;
-  --color-text-secondary: #6B6B6B;
-  --color-text-muted:     #8C8C8C;
+  --color-text-secondary: #5C5C5C;
+  --color-text-muted:     #8A8A8A;
 
-  --color-accent:         #196EDD;
-  --color-accent-hover:   #1259B8;
+  --color-link:           #5C5C5C;
+  --color-link-hover:     #000000;
 
-  --color-bg:             #F5F5F4;
+  --color-bg:             #FFFFFF;
   --color-bg-surface:     #FFFFFF;
-  --color-bg-panel:       #EEEEEE;
-  --color-bg-emphasis:    #EEEEEE;
-  --color-bg-inverse:     #2A2522;
+  --color-bg-panel:       #F2F2F2;
+  --color-bg-emphasis:    #ECECEC;
+  --color-bg-inverse:     #000000;
 
   --color-btn:            #000000;
   --color-btn-hover:      #333333;
 
-  --color-border:         #DEDEDE;
-  --color-divider:        #D5D5D5;
+  --color-border:         #E0E0E0;
+  --color-divider:        #D2D2D2;
 
-  --color-accent-light:   #EEF4FF;
+  --color-surface-tint:   #F2F2F2;
 
   /* ——— Typography ——— */
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-heading: "Urbanist", system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-sans);
 
   --text-display:   clamp(2.5rem, 3.5vw + 0.75rem, 3rem);
   --text-h1:        2.25rem;
@@ -43,14 +43,15 @@
   --leading-normal: 1.58;
 
   /* Weight */
-  --weight-normal:   400;
-  --weight-medium:   500;
-  --weight-semibold: 600;
-  --weight-bold:     700;
+  --weight-normal:    400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+  --weight-extrabold: 800;
 
   /* Tracking */
-  --tracking-tight:  -0.02em;
-  --tracking-heading: 0.1px;
+  --tracking-tight:   -0.02em;
+  --tracking-heading: -0.01em;
   --tracking-normal:  0;
   --tracking-wide:    0.04em;
 
@@ -73,7 +74,6 @@
 
   /* ——— Misc ——— */
 
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-full: 99px;
+  --radius-sm: 0.125rem;  /*  2px */
+  --radius-md: 0.25rem;   /*  4px */
 }
