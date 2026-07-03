@@ -3,16 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const TAG_MAP: Record<string, string> = {
-	'expense-tracking': 'Expense Tracking',
-	'couples-budgeting': 'Couples Budgeting',
-	'debt-payoff': 'Debt Payoff',
-	'savings-goals': 'Savings Goals',
-	'irregular-income': 'Irregular Income',
-	'net-worth': 'Net Worth',
-	'budgeting-styles': 'Budgeting Styles',
-};
-
 const allArticles = (await getCollection('articles'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.map((article) => {
@@ -25,13 +15,8 @@ const featuredSlug = '50-30-20-budget-rule';
 const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
 const rest = allArticles.filter((a) => a.id !== featured.id);
 
-const topicRows = Object.entries(TAG_MAP)
-	.map(([slug, label]) => ({
-		slug,
-		label,
-		articles: rest.filter((a) => (a.data.tags ?? []).includes(slug)).slice(0, 2),
-	}))
-	.filter((topic) => topic.articles.length > 0);
+const latest = rest.slice(0, 4);
+const featuredPicks = rest.slice(4, 8);
 
 const tools = [
 	{
@@ -99,52 +84,72 @@ const templates = (await getCollection('templates'))
 
 	<div class="section-divider"></div>
 
-	{topicRows.length > 0 && (
-		<section class="topics">
-			<div class="topics-inner">
-				{topicRows.map((topic) => (
-					<div class="topic-row">
-						<div class="topic-row-label">
-							<h3 class="topic-name">{topic.label}</h3>
-						</div>
-						<div class="topic-row-articles">
-							{topic.articles.map((article) => (
-								<a href={`/articles/${article.id}/`} class="topic-article-item">
-									{(article.data.cardImage || article.data.image) && (
-										<div class="topic-article-thumb">
-											<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-										</div>
-									)}
-									<div class="topic-article-text">
-										<h4 class="topic-article-title">{article.data.title}</h4>
-										<span class="topic-article-meta">{article.readTime} min read</span>
+	<section class="home-rows">
+		<div class="home-rows-inner">
+			{latest.length > 0 && (
+				<div class="home-row">
+					<div class="home-row-label">
+						<h3 class="home-row-heading">Latest</h3>
+					</div>
+					<div class="home-row-items">
+						{latest.map((article) => (
+							<a href={`/articles/${article.id}/`} class="home-row-item">
+								{(article.data.cardImage || article.data.image) && (
+									<div class="home-row-thumb">
+										<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
 									</div>
-								</a>
-							))}
-						</div>
-					</div>
-				))}
-				<div class="topic-row tools-row">
-					<div class="topic-row-label">
-						<h3 class="topic-name">Free tools</h3>
-					</div>
-					<div class="topic-row-articles tools-row-articles">
-						{tools.map((tool) => (
-							<a href={tool.url} class="topic-article-item tool-item">
-								<span class="tool-icon" set:html={`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
-								<div class="topic-article-text">
-									<h4 class="topic-article-title">{tool.name}</h4>
+								)}
+								<div class="home-row-text">
+									<h4 class="home-row-title">{article.data.title}</h4>
+									<span class="home-row-meta">{article.readTime} min read</span>
 								</div>
 							</a>
 						))}
 					</div>
 				</div>
+			)}
+			{featuredPicks.length > 0 && (
+				<div class="home-row">
+					<div class="home-row-label">
+						<h3 class="home-row-heading">Featured</h3>
+					</div>
+					<div class="home-row-items">
+						{featuredPicks.map((article) => (
+							<a href={`/articles/${article.id}/`} class="home-row-item">
+								{(article.data.cardImage || article.data.image) && (
+									<div class="home-row-thumb">
+										<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+									</div>
+								)}
+								<div class="home-row-text">
+									<h4 class="home-row-title">{article.data.title}</h4>
+									<span class="home-row-meta">{article.readTime} min read</span>
+								</div>
+							</a>
+						))}
+					</div>
+				</div>
+			)}
+			<div class="home-row tools-row">
+				<div class="home-row-label">
+					<h3 class="home-row-heading">Free tools</h3>
+				</div>
+				<div class="home-row-items tools-row-items">
+					{tools.map((tool) => (
+						<a href={tool.url} class="home-row-item tool-item">
+							<span class="tool-icon" set:html={`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
+							<div class="home-row-text">
+								<h4 class="home-row-title">{tool.name}</h4>
+							</div>
+						</a>
+					))}
+				</div>
 			</div>
-			<div class="topics-cta-wrap">
-				<a href="/articles" class="btn btn-secondary">All articles <span class="arrow">&rarr;</span></a>
-			</div>
-		</section>
-	)}
+		</div>
+		<div class="home-rows-cta-wrap">
+			<a href="/articles" class="btn btn-secondary">All articles <span class="arrow">&rarr;</span></a>
+		</div>
+	</section>
 
 	<section class="quiz-banner">
 		<div class="quiz-banner-inner">
@@ -274,65 +279,64 @@ const templates = (await getCollection('templates'))
 		border-top: 1px solid var(--color-border);
 	}
 
-	/* ——— Topics (label left / articles right rows) ——— */
+	/* ——— Home rows (label left / items right) ——— */
 
-	.topics {
+	.home-rows {
 		padding: var(--space-lg) var(--space-md) var(--space-section);
 	}
-	.topics-inner {
+	.home-rows-inner {
 		max-width: var(--max-width);
 		margin: 0 auto;
 	}
-	.topic-row {
+	.home-row {
 		display: grid;
 		grid-template-columns: 12rem 1fr;
 		gap: var(--space-xl);
 		padding: var(--space-lg) 0;
 		border-top: 1px solid var(--color-border);
 	}
-	.topic-row:first-child {
+	.home-row:first-child {
 		border-top: none;
 		padding-top: 0;
 	}
-	.topic-name {
+	.home-row-heading {
 		font-size: var(--text-h3);
 		font-weight: var(--weight-normal);
 		margin: 0;
 	}
-	.topic-row-articles {
+	.home-row-items {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		gap: var(--space-lg);
 	}
-	.topic-article-item {
+	.home-row-item {
 		display: flex;
+		flex-direction: column;
 		gap: var(--space-sm);
-		align-items: flex-start;
 		text-decoration: none;
 		color: inherit;
 		transition: opacity 0.15s ease;
 	}
-	.topic-article-item:hover {
+	.home-row-item:hover {
 		opacity: 0.7;
 	}
-	.topic-article-thumb {
-		flex-shrink: 0;
-		width: 6.5rem;
-		height: 4.35rem;
+	.home-row-thumb {
+		width: 100%;
+		aspect-ratio: 3 / 2;
 		border-radius: var(--radius-md);
 		overflow: hidden;
 		background: var(--color-bg-panel);
 	}
-	.topic-article-thumb img {
+	.home-row-thumb img {
 		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 	}
-	.topic-article-text {
+	.home-row-text {
 		min-width: 0;
 	}
-	.topic-article-title {
+	.home-row-title {
 		font-size: var(--text-small);
 		font-weight: var(--weight-medium);
 		line-height: 1.35;
@@ -343,17 +347,18 @@ const templates = (await getCollection('templates'))
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
-	.topic-article-meta {
+	.home-row-meta {
 		font-size: var(--text-xs);
 		color: var(--color-text-muted);
 	}
 
 	/* ——— Tools row ——— */
 
-	.tools-row-articles {
-		grid-template-columns: repeat(3, 1fr);
+	.tools-row-items {
+		grid-template-columns: repeat(5, 1fr);
 	}
 	.tool-item {
+		flex-direction: row;
 		align-items: center;
 	}
 	.tool-icon {
@@ -367,11 +372,11 @@ const templates = (await getCollection('templates'))
 		background: var(--color-bg-panel);
 		color: var(--color-text);
 	}
-	.tool-item .topic-article-title {
+	.tool-item .home-row-title {
 		-webkit-line-clamp: 2;
 	}
 
-	.topics-cta-wrap {
+	.home-rows-cta-wrap {
 		max-width: var(--max-width);
 		margin: var(--space-lg) auto 0;
 	}
@@ -544,24 +549,27 @@ const templates = (await getCollection('templates'))
 		.templates-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
+		.home-row-items {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.tools-row-items {
+			grid-template-columns: repeat(3, 1fr);
+		}
 	}
 
 	@media (max-width: 768px) {
-		.topic-row {
+		.home-row {
 			grid-template-columns: 1fr;
 			gap: var(--space-sm);
-		}
-		.tools-row-articles {
-			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
 	@media (max-width: 600px) {
-		.topic-row-articles {
+		.home-row-items {
 			grid-template-columns: 1fr;
 		}
-		.tools-row-articles {
-			grid-template-columns: 1fr;
+		.tools-row-items {
+			grid-template-columns: repeat(2, 1fr);
 		}
 		.templates-grid {
 			grid-template-columns: 1fr;
