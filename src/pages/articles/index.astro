@@ -92,17 +92,17 @@ const templates = [
 			<div class="article-list" id="article-list">
 				{articles.map((article) => (
 					<a href={`/articles/${article.id}/`} class="article-list-item" data-tags={JSON.stringify(article.data.tags ?? [])} data-date={article.data.pubDate.valueOf().toString()} data-title={article.data.title} data-desc={article.data.description}>
+						{(article.data.cardImage || article.data.image) && (
+							<div class="article-list-thumb">
+								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+							</div>
+						)}
 						<div class="article-list-text">
 							<TagPills tags={article.data.tags} tagMap={TAG_MAP} />
 							<h2 class="article-list-title">{article.data.title}</h2>
 							<p class="article-list-desc">{article.data.description}</p>
 							<span class="article-list-read">{article.readTime} min read</span>
 						</div>
-						{(article.data.cardImage || article.data.image) && (
-							<div class="article-list-thumb">
-								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-							</div>
-						)}
 					</a>
 				))}
 			</div>
@@ -257,27 +257,20 @@ const templates = [
 		color: var(--color-text-muted);
 	}
 
-	/* ——— Article list — single column ——— */
+	/* ——— Article list — 3-col card grid ——— */
 
 	.article-list {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-xl) var(--space-md);
 	}
 	.article-list-item {
 		display: flex;
-		gap: var(--space-lg);
-		align-items: flex-start;
-		padding: var(--space-lg) 0;
-		border-bottom: 1px solid var(--color-border);
+		flex-direction: column;
+		gap: var(--space-sm);
 		text-decoration: none;
 		color: inherit;
 		transition: opacity 0.15s ease;
-	}
-	.article-list-item:first-child {
-		padding-top: 0;
-	}
-	.article-list-item:last-child {
-		border-bottom: none;
 	}
 	.article-list-item:hover {
 		opacity: 0.75;
@@ -286,19 +279,18 @@ const templates = [
 		display: none;
 	}
 	.article-list-text {
-		flex: 1;
 		min-width: 0;
 	}
 	.article-list-title {
 		font-family: var(--font-heading);
-		font-size: 1.35rem;
+		font-size: 1.1rem;
 		font-weight: var(--weight-normal);
 		line-height: 1.3;
 		margin: 0 0 var(--space-xs) 0;
 		color: var(--color-text);
 	}
 	.article-list-desc {
-		font-size: var(--text-body);
+		font-size: var(--text-small);
 		color: var(--color-text-secondary);
 		line-height: 1.5;
 		margin: 0;
@@ -315,8 +307,7 @@ const templates = [
 	}
 	.article-list-thumb {
 		position: relative;
-		flex-shrink: 0;
-		width: 240px;
+		width: 100%;
 		aspect-ratio: 3 / 2;
 		border-radius: var(--radius-md);
 		overflow: hidden;
@@ -415,21 +406,17 @@ const templates = [
 	}
 
 	@media (max-width: 960px) {
+		.article-list {
+			grid-template-columns: repeat(2, 1fr);
+		}
 		.resources-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
 	@media (max-width: 600px) {
-		.article-list-item {
-			flex-direction: column;
-			gap: var(--space-md);
-		}
-		.article-list-thumb {
-			width: 100%;
-			height: auto;
-			aspect-ratio: 16 / 9;
-			order: -1;
+		.article-list {
+			grid-template-columns: 1fr;
 		}
 		.resources-grid {
 			grid-template-columns: 1fr;
