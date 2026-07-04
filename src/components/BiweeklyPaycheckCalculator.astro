@@ -1,8 +1,24 @@
 ---
+interface Props {
+	showFrequencyToggle?: boolean;
+}
+
+const { showFrequencyToggle = false } = Astro.props;
 const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<div class="calc" id={id}>
+<div class="calc" id={id} data-freq="biweekly">
+	{showFrequencyToggle && (
+		<div class="calc-freq-group">
+			<span class="calc-label">Pay frequency</span>
+			<div class="calc-freq-toggle">
+				<button class="calc-freq-btn active" data-freq="biweekly">Biweekly</button>
+				<button class="calc-freq-btn" data-freq="weekly">Weekly</button>
+			</div>
+			<p class="calc-freq-hint">Paid semi-monthly or monthly? Your income already matches the calendar — skip the buffer math and use the <a href="/tools/50-30-20-budget-calculator/">50/30/20 calculator</a> instead.</p>
+		</div>
+	)}
+
 	<div class="calc-input-group">
 		<label class="calc-label" for={`${id}-paycheck`}>Take-home pay per paycheck</label>
 		<div class="calc-field">
@@ -21,12 +37,12 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	<div class="calc-stats-row">
 		<div class="calc-stat">
-			<span class="calc-stat-label">Typical month <small>(2 paychecks)</small></span>
-			<span class="calc-stat-value" data-role="two">$0</span>
+			<span class="calc-stat-label">Typical month <small data-role="typical-note">(2 paychecks)</small></span>
+			<span class="calc-stat-value" data-role="typical">$0</span>
 		</div>
 		<div class="calc-stat">
-			<span class="calc-stat-label">3-paycheck month <small>(~2x a year)</small></span>
-			<span class="calc-stat-value" data-role="three">$0</span>
+			<span class="calc-stat-label"><span data-role="extra-label">3-paycheck month</span> <small data-role="extra-note">(~2x a year)</small></span>
+			<span class="calc-stat-value" data-role="extra">$0</span>
 		</div>
 		<div class="calc-stat">
 			<span class="calc-stat-label">Steady average <small>(one number all year)</small></span>
@@ -36,7 +52,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	</div>
 
 	<div class="calc-highlight">
-		<span class="calc-highlight-label">Cushion needed for a 2-paycheck month</span>
+		<span class="calc-highlight-label" data-role="buffer-label">Cushion needed for a 2-paycheck month</span>
 		<span class="calc-highlight-value" data-role="buffer">$0</span>
 		<span class="calc-highlight-math" data-role="buffer-math"></span>
 
@@ -54,6 +70,45 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		padding: var(--space-md);
 		margin: var(--space-lg) 0;
 		background: var(--color-bg-surface);
+	}
+
+	/* ——— Pay frequency toggle ——— */
+
+	.calc-freq-group {
+		margin-bottom: var(--space-md);
+		padding-bottom: var(--space-md);
+		border-bottom: 1px solid var(--color-divider);
+	}
+	.calc-freq-toggle {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+	}
+	.calc-freq-btn {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-normal);
+		color: var(--color-text-secondary);
+		background: none;
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-full);
+		padding: 0.375rem 0.875rem;
+		cursor: pointer;
+		transition: color 0.15s, border-color 0.15s, background 0.15s;
+	}
+	.calc-freq-btn:hover {
+		color: var(--color-text);
+		border-color: var(--color-text-muted);
+	}
+	.calc-freq-btn.active {
+		color: var(--color-bg);
+		background: var(--color-bg-inverse);
+		border-color: var(--color-bg-inverse);
+	}
+	.calc-freq-hint {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		margin: var(--space-sm) 0 0;
 	}
 
 	/* ——— Input ——— */
@@ -188,11 +243,33 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	var root = document.getElementById(id);
 	if (!root) return;
 
+	var FREQUENCIES = {
+		biweekly: {
+			paychecksPerYear: 26,
+			typicalPerMonth: 2,
+			extraPerMonth: 3,
+			extraTimesAYear: 2,
+		},
+		weekly: {
+			paychecksPerYear: 52,
+			typicalPerMonth: 4,
+			extraPerMonth: 5,
+			extraTimesAYear: 4,
+		},
+	};
+
+	var freq = 'biweekly';
+
 	var input = root.querySelector('.calc-input');
-	var twoEl = root.querySelector('[data-role="two"]');
-	var threeEl = root.querySelector('[data-role="three"]');
+	var freqBtns = root.querySelectorAll('.calc-freq-btn');
+	var typicalEl = root.querySelector('[data-role="typical"]');
+	var typicalNoteEl = root.querySelector('[data-role="typical-note"]');
+	var extraEl = root.querySelector('[data-role="extra"]');
+	var extraLabelEl = root.querySelector('[data-role="extra-label"]');
+	var extraNoteEl = root.querySelector('[data-role="extra-note"]');
 	var averageEl = root.querySelector('[data-role="average"]');
 	var averageMathEl = root.querySelector('[data-role="average-math"]');
+	var bufferLabelEl = root.querySelector('[data-role="buffer-label"]');
 	var bufferEl = root.querySelector('[data-role="buffer"]');
 	var bufferMathEl = root.querySelector('[data-role="buffer-math"]');
 
@@ -208,23 +285,29 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	}
 
 	function calculate() {
+		var config = FREQUENCIES[freq];
 		var raw = input.value.replace(/[^0-9.]/g, '');
 		var paycheck = parseFloat(raw) || 0;
 
-		var two = paycheck * 2;
-		var three = paycheck * 3;
-		var annual = paycheck * 26;
+		var typical = paycheck * config.typicalPerMonth;
+		var extra = paycheck * config.extraPerMonth;
+		var annual = paycheck * config.paychecksPerYear;
 		var average = annual / 12;
-		var buffer = Math.max(0, average - two);
+		var buffer = Math.max(0, average - typical);
 
-		twoEl.textContent = formatCurrency(two);
-		threeEl.textContent = formatCurrency(three);
+		typicalNoteEl.textContent = '(' + config.typicalPerMonth + ' paychecks)';
+		extraLabelEl.textContent = config.extraPerMonth + '-paycheck month';
+		extraNoteEl.textContent = '(~' + config.extraTimesAYear + 'x a year)';
+		bufferLabelEl.textContent = 'Cushion needed for a ' + config.typicalPerMonth + '-paycheck month';
+
+		typicalEl.textContent = formatCurrency(typical);
+		extraEl.textContent = formatCurrency(extra);
 		averageEl.textContent = formatCurrency(average);
 		bufferEl.textContent = formatCurrency(buffer);
 
 		if (paycheck > 0) {
-			averageMathEl.textContent = formatCurrency(paycheck) + ' × 26 ÷ 12';
-			bufferMathEl.textContent = formatCurrency(average) + ' average − ' + formatCurrency(two) + ' in a 2-paycheck month';
+			averageMathEl.textContent = formatCurrency(paycheck) + ' × ' + config.paychecksPerYear + ' ÷ 12';
+			bufferMathEl.textContent = formatCurrency(average) + ' average − ' + formatCurrency(typical) + ' in a ' + config.typicalPerMonth + '-paycheck month';
 		} else {
 			averageMathEl.textContent = '';
 			bufferMathEl.textContent = '';
@@ -238,6 +321,15 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		var after = input.value.length;
 		input.setSelectionRange(pos + (after - before), pos + (after - before));
 		calculate();
+	});
+
+	freqBtns.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			freqBtns.forEach(function (b) { b.classList.remove('active'); });
+			btn.classList.add('active');
+			freq = btn.dataset.freq;
+			calculate();
+		});
 	});
 
 	calculate();
