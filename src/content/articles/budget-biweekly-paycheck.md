@@ -14,6 +14,8 @@ faq:
     answer: "You can, and it works well for a lot of people. Instead of pulling one large rent payment from a single check, set aside half from each paycheck in a separate account, then pay rent in full when it's due. It makes each paycheck feel more balanced instead of one check being almost entirely gone to rent."
   - question: "What should I do with a third paycheck?"
     answer: "Treat it as a bonus, not spare spending money. Since your regular bills are already covered by your normal two-paycheck budget, a third paycheck is close to free money — a good candidate for savings, extra debt payments, or a planned expense you'd otherwise have to save up for over several months."
+  - question: "Can I just divide my annual income by 12 instead of tracking individual paychecks?"
+    answer: "Yes, plenty of people budget this way successfully. A two-paycheck month brings in less than that averaged number and a three-paycheck month brings in more, so it depends on keeping a cash buffer large enough to cover the gap in the months that fall short. If you already keep that kind of buffer, an annual average can work just as well as tracking each paycheck individually. If you don't, the mismatch between what's budgeted and what actually lands is usually where it breaks down."
 relatedProduct:
   name: 'Budget Spreadsheet'
   url: 'https://simplysheetdesign.etsy.com/listing/1854773368'
@@ -109,7 +111,7 @@ That leaves this paycheck fully allocated at $2,015 spent, with roughly $135 lef
 
 Notice that nothing here depends on "monthly income" as a single number. Each paycheck has its own job to do, and as long as both jobs get done, the month takes care of itself, regardless of which two Fridays the paychecks actually land on.
 
-If matching specific bills to specific paychecks feels too prescriptive, a simpler variation works just as well: instead of deciding that rent always comes from the first check and the car payment always comes from the second, add up a few months of take-home pay, divide by the number of paychecks, and budget against that average number every single pay period instead. You're still budgeting paycheck to paycheck, not by the calendar month — you're just smoothing over which specific bill happens to land on which specific check, which gives you a consistent number to expect every payday instead of a different mental map each time. (This is different from the "average income divided by 12" mistake below — you're still working from your real per-paycheck rhythm, just not micromanaging where each bill sits within it.)
+If matching specific bills to specific paychecks feels too prescriptive, a simpler variation works just as well: instead of deciding that rent always comes from the first check and the car payment always comes from the second, add up a few months of take-home pay, divide by the number of paychecks, and budget against that average number every single pay period instead. You're still budgeting paycheck to paycheck, not by the calendar month — you're just smoothing over which specific bill happens to land on which specific check, which gives you a consistent number to expect every payday instead of a different mental map each time. (This works even better paired with a healthy buffer — see the FAQ below on dividing your annual income by 12, which is really the same idea stretched across the full year.)
 
 ## Interactive Calculator (Coming Soon)
 
@@ -142,7 +144,7 @@ If you already know which months have three paychecks (see the section above), y
 
 ## Common mistakes people make with biweekly budgets
 
-**Budgeting off a monthly average instead of your real paycheck rhythm.** Dividing your annual income by 12 gives you a number that assumes income arrives in even monthly chunks, which a biweekly schedule never actually does. That's different from averaging your take-home per paycheck (see the example above) — the mistake here is losing track of your pay schedule entirely, not the averaging itself.
+**Treating a yearly average as a strict budget without a buffer.** Dividing your annual income by 12 gives you a steady number, but a two-paycheck month actually brings in less than that average and a three-paycheck month brings in more. This works fine for plenty of people, but only if there's a cash buffer sized to cover the gap in the months that fall short — without one, the mismatch between the average and what's actually landed is where the budget quietly comes up short.
 
 **Not noticing three-paycheck months in advance.** Without planning ahead, an extra paycheck often just blends into regular spending instead of doing something useful.
 
