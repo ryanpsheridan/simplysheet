@@ -34,9 +34,9 @@ src/
     articles/
       index.astro       # article listing/index page
       [...slug].astro   # renders any article via ArticleLayout
-    templates/
+    spreadsheets/       # public route: /spreadsheets/{slug}/ (renamed from /templates/)
       index.astro
-      [...slug].astro   # renders any template via TemplateLayout
+      [...slug].astro   # renders any product via TemplateLayout
     tools/
       index.astro        # tools listing
       *-calculator.astro  # one standalone page per calculator

@@ -20,7 +20,7 @@ Two Etsy bundles also exist (Budget + Debt Payoff, Budget + Savings Goals) at a 
 ## Revenue model
 
 - **One-time purchase, no subscriptions.** Every product is a single Etsy purchase (a downloadable/copyable spreadsheet file), not a recurring SaaS charge. "You own your data — no subscriptions, no ads, no company shutting down" is a stated selling point (see the Budget Spreadsheet FAQ).
-- **Content-to-commerce funnel.** The site itself carries no ads and sells nothing directly — it exists to rank in Google/AI search results for budgeting questions, build trust through free tools and articles, and route readers to the relevant `/templates/{slug}/` page, which carries its own Etsy CTA. Articles never link straight to Etsy.
+- **Content-to-commerce funnel.** The site itself carries no ads and sells nothing directly — it exists to rank in Google/AI search results for budgeting questions, build trust through free tools and articles, and route readers to the relevant `/spreadsheets/{slug}/` page, which carries its own Etsy CTA. Articles never link straight to Etsy.
 - **Free tools as top-of-funnel.** Calculators (50/30/20, emergency fund, sinking fund, debt snowball/avalanche, biweekly paycheck, expense-tracking readiness) and a budgeting-style quiz give visitors immediate value and a reason to return, without a purchase requirement.
 - **Cross-sell via bundles and "more spreadsheets."** Template pages surface bundle offers and other templates (`otherTemplates` on `TemplateLayout.astro`) to increase average order value and repeat purchase.
 - **Cost structure is minimal.** No physical shipping (`doesNotShip: true` in the Product schema), no per-unit cost — the product is one-time design + build effort, then indefinite resale.

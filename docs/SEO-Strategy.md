@@ -22,7 +22,7 @@ These are the standing UX rules that support both readability and SEO/AEO, drawn
 
 - **Cross-link in body text, not just the auto-generated block.** `ArticleLayout.astro` auto-populates a "Related articles" section with the 4 most recently published articles regardless of topic — that's a freshness surface, not a relevance surface. Actual topical relevance has to come from natural in-body links between articles (e.g. the 50/30/20 article links out to the biweekly-paycheck and irregular-income articles inline, at the point where those edge cases come up).
 - **Verify before linking.** Cross-reference the slug against `src/content/articles/` before adding any internal link — broken references to articles that don't exist must be removed or unlinked. Watch for orphaned articles (pages nothing else links to) and proactively add links to them.
-- **Article → template → Etsy funnel, never article → Etsy directly.** When an article's topic naturally intersects with a product (e.g. debt payoff content mentioning the debt payoff tracker), link to the internal `/templates/{slug}/` page. That page carries its own Etsy CTA — this keeps link equity and session time on-site and lets the template page's schema/CTA do the conversion work.
+- **Article → product page → Etsy funnel, never article → Etsy directly.** When an article's topic naturally intersects with a product (e.g. debt payoff content mentioning the debt payoff tracker), link to the internal `/spreadsheets/{slug}/` page. That page carries its own Etsy CTA — this keeps link equity and session time on-site and lets the product page's schema/CTA do the conversion work.
 - **Use `ProductPromo` for any visual mid-article promo**, `variant="interstitial"` for a single horizontal card with an eyebrow `label`, `variant="card"` inside a two-up `.product-cards` grid. Plain text links are fine for lighter mentions; reserve the visual promo for genuinely relevant moments.
 - **Tag-driven end-of-article recommendations.** `tagProductMap` in `ArticleLayout.astro` selects the two `ProductPromo` "row" cards shown at the bottom of every article, based on the article's `tags`. Assigning the right tag is itself part of the internal-linking/relevance strategy, not just categorization.
 
@@ -48,7 +48,7 @@ faq:                     # optional array of { question, answer }
 relatedProduct:          # optional { name, url } — currently unused by the layout
 ```
 
-Content rules: `##` for main sections, `###` for subsections, never skip a level. Weave internal links to related articles and 1–2 `/templates/` links naturally into body copy where topically relevant. Use `.mdx` only if the article embeds a component (a calculator, `ProductPromo`, etc.); otherwise plain `.md`.
+Content rules: `##` for main sections, `###` for subsections, never skip a level. Weave internal links to related articles and 1–2 `/spreadsheets/` links naturally into body copy where topically relevant. Use `.mdx` only if the article embeds a component (a calculator, `ProductPromo`, etc.); otherwise plain `.md`.
 
 ## Publishing checklist
 
@@ -61,7 +61,7 @@ Every time a new article is submitted, per `CLAUDE.md`:
 5. Verify every internal article link resolves to a real slug; remove/unlink anything that doesn't exist.
 6. Assign the correct `tags` entry so the right two product cards show at the end of the article.
 7. Review existing articles for natural cross-link opportunities to and from the new article.
-8. Add 1–2 natural `/templates/` links in body text where relevant (via `ProductPromo` for a visual promo, plain link otherwise) — never link directly to Etsy from an article.
+8. Add 1–2 natural `/spreadsheets/` links in body text where relevant (via `ProductPromo` for a visual promo, plain link otherwise) — never link directly to Etsy from an article.
 9. Include `schema`-relevant frontmatter: title, description, and (if applicable) `faq`.
 10. After merging to `main`, submit the article URL (and any standalone tool page URL) for indexing — see below.
 

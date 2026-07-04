@@ -1,6 +1,6 @@
 # Products
 
-All products are Google Sheets + Excel spreadsheets sold on Etsy (shop **SimplySheetDesign**), each available in dark and light theme (separate Etsy listings per theme, toggled client-side on the template page). Product data lives in `src/content/templates/*.md`, one file per product, rendered by `src/layouts/TemplateLayout.astro`. `tags` on each template determine which two products `ArticleLayout.astro` recommends at the bottom of an article with a given tag — see the mapping at the end of this doc.
+All products are Google Sheets + Excel spreadsheets sold on Etsy (shop **SimplySheetDesign**), each available in dark and light theme (separate Etsy listings per theme, toggled client-side on the product page). Product data lives in `src/content/templates/*.md` (the collection is still internally named `templates` in `src/content.config.ts`), one file per product, rendered by `src/layouts/TemplateLayout.astro`. Public product pages live at `/spreadsheets/{slug}/` (the route was renamed from `/templates/` — the `src/pages/templates/` folder is now `src/pages/spreadsheets/`; `ProductPromo.astro` builds its links as `` `/spreadsheets/${slug}/` ``). `tags` on each template determine which two products `ArticleLayout.astro` recommends at the bottom of an article with a given tag — see the mapping at the end of this doc.
 
 ## Budget Spreadsheet
 `src/content/templates/budget-spreadsheet.md` · `$17.99` · SKU `2025BT1` · badge: **Best Seller** · tag: `expense-tracking`
