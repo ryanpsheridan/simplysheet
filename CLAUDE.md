@@ -24,14 +24,12 @@ The primary goal of this site is organic Google discovery. Every change — new 
 Every time an article is provided, automatically do all of the following:
 
 1. **Create the article file** in `src/content/articles/` as `.md` (or `.mdx` if it embeds a component).
-2. **Generate two SVG images** and save them in `public/images/` following the SVG construction rules below:
-   - `article-{slug}.svg` — abstract gradient hero image (960x540). Uses blurred ellipse blobs, grain texture overlay, and floating semi-transparent white shapes. No text or UI elements.
-   - `card-{slug}.svg` — card thumbnail (960x540). Same gradient background as the hero, but includes a white card with a simple UI mockup relevant to the article topic (progress bars, category rows, etc.).
-   - **Always verify** the generated SVGs render correctly before committing. Open or screenshot them to check that the layout looks right — especially that the white card in card SVGs is properly positioned.
-3. **Include both image paths in frontmatter**:
+2. **Generate one SVG image** and save it in `public/images/` as `card-v2-{slug}.svg`, following the SVG construction rules below. The same file is used for both the homepage hero background and the card thumbnail — there is no separate hero/card pair.
+   - **Always verify** the generated SVG renders correctly before committing. Open or screenshot it to check the gradient, glow placement, and grain all look right.
+3. **Include the image path in frontmatter (same path for both fields)**:
    ```yaml
-   image: '/images/article-{slug}.svg'
-   cardImage: '/images/card-{slug}.svg'
+   image: '/images/card-v2-{slug}.svg'
+   cardImage: '/images/card-v2-{slug}.svg'
    ```
 4. **Use a unique color scheme** for each article's SVGs. Do not reuse an existing article's palette. See the color registry below.
 5. **Verify all internal article links** actually exist by cross-referencing slugs in `src/content/articles/`. Remove or unlink any references to articles that don't exist.
@@ -43,54 +41,71 @@ Every time an article is provided, automatically do all of the following:
 
 ## SVG Color Registry
 
-Each article has a unique gradient palette. Check this list before picking colors for a new article:
+Each article has a unique two-tone palette: a dark, saturated gradient background plus a contrasting set of glow colors. Check this list before picking colors for a new article — don't reuse a background hue family *or* a glow hue family that's already taken:
 
-| Article slug | Background | Accent |
-|---|---|---|
-| `50-30-20-budget-rule` | #E3F2FD | #196EDD (blue) |
-| `awareness-vs-automation` | #E0F2F1 | #00897B (teal) |
-| `budgeting-styles` | #F3E5F5 | #7E57C2 (purple) |
-| `couples-budgeting` | #F3E5F5 | #7E57C2 (purple) |
-| `where-is-my-money-going` | #FFF3E0 | #E86A33 (orange) |
-| `budgeting-with-irregular-income` | #E8F5E9 | #2D9D78 (green) |
-| `debt-snowball-vs-avalanche` | #E8EDF2 | #2C3E50 (slate) |
-| `how-to-pay-off-debt` | #EDE7F6 | #7E57C2 (purple) |
-| `emergency-fund-sizing` | #E8EAF6 | #5C6BC0 (indigo) |
-| `why-most-budgets-fail` | #FFF8E1 | #F9A825 (amber) |
+| Article slug | Background gradient | Glow colors | Dark vignette |
+|---|---|---|---|
+| `50-30-20-budget-rule` | #0B3D91 → #1565C0 (blue) | #4FC3F7, #80D8FF, #18FFFF (cyan) | #0D47A1 |
+| `awareness-vs-automation` | #00352C → #00695C (dark teal) | #29B6F6, #81D4FA, #00E5FF (blue/cyan) | #002018 |
+| `budgeting-styles` | #3B1070 → #6A1B9A (purple) | #F06292, #F8BBD0, #EC407A (pink) | #22073F |
+| `couples-budgeting` | #7B0D3F → #C2185B (magenta) | #90CAF9, #B3E5FC, #18FFFF (blue/cyan) | #4A0625 |
+| `debt-snowball-vs-avalanche` | #081620 → #1C3A52 (navy) | #90CAF9, #E1F5FE, #7C4DFF (blue/violet) | #040B10 |
+| `how-to-pay-off-debt` | #1A0E4D → #512DA8 (deep purple) | #F48FB1, #F8BBD0, #EC407A (pink) | #0D0726 |
+| `emergency-fund-sizing` | #0D1155 → #283593 (indigo) | #4FC3F7, #B3E5FC, #18FFFF (cyan/blue) | #070830 |
+| `why-most-budgets-fail` | #3E0A2E → #7A1656 (magenta) | #64B5F6, #BBDEFB, #00E5FF (blue/cyan) | #1A0512 |
+| `how-to-make-a-budget-work-on-a-fixed-income` | #04261B → #0E6B4A (green) | #4FC3F7, #B3E5FC, #18FFFF (blue/cyan) | #021712 |
+| `budgeting-with-irregular-income` | #0F3D13 → #2E7D32 (green) | #F06292, #F8BBD0, #EC407A (pink) | #082209 |
+| `sinking-funds-explained` | #073B4C → #0E7C86 (teal) | #7C4DFF, #B39DDB, #40C4FF (violet/blue) | #041F27 |
+| `track-expenses-before-budgeting` | #1B1464 → #3D2C8D (indigo/purple) | #F06292, #F8BBD0, #EC407A (pink) | #0D0938 |
+| `where-is-my-money-going` | #0A2472 → #1E3A8A (blue) | #7C4DFF, #B39DDB, #536DFE (violet/blue) | #050E33 |
+| `budget-biweekly-paycheck` | #3A1900 → #8A4A00 (amber/orange) | #26C6DA, #80DEEA, #00E0D0 (cyan/teal) | #2A1400 |
 
 ## SVG Construction Rules
 
-Both SVG types use `width="960" height="540" viewBox="0 0 960 540"`. Follow these specs exactly to keep images consistent across all articles.
+Every article uses a single SVG, `card-v2-{slug}.svg`, `width="960" height="540" viewBox="0 0 960 540"`, used for **both** `image` and `cardImage`. Follow this spec exactly to keep images consistent across all articles.
 
-### How hero images display on the homepage
+### How the image displays on the homepage
 
-On the homepage, the six secondary article cards use the hero image (`article-{slug}.svg`) as a full-bleed background. A white text overlay (`.article-card-body`) is **centered** within the card with equal margin on all sides. The gradient peeks through around **all edges** of the white overlay. This means:
+On the homepage, the six secondary article cards use this SVG as a full-bleed background. A white text overlay (`.article-card-body`) is **centered** within the card with equal margin on all sides, and the gradient/glow peek through around **all edges**. This means:
 
-- The hero SVG should have its gradient colors and blobs spread across the image, since the gradient is visible around all four edges of the centered white overlay.
-- Every article must have an `image` field in frontmatter. A missing image means no gradient background, which breaks the card layout.
-- After creating a new article's SVGs, always screenshot the homepage to verify the cards look correct — gradient visible around all edges, white body centered within the card.
+- Spread the gradient and glow circles across the full canvas so something is visible around all four edges of the centered white overlay.
+- Every article must have an `image` field in frontmatter (same path as `cardImage`). A missing image means no background, which breaks the card layout.
+- After creating a new article's SVG, screenshot the homepage to verify the card looks right — glow visible around all edges, white body centered within the card.
 
-### Hero image (`article-{slug}.svg`)
+### Required structure
 
-- Full-bleed gradient background rect covering 960x540
-- 2–3 blurred ellipses using the article's accent color at varying opacities (0.1–0.5), each with `feGaussianBlur` (stdDeviation 45–65)
-- 1–2 small accent circles at low opacity (0.06–0.1) with blur
-- Optional floating white shapes (rounded rects, circles) at low opacity (0.08–0.14) with blur for depth
-- Grain texture overlay: `feTurbulence` fractalNoise (baseFrequency 0.65) blended with `feBlend mode="multiply"` at opacity 0.12
-- No text, no UI elements, no white card
+1. **`<defs>`** — reuse this exact boilerplate in every SVG (only the gradient colors change):
+   ```xml
+   <linearGradient id="bg" x1="…%" y1="…%" x2="…%" y2="…%">
+     <stop offset="0%" stop-color="#…"/>
+     <stop offset="100%" stop-color="#…"/>
+   </linearGradient>
+   <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+     <feGaussianBlur stdDeviation="65"/>
+   </filter>
+   <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+     <feGaussianBlur stdDeviation="38"/>
+   </filter>
+   <filter id="blurM" x="-100%" y="-100%" width="300%" height="300%">
+     <feGaussianBlur stdDeviation="24"/>
+   </filter>
+   <filter id="grain">
+     <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+     <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+   </filter>
+   ```
+   Vary `x1/y1/x2/y2` on the gradient per article so the light direction isn't identical every time.
+2. **Background rect** — `<rect width="960" height="540" fill="url(#bg)"/>`.
+3. **Four glow circles**, in this order, each a fresh color per article (see registry above):
+   - Glow 1: r 210–250, opacity 0.7, `filter="url(#blurXL)"`, `style="mix-blend-mode:screen"`.
+   - Glow 2: r 155–190, a lighter/pastel tint of glow 1's hue, opacity 0.5, `blurXL`, `screen`.
+   - Glow 3: r 80–95, a vivid/neon accent, opacity 0.32, `filter="url(#blurL)"`, `screen`.
+   - Dark vignette: r 55–230, a near-black tint of the background's darkest stop, opacity 0.45, `blurXL`, **no** blend mode.
+   - Positions should be scattered toward different corners/edges (not stacked in the center) so the glow reads across the whole canvas.
+4. **Grain overlay** — `<rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>`.
+5. **Decorative motif** — one `<g filter="url(#blurM)">` group of plain white circles/rings (fills and/or strokes, opacity roughly 0.1–0.6) forming a simple abstract shape loosely themed to the article topic (e.g. concentric rings for a "target/goal" article, scattered dots for "tracking"). No text, no UI mockup, no rectangles — circles and rings only.
 
-### Card image (`card-{slug}.svg`)
-
-- Same gradient background and blurred blobs as the hero (can use slightly different positioning)
-- Grain texture overlay (same as hero)
-- **White card**: `<rect x="120" y="68" width="720" height="490" rx="10" fill="white"/>` — this is the exact position for every card. The card intentionally extends past the bottom of the viewBox (y 68 + height 490 = 558 > 540) so it appears anchored to the bottom with no bottom margin.
-- Inside the white card, build a simple UI mockup relevant to the article topic:
-  - Use `font-family="system-ui, -apple-system, sans-serif"` for all text
-  - Header text at y ~108, content starting below
-  - Use the article's accent color for progress bars, highlights, or indicators
-  - Keep inner content padded: x from 164 to 796, y from ~108 to ~460
-  - Use `#2A2522` for primary text, `#8A817C` for secondary/muted text, `#F0EDEA` for dividers and track backgrounds
-- All UI content must stay within the visible viewBox (above y=540). The white card bleeds past the bottom, but text and elements should not.
+There is no white card and no UI mockup in this style — that was the old spec and no live article uses it anymore.
 
 ## Article Page Structure
 
@@ -171,8 +186,8 @@ When building new calculators, follow the pattern in `src/components/BudgetCalcu
 
 Defined in `src/content.config.ts`. Key optional fields:
 
-- `image` — article hero SVG path
-- `cardImage` — card thumbnail SVG path
+- `image` — article SVG path (see SVG Construction Rules — same file as `cardImage`)
+- `cardImage` — card thumbnail SVG path (same file as `image`)
 - `tags` — array of tag slugs
 - `faq` — array of `{ question, answer }` objects
 - `relatedProduct` — `{ name, url }` (currently unused in layout)

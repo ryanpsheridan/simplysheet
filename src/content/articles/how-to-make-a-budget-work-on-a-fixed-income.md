@@ -88,3 +88,5 @@ Start by tracking where your money goes for one month, without trying to change 
 Once you can see that, you'll know which expenses are genuinely fixed, which ones have some flexibility, and where small adjustments are likely to make the biggest difference.
 
 Budgeting on a fixed income isn't about finding money that doesn't exist. It's about giving every dollar a clear purpose, so fewer surprises catch you off guard.
+
+If that fixed amount arrives every two weeks rather than once a month, [budgeting by paycheck instead of by the calendar month](/articles/budget-biweekly-paycheck/) covers how to line bills up with your actual pay dates.
