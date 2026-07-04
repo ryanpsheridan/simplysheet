@@ -24,8 +24,8 @@ const templates = (await getCollection('templates'))
 				<a href={`/spreadsheets/${t.id}/`} class="template-card">
 					<div class="template-thumb">
 						<img src={t.data.heroImage} alt={`${t.data.title} preview`} width="600" height="400" loading="lazy" />
+						{t.data.badge && <span class="template-badge">{t.data.badge}</span>}
 					</div>
-					{t.data.badge && <span class="template-badge">{t.data.badge}</span>}
 					<h2 class="template-name">{t.data.title.replace(/ for Google Sheets & Excel$/, '')}</h2>
 					<p class="template-desc">{t.data.description}</p>
 				</a>
@@ -106,8 +106,9 @@ const templates = (await getCollection('templates'))
 	}
 
 	.template-badge {
-		display: inline-block;
-		align-self: flex-start;
+		position: absolute;
+		left: 0.75rem;
+		bottom: 0.75rem;
 		font-size: var(--text-xs);
 		font-weight: var(--weight-normal);
 		color: var(--color-text);
