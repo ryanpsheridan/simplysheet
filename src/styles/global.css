@@ -55,6 +55,12 @@ p {
 	line-height: var(--leading-normal);
 }
 
+@media (max-width: 600px) {
+	.prose {
+		font-size: 1.125rem;
+	}
+}
+
 .prose h2 {
 	margin-top: 2em;
 	margin-bottom: 0.75em;
