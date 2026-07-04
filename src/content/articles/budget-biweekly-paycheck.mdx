@@ -26,6 +26,8 @@ schema:
   description: "Getting paid every two weeks (biweekly) makes monthly budgets confusing. Here's a simple, step-by-step way to budget by paycheck instead, including three-paycheck months."
 ---
 
+import BiweeklyPaycheckCalculator from '../../components/BiweeklyPaycheckCalculator.astro';
+
 If you get paid every two weeks, you've probably noticed that budgeting advice built around "monthly income" never quite fits. Some months your paychecks cover everything with room to spare. Other months feel tight for no obvious reason. Then, a few times a year, an extra paycheck shows up and throws the whole month off in the other direction.
 
 None of that means you're bad at budgeting. It means you're trying to fit a biweekly pay schedule into a monthly framework, and the two don't naturally line up. Once you budget around your actual paychecks instead of the calendar month, most of that confusion disappears.
@@ -111,11 +113,21 @@ That leaves this paycheck fully allocated at $2,015 spent, with roughly $135 lef
 
 Notice that nothing here depends on "monthly income" as a single number. Each paycheck has its own job to do, and as long as both jobs get done, the month takes care of itself, regardless of which two Fridays the paychecks actually land on.
 
-If matching specific bills to specific paychecks feels too prescriptive, a simpler variation works just as well: instead of deciding that rent always comes from the first check and the car payment always comes from the second, add up a few months of take-home pay, divide by the number of paychecks, and budget against that average number every single pay period instead. You're still budgeting paycheck to paycheck, not by the calendar month — you're just smoothing over which specific bill happens to land on which specific check, which gives you a consistent number to expect every payday instead of a different mental map each time. (This works even better paired with a healthy buffer — see the FAQ below on dividing your annual income by 12, which is really the same idea stretched across the full year.)
+If matching specific bills to specific paychecks feels too prescriptive, there's a simpler option: use one average number instead.
 
-## Interactive Calculator (Coming Soon)
+- Add up your take-home pay from the last few months.
+- Divide by the number of paychecks in that stretch.
+- Budget that average amount every payday, instead of deciding which bill goes with which check.
 
-*A biweekly paycheck budget calculator is in progress for this page. Enter your take-home pay per paycheck and it will show your two-paycheck and three-paycheck month totals, a suggested per-paycheck bill breakdown, and a steady average number to budget against if you'd rather not track exactly which bill lands on which check.*
+You're still budgeting paycheck to paycheck, not by the calendar month. You're just smoothing over the small stuff — which bill happens to land on which specific check — in exchange for one consistent number to expect every payday.
+
+This works best paired with a healthy buffer. See the FAQ below on dividing your annual income by 12 — it's the same idea, just stretched across a full year.
+
+## Try the calculator
+
+Enter your take-home pay per paycheck below to see your typical two-paycheck month, your three-paycheck months, and the steady average number mentioned above.
+
+<BiweeklyPaycheckCalculator />
 
 ## How to plan for bills that fall between paychecks
 

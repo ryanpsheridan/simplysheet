@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import BiweeklyPaycheckCalculator from '../../components/BiweeklyPaycheckCalculator.astro';
+import { SITE_TITLE } from '../../consts';
+
+const title = `Biweekly Paycheck Calculator — Budget by Payday`;
+const description = 'Free biweekly paycheck calculator. Enter your take-home pay per paycheck and see your typical two-paycheck month, your three-paycheck months, and a steady average to budget against instead.';
+---
+
+<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+	<main>
+		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: 'Biweekly Paycheck Calculator' }]} />
+		<article>
+			<header class="calc-header">
+				<h1>Biweekly Paycheck Calculator</h1>
+				<p class="calc-intro">If you're paid every two weeks, your income doesn't divide evenly into calendar months. Enter your take-home pay per paycheck below to see what a typical two-paycheck month looks like, what a three-paycheck month adds, and a steady average number you can budget against instead of tracking each paycheck individually.</p>
+			</header>
+
+			<BiweeklyPaycheckCalculator />
+
+			<div class="calc-callout">
+				<p class="calc-callout-text">For the full step-by-step process — including how to assign bills to specific paychecks and what to do with three-paycheck months — see <a href="/articles/budget-biweekly-paycheck/">How to Budget When You Get Paid Every Two Weeks</a>. Once you know your numbers, a <a href="/templates/budget-spreadsheet/">budget spreadsheet</a> makes it easy to track both paychecks side by side.</p>
+			</div>
+		</article>
+	</main>
+</BaseLayout>
+
+<style>
+	main {
+		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
+	}
+	.calc-header {
+		margin-bottom: var(--space-sm);
+	}
+	.calc-header h1 {
+		font-size: var(--text-h1);
+	}
+	.calc-intro {
+		font-size: var(--text-body);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+	.calc-callout {
+		margin-top: var(--space-xl);
+		padding: var(--space-md);
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
+	}
+	.calc-callout-text {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+	.calc-callout-text a {
+		font-weight: var(--weight-normal);
+	}
+</style>
