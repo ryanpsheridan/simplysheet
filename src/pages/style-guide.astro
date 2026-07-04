@@ -23,7 +23,7 @@ const templates = (await getCollection('templates'))
 	.map((t) => ({
 		name: t.data.title.replace(/ for Google Sheets & Excel$/, ''),
 		desc: t.data.description,
-		url: `/templates/${t.id}/`,
+		url: `/spreadsheets/${t.id}/`,
 		image: t.data.heroImage,
 		badge: t.data.badge,
 	}));

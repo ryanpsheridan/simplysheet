@@ -53,7 +53,7 @@ Keeping the process simple matters as much as keeping it short. The moment track
 
 A spreadsheet is the most practical tool for this, mainly because it's flexible enough to match how you actually spend instead of forcing your spending into someone else's categories.
 
-You can build one yourself in Google Sheets or Excel from scratch, and plenty of people do. If you'd rather skip the setup work, a [budget spreadsheet with a built-in expense tracker](/templates/budget-spreadsheet/) already has the categories, totals, and formulas in place, so the only thing left to do is log each day's spending as it happens.
+You can build one yourself in Google Sheets or Excel from scratch, and plenty of people do. If you'd rather skip the setup work, a [budget spreadsheet with a built-in expense tracker](/spreadsheets/budget-spreadsheet/) already has the categories, totals, and formulas in place, so the only thing left to do is log each day's spending as it happens.
 
 Either way works. What matters is that the tool stays out of your way enough that the daily habit actually survives past week one.
 

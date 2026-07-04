@@ -65,7 +65,7 @@ Set aside 25–30% of every payment you receive into a separate account and don'
 
 If you want to be more precise, look at what you paid in taxes last year and divide by your total gross income. That gives you your effective rate. Add two or three percentage points as a buffer, because owing the IRS in April is a particular kind of stress you don't need on top of irregular income.
 
-I track the tax set-aside alongside everything else in a [Budget Spreadsheet](/templates/budget-spreadsheet/) I originally built for my own freelance income. There's a row at the top of each month that shows take-home after the tax hold, so I'm always budgeting from the real number, not the gross. That one change eliminated the quarterly panic of suddenly needing to find a few thousand dollars.
+I track the tax set-aside alongside everything else in a [Budget Spreadsheet](/spreadsheets/budget-spreadsheet/) I originally built for my own freelance income. There's a row at the top of each month that shows take-home after the tax hold, so I'm always budgeting from the real number, not the gross. That one change eliminated the quarterly panic of suddenly needing to find a few thousand dollars.
 
 ## Use a pay-yourself system when you earn more than baseline
 
@@ -101,6 +101,6 @@ One thing that helps: keep a short list of expenses you can cut immediately when
 
 It's to stop pretending it's predictable.
 
-Most budgeting systems are built for people with a salary. If that's not your situation, you don't need a different app — you need a different starting assumption. Build from the floor, plan for the surplus, save during the good months so the bad ones don't set you back. It's not glamorous, but it works. And after a few months of it, you stop dreading the first of the month. If you want a ready-made system that handles all of this, take a look at the [Budget Spreadsheet](/templates/budget-spreadsheet/) I built for exactly this situation.
+Most budgeting systems are built for people with a salary. If that's not your situation, you don't need a different app — you need a different starting assumption. Build from the floor, plan for the surplus, save during the good months so the bad ones don't set you back. It's not glamorous, but it works. And after a few months of it, you stop dreading the first of the month. If you want a ready-made system that handles all of this, take a look at the [Budget Spreadsheet](/spreadsheets/budget-spreadsheet/) I built for exactly this situation.
 
 And if your situation is the opposite — a consistent paycheck, pension, or benefit that doesn't change — [budgeting on a fixed income](/articles/how-to-make-a-budget-work-on-a-fixed-income/) covers how to make the most of a predictable but limited amount. And if your income is steady but just arrives every two weeks instead of monthly, [budgeting when you get paid every two weeks](/articles/budget-biweekly-paycheck/) covers that timing problem specifically, separate from the amount-variability this article focuses on.

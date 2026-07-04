@@ -57,7 +57,7 @@ The challenge isn't tracking money, it's building a system simple enough to keep
 
 It does, and it's an underrated part of the comparison. Many budgeting apps run on a monthly or yearly subscription, which is worth it for people who lean on the automation. But not everyone needs that level of functionality just to stay aware of where their money is going.
 
-A basic spreadsheet can be entirely free in Google Sheets, and even a [pre-built budget template](/templates/budget-spreadsheet/) is usually a one-time cost rather than an ongoing one. For someone just getting started, that lower barrier alone can make it easier to begin, since there's no account to connect and no new platform to learn.
+A basic spreadsheet can be entirely free in Google Sheets, and even a [pre-built budget template](/spreadsheets/budget-spreadsheet/) is usually a one-time cost rather than an ongoing one. For someone just getting started, that lower barrier alone can make it easier to begin, since there's no account to connect and no new platform to learn.
 
 ## So is a spreadsheet actually better than an app?
 
