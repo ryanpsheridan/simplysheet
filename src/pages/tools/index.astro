@@ -4,38 +4,53 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { SITE_TITLE } from '../../consts';
 
 const title = 'Free Budgeting Tools';
-const description = 'Free calculators and tools to help you manage your money. Compare debt payoff strategies, find your ideal budget split, and more.';
+const description = 'Free calculators and assessments to help you manage your money. Compare debt payoff strategies, find your ideal budget split, and more.';
 
-const tools = [
+const calculators = [
 	{
 		name: '50/30/20 Budget Calculator',
 		desc: 'Enter your take-home pay and see how much to spend on needs, wants, and savings each month.',
 		url: '/tools/50-30-20-budget-calculator',
+		icon: '<rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/>',
 	},
 	{
 		name: 'Biweekly & Weekly Paycheck Calculator',
 		desc: 'Enter your take-home pay per paycheck and see your typical month, your extra-paycheck months, and a steady average to budget against.',
 		url: '/tools/biweekly-paycheck-calculator',
+		icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
 	},
 	{
 		name: 'Debt Strategy Comparison',
 		desc: 'Compare avalanche vs. snowball payoff strategies and see how extra monthly payments affect each one differently.',
 		url: '/tools/debt-snowball-vs-avalanche-calculator',
+		icon: '<line x1="6" y1="20" x2="6" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="14"/>',
 	},
 	{
 		name: 'Emergency Fund Calculator',
 		desc: 'Enter your essential monthly expenses and see how much to keep saved for 3, 6, 9, or 12 months of coverage.',
 		url: '/tools/emergency-fund-calculator',
-	},
-	{
-		name: 'Expense Tracking Readiness',
-		desc: 'Answer 6 quick questions to find out if you have tracked enough spending to confidently build your first budget.',
-		url: '/tools/expense-tracking-readiness',
+		icon: '<path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2"/><circle cx="17" cy="10" r="1"/>',
 	},
 	{
 		name: 'Sinking Fund Calculator',
 		desc: 'Find out if your expense is a good fit for a sinking fund, then calculate how much to save each month to hit your goal on time.',
 		url: '/tools/sinking-fund-calculator',
+		icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+	},
+];
+
+const assessments = [
+	{
+		name: 'Expense Tracking Readiness',
+		desc: 'Answer 6 quick questions to find out if you have tracked enough spending to confidently build your first budget.',
+		url: '/tools/expense-tracking-readiness',
+		icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12l2.5 2.5L16 9"/>',
+	},
+	{
+		name: 'Find Your Budgeting Style',
+		desc: 'Take our 60-second quiz to uncover your unique money personality and get one actionable tip to reach your goals faster.',
+		url: '/quiz/budgeting-style',
+		icon: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
 	},
 ];
 ---
@@ -48,14 +63,40 @@ const tools = [
 			<p class="tools-intro">Free calculators and assessments to help you make clearer decisions about your money.</p>
 		</header>
 
-		<div class="tools-grid">
-			{tools.map((tool) => (
-				<a href={tool.url} class="tool-card">
-					<h2 class="tool-name">{tool.name}</h2>
-					<p class="tool-desc">{tool.desc}</p>
-					<span class="tool-link">Open tool <span class="arrow">&rarr;</span></span>
-				</a>
-			))}
+		<div class="tools-rows">
+			<div class="tools-row">
+				<div class="tools-row-label">
+					<h2 class="tools-row-heading">Calculators</h2>
+				</div>
+				<div class="tools-row-items">
+					{calculators.map((tool) => (
+						<a href={tool.url} class="tools-row-item">
+							<span class="tools-row-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
+							<div class="tools-row-text">
+								<h3 class="tools-row-title">{tool.name}</h3>
+								<p class="tools-row-desc">{tool.desc}</p>
+							</div>
+						</a>
+					))}
+				</div>
+			</div>
+
+			<div class="tools-row">
+				<div class="tools-row-label">
+					<h2 class="tools-row-heading">Assessments</h2>
+				</div>
+				<div class="tools-row-items">
+					{assessments.map((tool) => (
+						<a href={tool.url} class="tools-row-item">
+							<span class="tools-row-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
+							<div class="tools-row-text">
+								<h3 class="tools-row-title">{tool.name}</h3>
+								<p class="tools-row-desc">{tool.desc}</p>
+							</div>
+						</a>
+					))}
+				</div>
+			</div>
 		</div>
 	</main>
 </BaseLayout>
@@ -72,42 +113,84 @@ const tools = [
 		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
 	}
-	.tools-grid {
+
+	.tools-row {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: var(--space-md);
+		grid-template-columns: 12rem 1fr;
+		gap: var(--space-xl);
+		padding: var(--space-lg) 0;
+		border-top: 1px solid var(--color-border);
 	}
-	.tool-card {
+	.tools-row:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+	.tools-row-heading {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-normal);
+		margin: 0;
+	}
+	.tools-row-items {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+	}
+	.tools-row-item {
 		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
+		align-items: flex-start;
+		gap: var(--space-sm);
 		text-decoration: none;
 		color: inherit;
 		transition: opacity 0.15s ease;
 	}
 	@media (hover: hover) {
-		.tool-card:hover {
+		.tools-row-item:hover {
 			opacity: 0.7;
 		}
 	}
-	.tool-name {
-		font-size: var(--text-h3);
+	.tools-row-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: var(--radius-full);
+		background: var(--color-bg-panel);
 		color: var(--color-text);
-		margin: 0;
 	}
-	.tool-desc {
+	.tools-row-text {
+		min-width: 0;
+	}
+	.tools-row-title {
 		font-size: var(--text-body);
-		line-height: var(--leading-normal);
+		font-weight: var(--weight-normal);
+		line-height: 1.35;
+		margin: 0 0 var(--space-2xs);
+		color: var(--color-text);
+	}
+	.tools-row-desc {
+		font-size: var(--text-small);
+		line-height: var(--leading-snug);
 		color: var(--color-text-secondary);
 		margin: 0;
 	}
-	.tool-link {
-		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-		color: var(--color-link);
+
+	@media (max-width: 960px) {
+		.tools-row-items {
+			grid-template-columns: repeat(2, 1fr);
+		}
 	}
+
+	@media (max-width: 768px) {
+		.tools-row {
+			grid-template-columns: 1fr;
+			gap: var(--space-sm);
+		}
+	}
+
 	@media (max-width: 600px) {
-		.tools-grid {
+		.tools-row-items {
 			grid-template-columns: 1fr;
 		}
 	}
