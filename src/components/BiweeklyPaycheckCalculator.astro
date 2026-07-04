@@ -14,8 +14,9 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 			<div class="calc-freq-toggle">
 				<button class="calc-freq-btn active" data-freq="biweekly">Biweekly</button>
 				<button class="calc-freq-btn" data-freq="weekly">Weekly</button>
+				<button class="calc-freq-btn" data-freq="semimonthly">Semi-monthly</button>
 			</div>
-			<p class="calc-freq-hint">Paid semi-monthly or monthly? Your income already matches the calendar — skip the buffer math and use the <a href="/tools/50-30-20-budget-calculator/">50/30/20 calculator</a> instead.</p>
+			<p class="calc-freq-hint">Paid monthly? Your income already matches the calendar — skip the buffer math and use the <a href="/tools/50-30-20-budget-calculator/">50/30/20 calculator</a> instead.</p>
 		</div>
 	)}
 
@@ -40,7 +41,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 			<span class="calc-stat-label">Typical month <small data-role="typical-note">(2 paychecks)</small></span>
 			<span class="calc-stat-value" data-role="typical">$0</span>
 		</div>
-		<div class="calc-stat">
+		<div class="calc-stat calc-stat-extra">
 			<span class="calc-stat-label"><span data-role="extra-label">3-paycheck month</span> <small data-role="extra-note">(~2x a year)</small></span>
 			<span class="calc-stat-value" data-role="extra">$0</span>
 		</div>
@@ -164,6 +165,9 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		gap: var(--space-sm);
 		margin-top: var(--space-md);
 	}
+	.calc-stats-row.two-col {
+		grid-template-columns: repeat(2, 1fr);
+	}
 	.calc-stat {
 		display: flex;
 		flex-direction: column;
@@ -249,12 +253,19 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 			typicalPerMonth: 2,
 			extraPerMonth: 3,
 			extraTimesAYear: 2,
+			hasExtra: true,
 		},
 		weekly: {
 			paychecksPerYear: 52,
 			typicalPerMonth: 4,
 			extraPerMonth: 5,
 			extraTimesAYear: 4,
+			hasExtra: true,
+		},
+		semimonthly: {
+			paychecksPerYear: 24,
+			typicalPerMonth: 2,
+			hasExtra: false,
 		},
 	};
 
@@ -262,6 +273,8 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	var input = root.querySelector('.calc-input');
 	var freqBtns = root.querySelectorAll('.calc-freq-btn');
+	var statsRowEl = root.querySelector('.calc-stats-row');
+	var extraStatEl = root.querySelector('.calc-stat-extra');
 	var typicalEl = root.querySelector('[data-role="typical"]');
 	var typicalNoteEl = root.querySelector('[data-role="typical-note"]');
 	var extraEl = root.querySelector('[data-role="extra"]');
@@ -290,24 +303,34 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		var paycheck = parseFloat(raw) || 0;
 
 		var typical = paycheck * config.typicalPerMonth;
-		var extra = paycheck * config.extraPerMonth;
 		var annual = paycheck * config.paychecksPerYear;
 		var average = annual / 12;
 		var buffer = Math.max(0, average - typical);
 
 		typicalNoteEl.textContent = '(' + config.typicalPerMonth + ' paychecks)';
-		extraLabelEl.textContent = config.extraPerMonth + '-paycheck month';
-		extraNoteEl.textContent = '(~' + config.extraTimesAYear + 'x a year)';
-		bufferLabelEl.textContent = 'Cushion needed for a ' + config.typicalPerMonth + '-paycheck month';
-
 		typicalEl.textContent = formatCurrency(typical);
-		extraEl.textContent = formatCurrency(extra);
 		averageEl.textContent = formatCurrency(average);
 		bufferEl.textContent = formatCurrency(buffer);
 
+		if (config.hasExtra) {
+			var extra = paycheck * config.extraPerMonth;
+			extraStatEl.style.display = '';
+			statsRowEl.classList.remove('two-col');
+			extraLabelEl.textContent = config.extraPerMonth + '-paycheck month';
+			extraNoteEl.textContent = '(~' + config.extraTimesAYear + 'x a year)';
+			extraEl.textContent = formatCurrency(extra);
+			bufferLabelEl.textContent = 'Cushion needed for a ' + config.typicalPerMonth + '-paycheck month';
+		} else {
+			extraStatEl.style.display = 'none';
+			statsRowEl.classList.add('two-col');
+			bufferLabelEl.textContent = 'Cushion needed';
+		}
+
 		if (paycheck > 0) {
 			averageMathEl.textContent = formatCurrency(paycheck) + ' × ' + config.paychecksPerYear + ' ÷ 12';
-			bufferMathEl.textContent = formatCurrency(average) + ' average − ' + formatCurrency(typical) + ' in a ' + config.typicalPerMonth + '-paycheck month';
+			bufferMathEl.textContent = config.hasExtra
+				? formatCurrency(average) + ' average − ' + formatCurrency(typical) + ' in a ' + config.typicalPerMonth + '-paycheck month'
+				: 'Semi-monthly pay always lines up evenly with the calendar — no buffer needed. You\'re all set.';
 		} else {
 			averageMathEl.textContent = '';
 			bufferMathEl.textContent = '';
