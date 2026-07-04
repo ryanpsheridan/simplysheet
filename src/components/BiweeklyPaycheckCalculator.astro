@@ -19,31 +19,32 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		<p class="calc-input-hint">If your paycheck amount changes, use your average from the last few months instead of a single one.</p>
 	</div>
 
-	<div class="calc-results">
-		<div class="calc-result">
-			<span class="calc-result-label">Typical month (2 paychecks)</span>
-			<span class="calc-result-value" data-role="two">$0</span>
+	<div class="calc-stats-row">
+		<div class="calc-stat">
+			<span class="calc-stat-label">Typical month <small>(2 paychecks)</small></span>
+			<span class="calc-stat-value" data-role="two">$0</span>
 		</div>
-		<div class="calc-result">
-			<span class="calc-result-label">Three-paycheck month (about twice a year)</span>
-			<span class="calc-result-value" data-role="three">$0</span>
+		<div class="calc-stat">
+			<span class="calc-stat-label">3-paycheck month <small>(~2x a year)</small></span>
+			<span class="calc-stat-value" data-role="three">$0</span>
 		</div>
-		<div class="calc-result">
-			<span class="calc-result-label">Steady average (if you'd rather budget one number all year)</span>
-			<span class="calc-result-value" data-role="average">$0</span>
-			<span class="calc-result-math" data-role="average-math"></span>
-		</div>
-		<div class="calc-result">
-			<span class="calc-result-label">Buffer to keep on hand for a 2-paycheck month</span>
-			<span class="calc-result-value" data-role="buffer">$0</span>
-			<span class="calc-result-math" data-role="buffer-math"></span>
+		<div class="calc-stat">
+			<span class="calc-stat-label">Steady average <small>(one number all year)</small></span>
+			<span class="calc-stat-value" data-role="average">$0</span>
+			<span class="calc-stat-math" data-role="average-math"></span>
 		</div>
 	</div>
 
-	<a href="/templates/budget-spreadsheet/" class="btn btn-primary calc-cta">
-		Track it in a budget spreadsheet
-		<span class="arrow">&rarr;</span>
-	</a>
+	<div class="calc-highlight">
+		<span class="calc-highlight-label">Cushion needed for a 2-paycheck month</span>
+		<span class="calc-highlight-value" data-role="buffer">$0</span>
+		<span class="calc-highlight-math" data-role="buffer-math"></span>
+
+		<a href="/templates/budget-spreadsheet/" class="btn btn-primary calc-cta">
+			Track it in a budget spreadsheet
+			<span class="arrow">&rarr;</span>
+		</a>
+	</div>
 </div>
 
 <style>
@@ -100,22 +101,57 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		margin: var(--space-xs) 0 0;
 	}
 
-	/* ——— Results ——— */
+	/* ——— Reference stats (de-emphasized, compact) ——— */
 
-	.calc-results {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-md);
+	.calc-stats-row {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-sm);
 		margin-top: var(--space-md);
 	}
-	.calc-result-label {
+	.calc-stat {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2xs);
+	}
+	.calc-stat-label {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		line-height: var(--leading-snug);
+	}
+	.calc-stat-label small {
+		display: block;
+		font-size: 0.95em;
+	}
+	.calc-stat-value {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-normal);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+	}
+	.calc-stat-math {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+
+	/* ——— Highlight card: the actionable takeaway + CTA ——— */
+
+	.calc-highlight {
+		display: flex;
+		flex-direction: column;
+		margin-top: var(--space-md);
+		padding: var(--space-md);
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
+	}
+	.calc-highlight-label {
 		display: block;
 		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
+		font-weight: var(--weight-medium);
 		color: var(--color-text);
 		margin-bottom: var(--space-2xs);
 	}
-	.calc-result-value {
+	.calc-highlight-value {
 		display: block;
 		font-size: var(--text-h2);
 		font-weight: var(--weight-normal);
@@ -123,7 +159,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		color: var(--color-text);
 		margin-bottom: var(--space-2xs);
 	}
-	.calc-result-math {
+	.calc-highlight-math {
 		display: block;
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
@@ -135,6 +171,15 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	.calc-cta {
 		width: 100%;
 		margin-top: var(--space-sm);
+	}
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 480px) {
+		.calc-stats-row {
+			grid-template-columns: 1fr;
+			gap: var(--space-sm);
+		}
 	}
 </style>
 

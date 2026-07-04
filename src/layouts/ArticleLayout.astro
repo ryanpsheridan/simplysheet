@@ -9,6 +9,13 @@ import ProductPromo from '../components/ProductPromo.astro';
 import TagPills from '../components/TagPills.astro';
 import { SITE_TITLE } from '../consts';
 
+function slugifyFaq(text: string): string {
+	return text
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/(^-|-$)/g, '');
+}
+
 const TAG_MAP: Record<string, string> = {
 	'expense-tracking': 'Expense Tracking',
 	'couples-budgeting': 'Couples Budgeting',
@@ -207,11 +214,11 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 			)}
 
 			{faq && faq.length > 0 && (
-				<section class="faq">
+				<section class="faq" id="faq">
 					<h2 class="faq-heading">Frequently asked questions</h2>
 					<div class="faq-list">
 						{faq.map(({ question, answer }: { question: string; answer: string }) => (
-							<details class="faq-item">
+							<details class="faq-item" id={slugifyFaq(question)}>
 								<summary class="faq-q">
 									<span>{question}</span>
 									<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -236,6 +243,11 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		<Footer />
 
 		<script>
+			if (location.hash) {
+				const linkedFaq = document.getElementById(location.hash.slice(1));
+				if (linkedFaq && linkedFaq.classList.contains('faq-item')) linkedFaq.open = true;
+			}
+
 			document.querySelectorAll('.faq-item').forEach((details) => {
 				const summary = details.querySelector('summary');
 				const wrap = details.querySelector('.faq-a-wrap');
@@ -543,6 +555,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 
 	.faq-item {
 		border-bottom: 1px solid var(--color-border);
+		scroll-margin-top: 4.5rem;
 	}
 
 	.faq-item:last-child {
