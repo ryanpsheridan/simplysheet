@@ -16,7 +16,7 @@ if (!template) {
 
 const { title, description, badge, midImage, heroImage } = template.data;
 const name = title.replace(/ for Google Sheets & Excel$/, '');
-const url = `/templates/${slug}/`;
+const url = `/spreadsheets/${slug}/`;
 const alt = `${name} preview`;
 const image = variant === 'row' ? heroImage : midImage;
 ---

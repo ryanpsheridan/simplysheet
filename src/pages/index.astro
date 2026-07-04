@@ -52,7 +52,7 @@ const templates = (await getCollection('templates'))
 	.map((t) => ({
 		name: t.data.title.replace(/ for Google Sheets & Excel$/, ''),
 		desc: t.data.description,
-		url: `/templates/${t.id}/`,
+		url: `/spreadsheets/${t.id}/`,
 		image: t.data.heroImage,
 		badge: t.data.badge,
 	}));
@@ -172,7 +172,7 @@ const templates = (await getCollection('templates'))
 				))}
 			</div>
 			<div class="templates-cta-wrap">
-				<a href="/templates" class="btn btn-primary">View all spreadsheets <span class="arrow">&rarr;</span></a>
+				<a href="/spreadsheets" class="btn btn-primary">View all spreadsheets <span class="arrow">&rarr;</span></a>
 			</div>
 		</div>
 	</section>

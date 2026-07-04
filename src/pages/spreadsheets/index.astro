@@ -21,7 +21,7 @@ const templates = (await getCollection('templates'))
 
 		<div class="templates-grid">
 			{templates.map((t) => (
-				<a href={`/templates/${t.id}/`} class="template-card">
+				<a href={`/spreadsheets/${t.id}/`} class="template-card">
 					<div class="template-thumb">
 						<img src={t.data.heroImage} alt={`${t.data.title} preview`} width="600" height="400" loading="lazy" />
 					</div>
