@@ -25,15 +25,18 @@ if (urlList.length === 0) {
 	process.exit(0);
 }
 
-const response = await fetch('https://api.indexnow.org/indexnow', {
-	method: 'POST',
-	headers: { 'Content-Type': 'application/json; charset=utf-8' },
-	body: JSON.stringify({
-		host: HOST,
-		key: KEY,
-		keyLocation: `https://${HOST}/${KEY}.txt`,
-		urlList,
-	}),
-});
-
-console.log(`[indexnow] Submitted ${urlList.length} URLs — status ${response.status}`);
+try {
+	const response = await fetch('https://api.indexnow.org/indexnow', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
+		body: JSON.stringify({
+			host: HOST,
+			key: KEY,
+			keyLocation: `https://${HOST}/${KEY}.txt`,
+			urlList,
+		}),
+	});
+	console.log(`[indexnow] Submitted ${urlList.length} URLs — status ${response.status}`);
+} catch (err) {
+	console.log(`[indexnow] Skipping — request failed: ${err.message}`);
+}
