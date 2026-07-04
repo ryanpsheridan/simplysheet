@@ -109,6 +109,12 @@ That leaves this paycheck fully allocated at $2,015 spent, with roughly $135 lef
 
 Notice that nothing here depends on "monthly income" as a single number. Each paycheck has its own job to do, and as long as both jobs get done, the month takes care of itself, regardless of which two Fridays the paychecks actually land on.
 
+If matching specific bills to specific paychecks feels too prescriptive, a simpler variation works just as well: instead of deciding that rent always comes from the first check and the car payment always comes from the second, add up a few months of take-home pay, divide by the number of paychecks, and budget against that average number every single pay period instead. You're still budgeting paycheck to paycheck, not by the calendar month — you're just smoothing over which specific bill happens to land on which specific check, which gives you a consistent number to expect every payday instead of a different mental map each time. (This is different from the "average income divided by 12" mistake below — you're still working from your real per-paycheck rhythm, just not micromanaging where each bill sits within it.)
+
+## Interactive Calculator (Coming Soon)
+
+*A biweekly paycheck budget calculator is in progress for this page. Enter your take-home pay per paycheck and it will show your two-paycheck and three-paycheck month totals, a suggested per-paycheck bill breakdown, and a steady average number to budget against if you'd rather not track exactly which bill lands on which check.*
+
 ## How to plan for bills that fall between paychecks
 
 The trickiest part of biweekly budgeting isn't the bills that land neatly after a paycheck, it's the ones that don't.
@@ -136,7 +142,7 @@ If you already know which months have three paychecks (see the section above), y
 
 ## Common mistakes people make with biweekly budgets
 
-**Budgeting off an average instead of actual paychecks.** Dividing your annual income by 12 gives you a number that doesn't match what actually lands in your account most months, which makes it hard to trust the budget when reality doesn't match the plan.
+**Budgeting off a monthly average instead of your real paycheck rhythm.** Dividing your annual income by 12 gives you a number that assumes income arrives in even monthly chunks, which a biweekly schedule never actually does. That's different from averaging your take-home per paycheck (see the example above) — the mistake here is losing track of your pay schedule entirely, not the averaging itself.
 
 **Not noticing three-paycheck months in advance.** Without planning ahead, an extra paycheck often just blends into regular spending instead of doing something useful.
 
@@ -153,10 +159,6 @@ If you already know which months have three paychecks (see the section above), y
 - **Recheck your bill-to-paycheck assignments once or twice a year**, especially after a rent increase, a new subscription, or a bill's due date changing.
 - **Keep the system visible.** [Tracking where your money actually goes](/articles/track-expenses-before-budgeting/) for a month or two makes it much easier to see whether your paycheck assignments still match reality.
 - **Use a simple spreadsheet to lay out both paychecks side by side.** Seeing which bills are assigned to which check, and what's left over after each one, makes the whole system easier to trust than trying to hold it all in your head. A [budget spreadsheet](/templates/budget-spreadsheet/) built for this kind of paycheck-by-paycheck tracking can make the month-to-month upkeep a lot faster.
-
-## Interactive Calculator (Coming Soon)
-
-*A biweekly paycheck budget calculator is in progress for this page. It will let you enter your take-home pay per paycheck and automatically show your two-paycheck and three-paycheck month totals, plus a suggested per-paycheck bill breakdown.*
 
 ## The bottom line
 
