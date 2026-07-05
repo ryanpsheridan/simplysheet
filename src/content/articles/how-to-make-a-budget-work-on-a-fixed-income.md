@@ -16,11 +16,6 @@ faq:
     answer: "The core principles stay the same, but the priorities shift. Getting a clear picture of essential expenses and building even a modest emergency fund matter more, since there's no extra paycheck to absorb a surprise cost."
   - question: "Where should someone on a fixed income start?"
     answer: "Track spending for one month without changing anything yet. Thirty days is usually enough to see real patterns and figure out which expenses are genuinely fixed versus flexible."
-schema:
-  "@context": "https://schema.org"
-  "@type": "Article"
-  headline: "How to Make a Budget Work on a Fixed Income"
-  description: "Budgeting on a fixed income isn't about finding extra money that isn't there. It's about understanding where your money already goes and what's actually flexible."
 ---
 
 People living on a fixed income often hear the same budgeting advice as everyone else: spend less, earn more.

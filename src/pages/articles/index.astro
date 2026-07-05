@@ -451,6 +451,11 @@ const templates = [
 
 	tagButtons.forEach((b) => b.addEventListener('click', () => setTag(b.dataset.tag!)));
 
+	const requestedTag = new URLSearchParams(location.search).get('tag');
+	if (requestedTag && Array.from(tagButtons).some((b) => b.dataset.tag === requestedTag)) {
+		setTag(requestedTag);
+	}
+
 	sortSelect?.addEventListener('change', () => {
 		activeSort = sortSelect.value;
 		applyFilterAndSort();

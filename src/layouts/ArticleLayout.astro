@@ -44,10 +44,12 @@ const heroImage = cardImage || image;
 const tocHeadings = headings.filter((h) => h.depth === 2);
 
 const allArticles = await getCollection('articles');
-const related = allArticles
+const others = allArticles
 	.filter((a) => a.id !== id)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 4);
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const tagMatched = others.filter((a) => a.data.tags?.some((t) => tags.includes(t)));
+const untagged = others.filter((a) => !tagMatched.includes(a));
+const related = [...tagMatched, ...untagged].slice(0, 4);
 
 const schema = {
 	'@context': 'https://schema.org',
