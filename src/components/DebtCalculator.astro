@@ -22,7 +22,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	<div class="compare-card">
 		<div class="compare-row">
 			<div class="compare-meta">
-				<span class="compare-method">Avalanche</span>
+				<span class="compare-method compare-method--avalanche">Avalanche</span>
 				<span class="compare-desc">Highest rate first</span>
 			</div>
 			<div class="compare-track">
@@ -31,7 +31,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		</div>
 		<div class="compare-row">
 			<div class="compare-meta">
-				<span class="compare-method">Snowball</span>
+				<span class="compare-method compare-method--snowball">Snowball</span>
 				<span class="compare-desc">Smallest balance first</span>
 			</div>
 			<div class="compare-track">
@@ -145,6 +145,22 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		font-size: var(--text-small);
 		font-weight: var(--weight-normal);
 		color: var(--color-text);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+	.compare-method::before {
+		content: '';
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+	.compare-method--avalanche::before {
+		background: var(--color-debt-avalanche);
+	}
+	.compare-method--snowball::before {
+		background: var(--color-debt-snowball);
 	}
 
 	.compare-desc {
@@ -166,11 +182,11 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	}
 
 	.compare-fill--avalanche {
-		background: var(--color-text-heading);
+		background: var(--color-debt-avalanche);
 	}
 
 	.compare-fill--snowball {
-		background: var(--color-text-secondary);
+		background: var(--color-debt-snowball);
 	}
 
 	.compare-context {

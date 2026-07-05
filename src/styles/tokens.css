@@ -34,6 +34,11 @@
   --color-accent-info:         #196EDD;
   --color-accent-info-bg:      #EEF4FF;
 
+  /* Identity colors for the debt avalanche vs. snowball comparison — neither
+     implies "better," just distinguishes the two equally valid strategies. */
+  --color-debt-avalanche:      #2E5AAC;
+  --color-debt-snowball:       #7C4DFF;
+
   /* ——— Typography ——— */
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
