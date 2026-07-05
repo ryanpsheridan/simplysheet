@@ -7,7 +7,7 @@ import Header from '../components/Header.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ProductPromo from '../components/ProductPromo.astro';
 import TagPills from '../components/TagPills.astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, TAG_MAP } from '../consts';
 
 function slugifyFaq(text: string): string {
 	return text
@@ -15,16 +15,6 @@ function slugifyFaq(text: string): string {
 		.replace(/[^a-z0-9]+/g, '-')
 		.replace(/(^-|-$)/g, '');
 }
-
-const TAG_MAP: Record<string, string> = {
-	'expense-tracking': 'Expense Tracking',
-	'couples-budgeting': 'Couples Budgeting',
-	'debt-payoff': 'Debt Payoff',
-	'savings-goals': 'Savings Goals',
-	'irregular-income': 'Irregular Income',
-	'net-worth': 'Net Worth',
-	'budgeting-styles': 'Budgeting Styles',
-};
 
 interface Heading {
 	depth: number;
