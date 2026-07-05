@@ -286,7 +286,7 @@ p {
 .product-thumb {
 	display: block;
 	width: 100%;
-	aspect-ratio: 3 / 2;
+	aspect-ratio: 10 / 9;
 	border-radius: var(--radius-md);
 	background: var(--color-bg-panel);
 	overflow: hidden;
