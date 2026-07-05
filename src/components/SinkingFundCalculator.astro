@@ -109,7 +109,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     border-radius: var(--radius-md);
     padding: var(--space-md);
     margin: var(--space-lg) 0;
-    background: var(--color-bg-surface);
+    background: var(--color-bg-panel);
   }
 
   /* ——— Progress ——— */
@@ -125,7 +125,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-progress-bar {
     height: 4px;
-    background: var(--color-bg-panel);
+    background: var(--color-bg-surface);
     border-radius: 2px;
     overflow: hidden;
   }
@@ -139,7 +139,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   /* ——— Question ——— */
 
   .sfc-q-text {
-    font-size: var(--text-h1);
+    font-size: var(--text-h2);
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
     color: var(--color-text);
@@ -289,6 +289,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     border: 1px solid var(--color-divider);
     border-radius: var(--radius-sm);
     overflow: hidden;
+    background: var(--color-bg-surface);
     transition: border-color 0.15s;
   }
   .sfc-money-field:focus-within {
@@ -322,7 +323,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     font-size: var(--text-body);
     padding: 0.625rem 0.75rem;
     color: var(--color-text);
-    background: transparent;
+    background: var(--color-bg-surface);
     box-sizing: border-box;
     transition: border-color 0.15s;
     outline: none;
@@ -334,7 +335,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   /* ——— Results ——— */
 
   .sfc-results {
-    background: var(--color-bg-panel);
+    background: var(--color-bg-surface);
     border-radius: var(--radius-md);
     padding: var(--space-md);
     margin-bottom: var(--space-md);
@@ -422,9 +423,6 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   @media (max-width: 480px) {
     .sfc {
       padding: var(--space-sm);
-    }
-    .sfc-q-text {
-      font-size: var(--text-h2);
     }
     .sfc-opts.sfc-opts--grid {
       grid-template-columns: repeat(2, 1fr);

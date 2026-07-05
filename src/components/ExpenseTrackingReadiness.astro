@@ -37,7 +37,7 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 		border-radius: var(--radius-md);
 		padding: 2rem;
 		margin: var(--space-lg) 0;
-		background: var(--color-bg-surface);
+		background: var(--color-bg-panel);
 	}
 
 	/* ——— Progress ——— */
@@ -53,7 +53,7 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 	}
 	.quiz-progress-bar {
 		height: 4px;
-		background: var(--color-bg-panel);
+		background: var(--color-bg-surface);
 		border-radius: 2px;
 		overflow: hidden;
 	}
@@ -68,7 +68,7 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 	/* ——— Question ——— */
 
 	.quiz-question-text {
-		font-size: var(--text-h1);
+		font-size: var(--text-h2);
 		line-height: var(--leading-snug);
 		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
@@ -129,10 +129,14 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 		align-items: center;
 		justify-content: center;
 		margin-bottom: var(--space-md);
-		background: var(--color-bg-panel);
+		background: var(--color-bg-surface);
 	}
 	:global(.quiz-result-icon .material-symbols-rounded) {
+		font-family: 'Material Symbols Rounded';
+		font-weight: normal;
+		font-style: normal;
 		font-size: 28px;
+		line-height: 1;
 		color: var(--color-text-heading);
 	}
 	.quiz-result-label {
@@ -166,7 +170,7 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text);
-		background: var(--color-bg-panel);
+		background: var(--color-bg-surface);
 		border-radius: var(--radius-md);
 		padding: var(--space-md);
 		margin-bottom: var(--space-md);
@@ -196,9 +200,6 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 		}
 		.quiz-result-title {
 			font-size: var(--text-h3);
-		}
-		.quiz-question-text {
-			font-size: var(--text-h2);
 		}
 	}
 </style>
@@ -265,7 +266,7 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "check_circle",
 			color: "var(--color-accent-positive)",
 			iconBg: "var(--color-accent-positive-bg)",
-			tipBg: "var(--color-bg-panel)",
+			tipBg: "var(--color-bg-surface)",
 			desc: "You've done the hard part. You have real data, you understand your patterns, and you know where your money actually goes. A budget built on this foundation is far more likely to stick than one built on assumptions.",
 			tip: "Take your tracked expenses and group them into five or six broad categories. Use your actual averages as starting points — not aspirational targets. You can adjust over time, but starting with reality gives you a budget you can actually follow.",
 			rec: "A budget spreadsheet with category tracking would help you turn your tracked data into an organized monthly plan.",
@@ -277,7 +278,7 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "trending_up",
 			color: "var(--color-accent-caution)",
 			iconBg: "var(--color-accent-caution-bg)",
-			tipBg: "var(--color-bg-panel)",
+			tipBg: "var(--color-bg-surface)",
 			desc: "You've started building awareness, and that matters more than most people realize. A few areas are still fuzzy, which is completely normal at this stage. Another week or two of tracking will fill in the gaps and give you much more confidence.",
 			tip: "Focus on the categories that still feel unclear. Pay extra attention to spending that varies week to week — restaurants, shopping, and entertainment tend to be the hardest to estimate without real data. A couple more weeks will sharpen the picture significantly.",
 			rec: "Keep tracking for now, and when you're ready, a simple budget template can help you organize everything you've learned.",
@@ -289,7 +290,7 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "edit_note",
 			color: "var(--color-accent-critical)",
 			iconBg: "var(--color-accent-critical-bg)",
-			tipBg: "var(--color-bg-panel)",
+			tipBg: "var(--color-bg-surface)",
 			desc: "You're at the beginning of the process, and that's a perfectly good place to be. Starting a budget right now would mean guessing at most of your numbers, which is exactly how budgets end up feeling unrealistic. Give yourself time to collect real information first.",
 			tip: "Start with something simple. Write down every expense for the next thirty days — just the date, the amount, and a broad category. Don't try to organize or judge anything yet. The goal right now is awareness, not control. The patterns will start showing up on their own.",
 			rec: "Once you have a month of data, you'll be in a much stronger position to build a budget that actually reflects your life.",

@@ -121,6 +121,9 @@ const templates = (await getCollection('templates'))
 								</div>
 							</a>
 						))}
+						<div class="home-row-viewall">
+							<a href="/articles" class="btn btn-secondary">All articles <span class="arrow">&rarr;</span></a>
+						</div>
 					</div>
 				</div>
 			)}
@@ -145,9 +148,6 @@ const templates = (await getCollection('templates'))
 					</a>
 				</div>
 			</div>
-		</div>
-		<div class="home-rows-cta-wrap">
-			<a href="/articles" class="btn btn-secondary">All articles <span class="arrow">&rarr;</span></a>
 		</div>
 	</section>
 
@@ -394,6 +394,13 @@ const templates = (await getCollection('templates'))
 		color: var(--color-text-muted);
 	}
 
+	/* ——— View all articles tile ——— */
+
+	.home-row-viewall {
+		display: flex;
+		align-items: flex-start;
+	}
+
 	/* ——— Tools row ——— */
 
 	.tools-row-items {
@@ -417,11 +424,6 @@ const templates = (await getCollection('templates'))
 	.tool-item .home-row-title {
 		font-size: var(--text-small);
 		-webkit-line-clamp: 2;
-	}
-
-	.home-rows-cta-wrap {
-		max-width: var(--max-width);
-		margin: var(--space-lg) auto 0;
 	}
 
 	/* ——— Quiz banner ——— */

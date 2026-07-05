@@ -26,7 +26,7 @@ const description = 'Take our 60-second quiz to uncover your unique money person
 
 			<div class="quiz-article-link">
 				<a href="/articles/budgeting-styles/">
-					<img src="/images/card-budgeting-styles.svg" alt="The 4 Budgeting Styles" width="960" height="540" loading="lazy" />
+					<img src="/images/card-v2-budgeting-styles.svg" alt="The 4 Budgeting Styles" width="960" height="540" loading="lazy" />
 					<div class="quiz-article-link-text">
 						<span class="quiz-article-link-label">Related article</span>
 						<span class="quiz-article-link-title">The 4 Budgeting Styles: Which One Are You?</span>
@@ -36,13 +36,16 @@ const description = 'Take our 60-second quiz to uncover your unique money person
 			</div>
 
 			<div class="quiz-callout">
-				<p class="quiz-callout-text">No matter your type, the right spreadsheet can help you stay on track. Browse all of our <a href="https://simplysheetdesign.etsy.com">budget templates</a> to find the one that fits how you manage money.</p>
+				<p class="quiz-callout-text">No matter your type, the right spreadsheet can help you stay on track. Browse all of our <a href="/spreadsheets/">budget templates</a> to find the one that fits how you manage money.</p>
 			</div>
 		</article>
 	</main>
 </BaseLayout>
 
 <style>
+	main {
+		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
+	}
 	.quiz-header {
 		margin-bottom: var(--space-sm);
 	}
