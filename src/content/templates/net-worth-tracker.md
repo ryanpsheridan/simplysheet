@@ -6,10 +6,10 @@ price: 9.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4510784687/net-worth-tracker-for-google-sheets-and"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4510785369/net-worth-tracker-for-google-sheets-and"
-heroImage: "/images/featured budget thumbnail-net worth tracker-right-positioned.png"
-lightImage: "/images/featured budget thumbnail-net worth tracker-light-theme-right-positioned.png"
-midImage: "/images/featured budget thumbnail-net worth tracker.png"
-midImageLight: "/images/featured budget thumbnail-net worth tracker-light-theme.png"
+heroImage: "/images/featured budget thumbnail-net worth tracker-right-positioned-v2.png"
+lightImage: "/images/featured budget thumbnail-net worth tracker-light-theme-right-positioned-v2.png"
+midImage: "/images/featured budget thumbnail-net worth tracker-v2.png"
+midImageLight: "/images/featured budget thumbnail-net worth tracker-light-theme-v2.png"
 features:
   - "Track all assets and liabilities in one place"
   - "Monthly net worth snapshots"
