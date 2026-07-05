@@ -16,11 +16,6 @@ faq:
     answer: "Often, yes. A budget with three or four broad categories that you actually check every week will outperform one with eighteen categories you stopped opening after a month. The goal is a system that's still running six months from now, not the most sophisticated one possible."
   - question: "What should someone do if budgeting has never worked for them before?"
     answer: "Start smaller than feels necessary. Track expenses for 30 days before building any categories, then build out just three or four broad categories and review them once a week rather than trying to optimize everything from day one."
-schema:
-  '@context': 'https://schema.org'
-  '@type': 'Article'
-  headline: 'Why Most Budgets Fail (And How to Build One That Lasts)'
-  description: "Most budgets don't fail because people lack discipline. They fail because the system doesn't fit how people actually manage money."
 ---
 
 Sarah downloads a budgeting app in January. She sets up eighteen categories, connects her accounts, and checks it every day for the first week. By February she's checking once every two weeks. By March she hasn't opened it at all.

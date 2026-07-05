@@ -427,6 +427,12 @@ const templates = [
 			max-width: none;
 			flex-basis: 100%;
 		}
+		.filter-tabs {
+			margin-left: calc(-1 * var(--space-md));
+			margin-right: calc(-1 * var(--space-md));
+			padding-left: var(--space-md);
+			padding-right: var(--space-md);
+		}
 	}
 </style>
 
@@ -450,6 +456,11 @@ const templates = [
 	}
 
 	tagButtons.forEach((b) => b.addEventListener('click', () => setTag(b.dataset.tag!)));
+
+	const requestedTag = new URLSearchParams(location.search).get('tag');
+	if (requestedTag && Array.from(tagButtons).some((b) => b.dataset.tag === requestedTag)) {
+		setTag(requestedTag);
+	}
 
 	sortSelect?.addEventListener('change', () => {
 		activeSort = sortSelect.value;
