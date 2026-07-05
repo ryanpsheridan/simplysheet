@@ -5,7 +5,7 @@ import SinkingFundCalculator from '../../components/SinkingFundCalculator.astro'
 import { SITE_TITLE } from '../../consts';
 
 const title = 'Sinking Fund Calculator — Monthly Savings Planner';
-const description = 'Find out if your expense is a good candidate for a sinking fund, then calculate exactly how much to save each month to hit your goal on time.';
+const description = 'Enter a target amount and target date to calculate exactly how much to save each month — plus the weekly and biweekly equivalent — so your sinking fund is ready on time.';
 ---
 
 <BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
@@ -14,13 +14,13 @@ const description = 'Find out if your expense is a good candidate for a sinking 
 		<article>
 			<header class="calc-header">
 				<h1>Sinking Fund Calculator</h1>
-				<p class="calc-intro">Many expenses that feel like emergencies aren't really surprises — they're things we knew were coming but never planned for. This tool first checks whether your expense is a good candidate for a sinking fund, then calculates exactly how much to set aside each month so the money is ready when you need it.</p>
+				<p class="calc-intro">Enter your target amount and the month you'll need it by, and this tool calculates exactly how much to set aside each month — plus the weekly and biweekly equivalent — so the money is ready when you need it.</p>
 			</header>
 
-			<SinkingFundCalculator />
+			<SinkingFundCalculator mode="calculator" />
 
 			<div class="calc-callout">
-				<p class="calc-callout-text">For a deeper look at how sinking funds work and why they make budgeting feel easier, read <a href="/articles/sinking-funds-explained/">How Sinking Funds Help You Stop Paying for Emergencies That Aren't Actually Emergencies</a>. Once you have your monthly amounts, a <a href="/spreadsheets/savings-goals-tracker/">savings goals tracker</a> can help you monitor multiple funds at once and see which ones are on pace.</p>
+				<p class="calc-callout-text">Not sure whether this expense is a good fit for a sinking fund in the first place? Take the <a href="/tools/sinking-fund-assessment/">sinking fund assessment</a> to find out. For a deeper look at how sinking funds work and why they make budgeting feel easier, read <a href="/articles/sinking-funds-explained/">How Sinking Funds Help You Stop Paying for Emergencies That Aren't Actually Emergencies</a>. Once you have your monthly amounts, a <a href="/spreadsheets/savings-goals-tracker/">savings goals tracker</a> can help you monitor multiple funds at once and see which ones are on pace.</p>
 			</div>
 		</article>
 	</main>

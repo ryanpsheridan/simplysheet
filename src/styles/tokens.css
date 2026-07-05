@@ -34,6 +34,12 @@
   --color-accent-info:         #196EDD;
   --color-accent-info-bg:      #EEF4FF;
 
+  /* Debt avalanche vs. snowball comparison: avalanche gets an identity color,
+     snowball stays grayscale — neither implies "better," just distinguishes
+     the two equally valid strategies. */
+  --color-debt-avalanche:      #2E5AAC;
+  --color-debt-snowball:       var(--color-text-secondary);
+
   /* ——— Typography ——— */
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;

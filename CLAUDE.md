@@ -207,6 +207,8 @@ Calculators and assessments stay grayscale-first, but may use a small, consisten
 
 Don't apply these to a comparison between two equally valid choices (debt snowball vs. avalanche, the four budgeting styles, etc.) — coloring one option green and the other something else implies it's objectively better when it isn't. Those stay grayscale, or keep their own separate identity colors if they already have them.
 
+The debt snowball vs. avalanche comparison (`DebtCalculator.astro`) uses `--color-debt-avalanche` (blue) for the avalanche bar and keeps the snowball bar grayscale (`--color-debt-snowball` maps to `--color-text-secondary`), defined in `tokens.css`. No green/red judgment implied — just enough distinction to tell the two bars apart.
+
 ## Content Schema
 
 Defined in `src/content.config.ts`. Key optional fields:

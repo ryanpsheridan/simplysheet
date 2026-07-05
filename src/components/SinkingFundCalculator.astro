@@ -1,80 +1,103 @@
 ---
+interface Props {
+  mode?: 'full' | 'assessment' | 'calculator';
+}
+const { mode = 'full' } = Astro.props;
+const showAssessment = mode !== 'calculator';
+const showCalculator = mode !== 'assessment';
 const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<div class="sfc" id={id}>
+<div class="sfc" id={id} data-mode={mode}>
 
   <!-- Phase 1: Assessment -->
-  <div class="sfc-assess" id={`${id}-assess`}>
-    <div class="sfc-progress">
-      <span class="sfc-progress-text" id={`${id}-ptext`}>Question 1 of 5</span>
-      <div class="sfc-progress-bar">
-        <div class="sfc-progress-fill" id={`${id}-pfill`} style="width:20%"></div>
+  {showAssessment && (
+    <div class="sfc-assess" id={`${id}-assess`}>
+      <div class="sfc-progress">
+        <span class="sfc-progress-text" id={`${id}-ptext`}>Question 1 of 5</span>
+        <div class="sfc-progress-bar">
+          <div class="sfc-progress-fill" id={`${id}-pfill`} style="width:20%"></div>
+        </div>
       </div>
+      <h2 class="sfc-q-text" id={`${id}-qtext`}></h2>
+      <p class="sfc-q-hint" id={`${id}-qhint`}></p>
+      <div class="sfc-opts" id={`${id}-opts`}></div>
     </div>
-    <h2 class="sfc-q-text" id={`${id}-qtext`}></h2>
-    <p class="sfc-q-hint" id={`${id}-qhint`}></p>
-    <div class="sfc-opts" id={`${id}-opts`}></div>
-  </div>
+  )}
 
   <!-- Phase 2: Recommendation + Calculator -->
-  <div class="sfc-phase2" id={`${id}-phase2`} hidden>
+  <div class="sfc-phase2" id={`${id}-phase2`} hidden={showAssessment}>
 
-    <div class="sfc-rec" id={`${id}-rec`}>
-      <div class="sfc-rec-icon" id={`${id}-rec-icon`}></div>
-      <p class="sfc-rec-eyebrow">Assessment result</p>
-      <h2 class="sfc-rec-title" id={`${id}-rec-title`}></h2>
-      <p class="sfc-rec-body" id={`${id}-rec-body`}></p>
-      <p class="sfc-rec-links" id={`${id}-rec-links`}></p>
-    </div>
-
-    <div class="sfc-divider"></div>
-
-    <h3 class="sfc-calc-heading">Calculate your monthly savings</h3>
-
-    <div class="sfc-input-grid">
-      <div class="sfc-field">
-        <label class="sfc-label" for={`${id}-amount`}>Target amount</label>
-        <div class="sfc-money-field">
-          <span class="sfc-prefix">$</span>
-          <input type="text" id={`${id}-amount`} class="sfc-money-input" inputmode="decimal" placeholder="0" autocomplete="off" />
+    {showAssessment && (
+      <>
+        <div class="sfc-rec" id={`${id}-rec`}>
+          <div class="sfc-rec-icon" id={`${id}-rec-icon`}></div>
+          <p class="sfc-rec-eyebrow">Assessment result</p>
+          <h2 class="sfc-rec-title" id={`${id}-rec-title`}></h2>
+          <p class="sfc-rec-body" id={`${id}-rec-body`}></p>
+          <p class="sfc-rec-links" id={`${id}-rec-links`}></p>
         </div>
-      </div>
-      <div class="sfc-field">
-        <label class="sfc-label" for={`${id}-date`}>Target month</label>
-        <input type="month" id={`${id}-date`} class="sfc-month-input" />
-      </div>
-    </div>
+        <div class="sfc-divider"></div>
+      </>
+    )}
 
-    <div class="sfc-results" id={`${id}-results`} hidden>
-      <div class="sfc-results-grid">
-        <div class="sfc-stat sfc-stat--hero">
-          <span class="sfc-stat-label">Save each month</span>
-          <span class="sfc-stat-value" id={`${id}-monthly`}>—</span>
-        </div>
-        <div class="sfc-stat">
-          <span class="sfc-stat-label">Months remaining</span>
-          <span class="sfc-stat-value" id={`${id}-mcount`}>—</span>
-        </div>
-        <div class="sfc-stat">
-          <span class="sfc-stat-label">Weekly equivalent</span>
-          <span class="sfc-stat-value" id={`${id}-weekly`}>—</span>
-        </div>
-        <div class="sfc-stat">
-          <span class="sfc-stat-label">Every two weeks</span>
-          <span class="sfc-stat-value" id={`${id}-biweekly`}>—</span>
-        </div>
-      </div>
-      <p class="sfc-tip" id={`${id}-tip`}></p>
-    </div>
+    {showCalculator && (
+      <>
+        <h3 class="sfc-calc-heading">Calculate your monthly savings</h3>
 
-    <p class="sfc-error" id={`${id}-error`} hidden>Enter a target amount and a future target month to see your savings plan.</p>
+        <div class="sfc-input-grid">
+          <div class="sfc-field">
+            <label class="sfc-label" for={`${id}-amount`}>Target amount</label>
+            <div class="sfc-money-field">
+              <span class="sfc-prefix">$</span>
+              <input type="text" id={`${id}-amount`} class="sfc-money-input" inputmode="decimal" placeholder="0" autocomplete="off" />
+            </div>
+          </div>
+          <div class="sfc-field">
+            <label class="sfc-label" for={`${id}-date`}>Target month</label>
+            <input type="month" id={`${id}-date`} class="sfc-month-input" />
+          </div>
+        </div>
 
-    <a href="/spreadsheets/savings-goals-tracker/" class="btn btn-primary sfc-cta">
-      Track your savings progress <span class="arrow">&rarr;</span>
-    </a>
+        <div class="sfc-results" id={`${id}-results`} hidden>
+          <div class="sfc-results-grid">
+            <div class="sfc-stat sfc-stat--hero">
+              <span class="sfc-stat-label">Save each month</span>
+              <span class="sfc-stat-value" id={`${id}-monthly`}>—</span>
+            </div>
+            <div class="sfc-stat">
+              <span class="sfc-stat-label">Months remaining</span>
+              <span class="sfc-stat-value" id={`${id}-mcount`}>—</span>
+            </div>
+            <div class="sfc-stat">
+              <span class="sfc-stat-label">Weekly equivalent</span>
+              <span class="sfc-stat-value" id={`${id}-weekly`}>—</span>
+            </div>
+            <div class="sfc-stat">
+              <span class="sfc-stat-label">Every two weeks</span>
+              <span class="sfc-stat-value" id={`${id}-biweekly`}>—</span>
+            </div>
+          </div>
+          <p class="sfc-tip" id={`${id}-tip`}></p>
+        </div>
 
-    <button class="sfc-retake" id={`${id}-retake`}>&larr; Start over</button>
+        <p class="sfc-error" id={`${id}-error`} hidden>Enter a target amount and a future target month to see your savings plan.</p>
+
+        <a href="/spreadsheets/savings-goals-tracker/" class="btn btn-primary sfc-cta">
+          Track your savings progress <span class="arrow">&rarr;</span>
+        </a>
+      </>
+    )}
+
+    {mode === 'assessment' && (
+      <a href="/tools/sinking-fund-calculator/" class="btn btn-primary sfc-cta" id={`${id}-calc-cta`}>
+        Calculate your monthly savings <span class="arrow">&rarr;</span>
+      </a>
+    )}
+
+    {showAssessment && (
+      <button class="sfc-retake" id={`${id}-retake`}>&larr; Start over</button>
+    )}
   </div>
 </div>
 
@@ -108,7 +131,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-progress-fill {
     height: 100%;
-    background: var(--color-link);
+    background: var(--color-text-heading);
     border-radius: 2px;
     transition: width 0.3s ease;
   }
@@ -154,7 +177,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     padding: 1rem 1.25rem;
     cursor: pointer;
     text-align: left;
-    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    transition: color 0.15s, border-color 0.15s, background 0.15s, transform 0.1s ease;
     line-height: var(--leading-snug);
     width: 100%;
     display: block;
@@ -168,14 +191,16 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   @media (hover: hover) {
     :global(.sfc-opt:hover) {
       color: var(--color-text);
-      border-color: var(--color-link);
-      background: var(--color-surface-tint);
+      border-color: var(--color-text-muted);
+      background: var(--color-bg-emphasis);
     }
   }
+  :global(.sfc-opt:active),
   :global(.sfc-opt.selected) {
-    background: var(--color-link);
-    color: white;
-    border-color: var(--color-link);
+    background: var(--color-bg-inverse);
+    color: var(--color-bg);
+    border-color: var(--color-bg-inverse);
+    transform: scale(0.98);
   }
   :global(.sfc-opt:disabled) {
     cursor: default;
@@ -413,10 +438,13 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
 </style>
 
-<script is:inline define:vars={{ id }}>
+<script is:inline define:vars={{ id, mode }}>
 (function () {
   var root = document.getElementById(id);
   if (!root) return;
+
+  var showAssessment = mode !== 'calculator';
+  var showCalculator = mode !== 'assessment';
 
   var assessEl = document.getElementById(id + '-assess');
   var phase2El = document.getElementById(id + '-phase2');
@@ -429,6 +457,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   var recTitleEl = document.getElementById(id + '-rec-title');
   var recBodyEl  = document.getElementById(id + '-rec-body');
   var recLinksEl = document.getElementById(id + '-rec-links');
+  var calcCtaEl  = document.getElementById(id + '-calc-cta');
   var amountEl   = document.getElementById(id + '-amount');
   var dateEl     = document.getElementById(id + '-date');
   var resultsEl  = document.getElementById(id + '-results');
@@ -690,20 +719,33 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     }
 
     // Pre-fill calculator from preset
-    if (preset) {
-      amountEl.value = preset.amount.toLocaleString('en-US');
-      dateEl.value   = preset.dateStr;
-    } else {
-      // Other: clear fields
-      amountEl.value = '';
-      dateEl.value   = '';
+    if (showCalculator) {
+      if (preset) {
+        amountEl.value = preset.amount.toLocaleString('en-US');
+        dateEl.value   = preset.dateStr;
+      } else {
+        // Other: clear fields
+        amountEl.value = '';
+        dateEl.value   = '';
+      }
+    }
+
+    // Assessment mode: point the CTA at the calculator, carrying the preset along
+    if (calcCtaEl) {
+      var params = new URLSearchParams();
+      if (preset) {
+        params.set('amount', String(preset.amount));
+        params.set('month', preset.dateStr);
+      }
+      var qs = params.toString();
+      calcCtaEl.href = '/tools/sinking-fund-calculator/' + (qs ? '?' + qs : '');
     }
 
     assessEl.hidden = true;
     phase2El.hidden = false;
 
     // Trigger calculation if preset filled in
-    if (preset) calculate();
+    if (showCalculator && preset) calculate();
   }
 
   /* ——— Calculate ——— */
@@ -748,33 +790,47 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
 
   /* ——— Input listeners ——— */
 
-  amountEl.addEventListener('input', function () {
-    var pos    = amountEl.selectionStart;
-    var before = amountEl.value.length;
-    amountEl.value = fmtInput(amountEl.value);
-    var after = amountEl.value.length;
-    amountEl.setSelectionRange(pos + (after - before), pos + (after - before));
-    calculate();
-  });
+  if (showCalculator) {
+    amountEl.addEventListener('input', function () {
+      var pos    = amountEl.selectionStart;
+      var before = amountEl.value.length;
+      amountEl.value = fmtInput(amountEl.value);
+      var after = amountEl.value.length;
+      amountEl.setSelectionRange(pos + (after - before), pos + (after - before));
+      calculate();
+    });
 
-  dateEl.addEventListener('change', calculate);
+    dateEl.addEventListener('change', calculate);
+  }
 
   /* ——— Retake ——— */
 
-  retakeBtn.addEventListener('click', function () {
-    currentQ = 0;
-    answers  = [];
-    selectedCategory = '';
-    preset   = null;
-    resultsEl.hidden = true;
-    errorEl.hidden   = true;
-    phase2El.hidden  = true;
-    assessEl.hidden  = false;
-    renderQuestion();
-  });
+  if (retakeBtn) {
+    retakeBtn.addEventListener('click', function () {
+      currentQ = 0;
+      answers  = [];
+      selectedCategory = '';
+      preset   = null;
+      if (resultsEl) resultsEl.hidden = true;
+      if (errorEl) errorEl.hidden = true;
+      phase2El.hidden  = true;
+      assessEl.hidden  = false;
+      renderQuestion();
+    });
+  }
 
   /* ——— Init ——— */
 
-  renderQuestion();
+  if (showAssessment) {
+    renderQuestion();
+  } else {
+    // Calculator-only mode: prefill from query params (e.g. handed off from the assessment)
+    var qp = new URLSearchParams(window.location.search);
+    var qAmount = qp.get('amount');
+    var qMonth  = qp.get('month');
+    if (qAmount) amountEl.value = fmtInput(qAmount);
+    if (qMonth)  dateEl.value = qMonth;
+    calculate();
+  }
 })();
 </script>
