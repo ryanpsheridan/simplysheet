@@ -1,6 +1,7 @@
 {
   "redirects": [
     { "source": "/templates", "destination": "/spreadsheets", "permanent": true },
+    { "source": "/templates/", "destination": "/spreadsheets/", "permanent": true },
     { "source": "/templates/:slug*", "destination": "/spreadsheets/:slug*", "permanent": true }
   ],
   "headers": [
