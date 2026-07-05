@@ -12,7 +12,10 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, description, image, noindex, type = 'website' } = Astro.props;
-const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
+// Social crawlers (Facebook, iMessage, Slack, etc.) don't render SVG for
+// preview images, so swap in the rasterized PNG generated at build time
+// by scripts/generate-og-images.mjs.
+const ogImage = image ? new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString() : undefined;
 ---
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CSDE2XWTG"></script>

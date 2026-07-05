@@ -18,6 +18,7 @@ The primary goal of this site is organic Google discovery. Every change — new 
 - Article titles and `headline` in schema should be optimized for both SEO (search engines) and AEO (AI engines / answer engines). Use natural question-style or how-to phrasing that matches what people actually search for.
 - Article slugs should match high-volume search phrases when possible (e.g. `how-to-pay-off-debt` instead of `debt-payoff`).
 - The site already has a sitemap (`/sitemap-index.xml`), canonical URLs, and Open Graph tags — these are handled automatically by `BaseHead.astro`.
+- Social crawlers (Facebook, iMessage, Slack, etc.) can't render SVG for link previews, so `BaseHead.astro` points `og:image`/`twitter:image` at a PNG counterpart of the article's SVG (same filename, `.png` instead of `.svg`). `scripts/generate-og-images.mjs` rasterizes every `card-v2-*.svg` in `public/images/` to a matching `.png` and runs automatically via the `prebuild` npm script — no manual step needed, but if you add a new article's SVG in this session (without running `npm run build`), also run `node scripts/generate-og-images.mjs` so the PNG exists for local testing/sharing before the next real build.
 
 ## When a New Article Is Submitted
 
@@ -26,6 +27,7 @@ Every time an article is provided, automatically do all of the following:
 1. **Create the article file** in `src/content/articles/` as `.md` (or `.mdx` if it embeds a component).
 2. **Generate one SVG image** and save it in `public/images/` as `card-v2-{slug}.svg`, following the SVG construction rules below. The same file is used for both the homepage hero background and the card thumbnail — there is no separate hero/card pair.
    - **Always verify** the generated SVG renders correctly before committing. Open or screenshot it to check the gradient, glow placement, and grain all look right.
+   - **Run `node scripts/generate-og-images.mjs`** afterward to rasterize the new SVG to a matching PNG — this is what social sharing previews (`og:image`/`twitter:image`) use, since crawlers can't render SVG. Commit the generated PNG alongside the SVG.
 3. **Include the image path in frontmatter (same path for both fields)**:
    ```yaml
    image: '/images/card-v2-{slug}.svg'
