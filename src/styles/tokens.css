@@ -23,6 +23,17 @@
 
   --color-surface-tint:   #F2F2F2;
 
+  /* ——— Accent colors (semantic, used sparingly on calculators/assessments) ——— */
+
+  --color-accent-positive:     #2D9D78;
+  --color-accent-positive-bg:  #E8F5E9;
+  --color-accent-caution:      #E86A33;
+  --color-accent-caution-bg:   #FFF3E0;
+  --color-accent-critical:     #C62828;
+  --color-accent-critical-bg:  #FCE4EC;
+  --color-accent-info:         #196EDD;
+  --color-accent-info-bg:      #EEF4FF;
+
   /* ——— Typography ——— */
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;

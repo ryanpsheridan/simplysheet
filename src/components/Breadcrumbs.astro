@@ -30,6 +30,12 @@ const { crumbs } = Astro.props;
 	.breadcrumbs {
 		margin-bottom: var(--space-xl);
 	}
+
+	@media (max-width: 600px) {
+		.breadcrumbs {
+			margin-bottom: calc(var(--space-xl) / 2);
+		}
+	}
 	.breadcrumbs ol {
 		list-style: none;
 		padding: 0;

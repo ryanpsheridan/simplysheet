@@ -39,6 +39,20 @@ Every time an article is provided, automatically do all of the following:
 9. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
 10. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://www.simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
 
+## SVG Color Registry — Category Hue Families
+
+Each article's background gradient hue is drawn from a family tied to its primary tag, so articles in the same category read as visually related. Look up the article's first tag below to pick the family, then still vary the exact hue, lightness, gradient direction, and glow accent so the result is unique — never reuse another article's exact palette, even within the same family. This rule applies to new articles going forward only; the existing per-article palettes in the table below are unaffected and stay as historical reference for what's already taken.
+
+| Tag | Hue family |
+|---|---|
+| `expense-tracking` | Blue |
+| `couples-budgeting` | Magenta / pink |
+| `debt-payoff` | Deep burgundy / wine |
+| `savings-goals` | Green |
+| `irregular-income` | Orange / amber |
+| `net-worth` | Teal |
+| `budgeting-styles` | Purple / violet |
+
 ## SVG Color Registry
 
 Each article has a unique two-tone palette: a dark, saturated gradient background plus a contrasting set of glow colors. Check this list before picking colors for a new article — don't reuse a background hue family *or* a glow hue family that's already taken:
@@ -181,6 +195,17 @@ When building new calculators, follow the pattern in `src/components/BudgetCalcu
 - Every calculator must exist in **two places**: embedded in the relevant article (via `.mdx` import) and as a **standalone tool page** in `src/pages/tools/` with its own SEO-optimized slug, title, and description
 - Tool page slugs should include "calculator" (e.g. `emergency-fund-calculator`) since that's what people search for
 - The standalone page should include breadcrumbs, a short intro, the calculator component, and a callout linking to the related article
+
+### Calculator Color System
+
+Calculators and assessments stay grayscale-first, but may use a small, consistent set of semantic accent tokens (defined in `tokens.css`) for progress bars, result icons, and status indicators — never as arbitrary decoration:
+
+- `--color-accent-positive` / `--color-accent-positive-bg` (green) — favorable, on track, more of this is good (e.g. the savings share of a 50/30/20 split, a "ready" assessment result).
+- `--color-accent-caution` / `--color-accent-caution-bg` (amber/orange) — discretionary or worth a second look, not bad, just flexible (e.g. "wants" spending, an "almost there" assessment result).
+- `--color-accent-critical` / `--color-accent-critical-bg` (red) — needs attention. Use sparingly.
+- `--color-accent-info` / `--color-accent-info-bg` (blue) — neutral or essential, no judgment attached (e.g. "needs" spending, a valid alternative path).
+
+Don't apply these to a comparison between two equally valid choices (debt snowball vs. avalanche, the four budgeting styles, etc.) — coloring one option green and the other something else implies it's objectively better when it isn't. Those stay grayscale, or keep their own separate identity colors if they already have them.
 
 ## Content Schema
 
