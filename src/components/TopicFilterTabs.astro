@@ -1,0 +1,58 @@
+---
+interface Props {
+	tags: { slug: string; label: string }[];
+	activeSlug: string;
+}
+
+const { tags, activeSlug } = Astro.props;
+---
+
+<nav class="filter-tabs" aria-label="Filter articles by topic">
+	<a href="/articles/" class={`filter-tab ${activeSlug === 'all' ? 'active' : ''}`}>All articles</a>
+	{tags.map((tag) => (
+		<a href={`/articles/tag/${tag.slug}/`} class={`filter-tab ${activeSlug === tag.slug ? 'active' : ''}`}>{tag.label}</a>
+	))}
+</nav>
+
+<style>
+	.filter-tabs {
+		display: flex;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		gap: var(--space-xs);
+		margin-bottom: var(--space-lg);
+		scrollbar-width: none;
+	}
+	.filter-tabs::-webkit-scrollbar {
+		display: none;
+	}
+	.filter-tab {
+		flex-shrink: 0;
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		background: var(--color-bg-panel);
+		border: 1px solid transparent;
+		border-radius: var(--radius-full);
+		padding: 0.5rem 1rem;
+		text-decoration: none;
+		transition: color 0.15s, border-color 0.15s, background 0.15s;
+	}
+	.filter-tab:hover {
+		color: var(--color-text);
+	}
+	.filter-tab.active {
+		color: var(--color-bg);
+		background: var(--color-bg-inverse);
+	}
+
+	@media (max-width: 600px) {
+		.filter-tabs {
+			margin-left: calc(-1 * var(--space-md));
+			margin-right: calc(-1 * var(--space-md));
+			padding-left: var(--space-md);
+			padding-right: var(--space-md);
+		}
+	}
+</style>
