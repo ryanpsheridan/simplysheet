@@ -121,17 +121,9 @@ const templates = (await getCollection('templates'))
 								</div>
 							</a>
 						))}
-						<a href="/articles" class="home-row-item home-row-viewall">
-							<div class="home-row-thumb home-row-viewall-thumb">
-								<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-									<line x1="5" y1="12" x2="19" y2="12"/>
-									<polyline points="12 5 19 12 12 19"/>
-								</svg>
-							</div>
-							<div class="home-row-text">
-								<h4 class="home-row-title">All articles</h4>
-							</div>
-						</a>
+						<div class="home-row-viewall">
+							<a href="/articles" class="btn btn-secondary">All articles <span class="arrow">&rarr;</span></a>
+						</div>
 					</div>
 				</div>
 			)}
@@ -404,11 +396,10 @@ const templates = (await getCollection('templates'))
 
 	/* ——— View all articles tile ——— */
 
-	.home-row-viewall-thumb {
+	.home-row-viewall {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: var(--color-text-muted);
 	}
 
 	/* ——— Tools row ——— */
