@@ -6,10 +6,10 @@ price: 9.99
 platforms: ["google-sheets", "excel"]
 darkListing: "https://simplysheetdesign.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets"
 lightListing: "https://simplysheetdesign.etsy.com/listing/4483665538/sinking-funds-tracker-google-sheets"
-heroImage: "/images/featured budget thumbnail-savings goals tracker-right-positioned.png"
-lightImage: "/images/featured budget thumbnail-savings goals tracker-light-theme-right-positioned.png"
-midImage: "/images/featured budget thumbnail-savings goals tracker.png"
-midImageLight: "/images/featured budget thumbnail-savings goals tracker-light-theme.png"
+heroImage: "/images/featured budget thumbnail-savings goals tracker-right-positioned-v2.png"
+lightImage: "/images/featured budget thumbnail-savings goals tracker-light-theme-right-positioned-v2.png"
+midImage: "/images/featured budget thumbnail-savings goals tracker-v2.png"
+midImageLight: "/images/featured budget thumbnail-savings goals tracker-light-theme-v2.png"
 features:
   - "Track multiple savings goals simultaneously"
   - "Visual progress bars for each goal"
