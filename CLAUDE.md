@@ -138,6 +138,8 @@ Every article page renders in this order (handled by `src/layouts/ArticleLayout.
 3. FAQ section (if `faq` array exists in frontmatter)
 4. Two recommended product cards (selected by article tag)
 
+**Never hand-type a "Related:" links list, horizontal rule, or similar wrap-up block at the end of the article body.** The Related Articles section above is rendered automatically by `ArticleLayout.astro` — a manual one in the markdown just duplicates it directly above the real one. This has shown up before when an article was drafted with outside AI help (ChatGPT, Claude, etc.), which tends to tack on a "Related:" line as a sign-off. When drafting or importing article content, the body should end with the article's own closing paragraph and nothing else — no "Related:", "See also:", "Further reading", or "You might also like" line, and no trailing `---` divider. Internal links belong naturally inline within body paragraphs (see SEO section above), not clustered in a list at the end.
+
 ## Product Card Tag Mapping
 
 The article's `tags` field determines which two Etsy products appear at the bottom. Defined in `ArticleLayout.astro`:
