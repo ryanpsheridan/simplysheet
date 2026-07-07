@@ -25,6 +25,29 @@ const ogImage = image ? new URL(image.replace(/\.svg$/i, '.png'), Astro.site).to
 	gtag('js', new Date());
 	gtag('config', 'G-3CSDE2XWTG');
 </script>
+<script is:inline>
+	// Fires a GA4 event whenever a link to Etsy is clicked, without touching
+	// the link's href — Etsy's own tracking params stay untouched.
+	document.addEventListener('click', function (e) {
+		var link = e.target.closest('a[href]');
+		if (!link) return;
+
+		var url;
+		try {
+			url = new URL(link.href, window.location.href);
+		} catch (err) {
+			return;
+		}
+		if (!/(^|\.)etsy\.com$/i.test(url.hostname)) return;
+
+		gtag('event', 'etsy_outbound_click', {
+			link_url: link.href,
+			link_domain: url.hostname,
+			link_label: link.dataset.cta || link.textContent.trim().slice(0, 100),
+			page_path: window.location.pathname,
+		});
+	}, true);
+</script>
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />

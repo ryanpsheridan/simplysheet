@@ -192,6 +192,7 @@ function featureIcon(text: string): string {
 						id={`cta-${templateId}`}
 						target="_blank"
 						rel="noopener noreferrer"
+						data-cta={`template_hero_cta:${id}`}
 					>
 						Get this template on Etsy
 						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
@@ -240,6 +241,7 @@ function featureIcon(text: string): string {
 								data-light-url={b.lightUrl}
 								target="_blank"
 								rel="noopener noreferrer"
+								data-cta={`template_bundle_cta:${id}:${b.name}`}
 							>
 								<span class="bundle-name">{b.name}</span>
 								<span class="bundle-link">View on Etsy <span class="arrow">&rarr;</span></span>
@@ -274,6 +276,7 @@ function featureIcon(text: string): string {
 								href="https://www.etsy.com/shop/SimplySheetDesign?ref=dashboard-header#reviews"
 								target="_blank"
 								rel="noopener noreferrer"
+								data-cta={`template_reviews_cta:${id}`}
 							>
 								See all Etsy reviews <span class="arrow">&rarr;</span>
 							</a>
@@ -299,6 +302,7 @@ function featureIcon(text: string): string {
 							href="https://www.etsy.com/shop/SimplySheetDesign?ref=dashboard-header#reviews"
 							target="_blank"
 							rel="noopener noreferrer"
+							data-cta={`template_reviews_cta:${id}`}
 						>
 							See all Etsy reviews <span class="arrow">&rarr;</span>
 						</a>
