@@ -40,6 +40,12 @@ const templates = defineCollection({
 		midImage: z.string().optional(),
 		midImageLight: z.string().optional(),
 		features: z.array(z.string()).default([]),
+		howItWorks: z.array(z.object({
+			heading: z.string(),
+			body: z.string(),
+			image: z.string().optional(),
+			imageAlt: z.string().optional(),
+		})).default([]),
 		relatedArticles: z.array(z.string()).default([]),
 		tags: z.array(z.string()).default([]),
 		order: z.number().default(99),

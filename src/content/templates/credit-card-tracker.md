@@ -17,6 +17,32 @@ features:
   - "Payment due date reminders"
   - "Monthly payment logging"
   - "Works with Google Sheets and Microsoft Excel"
+howItWorks:
+  - heading: "How it works"
+    body: >-
+      The spreadsheet has three tabs: <strong>Dashboard</strong>, <strong>Payment Log</strong>,
+      and a hidden Data tab for color settings. On the Dashboard, each row represents one credit
+      card. Enter the card name, credit limit, current balance, APR, minimum payment, due date
+      (as MM/DD), and pick a color.
+  - heading: "Utilization tracking"
+    body: >-
+      A utilization threshold dropdown at the top sets when a card gets flagged. The default is
+      30% — the standard benchmark for maintaining a healthy credit score. Each card shows its
+      individual utilization percentage, and the Dashboard shows your overall utilization across
+      all cards.
+  - heading: "Tracking payments"
+    body: >-
+      Every payment goes in the <strong>Payment Log</strong> tab: date, which card, amount, and
+      an optional note. The Dashboard updates automatically — available credit, utilization
+      percentage, and status all recalculate.
+  - heading: "What the Dashboard shows"
+    body: >-
+      Each card gets its own utilization bar, available credit amount, days until due date, and
+      a status indicator (healthy, warning, or high based on your threshold). Summary cards at
+      the top show total credit limit, total balance, and overall utilization at a glance.
+  - heading: "Available in dark and light themes"
+    body: >-
+      Both themes are functionally identical. Use the toggle above to switch between them.
 relatedArticles:
   - "how-to-pay-off-debt"
 tags: ["debt-payoff"]
@@ -29,23 +55,3 @@ faq:
   - question: "Can I use this alongside the Debt Payoff Tracker?"
     answer: "Absolutely. The Credit Card Tracker focuses on utilization and due dates, while the Debt Payoff Tracker focuses on paying down balances over time. They complement each other."
 ---
-
-## How it works
-
-The spreadsheet has three tabs: **Dashboard**, **Payment Log**, and a hidden Data tab for color settings. On the Dashboard, each row represents one credit card. Enter the card name, credit limit, current balance, APR, minimum payment, due date (as MM/DD), and pick a color.
-
-## Utilization tracking
-
-A utilization threshold dropdown at the top sets when a card gets flagged. The default is 30% — the standard benchmark for maintaining a healthy credit score. Each card shows its individual utilization percentage, and the Dashboard shows your overall utilization across all cards.
-
-## Tracking payments
-
-Every payment goes in the **Payment Log** tab: date, which card, amount, and an optional note. The Dashboard updates automatically — available credit, utilization percentage, and status all recalculate.
-
-## What the Dashboard shows
-
-Each card gets its own utilization bar, available credit amount, days until due date, and a status indicator (healthy, warning, or high based on your threshold). Summary cards at the top show total credit limit, total balance, and overall utilization at a glance.
-
-## Available in dark and light themes
-
-Both themes are functionally identical. Use the toggle above to switch between them.

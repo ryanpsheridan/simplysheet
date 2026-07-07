@@ -17,6 +17,33 @@ features:
   - "Combined savings goal tracking"
   - "Visual dashboard for joint finances"
   - "Works with Google Sheets and Microsoft Excel"
+howItWorks:
+  - heading: "How it works"
+    body: >-
+      Enter both partner names in the overview section — they'll populate dynamically throughout
+      the sheet. Set your budget period, date range, and currency, then add categories across
+      five sections: <strong>Income</strong>, <strong>Bills</strong>, <strong>Expenses</strong>,
+      <strong>Debt</strong>, and <strong>Savings</strong>. Each category gets an expected amount
+      for what you plan to spend or receive.
+  - heading: "The expense tracker"
+    body: >-
+      The expense tracker at the bottom of the sheet works the same as the solo version, with
+      one addition: a <strong>Partner</strong> field. For each expense, select which partner made
+      the purchase or mark it as "Joint" for shared costs. Names are color-coded for quick
+      scanning.
+  - heading: "What you'll see"
+    body: >-
+      Progress bars track spending against your expected amounts in real time. The overview
+      shows combined income, total spending, and how much is left — broken down so both
+      partners can see where the money is going.
+  - heading: "Built-in categories"
+    body: >-
+      Pre-filled with common categories for couples — joint bills, shared expenses, individual
+      spending — but fully customizable. Add or remove rows to match how you actually split
+      things.
+  - heading: "Available in dark and light themes"
+    body: >-
+      Both themes are functionally identical. Use the toggle above to switch between them.
 relatedArticles:
   - "couples-budgeting"
   - "50-30-20-budget-rule"
@@ -43,23 +70,3 @@ reviews:
     text: "Very easy download and easy to use."
     date: "2026-01-07"
 ---
-
-## How it works
-
-Enter both partner names in the overview section — they'll populate dynamically throughout the sheet. Set your budget period, date range, and currency, then add categories across five sections: **Income**, **Bills**, **Expenses**, **Debt**, and **Savings**. Each category gets an expected amount for what you plan to spend or receive.
-
-## The expense tracker
-
-The expense tracker at the bottom of the sheet works the same as the solo version, with one addition: a **Partner** field. For each expense, select which partner made the purchase or mark it as "Joint" for shared costs. Names are color-coded for quick scanning.
-
-## What you'll see
-
-Progress bars track spending against your expected amounts in real time. The overview shows combined income, total spending, and how much is left — broken down so both partners can see where the money is going.
-
-## Built-in categories
-
-Pre-filled with common categories for couples — joint bills, shared expenses, individual spending — but fully customizable. Add or remove rows to match how you actually split things.
-
-## Available in dark and light themes
-
-Both themes are functionally identical. Use the toggle above to switch between them.

@@ -18,6 +18,42 @@ features:
   - "Monthly overview dashboard with visual spending trends"
   - "Pre-built budget categories you can customize"
   - "Works with both Google Sheets and Microsoft Excel"
+howItWorks:
+  - heading: "How it works"
+    body: >-
+      You set a budget period and date range, define your currency, and add categories for five
+      sections: <strong>Income</strong>, <strong>Bills</strong>, <strong>Expenses</strong>,
+      <strong>Debt</strong>, and <strong>Savings</strong>. For each category, you enter an
+      expected amount — what you plan to spend or receive. As the month progresses, actual
+      amounts update automatically based on your logged transactions.
+    image: "/images/expense-tracking-preview-video-budget-spreadsheet.gif"
+    imageAlt: "Budget spreadsheet expense tracker updating in real time as a new expense is logged"
+  - heading: "The expense tracker"
+    body: >-
+      At the bottom of the sheet is a daily expense log. Each entry takes four fields: amount,
+      category (auto-populated from your setup), date, and an optional note. As you log expenses,
+      the actual column in your budget updates in real time — no manual totaling required.
+    image: "/images/inline-article-image-expenses-expense-tracker-categories.jpg"
+    imageAlt: "Budget spreadsheet daily expense tracker log with date, amount, category, and notes columns"
+  - heading: "What you'll see"
+    body: >-
+      Each budget section has progress bars that fill as you spend. At any point during the
+      month, you can see exactly how much of each category you've used and how much is left.
+      The overview section shows time remaining in your budget period, total income vs. total
+      spending, and the net difference.
+    image: "/images/inline-article-image-expenses-categories.jpg"
+    imageAlt: "Budget spreadsheet expense breakdown table showing expected, actual, remaining, and progress percentage per category"
+  - heading: "Built-in categories"
+    body: >-
+      The template comes pre-filled with common categories — salary, rent, utilities, groceries,
+      dining out, credit cards, emergency fund — but every category is fully editable. Add,
+      rename, or remove any row to match your actual spending.
+    image: "/images/inline-article-image-expenses-categories-graph.jpg"
+    imageAlt: "Budget spreadsheet bar chart comparing actual versus expected spending across categories"
+  - heading: "Available in dark and light themes"
+    body: >-
+      Both themes are functionally identical. Use the toggle above to switch between them and
+      pick the one you prefer.
 relatedArticles:
   - "50-30-20-budget-rule"
   - "budgeting-styles"
@@ -75,23 +111,3 @@ reviews:
     text: "Amazing resource! I love the visuals, it has great instructions and is easy to use. Ryan was so helpful when I wanted to add something. Definitely worth it!"
     date: "2026-02-08"
 ---
-
-## How it works
-
-You set a budget period and date range, define your currency, and add categories for five sections: **Income**, **Bills**, **Expenses**, **Debt**, and **Savings**. For each category, you enter an expected amount — what you plan to spend or receive. As the month progresses, actual amounts update automatically based on your logged transactions.
-
-## The expense tracker
-
-At the bottom of the sheet is a daily expense log. Each entry takes four fields: amount, category (auto-populated from your setup), date, and an optional note. As you log expenses, the actual column in your budget updates in real time — no manual totaling required.
-
-## What you'll see
-
-Each budget section has progress bars that fill as you spend. At any point during the month, you can see exactly how much of each category you've used and how much is left. The overview section shows time remaining in your budget period, total income vs. total spending, and the net difference.
-
-## Built-in categories
-
-The template comes pre-filled with common categories — salary, rent, utilities, groceries, dining out, credit cards, emergency fund — but every category is fully editable. Add, rename, or remove any row to match your actual spending.
-
-## Available in dark and light themes
-
-Both themes are functionally identical. Use the toggle above to switch between them and pick the one you prefer.

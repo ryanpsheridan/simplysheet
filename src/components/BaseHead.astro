@@ -19,6 +19,8 @@ const { title, description, image, noindex, type = 'website' } = Astro.props;
 const ogImage = image ? new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString() : undefined;
 ---
 
+<meta charset="utf-8" />
+
 <SpeedInsights />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CSDE2XWTG"></script>
@@ -52,7 +54,6 @@ const ogImage = image ? new URL(image.replace(/\.svg$/i, '.png'), Astro.site).to
 	}, true);
 </script>
 
-<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/images/logo-svg.svg" />
 <link rel="icon" type="image/jpeg" href="/images/logo-favicon.jpg" />
