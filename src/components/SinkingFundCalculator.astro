@@ -274,6 +274,9 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     gap: var(--space-sm);
     margin-bottom: var(--space-md);
   }
+  .sfc-field {
+    min-width: 0;
+  }
   .sfc-label {
     display: block;
     font-size: var(--text-small);
@@ -316,6 +319,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-month-input {
     width: 100%;
+    min-width: 0;
     height: 2.75rem;
     border: 1px solid var(--color-divider);
     border-radius: var(--radius-sm);
