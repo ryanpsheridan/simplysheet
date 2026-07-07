@@ -206,25 +206,25 @@ function featureIcon(text: string): string {
 				</div>
 			</section>
 
-			{features.length > 0 && (
-				<section class="product-features">
-					<h2>What's included</h2>
-					<ul class="features-list">
-						{features.map((f: string) => (
-							<li>
-								<svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={featureIcon(f)} />
-								<span>{f}</span>
-							</li>
-						))}
-					</ul>
-				</section>
-			)}
+			{(features.length > 0 || howItWorks.length > 0) && (
+				<section class="product-details">
+					<div class="details-list">
+						{features.length > 0 && (
+							<div class="detail-row">
+								<h2>What's included</h2>
+								<ul class="features-list">
+									{features.map((f: string) => (
+										<li>
+											<svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={featureIcon(f)} />
+											<span>{f}</span>
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
 
-			{howItWorks.length > 0 && (
-				<section class="product-howto">
-					<div class="howto-list">
 						{howItWorks.map((row: { heading: string; body: string; image?: string; imageAlt?: string }) => (
-							<div class="howto-row">
+							<div class="detail-row">
 								<h2>{row.heading}</h2>
 								<div class="howto-content">
 									<p set:html={row.body} />
@@ -637,20 +637,34 @@ function featureIcon(text: string): string {
 		padding: 0.25rem 0.75rem;
 	}
 
-	/* ——— Features ——— */
+	/* ——— Details (What's included + How it works) ——— */
 
-	.product-features {
+	.product-details {
 		margin-bottom: var(--space-2xl);
 		padding: var(--space-xl) 0;
 		border-top: 1px solid var(--color-border);
 		border-bottom: 1px solid var(--color-border);
+	}
+
+	.detail-row {
 		display: grid;
 		grid-template-columns: 1fr 2fr;
 		gap: var(--space-2xl);
 		align-items: start;
+		padding: var(--space-xl) 0;
+		border-bottom: 1px solid var(--color-border);
 	}
 
-	.product-features h2 {
+	.detail-row:first-child {
+		padding-top: 0;
+	}
+
+	.detail-row:last-child {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+
+	.detail-row h2 {
 		font-size: var(--text-h2);
 		margin: 0;
 	}
@@ -673,46 +687,15 @@ function featureIcon(text: string): string {
 		border-bottom: 1px solid var(--color-border);
 	}
 
-	.check-icon {
-		flex-shrink: 0;
-		color: var(--color-link);
-		margin-top: 0.1875rem;
-	}
-
-	/* ——— How it works ——— */
-
-	.product-howto {
-		margin-bottom: var(--space-2xl);
-		padding: var(--space-xl) 0;
-		border-top: 1px solid var(--color-border);
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.howto-list {
-		border-top: 1px solid var(--color-border);
-	}
-
-	.howto-row {
-		display: grid;
-		grid-template-columns: 1fr 2fr;
-		gap: var(--space-2xl);
-		align-items: start;
-		padding: var(--space-xl) 0;
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.howto-row:first-child {
-		padding-top: 0;
-	}
-
-	.howto-row:last-child {
+	.features-list li:last-child {
 		border-bottom: none;
 		padding-bottom: 0;
 	}
 
-	.howto-row h2 {
-		font-size: var(--text-h2);
-		margin: 0;
+	.check-icon {
+		flex-shrink: 0;
+		color: var(--color-link);
+		margin-top: 0.1875rem;
 	}
 
 	.howto-content p {
@@ -1159,11 +1142,7 @@ function featureIcon(text: string): string {
 			grid-template-columns: 1fr;
 			gap: var(--space-lg);
 		}
-		.product-features {
-			grid-template-columns: 1fr;
-			gap: var(--space-md);
-		}
-		.howto-row {
+		.detail-row {
 			grid-template-columns: 1fr;
 			gap: var(--space-sm);
 		}
