@@ -35,11 +35,25 @@
   <circle cx="590" cy="300" r="150" fill="#FFFFFF" opacity="0.12"/>
   </g>
 
-  <!-- Wireframe overlay: two lines merging into one -->
-  <g stroke="#FFFFFF" fill="none" stroke-width="2" stroke-linecap="round" opacity="0.6">
-    <path d="M220,220 Q320,200 420,260 T560,300"/>
-    <path d="M220,400 Q320,420 420,340 T560,300"/>
-    <path d="M560,300 Q700,280 850,300"/>
+  <!-- Wireframe overlay: two lines merging into one, anchored in a centered safe zone -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <rect x="240" y="162" width="480" height="216" fill="none"/>
+    <line x1="400" y1="162" x2="400" y2="378"/>
+    <line x1="560" y1="162" x2="560" y2="378"/>
+    <line x1="240" y1="234" x2="720" y2="234"/>
+    <line x1="240" y1="306" x2="720" y2="306"/>
   </g>
-  <circle cx="560" cy="300" r="5" fill="#FFFFFF" opacity="0.85"/>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <path d="M280,220 Q380,220 460,280" stroke-width="1.5" opacity="0.75"/>
+    <path d="M280,340 Q380,340 460,280" stroke-width="1.5" opacity="0.75"/>
+    <path d="M460,280 Q560,260 680,280" stroke-width="1.5" opacity="0.95"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="460" cy="280" r="6" opacity="0.3"/>
+    <circle cx="460" cy="280" r="2" opacity="1"/>
+    <circle cx="280" cy="220" r="5" opacity="0.22"/>
+    <circle cx="280" cy="220" r="1.6" opacity="0.75"/>
+    <circle cx="280" cy="340" r="5" opacity="0.22"/>
+    <circle cx="280" cy="340" r="1.6" opacity="0.75"/>
+  </g>
 </svg>

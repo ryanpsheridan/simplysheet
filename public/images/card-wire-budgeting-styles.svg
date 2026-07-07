@@ -36,16 +36,26 @@
   <circle cx="330" cy="410" r="70" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.32"/>
   </g>
 
-  <!-- Wireframe overlay: a row of distinct method glyphs -->
-  <g stroke="#FFFFFF" fill="none" stroke-width="1.6" stroke-linecap="round" opacity="0.55">
-    <line x1="190" y1="430" x2="720" y2="430" stroke-width="1.2" opacity="0.4"/>
-    <line x1="210" y1="415" x2="210" y2="400"/>
-    <line x1="230" y1="415" x2="230" y2="390"/>
-    <line x1="250" y1="415" x2="250" y2="380"/>
-    <circle cx="380" cy="395" r="25"/>
-    <line x1="380" y1="395" x2="380" y2="370"/>
-    <path d="M500,410 L515,375 L530,405 L545,370 L560,400"/>
-    <line x1="650" y1="395" x2="710" y2="395"/>
+  <!-- Wireframe overlay: a row of distinct method glyphs, anchored in a centered safe zone -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <rect x="240" y="162" width="480" height="216" fill="none"/>
+    <line x1="400" y1="162" x2="400" y2="378"/>
+    <line x1="560" y1="162" x2="560" y2="378"/>
+    <line x1="240" y1="234" x2="720" y2="234"/>
+    <line x1="240" y1="306" x2="720" y2="306"/>
   </g>
-  <circle cx="710" cy="395" r="4" fill="#FFFFFF" opacity="0.85"/>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <line x1="260" y1="345" x2="700" y2="345" stroke-width="1" opacity="0.35"/>
+    <line x1="280" y1="330" x2="280" y2="318" stroke-width="1.5" opacity="0.9"/>
+    <line x1="300" y1="330" x2="300" y2="310" stroke-width="1.5" opacity="0.9"/>
+    <line x1="320" y1="330" x2="320" y2="302" stroke-width="1.5" opacity="0.9"/>
+    <circle cx="420" cy="300" r="20" stroke-width="1.5" opacity="0.9"/>
+    <line x1="420" y1="300" x2="420" y2="280" stroke-width="1.5" opacity="0.9"/>
+    <path d="M500,320 C512,290 528,290 540,320 C552,350 568,350 580,320" stroke-width="1.5" opacity="0.9"/>
+    <line x1="620" y1="310" x2="680" y2="310" stroke-width="1.5" opacity="0.9"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="680" cy="310" r="6" opacity="0.3"/>
+    <circle cx="680" cy="310" r="2" opacity="1"/>
+  </g>
 </svg>

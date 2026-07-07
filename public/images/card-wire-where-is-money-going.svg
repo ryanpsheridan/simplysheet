@@ -35,13 +35,24 @@
   <circle cx="600" cy="410" r="18" fill="#FFFFFF" opacity="0.14"/>
   </g>
 
-  <!-- Wireframe overlay: category breakdown ring -->
-  <g stroke="#FFFFFF" fill="none" stroke-width="2" stroke-linecap="round" opacity="0.6">
-    <circle cx="720" cy="230" r="100"/>
-    <line x1="720" y1="230" x2="820" y2="230"/>
-    <line x1="720" y1="230" x2="754" y2="324"/>
-    <line x1="720" y1="230" x2="626" y2="264"/>
-    <line x1="720" y1="230" x2="694" y2="133"/>
+  <!-- Wireframe overlay: category breakdown ring, anchored in a centered safe zone -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <rect x="240" y="162" width="480" height="216" fill="none"/>
+    <line x1="400" y1="162" x2="400" y2="378"/>
+    <line x1="560" y1="162" x2="560" y2="378"/>
+    <line x1="240" y1="234" x2="720" y2="234"/>
+    <line x1="240" y1="306" x2="720" y2="306"/>
   </g>
-  <circle cx="720" cy="230" r="4" fill="#FFFFFF" opacity="0.85"/>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <circle cx="480" cy="270" r="90" stroke-width="1" opacity="0.4"/>
+    <line x1="480" y1="270" x2="570" y2="270" stroke-width="1.5" opacity="0.95"/>
+    <line x1="480" y1="270" x2="511" y2="355" stroke-width="1" opacity="0.45" stroke-dasharray="4,4"/>
+    <line x1="480" y1="270" x2="395" y2="301" stroke-width="1" opacity="0.45" stroke-dasharray="4,4"/>
+    <line x1="480" y1="270" x2="457" y2="183" stroke-width="1" opacity="0.45" stroke-dasharray="4,4"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="480" cy="270" r="4" opacity="0.5"/>
+    <circle cx="570" cy="270" r="6" opacity="0.3"/>
+    <circle cx="570" cy="270" r="2" opacity="1"/>
+  </g>
 </svg>

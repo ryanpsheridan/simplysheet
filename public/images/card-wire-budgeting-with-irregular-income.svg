@@ -36,9 +36,22 @@
   <circle cx="700" cy="360" r="20" fill="#FFFFFF" opacity="0.22"/>
   </g>
 
-  <!-- Wireframe overlay: volatile income line over a steady baseline -->
-  <g stroke="#FFFFFF" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
-    <path d="M180,320 L240,190 L300,350 L360,210 L420,370 L480,180 L540,340 L600,220 L660,360 L720,200 L780,300"/>
-    <line x1="180" y1="270" x2="780" y2="270" stroke-dasharray="6 8" stroke-width="1.5" opacity="0.7"/>
+  <!-- Wireframe overlay: volatile income wave over a steady baseline, anchored in a centered safe zone -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <rect x="240" y="162" width="480" height="216" fill="none"/>
+    <line x1="400" y1="162" x2="400" y2="378"/>
+    <line x1="560" y1="162" x2="560" y2="378"/>
+    <line x1="240" y1="234" x2="720" y2="234"/>
+    <line x1="240" y1="306" x2="720" y2="306"/>
+  </g>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <line x1="260" y1="300" x2="660" y2="300" stroke-width="1" opacity="0.45" stroke-dasharray="4,4"/>
+    <path d="M270,300 C310,230 350,230 390,300 C430,370 470,370 510,300 C550,230 590,230 630,300" stroke-width="1.5" opacity="0.95"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="270" cy="300" r="5" opacity="0.25"/>
+    <circle cx="270" cy="300" r="1.6" opacity="0.8"/>
+    <circle cx="630" cy="300" r="5" opacity="0.25"/>
+    <circle cx="630" cy="300" r="1.6" opacity="0.8"/>
   </g>
 </svg>

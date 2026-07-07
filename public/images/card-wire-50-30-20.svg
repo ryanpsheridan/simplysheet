@@ -39,20 +39,26 @@
   </g>
   </g>
 
-  <!-- Wireframe overlay: 50/30/20 split ruler -->
-  <g stroke="#FFFFFF" fill="none" stroke-width="2" stroke-linecap="round" opacity="0.6">
-    <line x1="560" y1="470" x2="900" y2="470"/>
-    <line x1="560" y1="462" x2="560" y2="478"/>
-    <line x1="730" y1="462" x2="730" y2="478"/>
-    <line x1="832" y1="462" x2="832" y2="478"/>
-    <line x1="900" y1="462" x2="900" y2="478"/>
-    <line x1="645" y1="470" x2="645" y2="380"/>
-    <line x1="781" y1="470" x2="781" y2="410"/>
-    <line x1="866" y1="470" x2="866" y2="430"/>
+  <!-- Wireframe overlay: 50/30/20 split, anchored in a centered safe zone -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <rect x="240" y="162" width="480" height="216" fill="none"/>
+    <line x1="400" y1="162" x2="400" y2="378"/>
+    <line x1="560" y1="162" x2="560" y2="378"/>
+    <line x1="240" y1="234" x2="720" y2="234"/>
+    <line x1="240" y1="306" x2="720" y2="306"/>
   </g>
-  <g fill="#FFFFFF" opacity="0.85">
-    <circle cx="645" cy="380" r="4"/>
-    <circle cx="781" cy="410" r="4"/>
-    <circle cx="866" cy="430" r="4"/>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <line x1="240" y1="378" x2="720" y2="378" stroke-width="1" opacity="0.45"/>
+    <line x1="340" y1="378" x2="340" y2="293" stroke-width="1.5" opacity="0.95"/>
+    <line x1="480" y1="378" x2="480" y2="327" stroke-width="1.5" opacity="0.95"/>
+    <line x1="620" y1="378" x2="620" y2="344" stroke-width="1.5" opacity="0.95"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="340" cy="293" r="6" opacity="0.3"/>
+    <circle cx="340" cy="293" r="2" opacity="1"/>
+    <circle cx="480" cy="327" r="6" opacity="0.3"/>
+    <circle cx="480" cy="327" r="2" opacity="1"/>
+    <circle cx="620" cy="344" r="6" opacity="0.3"/>
+    <circle cx="620" cy="344" r="2" opacity="1"/>
   </g>
 </svg>

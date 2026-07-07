@@ -4,6 +4,10 @@
       <stop offset="0%" stop-color="#1A0E4D"/>
       <stop offset="100%" stop-color="#512DA8"/>
     </linearGradient>
+    <linearGradient id="areaFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
     <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
       <feGaussianBlur stdDeviation="65"/>
     </filter>
@@ -35,12 +39,23 @@
   <circle cx="610" cy="450" r="18" fill="#FFFFFF" opacity="0.32"/>
   </g>
 
-  <!-- Wireframe overlay: staircase debt payoff to zero -->
-  <g stroke="#FFFFFF" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
-    <path d="M560,180 L620,180 L620,240 L680,240 L680,300 L740,300 L740,360 L800,360 L800,410 L860,410 L860,430 L890,430"/>
+  <!-- Wireframe overlay: staircase debt payoff to zero, anchored in a centered safe zone -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <rect x="240" y="162" width="480" height="216" fill="none"/>
+    <line x1="400" y1="162" x2="400" y2="378"/>
+    <line x1="560" y1="162" x2="560" y2="378"/>
+    <line x1="240" y1="234" x2="720" y2="234"/>
+    <line x1="240" y1="306" x2="720" y2="306"/>
   </g>
-  <g fill="#FFFFFF" opacity="0.85">
-    <circle cx="560" cy="180" r="4"/>
-    <circle cx="890" cy="430" r="5"/>
+  <path d="M300,200 L360,200 L360,240 L420,240 L420,280 L480,280 L480,310 L540,310 L540,335 L600,335 L600,352 L660,352 L660,360 L700,360 L700,378 L300,378 Z" fill="url(#areaFade)"/>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="260" y1="360" x2="720" y2="360" stroke-width="1" opacity="0.35"/>
+    <path d="M300,200 L360,200 L360,240 L420,240 L420,280 L480,280 L480,310 L540,310 L540,335 L600,335 L600,352 L660,352 L660,360 L700,360" stroke-width="1.5" opacity="0.95"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="300" cy="200" r="6" opacity="0.3"/>
+    <circle cx="300" cy="200" r="2" opacity="1"/>
+    <circle cx="700" cy="360" r="7" opacity="0.32"/>
+    <circle cx="700" cy="360" r="2.2" opacity="1"/>
   </g>
 </svg>
