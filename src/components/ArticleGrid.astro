@@ -1,0 +1,324 @@
+---
+import TagPills from './TagPills.astro';
+
+interface ManifestItem {
+	id: string;
+	title: string;
+	desc: string;
+	tags: string[];
+	date: number;
+	image?: string;
+	readTime: number;
+}
+
+interface Props {
+	articles: {
+		id: string;
+		readTime: number;
+		data: {
+			title: string;
+			description: string;
+			tags?: string[];
+			image?: string;
+			cardImage?: string;
+		};
+	}[];
+	manifest: ManifestItem[];
+	tagMap: Record<string, string>;
+}
+
+const { articles, manifest, tagMap } = Astro.props;
+---
+
+<div class="articles-controls">
+	<div class="filter-select-wrap">
+		<select id="sort-select" class="filter-select" aria-label="Sort articles">
+			<option value="newest">Newest first</option>
+			<option value="oldest">Oldest first</option>
+			<option value="title">Title A–Z</option>
+		</select>
+		<svg class="filter-select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+	</div>
+	<div class="filter-search">
+		<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+		<input type="search" id="search-input" class="search-input" placeholder="Search articles" aria-label="Search articles" />
+	</div>
+</div>
+
+<div class="article-list" id="article-list">
+	{articles.map((article) => (
+		<a href={`/articles/${article.id}/`} class="article-list-item">
+			{(article.data.cardImage || article.data.image) && (
+				<div class="article-list-thumb">
+					<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+				</div>
+			)}
+			<div class="article-list-text">
+				<TagPills tags={article.data.tags} tagMap={tagMap} />
+				<h2 class="article-list-title">{article.data.title}</h2>
+				<p class="article-list-desc">{article.data.description}</p>
+				<span class="article-list-read">{article.readTime} min read</span>
+			</div>
+		</a>
+	))}
+</div>
+
+<p class="no-results" hidden>No articles match your search.</p>
+
+<script type="application/json" id="articles-manifest" set:html={JSON.stringify(manifest)} />
+<script type="application/json" id="articles-tag-map" set:html={JSON.stringify(tagMap)} />
+
+<script>
+	// Default view is the statically rendered, real-paginated grid (good for
+	// SEO/AEO/no-JS). Search and non-default sort switch to a client-rendered
+	// view drawn from the full manifest, since those scopes span every page.
+	// Clearing search and resetting sort restores the original static markup
+	// exactly (including whichever page the visitor is actually on).
+	interface ManifestItem {
+		id: string;
+		title: string;
+		desc: string;
+		tags: string[];
+		date: number;
+		image?: string;
+		readTime: number;
+	}
+
+	const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
+	const sortSelect = document.getElementById('sort-select') as HTMLSelectElement | null;
+	const list = document.getElementById('article-list');
+	const noResults = document.querySelector<HTMLParagraphElement>('.no-results');
+	const pagination = document.querySelector<HTMLElement>('.pagination');
+
+	const manifestEl = document.getElementById('articles-manifest');
+	const tagMapEl = document.getElementById('articles-tag-map');
+	const manifest: ManifestItem[] = manifestEl ? JSON.parse(manifestEl.textContent || '[]') : [];
+	const tagMap: Record<string, string> = tagMapEl ? JSON.parse(tagMapEl.textContent || '{}') : {};
+
+	const originalHTML = list?.innerHTML ?? '';
+
+	function escapeHtml(str: string): string {
+		return str.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
+	}
+
+	function renderCard(item: ManifestItem): string {
+		const tags = (item.tags || []).slice(0, 2);
+		const pillsHtml = tags.length
+			? `<div class="tag-pills">${tags.map((t) => `<span class="tag-pill">${escapeHtml(tagMap[t] ?? t)}</span>`).join('')}</div>`
+			: '';
+		const imgHtml = item.image
+			? `<div class="article-list-thumb"><img src="${item.image}" alt="${escapeHtml(item.title)}" width="960" height="540" loading="lazy" /></div>`
+			: '';
+		return `<a href="/articles/${item.id}/" class="article-list-item">${imgHtml}<div class="article-list-text">${pillsHtml}<h2 class="article-list-title">${escapeHtml(item.title)}</h2><p class="article-list-desc">${escapeHtml(item.desc)}</p><span class="article-list-read">${item.readTime} min read</span></div></a>`;
+	}
+
+	function applyFilterAndSort() {
+		const query = (searchInput?.value ?? '').trim().toLowerCase();
+		const sort = sortSelect?.value ?? 'newest';
+		const isOverride = query.length > 0 || sort !== 'newest';
+
+		if (!isOverride) {
+			if (list) list.innerHTML = originalHTML;
+			if (noResults) noResults.hidden = true;
+			if (pagination) pagination.style.display = '';
+			return;
+		}
+
+		if (pagination) pagination.style.display = 'none';
+
+		const filtered = manifest.filter((item) =>
+			!query || item.title.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query)
+		);
+
+		filtered.sort((a, b) => {
+			if (sort === 'oldest') return a.date - b.date;
+			if (sort === 'title') return a.title.localeCompare(b.title);
+			return b.date - a.date;
+		});
+
+		if (list) list.innerHTML = filtered.map(renderCard).join('');
+		if (noResults) noResults.hidden = filtered.length > 0;
+	}
+
+	searchInput?.addEventListener('input', applyFilterAndSort);
+	sortSelect?.addEventListener('change', applyFilterAndSort);
+</script>
+
+<style>
+	/* ——— Controls (sort + search) ——— */
+
+	.articles-controls {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+		margin-bottom: var(--space-lg);
+	}
+	.filter-select-wrap {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+	.filter-select {
+		appearance: none;
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		color: var(--color-text);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-sm);
+		padding: 0.5rem 2rem 0.5rem 0.875rem;
+		cursor: pointer;
+		transition: border-color 0.15s;
+	}
+	.filter-select:hover,
+	.filter-select:focus-visible {
+		border-color: var(--color-text-muted);
+		outline: none;
+	}
+	.filter-select-chevron {
+		position: absolute;
+		right: 0.75rem;
+		pointer-events: none;
+		color: var(--color-text-muted);
+	}
+	.filter-search {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+		border: 1px solid var(--color-divider);
+		border-radius: var(--radius-sm);
+		padding: 0.5rem 0.875rem;
+		color: var(--color-text-muted);
+		transition: border-color 0.15s;
+		flex: 1;
+		min-width: 12rem;
+		max-width: 20rem;
+	}
+	.filter-search:focus-within {
+		border-color: var(--color-text-muted);
+	}
+	.filter-search svg {
+		flex-shrink: 0;
+	}
+	.search-input {
+		flex: 1;
+		min-width: 0;
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		color: var(--color-text);
+		background: none;
+		border: none;
+		outline: none;
+	}
+	.search-input::placeholder {
+		color: var(--color-text-muted);
+	}
+
+	/* ——— Article list — 3-col card grid ——— */
+
+	.article-list {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-xl) var(--space-md);
+	}
+	.article-list :global(.article-list-item) {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+		text-decoration: none;
+		color: inherit;
+		transition: opacity 0.15s ease;
+	}
+	@media (hover: hover) {
+		.article-list :global(.article-list-item:hover) {
+			opacity: 0.75;
+		}
+	}
+	.article-list :global(.article-list-text) {
+		min-width: 0;
+	}
+	.article-list :global(.article-list-title) {
+		font-family: var(--font-heading);
+		font-size: 1.1rem;
+		font-weight: var(--weight-normal);
+		line-height: 1.3;
+		margin: 0 0 var(--space-xs) 0;
+		color: var(--color-text);
+	}
+	.article-list :global(.article-list-desc) {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.article-list :global(.article-list-read) {
+		display: inline-block;
+		margin-top: var(--space-xs);
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+	.article-list :global(.article-list-thumb) {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		background: var(--color-bg-panel);
+		padding: 1.5rem;
+	}
+	.article-list :global(.article-list-thumb img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: var(--radius-sm);
+	}
+
+	/* Client-rendered search/sort results inject raw <div class="tag-pills">
+	   markup that bypasses TagPills.astro's own scoped styles, so mirror
+	   them here as global rules to keep both render paths visually identical. */
+	.article-list :global(.tag-pills) {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: var(--space-xs);
+	}
+	.article-list :global(.tag-pill) {
+		background: var(--color-bg-panel);
+		color: var(--color-text);
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 1;
+		padding: 6px 10px;
+		border-radius: 999px;
+		white-space: nowrap;
+	}
+
+	/* ——— Empty state ——— */
+
+	.no-results {
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		padding: var(--space-lg) 0;
+	}
+
+	@media (max-width: 960px) {
+		.article-list {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.article-list {
+			grid-template-columns: 1fr;
+		}
+		.filter-search {
+			min-width: 0;
+			max-width: none;
+			flex-basis: 100%;
+		}
+	}
+</style>
