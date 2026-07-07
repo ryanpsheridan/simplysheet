@@ -17,6 +17,32 @@ features:
   - "Target amount and deadline tracking"
   - "Overview dashboard for all goals"
   - "Works with Google Sheets and Microsoft Excel"
+howItWorks:
+  - heading: "How it works"
+    body: >-
+      The spreadsheet has two tabs: <strong>Dashboard</strong> and
+      <strong>Transaction Log</strong>. On the Dashboard, each row is one savings goal. Enter a
+      fund name, target amount, any starting balance you already have saved, an optional target
+      date, and pick a color.
+  - heading: "Logging transactions"
+    body: >-
+      Every deposit or withdrawal goes in the <strong>Transaction Log</strong> tab: date, which
+      fund, amount, type (deposit or withdrawal), and an optional note. The Dashboard updates
+      automatically — your total saved, remaining amount, percentage, and progress bar all
+      recalculate.
+  - heading: "What the Dashboard shows"
+    body: >-
+      Each fund gets a visual progress bar, a percentage toward your goal, and a status that
+      switches from "In progress" to "Funded" once you reach 100%. The remaining column shows
+      exactly how much more you need — it will never display a negative number.
+  - heading: "What you can track"
+    body: >-
+      Emergency funds, vacation savings, car repairs, holiday shopping, down payments — any goal
+      with a dollar amount. Each fund operates independently with its own balance, progress, and
+      transaction history.
+  - heading: "Available in dark and light themes"
+    body: >-
+      Both themes are functionally identical. Use the toggle above to switch between them.
 relatedArticles:
   - "emergency-fund-sizing"
   - "50-30-20-budget-rule"
@@ -37,23 +63,3 @@ reviews:
   - name: "Brianna"
     text: "This product is a great way to see where your savings are going. The progress bar is a nice touch and will motivate me. I'm glad I found this shop and this resource!"
 ---
-
-## How it works
-
-The spreadsheet has two tabs: **Dashboard** and **Transaction Log**. On the Dashboard, each row is one savings goal. Enter a fund name, target amount, any starting balance you already have saved, an optional target date, and pick a color.
-
-## Logging transactions
-
-Every deposit or withdrawal goes in the **Transaction Log** tab: date, which fund, amount, type (deposit or withdrawal), and an optional note. The Dashboard updates automatically — your total saved, remaining amount, percentage, and progress bar all recalculate.
-
-## What the Dashboard shows
-
-Each fund gets a visual progress bar, a percentage toward your goal, and a status that switches from "In progress" to "Funded" once you reach 100%. The remaining column shows exactly how much more you need — it will never display a negative number.
-
-## What you can track
-
-Emergency funds, vacation savings, car repairs, holiday shopping, down payments — any goal with a dollar amount. Each fund operates independently with its own balance, progress, and transaction history.
-
-## Available in dark and light themes
-
-Both themes are functionally identical. Use the toggle above to switch between them.
