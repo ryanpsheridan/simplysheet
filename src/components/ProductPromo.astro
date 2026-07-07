@@ -18,19 +18,23 @@ const { title, description, badge, midImage, heroImage } = template.data;
 const name = title.replace(/ for Google Sheets & Excel$/, '');
 const url = `/spreadsheets/${slug}/`;
 const alt = `${name} preview`;
-const image = variant === 'row' ? heroImage : midImage;
+const image = variant === 'card' ? midImage : heroImage;
 ---
 
 {variant === 'interstitial' && (
-	<div class="article-interstitial">
-		<a href={url} class="interstitial-link">
-			<img src={image} alt={alt} width="600" height="400" loading="lazy" class="interstitial-img" />
-			<div class="interstitial-body">
-				{label && <p class="interstitial-label">{label}</p>}
-				<p class="interstitial-title">{name}</p>
-				<p class="interstitial-desc">{description}</p>
-			</div>
+	<div class="article-promo">
+		<a href={url} class="article-promo-thumb">
+			<img src={image} alt={alt} width="600" height="400" loading="lazy" />
 		</a>
+		<div class="article-promo-content">
+			{label && <p class="interstitial-label">{label}</p>}
+			<div class="product-text">
+				{badge && <span class="product-badge">{badge}</span>}
+				<h3 class="product-name">{name}</h3>
+				<p class="product-desc">{description}</p>
+			</div>
+			<a href={url} class="btn btn-secondary product-cta">View template <span class="arrow">&rarr;</span></a>
+		</div>
 	</div>
 )}
 

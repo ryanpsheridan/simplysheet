@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="10%" y1="-5%" x2="90%" y2="105%">
+      <stop offset="0%" stop-color="#0A2E4D"/>
+      <stop offset="100%" stop-color="#146B9C"/>
+    </linearGradient>
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+    <filter id="blurM" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+
+  <circle cx="880" cy="40" r="230" fill="#FFB74D" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="650" cy="470" r="175" fill="#FFE0B2" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="90" cy="470" r="88" fill="#FFD54F" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="140" cy="90" r="200" fill="#04182A" opacity="0.45" filter="url(#blurXL)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
+
+  <g filter="url(#blurM)">
+  <circle cx="300" cy="400" r="14" fill="#FFFFFF" opacity="0.5"/>
+  <circle cx="350" cy="370" r="10" fill="#FFFFFF" opacity="0.4"/>
+  <circle cx="395" cy="335" r="16" fill="#FFFFFF" opacity="0.55"/>
+  <circle cx="445" cy="355" r="9" fill="#FFFFFF" opacity="0.3"/>
+  <circle cx="490" cy="310" r="13" fill="#FFFFFF" opacity="0.45"/>
+  <circle cx="540" cy="330" r="8" fill="#FFFFFF" opacity="0.35"/>
+  <circle cx="585" cy="285" r="15" fill="#FFFFFF" opacity="0.5"/>
+  <circle cx="430" cy="340" r="90" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.12"/>
+  <circle cx="520" cy="300" r="60" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.16"/>
+  </g>
+</svg>
