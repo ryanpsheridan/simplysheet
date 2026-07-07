@@ -35,16 +35,11 @@
   <circle cx="590" cy="300" r="150" fill="#FFFFFF" opacity="0.12"/>
   </g>
 
-  <!-- v1 UI ghost accent (~10%) -->
-  <g opacity="0.16" transform="translate(660,346)">
-    <rect x="0" y="0" width="240" height="150" rx="10" fill="#FFFFFF"/>
-    <rect x="20" y="24" width="120" height="9" rx="4.5" fill="#2A2522" opacity="0.65"/>
-    <rect x="20" y="46" width="86" height="20" rx="4" fill="#2A2522" opacity="0.85"/>
-    <rect x="20" y="90" width="200" height="6" rx="3" fill="#E8EAF6"/>
-    <rect x="20" y="90" width="132" height="6" rx="3" fill="#18FFFF"/>
-    <rect x="20" y="108" width="200" height="6" rx="3" fill="#E8EAF6"/>
-    <rect x="20" y="108" width="88" height="6" rx="3" fill="#18FFFF" opacity="0.75"/>
-    <rect x="20" y="126" width="200" height="6" rx="3" fill="#E8EAF6"/>
-    <rect x="20" y="126" width="58" height="6" rx="3" fill="#18FFFF" opacity="0.55"/>
+  <!-- UI accent: abstract bar-chart glyph (~10%) -->
+  <g opacity="0.45" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" fill="none" transform="translate(764,458)">
+    <line x1="0" y1="0" x2="0" y2="-30"/>
+    <line x1="36" y1="0" x2="36" y2="-50"/>
+    <line x1="72" y1="0" x2="72" y2="-72"/>
+    <line x1="108" y1="0" x2="108" y2="-96"/>
   </g>
 </svg>
