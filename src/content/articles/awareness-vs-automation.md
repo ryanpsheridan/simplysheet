@@ -35,6 +35,8 @@ A spreadsheet doesn't automate much. You decide the categories, you enter the tr
 
 When you manually type in a purchase, you notice it. A $14 lunch or a forgotten subscription is harder to ignore when you're the one entering it, instead of letting an algorithm quietly file it into a category you never check. The small effort creates the awareness, which is the whole point.
 
+![Budget spreadsheet expense tracker showing manually logged purchases with date, amount, category, and notes columns](/images/inline-article-image-expenses-expense-tracker-categories.jpg)
+
 There's a visual difference too. An app spreads your financial life across multiple screens, tabs, and toggles. A spreadsheet puts it all on one surface, so you can open it and see your whole month at a glance instead of tapping through menus to find the number you're after. For someone trying to build a daily or weekly check-in habit, that one flat view tends to matter more than people expect.
 
 ## Why do simple systems tend to last longer?

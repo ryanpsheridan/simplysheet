@@ -1,6 +1,6 @@
 ---
 title: 'Where is my money going? A simple way to finally find out'
-description: "If you've ever looked at your bank account and wondered where it all went, here's the simplest way to find out — and what to do once you know."
+description: "If you've ever looked at your bank account and wondered where it all went, here's the simplest way to find out, and what to do once you know."
 pubDate: 'Jun 23 2026'
 image: '/images/card-v2-where-is-money-going.svg'
 cardImage: '/images/card-v2-where-is-money-going.svg'
@@ -45,6 +45,8 @@ The habit that works best is small and boring on purpose: a few minutes at the e
 
 A simple version of this looks like getting a bank notification summary in the evening and spending five minutes adding everything to a spreadsheet. That's it. No elaborate system, no hour-long Sunday planning session, just a short daily check-in.
 
+![Budget spreadsheet expense tracker log showing daily transactions logged with date, amount, category, and notes](/images/inline-article-image-expenses-expense-tracker-categories.jpg)
+
 The reason this beats a bigger weekly or monthly effort is momentum. Five minutes a day rarely gets skipped because it's not a big enough task to dread. A 45-minute weekly session is much easier to push to "tomorrow," and tomorrow has a way of becoming next week.
 
 Keeping the process simple matters as much as keeping it short. The moment tracking starts to feel complicated is usually the moment people quietly stop doing it.
@@ -61,8 +63,10 @@ Either way works. What matters is that the tool stays out of your way enough tha
 
 This is where the real value shows up. Once you have a few months of real numbers in front of you, patterns tend to be obvious in a way they never were from memory alone. Maybe dining out is double what you assumed. Maybe a handful of small subscriptions add up to a surprising monthly total. Maybe nothing is actually wrong, and the anxiety was bigger than the actual numbers.
 
+![Budget spreadsheet overview panel showing an expense log next to a spending breakdown chart of actual versus expected amounts by category](/images/inline-article-image-overview-section.jpg)
+
 From there, adjusting is straightforward. You're not cutting spending across the board and hoping it works. You're looking at specific categories with specific totals and deciding, one at a time, what still earns a place in your budget. If you're not sure whether you've tracked enough to start budgeting, a quick [readiness assessment](/tools/expense-tracking-readiness/) can help you decide.
 
 The financial anxiety that comes from not knowing tends to fade quietly once you actually know. Not because the numbers are necessarily great, but because uncertainty is almost always more stressful than the truth, whatever the truth turns out to be.
 
-If your income varies month to month, tracking is still the first step — but your budgeting approach will look a little different. [Budgeting with irregular income](/articles/budgeting-with-irregular-income/) covers what to do once you have the numbers but your paycheck isn't predictable. If your income is steady but limited — a pension, Social Security, or a fixed salary — [making a budget work on a fixed income](/articles/how-to-make-a-budget-work-on-a-fixed-income/) covers how to get the most from what's already coming in. And if you've tried tracking before and it fizzled out after a few weeks, [tracking expenses without burning out](/articles/track-expenses-without-burnout/) covers how to catch up after a missed day instead of treating it as a reason to quit.
+If your income varies month to month, tracking is still the first step, but your budgeting approach will look a little different. [Budgeting with irregular income](/articles/budgeting-with-irregular-income/) covers what to do once you have the numbers but your paycheck isn't predictable. If your income is steady but limited (a pension, Social Security, or a fixed salary), [making a budget work on a fixed income](/articles/how-to-make-a-budget-work-on-a-fixed-income/) covers how to get the most from what's already coming in. And if you've tried tracking before and it fizzled out after a few weeks, [tracking expenses without burning out](/articles/track-expenses-without-burnout/) covers how to catch up after a missed day instead of treating it as a reason to quit.
