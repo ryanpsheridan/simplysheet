@@ -809,7 +809,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   /* ——— Input listeners ——— */
 
   if (showCalculator) {
-    dateEl.min = monthValue(todayYear, todayMonth);
+    dateEl.min = addMonths(1);
 
     amountEl.addEventListener('input', function () {
       var pos    = amountEl.selectionStart;
