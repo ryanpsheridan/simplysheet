@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE_TITLE } from '../consts';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
 	title: string;
@@ -17,6 +18,8 @@ const { title, description, image, noindex, type = 'website' } = Astro.props;
 // by scripts/generate-og-images.mjs.
 const ogImage = image ? new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString() : undefined;
 ---
+
+<SpeedInsights />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CSDE2XWTG"></script>
 <script is:inline>
