@@ -20,6 +20,11 @@ The primary goal of this site is organic Google discovery. Every change — new 
 - The site already has a sitemap (`/sitemap-index.xml`), canonical URLs, and Open Graph tags — these are handled automatically by `BaseHead.astro`.
 - Social crawlers (Facebook, iMessage, Slack, etc.) can't render SVG for link previews, so `BaseHead.astro` points `og:image`/`twitter:image` at a PNG counterpart of the article's SVG (same filename, `.png` instead of `.svg`). `scripts/generate-og-images.mjs` rasterizes every `card-v2-*.svg` in `public/images/` to a matching `.png` and runs automatically via the `prebuild` npm script — no manual step needed, but if you add a new article's SVG in this session (without running `npm run build`), also run `node scripts/generate-og-images.mjs` so the PNG exists for local testing/sharing before the next real build.
 
+## Writing Style
+
+- Avoid em dashes. Use a period, comma, or colon instead — em dashes used heavily read as AI-generated. A stray one or two is fine; a paragraph shouldn't have more than one.
+- Bold 2–5 sentences per article for emphasis (`**text**` in markdown), reserved for the single strongest, most quotable sentence in a section — a thesis statement or the line that resonates most. Don't bold whole paragraphs or more than one sentence in a row. `.prose strong` is styled at `--weight-medium` (500), not full bold, so it reads as emphasis rather than shouting.
+
 ## When a New Article Is Submitted
 
 Every time an article is provided, automatically do all of the following:

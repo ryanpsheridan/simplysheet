@@ -92,7 +92,7 @@ p {
 }
 
 .prose strong {
-	font-weight: var(--weight-normal);
+	font-weight: var(--weight-medium);
 }
 
 .prose code {
