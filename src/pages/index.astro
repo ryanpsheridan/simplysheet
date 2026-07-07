@@ -301,7 +301,7 @@ const templates = (await getCollection('templates'))
 	@media (hover: hover) {
 		.topic-pill:hover {
 			color: var(--color-text);
-			background: var(--color-surface-tint);
+			background: var(--color-bg-panel);
 		}
 	}
 
@@ -536,7 +536,7 @@ const templates = (await getCollection('templates'))
 		display: block;
 	}
 	.template-placeholder-icon {
-		color: var(--color-divider);
+		color: var(--color-border);
 	}
 	.template-badge {
 		position: absolute;
@@ -546,7 +546,7 @@ const templates = (await getCollection('templates'))
 		font-weight: var(--weight-normal);
 		color: var(--color-text);
 		background: var(--color-bg);
-		border: 1px solid var(--color-divider);
+		border: 1px solid var(--color-border);
 		border-radius: var(--radius-sm);
 		padding: 0.125rem 0.5rem;
 		line-height: 1.4;
