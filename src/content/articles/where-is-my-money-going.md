@@ -1,6 +1,6 @@
 ---
 title: 'Where is my money going? A simple way to finally find out'
-description: "If you've ever looked at your bank account and wondered where it all went, here's the simplest way to find out — and what to do once you know."
+description: "If you've ever looked at your bank account and wondered where it all went, here's the simplest way to find out, and what to do once you know."
 pubDate: 'Jun 23 2026'
 image: '/images/card-v2-where-is-money-going.svg'
 cardImage: '/images/card-v2-where-is-money-going.svg'
@@ -69,4 +69,4 @@ From there, adjusting is straightforward. You're not cutting spending across the
 
 The financial anxiety that comes from not knowing tends to fade quietly once you actually know. Not because the numbers are necessarily great, but because uncertainty is almost always more stressful than the truth, whatever the truth turns out to be.
 
-If your income varies month to month, tracking is still the first step — but your budgeting approach will look a little different. [Budgeting with irregular income](/articles/budgeting-with-irregular-income/) covers what to do once you have the numbers but your paycheck isn't predictable. If your income is steady but limited — a pension, Social Security, or a fixed salary — [making a budget work on a fixed income](/articles/how-to-make-a-budget-work-on-a-fixed-income/) covers how to get the most from what's already coming in. And if you've tried tracking before and it fizzled out after a few weeks, [tracking expenses without burning out](/articles/track-expenses-without-burnout/) covers how to catch up after a missed day instead of treating it as a reason to quit.
+If your income varies month to month, tracking is still the first step, but your budgeting approach will look a little different. [Budgeting with irregular income](/articles/budgeting-with-irregular-income/) covers what to do once you have the numbers but your paycheck isn't predictable. If your income is steady but limited (a pension, Social Security, or a fixed salary), [making a budget work on a fixed income](/articles/how-to-make-a-budget-work-on-a-fixed-income/) covers how to get the most from what's already coming in. And if you've tried tracking before and it fizzled out after a few weeks, [tracking expenses without burning out](/articles/track-expenses-without-burnout/) covers how to catch up after a missed day instead of treating it as a reason to quit.
