@@ -55,7 +55,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
           </div>
           <div class="sfc-field">
             <label class="sfc-label" for={`${id}-date`}>Target month</label>
-            <input type="month" id={`${id}-date`} class="sfc-month-input" />
+            <input type="month" id={`${id}-date`} class="sfc-month-input" required />
           </div>
         </div>
 
@@ -81,9 +81,10 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
           <p class="sfc-tip" id={`${id}-tip`}></p>
         </div>
 
+        <p class="sfc-hint" id={`${id}-hint`}>Fill in both fields above to see your monthly savings plan.</p>
         <p class="sfc-error" id={`${id}-error`} hidden>Enter a target amount and a future target month to see your savings plan.</p>
 
-        <a href="/spreadsheets/savings-goals-tracker/" class="btn btn-primary sfc-cta">
+        <a href="/spreadsheets/savings-goals-tracker/" class="btn btn-primary sfc-cta" id={`${id}-cta`} hidden>
           Track your savings progress <span class="arrow">&rarr;</span>
         </a>
       </>
@@ -335,6 +336,9 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   .sfc-month-input:focus {
     border-color: var(--color-link);
   }
+  .sfc-month-input:invalid {
+    color: var(--color-text-muted);
+  }
 
   /* ——— Results ——— */
 
@@ -396,6 +400,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     padding-top: var(--space-xs);
     border-top: 1px solid var(--color-border);
   }
+  .sfc-hint,
   .sfc-error {
     font-size: var(--text-small);
     color: var(--color-text-muted);
@@ -407,6 +412,9 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   .sfc-cta {
     width: 100%;
     margin-bottom: var(--space-sm);
+  }
+  .sfc-cta[hidden] {
+    display: none;
   }
   .sfc-retake {
     font-family: var(--font-sans);
@@ -468,7 +476,9 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   var weeklyEl   = document.getElementById(id + '-weekly');
   var biweeklyEl = document.getElementById(id + '-biweekly');
   var tipEl      = document.getElementById(id + '-tip');
+  var hintEl     = document.getElementById(id + '-hint');
   var errorEl    = document.getElementById(id + '-error');
+  var ctaEl      = document.getElementById(id + '-cta');
   var retakeBtn  = document.getElementById(id + '-retake');
 
   var currentQ = 0;
@@ -760,6 +770,8 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     if (!amount || !dateVal) {
       resultsEl.hidden = true;
       errorEl.hidden = true;
+      if (hintEl) hintEl.hidden = false;
+      if (ctaEl) ctaEl.hidden = true;
       return;
     }
 
@@ -770,11 +782,14 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
 
     if (months <= 0) {
       resultsEl.hidden = true;
+      if (hintEl) hintEl.hidden = true;
       errorEl.hidden = false;
       errorEl.textContent = 'Target month must be in the future.';
+      if (ctaEl) ctaEl.hidden = true;
       return;
     }
 
+    if (hintEl) hintEl.hidden = true;
     errorEl.hidden = true;
 
     var monthly  = amount / months;
@@ -788,11 +803,14 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     tipEl.textContent      = getTip(selectedCategory, months, monthly);
 
     resultsEl.hidden = false;
+    if (ctaEl) ctaEl.hidden = false;
   }
 
   /* ——— Input listeners ——— */
 
   if (showCalculator) {
+    dateEl.min = addMonths(1);
+
     amountEl.addEventListener('input', function () {
       var pos    = amountEl.selectionStart;
       var before = amountEl.value.length;
@@ -815,6 +833,8 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
       preset   = null;
       if (resultsEl) resultsEl.hidden = true;
       if (errorEl) errorEl.hidden = true;
+      if (hintEl) hintEl.hidden = false;
+      if (ctaEl) ctaEl.hidden = true;
       phase2El.hidden  = true;
       assessEl.hidden  = false;
       renderQuestion();
