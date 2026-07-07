@@ -26,6 +26,8 @@ howItWorks:
       <strong>Debt</strong>, and <strong>Savings</strong>. For each category, you enter an
       expected amount — what you plan to spend or receive. As the month progresses, actual
       amounts update automatically based on your logged transactions.
+    image: "/images/inline-article-image-how-it-works.jpg"
+    imageAlt: "Budget spreadsheet Income, Bills, Expenses, Debt, and Savings sections with expected and actual amounts"
   - heading: "The expense tracker"
     body: >-
       At the bottom of the sheet is a daily expense log. Each entry takes four fields: amount,
@@ -39,8 +41,8 @@ howItWorks:
       month, you can see exactly how much of each category you've used and how much is left.
       The overview section shows time remaining in your budget period, total income vs. total
       spending, and the net difference.
-    image: "/images/inline-article-image-expenses-categories.jpg"
-    imageAlt: "Budget spreadsheet expense breakdown table showing expected, actual, remaining, and progress percentage per category"
+    image: "/images/inline-article-image-overview-section.jpg"
+    imageAlt: "Budget spreadsheet overview panel with financial summary and expected versus actual breakdown charts"
   - heading: "Built-in categories"
     body: >-
       The template comes pre-filled with common categories — salary, rent, utilities, groceries,
