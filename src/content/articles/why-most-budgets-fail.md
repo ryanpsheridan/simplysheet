@@ -38,6 +38,8 @@ A budget that requires daily logging of every transaction across eighteen catego
 
 The systems that last tend to be built around habits, not features. A short weekly check-in instead of daily logging. One place to see everything at a glance instead of several screens or apps. A routine simple enough to repeat without having to relearn it each time. A weekly review that's part of an existing routine, a Sunday evening habit, for instance, is often more valuable than a dashboard with dozens of charts that rarely get opened. The habit is what creates the awareness, not the dashboard sitting underneath it.
 
+![Budget spreadsheet dashboard showing Income, Bills, Expenses, Debt, and Savings sections in one place at a glance](/images/inline-article-image-how-it-works.jpg)
+
 This is the same idea behind [why awareness tends to beat automation](/articles/awareness-vs-automation): a system that asks a little of you, consistently, usually outperforms a system that asks nothing of you until it quietly stops being used at all.
 
 ## Why do simple systems often outperform complicated ones?
