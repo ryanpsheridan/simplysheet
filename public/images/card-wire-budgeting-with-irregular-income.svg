@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="10%" y1="105%" x2="90%" y2="-10%">
+      <stop offset="0%" stop-color="#0F3D13"/>
+      <stop offset="100%" stop-color="#2E7D32"/>
+    </linearGradient>
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+    <filter id="blurM" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+
+  <circle cx="-80" cy="400" r="210" fill="#F06292" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="300" cy="300" r="160" fill="#F8BBD0" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="600" cy="190" r="90" fill="#EC407A" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="1020" cy="110" r="170" fill="#082209" opacity="0.45" filter="url(#blurXL)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
+
+  <g filter="url(#blurM)">
+  <circle cx="230" cy="380" r="34" fill="#FFFFFF" opacity="0.24"/>
+  <circle cx="330" cy="330" r="62" fill="#FFFFFF" opacity="0.18"/>
+  <circle cx="440" cy="400" r="24" fill="#FFFFFF" opacity="0.2"/>
+  <circle cx="560" cy="290" r="78" fill="none" stroke="#FFFFFF" stroke-width="7" opacity="0.42"/>
+  <circle cx="700" cy="360" r="20" fill="#FFFFFF" opacity="0.22"/>
+  </g>
+
+  <!-- Wireframe overlay: volatile income line over a steady baseline -->
+  <g stroke="#FFFFFF" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
+    <path d="M180,320 L240,190 L300,350 L360,210 L420,370 L480,180 L540,340 L600,220 L660,360 L720,200 L780,300"/>
+    <line x1="180" y1="270" x2="780" y2="270" stroke-dasharray="6 8" stroke-width="1.5" opacity="0.7"/>
+  </g>
+</svg>
