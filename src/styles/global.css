@@ -154,13 +154,13 @@ p {
 .interstitial-link {
 	display: flex;
 	align-items: center;
-	gap: var(--space-md);
+	gap: var(--space-lg);
 	text-decoration: none;
 	padding: var(--space-md);
 }
 .interstitial-img {
 	width: 10rem;
-	height: auto;
+	aspect-ratio: 10 / 9;
 	border-radius: var(--radius-sm);
 	flex-shrink: 0;
 	object-fit: cover;
@@ -184,7 +184,7 @@ p {
 .interstitial-desc {
 	font-size: var(--text-small);
 	color: var(--color-text-secondary);
-	line-height: var(--leading-snug);
+	line-height: var(--leading-normal);
 	margin: 0;
 }
 @media (max-width: 480px) {
