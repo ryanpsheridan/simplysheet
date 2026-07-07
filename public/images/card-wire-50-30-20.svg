@@ -39,26 +39,26 @@
   </g>
   </g>
 
-  <!-- Wireframe overlay: 50/30/20 split, grid-snapped in a centered safe zone -->
+  <!-- Wireframe overlay: Type C (clean floating box), 50/30/20 split -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
-    <rect x="240" y="162" width="480" height="216" fill="none" vector-effect="non-scaling-stroke"/>
-    <line x1="400" y1="162" x2="400" y2="378" vector-effect="non-scaling-stroke"/>
-    <line x1="560" y1="162" x2="560" y2="378" vector-effect="non-scaling-stroke"/>
-    <line x1="240" y1="234" x2="720" y2="234" vector-effect="non-scaling-stroke"/>
-    <line x1="240" y1="306" x2="720" y2="306" vector-effect="non-scaling-stroke"/>
+    <rect x="144" y="108" width="672" height="324" fill="none" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="216" x2="816" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="324" x2="816" y2="324" vector-effect="non-scaling-stroke"/>
   </g>
   <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
-    <line x1="240" y1="378" x2="720" y2="378" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
-    <line x1="320" y1="378" x2="320" y2="198" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
-    <line x1="480" y1="378" x2="480" y2="270" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
-    <line x1="640" y1="378" x2="640" y2="342" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="816" y2="432" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
+    <line x1="256" y1="432" x2="256" y2="162" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
+    <line x1="480" y1="432" x2="480" y2="270" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
+    <line x1="704" y1="432" x2="704" y2="378" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
   </g>
   <g fill="#FFFFFF">
-    <circle cx="320" cy="198" r="6" opacity="0.3"/>
-    <circle cx="320" cy="198" r="2" opacity="1"/>
+    <circle cx="256" cy="162" r="6" opacity="0.3"/>
+    <circle cx="256" cy="162" r="2" opacity="1"/>
     <circle cx="480" cy="270" r="6" opacity="0.3"/>
     <circle cx="480" cy="270" r="2" opacity="1"/>
-    <circle cx="640" cy="342" r="6" opacity="0.3"/>
-    <circle cx="640" cy="342" r="2" opacity="1"/>
+    <circle cx="704" cy="378" r="6" opacity="0.3"/>
+    <circle cx="704" cy="378" r="2" opacity="1"/>
   </g>
 </svg>

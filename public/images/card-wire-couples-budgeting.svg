@@ -35,25 +35,28 @@
   <circle cx="590" cy="300" r="150" fill="#FFFFFF" opacity="0.12"/>
   </g>
 
-  <!-- Wireframe overlay: two lines merging into one, grid-snapped in a centered safe zone -->
+  <!-- Wireframe overlay: Type B (left-anchored L-axis), two lines merging into one -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
-    <rect x="240" y="162" width="480" height="216" fill="none" vector-effect="non-scaling-stroke"/>
-    <line x1="400" y1="162" x2="400" y2="378" vector-effect="non-scaling-stroke"/>
-    <line x1="560" y1="162" x2="560" y2="378" vector-effect="non-scaling-stroke"/>
-    <line x1="240" y1="234" x2="720" y2="234" vector-effect="non-scaling-stroke"/>
-    <line x1="240" y1="306" x2="720" y2="306" vector-effect="non-scaling-stroke"/>
+    <line x1="224" y1="108" x2="224" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="448" y1="108" x2="448" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="216" x2="672" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="324" x2="672" y2="324" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g stroke="#FFFFFF" fill="none">
+    <line x1="0" y1="108" x2="0" y2="432" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="432" x2="672" y2="432" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
   </g>
   <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
-    <path d="M240,234 Q360,234 480,270" stroke-width="1.5" opacity="0.75" vector-effect="non-scaling-stroke"/>
-    <path d="M240,342 Q360,342 480,270" stroke-width="1.5" opacity="0.75" vector-effect="non-scaling-stroke"/>
-    <path d="M480,270 Q600,255 720,270" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
+    <path d="M0,162 Q224,162 336,270" stroke-width="1.5" opacity="0.75" vector-effect="non-scaling-stroke"/>
+    <path d="M0,378 Q224,378 336,270" stroke-width="1.5" opacity="0.75" vector-effect="non-scaling-stroke"/>
+    <path d="M336,270 Q504,255 672,270" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
   </g>
   <g fill="#FFFFFF">
-    <circle cx="480" cy="270" r="6" opacity="0.3"/>
-    <circle cx="480" cy="270" r="2" opacity="1"/>
-    <circle cx="240" cy="234" r="5" opacity="0.22"/>
-    <circle cx="240" cy="234" r="1.6" opacity="0.75"/>
-    <circle cx="240" cy="342" r="5" opacity="0.22"/>
-    <circle cx="240" cy="342" r="1.6" opacity="0.75"/>
+    <circle cx="336" cy="270" r="6" opacity="0.3"/>
+    <circle cx="336" cy="270" r="2" opacity="1"/>
+    <circle cx="0" cy="162" r="5" opacity="0.22"/>
+    <circle cx="0" cy="162" r="1.6" opacity="0.75"/>
+    <circle cx="0" cy="378" r="5" opacity="0.22"/>
+    <circle cx="0" cy="378" r="1.6" opacity="0.75"/>
   </g>
 </svg>

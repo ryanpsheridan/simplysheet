@@ -40,23 +40,22 @@
   <circle cx="700" cy="360" r="20" fill="#FFFFFF" opacity="0.22"/>
   </g>
 
-  <!-- Wireframe overlay: volatile income wave masked to its own baseline axis, grid-snapped in a centered safe zone -->
+  <!-- Wireframe overlay: Type A (infinite baseline, open top/bottom), volatile income wave masked to its zero-line -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
-    <rect x="240" y="162" width="480" height="216" fill="none" vector-effect="non-scaling-stroke"/>
-    <line x1="400" y1="162" x2="400" y2="378" vector-effect="non-scaling-stroke"/>
-    <line x1="560" y1="162" x2="560" y2="378" vector-effect="non-scaling-stroke"/>
-    <line x1="240" y1="234" x2="720" y2="234" vector-effect="non-scaling-stroke"/>
-    <line x1="240" y1="306" x2="720" y2="306" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="108" x2="144" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="108" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="216" x2="816" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="324" x2="816" y2="324" vector-effect="non-scaling-stroke"/>
   </g>
-  <path d="M240,306 C280,234 360,234 400,306 C440,378 520,378 560,306 C600,234 680,234 720,306 Z" fill="url(#areaFade)" opacity="0.9"/>
-  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
-    <line x1="240" y1="306" x2="720" y2="306" stroke-width="1" opacity="0.45" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
-    <path d="M240,306 C280,234 360,234 400,306 C440,378 520,378 560,306 C600,234 680,234 720,306" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
-  </g>
+  <line x1="0" y1="270" x2="960" y2="270" stroke="#FFFFFF" stroke-width="1" opacity="0.4" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
+  <path d="M144,270 C210,162 300,162 368,270 C436,378 526,378 592,270 C660,162 750,162 816,270 Z" fill="url(#areaFade)" opacity="0.9"/>
+  <path d="M144,270 C210,162 300,162 368,270 C436,378 526,378 592,270 C660,162 750,162 816,270" stroke="#FFFFFF" stroke-width="1.5" opacity="0.95" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
   <g fill="#FFFFFF">
-    <circle cx="240" cy="306" r="5" opacity="0.25"/>
-    <circle cx="240" cy="306" r="1.6" opacity="0.8"/>
-    <circle cx="720" cy="306" r="5" opacity="0.25"/>
-    <circle cx="720" cy="306" r="1.6" opacity="0.8"/>
+    <circle cx="144" cy="270" r="5" opacity="0.25"/>
+    <circle cx="144" cy="270" r="1.6" opacity="0.8"/>
+    <circle cx="816" cy="270" r="5" opacity="0.25"/>
+    <circle cx="816" cy="270" r="1.6" opacity="0.8"/>
   </g>
 </svg>
