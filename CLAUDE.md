@@ -23,7 +23,7 @@ The primary goal of this site is organic Google discovery. Every change — new 
 ## Writing Style
 
 - Avoid em dashes. Use a period, comma, or colon instead — em dashes used heavily read as AI-generated. A stray one or two is fine; a paragraph shouldn't have more than one.
-- Bold 2–5 sentences per article for emphasis (`**text**` in markdown), reserved for the single strongest, most quotable sentence in a section — a thesis statement or the line that resonates most. Don't bold whole paragraphs or more than one sentence in a row. `.prose strong` is styled at `--weight-medium` (500), not full bold, so it reads as emphasis rather than shouting.
+- Don't use bold (`**text**`) for emphasis in article body text.
 
 ## When a New Article Is Submitted
 
