@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="50%" y1="-15%" x2="50%" y2="115%">
+      <stop offset="0%" stop-color="#00352C"/>
+      <stop offset="100%" stop-color="#00695C"/>
+    </linearGradient>
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+    <filter id="blurM" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+
+  <circle cx="520" cy="-60" r="230" fill="#29B6F6" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="480" cy="260" r="165" fill="#81D4FA" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="720" cy="430" r="85" fill="#00E5FF" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="260" cy="610" r="160" fill="#002018" opacity="0.45" filter="url(#blurXL)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
+
+  <g filter="url(#blurM)">
+  <circle cx="400" cy="290" r="150" fill="none" stroke="#FFFFFF" stroke-width="7" opacity="0.5"/>
+  <circle cx="400" cy="290" r="150" fill="#FFFFFF" opacity="0.1"/>
+  <circle cx="600" cy="250" r="140" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.3"/>
+  <ellipse cx="500" cy="270" rx="55" ry="130" fill="#FFFFFF" opacity="0.16"/>
+  </g>
+
+  <!-- v1 UI ghost accent (~10%) -->
+  <g opacity="0.16" transform="translate(660,346)">
+    <rect x="0" y="0" width="240" height="150" rx="10" fill="#FFFFFF"/>
+    <rect x="20" y="24" width="120" height="9" rx="4.5" fill="#2A2522" opacity="0.65"/>
+    <rect x="20" y="46" width="86" height="20" rx="4" fill="#2A2522" opacity="0.85"/>
+    <rect x="20" y="90" width="200" height="6" rx="3" fill="#E8EAF6"/>
+    <rect x="20" y="90" width="132" height="6" rx="3" fill="#00E5FF"/>
+    <rect x="20" y="108" width="200" height="6" rx="3" fill="#E8EAF6"/>
+    <rect x="20" y="108" width="88" height="6" rx="3" fill="#00E5FF" opacity="0.75"/>
+    <rect x="20" y="126" width="200" height="6" rx="3" fill="#E8EAF6"/>
+    <rect x="20" y="126" width="58" height="6" rx="3" fill="#00E5FF" opacity="0.55"/>
+  </g>
+</svg>

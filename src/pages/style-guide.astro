@@ -6,11 +6,6 @@ import { SITE_TITLE } from '../consts';
 
 const allArticles = (await getCollection('articles'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const masonryArticles = allArticles.slice(0, 6).map((a) => {
-	const wordCount = a.body?.split(/\s+/).filter(Boolean).length ?? 0;
-	const readTime = Math.max(1, Math.ceil(wordCount / 200));
-	return { ...a, readTime };
-});
 const sampleArticles = allArticles.slice(0, 3).map((a) => {
 	const wordCount = a.body?.split(/\s+/).filter(Boolean).length ?? 0;
 	const readTime = Math.max(1, Math.ceil(wordCount / 200));
@@ -27,27 +22,6 @@ const templates = (await getCollection('templates'))
 		image: t.data.heroImage,
 		badge: t.data.badge,
 	}));
-
-const listArticles = allArticles.map((a) => {
-	const wordCount = a.body?.split(/\s+/).filter(Boolean).length ?? 0;
-	const readTime = Math.max(1, Math.ceil(wordCount / 200));
-	return { ...a, readTime };
-});
-
-const GRADIENT_ANGLES = ['135deg', '135deg', '135deg', '135deg', '135deg', '135deg'];
-
-const ARTICLE_COLORS: Record<string, { bg: string; accent: string; accent2?: string }> = {
-	'50-30-20-budget-rule':           { bg: '#E3F2FD', accent: '#196EDD', accent2: '#90CAF9' },
-	'awareness-vs-automation':        { bg: '#E0F2F1', accent: '#00897B', accent2: '#80CBC4' },
-	'budgeting-styles':               { bg: '#F3E5F5', accent: '#7E57C2', accent2: '#CE93D8' },
-	'couples-budgeting':              { bg: '#FCE4EC', accent: '#E91E63', accent2: '#F48FB1' },
-	'where-is-my-money-going':        { bg: '#FFF3E0', accent: '#E86A33', accent2: '#FFCC80' },
-	'budgeting-with-irregular-income': { bg: '#E8F5E9', accent: '#2D9D78', accent2: '#A5D6A7' },
-	'debt-snowball-vs-avalanche':     { bg: '#E8EDF2', accent: '#2C3E50', accent2: '#90A4AE' },
-	'how-to-pay-off-debt':            { bg: '#EDE7F6', accent: '#7E57C2', accent2: '#B39DDB' },
-	'emergency-fund-sizing':          { bg: '#E8EAF6', accent: '#5C6BC0', accent2: '#9FA8DA' },
-	'why-most-budgets-fail':          { bg: '#FFF8E1', accent: '#F9A825', accent2: '#FFE082' },
-};
 
 const TAG_MAP: Record<string, string> = {
 	'expense-tracking': 'Expense Tracking',
@@ -268,45 +242,16 @@ const spacingScale = [
 			</div>
 		</section>
 
-		<!-- ============ CARDS: GLASS OVERLAY ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Article Card — Glass Overlay</h2>
-			<p class="section-desc">Each card gets a unique multi-stop gradient background derived from the article's accent color palette, with the hero SVG layered on top at low opacity for texture. Consistent top-left light source across all cards.</p>
-			<div class="glass2-grid">
-				{masonryArticles.map((article, i) => {
-					const palette = ARTICLE_COLORS[article.id] ?? { bg: '#E8EAF6', accent: '#5C6BC0', accent2: '#9FA8DA' };
-					const angle = GRADIENT_ANGLES[i % GRADIENT_ANGLES.length];
-					return (
-						<a href={`/articles/${article.id}/`} class="glass2-card">
-							<div class="glass2-card-bg" style={`background: linear-gradient(${angle}, ${palette.bg} 0%, ${palette.accent2 ?? palette.bg} 50%, ${palette.accent}e6 100%);`}>
-								{article.data.image && (
-									<img src={article.data.image} alt="" width="960" height="540" loading="lazy" />
-								)}
-							</div>
-							<div class="glass2-card-panel">
-								<span class="glass2-card-read">{article.readTime} min read</span>
-								<h3 class="glass2-card-title">{article.data.title}</h3>
-								<p class="glass2-card-desc">{article.data.description}</p>
-								<div class="glass2-card-footer">
-									<FormattedDate date={article.data.pubDate} />
-								</div>
-							</div>
-						</a>
-					);
-				})}
-			</div>
-		</section>
-
 		<!-- ============ THUMBNAIL V2: MESH ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Thumbnail Style Comparison</h2>
-			<p class="section-desc">Current UI-based thumbnails (v1) vs. abstract gradient mesh style (v2) — inspired by Spotify's AI playlist covers. Saturated color-field backgrounds, overlapping blurred blobs that melt into an organic swirl, grain texture, and a circle-only shape vocabulary for each topic's visual metaphor. No white cards, no fake UI.</p>
+			<p class="section-desc">A 90/10 blend of the old UI-based style (v1) and the live abstract gradient mesh style (v2) — inspired by Spotify's AI playlist covers — compared against the mesh style on its own. The blend keeps the full mesh treatment (saturated color-field background, blurred blobs, grain, circle motif) and tucks in a faint ghost of the old UI card as a small accent. For reference only — the live site uses v2 — Mesh alone.</p>
 
 			<h3 class="thumb-compare-label">50/30/20 Budget Rule</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/featured-50-30-20.svg" alt="Current 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-50-30-20.svg" alt="Mesh and UI mix 50/30/20 thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -317,8 +262,8 @@ const spacingScale = [
 			<h3 class="thumb-compare-label">Emergency Fund Sizing</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-emergency-fund-sizing.svg" alt="Current emergency fund thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-emergency-fund.svg" alt="Mesh and UI mix emergency fund thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -329,8 +274,8 @@ const spacingScale = [
 			<h3 class="thumb-compare-label">Debt Snowball vs. Avalanche</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-debt-snowball-vs-avalanche.svg" alt="Current debt snowball thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-debt-snowball.svg" alt="Mesh and UI mix debt snowball thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -341,8 +286,8 @@ const spacingScale = [
 			<h3 class="thumb-compare-label">Where Is My Money Going?</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-where-is-money-going.svg" alt="Current where is my money going thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-where-is-money-going.svg" alt="Mesh and UI mix where is my money going thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -353,8 +298,8 @@ const spacingScale = [
 			<h3 class="thumb-compare-label">Why Most Budgets Fail</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-why-most-budgets-fail.svg" alt="Current why most budgets fail thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-why-most-budgets-fail.svg" alt="Mesh and UI mix why most budgets fail thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -365,8 +310,8 @@ const spacingScale = [
 			<h3 class="thumb-compare-label">Budgeting with Irregular Income</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-budgeting-with-irregular-income.svg" alt="Current irregular income thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-budgeting-with-irregular-income.svg" alt="Mesh and UI mix irregular income thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -377,8 +322,8 @@ const spacingScale = [
 			<h3 class="thumb-compare-label">Awareness vs. Automation</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-awareness-vs-automation.svg" alt="Current awareness vs automation thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-awareness-vs-automation.svg" alt="Mesh and UI mix awareness vs automation thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -389,8 +334,8 @@ const spacingScale = [
 			<h3 class="thumb-compare-label">Budgeting Styles</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-budgeting-styles.svg" alt="Current budgeting styles thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-budgeting-styles.svg" alt="Mesh and UI mix budgeting styles thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -401,8 +346,8 @@ const spacingScale = [
 			<h3 class="thumb-compare-label">Couples Budgeting</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-couples-budgeting.svg" alt="Current couples budgeting thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-couples-budgeting.svg" alt="Mesh and UI mix couples budgeting thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -413,8 +358,8 @@ const spacingScale = [
 			<h3 class="thumb-compare-label">How to Pay Off Debt</h3>
 			<div class="thumb-compare-row">
 				<div class="thumb-compare-item">
-					<span class="thumb-compare-tag">v1 — UI</span>
-					<img src="/images/card-how-to-pay-off-debt.svg" alt="Current how to pay off debt thumbnail" width="960" height="540" loading="lazy" />
+					<span class="thumb-compare-tag">90/10 Mix</span>
+					<img src="/images/card-mix-how-to-pay-off-debt.svg" alt="Mesh and UI mix how to pay off debt thumbnail" width="960" height="540" loading="lazy" />
 				</div>
 				<div class="thumb-compare-item">
 					<span class="thumb-compare-tag thumb-compare-tag-new">v2 — Mesh</span>
@@ -438,30 +383,6 @@ const spacingScale = [
 						<p class="template-demo-desc">{t.desc}</p>
 					</a>
 				))}
-			</div>
-		</section>
-
-		<!-- ============ CARDS: FEATURED ARTICLE ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Featured Article Card</h2>
-			<p class="section-desc">Used in the homepage hero. Large thumbnail with "Featured Article" label, title, and metadata.</p>
-			<div style="max-width: 32rem;">
-				{sampleArticles[0] && (
-					<a href={`/articles/${sampleArticles[0].id}/`} class="featured-demo">
-						{(sampleArticles[0].data.cardImage || sampleArticles[0].data.image) && (
-							<div class="featured-demo-thumb">
-								<img src={sampleArticles[0].data.cardImage ?? sampleArticles[0].data.image} alt={sampleArticles[0].data.title} width="960" height="540" loading="lazy" />
-							</div>
-						)}
-						<span class="featured-demo-label">Featured Article</span>
-						<h2 class="featured-demo-title">{sampleArticles[0].data.title}</h2>
-						<p class="featured-demo-meta">
-							<FormattedDate date={sampleArticles[0].data.pubDate} />
-							<span>&middot;</span>
-							<span>{sampleArticles[0].readTime} min read</span>
-						</p>
-					</a>
-				)}
 			</div>
 		</section>
 
@@ -530,35 +451,6 @@ const spacingScale = [
 					<hr />
 					<p>Content below divider</p>
 				</div>
-			</div>
-		</section>
-
-		<!-- ============ ARTICLE LIST — SINGLE COLUMN ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Article List — Single Column</h2>
-			<p class="section-desc">Medium-style single-column layout for the /articles/ parent page. Title and description on the left, thumbnail on the right.</p>
-
-			<div class="article-list">
-				{listArticles.map((article) => (
-					<a href={`/articles/${article.id}/`} class="article-list-item">
-						<div class="article-list-text">
-							<div class="article-list-meta">
-								{article.data.tags?.map((tag: string) => (
-									<span class="article-list-tag">{TAG_MAP[tag] ?? tag}</span>
-								))}
-								<span class="article-list-date"><FormattedDate date={article.data.pubDate} /></span>
-							</div>
-							<h3 class="article-list-title">{article.data.title}</h3>
-							<p class="article-list-desc">{article.data.description}</p>
-							<span class="article-list-read">{article.readTime} min read</span>
-						</div>
-						{article.data.cardImage && (
-							<div class="article-list-thumb">
-								<img src={article.data.cardImage} alt={article.data.title} width="960" height="540" loading="lazy" />
-							</div>
-						)}
-					</a>
-				))}
 			</div>
 		</section>
 
@@ -1136,198 +1028,6 @@ const spacingScale = [
 		gap: 0.375rem;
 	}
 
-	/* ——— Glass overlay card ——— */
-
-	.glass2-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-md);
-	}
-	@media (max-width: 960px) {
-		.glass2-grid { grid-template-columns: repeat(2, 1fr); }
-	}
-	@media (max-width: 600px) {
-		.glass2-grid { grid-template-columns: 1fr; }
-	}
-
-	.glass2-card {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-		border-radius: 1rem;
-		overflow: hidden;
-		text-decoration: none;
-		min-height: 22rem;
-		transition: transform 0.2s ease;
-	}
-	.glass2-card:hover {
-		transform: translateY(-2px);
-	}
-
-	.glass2-card-bg {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-		overflow: hidden;
-	}
-	.glass2-card-bg img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		opacity: 0.35;
-		mix-blend-mode: overlay;
-		transform: scale(1.2);
-	}
-
-	.glass2-card-panel {
-		position: relative;
-		z-index: 1;
-		background: rgba(255, 255, 255, 0.88);
-		backdrop-filter: blur(16px) saturate(1.4);
-		-webkit-backdrop-filter: blur(16px) saturate(1.4);
-		border-radius: 0.5rem;
-		margin: 0.5rem;
-		padding: var(--space-md);
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		transition: background 0.2s ease;
-	}
-	.glass2-card:hover .glass2-card-panel {
-		background: rgba(255, 255, 255, 0.90);
-	}
-
-	.glass2-card-read {
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		margin-bottom: var(--space-sm);
-	}
-
-	.glass2-card-title {
-		font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem);
-		font-weight: var(--weight-normal);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-		margin-bottom: var(--space-xs);
-	}
-
-	.glass2-card-desc {
-		font-size: var(--text-small);
-		line-height: var(--leading-snug);
-		color: var(--color-text-secondary);
-		margin: 0 0 var(--space-sm);
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
-	.glass2-card-footer {
-		margin-top: auto;
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		padding-top: var(--space-xs);
-		border-top: 1px solid rgba(0, 0, 0, 0.06);
-	}
-
-	/* ——— Thumbnail comparison ——— */
-
-	/* ——— Article List — Single Column ——— */
-	.article-list {
-		display: flex;
-		flex-direction: column;
-	}
-	.article-list-item {
-		display: flex;
-		gap: var(--space-lg);
-		align-items: flex-start;
-		padding: var(--space-lg) 0;
-		border-bottom: 1px solid var(--color-border);
-		text-decoration: none;
-		color: inherit;
-		transition: opacity 0.15s ease;
-	}
-	.article-list-item:first-child {
-		padding-top: 0;
-	}
-	.article-list-item:last-child {
-		border-bottom: none;
-	}
-	.article-list-item:hover {
-		opacity: 0.75;
-	}
-	.article-list-text {
-		flex: 1;
-		min-width: 0;
-	}
-	.article-list-meta {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-		margin-bottom: var(--space-xs);
-	}
-	.article-list-tag {
-		font-size: var(--text-xs);
-		font-weight: var(--weight-normal);
-		color: var(--color-link);
-	}
-	.article-list-tag + .article-list-date::before {
-		content: '·';
-		margin-right: var(--space-xs);
-		color: var(--color-text-muted);
-	}
-	.article-list-date {
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-	}
-	.article-list-title {
-		font-family: var(--font-heading);
-		font-size: 1.35rem;
-		font-weight: var(--weight-normal);
-		line-height: 1.3;
-		margin: 0 0 var(--space-xs) 0;
-		color: var(--color-text);
-	}
-	.article-list-desc {
-		font-size: var(--text-body);
-		color: var(--color-text-secondary);
-		line-height: 1.5;
-		margin: 0;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-	.article-list-read {
-		display: inline-block;
-		margin-top: var(--space-xs);
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-	}
-	.article-list-thumb {
-		flex-shrink: 0;
-		width: 160px;
-		height: 107px;
-		border-radius: var(--radius-md);
-		overflow: hidden;
-	}
-	.article-list-thumb img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-	@media (max-width: 600px) {
-		.article-list-thumb {
-			width: 100px;
-			height: 67px;
-		}
-		.article-list-desc {
-			-webkit-line-clamp: 2;
-		}
-	}
 	/* ——— Thumbnail Comparison ——— */
 	.thumb-compare-label {
 		font-size: var(--text-body);
@@ -1442,54 +1142,6 @@ const spacingScale = [
 		line-height: var(--leading-snug);
 		margin: 0;
 		padding: 0 var(--space-md) var(--space-md);
-	}
-
-	/* ——— Featured article card demo ——— */
-
-	.featured-demo {
-		display: flex;
-		flex-direction: column;
-		text-decoration: none;
-	}
-	.featured-demo-thumb {
-		border-radius: var(--radius-md);
-		overflow: hidden;
-		margin-bottom: var(--space-md);
-		background: var(--color-bg-panel);
-	}
-	.featured-demo-thumb img {
-		display: block;
-		width: 100%;
-		height: auto;
-	}
-	.featured-demo-label {
-		display: inline-block;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-normal);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wide);
-		color: var(--color-link);
-		margin-bottom: var(--space-2xs);
-	}
-	.featured-demo-title {
-		font-size: var(--text-h3);
-		line-height: var(--leading-snug);
-		color: var(--color-text);
-		margin-bottom: var(--space-xs);
-		text-decoration: underline transparent;
-		text-underline-offset: 3px;
-		transition: text-decoration-color 100ms ease;
-	}
-	.featured-demo:hover .featured-demo-title {
-		text-decoration-color: var(--color-text);
-	}
-	.featured-demo-meta {
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-		margin: 0;
-		display: flex;
-		align-items: center;
-		gap: 0.375rem;
 	}
 
 	/* ——— Buttons ——— */
