@@ -35,23 +35,27 @@
   <ellipse cx="500" cy="270" rx="55" ry="130" fill="#FFFFFF" opacity="0.16"/>
   </g>
 
-  <!-- Wireframe overlay: manual steps vs. automated flow, anchored in a centered safe zone -->
+  <!-- Wireframe overlay: manual steps vs. automated flow, grid-snapped in a centered safe zone -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
-    <rect x="240" y="162" width="480" height="216" fill="none"/>
-    <line x1="400" y1="162" x2="400" y2="378"/>
-    <line x1="560" y1="162" x2="560" y2="378"/>
-    <line x1="240" y1="234" x2="720" y2="234"/>
-    <line x1="240" y1="306" x2="720" y2="306"/>
+    <rect x="240" y="162" width="480" height="216" fill="none" vector-effect="non-scaling-stroke"/>
+    <line x1="400" y1="162" x2="400" y2="378" vector-effect="non-scaling-stroke"/>
+    <line x1="560" y1="162" x2="560" y2="378" vector-effect="non-scaling-stroke"/>
+    <line x1="240" y1="234" x2="720" y2="234" vector-effect="non-scaling-stroke"/>
+    <line x1="240" y1="306" x2="720" y2="306" vector-effect="non-scaling-stroke"/>
   </g>
   <g stroke="#FFFFFF" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="480" y1="162" x2="480" y2="378" stroke-width="1" opacity="0.35" stroke-dasharray="4,4"/>
-    <path d="M280,350 L340,350 L340,300 L400,300 L400,250 L460,250 L460,200" stroke-width="1.5" opacity="0.92"/>
-    <path d="M500,350 C560,350 600,260 680,200" stroke-width="1.5" opacity="0.92"/>
+    <line x1="480" y1="162" x2="480" y2="378" stroke-width="1" opacity="0.35" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
+    <path d="M240,342 L320,342 L320,306 L400,306 L400,270" stroke-width="1.5" opacity="0.92" vector-effect="non-scaling-stroke"/>
+    <path d="M560,342 C620,342 660,270 720,198" stroke-width="1.5" opacity="0.92" vector-effect="non-scaling-stroke"/>
   </g>
   <g fill="#FFFFFF">
-    <circle cx="460" cy="200" r="6" opacity="0.3"/>
-    <circle cx="460" cy="200" r="2" opacity="1"/>
-    <circle cx="680" cy="200" r="6" opacity="0.3"/>
-    <circle cx="680" cy="200" r="2" opacity="1"/>
+    <circle cx="240" cy="342" r="4" opacity="0.25"/>
+    <circle cx="240" cy="342" r="1.4" opacity="0.75"/>
+    <circle cx="400" cy="270" r="6" opacity="0.3"/>
+    <circle cx="400" cy="270" r="2" opacity="1"/>
+    <circle cx="560" cy="342" r="4" opacity="0.25"/>
+    <circle cx="560" cy="342" r="1.4" opacity="0.75"/>
+    <circle cx="720" cy="198" r="6" opacity="0.3"/>
+    <circle cx="720" cy="198" r="2" opacity="1"/>
   </g>
 </svg>

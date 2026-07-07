@@ -36,26 +36,25 @@
   <circle cx="330" cy="410" r="70" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.32"/>
   </g>
 
-  <!-- Wireframe overlay: a row of distinct method glyphs, anchored in a centered safe zone -->
+  <!-- Wireframe overlay: a row of distinct method glyphs, grid-snapped in a centered safe zone -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
-    <rect x="240" y="162" width="480" height="216" fill="none"/>
-    <line x1="400" y1="162" x2="400" y2="378"/>
-    <line x1="560" y1="162" x2="560" y2="378"/>
-    <line x1="240" y1="234" x2="720" y2="234"/>
-    <line x1="240" y1="306" x2="720" y2="306"/>
+    <rect x="240" y="162" width="480" height="216" fill="none" vector-effect="non-scaling-stroke"/>
+    <line x1="400" y1="162" x2="400" y2="378" vector-effect="non-scaling-stroke"/>
+    <line x1="560" y1="162" x2="560" y2="378" vector-effect="non-scaling-stroke"/>
+    <line x1="240" y1="234" x2="720" y2="234" vector-effect="non-scaling-stroke"/>
+    <line x1="240" y1="306" x2="720" y2="306" vector-effect="non-scaling-stroke"/>
   </g>
   <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
-    <line x1="260" y1="345" x2="700" y2="345" stroke-width="1" opacity="0.35"/>
-    <line x1="280" y1="330" x2="280" y2="318" stroke-width="1.5" opacity="0.9"/>
-    <line x1="300" y1="330" x2="300" y2="310" stroke-width="1.5" opacity="0.9"/>
-    <line x1="320" y1="330" x2="320" y2="302" stroke-width="1.5" opacity="0.9"/>
-    <circle cx="420" cy="300" r="20" stroke-width="1.5" opacity="0.9"/>
-    <line x1="420" y1="300" x2="420" y2="280" stroke-width="1.5" opacity="0.9"/>
-    <path d="M500,320 C512,290 528,290 540,320 C552,350 568,350 580,320" stroke-width="1.5" opacity="0.9"/>
-    <line x1="620" y1="310" x2="680" y2="310" stroke-width="1.5" opacity="0.9"/>
+    <line x1="240" y1="342" x2="720" y2="342" stroke-width="1" opacity="0.35" vector-effect="non-scaling-stroke"/>
+    <line x1="240" y1="342" x2="240" y2="306" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <line x1="320" y1="342" x2="320" y2="270" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <circle cx="400" cy="306" r="72" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <line x1="400" y1="306" x2="400" y2="234" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <path d="M480,306 Q520,234 560,306" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <line x1="640" y1="270" x2="720" y2="270" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
   </g>
   <g fill="#FFFFFF">
-    <circle cx="680" cy="310" r="6" opacity="0.3"/>
-    <circle cx="680" cy="310" r="2" opacity="1"/>
+    <circle cx="720" cy="270" r="6" opacity="0.3"/>
+    <circle cx="720" cy="270" r="2" opacity="1"/>
   </g>
 </svg>

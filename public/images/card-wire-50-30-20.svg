@@ -39,26 +39,26 @@
   </g>
   </g>
 
-  <!-- Wireframe overlay: 50/30/20 split, anchored in a centered safe zone -->
+  <!-- Wireframe overlay: 50/30/20 split, grid-snapped in a centered safe zone -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
-    <rect x="240" y="162" width="480" height="216" fill="none"/>
-    <line x1="400" y1="162" x2="400" y2="378"/>
-    <line x1="560" y1="162" x2="560" y2="378"/>
-    <line x1="240" y1="234" x2="720" y2="234"/>
-    <line x1="240" y1="306" x2="720" y2="306"/>
+    <rect x="240" y="162" width="480" height="216" fill="none" vector-effect="non-scaling-stroke"/>
+    <line x1="400" y1="162" x2="400" y2="378" vector-effect="non-scaling-stroke"/>
+    <line x1="560" y1="162" x2="560" y2="378" vector-effect="non-scaling-stroke"/>
+    <line x1="240" y1="234" x2="720" y2="234" vector-effect="non-scaling-stroke"/>
+    <line x1="240" y1="306" x2="720" y2="306" vector-effect="non-scaling-stroke"/>
   </g>
   <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
-    <line x1="240" y1="378" x2="720" y2="378" stroke-width="1" opacity="0.45"/>
-    <line x1="340" y1="378" x2="340" y2="293" stroke-width="1.5" opacity="0.95"/>
-    <line x1="480" y1="378" x2="480" y2="327" stroke-width="1.5" opacity="0.95"/>
-    <line x1="620" y1="378" x2="620" y2="344" stroke-width="1.5" opacity="0.95"/>
+    <line x1="240" y1="378" x2="720" y2="378" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
+    <line x1="320" y1="378" x2="320" y2="198" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
+    <line x1="480" y1="378" x2="480" y2="270" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
+    <line x1="640" y1="378" x2="640" y2="342" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
   </g>
   <g fill="#FFFFFF">
-    <circle cx="340" cy="293" r="6" opacity="0.3"/>
-    <circle cx="340" cy="293" r="2" opacity="1"/>
-    <circle cx="480" cy="327" r="6" opacity="0.3"/>
-    <circle cx="480" cy="327" r="2" opacity="1"/>
-    <circle cx="620" cy="344" r="6" opacity="0.3"/>
-    <circle cx="620" cy="344" r="2" opacity="1"/>
+    <circle cx="320" cy="198" r="6" opacity="0.3"/>
+    <circle cx="320" cy="198" r="2" opacity="1"/>
+    <circle cx="480" cy="270" r="6" opacity="0.3"/>
+    <circle cx="480" cy="270" r="2" opacity="1"/>
+    <circle cx="640" cy="342" r="6" opacity="0.3"/>
+    <circle cx="640" cy="342" r="2" opacity="1"/>
   </g>
 </svg>
