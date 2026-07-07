@@ -1,0 +1,125 @@
+---
+interface Props {
+	currentPage: number;
+	lastPage: number;
+	basePath: string;
+}
+
+const { currentPage, lastPage, basePath } = Astro.props;
+
+function pageUrl(n: number): string {
+	return n <= 1 ? `${basePath}/` : `${basePath}/${n}/`;
+}
+
+function getPages(current: number, last: number): (number | 'ellipsis')[] {
+	if (last <= 7) return Array.from({ length: last }, (_, i) => i + 1);
+	const keep = new Set([1, 2, last - 1, last, current - 1, current, current + 1]);
+	const sorted = [...keep].filter((n) => n >= 1 && n <= last).sort((a, b) => a - b);
+	const result: (number | 'ellipsis')[] = [];
+	sorted.forEach((n, i) => {
+		if (i > 0 && n - sorted[i - 1] > 1) result.push('ellipsis');
+		result.push(n);
+	});
+	return result;
+}
+
+const pages = getPages(currentPage, lastPage);
+const hasPrev = currentPage > 1;
+const hasNext = currentPage < lastPage;
+---
+
+{lastPage > 1 && (
+	<nav class="pagination" aria-label="Pagination">
+		{hasPrev
+			? <a href={pageUrl(currentPage - 1)} class="pagination-arrow" aria-label="Previous page" rel="prev">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+				</a>
+			: <span class="pagination-arrow disabled" aria-hidden="true">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+				</span>
+		}
+
+		<div class="pagination-pages">
+			{pages.map((p) =>
+				p === 'ellipsis' ? (
+					<span class="pagination-ellipsis">&hellip;</span>
+				) : p === currentPage ? (
+					<span class="pagination-page active" aria-current="page">{p}</span>
+				) : (
+					<a href={pageUrl(p)} class="pagination-page">{p}</a>
+				)
+			)}
+		</div>
+
+		{hasNext
+			? <a href={pageUrl(currentPage + 1)} class="pagination-arrow enabled" aria-label="Next page" rel="next">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+				</a>
+			: <span class="pagination-arrow disabled" aria-hidden="true">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+				</span>
+		}
+	</nav>
+)}
+
+<style>
+	.pagination {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-md);
+		margin-top: var(--space-2xl);
+	}
+	.pagination-pages {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+	}
+	.pagination-page {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 2.25rem;
+		height: 2.25rem;
+		border-radius: var(--radius-full);
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		transition: color 0.15s, background 0.15s;
+	}
+	a.pagination-page:hover {
+		color: var(--color-text);
+	}
+	.pagination-page.active {
+		background: var(--color-bg-inverse);
+		color: var(--color-bg);
+	}
+	.pagination-ellipsis {
+		color: var(--color-text-muted);
+		font-size: var(--text-small);
+		padding: 0 0.125rem;
+	}
+	.pagination-arrow {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: var(--radius-full);
+		text-decoration: none;
+		transition: color 0.15s, background 0.15s;
+	}
+	a.pagination-arrow {
+		background: var(--color-bg-panel);
+		color: var(--color-text-secondary);
+	}
+	a.pagination-arrow:hover {
+		color: var(--color-text);
+	}
+	.pagination-arrow.disabled {
+		color: var(--color-text-muted);
+		opacity: 0.5;
+		cursor: default;
+	}
+</style>

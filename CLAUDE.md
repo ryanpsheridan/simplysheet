@@ -146,7 +146,7 @@ The article's `tags` field determines which two Etsy products appear at the bott
 | `net-worth` | Budget Template | Savings Goals Tracker |
 | `budgeting-styles` | Budget Template | Couples Budget |
 
-When adding a new tag, update the `tagProductMap` in `ArticleLayout.astro` and the `TAG_MAP` in both `src/pages/index.astro` and `src/pages/articles/index.astro`.
+`ALL_TAGS`/`TAG_MAP` are defined once in `src/consts.ts` and imported everywhere they're needed (homepage, articles listing, tag archive pages, `ArticleLayout.astro`). When adding a new tag, add it there and update the `tagProductMap` in `ArticleLayout.astro`.
 
 ## Product Promo Component
 
@@ -163,7 +163,7 @@ When adding a new tag, update the `tagProductMap` in `ArticleLayout.astro` and t
 
 ## Available Tags
 
-Defined in `TAG_MAP` on `src/pages/index.astro` and `src/pages/articles/index.astro`:
+Defined once in `ALL_TAGS`/`TAG_MAP` in `src/consts.ts`:
 
 - `expense-tracking` — Expense Tracking
 - `couples-budgeting` — Couples Budgeting
@@ -172,6 +172,18 @@ Defined in `TAG_MAP` on `src/pages/index.astro` and `src/pages/articles/index.as
 - `irregular-income` — Irregular Income
 - `net-worth` — Net Worth
 - `budgeting-styles` — Budgeting Styles
+
+## Articles Listing & Pagination
+
+The articles hub is statically paginated for SEO/AEO crawlability — there is no client-side "load more."
+
+- `src/pages/articles/[...page].astro` generates `/articles/`, `/articles/2/`, `/articles/3/`, etc. via Astro's `paginate()`, `PAGE_SIZE = 12`.
+- `src/pages/articles/tag/[tag]/[...page].astro` generates a real, independently indexable archive page per tag (e.g. `/articles/tag/debt-payoff/`, paginated the same way) instead of the old client-side `?tag=` filter. Each has its own unique title/meta description.
+- `src/components/TopicFilterTabs.astro` renders the tag pill nav as real `<a>` links to these archive pages (not JS-driven).
+- `src/components/ArticleGrid.astro` renders the static, crawlable grid for the current page plus the search/sort controls. Search and non-default sort switch to a client-rendered view drawn from a lightweight embedded JSON manifest of *all* articles in that scope (all articles, or all articles for the current tag) — since those operations span every page, not just the current one. Clearing search and resetting sort back to "Newest first" restores the original static markup exactly.
+- `src/components/Pagination.astro` is the reusable numbered pager (prev/next arrows, active page as a filled circle). Takes `currentPage`, `lastPage`, `basePath`.
+- Both listing route types emit `CollectionPage` and `ItemList` JSON-LD for AEO/structured data.
+- If you add a new tag to `ALL_TAGS`, a new archive page is generated automatically at build time — no other wiring needed.
 
 ## Homepage
 

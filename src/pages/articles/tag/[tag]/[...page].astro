@@ -1,0 +1,125 @@
+---
+import type { GetStaticPaths, Page } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
+import TopicFilterTabs from '../../../../components/TopicFilterTabs.astro';
+import ArticleGrid from '../../../../components/ArticleGrid.astro';
+import Pagination from '../../../../components/Pagination.astro';
+import { ALL_TAGS, ARTICLES_PAGE_SIZE as PAGE_SIZE, TAG_MAP, SITE_TITLE } from '../../../../consts';
+
+type ArticleWithReadTime = CollectionEntry<'articles'> & { readTime: number };
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const allArticles = await getCollection('articles');
+	const usedTags = new Set(allArticles.flatMap((a) => a.data.tags ?? []));
+	const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
+
+	return visibleTags.flatMap((tag) => {
+		const tagged = allArticles
+			.filter((a) => a.data.tags?.includes(tag.slug))
+			.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+			.map((article) => {
+				const wordCount = article.body?.split(/\s+/).filter(Boolean).length ?? 0;
+				const readTime = Math.max(1, Math.ceil(wordCount / 200));
+				return { ...article, readTime };
+			});
+		return paginate(tagged, { pageSize: PAGE_SIZE, params: { tag: tag.slug } });
+	});
+}) satisfies GetStaticPaths;
+
+const { tag } = Astro.params;
+const { page } = Astro.props as { page: Page<ArticleWithReadTime> };
+const tagLabel = TAG_MAP[tag as string] ?? tag;
+
+const allArticles = await getCollection('articles');
+const usedTags = new Set(allArticles.flatMap((a) => a.data.tags ?? []));
+const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
+
+const manifest = allArticles
+	.filter((a) => a.data.tags?.includes(tag as string))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.map((article) => {
+		const wordCount = article.body?.split(/\s+/).filter(Boolean).length ?? 0;
+		return {
+			id: article.id,
+			title: article.data.title,
+			desc: article.data.description,
+			tags: article.data.tags ?? [],
+			date: article.data.pubDate.valueOf(),
+			image: article.data.cardImage ?? article.data.image,
+			readTime: Math.max(1, Math.ceil(wordCount / 200)),
+		};
+	});
+
+const pageTitle = page.currentPage === 1
+	? `${tagLabel} Articles — ${SITE_TITLE}`
+	: `${tagLabel} Articles — Page ${page.currentPage} — ${SITE_TITLE}`;
+const pageDescription = `Guides and practical advice on ${tagLabel.toLowerCase()} — straightforward writing to help you manage your money without the stress.`;
+
+const crumbs = page.currentPage === 1
+	? [{ label: 'Articles', href: '/articles/' }, { label: tagLabel }]
+	: [{ label: 'Articles', href: '/articles/' }, { label: tagLabel, href: `/articles/tag/${tag}/` }, { label: `Page ${page.currentPage}` }];
+
+const collectionSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	name: pageTitle,
+	description: pageDescription,
+	url: Astro.url.toString(),
+};
+
+const itemListSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'ItemList',
+	itemListElement: page.data.map((article, i) => ({
+		'@type': 'ListItem',
+		position: (page.currentPage - 1) * PAGE_SIZE + i + 1,
+		url: new URL(`/articles/${article.id}/`, Astro.site).toString(),
+		name: article.data.title,
+	})),
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+	<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
+
+	<main class="articles-page">
+		<Breadcrumbs crumbs={crumbs} />
+		<div class="articles-header">
+			<h1>{tagLabel} Articles</h1>
+		</div>
+
+		<TopicFilterTabs tags={visibleTags} activeSlug={tag as string} />
+
+		<div class="articles-main">
+			<ArticleGrid articles={page.data} manifest={manifest} tagMap={TAG_MAP} />
+		</div>
+
+		<Pagination currentPage={page.currentPage} lastPage={page.lastPage} basePath={`/articles/tag/${tag}`} />
+	</main>
+</BaseLayout>
+
+<style>
+	.articles-page {
+		max-width: calc(var(--max-width) + var(--space-md) * 2);
+		padding: var(--space-xl) var(--space-md) var(--space-2xl);
+	}
+
+	.articles-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-md);
+		margin-bottom: var(--space-lg);
+	}
+
+	h1 {
+		margin-bottom: 0;
+	}
+
+	.articles-main {
+		min-width: 0;
+	}
+</style>
