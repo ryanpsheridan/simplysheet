@@ -35,4 +35,36 @@
   <circle cx="720" cy="390" r="48" fill="#FFFFFF" opacity="0.16"/>
   <circle cx="330" cy="410" r="70" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.32"/>
   </g>
+
+  <!-- Wireframe overlay: Centered Box, categorical matrix — 4 isolated lanes, one archetype each, none bridge a divider -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <rect x="144" y="108" width="672" height="324" fill="none" vector-effect="non-scaling-stroke"/>
+    <line x1="312" y1="108" x2="312" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="480" y1="108" x2="480" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="648" y1="108" x2="648" y2="432" vector-effect="non-scaling-stroke"/>
+  </g>
+
+  <!-- Lane 1 (144-312): 3-bar vertical column chart -->
+  <g stroke="#FFFFFF" fill="none" stroke-width="1.5" opacity="0.9" stroke-linecap="round">
+    <line x1="192" y1="378" x2="192" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="228" y1="378" x2="228" y2="270" vector-effect="non-scaling-stroke"/>
+    <line x1="264" y1="378" x2="264" y2="216" vector-effect="non-scaling-stroke"/>
+  </g>
+
+  <!-- Lane 2 (312-480): precise 50/50 split circle -->
+  <g>
+    <path d="M396,216 A54,54 0 0,0 396,324 Z" fill="#FFFFFF" opacity="0.18"/>
+    <circle cx="396" cy="270" r="54" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <line x1="396" y1="216" x2="396" y2="324" stroke="#FFFFFF" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+  </g>
+
+  <!-- Lane 3 (480-648): a smooth individual arc -->
+  <path d="M516,378 Q564,270 612,378" stroke="#FFFFFF" stroke-width="1.5" opacity="0.9" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+
+  <!-- Lane 4 (648-816): flat steady line with a terminating node -->
+  <line x1="684" y1="324" x2="780" y2="324" stroke="#FFFFFF" stroke-width="1.5" opacity="0.9" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <g fill="#FFFFFF">
+    <circle cx="780" cy="324" r="6" opacity="0.3"/>
+    <circle cx="780" cy="324" r="2" opacity="1"/>
+  </g>
 </svg>

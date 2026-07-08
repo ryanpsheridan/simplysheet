@@ -38,4 +38,28 @@
   <circle cx="280" cy="320" r="10" fill="#FFFFFF" opacity="0.14"/>
   <circle cx="460" cy="340" r="10" fill="#FFFFFF" opacity="0.14"/>
   </g>
+
+  <!-- Wireframe overlay: Full Horizontal Bleed, 30 days of tracking data accumulating upward -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <line x1="144" y1="108" x2="144" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="108" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="108" x2="960" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="216" x2="960" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="324" x2="960" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="432" x2="960" y2="432" vector-effect="non-scaling-stroke"/>
+  </g>
+  <line x1="0" y1="378" x2="960" y2="378" stroke="#FFFFFF" stroke-width="1" opacity="0.35" vector-effect="non-scaling-stroke"/>
+  <path d="M144,378 C220,378 300,300 368,270 C440,240 520,216 592,216 C660,216 750,180 816,162" stroke="#FFFFFF" stroke-width="1.5" opacity="0.95" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <g fill="#FFFFFF">
+    <circle cx="144" cy="378" r="5" opacity="0.25"/>
+    <circle cx="144" cy="378" r="1.6" opacity="0.8"/>
+    <circle cx="368" cy="270" r="5" opacity="0.25"/>
+    <circle cx="368" cy="270" r="1.6" opacity="0.8"/>
+    <circle cx="592" cy="216" r="5" opacity="0.25"/>
+    <circle cx="592" cy="216" r="1.6" opacity="0.8"/>
+    <circle cx="816" cy="162" r="6" opacity="0.3"/>
+    <circle cx="816" cy="162" r="2" opacity="1"/>
+  </g>
 </svg>
