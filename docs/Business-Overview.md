@@ -8,8 +8,8 @@ All products are sold through the Etsy shop **SimplySheetDesign**, each as a Goo
 
 | Product | Price | SKU | Tag |
 |---|---|---|---|
-| Budget Spreadsheet (best seller) | $17.99 | `2025BT1` | `expense-tracking` |
-| Couples Budget Spreadsheet | $20.99 | `2025JBS` | `couples-budgeting` |
+| Budget Spreadsheet (best seller) | $14.99 | `2025BT1` | `expense-tracking` |
+| Couples Budget Spreadsheet | $16.99 | `2025JBS` | `couples-budgeting` |
 | Debt Payoff Tracker | $9.99 | `2026SDT1` | `debt-payoff` |
 | Savings Goals Tracker | $9.99 | `2026SFT` | `savings-goals` |
 | Net Worth Tracker | $9.99 | `2026NWT` | `net-worth` |

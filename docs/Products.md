@@ -3,7 +3,7 @@
 All products are Google Sheets + Excel spreadsheets sold on Etsy (shop **SimplySheetDesign**), each available in dark and light theme (separate Etsy listings per theme, toggled client-side on the product page). Product data lives in `src/content/templates/*.md` (the collection is still internally named `templates` in `src/content.config.ts`), one file per product, rendered by `src/layouts/TemplateLayout.astro`. Public product pages live at `/spreadsheets/{slug}/` (the route was renamed from `/templates/` — the `src/pages/templates/` folder is now `src/pages/spreadsheets/`; `ProductPromo.astro` builds its links as `` `/spreadsheets/${slug}/` ``). `tags` on each template determine which two products `ArticleLayout.astro` recommends at the bottom of an article with a given tag — see the mapping at the end of this doc.
 
 ## Budget Spreadsheet
-`src/content/templates/budget-spreadsheet.md` · `$17.99` · SKU `2025BT1` · badge: **Best Seller** · tag: `expense-tracking`
+`src/content/templates/budget-spreadsheet.md` · `$14.99` · SKU `2025BT1` · badge: **Best Seller** · tag: `expense-tracking`
 
 **Features:** monthly income/expense tracking with category breakdowns, real-time progress bars, daily expense log with auto-categorization, monthly overview dashboard, pre-built customizable categories, Google Sheets + Excel.
 
@@ -12,7 +12,7 @@ All products are Google Sheets + Excel spreadsheets sold on Etsy (shop **SimplyS
 **When articles should recommend it:** the default/fallback recommendation — shown alongside almost every other tag (`expense-tracking`, `irregular-income`, `net-worth`, `debt-payoff`, `savings-goals`, `budgeting-styles` all include it as one of the two picks in `tagProductMap`). Recommend it in any article about getting started with budgeting, tracking daily spending, or applying a percentage framework like 50/30/20.
 
 ## Couples Budget Spreadsheet
-`src/content/templates/couples-budget-spreadsheet.md` · `$20.99` · SKU `2025JBS` · tag: `couples-budgeting`
+`src/content/templates/couples-budget-spreadsheet.md` · `$16.99` · SKU `2025JBS` · tag: `couples-budgeting`
 
 **Features:** dual income tracking, shared vs. personal expense categories, bill splitting, combined savings goal tracking, visual joint-finance dashboard, Google Sheets + Excel.
 
