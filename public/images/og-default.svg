@@ -1,0 +1,32 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#0A1D52"/>
+      <stop offset="100%" stop-color="#2A60EE"/>
+    </linearGradient>
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+
+  <circle cx="180" cy="120" r="230" fill="#4FC3F7" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="820" cy="430" r="175" fill="#B3E5FC" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="700" cy="90" r="90" fill="#18FFFF" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="120" cy="470" r="200" fill="#050F30" opacity="0.45" filter="url(#blurXL)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
+
+  <!-- Simply Sheet Design logo mark, centered (source: logo-svg.svg, 173x154 viewBox) -->
+  <g transform="translate(357.5, 161) scale(1.417)" fill="#FFFFFF" fill-opacity="0.96">
+    <path d="M150.958 108.619C148.828 133.019 129.006 152.237 104.116 153.809H66.3994V108.619H150.958ZM84.5586 58.5293C82.4284 82.9296 62.607 102.148 37.7168 103.72H0V58.5293H84.5586ZM172.594 93.6602H88.5938C91.6922 69.0322 112.254 50.8172 137.041 50.1562L172.571 50.0879L172.594 93.6602ZM106.205 43.5723H22.2051C25.3035 18.9441 45.8533 0.729059 70.6523 0.0683594L106.182 0L106.205 43.5723Z"/>
+  </g>
+</svg>

@@ -9,14 +9,16 @@ interface Props {
 	image?: string;
 	noindex?: boolean;
 	type?: 'website' | 'article';
+	pubDate?: Date;
+	updatedDate?: Date;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const { title, description, image, noindex, type = 'website' } = Astro.props;
+const { title, description, image = '/images/og-default.svg', noindex, type = 'website', pubDate, updatedDate } = Astro.props;
 // Social crawlers (Facebook, iMessage, Slack, etc.) don't render SVG for
 // preview images, so swap in the rasterized PNG generated at build time
 // by scripts/generate-og-images.mjs.
-const ogImage = image ? new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString() : undefined;
+const ogImage = new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString();
 ---
 
 <meta charset="utf-8" />
@@ -80,13 +82,16 @@ const ogImage = image ? new URL(image.replace(/\.svg$/i, '.png'), Astro.site).to
 <meta name="description" content={description} />
 
 <meta property="og:type" content={type} />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-{ogImage && <meta property="og:image" content={ogImage} />}
+<meta property="og:image" content={ogImage} />
+{type === 'article' && pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
+{type === 'article' && updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
 
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-{ogImage && <meta property="twitter:image" content={ogImage} />}
+<meta property="twitter:image" content={ogImage} />

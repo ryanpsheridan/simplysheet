@@ -49,9 +49,37 @@ const templates = (await getCollection('templates'))
 		image: t.data.heroImage,
 		badge: t.data.badge,
 	}));
+
+const organizationSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: SITE_TITLE,
+	url: Astro.site?.toString(),
+	logo: new URL('/images/logo-256px.jpg', Astro.site).toString(),
+	description: SITE_DESCRIPTION,
+	founder: {
+		'@type': 'Person',
+		name: 'Ryan Sheridan',
+	},
+	sameAs: ['https://simplysheetdesign.etsy.com'],
+};
+
+const websiteSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: SITE_TITLE,
+	url: Astro.site?.toString(),
+	description: SITE_DESCRIPTION,
+	publisher: {
+		'@type': 'Organization',
+		name: SITE_TITLE,
+	},
+};
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 	<section class="hero">
 		<div class="hero-inner">
 			<div class="hero-text">
@@ -111,7 +139,7 @@ const templates = (await getCollection('templates'))
 							</a>
 						))}
 						<div class="home-row-viewall">
-							<a href="/articles" class="btn btn-secondary">All articles <span class="arrow">&rarr;</span></a>
+							<a href="/articles/" class="btn btn-secondary">All articles <span class="arrow">&rarr;</span></a>
 						</div>
 					</div>
 				</div>
@@ -142,8 +170,8 @@ const templates = (await getCollection('templates'))
 
 	<section class="quiz-banner">
 		<div class="quiz-banner-inner">
-			<h6 class="quiz-banner-heading">Curious which budgeting style fits you best?</h6>
-			<a href="/quiz/budgeting-style" class="btn btn-primary">Take the 60-second quiz</a>
+			<h2 class="quiz-banner-heading">Curious which budgeting style fits you best?</h2>
+			<a href="/quiz/budgeting-style/" class="btn btn-primary">Take the 60-second quiz</a>
 		</div>
 	</section>
 
@@ -152,7 +180,7 @@ const templates = (await getCollection('templates'))
 			<div class="about-brief-label">Creating a sustainable system</div>
 			<div class="about-brief-content">
 				<p class="about-brief-body" id="about-text">I spent years frustrated by complicated budgeting apps that didn't fit my life. After six years of refining my own spreadsheet systems, I realized that clarity comes from simplicity, not extra features. I combined my background in UX design with my passion for personal finance to build the tools I wish I had from the start.</p>
-				<a href="/about" class="btn btn-secondary about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
+				<a href="/about/" class="btn btn-secondary about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
 			</div>
 		</div>
 	</section>
@@ -176,7 +204,7 @@ const templates = (await getCollection('templates'))
 				))}
 			</div>
 			<div class="templates-cta-wrap">
-				<a href="/spreadsheets" class="btn btn-primary">View all spreadsheets <span class="arrow">&rarr;</span></a>
+				<a href="/spreadsheets/" class="btn btn-primary">View all spreadsheets <span class="arrow">&rarr;</span></a>
 			</div>
 		</div>
 	</section>

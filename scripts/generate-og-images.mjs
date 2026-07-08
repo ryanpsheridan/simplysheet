@@ -9,7 +9,9 @@ import sharp from 'sharp';
 const imagesDir = path.resolve(import.meta.dirname, '../public/images');
 
 const files = await readdir(imagesDir);
-const svgs = files.filter((f) => f.startsWith('card-v2-') && f.endsWith('.svg'));
+const svgs = files.filter(
+	(f) => (f.startsWith('card-v2-') || f === 'og-default.svg') && f.endsWith('.svg'),
+);
 
 for (const svg of svgs) {
 	const pngName = svg.replace(/\.svg$/, '.png');

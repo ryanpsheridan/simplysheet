@@ -15,12 +15,12 @@ const isActive = (href: string) =>
 			</a>
 			<span class="nav-divider"></span>
 			<ul class="nav-links">
-				<li><a href="/articles" aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a></li>
-				<li><a href="/spreadsheets" aria-current={isActive('/spreadsheets') ? 'page' : undefined}>Spreadsheets</a></li>
-				<li><a href="/tools" aria-current={isActive('/tools') ? 'page' : undefined}>Tools</a></li>
+				<li><a href="/articles/" aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a></li>
+				<li><a href="/spreadsheets/" aria-current={isActive('/spreadsheets') ? 'page' : undefined}>Spreadsheets</a></li>
+				<li><a href="/tools/" aria-current={isActive('/tools') ? 'page' : undefined}>Tools</a></li>
 			</ul>
 		</div>
-		<a href="/quiz/budgeting-style" class="nav-cta">Find Your Budget Style</a>
+		<a href="/quiz/budgeting-style/" class="nav-cta">Find Your Budget Style</a>
 		<button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
 			<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
 				<line x1="4" y1="7" x2="20" y2="7" />
@@ -43,10 +43,10 @@ const isActive = (href: string) =>
 		</div>
 		<ul class="menu-links">
 			<li><a href="/" aria-current={isActive('/') ? 'page' : undefined}>Home</a></li>
-			<li><a href="/articles" aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a></li>
-			<li><a href="/spreadsheets" aria-current={isActive('/spreadsheets') ? 'page' : undefined}>Spreadsheets</a></li>
-			<li><a href="/tools" aria-current={isActive('/tools') ? 'page' : undefined}>Tools</a></li>
-			<li><a href="/quiz/budgeting-style" aria-current={isActive('/quiz/budgeting-style') ? 'page' : undefined}>Budgeting Style Quiz</a></li>
+			<li><a href="/articles/" aria-current={isActive('/articles') ? 'page' : undefined}>Articles</a></li>
+			<li><a href="/spreadsheets/" aria-current={isActive('/spreadsheets') ? 'page' : undefined}>Spreadsheets</a></li>
+			<li><a href="/tools/" aria-current={isActive('/tools') ? 'page' : undefined}>Tools</a></li>
+			<li><a href="/quiz/budgeting-style/" aria-current={isActive('/quiz/budgeting-style') ? 'page' : undefined}>Budgeting Style Quiz</a></li>
 		</ul>
 	</div>
 </div>
