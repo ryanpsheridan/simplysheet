@@ -30,40 +30,46 @@ interface Props {
 const { articles, manifest, tagMap } = Astro.props;
 ---
 
-<div class="articles-controls">
-	<div class="filter-select-wrap">
-		<select id="sort-select" class="filter-select" aria-label="Sort articles">
-			<option value="newest">Newest first</option>
-			<option value="oldest">Oldest first</option>
-			<option value="title">Title A–Z</option>
-		</select>
-		<svg class="filter-select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
-	</div>
-	<div class="filter-search">
-		<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-		<input type="search" id="search-input" class="search-input" placeholder="Search articles" aria-label="Search articles" />
-	</div>
-</div>
-
-<div class="article-list" id="article-list">
-	{articles.map((article) => (
-		<a href={`/articles/${article.id}/`} class="article-list-item">
-			{(article.data.cardImage || article.data.image) && (
-				<div class="article-list-thumb">
-					<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-				</div>
-			)}
-			<div class="article-list-text">
-				<TagPills tags={article.data.tags} tagMap={tagMap} />
-				<h2 class="article-list-title">{article.data.title}</h2>
-				<p class="article-list-desc">{article.data.description}</p>
-				<span class="article-list-read">{article.readTime} min read</span>
+<div class="articles-layout">
+	<aside class="articles-sidebar">
+		<div class="articles-controls">
+			<div class="filter-search">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+				<input type="search" id="search-input" class="search-input" placeholder="Search articles" aria-label="Search articles" />
 			</div>
-		</a>
-	))}
-</div>
+			<div class="filter-select-wrap">
+				<select id="sort-select" class="filter-select" aria-label="Sort articles">
+					<option value="newest">Newest first</option>
+					<option value="oldest">Oldest first</option>
+					<option value="title">Title A–Z</option>
+				</select>
+				<svg class="filter-select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+			</div>
+		</div>
+	</aside>
 
-<p class="no-results" hidden>No articles match your search.</p>
+	<div class="articles-content">
+		<div class="article-list" id="article-list">
+			{articles.map((article) => (
+				<a href={`/articles/${article.id}/`} class="article-list-item">
+					{(article.data.cardImage || article.data.image) && (
+						<div class="article-list-thumb">
+							<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+						</div>
+					)}
+					<div class="article-list-text">
+						<TagPills tags={article.data.tags} tagMap={tagMap} />
+						<h2 class="article-list-title">{article.data.title}</h2>
+						<p class="article-list-desc">{article.data.description}</p>
+						<span class="article-list-read">{article.readTime} min read</span>
+					</div>
+				</a>
+			))}
+		</div>
+
+		<p class="no-results" hidden>No articles match your search.</p>
+	</div>
+</div>
 
 <script type="application/json" id="articles-manifest" set:html={JSON.stringify(manifest)} />
 <script type="application/json" id="articles-tag-map" set:html={JSON.stringify(tagMap)} />
@@ -145,21 +151,39 @@ const { articles, manifest, tagMap } = Astro.props;
 </script>
 
 <style>
-	/* ——— Controls (sort + search) ——— */
+	/* ——— Layout (sticky sidebar / content) ——— */
+
+	.articles-layout {
+		display: grid;
+		grid-template-columns: 12rem 1fr;
+		gap: var(--space-xl);
+		align-items: start;
+	}
+	.articles-sidebar {
+		position: sticky;
+		top: calc(3.5rem + var(--space-lg));
+	}
+	.articles-content {
+		min-width: 0;
+	}
+
+	/* ——— Controls (search + sort) ——— */
 
 	.articles-controls {
 		display: flex;
-		flex-wrap: wrap;
+		flex-direction: column;
 		gap: var(--space-sm);
-		margin-bottom: var(--space-lg);
 	}
 	.filter-select-wrap {
 		position: relative;
 		display: flex;
 		align-items: center;
+		width: 100%;
 	}
 	.filter-select {
 		appearance: none;
+		width: 100%;
+		box-sizing: border-box;
 		font-family: var(--font-sans);
 		font-size: var(--text-small);
 		color: var(--color-text);
@@ -190,9 +214,8 @@ const { articles, manifest, tagMap } = Astro.props;
 		padding: 0.5rem 0.875rem;
 		color: var(--color-text-muted);
 		transition: border-color 0.15s;
-		flex: 1;
-		min-width: 12rem;
-		max-width: 20rem;
+		width: 100%;
+		box-sizing: border-box;
 	}
 	.filter-search:focus-within {
 		border-color: var(--color-text-muted);
@@ -203,6 +226,7 @@ const { articles, manifest, tagMap } = Astro.props;
 	.search-input {
 		flex: 1;
 		min-width: 0;
+		width: 100%;
 		font-family: var(--font-sans);
 		font-size: var(--text-small);
 		color: var(--color-text);
@@ -311,13 +335,34 @@ const { articles, manifest, tagMap } = Astro.props;
 		}
 	}
 
+	@media (max-width: 768px) {
+		.articles-layout {
+			grid-template-columns: 1fr;
+			gap: var(--space-sm);
+		}
+		.articles-sidebar {
+			position: static;
+		}
+		.articles-controls {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.filter-search {
+			flex: 1;
+			width: auto;
+			min-width: 12rem;
+		}
+		.filter-select-wrap {
+			width: auto;
+		}
+	}
+
 	@media (max-width: 600px) {
 		.article-list {
 			grid-template-columns: 1fr;
 		}
 		.filter-search {
 			min-width: 0;
-			max-width: none;
 			flex-basis: 100%;
 		}
 	}
