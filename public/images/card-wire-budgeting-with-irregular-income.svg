@@ -40,14 +40,16 @@
   <circle cx="700" cy="360" r="20" fill="#FFFFFF" opacity="0.22"/>
   </g>
 
-  <!-- Wireframe overlay: Type A (infinite baseline, open top/bottom), volatile income wave masked to its zero-line -->
+  <!-- Wireframe overlay: Full Horizontal Bleed, volatile income wave masked to its zero-line -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
     <line x1="144" y1="108" x2="144" y2="432" vector-effect="non-scaling-stroke"/>
     <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
     <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
     <line x1="816" y1="108" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
-    <line x1="144" y1="216" x2="816" y2="216" vector-effect="non-scaling-stroke"/>
-    <line x1="144" y1="324" x2="816" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="108" x2="960" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="216" x2="960" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="324" x2="960" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="432" x2="960" y2="432" vector-effect="non-scaling-stroke"/>
   </g>
   <line x1="0" y1="270" x2="960" y2="270" stroke="#FFFFFF" stroke-width="1" opacity="0.4" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
   <path d="M144,270 C210,162 300,162 368,270 C436,378 526,378 592,270 C660,162 750,162 816,270 Z" fill="url(#areaFade)" opacity="0.9"/>

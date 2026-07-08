@@ -39,14 +39,16 @@
   <circle cx="300" cy="420" r="10" fill="#FFFFFF" opacity="0.22"/>
   </g>
 
-  <!-- Wireframe overlay: Type A (infinite baseline, open top), a trend line that cracks and drops -->
+  <!-- Wireframe overlay: Full Horizontal Bleed, a trend line that cracks and drops -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
     <line x1="144" y1="108" x2="144" y2="432" vector-effect="non-scaling-stroke"/>
     <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
     <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
     <line x1="816" y1="108" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
-    <line x1="144" y1="216" x2="816" y2="216" vector-effect="non-scaling-stroke"/>
-    <line x1="144" y1="324" x2="816" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="108" x2="960" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="216" x2="960" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="324" x2="960" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="432" x2="960" y2="432" vector-effect="non-scaling-stroke"/>
   </g>
   <line x1="0" y1="432" x2="960" y2="432" stroke="#FFFFFF" stroke-width="1" opacity="0.35" vector-effect="non-scaling-stroke"/>
   <path d="M144,432 C260,380 380,220 480,162 L592,270 C660,330 740,380 816,432 Z" fill="url(#areaFade)"/>

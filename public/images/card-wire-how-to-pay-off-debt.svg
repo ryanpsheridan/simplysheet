@@ -39,23 +39,27 @@
   <circle cx="610" cy="450" r="18" fill="#FFFFFF" opacity="0.32"/>
   </g>
 
-  <!-- Wireframe overlay: Type B (left-anchored L-axis), staircase debt payoff to zero -->
+  <!-- Wireframe overlay: Full Vertical Bleed, staircase debt payoff to zero -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
-    <line x1="224" y1="108" x2="224" y2="432" vector-effect="non-scaling-stroke"/>
-    <line x1="448" y1="108" x2="448" y2="432" vector-effect="non-scaling-stroke"/>
-    <line x1="0" y1="216" x2="672" y2="216" vector-effect="non-scaling-stroke"/>
-    <line x1="0" y1="324" x2="672" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="0" x2="144" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="0" x2="368" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="0" x2="592" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="0" x2="816" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="108" x2="816" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="216" x2="816" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="324" x2="816" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
   </g>
   <g stroke="#FFFFFF" fill="none">
-    <line x1="0" y1="108" x2="0" y2="432" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
-    <line x1="0" y1="432" x2="672" y2="432" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="0" x2="144" y2="540" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="816" y2="432" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
   </g>
-  <path d="M0,162 L112,162 L112,216 L224,216 L224,270 L336,270 L336,324 L448,324 L448,378 L560,378 L560,432 L672,432 L0,432 Z" fill="url(#areaFade)"/>
-  <path d="M0,162 L112,162 L112,216 L224,216 L224,270 L336,270 L336,324 L448,324 L448,378 L560,378 L560,432 L672,432" stroke="#FFFFFF" stroke-width="1.5" opacity="0.95" fill="none" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <path d="M144,162 L256,162 L256,216 L368,216 L368,270 L480,270 L480,324 L592,324 L592,378 L704,378 L704,432 L816,432 L144,432 Z" fill="url(#areaFade)"/>
+  <path d="M144,162 L256,162 L256,216 L368,216 L368,270 L480,270 L480,324 L592,324 L592,378 L704,378 L704,432 L816,432" stroke="#FFFFFF" stroke-width="1.5" opacity="0.95" fill="none" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
   <g fill="#FFFFFF">
-    <circle cx="0" cy="162" r="6" opacity="0.3"/>
-    <circle cx="0" cy="162" r="2" opacity="1"/>
-    <circle cx="672" cy="432" r="7" opacity="0.32"/>
-    <circle cx="672" cy="432" r="2.2" opacity="1"/>
+    <circle cx="144" cy="162" r="6" opacity="0.3"/>
+    <circle cx="144" cy="162" r="2" opacity="1"/>
+    <circle cx="816" cy="432" r="7" opacity="0.32"/>
+    <circle cx="816" cy="432" r="2.2" opacity="1"/>
   </g>
 </svg>
