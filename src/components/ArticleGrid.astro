@@ -361,9 +361,16 @@ const { articles, manifest, tagMap } = Astro.props;
 		.article-list {
 			grid-template-columns: 1fr;
 		}
+		.articles-controls {
+			flex-direction: column;
+			flex-wrap: nowrap;
+		}
 		.filter-search {
 			min-width: 0;
-			flex-basis: 100%;
+			width: 100%;
+		}
+		.filter-select-wrap {
+			width: 100%;
 		}
 	}
 </style>
