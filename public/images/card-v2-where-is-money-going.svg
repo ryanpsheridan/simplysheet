@@ -34,4 +34,25 @@
   <circle cx="500" cy="350" r="30" fill="#FFFFFF" opacity="0.16"/>
   <circle cx="600" cy="410" r="18" fill="#FFFFFF" opacity="0.14"/>
   </g>
+
+  <!-- Wireframe overlay: Type C (clean floating box), category breakdown ring -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <rect x="144" y="108" width="672" height="324" fill="none" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="216" x2="816" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="324" x2="816" y2="324" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <circle cx="480" cy="270" r="112" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+    <line x1="480" y1="270" x2="592" y2="270" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
+    <line x1="480" y1="270" x2="480" y2="162" stroke-width="1" opacity="0.45" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
+    <line x1="480" y1="270" x2="368" y2="324" stroke-width="1" opacity="0.45" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
+    <line x1="480" y1="270" x2="480" y2="378" stroke-width="1" opacity="0.45" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="480" cy="270" r="4" opacity="0.5"/>
+    <circle cx="592" cy="270" r="6" opacity="0.3"/>
+    <circle cx="592" cy="270" r="2" opacity="1"/>
+  </g>
 </svg>

@@ -36,4 +36,30 @@
     <circle cx="0" cy="0" r="36" fill="#FFFFFF" opacity="0.6"/>
   </g>
   </g>
+
+  <!-- Wireframe overlay: Full Horizontal Bleed, ascending fund ladder -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <line x1="144" y1="108" x2="144" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="108" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="108" x2="960" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="216" x2="960" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="324" x2="960" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="432" x2="960" y2="432" vector-effect="non-scaling-stroke"/>
+  </g>
+  <line x1="0" y1="432" x2="960" y2="432" stroke="#FFFFFF" stroke-width="1" opacity="0.35" vector-effect="non-scaling-stroke"/>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <line x1="144" y1="432" x2="144" y2="162" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="256" y2="432" stroke-width="1.5" opacity="0.82" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="378" x2="368" y2="378" stroke-width="1.5" opacity="0.85" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="324" x2="480" y2="324" stroke-width="1.5" opacity="0.88" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="270" x2="592" y2="270" stroke-width="1.5" opacity="0.91" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="216" x2="704" y2="216" stroke-width="1.5" opacity="0.94" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="162" x2="816" y2="162" stroke-width="1.5" opacity="0.97" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="816" cy="162" r="6" opacity="0.3"/>
+    <circle cx="816" cy="162" r="2" opacity="1"/>
+  </g>
 </svg>

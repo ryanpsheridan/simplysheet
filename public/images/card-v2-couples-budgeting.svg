@@ -34,4 +34,29 @@
   <circle cx="590" cy="300" r="150" fill="none" stroke="#FFFFFF" stroke-width="7" opacity="0.5"/>
   <circle cx="590" cy="300" r="150" fill="#FFFFFF" opacity="0.12"/>
   </g>
+
+  <!-- Wireframe overlay: Full Horizontal Bleed, two lines merging into one -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <line x1="144" y1="108" x2="144" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="108" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="108" x2="960" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="216" x2="960" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="324" x2="960" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="432" x2="960" y2="432" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <path d="M144,162 Q368,162 480,270" stroke-width="1.5" opacity="0.75" vector-effect="non-scaling-stroke"/>
+    <path d="M144,378 Q368,378 480,270" stroke-width="1.5" opacity="0.75" vector-effect="non-scaling-stroke"/>
+    <path d="M480,270 Q648,255 816,270" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="480" cy="270" r="6" opacity="0.3"/>
+    <circle cx="480" cy="270" r="2" opacity="1"/>
+    <circle cx="144" cy="162" r="5" opacity="0.22"/>
+    <circle cx="144" cy="162" r="1.6" opacity="0.75"/>
+    <circle cx="144" cy="378" r="5" opacity="0.22"/>
+    <circle cx="144" cy="378" r="1.6" opacity="0.75"/>
+  </g>
 </svg>
