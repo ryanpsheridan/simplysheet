@@ -57,10 +57,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		<span class="calc-highlight-value" data-role="buffer">$0</span>
 		<span class="calc-highlight-math" data-role="buffer-math"></span>
 
-		<a href="/spreadsheets/budget-spreadsheet/" class="btn btn-primary calc-cta">
-			Track it in a budget spreadsheet
-			<span class="arrow">&rarr;</span>
-		</a>
+		<a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
 	</div>
 </div>
 
@@ -226,11 +223,13 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		min-height: 1.4em;
 	}
 
-	/* ——— CTA ——— */
+	/* ——— Product link ——— */
 
-	.calc-cta {
-		width: 100%;
+	.calc-product-link {
+		display: block;
+		text-align: center;
 		margin-top: var(--space-sm);
+		font-size: var(--text-small);
 	}
 
 	/* ——— Responsive ——— */

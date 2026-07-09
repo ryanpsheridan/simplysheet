@@ -1,59 +1,76 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import BiweeklyPaycheckCalculator from '../../components/BiweeklyPaycheckCalculator.astro';
-import { SITE_TITLE } from '../../consts';
 
-const title = `Biweekly & Weekly Paycheck Calculator — Budget by Payday`;
+const title = 'Biweekly & Weekly Paycheck Calculator';
+const metaTitle = 'Biweekly & Weekly Paycheck Calculator — Budget by Payday';
 const description = 'Free biweekly and weekly paycheck calculator. Enter your take-home pay and see your typical month, extra-paycheck months, and a steady average to budget on.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'three-paycheck-months', text: 'Why some months have three paychecks' },
+	{ slug: 'average-vs-typical', text: 'Average vs. typical month' },
+	{ slug: 'extra-paycheck', text: 'What to do with an extra paycheck' },
+];
+
+const faq = [
+	{
+		question: 'How many three-paycheck months are there in a year?',
+		answer: 'If you are paid every two weeks, you receive 26 paychecks a year, which works out to two months with three paychecks and ten months with two. If you are paid weekly, you receive 52 paychecks, so four months have five paychecks instead of the usual four.',
+	},
+	{
+		question: 'Which months will have three paychecks?',
+		answer: 'It depends entirely on your payday schedule, not the calendar alone. Find your first payday of the year, then count forward in 14-day steps. Any month containing three of those paydays is a three-paycheck month. As a shortcut: if your first payday of a month lands on the 1st or 2nd, that month will almost always contain a third paycheck.',
+	},
+	{
+		question: 'Should I use gross pay or take-home pay in this calculator?',
+		answer: 'Use take-home pay, meaning the amount that actually hits your bank account after taxes, retirement contributions, and insurance are withheld. Budgets built on gross pay overestimate what you can spend every single month.',
+	},
+	{
+		question: 'Is it better to budget by month or by paycheck?',
+		answer: 'Most bills arrive monthly, so a monthly budget is usually the simpler frame. The most reliable approach for biweekly earners is to build the monthly budget on two paychecks only, then treat the third paycheck in extra months as a planned surplus. Budgeting paycheck-by-paycheck works too, and suits people who prefer to assign each check to specific bills.',
+	},
+	{
+		question: 'What should I do with the money from a three-paycheck month?',
+		answer: 'Because your regular budget already covers the month with two paychecks, the third one is fully unassigned. Common uses are topping up an emergency fund, making an extra debt payment, or funding an upcoming irregular expense like car insurance or holiday spending. Deciding before the month arrives is what keeps it from disappearing into everyday spending.',
+	},
+];
 ---
 
-<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
-	<main>
-		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: 'Biweekly & Weekly Paycheck Calculator' }]} />
-		<article>
-			<header class="calc-header">
-				<h1>Biweekly & Weekly Paycheck Calculator</h1>
-				<p class="calc-intro">If you're paid every one or two weeks, your income doesn't divide evenly into calendar months — a couple of times a year you'll get an extra paycheck. Enter your take-home pay per paycheck below to see what a typical month looks like, what an extra-paycheck month adds, and a steady average number you can budget against instead of tracking each paycheck individually.</p>
-			</header>
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="Biweekly & Weekly Paycheck Calculator"
+	toc={toc}
+	faq={faq}
+	tags={['expense-tracking', 'irregular-income']}
+	productSlug="budget-spreadsheet"
+	productLabel="Turn your paycheck math into a plan"
+	relatedToolUrls={[
+		'/tools/50-30-20-budget-calculator/',
+		'/tools/emergency-fund-calculator/',
+		'/tools/sinking-fund-calculator/',
+		'/tools/expense-tracking-readiness/',
+	]}
+>
+	<Fragment slot="intro">If you're paid every one or two weeks, your income doesn't divide evenly into calendar months. A couple of times a year you'll get an extra paycheck. Enter your take-home pay per paycheck below to see what a typical month looks like, what an extra-paycheck month adds, and a steady average number you can budget against instead of tracking each paycheck individually.</Fragment>
 
-			<BiweeklyPaycheckCalculator showFrequencyToggle />
+	<BiweeklyPaycheckCalculator showFrequencyToggle slot="calculator" />
 
-			<div class="calc-callout">
-				<p class="calc-callout-text">For the full step-by-step process — including how to assign bills to specific paychecks and what to do with three-paycheck months — see <a href="/articles/budget-biweekly-paycheck/">How to Budget When You Get Paid Every Two Weeks</a>. Once you know your numbers, a <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> makes it easy to track both paychecks side by side.</p>
-			</div>
-		</article>
-	</main>
-</BaseLayout>
+	<h2 id="how-it-works">How this calculator works</h2>
+	<p>The calculator takes one number, your take-home pay per paycheck, and turns it into the three figures that matter for a monthly budget. Your typical month is two paychecks (or four, if you're paid weekly). Your extra-paycheck months add one more check on top of that. And your monthly average spreads all 26 biweekly paychecks (or 52 weekly ones) evenly across 12 months, which is the steadiest number to plan around.</p>
+	<p>Take-home pay means what actually lands in your account after taxes, retirement contributions, and insurance. If you enter your gross salary the results will look better than your real life, which is exactly how budgets end up failing in week one.</p>
 
-<style>
-	main {
-		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
-	}
-	.calc-header {
-		margin-bottom: var(--space-sm);
-	}
-	.calc-header h1 {
-		font-size: var(--text-h1);
-	}
-	.calc-intro {
-		font-size: var(--text-body);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-	}
-	.calc-callout {
-		margin-top: var(--space-xl);
-		padding: var(--space-md);
-		background: var(--color-bg-panel);
-		border-radius: var(--radius-md);
-	}
-	.calc-callout-text {
-		font-size: var(--text-small);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
-	.calc-callout-text a {
-		font-weight: var(--weight-normal);
-	}
-</style>
+	<h2 id="three-paycheck-months">Why some months have three paychecks</h2>
+	<p>A biweekly schedule pays you every 14 days, but calendar months are longer than 28 days. That mismatch slowly pushes your paydays earlier in each month until, twice a year, a third payday squeezes in before the month ends. Weekly earners see the same effect as four months with five paychecks.</p>
+	<p>Which months those are depends only on when your paydays fall, so two people at different companies will hit their extra months at different times. The FAQ below shows how to find yours, and <a href="/articles/budget-biweekly-paycheck/">How to Budget When You Get Paid Every Two Weeks</a> walks through mapping your paydays for the whole year.</p>
+
+	<h2 id="average-vs-typical">Should you budget on the average or the typical month?</h2>
+	<p>The safest approach is to build your budget on the typical two-paycheck month. If your regular bills and spending fit inside two paychecks, every month works, and the extra-paycheck months become pure surplus rather than something your plan depends on.</p>
+	<p>The monthly average is better as a planning number than a spending number. It's useful for questions like "can I afford this rent?" or "how much can I realistically save per year?" because it reflects your full annual income. But spending to the average every month means you're borrowing from the extra paychecks before they arrive. If your income also varies from check to check, <a href="/articles/budgeting-with-irregular-income/">budgeting with irregular income</a> covers how to build a baseline month from a fluctuating paycheck.</p>
+
+	<h2 id="extra-paycheck">What to do with an extra paycheck</h2>
+	<p>If your budget runs on two paychecks, the third one arrives with no job assigned to it. That makes it the easiest money of the year to put toward a real goal: an emergency fund top-up, an extra debt payment, or an upcoming expense you'd otherwise scramble for. Use the <a href="/tools/emergency-fund-calculator/">emergency fund calculator</a> to see how far one extra check moves you toward a fully funded cushion.</p>
+	<p>The one thing that reliably doesn't work is deciding in the moment. An unassigned paycheck in your checking account gets absorbed into everyday spending within a few weeks. Pick its job before the month starts, and track it alongside your regular paychecks in a <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> so the surplus actually lands where you pointed it.</p>
+</CalculatorLayout>

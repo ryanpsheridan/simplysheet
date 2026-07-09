@@ -1,59 +1,73 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import ExpenseTrackingReadiness from '../../components/ExpenseTrackingReadiness.astro';
-import { SITE_TITLE } from '../../consts';
 
 const title = 'Expense Tracking Readiness Assessment';
+const metaTitle = 'Expense Tracking Readiness Assessment';
 const description = 'Answer 6 quick questions to find out if you have tracked enough spending to build a realistic budget, or if a few more weeks of tracking would help.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this assessment works' },
+	{ slug: 'why-track-first', text: 'Why track before budgeting' },
+	{ slug: 'what-enough-looks-like', text: 'What enough tracking looks like' },
+	{ slug: 'after-the-assessment', text: 'What to do once you’re ready' },
+];
+
+const faq = [
+	{
+		question: 'How long should I track expenses before making a budget?',
+		answer: 'Thirty days is the standard recommendation, because one full month captures your rent cycle, at least two paychecks for most people, and a weekend-weekday rhythm. If your spending is irregular, sixty to ninety days paints a truer picture, since it catches the lumpy expenses a single month misses.',
+	},
+	{
+		question: 'Do I need to track every single purchase?',
+		answer: 'During the observation period, yes, and that is exactly why the period is short. The point is a complete picture of where money actually goes, including the small recurring purchases people always underestimate. Once your budget exists, tracking can relax to a lighter routine.',
+	},
+	{
+		question: 'Should I track with an app or manually?',
+		answer: 'Apps are more complete; manual tracking is more instructive. Automatic imports never miss a transaction, but typing each purchase yourself builds the awareness that changes behavior. A common middle path: track manually during your 30-day observation window, then let a spreadsheet or app carry the load once your budget is running.',
+	},
+	{
+		question: 'What if my income or spending is different every month?',
+		answer: 'Irregularity is a reason to track longer, not to skip tracking. Two or three months of data reveals your baseline: the floor of essential spending that repeats regardless. That floor becomes the foundation of your budget, with variable income layered on top of it.',
+	},
+];
 ---
 
-<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
-	<main>
-		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: 'Expense Tracking Readiness' }]} />
-		<article>
-			<header class="calc-header">
-				<h1>Expense Tracking Readiness Assessment</h1>
-				<p class="calc-intro">Most people jump into budgeting before they have enough information to set realistic numbers. This short assessment helps you figure out whether you've tracked enough spending to build a budget that actually reflects your life, or whether another couple of weeks of observation would give you a much stronger starting point.</p>
-			</header>
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="Expense Tracking Readiness"
+	kind="assessment"
+	toc={toc}
+	faq={faq}
+	tags={['expense-tracking']}
+	productSlug="budget-spreadsheet"
+	productLabel="For when you're ready"
+	relatedToolUrls={[
+		'/quiz/budgeting-style/',
+		'/tools/50-30-20-budget-calculator/',
+		'/tools/biweekly-paycheck-calculator/',
+		'/tools/sinking-fund-assessment/',
+	]}
+>
+	<Fragment slot="intro">Most people jump into budgeting before they have enough information to set realistic numbers. This short assessment helps you figure out whether you've tracked enough spending to build a budget that actually reflects your life, or whether another couple of weeks of observation would give you a much stronger starting point.</Fragment>
 
-			<ExpenseTrackingReadiness />
+	<ExpenseTrackingReadiness slot="calculator" />
 
-			<div class="calc-callout">
-				<p class="calc-callout-text">For a deeper look at why tracking before budgeting matters, <a href="/articles/track-expenses-before-budgeting/">Track Your Expenses for 30 Days Before You Build a Budget</a> walks through the full process. When you're ready to build your first budget, a <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> can help you turn your tracked data into an organized monthly plan.</p>
-			</div>
-		</article>
-	</main>
-</BaseLayout>
+	<h2 id="how-it-works">How this assessment works</h2>
+	<p>The six questions check the ingredients a realistic budget is built from: how long you've been tracking, how completely, whether you know your recurring bills, and whether you've caught the irregular expenses that wreck first budgets. You'll get one of three results, ready, almost there, or start observing, along with the specific gap to close if you're not ready yet.</p>
+	<p>There's no score to game. Answering optimistically just produces a budget built on optimistic data, which is the exact failure this assessment exists to prevent.</p>
 
-<style>
-	main {
-		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
-	}
-	.calc-header {
-		margin-bottom: var(--space-sm);
-	}
-	.calc-header h1 {
-		font-size: var(--text-h1);
-	}
-	.calc-intro {
-		font-size: var(--text-body);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-	}
-	.calc-callout {
-		margin-top: var(--space-xl);
-		padding: var(--space-md);
-		background: var(--color-bg-panel);
-		border-radius: var(--radius-md);
-	}
-	.calc-callout-text {
-		font-size: var(--text-small);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
-	.calc-callout-text a {
-		font-weight: var(--weight-normal);
-	}
-</style>
+	<h2 id="why-track-first">Why track before you budget?</h2>
+	<p>A budget is a set of predictions, and predictions need data. Numbers pulled from memory or good intentions are reliably wrong in the same direction: too low. People underestimate food spending, forget quarterly and annual bills, and round everything down. The resulting budget fails in week two, and the failure feels personal when it was really just bad inputs.</p>
+	<p>Tracking first inverts this. Thirty days of honest observation, as covered in <a href="/articles/track-expenses-before-budgeting/">why you should track expenses for 30 days before budgeting</a>, produces categories and amounts that describe your actual life. If you've tried tracking before and it collapsed after a week, <a href="/articles/track-expenses-without-burnout/">tracking without burnout</a> covers the lighter-touch approaches that stick.</p>
+
+	<h2 id="what-enough-looks-like">What enough tracking looks like</h2>
+	<p>Enough means one full month, every purchase, including the small ones. A complete month captures your rent or mortgage cycle, multiple paychecks, and both halves of the weekday-weekend spending pattern. The completeness matters more than the duration: three fully tracked weeks beat two spotty months, because gaps in the data become gaps in the budget.</p>
+	<p>You'll know the data is working when it starts answering the question that probably brought you here: <a href="/articles/where-is-my-money-going/">where is my money actually going?</a> Most people find two or three genuinely surprising line items in the first month, and those surprises are exactly what a memory-based budget would have missed.</p>
+
+	<h2 id="after-the-assessment">What to do once you're ready</h2>
+	<p>Turn observations into a plan. Group your tracked spending into categories, set each category's budget at what you actually spent (not what you wish you'd spent), and only then make deliberate cuts to fund your goals. A budget that starts from reality and tightens beats one that starts tight and snaps.</p>
+	<p>A <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> is built for exactly this handoff: your tracked categories become budget lines, and the tracking habit you just built keeps feeding it. From there, the <a href="/tools/50-30-20-budget-calculator/">50/30/20 calculator</a> is a quick way to sanity-check whether your category totals are in healthy proportion.</p>
+</CalculatorLayout>

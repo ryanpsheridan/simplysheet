@@ -84,7 +84,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
         <p class="sfc-hint" id={`${id}-hint`}>Fill in both fields above to see your monthly savings plan.</p>
         <p class="sfc-error" id={`${id}-error`} hidden>Enter a target amount and a future target month to see your savings plan.</p>
 
-        <a href="/spreadsheets/savings-goals-tracker/" class="btn btn-primary sfc-cta" id={`${id}-cta`} hidden>
+        <a href="/spreadsheets/savings-goals-tracker/" class="sfc-product-link" id={`${id}-cta`} hidden>
           Track your savings progress <span class="arrow">&rarr;</span>
         </a>
       </>
@@ -414,6 +414,15 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     margin-bottom: var(--space-sm);
   }
   .sfc-cta[hidden] {
+    display: none;
+  }
+  .sfc-product-link {
+    display: block;
+    text-align: center;
+    margin-bottom: var(--space-sm);
+    font-size: var(--text-small);
+  }
+  .sfc-product-link[hidden] {
     display: none;
   }
   .sfc-retake {

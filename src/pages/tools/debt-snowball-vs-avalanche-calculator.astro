@@ -1,40 +1,75 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import DebtCalculator from '../../components/DebtCalculator.astro';
-import { SITE_TITLE } from '../../consts';
 
-const title = 'How Much Could Extra Payments Save You?';
+const title = 'How much could extra payments save you?';
+const metaTitle = 'How Much Could Extra Payments Save You?';
 const description = 'See how much interest you could save and how much sooner you could be debt-free by putting extra money toward your debt each month.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this comparison works' },
+	{ slug: 'snowball-vs-avalanche', text: 'Snowball vs. avalanche' },
+	{ slug: 'extra-payments', text: 'Why extra payments matter' },
+	{ slug: 'choosing', text: 'How to choose a strategy' },
+];
+
+const faq = [
+	{
+		question: 'Which saves more money, debt snowball or debt avalanche?',
+		answer: 'Mathematically, the avalanche method (highest interest rate first) always saves at least as much interest as the snowball, and usually more. But the difference is often smaller than people expect, and a strategy you stick with beats a strategy you abandon. The snowball’s early wins keep many people going long enough to actually finish.',
+	},
+	{
+		question: 'Do I keep paying minimums on my other debts?',
+		answer: 'Yes, always. Both strategies work the same way: pay the minimum on every debt to stay current, then send every extra dollar to one focus debt. The only difference between snowball and avalanche is which debt gets the focus.',
+	},
+	{
+		question: 'What happens when my first debt is paid off?',
+		answer: 'Its entire payment, minimum plus the extra, rolls onto the next debt in line. This is why both methods accelerate over time: each payoff frees up more money to attack the remaining balances, like a snowball gaining size as it rolls.',
+	},
+	{
+		question: 'Should I pay extra on my debt or save the money instead?',
+		answer: 'Most people benefit from a small emergency buffer first, often around one month of essential expenses, so a surprise bill doesn’t land back on a credit card. After that, extra payments on high-interest debt are one of the best guaranteed returns available: paying off a 24% credit card is equivalent to earning 24% risk-free.',
+	},
+	{
+		question: 'Is it worth paying extra on low-interest debt?',
+		answer: 'Usually not first. Extra dollars do the most work against your highest-interest balances. A 4% car loan or a 3% mortgage costs you far less per dollar of balance than a 22% credit card, so most plans focus extra payments on the expensive debt and let cheap debt ride on minimums.',
+	},
+];
 ---
 
-<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
-	<main>
-		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: 'Debt Strategy Comparison' }]} />
-		<article>
-			<header class="calc-header">
-				<h1>How much could extra payments save you?</h1>
-				<p class="calc-intro">Most people know that paying more than the minimum helps. But it can be hard to feel how much of a difference even a small extra payment makes until you see the numbers. Drag the slider below to find out.</p>
-			</header>
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="Debt Strategy Comparison"
+	toc={toc}
+	faq={faq}
+	tags={['debt-payoff']}
+	productSlug="debt-payoff-tracker"
+	productLabel="Watch your balances fall"
+	relatedToolUrls={[
+		'/tools/50-30-20-budget-calculator/',
+		'/tools/emergency-fund-calculator/',
+		'/tools/biweekly-paycheck-calculator/',
+		'/tools/sinking-fund-calculator/',
+	]}
+>
+	<Fragment slot="intro">Most people know that paying more than the minimum helps. But it can be hard to feel how much of a difference even a small extra payment makes until you see the numbers. Drag the slider below to find out.</Fragment>
 
-			<DebtCalculator />
-		</article>
-	</main>
-</BaseLayout>
+	<DebtCalculator slot="calculator" />
 
-<style>
-	main {
-		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
-	}
-	.calc-header {
-		margin-bottom: var(--space-sm);
-	}
-	.calc-header h1 {
-		font-size: var(--text-h1);
-	}
-	.calc-intro {
-		font-size: var(--text-body);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-	}
-</style>
+	<h2 id="how-it-works">How this comparison works</h2>
+	<p>The slider sets a hypothetical extra monthly payment, and the two bars show how the avalanche and snowball strategies each respond: the interest saved and the time cut from the payoff. The point isn't precision to the dollar. It's seeing that the relationship between extra payments and results is dramatic rather than linear, because every extra dollar stops interest from compounding on itself for the rest of the payoff.</p>
+
+	<h2 id="snowball-vs-avalanche">What's the difference between snowball and avalanche?</h2>
+	<p>Both strategies follow the same core mechanic: pay minimums on everything, focus all extra money on one debt, then roll that freed-up payment onto the next debt when it's gone. The only difference is the order. The snowball targets your smallest balance first, so you get quick wins and shrinking account counts. The avalanche targets your highest interest rate first, so every dollar does maximum mathematical damage.</p>
+	<p>Neither is objectively better; they optimize for different things, motivation versus interest saved. The full breakdown, including when each one tends to win in real life, is in <a href="/articles/debt-snowball-vs-avalanche/">Debt Snowball vs. Avalanche: Which Actually Gets You Debt-Free Faster?</a></p>
+
+	<h2 id="extra-payments">Why small extra payments matter so much</h2>
+	<p>Minimum payments are designed to keep you in debt for a long time; on credit cards, they're often calculated so most of the payment goes to interest, especially early on. An extra payment skips that entirely. Every dollar above the minimum goes straight to principal, which shrinks the balance the next month's interest is calculated on, which makes the next payment more effective too.</p>
+	<p>That compounding-in-reverse is why even $50 a month can cut years off a payoff. Finding that $50 is a budgeting problem more than a debt problem: <a href="/articles/how-to-pay-off-debt/">How to Pay Off Debt</a> walks through building the payoff plan around your actual budget.</p>
+
+	<h2 id="choosing">How to choose a strategy</h2>
+	<p>Be honest about what has derailed you before. If you've quit debt plans because progress felt invisible, the snowball's early payoffs are worth more than the interest difference. If you're motivated by the math and your highest-rate debt isn't your largest balance, the avalanche gets you out cheaper. Some people run a hybrid: knock out one tiny balance for momentum, then switch to avalanche order.</p>
+	<p>Whichever order you pick, the mechanics are identical and so is the tracking. A <a href="/spreadsheets/debt-payoff-tracker/">debt payoff tracker</a> keeps every balance, rate, and rollover payment in one place so you can see the finish line move closer each month.</p>
+</CalculatorLayout>

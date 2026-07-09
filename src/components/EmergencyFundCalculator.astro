@@ -36,10 +36,7 @@ const id = `efcalc-${Math.random().toString(36).slice(2, 8)}`;
 		</div>
 	</div>
 
-	<a href="/spreadsheets/savings-goals-tracker/" class="btn btn-primary calc-cta">
-		Track your savings goal
-		<span class="arrow">&rarr;</span>
-	</a>
+	<a href="/spreadsheets/savings-goals-tracker/" class="calc-product-link">Track your savings goal <span class="arrow">&rarr;</span></a>
 </div>
 
 <style>
@@ -151,10 +148,13 @@ const id = `efcalc-${Math.random().toString(36).slice(2, 8)}`;
 		min-height: 1.4em;
 	}
 
-	/* ——— CTA ——— */
+	/* ——— Product link ——— */
 
-	.calc-cta {
-		width: 100%;
+	.calc-product-link {
+		display: block;
+		text-align: center;
+		margin-top: var(--space-sm);
+		font-size: var(--text-small);
 	}
 </style>
 

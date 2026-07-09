@@ -3,7 +3,7 @@ import { getEntry } from 'astro:content';
 
 interface Props {
 	slug: string;
-	variant?: 'card' | 'interstitial' | 'row';
+	variant?: 'card' | 'interstitial' | 'row' | 'mini';
 	label?: string;
 }
 
@@ -47,6 +47,13 @@ const image = variant === 'card' ? midImage : heroImage;
 		<h3 class="product-card-name">{name}</h3>
 		<p class="product-card-desc">{description}</p>
 	</a>
+)}
+
+{variant === 'mini' && (
+	<aside class="promo-mini">
+		<p class="promo-mini-label">{label ?? 'Recommended template'}</p>
+		<a href={url} class="promo-mini-link">{name} <span class="arrow">&rarr;</span></a>
+	</aside>
 )}
 
 {variant === 'row' && (

@@ -1,59 +1,76 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import BudgetCalculator from '../../components/BudgetCalculator.astro';
-import { SITE_TITLE } from '../../consts';
 
-const title = `50/30/20 Budget Calculator — Find Your Monthly Targets`;
+const title = '50/30/20 Budget Calculator';
+const metaTitle = '50/30/20 Budget Calculator — Find Your Monthly Targets';
 const description = 'Free 50/30/20 budget calculator. Enter your take-home pay and instantly see how much to spend on needs, wants, and savings each month.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'needs-vs-wants', text: 'What counts as a need vs. a want' },
+	{ slug: 'when-it-doesnt-fit', text: "When the split doesn't fit" },
+	{ slug: 'put-into-practice', text: 'Putting your targets into practice' },
+];
+
+const faq = [
+	{
+		question: 'Should I use gross income or take-home pay for the 50/30/20 rule?',
+		answer: 'Take-home pay. The rule is designed around after-tax income, the money that actually reaches your bank account. If your employer withholds retirement contributions or health insurance from your paycheck, those are already handled, so you work with what remains.',
+	},
+	{
+		question: 'Does the 20% savings category include my 401(k)?',
+		answer: 'If your 401(k) contribution comes out of your paycheck before you receive it, most people treat it as separate from the 20%, since the rule works on take-home pay. That means the 20% target is for goals funded from your bank account: emergency savings, extra debt payments, IRA contributions, or sinking funds. If you prefer to count pre-tax retirement savings toward the 20%, that is a valid, slightly more relaxed version of the rule.',
+	},
+	{
+		question: 'What if my needs are more than 50% of my income?',
+		answer: 'This is common, especially in high-rent cities or on a single income. The percentages are a starting point, not a rule you pass or fail. If needs take 60%, try 60/25/15 and revisit as your income grows or fixed costs drop. The value of the rule is the discipline of giving wants and savings explicit caps, not the specific numbers.',
+	},
+	{
+		question: 'Where do debt payments fit in the 50/30/20 rule?',
+		answer: 'Minimum payments are a need, since missing them has real consequences. Anything beyond the minimum counts toward the 20%, because extra payments build your net worth the same way savings do.',
+	},
+	{
+		question: 'Is the 50/30/20 rule still realistic?',
+		answer: 'As a permanent prescription, not for everyone. As a diagnostic, absolutely. Running your real numbers against the 50/30/20 split shows you immediately which category is out of proportion, and that is usually the insight people need to make their first real budget decision.',
+	},
+];
 ---
 
-<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
-	<main>
-		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: '50/30/20 Budget Calculator' }]} />
-		<article>
-			<header class="calc-header">
-				<h1>50/30/20 Budget Calculator</h1>
-				<p class="calc-intro">The 50/30/20 rule splits your after-tax income into three categories: 50% to needs (rent, groceries, insurance), 30% to wants (dining out, hobbies, subscriptions), and 20% to savings and debt payoff. Enter your monthly take-home pay below to see your target dollar amounts for each category.</p>
-			</header>
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="50/30/20 Budget Calculator"
+	toc={toc}
+	faq={faq}
+	tags={['expense-tracking', 'budgeting-styles']}
+	productSlug="budget-spreadsheet"
+	productLabel="Track your split every month"
+	relatedToolUrls={[
+		'/tools/biweekly-paycheck-calculator/',
+		'/tools/emergency-fund-calculator/',
+		'/tools/expense-tracking-readiness/',
+		'/quiz/budgeting-style/',
+	]}
+>
+	<Fragment slot="intro">The 50/30/20 rule splits your after-tax income into three categories: 50% to needs (rent, groceries, insurance), 30% to wants (dining out, hobbies, subscriptions), and 20% to savings and debt payoff. Enter your monthly take-home pay below to see your target dollar amounts for each category.</Fragment>
 
-			<BudgetCalculator />
+	<BudgetCalculator slot="calculator" />
 
-			<div class="calc-callout">
-				<p class="calc-callout-text">Now that you know your targets, a <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> tracks your actual spending against them every month — so you can see whether you're hitting the split or where you're drifting.</p>
-			</div>
-		</article>
-	</main>
-</BaseLayout>
+	<h2 id="how-it-works">How this calculator works</h2>
+	<p>Enter your monthly take-home pay and the calculator splits it into the three 50/30/20 targets in dollars. That's the whole trick of the rule: it converts a vague intention like "spend less on fun stuff" into a concrete monthly cap you can compare your real spending against.</p>
+	<p>If you're paid every two weeks, remember that two paychecks is your typical month, not your average. The <a href="/tools/biweekly-paycheck-calculator/">biweekly paycheck calculator</a> gives you the right monthly number to enter here.</p>
 
-<style>
-	main {
-		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
-	}
-	.calc-header {
-		margin-bottom: var(--space-sm);
-	}
-	.calc-header h1 {
-		font-size: var(--text-h1);
-	}
-	.calc-intro {
-		font-size: var(--text-body);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-	}
-	.calc-callout {
-		margin-top: var(--space-xl);
-		padding: var(--space-md);
-		background: var(--color-bg-panel);
-		border-radius: var(--radius-md);
-	}
-	.calc-callout-text {
-		font-size: var(--text-small);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
-	.calc-callout-text a {
-		font-weight: var(--weight-normal);
-	}
-</style>
+	<h2 id="needs-vs-wants">What counts as a need vs. a want</h2>
+	<p>Needs are expenses with real consequences if you skip them: housing, utilities, groceries, insurance, minimum debt payments, transportation to work, childcare. Wants are everything you could pause without your life breaking: restaurants, streaming, hobbies, travel, upgraded versions of things that have cheaper versions.</p>
+	<p>The line gets blurry in practice. A car payment is a need, but the difference between a $250 payment and a $550 payment is usually a want wearing a need's clothes. Groceries are a need; meal kits and takeout are wants. You don't have to get every edge case right. You just have to be consistent, so your monthly numbers stay comparable. For a deeper walkthrough of the rule with worked examples, read <a href="/articles/50-30-20-budget-rule/">the complete guide to the 50/30/20 budget</a>.</p>
+
+	<h2 id="when-it-doesnt-fit">When the 50/30/20 split doesn't fit</h2>
+	<p>The rule assumes your fixed costs leave room for it, and for plenty of people they don't. High-rent cities, single incomes, low starting salaries, and heavy debt loads can push needs well past 50%. That doesn't mean budgeting failed; it means your version of the split starts somewhere else, like 60/25/15, and moves toward the classic numbers as income rises or fixed costs fall.</p>
+	<p>The percentages are also not the reason most budgets collapse. Budgets usually fail because the numbers were aspirational rather than based on real spending. If you've never measured where your money actually goes, <a href="/articles/track-expenses-before-budgeting/">track your expenses for 30 days first</a>, then set your split from data instead of optimism. <a href="/articles/why-most-budgets-fail/">Why most budgets fail</a> covers the other traps worth avoiding.</p>
+
+	<h2 id="put-into-practice">Putting your targets into practice</h2>
+	<p>Your three dollar targets only matter if you check real spending against them. Each month, total what you spent in each category and compare it to the caps from this calculator. The gap tells you exactly where next month's attention goes.</p>
+	<p>A <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> makes that comparison automatic: you log spending once, and the needs, wants, and savings totals update against your targets so you can see drift while the month is still happening, not after it's over.</p>
+</CalculatorLayout>

@@ -42,10 +42,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		<p class="compare-note" id={`${id}-note`}></p>
 	</div>
 
-	<a href="/spreadsheets/debt-payoff-tracker/" class="btn btn-primary visualizer-cta">
-		Track your debt payoff
-		<span class="arrow">&rarr;</span>
-	</a>
+	<a href="/spreadsheets/debt-payoff-tracker/" class="calc-product-link">Track your debt payoff <span class="arrow">&rarr;</span></a>
 </div>
 
 <style>
@@ -213,10 +210,13 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		display: none;
 	}
 
-	/* ——— CTA ——— */
+	/* ——— Product link ——— */
 
-	.visualizer-cta {
-		width: 100%;
+	.calc-product-link {
+		display: block;
+		text-align: center;
+		margin-top: var(--space-sm);
+		font-size: var(--text-small);
 	}
 </style>
 

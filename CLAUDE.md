@@ -322,7 +322,9 @@ When building new calculators, follow the pattern in `src/components/BudgetCalcu
 - Place on Tools page (`src/pages/tools/`) and add to the tools index grid
 - Every calculator must exist in **two places**: embedded in the relevant article (via `.mdx` import) and as a **standalone tool page** in `src/pages/tools/` with its own SEO-optimized slug, title, and description
 - Tool page slugs should include "calculator" (e.g. `emergency-fund-calculator`) since that's what people search for
-- The standalone page should include breadcrumbs, a short intro, the calculator component, and a callout linking to the related article
+- Every standalone tool page uses `src/layouts/CalculatorLayout.astro` (mirrors the article layout: sticky TOC left rail with a `ProductPromo variant="mini"` link beneath it, content centered). The page passes `title`, `metaTitle`, `description`, `breadcrumbLabel`, `kind` (`calculator`/`assessment`), `toc` (section anchors), `faq` (renders collapsible Q&A + `FAQPage` JSON-LD), `tags` (drives the auto related-articles list), `productSlug`/`productLabel` (rail mini link + end-of-page interstitial), and `relatedToolUrls` (the "More free tools" grid, drawn from the registry in `src/data/tools.ts`). The calculator component goes in `slot="calculator"`; below it, 3–4 short `<h2 id="...">` content sections (~400–700 words total, question-style headings, natural internal links to articles and `/spreadsheets/` pages). The layout emits `WebApplication` + `BreadcrumbList` JSON-LD automatically.
+- When adding a new tool, also add it to the `TOOLS` registry in `src/data/tools.ts` — the tools index page and every "More free tools" grid read from it
+- Product CTAs inside calculator components are quiet text links (`calc-product-link` / `sfc-product-link` pattern), not `btn btn-primary` buttons — the tool page's rail link and end-of-page promo carry the product funnel instead. CTAs that link to another free tool (e.g. assessment → calculator) stay as buttons.
 
 ### Calculator Color System
 

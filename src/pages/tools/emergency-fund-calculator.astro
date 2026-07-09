@@ -1,59 +1,76 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import EmergencyFundCalculator from '../../components/EmergencyFundCalculator.astro';
-import { SITE_TITLE } from '../../consts';
 
-const title = `Emergency Fund Calculator — Find Your Target`;
+const title = 'Emergency Fund Calculator';
+const metaTitle = 'Emergency Fund Calculator — Find Your Target';
 const description = 'Free emergency fund calculator. Enter your essential monthly expenses and see how much you need saved for 3, 6, 9, or 12 months of coverage.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'essential-expenses', text: 'What counts as essential' },
+	{ slug: 'how-many-months', text: 'How many months you need' },
+	{ slug: 'where-to-keep', text: 'Where to keep the money' },
+];
+
+const faq = [
+	{
+		question: 'Is $1,000 enough for an emergency fund?',
+		answer: 'As a first milestone, yes; as a finished emergency fund, no. $1,000 covers most single surprises like a car repair or an urgent vet bill, and it keeps those off your credit card. But the main job of an emergency fund is replacing income if you can’t work, and that requires months of essential expenses, not a flat number.',
+	},
+	{
+		question: 'Should I save 3 months or 6 months of expenses?',
+		answer: 'Three months fits people with stable jobs, steady paychecks, and a second household income to fall back on. Six months or more fits single-income households, variable or commission-based pay, self-employment, and industries where finding a new job takes longer. The steadier your income, the smaller the multiple you can justify.',
+	},
+	{
+		question: 'Should I build my emergency fund before paying off debt?',
+		answer: 'Most plans do a starter fund first, often $1,000 or one month of essentials, then attack high-interest debt, then finish the full emergency fund. A small buffer keeps new emergencies from being financed at credit card rates while you pay down what you owe.',
+	},
+	{
+		question: 'What actually counts as an emergency?',
+		answer: 'An expense that is unexpected, necessary, and time-sensitive: job loss, a medical bill, a broken furnace, a car repair you need to get to work. Predictable irregular costs like holiday gifts, annual insurance premiums, or routine car maintenance are not emergencies; they belong in sinking funds you build on purpose.',
+	},
+	{
+		question: 'What is the difference between an emergency fund and a sinking fund?',
+		answer: 'An emergency fund covers the unpredictable: you don’t know what it will be spent on or when. A sinking fund covers the predictable: a known expense with a rough date and amount, saved for in monthly slices. Keeping them separate stops planned expenses from draining the money protecting you from unplanned ones.',
+	},
+];
 ---
 
-<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
-	<main>
-		<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: 'Emergency Fund Calculator' }]} />
-		<article>
-			<header class="calc-header">
-				<h1>Emergency Fund Calculator</h1>
-				<p class="calc-intro">An emergency fund covers essential expenses if your income stops. Enter your essential monthly expenses below, choose how many months of coverage fits your situation, and see your target amount. Essential expenses are the costs that continue regardless of income: housing, utilities, groceries, minimum debt payments, insurance, and transportation.</p>
-			</header>
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="Emergency Fund Calculator"
+	toc={toc}
+	faq={faq}
+	tags={['savings-goals']}
+	productSlug="savings-goals-tracker"
+	productLabel="Watch your fund grow"
+	relatedToolUrls={[
+		'/tools/sinking-fund-calculator/',
+		'/tools/sinking-fund-assessment/',
+		'/tools/50-30-20-budget-calculator/',
+		'/tools/biweekly-paycheck-calculator/',
+	]}
+>
+	<Fragment slot="intro">An emergency fund covers essential expenses if your income stops. Enter your essential monthly expenses below, choose how many months of coverage fits your situation, and see your target amount. Essential expenses are the costs that continue regardless of income: housing, utilities, groceries, minimum debt payments, insurance, and transportation.</Fragment>
 
-			<EmergencyFundCalculator />
+	<EmergencyFundCalculator slot="calculator" />
 
-			<div class="calc-callout">
-				<p class="calc-callout-text">For a deeper look at how to choose the right number of months for your situation, <a href="/articles/emergency-fund-sizing/">How Much Should You Keep in an Emergency Fund?</a> walks through the factors that move the target up or down. Once you have your number, a <a href="/spreadsheets/savings-goals-tracker/">savings goals tracker</a> can help you monitor your progress toward the target.</p>
-			</div>
-		</article>
-	</main>
-</BaseLayout>
+	<h2 id="how-it-works">How this calculator works</h2>
+	<p>The calculator multiplies your essential monthly expenses by the number of months of coverage you choose. That's genuinely all an emergency fund target is, which is why the two inputs matter so much: an inflated expense number or an arbitrary month count gives you a target that's either discouraging or inadequate.</p>
+	<p>Note that the target is based on what you need to survive a bad stretch, not your full lifestyle spending. In a real income gap, wants get paused, so sizing the fund on essentials keeps the goal honest and reachable.</p>
 
-<style>
-	main {
-		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
-	}
-	.calc-header {
-		margin-bottom: var(--space-sm);
-	}
-	.calc-header h1 {
-		font-size: var(--text-h1);
-	}
-	.calc-intro {
-		font-size: var(--text-body);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-	}
-	.calc-callout {
-		margin-top: var(--space-xl);
-		padding: var(--space-md);
-		background: var(--color-bg-panel);
-		border-radius: var(--radius-md);
-	}
-	.calc-callout-text {
-		font-size: var(--text-small);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
-	.calc-callout-text a {
-		font-weight: var(--weight-normal);
-	}
-</style>
+	<h2 id="essential-expenses">What counts as an essential expense</h2>
+	<p>Include the bills that keep arriving whether or not you have income: rent or mortgage, utilities, groceries, insurance premiums, minimum debt payments, transportation, childcare, and required medications. Exclude the things you'd cut in a crisis: restaurants, subscriptions, travel, hobbies, and extra debt payments beyond minimums.</p>
+	<p>If you don't know your essential number, that's a sign to measure before you save toward a guess. A few weeks of honest tracking, like the approach in <a href="/articles/track-expenses-before-budgeting/">tracking expenses before budgeting</a>, gives you a real figure to put in the calculator.</p>
+
+	<h2 id="how-many-months">How many months of coverage do you need</h2>
+	<p>The right multiple depends on how quickly you could replace your income. Dual-income households with stable jobs can often justify three months, since both incomes vanishing at once is unlikely. Single earners, freelancers, commission-based workers, and people in specialized fields where job searches run long tend toward six months or more.</p>
+	<p>Risk factors stack: a single income plus variable pay plus a specialized role points to the high end. <a href="/articles/emergency-fund-sizing/">How Much Should You Keep in an Emergency Fund?</a> walks through each factor that moves the target up or down so you can pick a number you actually believe in.</p>
+
+	<h2 id="where-to-keep">Where to keep your emergency fund</h2>
+	<p>The fund needs to be liquid and boring: a high-yield savings account at a bank separate from your everyday checking is the standard answer. Separate enough that you won't spend it accidentally, accessible enough that a real emergency doesn't involve selling investments at a bad time or waiting days for a transfer.</p>
+	<p>Investing your emergency fund defeats its purpose, because market drops and job losses like to arrive together. Once the fund is parked, the remaining job is just filling it. A <a href="/spreadsheets/savings-goals-tracker/">savings goals tracker</a> shows your progress toward the target month by month, which matters more than it sounds: visible progress is what keeps multi-month goals alive.</p>
+</CalculatorLayout>
