@@ -56,10 +56,9 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		<span class="calc-highlight-label" data-role="buffer-label">Cushion needed for a 2-paycheck month</span>
 		<span class="calc-highlight-value" data-role="buffer">$0</span>
 		<span class="calc-highlight-math" data-role="buffer-math"></span>
-
-		<a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
 	</div>
 </div>
+<a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
 
 <style>
 	.calc {
@@ -227,9 +226,22 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	.calc-product-link {
 		display: block;
-		text-align: center;
-		margin-top: var(--space-sm);
-		font-size: var(--text-small);
+		width: fit-content;
+		/* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
+		margin-top: calc(var(--space-md) - var(--space-lg));
+		margin-bottom: var(--space-lg);
+		font-size: 0.875rem;
+		text-decoration: none;
+	}
+	.calc-product-link:hover {
+		text-decoration: underline;
+	}
+	.calc-product-link .arrow {
+		display: inline-block;
+		transition: transform 0.15s ease;
+	}
+	.calc-product-link:hover .arrow {
+		transform: translateX(2px);
 	}
 
 	/* ——— Responsive ——— */

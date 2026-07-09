@@ -83,10 +83,6 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
 
         <p class="sfc-hint" id={`${id}-hint`}>Fill in both fields above to see your monthly savings plan.</p>
         <p class="sfc-error" id={`${id}-error`} hidden>Enter a target amount and a future target month to see your savings plan.</p>
-
-        <a href="/spreadsheets/savings-goals-tracker/" class="sfc-product-link" id={`${id}-cta`} hidden>
-          Track your savings progress <span class="arrow">&rarr;</span>
-        </a>
       </>
     )}
 
@@ -101,6 +97,11 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     )}
   </div>
 </div>
+{showCalculator && (
+  <a href="/spreadsheets/savings-goals-tracker/" class="sfc-product-link" id={`${id}-cta`} hidden>
+    Track your savings progress <span class="arrow">&rarr;</span>
+  </a>
+)}
 
 <style>
   /* ——— Container ——— */
@@ -418,9 +419,22 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-product-link {
     display: block;
-    text-align: center;
-    margin-bottom: var(--space-sm);
-    font-size: var(--text-small);
+    width: fit-content;
+    /* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
+    margin-top: calc(var(--space-md) - var(--space-lg));
+    margin-bottom: var(--space-lg);
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+  .sfc-product-link:hover {
+    text-decoration: underline;
+  }
+  .sfc-product-link .arrow {
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+  .sfc-product-link:hover .arrow {
+    transform: translateX(2px);
   }
   .sfc-product-link[hidden] {
     display: none;
