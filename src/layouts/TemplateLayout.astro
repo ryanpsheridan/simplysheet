@@ -531,13 +531,17 @@ function featureIcon(text: string): string {
 		margin-bottom: var(--space-2xl);
 	}
 
+	/* The "right-positioned" hero PNGs are pre-cropped at their right edge
+	   (the laptop deliberately runs off the frame), so the image must be
+	   pinned flush to the panel's right edge: left-only padding + right
+	   object-position. Centering it exposes the bare crop edge mid-panel. */
 	.product-image {
 		position: relative;
 		aspect-ratio: 10 / 9;
 		border-radius: var(--radius-md);
 		overflow: hidden;
 		background: var(--color-bg-panel);
-		padding: 1.5rem;
+		padding: 1.5rem 0 1.5rem 1.5rem;
 	}
 
 	.product-image img {
@@ -545,7 +549,7 @@ function featureIcon(text: string): string {
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
-		object-position: center center;
+		object-position: right center;
 	}
 
 	.product-info {

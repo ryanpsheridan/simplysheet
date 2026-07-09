@@ -4,6 +4,20 @@
 
 Astro-based personal finance content site. Articles in `src/content/articles/` (`.md` or `.mdx`). Design tokens in `src/styles/tokens.css`. Google Fonts loaded in `src/components/BaseHead.astro`.
 
+## Product Hero Images Are Pre-Cropped — Always Flush Right
+
+The `featured budget thumbnail-*-right-positioned-v2.png` product images (`heroImage` in `src/content/templates/`) are **pre-cropped at their right edge**: the laptop mockup deliberately runs off the right side of the PNG. This crop only reads as intentional when the CSS pins the image flush against its container's right edge. Every container that renders these images must use:
+
+```css
+padding: 1.5rem 0 1.5rem 1.5rem; /* no right padding */
+```
+```css
+object-fit: contain;
+object-position: right center;
+```
+
+**Never "center" these images or add right padding** — that floats the bare crop edge mid-panel with a gray gap to its right, which looks broken (this exact regression has shipped before, via a well-intentioned "center the hero" change to `TemplateLayout.astro` that was only half reverted). Surfaces using this treatment: `.product-image` and `.template-thumb` in `TemplateLayout.astro`, `.template-thumb` in `pages/spreadsheets/index.astro` and `pages/index.astro`, `.resource-thumb` in `pages/articles/[...page].astro`, `.article-promo-thumb` and `.product-thumb` in `styles/global.css`. If a design change calls for a centered product image, that requires a new uncropped asset, not a CSS change.
+
 ## SEO — Always Top of Mind
 
 The primary goal of this site is organic Google discovery. Every change — new articles, layout updates, content edits — should support that. Specifically:
