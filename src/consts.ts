@@ -16,3 +16,16 @@ export const TAG_MAP: Record<string, string> = Object.fromEntries(
 );
 
 export const ARTICLES_PAGE_SIZE = 12;
+
+export const ETSY_SHOP_URL = 'https://simplysheetdesign.etsy.com';
+
+// Every user-clickable Etsy link must use the simplysheetdesign.etsy.com
+// domain (that's what earns the Share & Save fee credit — www.etsy.com links
+// don't) and carry these UTM params so Etsy Shop Stats can separate site
+// traffic from social links. UTMs don't affect the Share & Save credit.
+export function withEtsyTracking(url: string): string {
+	const tracked = new URL(url);
+	tracked.searchParams.set('utm_source', 'simplysheetdesign.com');
+	tracked.searchParams.set('utm_medium', 'referral');
+	return tracked.toString();
+}

@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
-import { SITE_TITLE } from '../../consts';
+import { SITE_TITLE, ETSY_SHOP_URL, withEtsyTracking } from '../../consts';
 
 const title = 'Budget Templates for Google Sheets & Excel';
 const description = 'Ready-made spreadsheet templates to track your budget, pay off debt, and hit savings goals. Available for Google Sheets and Microsoft Excel.';
@@ -33,7 +33,7 @@ const templates = (await getCollection('templates'))
 		</div>
 
 		<div class="templates-etsy-cta">
-			<a href="https://simplysheetdesign.etsy.com" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-cta="spreadsheets_index_etsy_link">
+			<a href={withEtsyTracking(ETSY_SHOP_URL)} class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-cta="spreadsheets_index_etsy_link">
 				Browse all on Etsy
 				<svg class="arrow external-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
 			</a>

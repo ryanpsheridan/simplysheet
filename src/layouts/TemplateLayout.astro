@@ -5,7 +5,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, ETSY_SHOP_URL, withEtsyTracking } from '../consts';
 
 type Props = CollectionEntry<'templates'>['data'] & {
 	id?: string;
@@ -32,6 +32,10 @@ const platformLabels: Record<string, string> = {
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.simplysheetdesign.com';
 const imageUrl = `${siteUrl}${heroImage}`;
+
+const darkListingUrl = withEtsyTracking(darkListing);
+const lightListingUrl = withEtsyTracking(lightListing);
+const etsyReviewsUrl = withEtsyTracking(`${ETSY_SHOP_URL}/#reviews`);
 
 const reviewSchema = reviews?.map((r: { name: string; text: string; date?: string }) => ({
 	'@type': 'Review',
@@ -187,7 +191,7 @@ function featureIcon(text: string): string {
 					</div>
 
 					<a
-						href={darkListing}
+						href={darkListingUrl}
 						class="btn btn-primary product-cta"
 						id={`cta-${templateId}`}
 						target="_blank"
@@ -242,10 +246,10 @@ function featureIcon(text: string): string {
 					<div class="bundles-grid">
 						{bundles.map((b: { name: string; darkUrl: string; lightUrl: string }) => (
 							<a
-								href={b.darkUrl}
+								href={withEtsyTracking(b.darkUrl)}
 								class="bundle-card"
-								data-dark-url={b.darkUrl}
-								data-light-url={b.lightUrl}
+								data-dark-url={withEtsyTracking(b.darkUrl)}
+								data-light-url={withEtsyTracking(b.lightUrl)}
 								target="_blank"
 								rel="noopener noreferrer"
 								data-cta={`template_bundle_cta:${id}:${b.name}`}
@@ -280,7 +284,7 @@ function featureIcon(text: string): string {
 						{reviews.length === 1 && (
 							<a
 								class="btn btn-secondary btn-sm reviews-etsy-link"
-								href="https://www.etsy.com/shop/SimplySheetDesign?ref=dashboard-header#reviews"
+								href={etsyReviewsUrl}
 								target="_blank"
 								rel="noopener noreferrer"
 								data-cta={`template_reviews_cta:${id}`}
@@ -306,7 +310,7 @@ function featureIcon(text: string): string {
 					{reviews.length > 1 && (
 						<a
 							class="btn btn-secondary btn-sm reviews-etsy-link"
-							href="https://www.etsy.com/shop/SimplySheetDesign?ref=dashboard-header#reviews"
+							href={etsyReviewsUrl}
 							target="_blank"
 							rel="noopener noreferrer"
 							data-cta={`template_reviews_cta:${id}`}
@@ -377,7 +381,7 @@ function featureIcon(text: string): string {
 		</main>
 		<Footer />
 
-		<script is:inline define:vars={{ templateId, darkListing, lightListing, heroImage, lightImage }}>
+		<script is:inline define:vars={{ templateId, darkListing: darkListingUrl, lightListing: lightListingUrl, heroImage, lightImage }}>
 			const toggle = document.getElementById(`theme-toggle-${templateId}`);
 			const cta = document.getElementById(`cta-${templateId}`);
 			const heroImg = document.getElementById(`hero-img-${templateId}`);
