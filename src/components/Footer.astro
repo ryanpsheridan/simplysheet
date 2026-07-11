@@ -1,4 +1,6 @@
 ---
+import { ETSY_SHOP_URL, withEtsyTracking } from '../consts';
+
 const year = new Date().getFullYear();
 ---
 
@@ -37,7 +39,7 @@ const year = new Date().getFullYear();
 				<div class="footer-col">
 					<p class="footer-heading">Shop</p>
 					<ul>
-						<li><a href="https://simplysheetdesign.etsy.com" data-cta="footer_etsy_link">Etsy Store</a></li>
+						<li><a href={withEtsyTracking(ETSY_SHOP_URL)} data-cta="footer_etsy_link">Etsy Store</a></li>
 					</ul>
 				</div>
 			</nav>
