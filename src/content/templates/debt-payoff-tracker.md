@@ -57,6 +57,7 @@ bundles:
   - name: "Budget + Debt Payoff Bundle"
     darkUrl: "https://simplysheetdesign.etsy.com/listing/4494305330/budget-spreadsheet-debt-payoff-tracker"
     lightUrl: "https://simplysheetdesign.etsy.com/listing/4494306090/budget-spreadsheet-debt-payoff-tracker"
+    image: "/images/featured bundle thumbnail-budget-spreadsheet-and-debt-tracker.png"
 faq:
   - question: "Can I track different types of debt?"
     answer: "Yes — credit cards, student loans, car payments, personal loans, medical debt. Any balance with a payment schedule works."

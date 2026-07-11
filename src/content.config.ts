@@ -53,6 +53,7 @@ const templates = defineCollection({
 			name: z.string(),
 			darkUrl: z.string().url(),
 			lightUrl: z.string().url(),
+			image: z.string().optional(),
 		})).optional(),
 		faq: z.array(z.object({
 			question: z.string(),

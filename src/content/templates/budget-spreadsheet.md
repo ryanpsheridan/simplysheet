@@ -66,9 +66,11 @@ bundles:
   - name: "Budget + Debt Payoff Bundle"
     darkUrl: "https://simplysheetdesign.etsy.com/listing/4494305330/budget-spreadsheet-debt-payoff-tracker"
     lightUrl: "https://simplysheetdesign.etsy.com/listing/4494306090/budget-spreadsheet-debt-payoff-tracker"
+    image: "/images/featured bundle thumbnail-budget-spreadsheet-and-debt-tracker.png"
   - name: "Budget + Savings Goals Bundle"
     darkUrl: "https://simplysheetdesign.etsy.com/listing/4514633589/budget-spreadsheet-savings-goals-tracker"
     lightUrl: "https://simplysheetdesign.etsy.com/listing/4514632653/budget-spreadsheet-savings-goals-tracker"
+    image: "/images/featured bundle thumbnail-budget-spreadsheet-and-savings-goals-tracker.png"
 faq:
   - question: "Does this work with Google Sheets and Excel?"
     answer: "Yes. You get both versions — a Google Sheets file you can copy directly into your Drive, and an Excel (.xlsx) file you can download and use offline."
