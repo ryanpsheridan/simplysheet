@@ -26,11 +26,15 @@ const assessments = TOOLS.filter((t) => t.group === 'assessment');
 				</div>
 				<div class="tools-row-items">
 					{calculators.map((tool) => (
-						<a href={tool.url} class="tools-row-item">
-							<span class="tools-row-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
-							<div class="tools-row-text">
-								<h3 class="tools-row-title">{tool.name}</h3>
-								<p class="tools-row-desc">{tool.desc}</p>
+						<a href={tool.url} class="tools-card">
+							{tool.thumb ? (
+								<img class="tools-card-thumb" src={tool.thumb} alt={tool.name} width="960" height="540" loading="lazy" />
+							) : (
+								<span class="tools-card-thumb tools-card-thumb--placeholder" set:html={`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
+							)}
+							<div class="tools-card-text">
+								<h3 class="tools-card-title">{tool.name}</h3>
+								<p class="tools-card-desc">{tool.desc}</p>
 							</div>
 						</a>
 					))}
@@ -43,11 +47,15 @@ const assessments = TOOLS.filter((t) => t.group === 'assessment');
 				</div>
 				<div class="tools-row-items">
 					{assessments.map((tool) => (
-						<a href={tool.url} class="tools-row-item">
-							<span class="tools-row-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
-							<div class="tools-row-text">
-								<h3 class="tools-row-title">{tool.name}</h3>
-								<p class="tools-row-desc">{tool.desc}</p>
+						<a href={tool.url} class="tools-card">
+							{tool.thumb ? (
+								<img class="tools-card-thumb" src={tool.thumb} alt={tool.name} width="960" height="540" loading="lazy" />
+							) : (
+								<span class="tools-card-thumb tools-card-thumb--placeholder" set:html={`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
+							)}
+							<div class="tools-card-text">
+								<h3 class="tools-card-title">{tool.name}</h3>
+								<p class="tools-card-desc">{tool.desc}</p>
 							</div>
 						</a>
 					))}
@@ -85,44 +93,52 @@ const assessments = TOOLS.filter((t) => t.group === 'assessment');
 	.tools-row-items {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		row-gap: 3rem;
-		column-gap: 2rem;
+		row-gap: var(--space-xl);
+		column-gap: var(--space-lg);
 	}
-	.tools-row-item {
+	.tools-card {
 		display: flex;
-		align-items: flex-start;
-		gap: var(--space-sm);
+		flex-direction: column;
 		text-decoration: none;
 		color: inherit;
+	}
+	.tools-card-thumb {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border);
+		margin-bottom: var(--space-sm);
 		transition: opacity 0.15s ease;
 	}
-	@media (hover: hover) {
-		.tools-row-item:hover {
-			opacity: 0.7;
-		}
-	}
-	.tools-row-icon {
+	.tools-card-thumb--placeholder {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		flex-shrink: 0;
-		width: 2.5rem;
-		height: 2.5rem;
-		border-radius: var(--radius-full);
 		background: var(--color-bg-panel);
-		color: var(--color-text);
+		color: var(--color-text-secondary);
 	}
-	.tools-row-text {
+	@media (hover: hover) {
+		.tools-card:hover .tools-card-thumb {
+			opacity: 0.85;
+		}
+		.tools-card:hover .tools-card-title {
+			text-decoration: underline;
+		}
+	}
+	.tools-card-text {
 		min-width: 0;
 	}
-	.tools-row-title {
+	.tools-card-title {
 		font-size: var(--text-body);
 		font-weight: var(--weight-normal);
 		line-height: 1.35;
 		margin: 0 0 var(--space-2xs);
 		color: var(--color-text);
 	}
-	.tools-row-desc {
+	.tools-card-desc {
 		font-size: var(--text-small);
 		line-height: var(--leading-snug);
 		color: var(--color-text-secondary);

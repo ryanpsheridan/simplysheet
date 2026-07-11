@@ -3,6 +3,13 @@ export interface Tool {
 	desc: string;
 	url: string;
 	icon: string;
+	/**
+	 * Thumbnail image path (article-style mesh background + a cropped UI panel of
+	 * the tool bleeding off the bottom-right). Used on the tools index cards and
+	 * the "More free tools" list — not the homepage. Palette matches the tool's
+	 * related article. Optional while thumbnails are still being rolled out.
+	 */
+	thumb?: string;
 	group: 'calculator' | 'assessment';
 }
 
@@ -12,6 +19,7 @@ export const TOOLS: Tool[] = [
 		desc: 'Enter your take-home pay and see how much to spend on needs, wants, and savings each month.',
 		url: '/tools/50-30-20-budget-calculator/',
 		icon: '<rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/>',
+		thumb: '/images/tool-thumb-50-30-20-budget-calculator.svg',
 		group: 'calculator',
 	},
 	{
