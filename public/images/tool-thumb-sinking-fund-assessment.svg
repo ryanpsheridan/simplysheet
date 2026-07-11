@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="16%" y1="-4%" x2="76%" y2="108%">
+      <stop offset="0%" stop-color="#0A4A52"/>
+      <stop offset="100%" stop-color="#0F7E7A"/>
+    </linearGradient>
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+
+  <circle cx="180" cy="-30" r="235" fill="#40C4FF" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="-20" cy="300" r="180" fill="#B39DDB" opacity="0.4" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="270" cy="80" r="86" fill="#7C4DFF" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="60" cy="510" r="200" fill="#032428" opacity="0.48" filter="url(#blurXL)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
+
+  <rect x="118" y="82" width="900" height="520" rx="24" fill="#021418" opacity="0.26" filter="url(#blurL)"/>
+  <rect x="110" y="70" width="900" height="520" rx="22" fill="#FFFFFF"/>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="400">
+    <text x="150" y="130" font-size="18" fill="#9CA3AF">Question 2 of 5</text>
+    <rect x="150" y="146" width="790" height="6" rx="3" fill="#EEF1F4"/>
+    <rect x="150" y="146" width="316" height="6" rx="3" fill="#1F2937"/>
+
+    <text x="150" y="206" font-size="24" fill="#1F2937">Is this expense one-time or recurring?</text>
+
+    <rect x="150" y="238" width="790" height="54" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="176" y="272" font-size="20" fill="#374151">One-time, on a set future date</text>
+
+    <rect x="150" y="308" width="790" height="54" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="176" y="342" font-size="20" fill="#374151">Recurring every year</text>
+
+    <rect x="150" y="378" width="790" height="54" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="176" y="412" font-size="20" fill="#374151">Unexpected, with no set date</text>
+
+    <rect x="150" y="448" width="790" height="54" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="176" y="482" font-size="20" fill="#374151">A regular monthly bill</text>
+  </g>
+</svg>

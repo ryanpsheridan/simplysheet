@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="12%" y1="-6%" x2="80%" y2="106%">
+      <stop offset="0%" stop-color="#073B4C"/>
+      <stop offset="100%" stop-color="#0E7C86"/>
+    </linearGradient>
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+
+  <circle cx="135" cy="-25" r="240" fill="#7C4DFF" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="-30" cy="250" r="180" fill="#B39DDB" opacity="0.42" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="225" cy="60" r="88" fill="#40C4FF" opacity="0.34" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="35" cy="515" r="200" fill="#041F27" opacity="0.48" filter="url(#blurXL)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
+
+  <rect x="118" y="82" width="900" height="520" rx="24" fill="#02171D" opacity="0.26" filter="url(#blurL)"/>
+  <rect x="110" y="70" width="900" height="520" rx="22" fill="#FFFFFF"/>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="400">
+    <text x="150" y="126" font-size="23" fill="#374151">Calculate your monthly savings</text>
+
+    <!-- Two input fields -->
+    <text x="150" y="176" font-size="18" fill="#6B7280">Target amount</text>
+    <rect x="150" y="190" width="360" height="52" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="172" y="224" font-size="22" fill="#9CA3AF">$</text>
+    <text x="196" y="224" font-size="23" fill="#374151">1,200</text>
+
+    <text x="540" y="176" font-size="18" fill="#6B7280">Target month</text>
+    <rect x="540" y="190" width="400" height="52" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="562" y="224" font-size="23" fill="#374151">December 2026</text>
+
+    <!-- Results -->
+    <text x="150" y="332" font-size="20" fill="#4B5563">Save each month</text>
+    <text x="150" y="392" font-size="52" fill="#1F2937">$150</text>
+
+    <text x="540" y="332" font-size="20" fill="#4B5563">Months remaining</text>
+    <text x="540" y="392" font-size="52" fill="#1F2937">8</text>
+  </g>
+</svg>
