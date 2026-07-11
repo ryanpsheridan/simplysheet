@@ -25,6 +25,30 @@ const ogImage = new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString()
 
 <SpeedInsights />
 
+<script is:inline>
+	// Owner-device opt-out. Visit any page once with ?ga=off on a device to
+	// permanently stop Google Analytics collecting from that browser
+	// (?ga=on re-enables). Persists in localStorage, so it survives IP
+	// changes and works on cellular — unlike GA's IP-based internal traffic
+	// filter. Must run before the gtag scripts below: window['ga-disable-<ID>']
+	// only takes effect if set before GA initializes. Also silences GA during
+	// local development.
+	(function () {
+		var KEY = 'ss-ga-off';
+		try {
+			var ga = new URLSearchParams(window.location.search).get('ga');
+			if (ga === 'off') localStorage.setItem(KEY, '1');
+			if (ga === 'on') localStorage.removeItem(KEY);
+			var isLocal = /^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$/.test(window.location.hostname);
+			if (isLocal || localStorage.getItem(KEY) === '1') {
+				window['ga-disable-G-3CSDE2XWTG'] = true;
+				console.info('[SimplySheet] Google Analytics is disabled on this device. Visit any page with ?ga=on to re-enable.');
+			}
+		} catch (e) {
+			// localStorage unavailable (private mode, blocked storage) — let GA run.
+		}
+	})();
+</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CSDE2XWTG"></script>
 <script is:inline>
 	window.dataLayer = window.dataLayer || [];
