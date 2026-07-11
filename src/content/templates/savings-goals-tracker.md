@@ -52,6 +52,7 @@ bundles:
   - name: "Budget + Savings Goals Bundle"
     darkUrl: "https://simplysheetdesign.etsy.com/listing/4514633589/budget-spreadsheet-savings-goals-tracker"
     lightUrl: "https://simplysheetdesign.etsy.com/listing/4514632653/budget-spreadsheet-savings-goals-tracker"
+    image: "/images/featured bundle thumbnail-budget-spreadsheet-and-savings-goals-tracker.png"
 faq:
   - question: "What kind of savings goals can I track?"
     answer: "Anything — emergency fund, vacation, car down payment, holiday gifts, home repairs. Each goal gets its own progress bar and contribution log."
