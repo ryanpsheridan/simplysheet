@@ -244,7 +244,7 @@ function featureIcon(text: string): string {
 				<section class="product-bundles">
 					<h2>Save with a bundle</h2>
 					<div class="bundles-grid">
-						{bundles.map((b: { name: string; darkUrl: string; lightUrl: string }) => (
+						{bundles.map((b: { name: string; darkUrl: string; lightUrl: string; image?: string }) => (
 							<a
 								href={withEtsyTracking(b.darkUrl)}
 								class="bundle-card"
@@ -254,8 +254,15 @@ function featureIcon(text: string): string {
 								rel="noopener noreferrer"
 								data-cta={`template_bundle_cta:${id}:${b.name}`}
 							>
-								<span class="bundle-name">{b.name}</span>
-								<span class="bundle-link">View on Etsy <span class="arrow">&rarr;</span></span>
+								{b.image && (
+									<div class="bundle-thumb">
+										<img src={b.image} alt={`${b.name} preview`} width="600" height="400" loading="lazy" />
+									</div>
+								)}
+								<span class="bundle-text">
+									<span class="bundle-name">{b.name}</span>
+									<span class="bundle-link">View on Etsy <span class="arrow">&rarr;</span></span>
+								</span>
 							</a>
 						))}
 					</div>
@@ -649,9 +656,8 @@ function featureIcon(text: string): string {
 
 	.product-details {
 		margin-bottom: var(--space-2xl);
-		padding: var(--space-xl) 0;
+		padding: var(--space-xl) 0 0;
 		border-top: 1px solid var(--color-border);
-		border-bottom: 1px solid var(--color-border);
 	}
 
 	.detail-row {
@@ -742,12 +748,11 @@ function featureIcon(text: string): string {
 
 	.bundle-card {
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: var(--space-md) var(--space-lg);
+		flex-direction: column;
 		background: var(--color-bg-surface);
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
+		overflow: hidden;
 		text-decoration: none;
 		transition: border-color 0.15s, background 0.15s;
 	}
@@ -755,6 +760,29 @@ function featureIcon(text: string): string {
 	.bundle-card:hover {
 		border-color: var(--color-text-muted);
 		background: var(--color-bg-panel);
+	}
+
+	.bundle-thumb {
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		background: var(--color-bg-panel);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.bundle-thumb img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		object-position: center;
+	}
+
+	.bundle-text {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-sm);
+		padding: var(--space-md) var(--space-lg);
 	}
 
 	.bundle-name {
@@ -767,6 +795,7 @@ function featureIcon(text: string): string {
 		font-size: var(--text-small);
 		font-weight: var(--weight-normal);
 		color: var(--color-link);
+		white-space: nowrap;
 	}
 
 	/* ——— Related articles + FAQ panel (full-bleed) ——— */
