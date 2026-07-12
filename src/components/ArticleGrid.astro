@@ -256,7 +256,7 @@ const { articles, manifest, tagMap } = Astro.props;
 	   never the title/description/badge/meta — dimming text hurt contrast. */
 	@media (hover: hover) {
 		.article-list :global(.article-list-item:hover .article-list-thumb) {
-			padding: 1.25rem;
+			padding: 1.375rem;
 		}
 	}
 	.article-list :global(.article-list-text) {
@@ -294,7 +294,7 @@ const { articles, manifest, tagMap } = Astro.props;
 		overflow: hidden;
 		background: var(--color-bg-panel);
 		padding: 1.5rem;
-		transition: padding 0.15s ease;
+		transition: padding 0.3s ease;
 	}
 	.article-list :global(.article-list-thumb img) {
 		width: 100%;
