@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "prebuild": "node scripts/generate-og-images.mjs",
+    "lint:content": "node scripts/content-lint.mjs",
     "build": "astro build",
     "postbuild": "node scripts/submit-indexnow.mjs",
     "preview": "astro preview",
