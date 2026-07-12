@@ -155,14 +155,17 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 			<Breadcrumbs crumbs={[{ label: 'Articles', href: '/articles' }, { label: title }]} />
 			<div class="article-grid">
 				{tocHeadings.length > 1 && (
-					<nav class="toc" aria-label="Table of contents">
-						<p class="toc-heading">On this page</p>
-						<ul class="toc-list">
-							{tocHeadings.map((h) => (
-								<li><a href={`#${h.slug}`} data-toc-slug={h.slug}>{h.text}</a></li>
-							))}
-						</ul>
-					</nav>
+					<div class="toc-rail">
+						<nav class="toc" aria-label="Table of contents">
+							<p class="toc-heading">On this page</p>
+							<ul class="toc-list">
+								{tocHeadings.map((h) => (
+									<li><a href={`#${h.slug}`} data-toc-slug={h.slug}>{h.text}</a></li>
+								))}
+							</ul>
+						</nav>
+						<ProductPromo slug={recommendedSlugs[0]} variant="mini" />
+					</div>
 				)}
 
 				<article>
@@ -368,7 +371,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		.reading-progress {
 			display: block;
 		}
-		.toc {
+		.toc-rail {
 			display: none;
 		}
 	}
@@ -472,7 +475,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 
 	/* ——— Table of contents ——— */
 
-	.toc {
+	.toc-rail {
 		margin-bottom: calc(var(--space-lg) + 3rem);
 	}
 
@@ -524,7 +527,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 			align-items: start;
 		}
 
-		.has-toc .toc {
+		.has-toc .toc-rail {
 			position: sticky;
 			top: 4.5rem;
 			margin-bottom: 0;
