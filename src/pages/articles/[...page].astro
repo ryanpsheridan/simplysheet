@@ -186,11 +186,13 @@ const templates = [
 		gap: var(--space-sm);
 		text-decoration: none;
 		color: inherit;
-		transition: opacity 0.15s ease;
 	}
+	/* Hover zooms only the thumbnail, leaving the name/badge text untouched.
+	   The image is pinned flush-right, so scale from the right edge to keep
+	   that edge fixed (overflow: hidden clips the leftward growth). */
 	@media (hover: hover) {
-		.resource-card:hover {
-			opacity: 0.75;
+		.resource-card:hover .resource-thumb img {
+			transform: scale(1.01);
 		}
 	}
 	.resource-thumb {
@@ -209,6 +211,8 @@ const templates = [
 		object-position: right center;
 		border-radius: var(--radius-sm);
 		display: block;
+		transform-origin: right center;
+		transition: transform 0.3s ease;
 	}
 	.resource-badge {
 		display: inline-block;

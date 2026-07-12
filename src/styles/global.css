@@ -161,6 +161,15 @@ p {
 	object-fit: contain;
 	object-position: right center;
 	display: block;
+	transform-origin: right center;
+	transition: transform 0.3s ease;
+}
+/* Hover zooms the flush-right product image from its pinned right edge
+   (overflow: hidden clips the leftward growth). Pointer devices only. */
+@media (hover: hover) {
+	.article-promo-thumb:hover img {
+		transform: scale(1.01);
+	}
 }
 .article-promo-content {
 	display: flex;
@@ -241,6 +250,14 @@ p {
 	object-fit: cover;
 	display: block;
 	border-radius: 0;
+	transition: transform 0.3s ease;
+}
+/* This variant's image is centered (object-fit: cover), so zoom from the
+   center on hover. Pairs with the card's existing border/background shift. */
+@media (hover: hover) {
+	.product-card:hover .product-card-thumb img {
+		transform: scale(1.01);
+	}
 }
 .product-card-badge {
 	display: inline-block;
@@ -309,6 +326,15 @@ p {
 	object-fit: contain;
 	object-position: right center;
 	display: block;
+	transform-origin: right center;
+	transition: transform 0.3s ease;
+}
+/* Hover zooms the flush-right product image from its pinned right edge
+   (overflow: hidden clips the leftward growth). Pointer devices only. */
+@media (hover: hover) {
+	.product-thumb:hover img {
+		transform: scale(1.01);
+	}
 }
 .product-content {
 	display: flex;

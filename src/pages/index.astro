@@ -545,11 +545,13 @@ const websiteSchema = {
 		gap: var(--space-sm);
 		text-decoration: none;
 		color: inherit;
-		transition: opacity 0.15s ease;
 	}
+	/* Hover zooms only the thumbnail, leaving the name/badge text untouched.
+	   The image is pinned flush-right, so scale from the right edge to keep
+	   that edge fixed (overflow: hidden clips the leftward growth). */
 	@media (hover: hover) {
-		.template-card:hover {
-			opacity: 0.7;
+		.template-card:hover .template-thumb img {
+			transform: scale(1.01);
 		}
 	}
 	.template-thumb {
@@ -571,6 +573,8 @@ const websiteSchema = {
 		object-position: right center;
 		border-radius: var(--radius-sm);
 		display: block;
+		transform-origin: right center;
+		transition: transform 0.3s ease;
 	}
 	.template-placeholder-icon {
 		color: var(--color-border);
