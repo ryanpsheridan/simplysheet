@@ -767,6 +767,7 @@ function featureIcon(text: string): string {
 		aspect-ratio: 3 / 2;
 		background: var(--color-bg-panel);
 		border-bottom: 1px solid var(--color-border);
+		overflow: hidden;
 	}
 
 	.bundle-thumb img {
@@ -775,6 +776,14 @@ function featureIcon(text: string): string {
 		height: 100%;
 		object-fit: contain;
 		object-position: center;
+		transition: transform 0.3s ease;
+	}
+	/* This image is centered, so zoom from the center on hover. Pairs with
+	   the card's existing border/background shift. Pointer devices only. */
+	@media (hover: hover) {
+		.bundle-card:hover .bundle-thumb img {
+			transform: scale(1.01);
+		}
 	}
 
 	.bundle-text {
