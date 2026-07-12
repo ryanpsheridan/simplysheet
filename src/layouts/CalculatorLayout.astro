@@ -191,11 +191,7 @@ const faqSchema = faq.length ? {
 						<div class="more-tools-grid">
 							{relatedTools.map((tool) => (
 								<a href={tool.url} class="more-tool">
-									{tool.thumb ? (
-										<img class="more-tool-thumb" src={tool.thumb} alt={tool.name} width="960" height="540" loading="lazy" />
-									) : (
-										<span class="more-tool-thumb more-tool-thumb--placeholder" set:html={`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
-									)}
+									<span class="more-tool-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
 									<div class="more-tool-text">
 										<h3 class="more-tool-title">{tool.name}</h3>
 										<p class="more-tool-desc">{tool.desc}</p>
@@ -534,43 +530,36 @@ const faqSchema = faq.length ? {
 
 	.more-tools-grid {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: 1fr 1fr;
 		row-gap: var(--space-lg);
+		column-gap: var(--space-lg);
 	}
 
 	.more-tool {
 		display: flex;
-		align-items: center;
-		gap: var(--space-md);
+		align-items: flex-start;
+		gap: var(--space-sm);
 		text-decoration: none;
 		color: inherit;
-	}
-
-	.more-tool-thumb {
-		flex-shrink: 0;
-		width: 180px;
-		height: auto;
-		aspect-ratio: 16 / 9;
-		object-fit: cover;
-		border-radius: var(--radius-md);
 		transition: opacity 0.15s ease;
 	}
 
-	.more-tool-thumb--placeholder {
+	@media (hover: hover) {
+		.more-tool:hover {
+			opacity: 0.7;
+		}
+	}
+
+	.more-tool-icon {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		flex-shrink: 0;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: var(--radius-full);
 		background: var(--color-bg-panel);
-		color: var(--color-text-secondary);
-	}
-
-	@media (hover: hover) {
-		.more-tool:hover .more-tool-thumb {
-			opacity: 0.85;
-		}
-		.more-tool:hover .more-tool-title {
-			text-decoration: underline;
-		}
+		color: var(--color-text);
 	}
 
 	.more-tool-text {
@@ -605,9 +594,9 @@ const faqSchema = faq.length ? {
 		text-decoration: underline;
 	}
 
-	@media (max-width: 480px) {
-		.more-tool-thumb {
-			width: 132px;
+	@media (max-width: 600px) {
+		.more-tools-grid {
+			grid-template-columns: 1fr;
 		}
 	}
 

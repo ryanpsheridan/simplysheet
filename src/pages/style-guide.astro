@@ -69,6 +69,20 @@ const spacingScale = [
 	{ token: '--space-xl',  label: 'xl',  px: '64' },
 	{ token: '--space-2xl', label: '2xl', px: '96' },
 ];
+
+// Explored but not shipped: tool thumbnails (article-style mesh background with
+// the tool's own UI cropped into the bottom-right). The tools index and
+// "More free tools" lists kept the icon treatment; these are kept for reference.
+const toolThumbnails = [
+	{ name: '50/30/20 Budget Calculator',            src: '/images/tool-thumb-50-30-20-budget-calculator.svg' },
+	{ name: 'Biweekly & Weekly Paycheck Calculator', src: '/images/tool-thumb-biweekly-paycheck-calculator.svg' },
+	{ name: 'Debt Strategy Comparison',              src: '/images/tool-thumb-debt-snowball-vs-avalanche-calculator.svg' },
+	{ name: 'Emergency Fund Calculator',             src: '/images/tool-thumb-emergency-fund-calculator.svg' },
+	{ name: 'Sinking Fund Calculator',               src: '/images/tool-thumb-sinking-fund-calculator.svg' },
+	{ name: 'Expense Tracking Readiness',            src: '/images/tool-thumb-expense-tracking-readiness.svg' },
+	{ name: 'Sinking Fund Assessment',               src: '/images/tool-thumb-sinking-fund-assessment.svg' },
+	{ name: 'Find Your Budgeting Style',             src: '/images/tool-thumb-budgeting-style-quiz.svg' },
+];
 ---
 
 <BaseLayout title={`Style Guide — ${SITE_TITLE}`} description="Living reference for Simply Sheet Design components, tokens, and patterns." noindex>
@@ -364,6 +378,17 @@ const spacingScale = [
 							</p>
 						</div>
 					</a>
+				))}
+			</div>
+
+			<h3 class="archive-label">Tool Thumbnails — UI Preview</h3>
+			<p class="section-desc">Article-style mesh background (palette matched to each tool's related article) with the tool's own UI cropped into the bottom-right. Explored for the tools index cards and the "More free tools" list; not shipped — those surfaces kept the icon treatment.</p>
+			<div class="card-demo-grid card-demo-3col">
+				{toolThumbnails.map((t) => (
+					<figure class="tool-thumb-demo">
+						<img src={t.src} alt={`${t.name} thumbnail preview`} width="960" height="540" loading="lazy" />
+						<figcaption>{t.name}</figcaption>
+					</figure>
 				))}
 			</div>
 		</section>
@@ -915,6 +940,21 @@ const spacingScale = [
 		font-weight: var(--weight-normal);
 		margin-bottom: var(--space-xs);
 		margin-top: var(--space-md);
+	}
+
+	.tool-thumb-demo {
+		margin: 0;
+	}
+	.tool-thumb-demo img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-md);
+	}
+	.tool-thumb-demo figcaption {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		margin-top: var(--space-2xs);
 	}
 
 	/* ——— Template / product card demo ——— */
