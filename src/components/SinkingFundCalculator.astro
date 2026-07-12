@@ -97,11 +97,9 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     )}
   </div>
 </div>
-{showCalculator && (
-  <a href="/spreadsheets/savings-goals-tracker/" class="sfc-product-link" id={`${id}-cta`} hidden>
-    Track your savings progress <span class="arrow">&rarr;</span>
-  </a>
-)}
+<a href="/spreadsheets/budget-spreadsheet/" class="sfc-product-link">
+  Track it in a budget spreadsheet <span class="arrow">&rarr;</span>
+</a>
 
 <style>
   /* ——— Container ——— */
@@ -321,8 +319,13 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-month-input {
     width: 100%;
+    max-width: 100%;
     min-width: 0;
     height: 2.75rem;
+    /* iOS renders type=month with a native min width that ignores width:100% and
+       overflows its grid cell; normalizing appearance makes it respect the box. */
+    -webkit-appearance: none;
+    appearance: none;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     font-family: var(--font-sans);
@@ -420,6 +423,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   .sfc-product-link {
     display: block;
     width: fit-content;
+    color: var(--color-accent-info);
     /* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
     margin-top: calc(var(--space-md) - var(--space-lg));
     margin-bottom: var(--space-lg);
@@ -608,7 +612,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     maybe: {
       icon: '~',
       iconBg: 'var(--color-accent-caution-bg)',
-      iconColor: 'var(--color-accent-caution)',
+      iconColor: 'var(--color-accent-caution-strong)',
       title: 'Could work as a sinking fund',
       body: 'This expense has some of the hallmarks of a sinking fund candidate. Depending on your situation, you might handle it through your regular monthly budget or by setting aside a dedicated amount each month.',
       links: ''
