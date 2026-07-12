@@ -34,6 +34,16 @@ The primary goal of this site is organic Google discovery. Every change — new 
 - The site already has a sitemap (`/sitemap-index.xml`), canonical URLs, and Open Graph tags — these are handled automatically by `BaseHead.astro`.
 - Social crawlers (Facebook, iMessage, Slack, etc.) can't render SVG for link previews, so `BaseHead.astro` points `og:image`/`twitter:image` at a PNG counterpart of the article's SVG (same filename, `.png` instead of `.svg`). `scripts/generate-og-images.mjs` rasterizes every `card-v2-*.svg` in `public/images/` to a matching `.png` and runs automatically via the `prebuild` npm script — no manual step needed, but if you add a new article's SVG in this session (without running `npm run build`), also run `node scripts/generate-og-images.mjs` so the PNG exists for local testing/sharing before the next real build.
 
+## Content Linting — Runs Automatically, Keep It Current
+
+`scripts/content-lint.mjs` enforces the invariants in this file as a runnable check (`npm run lint:content`). It runs automatically as part of `prebuild`, so a real regression fails the build/deploy before it ships — the user should never have to invoke it manually.
+
+What it errors on (fails the build): dead internal `/articles/` or `/spreadsheets/` links, an article missing its `image`/`cardImage` or the OG PNG counterpart, the wrong Etsy domain (anything but `simplysheetdesign.etsy.com`), unknown tags, duplicate `title`/`description`, a manual "Related:"/"See also" wrap-up block or trailing `---`, and the flush-right product-image CSS rule being broken. What it warns on (never fails): em-dash pileups and bold in body prose.
+
+Every session's responsibilities:
+- Run `npm run lint:content` before committing any content or layout change and resolve all errors first.
+- This script is the enforcement arm of these instructions. When you add or change an invariant here (a new tag, a new product-image surface, a new rule), update `content-lint.mjs` in the same change so the check stays in sync. A rule that isn't linted will regress eventually.
+
 ## Etsy Links — Share & Save Domain + UTM Tracking
 
 Every user-clickable link to Etsy, anywhere on the site, must follow these rules (helper and rationale live in `src/consts.ts`):

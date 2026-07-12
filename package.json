@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "node scripts/generate-og-images.mjs",
+    "prebuild": "node scripts/generate-og-images.mjs && node scripts/content-lint.mjs",
     "lint:content": "node scripts/content-lint.mjs",
     "build": "astro build",
     "postbuild": "node scripts/submit-indexnow.mjs",

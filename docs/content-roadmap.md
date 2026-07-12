@@ -4,6 +4,12 @@ Internal planning doc (not routed, never appears on the live site). It's the
 source of truth for the next batches of content so any session — including a
 fresh chat with no prior context — can pick up a batch and build it correctly.
 
+This is a **living document** — it is never replaced with a new file. As
+batches ship, mark them Done here (keep them for history). When the queue runs
+low, append the next wave to this same doc, ideally informed by Search Console
+data (which articles/tools are getting impressions and clicks) so real demand
+guides what gets written next. See "How this roadmap evolves" at the bottom.
+
 ## Strategy in one line
 
 Stop piling onto Expense Tracking (already mature). Build out the thin and
@@ -51,7 +57,10 @@ from the products.
 
 ## Batches
 
-### Batch 1 — Couples split-bills article + Bill Split Calculator (one unit)
+Status legend: **Planned** · **In progress** · **Done** (leave Done batches in
+place with a one-line note of what shipped).
+
+### Batch 1 — Couples split-bills article + Bill Split Calculator (one unit) — Planned
 
 Build the article and the calculator together — the calculator embeds inside
 the article (which forces `.mdx`) and also ships as a standalone tool page, so
@@ -78,7 +87,7 @@ they're one deliverable, not two.
   - Product CTA is a quiet left-aligned text link *outside* the calculator box
     (`calc-product-link` pattern), not a `btn btn-primary` inside it.
 
-### Batch 2 — Net Worth pillar
+### Batch 2 — Net Worth pillar — Planned
 
 - **Article:** "How to Calculate Your Net Worth (With Examples)"
   - Tag: `net-worth`. Fills the empty cluster that already has a product.
@@ -87,14 +96,14 @@ they're one deliverable, not two.
   - Structure it so a net-worth calculator (assets − liabilities) can slot in
     later without a rewrite — that's the obvious next tool, not built this wave.
 
-### Batch 3 — Joint vs Separate Accounts
+### Batch 3 — Joint vs Separate Accounts — Planned
 
 - **Article:** "Joint Accounts vs Separate Accounts: Which Is Better for Couples?"
   - Tag: `couples-budgeting`. Compounds the couples cluster.
   - Cross-link the existing couples article's "Does combining finances
     automatically fix this?" section rather than re-arguing account structure.
 
-### Batch 4 — Negative net worth
+### Batch 4 — Negative net worth — Planned
 
 - **Article:** "Is a Negative Net Worth Normal in Your 20s and 30s?"
   - Tag: `net-worth`. Question-style phrasing with strong AI-Overview potential.
@@ -103,6 +112,21 @@ they're one deliverable, not two.
 ## Future tool opportunities (not scheduled)
 
 - Net-worth calculator (assets − liabilities) as the companion to Batch 2.
+
+## How this roadmap evolves
+
+Keep using this one file — do not spin up a second roadmap doc.
+
+1. When a batch ships, change its heading status to **Done** and add a one-line
+   note (slug shipped, tool page URL). Leave it in place as history.
+2. When only a batch or two remain Planned, add the next wave here.
+3. Let the site's own data drive that next wave. Pull Search Console
+   (impressions/clicks per article and per tool page) and favor: expanding the
+   clusters and topics Google already shows signs of understanding, and
+   articles that pair with a tool. Keep completing thin clusters over padding
+   the mature Expense Tracking one, and stay in the household-budgeting lane.
+4. Re-check cross-links and tags against what actually exists at that point
+   (`src/content/articles/`, `ALL_TAGS` in `src/consts.ts`) before committing.
 
 ## Definition of done (per batch)
 
