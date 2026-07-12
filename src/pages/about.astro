@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import ProductPromo from '../components/ProductPromo.astro';
+import SpreadsheetsToolsRows from '../components/SpreadsheetsToolsRows.astro';
 import { SITE_TITLE } from '../consts';
 ---
 
@@ -39,20 +39,25 @@ import { SITE_TITLE } from '../consts';
 				<p>My goal is simple: help other people learn what budgeting is and show them that there are a lot of ways to do it. You don't need a complicated system. You don't need to track every penny if that's not your thing. You just need something that gives you enough visibility to make better decisions — and then you need to keep it simple enough that you'll actually stick with it.</p>
 				<p>That's what this site is about. Straightforward articles, practical advice, and <a href="/spreadsheets/">spreadsheets that work</a>. I built all of this because budgeting changed my life, and I believe the right tools can do the same for someone else.</p>
 			</div>
-
-			<ProductPromo slug="budget-spreadsheet" variant="interstitial" label="Where it all started" />
-
-			<div class="about-cta">
-				<a href="/spreadsheets/" class="btn btn-primary">Browse all spreadsheets <span class="arrow">&rarr;</span></a>
-				<a href="/quiz/budgeting-style/" class="btn btn-secondary">Take the 60-second quiz</a>
-			</div>
 		</article>
 	</main>
+
+	<section class="home-rows about-rows">
+		<div class="home-rows-inner">
+			<SpreadsheetsToolsRows />
+		</div>
+	</section>
 </BaseLayout>
 
 <style>
+	/* Center the story column (breadcrumb + article) at the same narrow width
+	   it had before, rather than pinning it to the left of the wider main. */
+	main {
+		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
+	}
 	article {
 		max-width: var(--max-width-narrow);
+		margin-inline: auto;
 	}
 
 	.about-header {
@@ -63,15 +68,11 @@ import { SITE_TITLE } from '../consts';
 		font-size: var(--text-h1);
 	}
 
-	.about-cta {
-		display: flex;
-		gap: var(--space-sm);
-		margin-top: var(--space-lg);
-	}
-
-	@media (max-width: 600px) {
-		.about-cta {
-			flex-direction: column;
-		}
+	/* Separate the shared Spreadsheets / Free tools rows from the story above
+	   with a max-width-contained hairline divider (matching the site's other
+	   dividers, which never span the full viewport). */
+	.about-rows .home-rows-inner {
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-xl);
 	}
 </style>

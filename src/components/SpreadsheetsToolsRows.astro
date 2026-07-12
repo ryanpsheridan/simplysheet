@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+
+// The Spreadsheets + Free tools rows shared by the homepage and the About
+// page. Renders two `.home-row` fragments (no section wrapper) so the caller
+// controls the surrounding `.home-rows` / `.home-rows-inner` layout. All
+// styling lives in the global "Home rows" block in src/styles/global.css.
+const templates = (await getCollection('templates'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.slice(0, 3)
+	.map((t) => ({
+		name: t.data.title.replace(/ for Google Sheets & Excel$/, ''),
+		desc: t.data.description,
+		url: `/spreadsheets/${t.id}/`,
+		image: t.data.heroImage,
+		badge: t.data.badge,
+	}));
+
+const tools = [
+	{
+		name: 'Biweekly Paycheck Calculator',
+		url: '/tools/biweekly-paycheck-calculator/',
+		icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+	},
+	{
+		name: 'Sinking Fund Calculator',
+		url: '/tools/sinking-fund-calculator/',
+		icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+	},
+	{
+		name: '50/30/20 Budget Calculator',
+		url: '/tools/50-30-20-budget-calculator/',
+		icon: '<rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/>',
+	},
+];
+---
+
+{templates.length > 0 && (
+	<div class="home-row">
+		<div class="home-row-label">
+			<h3 class="home-row-heading">Spreadsheets</h3>
+		</div>
+		<div class="home-row-items">
+			{templates.map((t) => (
+				<a href={t.url} class="home-row-item">
+					<div class="home-row-thumb home-row-thumb--product">
+						{t.image
+							? <img src={t.image} alt={`${t.name} preview`} width="600" height="400" loading="lazy" />
+							: <svg class="home-row-placeholder" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 16l5-5 4 4 4-4 5 5" /><circle cx="8.5" cy="8.5" r="1.5" /></svg>
+						}
+						{t.badge && <span class="home-row-badge">{t.badge}</span>}
+					</div>
+					<div class="home-row-text">
+						<h4 class="home-row-title">{t.name}</h4>
+						<p class="home-row-desc">{t.desc}</p>
+					</div>
+				</a>
+			))}
+			<div class="home-row-viewall">
+				<a href="/spreadsheets/" class="btn btn-secondary">All spreadsheets <span class="arrow">&rarr;</span></a>
+			</div>
+		</div>
+	</div>
+)}
+<div class="home-row">
+	<div class="home-row-label">
+		<h3 class="home-row-heading">Free tools</h3>
+	</div>
+	<div class="home-row-items home-row-items--tools">
+		{tools.map((tool) => (
+			<a href={tool.url} class="home-row-item home-row-item--tool">
+				<span class="home-row-icon" set:html={`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
+				<div class="home-row-text">
+					<h4 class="home-row-title">{tool.name}</h4>
+				</div>
+			</a>
+		))}
+		<a href="/tools/" class="home-row-item home-row-item--tool">
+			<span class="home-row-icon" set:html={`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`} />
+			<div class="home-row-text">
+				<h4 class="home-row-title">View all tools</h4>
+			</div>
+		</a>
+	</div>
+</div>
