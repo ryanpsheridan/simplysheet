@@ -251,11 +251,12 @@ const { articles, manifest, tagMap } = Astro.props;
 		gap: var(--space-sm);
 		text-decoration: none;
 		color: inherit;
-		transition: opacity 0.15s ease;
 	}
+	/* Hover affects only the thumbnail (a subtle zoom via reduced padding),
+	   never the title/description/badge/meta — dimming text hurt contrast. */
 	@media (hover: hover) {
-		.article-list :global(.article-list-item:hover) {
-			opacity: 0.75;
+		.article-list :global(.article-list-item:hover .article-list-thumb) {
+			padding: 1.25rem;
 		}
 	}
 	.article-list :global(.article-list-text) {
@@ -293,6 +294,7 @@ const { articles, manifest, tagMap } = Astro.props;
 		overflow: hidden;
 		background: var(--color-bg-panel);
 		padding: 1.5rem;
+		transition: padding 0.15s ease;
 	}
 	.article-list :global(.article-list-thumb img) {
 		width: 100%;

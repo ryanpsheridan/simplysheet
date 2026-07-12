@@ -246,11 +246,12 @@ const websiteSchema = {
 		display: flex;
 		flex-direction: column;
 		text-decoration: none;
-		transition: opacity 0.15s ease;
 	}
+	/* Hover zooms only the thumbnail (transform, so the text below doesn't
+	   reflow), leaving the title/meta text untouched for contrast. */
 	@media (hover: hover) {
-		.hero-featured:hover {
-			opacity: 0.7;
+		.hero-featured:hover .hero-featured-thumb img {
+			transform: scale(1.02);
 		}
 	}
 	.hero-featured-thumb {
@@ -266,6 +267,7 @@ const websiteSchema = {
 		width: 100%;
 		height: auto;
 		border-radius: var(--radius-sm);
+		transition: transform 0.15s ease;
 	}
 	.hero-featured-title {
 		font-size: var(--text-h3);
@@ -372,7 +374,13 @@ const websiteSchema = {
 		transition: opacity 0.15s ease;
 	}
 	@media (hover: hover) {
-		.home-row-item:hover {
+		/* Article cards: hover zooms only the thumbnail, leaving the title/badge/
+		   meta text untouched (dimming text hurt contrast). Tool cards have no
+		   thumbnail, so they keep the whole-item dim for hover feedback. */
+		.home-row-item:hover .home-row-thumb {
+			padding: 1.25rem;
+		}
+		.tool-item:hover {
 			opacity: 0.7;
 		}
 	}
@@ -384,6 +392,7 @@ const websiteSchema = {
 		overflow: hidden;
 		background: var(--color-bg-panel);
 		padding: 1.5rem;
+		transition: padding 0.15s ease;
 	}
 	.home-row-thumb img {
 		display: block;
