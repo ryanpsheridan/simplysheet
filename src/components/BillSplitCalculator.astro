@@ -31,8 +31,8 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	<div class="bs-table" role="table" aria-label="Bill split comparison">
 		<div class="bs-row bs-head" role="row">
-			<span role="columnheader">Each person pays</span>
-			<span role="columnheader">Even 50/50</span>
+			<span role="columnheader">Each person</span>
+			<span role="columnheader">50/50</span>
 			<span role="columnheader">By income</span>
 		</div>
 		<div class="bs-row" role="row">
@@ -45,7 +45,7 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		</div>
 		<div class="bs-row" role="row">
 			<span class="bs-who" role="rowheader">
-				<span class="bs-name"><i class="bs-dot bs-dot-partner"></i>Your partner</span>
+				<span class="bs-name"><i class="bs-dot bs-dot-partner"></i>Partner</span>
 				<small data-role="b-sub"></small>
 			</span>
 			<span class="bs-amt" role="cell" data-role="b-even">$0</span>
@@ -153,6 +153,7 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		color: var(--color-text-muted);
 		text-align: right;
 		line-height: var(--leading-snug);
+		white-space: nowrap;
 	}
 	.bs-head span:first-child {
 		text-align: left;
@@ -169,10 +170,12 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		gap: 0.5rem;
 		font-size: var(--text-body);
 		color: var(--color-text);
+		white-space: nowrap;
 	}
 	.bs-who small {
 		font-size: var(--text-xs);
 		color: var(--color-text-muted);
+		white-space: nowrap;
 	}
 	.bs-dot {
 		width: 8px;
@@ -234,9 +237,12 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 			margin-top: 0;
 		}
 		.bs-row {
-			gap: var(--space-sm);
+			gap: var(--space-xs);
 			padding: var(--space-sm);
-			grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+			grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1fr);
+		}
+		.bs-amt {
+			font-size: var(--text-small);
 		}
 	}
 </style>
