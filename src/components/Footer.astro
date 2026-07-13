@@ -2,9 +2,13 @@
 import { ETSY_SHOP_URL, withEtsyTracking } from '../consts';
 
 const year = new Date().getFullYear();
+const promoUrl = withEtsyTracking(`${ETSY_SHOP_URL}?coupon=SAVENOW`);
 ---
 
 <footer>
+	<a href={promoUrl} class="footer-promo-bar" data-cta="footer_promo_banner">
+		New to budgeting? Start with our best-selling Budget Spreadsheet and save 30% this week.
+	</a>
 	<div class="footer-inner">
 		<div class="footer-top">
 			<div class="footer-brand">
@@ -56,6 +60,22 @@ const year = new Date().getFullYear();
 		border-top: 1px solid var(--color-border);
 		padding: var(--space-xl) var(--space-md) var(--space-lg);
 		background: var(--color-bg-panel);
+	}
+
+	.footer-promo-bar {
+		display: block;
+		margin: calc(var(--space-xl) * -1) calc(var(--space-md) * -1) var(--space-xl);
+		padding: var(--space-xs) var(--space-md);
+		background: var(--color-btn);
+		color: white;
+		text-align: center;
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		text-decoration: none;
+		transition: background 0.15s;
+	}
+	.footer-promo-bar:hover {
+		background: var(--color-btn-hover);
 	}
 	.footer-inner {
 		max-width: var(--max-width);
