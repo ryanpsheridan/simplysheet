@@ -37,6 +37,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 { font-size: var(--text-h1); }
 h2 { font-size: var(--text-h2); }
 h3 { font-size: var(--text-h3); }
+h4 { font-size: var(--text-h4); font-weight: var(--weight-semibold); }
 
 a {
 	color: var(--color-link);
@@ -70,6 +71,12 @@ p {
 .prose h3 {
 	margin-top: 1.5em;
 	margin-bottom: 0.5em;
+	scroll-margin-top: 4.5rem;
+}
+
+.prose h4 {
+	margin-top: 1.25em;
+	margin-bottom: 0.4em;
 	scroll-margin-top: 4.5rem;
 }
 
