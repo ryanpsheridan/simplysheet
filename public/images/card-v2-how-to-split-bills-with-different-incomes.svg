@@ -35,30 +35,45 @@
     <circle cx="615" cy="290" r="105" fill="#FFFFFF" opacity="0.12"/>
   </g>
 
-  <!-- Wireframe overlay: Centered Box, even 50/50 split vs proportional-by-income split -->
+  <!-- Wireframe overlay: Full Vertical Bleed, two income bars of different
+       heights (different incomes). Each bar's shaded base is the same share of
+       its own height, so the higher earner's dollar share is larger while both
+       give up the same slice of their income. -->
   <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
-    <rect x="144" y="108" width="672" height="324" fill="none" vector-effect="non-scaling-stroke"/>
-    <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
-    <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="0" x2="144" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="0" x2="368" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="0" x2="592" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="0" x2="816" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="108" x2="816" y2="108" vector-effect="non-scaling-stroke"/>
     <line x1="144" y1="216" x2="816" y2="216" vector-effect="non-scaling-stroke"/>
     <line x1="144" y1="324" x2="816" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
   </g>
-  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
-    <!-- Even 50/50 split: centered divide (secondary, dashed reference) -->
-    <line x1="144" y1="216" x2="816" y2="216" stroke-width="1" opacity="0.45" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
-    <line x1="480" y1="216" x2="480" y2="270" stroke-width="1" opacity="0.45" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
-    <!-- Proportional split: off-centre divide mirroring income share (primary) -->
-    <line x1="144" y1="324" x2="816" y2="324" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
-    <line x1="592" y1="324" x2="592" y2="378" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+  <!-- Emphasized origin: left wall + baseline -->
+  <g stroke="#FFFFFF" fill="none">
+    <line x1="144" y1="0" x2="144" y2="540" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="816" y2="432" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+  </g>
+  <!-- Shaded bill share (lower half of each bar) -->
+  <g fill="#FFFFFF" opacity="0.16">
+    <rect x="332" y="324" width="72" height="108"/>
+    <rect x="556" y="378" width="72" height="54"/>
+  </g>
+  <!-- Bar outlines + the bills/leftover divide -->
+  <g stroke="#FFFFFF" fill="none">
+    <rect x="332" y="216" width="72" height="216" rx="4" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <rect x="556" y="324" width="72" height="108" rx="4" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <line x1="332" y1="324" x2="404" y2="324" stroke-width="1" opacity="0.6" vector-effect="non-scaling-stroke"/>
+    <line x1="556" y1="378" x2="628" y2="378" stroke-width="1" opacity="0.6" vector-effect="non-scaling-stroke"/>
   </g>
   <g fill="#FFFFFF">
-    <circle cx="480" cy="216" r="5" opacity="0.25"/>
-    <circle cx="480" cy="216" r="1.6" opacity="0.8"/>
+    <circle cx="368" cy="216" r="6" opacity="0.3"/>
+    <circle cx="368" cy="216" r="2" opacity="1"/>
     <circle cx="592" cy="324" r="6" opacity="0.3"/>
     <circle cx="592" cy="324" r="2" opacity="1"/>
-    <circle cx="144" cy="324" r="5" opacity="0.22"/>
-    <circle cx="144" cy="324" r="1.6" opacity="0.75"/>
-    <circle cx="816" cy="324" r="5" opacity="0.22"/>
-    <circle cx="816" cy="324" r="1.6" opacity="0.75"/>
+    <circle cx="368" cy="324" r="5" opacity="0.22"/>
+    <circle cx="368" cy="324" r="1.6" opacity="0.8"/>
+    <circle cx="592" cy="378" r="5" opacity="0.22"/>
+    <circle cx="592" cy="378" r="1.6" opacity="0.8"/>
   </g>
 </svg>

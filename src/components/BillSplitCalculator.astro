@@ -31,27 +31,29 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	<div class="bs-table" role="table" aria-label="Bill split comparison">
 		<div class="bs-row bs-head" role="row">
-			<span role="columnheader"></span>
+			<span role="columnheader">Each person pays</span>
 			<span role="columnheader">Even 50/50</span>
 			<span role="columnheader">By income</span>
 		</div>
 		<div class="bs-row" role="row">
-			<span class="bs-who" role="rowheader">You <small data-role="a-pct"></small></span>
+			<span class="bs-who" role="rowheader">
+				<span class="bs-name"><i class="bs-dot bs-dot-you"></i>You</span>
+				<small data-role="a-sub"></small>
+			</span>
 			<span class="bs-amt" role="cell" data-role="a-even">$0</span>
 			<span class="bs-amt" role="cell" data-role="a-prop">$0</span>
 		</div>
 		<div class="bs-row" role="row">
-			<span class="bs-who" role="rowheader">Your partner <small data-role="b-pct"></small></span>
+			<span class="bs-who" role="rowheader">
+				<span class="bs-name"><i class="bs-dot bs-dot-partner"></i>Your partner</span>
+				<small data-role="b-sub"></small>
+			</span>
 			<span class="bs-amt" role="cell" data-role="b-even">$0</span>
 			<span class="bs-amt" role="cell" data-role="b-prop">$0</span>
 		</div>
 	</div>
 
-	<div class="calc-highlight">
-		<span class="calc-highlight-label">Your fair share, split by income</span>
-		<span class="calc-highlight-value" data-role="hl-value">$0</span>
-		<span class="calc-highlight-math" data-role="hl-math"></span>
-	</div>
+	<p class="bs-note">"By income" splits the same bills in proportion to what each person earns, so both cover the same share of their own paycheck.</p>
 </div>
 <a href="/spreadsheets/couples-budget-spreadsheet/" class="calc-product-link">Track it in a couples budget spreadsheet <span class="arrow">&rarr;</span></a>
 
@@ -123,82 +125,80 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		margin: var(--space-xs) 0 0;
 	}
 
-	/* ——— Comparison table ——— */
+	/* ——— Comparison table (a clean white card on the panel, styled to match
+	   the article's markdown tables: quiet header, hairline row dividers) ——— */
 
 	.bs-table {
 		margin-top: var(--space-md);
+		background: var(--color-bg-surface);
 		border: 1px solid var(--color-border);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-md);
 		overflow: hidden;
 	}
 	.bs-row {
 		display: grid;
-		grid-template-columns: 1.5fr 1fr 1fr;
-		align-items: baseline;
-		gap: var(--space-sm);
-		padding: 0.625rem var(--space-sm);
+		grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+		align-items: center;
+		gap: var(--space-md);
+		padding: var(--space-sm) var(--space-md);
 	}
 	.bs-row + .bs-row {
 		border-top: 1px solid var(--color-border);
 	}
 	.bs-head {
-		background: var(--color-bg-surface);
+		border-bottom: 1px solid var(--color-border);
 	}
 	.bs-head span {
 		font-size: var(--text-xs);
 		color: var(--color-text-muted);
 		text-align: right;
+		line-height: var(--leading-snug);
 	}
 	.bs-head span:first-child {
 		text-align: left;
 	}
 	.bs-who {
-		font-size: var(--text-small);
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 0;
+	}
+	.bs-name {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: var(--text-body);
 		color: var(--color-text);
 	}
 	.bs-who small {
+		font-size: var(--text-xs);
 		color: var(--color-text-muted);
-		font-size: 0.85em;
+	}
+	.bs-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: var(--radius-full);
+		flex-shrink: 0;
+	}
+	.bs-dot-you {
+		background: var(--color-split-you);
+	}
+	.bs-dot-partner {
+		background: var(--color-split-partner);
 	}
 	.bs-amt {
+		text-align: right;
 		font-size: var(--text-body);
-		font-weight: var(--weight-normal);
 		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
-		text-align: right;
 		font-variant-numeric: tabular-nums;
 	}
 
-	/* ——— Highlight ——— */
-
-	.calc-highlight {
-		display: flex;
-		flex-direction: column;
-		margin-top: var(--space-md);
-		padding: var(--space-md);
-		background: var(--color-bg-surface);
-		border-radius: var(--radius-md);
-	}
-	.calc-highlight-label {
-		display: block;
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text);
-		margin-bottom: var(--space-2xs);
-	}
-	.calc-highlight-value {
-		display: block;
-		font-size: var(--text-h2);
-		font-weight: var(--weight-normal);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-		margin-bottom: var(--space-2xs);
-	}
-	.calc-highlight-math {
-		display: block;
-		font-size: var(--text-small);
+	.bs-note {
+		font-size: var(--text-xs);
 		color: var(--color-text-muted);
-		min-height: 1.4em;
+		line-height: var(--leading-snug);
+		margin: var(--space-sm) 0 0;
 	}
 
 	/* ——— Product link ——— */
@@ -233,6 +233,11 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		.bs-incomes .calc-input-group + .calc-input-group {
 			margin-top: 0;
 		}
+		.bs-row {
+			gap: var(--space-sm);
+			padding: var(--space-sm);
+			grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+		}
 	}
 </style>
 
@@ -245,14 +250,12 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 	var incomeB = root.querySelector('[data-role="income-b"]');
 	var billsEl = root.querySelector('[data-role="bills"]');
 
-	var aPctEl = root.querySelector('[data-role="a-pct"]');
-	var bPctEl = root.querySelector('[data-role="b-pct"]');
+	var aSubEl = root.querySelector('[data-role="a-sub"]');
+	var bSubEl = root.querySelector('[data-role="b-sub"]');
 	var aEvenEl = root.querySelector('[data-role="a-even"]');
 	var bEvenEl = root.querySelector('[data-role="b-even"]');
 	var aPropEl = root.querySelector('[data-role="a-prop"]');
 	var bPropEl = root.querySelector('[data-role="b-prop"]');
-	var hlValueEl = root.querySelector('[data-role="hl-value"]');
-	var hlMathEl = root.querySelector('[data-role="hl-math"]');
 
 	function formatCurrency(n) {
 		return '$' + Math.round(n).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -286,35 +289,15 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 			var propA = bills * shareA;
 			var propB = bills - propA;
 
-			aPctEl.textContent = '· ' + pctA + '%';
-			bPctEl.textContent = '· ' + pctB + '%';
+			aSubEl.textContent = pctA + '% of income';
+			bSubEl.textContent = pctB + '% of income';
 			aPropEl.textContent = formatCurrency(propA);
 			bPropEl.textContent = formatCurrency(propB);
-
-			if (bills > 0) {
-				hlValueEl.textContent = formatCurrency(propA);
-				var diff = propA - even;
-				var rounded = Math.round(Math.abs(diff));
-				var swing;
-				if (rounded < 1) {
-					swing = 'the same as an even 50/50 split, since you earn about the same.';
-				} else if (diff > 0) {
-					swing = formatCurrency(rounded) + ' more than an even 50/50 split.';
-				} else {
-					swing = formatCurrency(rounded) + ' less than an even 50/50 split.';
-				}
-				hlMathEl.textContent = pctA + '% of ' + formatCurrency(bills) + ' in shared bills, matching your ' + pctA + '% of your combined income. That’s ' + swing;
-			} else {
-				hlValueEl.textContent = '$0';
-				hlMathEl.textContent = '';
-			}
 		} else {
-			aPctEl.textContent = '';
-			bPctEl.textContent = '';
+			aSubEl.textContent = '';
+			bSubEl.textContent = '';
 			aPropEl.textContent = '—';
 			bPropEl.textContent = '—';
-			hlValueEl.textContent = '—';
-			hlMathEl.textContent = 'Enter both incomes to see a split weighted by what each person earns.';
 		}
 	}
 
