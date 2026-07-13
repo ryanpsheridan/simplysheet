@@ -6,9 +6,9 @@ const promoUrl = withEtsyTracking(`${ETSY_SHOP_URL}?coupon=SAVENOW`);
 ---
 
 <footer>
-	<a href={promoUrl} class="footer-promo-bar" data-cta="footer_promo_banner">
-		New to budgeting? Start with our best-selling Budget Spreadsheet and save 30% this week.
-	</a>
+	<p class="footer-promo-bar">
+		New to budgeting? Start with our best-selling <a href={promoUrl} class="footer-promo-link" data-cta="footer_promo_banner">Budget Spreadsheet</a> and save 30% this week.
+	</p>
 	<div class="footer-inner">
 		<div class="footer-top">
 			<div class="footer-brand">
@@ -63,19 +63,20 @@ const promoUrl = withEtsyTracking(`${ETSY_SHOP_URL}?coupon=SAVENOW`);
 	}
 
 	.footer-promo-bar {
-		display: block;
 		margin: calc(var(--space-xl) * -1) calc(var(--space-md) * -1) var(--space-xl);
-		padding: var(--space-xs) var(--space-md);
-		background: var(--color-btn);
-		color: white;
+		padding: var(--space-sm) var(--space-md);
+		border-bottom: 1px solid var(--color-border);
 		text-align: center;
 		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		text-decoration: none;
-		transition: background 0.15s;
+		color: var(--color-text-secondary);
 	}
-	.footer-promo-bar:hover {
-		background: var(--color-btn-hover);
+	.footer-promo-link {
+		color: var(--color-accent-info);
+		font-weight: var(--weight-medium);
+		text-decoration: underline;
+	}
+	.footer-promo-link:hover {
+		color: var(--color-text);
 	}
 	.footer-inner {
 		max-width: var(--max-width);
