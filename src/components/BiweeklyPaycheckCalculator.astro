@@ -37,26 +37,26 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	</div>
 
 	<div class="calc-highlight">
-		<span class="calc-highlight-label" data-role="buffer-label">Cushion needed for a 2-paycheck month</span>
-		<span class="calc-highlight-value" data-role="buffer">$0</span>
-		<p class="calc-highlight-desc" data-role="buffer-desc"></p>
-		<span class="calc-highlight-math" data-role="buffer-math"></span>
+		<span class="calc-highlight-label">Average Monthly Income</span>
+		<span class="calc-highlight-value" data-role="average">$0</span>
+		<p class="calc-highlight-desc">Use this number when creating a monthly budget.</p>
 	</div>
 
 	<div class="calc-stats-row">
 		<div class="calc-stat">
-			<span class="calc-stat-label">Typical month <small data-role="typical-note">(2 paychecks)</small></span>
+			<span class="calc-stat-label">Typical Month <small data-role="typical-note">(2 paychecks)</small></span>
 			<span class="calc-stat-value" data-role="typical">$0</span>
 		</div>
 		<div class="calc-stat calc-stat-extra">
-			<span class="calc-stat-label"><span data-role="extra-label">3-paycheck month</span> <small data-role="extra-note">(~2x a year)</small></span>
+			<span class="calc-stat-label"><span data-role="extra-label">3-Paycheck Month</span> <small data-role="extra-note">(~2x a year)</small></span>
 			<span class="calc-stat-value" data-role="extra">$0</span>
 		</div>
-		<div class="calc-stat">
-			<span class="calc-stat-label">Steady average <small>(one number all year)</small></span>
-			<span class="calc-stat-value" data-role="average">$0</span>
-			<span class="calc-stat-math" data-role="average-math"></span>
-		</div>
+	</div>
+
+	<div class="calc-insight" data-role="insight">
+		<span class="calc-insight-label">Monthly Buffer Needed</span>
+		<span class="calc-insight-value" data-role="buffer">$0</span>
+		<p class="calc-insight-desc">If you want your budget to stay consistent year-round, set aside this amount during months with an extra paycheck.</p>
 	</div>
 </div>
 <a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
@@ -155,7 +155,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		margin: var(--space-xs) 0 0;
 	}
 
-	/* ——— Highlight card: the primary result + CTA ——— */
+	/* ——— Highlight card: the hero result ——— */
 
 	.calc-highlight {
 		display: flex;
@@ -184,30 +184,19 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		font-size: var(--text-small);
 		line-height: var(--leading-snug);
 		color: var(--color-text-secondary);
-		margin: 0 0 var(--space-2xs);
-	}
-	.calc-highlight-desc:empty {
-		display: none;
-	}
-	.calc-highlight-math {
-		display: block;
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-	}
-	.calc-highlight-math:empty {
-		display: none;
+		margin: 0;
 	}
 
-	/* ——— Reference stats (de-emphasized, compact supporting numbers) ——— */
+	/* ——— Reference stats (compact supporting numbers) ——— */
 
 	.calc-stats-row {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		gap: var(--space-sm);
 		margin-top: var(--space-md);
 	}
-	.calc-stats-row.two-col {
-		grid-template-columns: repeat(2, 1fr);
+	.calc-stats-row.single {
+		grid-template-columns: 1fr;
 	}
 	.calc-stat {
 		display: flex;
@@ -229,9 +218,40 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
 	}
-	.calc-stat-math {
+
+	/* ——— Insight: secondary, optional budgeting tip ——— */
+
+	.calc-insight {
+		margin-top: var(--space-md);
+		padding-top: var(--space-md);
+		border-top: 1px solid var(--color-border);
+	}
+	.calc-insight[hidden] {
+		display: none;
+	}
+	.calc-insight-label {
+		display: block;
 		font-size: var(--text-xs);
+		font-weight: var(--weight-normal);
 		color: var(--color-text-muted);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-wide);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-insight-value {
+		display: block;
+		font-size: var(--text-h3);
+		font-weight: var(--weight-normal);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-insight-desc {
+		font-size: var(--text-xs);
+		line-height: var(--leading-snug);
+		color: var(--color-text-muted);
+		margin: 0;
+		max-width: 34rem;
 	}
 
 	/* ——— Product link ——— */
@@ -271,12 +291,12 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 			font-size: var(--text-h2);
 		}
 		.calc-stats-row {
-			grid-template-columns: repeat(2, 1fr);
 			gap: calc(var(--space-sm) * 0.75);
 			margin-top: calc(var(--space-md) * 0.75);
 		}
-		.calc-stats-row:not(.two-col) .calc-stat:last-child {
-			grid-column: 1 / -1;
+		.calc-insight {
+			margin-top: calc(var(--space-md) * 0.75);
+			padding-top: calc(var(--space-md) * 0.75);
 		}
 	}
 </style>
@@ -320,11 +340,8 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	var extraLabelEl = root.querySelector('[data-role="extra-label"]');
 	var extraNoteEl = root.querySelector('[data-role="extra-note"]');
 	var averageEl = root.querySelector('[data-role="average"]');
-	var averageMathEl = root.querySelector('[data-role="average-math"]');
-	var bufferLabelEl = root.querySelector('[data-role="buffer-label"]');
+	var insightEl = root.querySelector('[data-role="insight"]');
 	var bufferEl = root.querySelector('[data-role="buffer"]');
-	var bufferDescEl = root.querySelector('[data-role="buffer-desc"]');
-	var bufferMathEl = root.querySelector('[data-role="buffer-math"]');
 
 	function formatCurrency(n) {
 		return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -350,32 +367,20 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		typicalNoteEl.textContent = '(' + config.typicalPerMonth + ' paychecks)';
 		typicalEl.textContent = formatCurrency(typical);
 		averageEl.textContent = formatCurrency(average);
-		bufferEl.textContent = formatCurrency(buffer);
 
 		if (config.hasExtra) {
 			var extra = paycheck * config.extraPerMonth;
 			extraStatEl.style.display = '';
-			statsRowEl.classList.remove('two-col');
-			extraLabelEl.textContent = config.extraPerMonth + '-paycheck month';
+			statsRowEl.classList.remove('single');
+			extraLabelEl.textContent = config.extraPerMonth + '-Paycheck Month';
 			extraNoteEl.textContent = '(~' + config.extraTimesAYear + 'x a year)';
 			extraEl.textContent = formatCurrency(extra);
-			bufferLabelEl.textContent = 'Cushion needed for a ' + config.typicalPerMonth + '-paycheck month';
-			bufferDescEl.textContent = 'Set aside this amount each month so your income stays consistent all year.';
+			insightEl.hidden = false;
+			bufferEl.textContent = formatCurrency(buffer);
 		} else {
 			extraStatEl.style.display = 'none';
-			statsRowEl.classList.add('two-col');
-			bufferLabelEl.textContent = 'Cushion needed';
-			bufferDescEl.textContent = 'Semi-monthly pay always lines up evenly with the calendar. No cushion needed, you\'re all set.';
-		}
-
-		if (paycheck > 0) {
-			averageMathEl.textContent = formatCurrency(paycheck) + ' × ' + config.paychecksPerYear + ' ÷ 12';
-			bufferMathEl.textContent = config.hasExtra
-				? formatCurrency(average) + ' average − ' + formatCurrency(typical) + ' in a ' + config.typicalPerMonth + '-paycheck month'
-				: '';
-		} else {
-			averageMathEl.textContent = '';
-			bufferMathEl.textContent = '';
+			statsRowEl.classList.add('single');
+			insightEl.hidden = true;
 		}
 	}
 
