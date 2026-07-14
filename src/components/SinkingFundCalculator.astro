@@ -59,7 +59,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
           </div>
         </div>
 
-        <div class="sfc-results" id={`${id}-results`} hidden>
+        <div class="sfc-results" id={`${id}-results`}>
           <div class="sfc-highlight">
             <span class="sfc-highlight-label">Save each month</span>
             <span class="sfc-highlight-value" id={`${id}-monthly`}>—</span>
@@ -83,7 +83,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
           <p class="sfc-tip" id={`${id}-tip`}></p>
         </div>
 
-        <p class="sfc-hint" id={`${id}-hint`}>Fill in both fields above to see your monthly savings plan.</p>
+        <p class="sfc-hint" id={`${id}-hint`}>Updates automatically as you fill in both fields above.</p>
         <p class="sfc-error" id={`${id}-error`} hidden>Enter a target amount and a future target month to see your savings plan.</p>
       </>
     )}
@@ -99,6 +99,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     )}
   </div>
 </div>
+<div class="sfc-cta-divider"></div>
 <a href="/spreadsheets/savings-goals-tracker/" class="sfc-product-link">
   Track your savings progress <span class="arrow">&rarr;</span>
 </a>
@@ -403,6 +404,9 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     color: var(--color-text-secondary);
     margin: var(--space-sm) 0 0;
   }
+  .sfc-tip:empty {
+    display: none;
+  }
   .sfc-hint,
   .sfc-error {
     font-size: var(--text-small);
@@ -418,6 +422,11 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-cta[hidden] {
     display: none;
+  }
+  .sfc-cta-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin-top: var(--space-lg);
   }
   .sfc-product-link {
     display: block;
@@ -499,7 +508,6 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   var calcCtaEl  = document.getElementById(id + '-calc-cta');
   var amountEl   = document.getElementById(id + '-amount');
   var dateEl     = document.getElementById(id + '-date');
-  var resultsEl  = document.getElementById(id + '-results');
   var monthlyEl  = document.getElementById(id + '-monthly');
   var mcountEl   = document.getElementById(id + '-mcount');
   var weeklyEl   = document.getElementById(id + '-weekly');
@@ -791,13 +799,24 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
 
   /* ——— Calculate ——— */
 
+  // The results card stays visible at all times (with — placeholders) so it
+  // reads as a live preview that fills in, rather than a form to submit.
+  function resetResults() {
+    if (!monthlyEl) return;
+    monthlyEl.textContent  = '—';
+    mcountEl.textContent   = '—';
+    weeklyEl.textContent   = '—';
+    biweeklyEl.textContent = '—';
+    tipEl.textContent      = '';
+  }
+
   function calculate() {
     var rawAmount = amountEl.value.replace(/[^0-9.]/g, '');
     var amount = parseFloat(rawAmount) || 0;
     var dateVal = dateEl.value; // "YYYY-MM"
 
     if (!amount || !dateVal) {
-      resultsEl.hidden = true;
+      resetResults();
       errorEl.hidden = true;
       if (hintEl) hintEl.hidden = false;
       if (ctaEl) ctaEl.hidden = true;
@@ -810,7 +829,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     var months = (targetYear - todayYear) * 12 + (targetMonth - todayMonth);
 
     if (months <= 0) {
-      resultsEl.hidden = true;
+      resetResults();
       if (hintEl) hintEl.hidden = true;
       errorEl.hidden = false;
       errorEl.textContent = 'Target month must be in the future.';
@@ -831,7 +850,6 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     biweeklyEl.textContent = fmt(biweekly, 2);
     tipEl.textContent      = getTip(selectedCategory, months, monthly);
 
-    resultsEl.hidden = false;
     if (ctaEl) ctaEl.hidden = false;
   }
 
@@ -860,7 +878,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
       answers  = [];
       selectedCategory = '';
       preset   = null;
-      if (resultsEl) resultsEl.hidden = true;
+      resetResults();
       if (errorEl) errorEl.hidden = true;
       if (hintEl) hintEl.hidden = false;
       if (ctaEl) ctaEl.hidden = true;
