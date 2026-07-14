@@ -10,13 +10,12 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 <div class="calc" id={id} data-freq="biweekly">
 	{showFrequencyToggle && (
 		<div class="calc-freq-group">
-			<span class="calc-label">Pay frequency</span>
-			<div class="calc-freq-toggle">
-				<button class="calc-freq-btn active" data-freq="biweekly">Biweekly</button>
-				<button class="calc-freq-btn" data-freq="weekly">Weekly</button>
-				<button class="calc-freq-btn" data-freq="semimonthly">Semi-monthly</button>
-			</div>
-			<p class="calc-freq-hint">Paid monthly? Use the <a href="/tools/50-30-20-budget-calculator/">50/30/20 calculator</a> instead.</p>
+			<label class="calc-label" for={`${id}-freq`}>Pay frequency</label>
+			<select id={`${id}-freq`} class="calc-select" data-role="freq-select">
+				<option value="biweekly">Biweekly</option>
+				<option value="weekly">Weekly</option>
+				<option value="semimonthly">Semi-monthly</option>
+			</select>
 		</div>
 	)}
 
@@ -42,22 +41,40 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		<p class="calc-highlight-desc">Use this number when creating a monthly budget.</p>
 	</div>
 
-	<div class="calc-stats-row">
-		<div class="calc-stat">
-			<span class="calc-stat-label">Typical Month <small data-role="typical-note">(2 paychecks)</small></span>
-			<span class="calc-stat-value" data-role="typical">$0</span>
-		</div>
-		<div class="calc-stat calc-stat-extra">
-			<span class="calc-stat-label"><span data-role="extra-label">3-Paycheck Month</span> <small data-role="extra-note">(~2x a year)</small></span>
-			<span class="calc-stat-value" data-role="extra">$0</span>
-		</div>
+	<div class="calc-table-card">
+		<table class="calc-table">
+			<colgroup>
+				<col class="calc-table-col-period" />
+				<col class="calc-table-col-count" />
+				<col class="calc-table-col-amount" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">Period</th>
+					<th scope="col">Count</th>
+					<th scope="col">Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Typical Month</td>
+					<td data-role="typical-count">2</td>
+					<td class="calc-table-amount" data-role="typical">$0</td>
+				</tr>
+				<tr data-role="extra-row">
+					<td data-role="extra-label">3-Paycheck Month</td>
+					<td data-role="extra-count">3</td>
+					<td class="calc-table-amount" data-role="extra">$0</td>
+				</tr>
+				<tr class="calc-table-row-buffer" data-role="buffer-row">
+					<td>Monthly Buffer Needed</td>
+					<td>—</td>
+					<td class="calc-table-amount" data-role="buffer">$0</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-
-	<div class="calc-insight" data-role="insight">
-		<span class="calc-insight-label">Monthly Buffer Needed</span>
-		<span class="calc-insight-value" data-role="buffer">$0</span>
-		<p class="calc-insight-desc">If you want your budget to stay consistent year-round, set aside this amount during months with an extra paycheck.</p>
-	</div>
+	<p class="calc-table-hint" data-role="buffer-hint">If you want your budget to stay consistent year-round, set aside this amount during months with an extra paycheck.</p>
 </div>
 <a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
 
@@ -70,43 +87,26 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		background: var(--color-bg-panel);
 	}
 
-	/* ——— Pay frequency toggle ——— */
+	/* ——— Pay frequency ——— */
 
 	.calc-freq-group {
 		margin-bottom: var(--space-md);
-		padding-bottom: var(--space-md);
-		border-bottom: 1px solid var(--color-border);
 	}
-	.calc-freq-toggle {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-xs);
-	}
-	.calc-freq-btn {
+	.calc-select {
+		width: 100%;
 		font-family: var(--font-sans);
-		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-		color: var(--color-text-secondary);
+		font-size: var(--text-body);
+		padding: 0.625rem 0.75rem;
+		color: var(--color-text);
 		background: var(--color-bg-surface);
 		border: 1px solid var(--color-border);
-		border-radius: var(--radius-full);
-		padding: 0.375rem 0.875rem;
+		border-radius: var(--radius-sm);
+		outline: none;
 		cursor: pointer;
-		transition: color 0.15s, border-color 0.15s, background 0.15s;
+		transition: border-color 0.15s;
 	}
-	.calc-freq-btn:hover {
-		color: var(--color-text);
-		border-color: var(--color-text-muted);
-	}
-	.calc-freq-btn.active {
-		color: var(--color-bg);
-		background: var(--color-bg-inverse);
-		border-color: var(--color-bg-inverse);
-	}
-	.calc-freq-hint {
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		margin: var(--space-sm) 0 0;
+	.calc-select:focus {
+		border-color: var(--color-link);
 	}
 
 	/* ——— Input ——— */
@@ -150,8 +150,9 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		color: var(--color-text-muted);
 	}
 	.calc-input-hint {
+		/* text-secondary (not text-muted) to keep this at AA contrast against the white field background */
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
 		margin: var(--space-xs) 0 0;
 	}
 
@@ -187,71 +188,65 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		margin: 0;
 	}
 
-	/* ——— Reference stats (compact supporting numbers) ——— */
+	/* ——— Breakdown table: compact, secondary to the hero card ——— */
 
-	.calc-stats-row {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: var(--space-sm);
+	.calc-table-card {
 		margin-top: var(--space-md);
+		background: var(--color-bg-surface);
+		border-radius: var(--radius-md);
+		overflow: hidden;
 	}
-	.calc-stats-row.single {
-		grid-template-columns: 1fr;
+	.calc-table {
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
 	}
-	.calc-stat {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2xs);
+	.calc-table-col-period {
+		width: 46%;
 	}
-	.calc-stat-label {
+	.calc-table-col-count {
+		width: 16%;
+	}
+	.calc-table-col-amount {
+		width: 38%;
+	}
+	.calc-table th {
+		text-align: left;
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		line-height: var(--leading-snug);
-	}
-	.calc-stat-label small {
-		display: block;
-		font-size: 0.95em;
-	}
-	.calc-stat-value {
-		font-size: var(--text-h3);
-		font-weight: var(--weight-normal);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-	}
-
-	/* ——— Insight: secondary, optional budgeting tip ——— */
-
-	.calc-insight {
-		margin-top: var(--space-md);
-		padding-top: var(--space-md);
-		border-top: 1px solid var(--color-border);
-	}
-	.calc-insight[hidden] {
-		display: none;
-	}
-	.calc-insight-label {
-		display: block;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-normal);
-		color: var(--color-text-muted);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-wide);
-		margin-bottom: var(--space-2xs);
+		padding: var(--space-sm) var(--space-md) var(--space-xs);
 	}
-	.calc-insight-value {
-		display: block;
-		font-size: var(--text-h3);
-		font-weight: var(--weight-normal);
-		letter-spacing: var(--tracking-tight);
+	.calc-table th:last-child,
+	.calc-table td:last-child {
+		text-align: right;
+	}
+	.calc-table td {
+		/* Smaller than the hero value on purpose — these are supporting numbers, not the answer */
+		font-size: var(--text-small);
 		color: var(--color-text);
-		margin-bottom: var(--space-2xs);
+		padding: var(--space-sm) var(--space-md);
+		border-top: 1px solid var(--color-border);
 	}
-	.calc-insight-desc {
+	/* Paychecks count and dollar amounts stay on one line; only the period label may wrap */
+	.calc-table td:nth-child(2),
+	.calc-table-amount {
+		white-space: nowrap;
+	}
+	.calc-table-row-buffer td {
+		background: var(--color-bg-emphasis);
+		font-weight: var(--weight-medium);
+	}
+	.calc-table-hint {
 		font-size: var(--text-xs);
 		line-height: var(--leading-snug);
-		color: var(--color-text-muted);
-		margin: 0;
-		max-width: 34rem;
+		color: var(--color-text-secondary);
+		margin: var(--space-sm) 0 0;
+	}
+	.calc-table-hint[hidden] {
+		display: none;
 	}
 
 	/* ——— Product link ——— */
@@ -282,7 +277,6 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	@media (max-width: 767px) {
 		.calc-freq-group {
 			margin-bottom: calc(var(--space-md) * 0.75);
-			padding-bottom: calc(var(--space-md) * 0.75);
 		}
 		.calc-highlight {
 			margin-top: calc(var(--space-md) * 0.75);
@@ -290,13 +284,16 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		.calc-highlight-value {
 			font-size: var(--text-h2);
 		}
-		.calc-stats-row {
-			gap: calc(var(--space-sm) * 0.75);
+		.calc-table-card {
 			margin-top: calc(var(--space-md) * 0.75);
 		}
-		.calc-insight {
-			margin-top: calc(var(--space-md) * 0.75);
-			padding-top: calc(var(--space-md) * 0.75);
+		.calc-table th,
+		.calc-table td {
+			padding-left: var(--space-xs);
+			padding-right: var(--space-xs);
+		}
+		.calc-table-hint {
+			margin-top: calc(var(--space-sm) * 0.75);
 		}
 	}
 </style>
@@ -311,14 +308,12 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 			paychecksPerYear: 26,
 			typicalPerMonth: 2,
 			extraPerMonth: 3,
-			extraTimesAYear: 2,
 			hasExtra: true,
 		},
 		weekly: {
 			paychecksPerYear: 52,
 			typicalPerMonth: 4,
 			extraPerMonth: 5,
-			extraTimesAYear: 4,
 			hasExtra: true,
 		},
 		semimonthly: {
@@ -331,16 +326,16 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	var freq = 'biweekly';
 
 	var input = root.querySelector('.calc-input');
-	var freqBtns = root.querySelectorAll('.calc-freq-btn');
-	var statsRowEl = root.querySelector('.calc-stats-row');
-	var extraStatEl = root.querySelector('.calc-stat-extra');
+	var freqSelect = root.querySelector('[data-role="freq-select"]');
+	var extraRowEl = root.querySelector('[data-role="extra-row"]');
+	var bufferRowEl = root.querySelector('[data-role="buffer-row"]');
+	var bufferHintEl = root.querySelector('[data-role="buffer-hint"]');
 	var typicalEl = root.querySelector('[data-role="typical"]');
-	var typicalNoteEl = root.querySelector('[data-role="typical-note"]');
+	var typicalCountEl = root.querySelector('[data-role="typical-count"]');
 	var extraEl = root.querySelector('[data-role="extra"]');
+	var extraCountEl = root.querySelector('[data-role="extra-count"]');
 	var extraLabelEl = root.querySelector('[data-role="extra-label"]');
-	var extraNoteEl = root.querySelector('[data-role="extra-note"]');
 	var averageEl = root.querySelector('[data-role="average"]');
-	var insightEl = root.querySelector('[data-role="insight"]');
 	var bufferEl = root.querySelector('[data-role="buffer"]');
 
 	function formatCurrency(n) {
@@ -364,23 +359,23 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		var average = annual / 12;
 		var buffer = Math.max(0, average - typical);
 
-		typicalNoteEl.textContent = '(' + config.typicalPerMonth + ' paychecks)';
+		typicalCountEl.textContent = config.typicalPerMonth;
 		typicalEl.textContent = formatCurrency(typical);
 		averageEl.textContent = formatCurrency(average);
 
 		if (config.hasExtra) {
 			var extra = paycheck * config.extraPerMonth;
-			extraStatEl.style.display = '';
-			statsRowEl.classList.remove('single');
+			extraRowEl.style.display = '';
+			bufferRowEl.style.display = '';
+			bufferHintEl.hidden = false;
+			extraCountEl.textContent = config.extraPerMonth;
 			extraLabelEl.textContent = config.extraPerMonth + '-Paycheck Month';
-			extraNoteEl.textContent = '(~' + config.extraTimesAYear + 'x a year)';
 			extraEl.textContent = formatCurrency(extra);
-			insightEl.hidden = false;
 			bufferEl.textContent = formatCurrency(buffer);
 		} else {
-			extraStatEl.style.display = 'none';
-			statsRowEl.classList.add('single');
-			insightEl.hidden = true;
+			extraRowEl.style.display = 'none';
+			bufferRowEl.style.display = 'none';
+			bufferHintEl.hidden = true;
 		}
 	}
 
@@ -393,14 +388,12 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		calculate();
 	});
 
-	freqBtns.forEach(function (btn) {
-		btn.addEventListener('click', function () {
-			freqBtns.forEach(function (b) { b.classList.remove('active'); });
-			btn.classList.add('active');
-			freq = btn.dataset.freq;
+	if (freqSelect) {
+		freqSelect.addEventListener('change', function () {
+			freq = freqSelect.value;
 			calculate();
 		});
-	});
+	}
 
 	calculate();
 })();
