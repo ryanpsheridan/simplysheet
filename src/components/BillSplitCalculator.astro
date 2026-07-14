@@ -3,7 +3,7 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div class="calc" id={id}>
-	<div class="bs-incomes">
+	<div class="calc-form-grid">
 		<div class="calc-input-group">
 			<label class="calc-label" for={`${id}-a`}>Your monthly take-home</label>
 			<div class="calc-field">
@@ -20,7 +20,7 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		</div>
 	</div>
 
-	<div class="calc-input-group">
+	<div class="calc-input-group calc-bills">
 		<label class="calc-label" for={`${id}-bills`}>Total shared monthly bills</label>
 		<div class="calc-field">
 			<span class="calc-prefix">$</span>
@@ -29,56 +29,64 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		<p class="calc-input-hint">Rent, utilities, groceries, and anything else you cover together. Leave out personal spending.</p>
 	</div>
 
-	<div class="bs-table" role="table" aria-label="Bill split comparison">
-		<div class="bs-row bs-head" role="row">
-			<span role="columnheader">Each person</span>
-			<span role="columnheader">50/50</span>
-			<span role="columnheader">By income</span>
-		</div>
-		<div class="bs-row" role="row">
-			<span class="bs-who" role="rowheader">
-				<span class="bs-name"><i class="bs-dot bs-dot-you"></i>You</span>
-				<small data-role="a-sub"></small>
-			</span>
-			<span class="bs-amt" role="cell" data-role="a-even">$0</span>
-			<span class="bs-amt" role="cell" data-role="a-prop">$0</span>
-		</div>
-		<div class="bs-row" role="row">
-			<span class="bs-who" role="rowheader">
-				<span class="bs-name"><i class="bs-dot bs-dot-partner"></i>Partner</span>
-				<small data-role="b-sub"></small>
-			</span>
-			<span class="bs-amt" role="cell" data-role="b-even">$0</span>
-			<span class="bs-amt" role="cell" data-role="b-prop">$0</span>
-		</div>
-	</div>
+	<table class="calc-table">
+		<colgroup>
+			<col class="calc-col-person" />
+			<col class="calc-col-amount" />
+			<col class="calc-col-amount" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">Each person</th>
+				<th scope="col">50/50</th>
+				<th scope="col">By income</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<span class="bs-name"><i class="bs-dot bs-dot-you"></i>You</span>
+					<span class="bs-sub" data-role="a-sub"></span>
+				</td>
+				<td class="calc-table-amount" data-role="a-even">$0</td>
+				<td class="calc-table-amount" data-role="a-prop">$0</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="bs-name"><i class="bs-dot bs-dot-partner"></i>Partner</span>
+					<span class="bs-sub" data-role="b-sub"></span>
+				</td>
+				<td class="calc-table-amount" data-role="b-even">$0</td>
+				<td class="calc-table-amount" data-role="b-prop">$0</td>
+			</tr>
+		</tbody>
+	</table>
 
 	<p class="bs-note">"By income" splits the same bills in proportion to what each person earns, so both cover the same share of their own paycheck.</p>
 </div>
+<div class="calc-cta-divider"></div>
 <a href="/spreadsheets/couples-budget-spreadsheet/" class="calc-product-link">Track it in a couples budget spreadsheet <span class="arrow">&rarr;</span></a>
 
 <style>
+	/* No card, border, or fill — the calculator sits directly in the page column.
+	   A hairline rule + generous top padding is the only signal that a new,
+	   interactive section is starting. */
 	.calc {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: var(--space-md);
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-lg);
 		margin: var(--space-lg) 0;
-		background: var(--color-bg-panel);
+	}
+
+	.calc-form-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--space-md);
+	}
+	.calc-bills {
+		margin-top: var(--space-md);
 	}
 
 	/* ——— Inputs ——— */
-
-	.bs-incomes {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: var(--space-sm);
-	}
-	.calc-input-group + .calc-input-group {
-		margin-top: 0;
-	}
-	.bs-incomes + .calc-input-group {
-		margin-top: var(--space-md);
-	}
 
 	.calc-label {
 		display: block;
@@ -90,6 +98,8 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 	.calc-field {
 		display: flex;
 		align-items: center;
+		height: 2.75rem;
+		box-sizing: border-box;
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-sm);
 		overflow: hidden;
@@ -120,61 +130,71 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		color: var(--color-text-muted);
 	}
 	.calc-input-hint {
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+		font-size: 0.75rem;
+		color: var(--color-text-secondary);
 		margin: var(--space-xs) 0 0;
 	}
 
-	/* ——— Comparison table (a clean white card on the panel, styled to match
-	   the article's markdown tables: quiet header, hairline row dividers) ——— */
+	/* ——— Comparison table: flush with the page, no wrapping card ——— */
 
-	.bs-table {
-		margin-top: var(--space-md);
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		overflow: hidden;
+	.calc-table {
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
+		margin-top: var(--space-lg);
 	}
-	.bs-row {
-		display: grid;
-		grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
-		align-items: center;
-		gap: var(--space-md);
-		padding: var(--space-sm) var(--space-md);
+	.calc-col-person {
+		width: 48%;
 	}
-	.bs-row + .bs-row {
-		border-top: 1px solid var(--color-border);
+	.calc-col-amount {
+		width: 26%;
 	}
-	.bs-head {
-		border-bottom: 1px solid var(--color-border);
-	}
-	.bs-head span {
+	.calc-table th {
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
+		padding: 0 var(--space-sm) var(--space-xs);
 		text-align: right;
-		line-height: var(--leading-snug);
 		white-space: nowrap;
 	}
-	.bs-head span:first-child {
+	.calc-table th:first-child {
 		text-align: left;
+		padding-left: 0;
 	}
-	.bs-who {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-		min-width: 0;
+	.calc-table th:last-child {
+		padding-right: 0;
 	}
+	.calc-table td {
+		font-size: var(--text-small);
+		color: var(--color-text);
+		padding: var(--space-sm);
+		border-top: 1px solid var(--color-border);
+		vertical-align: top;
+	}
+	.calc-table td:first-child {
+		padding-left: 0;
+	}
+	.calc-table-amount {
+		text-align: right;
+		white-space: nowrap;
+		font-variant-numeric: tabular-nums;
+	}
+	.calc-table td:last-child {
+		padding-right: 0;
+	}
+
 	.bs-name {
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		font-size: var(--text-body);
 		color: var(--color-text);
 		white-space: nowrap;
 	}
-	.bs-who small {
+	.bs-sub {
+		display: block;
 		font-size: var(--text-xs);
 		color: var(--color-text-muted);
+		margin-top: 2px;
 		white-space: nowrap;
 	}
 	.bs-dot {
@@ -189,28 +209,26 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 	.bs-dot-partner {
 		background: var(--color-split-partner);
 	}
-	.bs-amt {
-		text-align: right;
-		font-size: var(--text-body);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-		font-variant-numeric: tabular-nums;
-	}
 
 	.bs-note {
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
 		line-height: var(--leading-snug);
-		margin: var(--space-sm) 0 0;
+		margin: var(--space-md) 0 0;
 	}
 
 	/* ——— Product link ——— */
 
+	.calc-cta-divider {
+		height: 1px;
+		background: var(--color-border);
+		margin-top: var(--space-lg);
+	}
 	.calc-product-link {
 		display: block;
 		width: fit-content;
 		color: var(--color-accent-info);
-		margin-top: calc(var(--space-md) - var(--space-lg));
+		margin-top: var(--space-md);
 		margin-bottom: var(--space-lg);
 		font-size: 0.875rem;
 		text-decoration: none;
@@ -228,21 +246,24 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	/* ——— Responsive ——— */
 
-	@media (max-width: 480px) {
-		.bs-incomes {
+	@media (max-width: 767px) {
+		.calc {
+			padding-top: var(--space-md);
+		}
+		.calc-form-grid {
 			grid-template-columns: 1fr;
 			gap: var(--space-sm);
 		}
-		.bs-incomes .calc-input-group + .calc-input-group {
-			margin-top: 0;
+		.calc-table {
+			margin-top: calc(var(--space-md) * 0.75);
 		}
-		.bs-row {
-			gap: var(--space-xs);
-			padding: var(--space-sm);
-			grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1fr);
+		/* Give the amount columns more room so "By income" and the dollar
+		   figures never clip against the page edge on narrow phones. */
+		.calc-col-person {
+			width: 40%;
 		}
-		.bs-amt {
-			font-size: var(--text-small);
+		.calc-col-amount {
+			width: 30%;
 		}
 	}
 </style>
