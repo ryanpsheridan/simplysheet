@@ -19,6 +19,7 @@ faq:
 ---
 
 import DebtCalculator from '../../components/DebtCalculator.astro';
+import Poll from '../../components/Poll.astro';
 
 ## What's actually different between snowball and avalanche?
 
@@ -63,3 +64,13 @@ If paying off debt is stretching your monthly budget more than expected, underst
 ## So which one actually works better?
 
 Avalanche usually wins on the math. Snowball often wins on motivation. The better method isn't the one that's theoretically optimal, it's the one you'll still be following six months from now. Knowing the actual tradeoff with your own numbers, rather than guessing which type of person you are, tends to make that decision a lot easier.
+
+<Poll
+	pollId="debt-payoff-method"
+	question="Which payoff method would you pick for your own debt?"
+	options={[
+		{ key: 'snowball', label: 'Snowball (smallest balance first)' },
+		{ key: 'avalanche', label: 'Avalanche (highest interest first)' },
+		{ key: 'not-started', label: "Haven't started yet" },
+	]}
+/>

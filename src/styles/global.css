@@ -255,12 +255,16 @@ p {
 	overflow: hidden;
 	transition: border-color 0.15s, background 0.15s;
 }
-.product-card:hover {
-	border-color: var(--color-text-muted);
-	background: var(--color-bg-panel);
+@media (hover: hover) {
+	.product-card:hover {
+		border-color: var(--color-text-muted);
+		background: var(--color-bg-panel);
+	}
 }
 .product-card-thumb {
-	aspect-ratio: 3 / 2;
+	/* Matches the midImage source assets' native ratio (1999x1215) so
+	   object-fit: cover shows the full laptop mockup with no side crop. */
+	aspect-ratio: 1999 / 1215;
 	background: var(--color-bg-panel);
 	overflow: hidden;
 }
