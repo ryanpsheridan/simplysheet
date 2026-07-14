@@ -8,31 +8,33 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div class="calc" id={id} data-freq="biweekly">
-	{showFrequencyToggle && (
-		<div class="calc-freq-group">
-			<label class="calc-label" for={`${id}-freq`}>Pay frequency</label>
-			<select id={`${id}-freq`} class="calc-select" data-role="freq-select">
-				<option value="biweekly">Biweekly</option>
-				<option value="weekly">Weekly</option>
-				<option value="semimonthly">Semi-monthly</option>
-			</select>
-		</div>
-	)}
+	<div class="calc-form-grid">
+		{showFrequencyToggle && (
+			<div class="calc-freq-group">
+				<label class="calc-label" for={`${id}-freq`}>Pay frequency</label>
+				<select id={`${id}-freq`} class="calc-select" data-role="freq-select">
+					<option value="biweekly">Biweekly</option>
+					<option value="weekly">Weekly</option>
+					<option value="semimonthly">Semi-monthly</option>
+				</select>
+			</div>
+		)}
 
-	<div class="calc-input-group">
-		<label class="calc-label" for={`${id}-paycheck`}>Take-home pay per paycheck</label>
-		<div class="calc-field">
-			<span class="calc-prefix">$</span>
-			<input
-				type="text"
-				id={`${id}-paycheck`}
-				class="calc-input"
-				inputmode="decimal"
-				placeholder="0"
-				autocomplete="off"
-			/>
+		<div class="calc-input-group">
+			<label class="calc-label" for={`${id}-paycheck`}>Take-home pay per paycheck</label>
+			<div class="calc-field">
+				<span class="calc-prefix">$</span>
+				<input
+					type="text"
+					id={`${id}-paycheck`}
+					class="calc-input"
+					inputmode="decimal"
+					placeholder="0"
+					autocomplete="off"
+				/>
+			</div>
+			<p class="calc-input-hint">Use your average paycheck if your income varies.</p>
 		</div>
-		<p class="calc-input-hint">Use your average paycheck if your income varies.</p>
 	</div>
 
 	<div class="calc-highlight">
@@ -41,57 +43,62 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		<p class="calc-highlight-desc">Use this number when creating a monthly budget.</p>
 	</div>
 
-	<div class="calc-table-card">
-		<table class="calc-table">
-			<colgroup>
-				<col class="calc-table-col-period" />
-				<col class="calc-table-col-count" />
-				<col class="calc-table-col-amount" />
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">Period</th>
-					<th scope="col">Count</th>
-					<th scope="col">Amount</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Typical Month</td>
-					<td data-role="typical-count">2</td>
-					<td class="calc-table-amount" data-role="typical">$0</td>
-				</tr>
-				<tr data-role="extra-row">
-					<td data-role="extra-label">3-Paycheck Month</td>
-					<td data-role="extra-count">3</td>
-					<td class="calc-table-amount" data-role="extra">$0</td>
-				</tr>
-				<tr class="calc-table-row-buffer" data-role="buffer-row">
-					<td>Monthly Buffer Needed</td>
-					<td>—</td>
-					<td class="calc-table-amount" data-role="buffer">$0</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+	<table class="calc-table">
+		<colgroup>
+			<col class="calc-table-col-period" />
+			<col class="calc-table-col-count" />
+			<col class="calc-table-col-amount" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">Period</th>
+				<th scope="col">Count</th>
+				<th scope="col">Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Typical Month</td>
+				<td data-role="typical-count">2</td>
+				<td class="calc-table-amount" data-role="typical">$0</td>
+			</tr>
+			<tr data-role="extra-row">
+				<td data-role="extra-label">3-Paycheck Month</td>
+				<td data-role="extra-count">3</td>
+				<td class="calc-table-amount" data-role="extra">$0</td>
+			</tr>
+			<tr class="calc-table-row-buffer" data-role="buffer-row">
+				<td>Monthly Buffer Needed</td>
+				<td>—</td>
+				<td class="calc-table-amount" data-role="buffer">$0</td>
+			</tr>
+		</tbody>
+	</table>
 	<p class="calc-table-hint" data-role="buffer-hint">If you want your budget to stay consistent year-round, set aside this amount during months with an extra paycheck.</p>
 </div>
 <a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
 
 <style>
+	/* No card, border, or fill — the calculator sits directly in the page column.
+	   A hairline rule + generous top padding is the only signal that a new,
+	   interactive section is starting. */
 	.calc {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: var(--space-md);
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-lg);
 		margin: var(--space-lg) 0;
-		background: var(--color-bg-panel);
+	}
+
+	.calc-form-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--space-md);
+	}
+	.calc-form-grid > *:only-child {
+		grid-column: 1 / -1;
 	}
 
 	/* ——— Pay frequency ——— */
 
-	.calc-freq-group {
-		margin-bottom: var(--space-md);
-	}
 	.calc-select {
 		width: 100%;
 		font-family: var(--font-sans);
@@ -150,20 +157,19 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		color: var(--color-text-muted);
 	}
 	.calc-input-hint {
-		/* text-secondary (not text-muted) to keep this at AA contrast against the white field background */
 		font-size: var(--text-xs);
 		color: var(--color-text-secondary);
 		margin: var(--space-xs) 0 0;
 	}
 
-	/* ——— Highlight card: the hero result ——— */
+	/* ——— Highlight card: the one deliberate card in the layout, reserved for the hero result ——— */
 
 	.calc-highlight {
 		display: flex;
 		flex-direction: column;
-		margin-top: var(--space-md);
+		margin-top: var(--space-lg);
 		padding: var(--space-md);
-		background: var(--color-bg-surface);
+		background: var(--color-bg-panel);
 		border-radius: var(--radius-md);
 	}
 	.calc-highlight-label {
@@ -188,18 +194,13 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		margin: 0;
 	}
 
-	/* ——— Breakdown table: compact, secondary to the hero card ——— */
+	/* ——— Breakdown table: flush with the page, no wrapping card ——— */
 
-	.calc-table-card {
-		margin-top: var(--space-md);
-		background: var(--color-bg-surface);
-		border-radius: var(--radius-md);
-		overflow: hidden;
-	}
 	.calc-table {
 		width: 100%;
 		table-layout: fixed;
 		border-collapse: collapse;
+		margin-top: var(--space-lg);
 	}
 	.calc-table-col-period {
 		width: 46%;
@@ -215,28 +216,32 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		font-size: var(--text-xs);
 		font-weight: var(--weight-medium);
 		color: var(--color-text-secondary);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wide);
-		padding: var(--space-sm) var(--space-md) var(--space-xs);
+		padding: 0 var(--space-sm) var(--space-xs);
+	}
+	.calc-table th:first-child,
+	.calc-table td:first-child {
+		padding-left: 0;
 	}
 	.calc-table th:last-child,
 	.calc-table td:last-child {
+		padding-right: 0;
 		text-align: right;
 	}
 	.calc-table td {
 		/* Smaller than the hero value on purpose — these are supporting numbers, not the answer */
 		font-size: var(--text-small);
 		color: var(--color-text);
-		padding: var(--space-sm) var(--space-md);
+		padding: var(--space-sm);
 		border-top: 1px solid var(--color-border);
 	}
 	/* Paychecks count and dollar amounts stay on one line; only the period label may wrap */
 	.calc-table td:nth-child(2),
 	.calc-table-amount {
 		white-space: nowrap;
+		font-variant-numeric: tabular-nums;
 	}
 	.calc-table-row-buffer td {
-		background: var(--color-bg-emphasis);
+		background: var(--color-bg-panel);
 		font-weight: var(--weight-medium);
 	}
 	.calc-table-hint {
@@ -255,8 +260,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		display: block;
 		width: fit-content;
 		color: var(--color-accent-info);
-		/* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
-		margin-top: calc(var(--space-md) - var(--space-lg));
+		margin-top: var(--space-md);
 		margin-bottom: var(--space-lg);
 		font-size: 0.875rem;
 		text-decoration: none;
@@ -275,8 +279,12 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	/* ——— Responsive ——— */
 
 	@media (max-width: 767px) {
-		.calc-freq-group {
-			margin-bottom: calc(var(--space-md) * 0.75);
+		.calc {
+			padding-top: var(--space-md);
+		}
+		.calc-form-grid {
+			grid-template-columns: 1fr;
+			gap: var(--space-sm);
 		}
 		.calc-highlight {
 			margin-top: calc(var(--space-md) * 0.75);
@@ -284,13 +292,8 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		.calc-highlight-value {
 			font-size: var(--text-h2);
 		}
-		.calc-table-card {
+		.calc-table {
 			margin-top: calc(var(--space-md) * 0.75);
-		}
-		.calc-table th,
-		.calc-table td {
-			padding-left: var(--space-xs);
-			padding-right: var(--space-xs);
 		}
 		.calc-table-hint {
 			margin-top: calc(var(--space-sm) * 0.75);
