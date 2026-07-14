@@ -19,12 +19,12 @@ const DEBTS = [
 	{showHeader && (
 		<>
 			<h2 class="debt-title">Debt Payoff Strategy Calculator</h2>
-			<p class="debt-subtitle">Most people know that paying more than the minimum helps. <strong>Based on a sample $10,000 total debt, drag the slider below to find out how much of a difference an extra monthly payment can make.</strong></p>
+			<p class="debt-subtitle">Most people know that paying more than the minimum helps. Based on a sample $10,000 total debt, drag the slider below to find out how much of a difference an extra monthly payment can make.</p>
 		</>
 	)}
 
 	<div class="slider-group">
-		<label class="slider-label" for={`${id}-range`}>Extra monthly payment</label>
+		<label class="slider-label" for={`${id}-range`}>Extra monthly payment <span class="slider-label-context">(based on $10,000 total debt)</span></label>
 		<div class="slider-amount" id={`${id}-amount`}>$200</div>
 		<input
 			type="range"
@@ -99,12 +99,6 @@ const DEBTS = [
 		line-height: var(--leading-normal);
 		margin: 0 0 var(--space-lg);
 	}
-	/* Article bodies reset strong to normal weight (.prose strong in
-	   global.css); this sentence is a calculator UI cue, not body prose,
-	   so it needs to win that override regardless of embed context. */
-	.debt-subtitle strong {
-		font-weight: var(--weight-semibold);
-	}
 
 	/* ——— Slider ——— */
 
@@ -118,6 +112,12 @@ const DEBTS = [
 		font-weight: var(--weight-normal);
 		color: var(--color-text-secondary);
 		margin-bottom: var(--space-2xs);
+	}
+
+	.slider-label-context {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-normal);
+		color: var(--color-text-muted);
 	}
 
 	.slider-amount {
@@ -184,7 +184,7 @@ const DEBTS = [
 		display: flex;
 		align-items: center;
 		gap: var(--space-xs);
-		margin-bottom: var(--space-2xs);
+		margin-bottom: 0.75rem;
 	}
 
 	.compare-method {
@@ -195,7 +195,7 @@ const DEBTS = [
 
 	.compare-badge {
 		display: inline-block;
-		font-size: var(--text-xs);
+		font-size: 0.6875rem;
 		font-weight: var(--weight-normal);
 		color: var(--color-text);
 		background: var(--color-bg-panel);
