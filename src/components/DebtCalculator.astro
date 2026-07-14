@@ -1,75 +1,129 @@
 ---
+interface Props {
+	showHeader?: boolean;
+}
+const { showHeader = true } = Astro.props;
+
 const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
+
+// Single source of truth for the example portfolio, passed into the
+// client-side payoff simulation via define:vars below.
+const DEBTS = [
+	{ name: 'Credit Card', balance: 3000, apr: 0.24 },
+	{ name: 'Auto Loan', balance: 5000, apr: 0.07 },
+	{ name: 'Student Loan', balance: 2000, apr: 0.05 },
+];
 ---
 
 <div class="visualizer" id={id}>
-	<label class="slider-label" for={`${id}-range`}>Extra monthly payment</label>
-	<div class="slider-amount" id={`${id}-amount`}>$200</div>
-	<input
-		type="range"
-		id={`${id}-range`}
-		class="slider-input"
-		min="0"
-		max="1000"
-		step="50"
-		value="200"
-	/>
-	<div class="slider-range-labels">
-		<span>$0</span>
-		<span>$1,000</span>
+	{showHeader && (
+		<>
+			<h2 class="debt-title">Debt Payoff Strategy Calculator</h2>
+			<p class="debt-subtitle">Most people know that paying more than the minimum helps. Based on a sample $10,000 total debt, drag the slider below to find out how much of a difference an extra monthly payment can make.</p>
+		</>
+	)}
+
+	<div class="slider-group">
+		<label class="slider-label" for={`${id}-range`}>Extra monthly payment <span class="slider-label-context">(based on $10,000 total debt)</span></label>
+		<div class="slider-amount" id={`${id}-amount`}>$200</div>
+		<input
+			type="range"
+			id={`${id}-range`}
+			class="slider-input"
+			min="0"
+			max="1000"
+			step="50"
+			value="200"
+		/>
+		<div class="slider-range-labels">
+			<span>$0</span>
+			<span>$1,000</span>
+		</div>
 	</div>
 
 	<div class="compare-card">
 		<div class="compare-row">
 			<div class="compare-meta">
-				<span class="compare-method compare-method--avalanche">Avalanche</span>
-				<span class="compare-desc">Highest rate first</span>
+				<span class="compare-method">Avalanche</span>
+				<span class="compare-badge">Highest rate first</span>
 			</div>
 			<div class="compare-track">
 				<div class="compare-fill compare-fill--avalanche" id={`${id}-aval`}></div>
 			</div>
+			<div class="compare-metrics-row">
+				<span class="compare-metrics-cost">Interest paid: <span class="compare-metrics-value" id={`${id}-aval-interest`}>$0</span></span>
+				<span class="compare-metrics-time compare-metrics-time--highlight" id={`${id}-aval-time`}></span>
+			</div>
 		</div>
 		<div class="compare-row">
 			<div class="compare-meta">
-				<span class="compare-method compare-method--snowball">Snowball</span>
-				<span class="compare-desc">Smallest balance first</span>
+				<span class="compare-method">Snowball</span>
+				<span class="compare-badge">Smallest balance first</span>
 			</div>
 			<div class="compare-track">
 				<div class="compare-fill compare-fill--snowball" id={`${id}-snow`}></div>
 			</div>
+			<div class="compare-metrics-row">
+				<span class="compare-metrics-cost">Interest paid: <span class="compare-metrics-value" id={`${id}-snow-interest`}>$0</span></span>
+				<span class="compare-metrics-time" id={`${id}-snow-time`}></span>
+			</div>
 		</div>
-		<p class="compare-context" id={`${id}-context`}>Avalanche is saving roughly 8% more in interest than Snowball.</p>
-		<p class="compare-note" id={`${id}-note`}></p>
 	</div>
 
+	<p class="compare-note">Estimated using typical interest rates — actual results may vary.</p>
 </div>
+<div class="calc-cta-divider"></div>
 <a href="/spreadsheets/debt-payoff-tracker/" class="calc-product-link">Track your debt payoff <span class="arrow">&rarr;</span></a>
 
 <style>
+	/* No card, border, or fill — the visualizer sits directly in the page column. */
 	.visualizer {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: var(--space-lg) var(--space-md);
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-lg);
 		margin: var(--space-lg) 0;
-		background: var(--color-bg-panel);
+	}
+
+	/* ——— Self-contained title + context ——— */
+
+	.debt-title {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		margin: 0 0 var(--space-xs);
+	}
+
+	.debt-subtitle {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-normal);
+		margin: 0 0 var(--space-lg);
 	}
 
 	/* ——— Slider ——— */
+
+	.slider-group {
+		margin-bottom: var(--space-lg);
+	}
 
 	.slider-label {
 		display: block;
 		font-size: var(--text-small);
 		font-weight: var(--weight-normal);
 		color: var(--color-text-secondary);
-		text-align: center;
 		margin-bottom: var(--space-2xs);
+	}
+
+	.slider-label-context {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-normal);
+		color: var(--color-text-muted);
 	}
 
 	.slider-amount {
 		font-size: clamp(2rem, 5vw, 2.75rem);
 		font-weight: var(--weight-normal);
 		color: var(--color-text);
-		text-align: center;
 		letter-spacing: var(--tracking-tight);
 		margin-bottom: var(--space-md);
 	}
@@ -109,19 +163,14 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		display: flex;
 		justify-content: space-between;
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
 		margin-top: var(--space-2xs);
-		margin-bottom: var(--space-lg);
 	}
 
-	/* ——— Comparison card ——— */
+	/* ——— Comparison: no card — sits flush on the page like the rest of the site ——— */
 
 	.compare-card {
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: var(--space-md);
-		margin-bottom: var(--space-md);
+		margin-bottom: var(--space-sm);
 	}
 
 	.compare-row {
@@ -133,36 +182,26 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 
 	.compare-meta {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 		gap: var(--space-xs);
-		margin-bottom: var(--space-2xs);
+		margin-bottom: 0.75rem;
 	}
 
 	.compare-method {
 		font-size: var(--text-small);
 		font-weight: var(--weight-normal);
 		color: var(--color-text);
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-	}
-	.compare-method::before {
-		content: '';
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: 50%;
-		flex-shrink: 0;
-	}
-	.compare-method--avalanche::before {
-		background: var(--color-debt-avalanche);
-	}
-	.compare-method--snowball::before {
-		background: var(--color-debt-snowball);
 	}
 
-	.compare-desc {
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+	.compare-badge {
+		display: inline-block;
+		font-size: 0.6875rem;
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
+		background: var(--color-bg-panel);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		padding: 0.125rem 0.5rem;
 	}
 
 	.compare-track {
@@ -186,38 +225,56 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		background: var(--color-debt-snowball);
 	}
 
-	.compare-context {
-		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-		text-align: center;
-		margin: var(--space-md) 0 0;
-		line-height: var(--leading-normal);
+	/* Interest + months-faster read like a table row directly under each
+	   strategy's own bar: cost pinned left, pace pinned right, instead of
+	   both crammed into one running sentence. */
+	.compare-metrics-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: var(--space-sm);
+		margin-top: var(--space-xs);
 	}
 
-	:global(.compare-pct) {
-		color: var(--color-link);
+	.compare-metrics-cost {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+	.compare-metrics-value {
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+	}
+
+	.compare-metrics-time {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+	.compare-metrics-time--highlight {
+		color: var(--color-debt-avalanche);
 	}
 
 	.compare-note {
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		text-align: center;
-		margin: var(--space-xs) 0 0;
+		color: var(--color-text-secondary);
+		margin: var(--space-sm) 0 0;
 		line-height: var(--leading-normal);
-	}
-	.compare-note:empty {
-		display: none;
 	}
 
 	/* ——— Product link ——— */
 
+	.calc-cta-divider {
+		height: 1px;
+		background: var(--color-border);
+		margin-top: var(--space-lg);
+	}
 	.calc-product-link {
 		display: block;
 		width: fit-content;
 		color: var(--color-accent-info);
-		/* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
-		margin-top: calc(var(--space-md) - var(--space-lg));
+		margin-top: var(--space-md);
 		margin-bottom: var(--space-lg);
 		font-size: 0.875rem;
 		text-decoration: none;
@@ -232,37 +289,131 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	.calc-product-link:hover .arrow {
 		transform: translateX(2px);
 	}
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 767px) {
+		.visualizer {
+			padding-top: var(--space-md);
+		}
+	}
 </style>
 
-<script is:inline define:vars={{ id }}>
+<script is:inline define:vars={{ id, DEBTS }}>
 (function () {
 	var slider = document.getElementById(id + '-range');
 	var amountEl = document.getElementById(id + '-amount');
 	var avalEl = document.getElementById(id + '-aval');
 	var snowEl = document.getElementById(id + '-snow');
-	var contextEl = document.getElementById(id + '-context');
-	var noteEl = document.getElementById(id + '-note');
+	var avalInterestEl = document.getElementById(id + '-aval-interest');
+	var avalTimeEl = document.getElementById(id + '-aval-time');
+	var snowInterestEl = document.getElementById(id + '-snow-interest');
+	var snowTimeEl = document.getElementById(id + '-snow-time');
+
+	// Minimum payments aren't part of the displayed table (it only shows
+	// balance + APR), so estimate a typical 2.5%-of-balance minimum per debt.
+	var MIN_PAYMENT_RATE = 0.025;
+	var debts = DEBTS.map(function (d) {
+		return { balance: d.balance, apr: d.apr, minPayment: d.balance * MIN_PAYMENT_RATE };
+	});
+
+	// Avalanche (highest rate first) and snowball (smallest balance first)
+	// disagree here: the Credit Card is both the highest-rate and a
+	// mid-size balance, so the two methods genuinely attack in a different
+	// order — that's what makes the comparison meaningful.
+	var AVALANCHE_ORDER = debts.slice().sort(function (a, b) { return b.apr - a.apr; });
+	var SNOWBALL_ORDER = debts.slice().sort(function (a, b) { return a.balance - b.balance; });
+
+	// Simulates paying down `order` (a priority-sorted list of debts) with a
+	// fixed monthly budget of (sum of minimums + extra), redirecting every
+	// dollar beyond minimums to the highest-priority debt still owing —
+	// exactly how the snowball/avalanche methods work in practice. Returns
+	// total interest paid and months to $0 across all debts.
+	function simulate(order, extra) {
+		var sim = order.map(function (d) {
+			return { balance: d.balance, apr: d.apr, minPayment: d.minPayment };
+		});
+		var totalInterest = 0;
+		var months = 0;
+		var MAX_MONTHS = 600; // 50-year safety cap
+
+		while (months < MAX_MONTHS && sim.some(function (d) { return d.balance > 0.01; })) {
+			months++;
+
+			sim.forEach(function (d) {
+				if (d.balance > 0) {
+					var interest = d.balance * (d.apr / 12);
+					totalInterest += interest;
+					d.balance += interest;
+				}
+			});
+
+			var budget = extra;
+			sim.forEach(function (d) { if (d.balance > 0) budget += d.minPayment; });
+
+			var target = sim.find(function (d) { return d.balance > 0; });
+			sim.forEach(function (d) {
+				if (d !== target && d.balance > 0) {
+					var pay = Math.min(d.minPayment, d.balance);
+					d.balance -= pay;
+					budget -= pay;
+				}
+			});
+
+			// Apply everything left to the priority target, cascading any
+			// leftover to the next debt(s) in line the same month.
+			while (budget > 0.01) {
+				var next = sim.find(function (d) { return d.balance > 0.01; });
+				if (!next) break;
+				var pay = Math.min(budget, next.balance);
+				next.balance -= pay;
+				budget -= pay;
+			}
+		}
+
+		return { interest: totalInterest, months: months };
+	}
+
+	function formatCurrency(n) {
+		return '$' + Math.round(n).toLocaleString('en-US');
+	}
+
+	// Reference point for the summary line below: total interest and months
+	// to debt-free with $0 extra (order doesn't matter at $0 — there's
+	// nothing yet to redirect between debts).
+	var BASELINE = simulate(AVALANCHE_ORDER, 0);
 
 	function update() {
 		var extra = parseInt(slider.value, 10);
-		var t = extra / 1000;
-
 		amountEl.textContent = '$' + extra.toLocaleString('en-US');
 
-		var avalPct = 100 - t * 78;
-		var snowPct = 100 - t * 65;
+		var aval = simulate(AVALANCHE_ORDER, extra);
+		var snow = simulate(SNOWBALL_ORDER, extra);
 
-		avalEl.style.width = avalPct + '%';
-		snowEl.style.width = snowPct + '%';
+		// Bars represent total interest paid — shorter is the goal — scaled
+		// against whichever method costs more, so the pricier one always
+		// fills the full track and the cheaper one visibly falls short of it.
+		var maxInterest = Math.max(aval.interest, snow.interest, 1);
+		avalEl.style.width = (aval.interest / maxInterest * 100) + '%';
+		snowEl.style.width = (snow.interest / maxInterest * 100) + '%';
 
-		if (extra === 0) {
-			contextEl.textContent = 'Drag the slider to see how extra payments affect each strategy differently.';
-		} else {
-			var advantage = Math.round((1 - avalPct / snowPct) * 100);
-			if (advantage < 1) advantage = 1;
-			contextEl.innerHTML = 'Avalanche is saving roughly <strong class="compare-pct">' + advantage + '%</strong> more in interest than Snowball.';
-		}
-		noteEl.textContent = 'The exact savings depend on your specific interest rates and balances. Use the Debt Payoff Tracker to see your precise numbers.';
+		// Each strategy's own cost/pace row lives directly under its bar,
+		// framed against the $0-extra baseline rather than Avalanche vs.
+		// Snowball directly — that head-to-head gap shrinks as extra
+		// payments grow, which reads as "less impact" even though the
+		// payoff is objectively better. Comparing to baseline stays
+		// monotonic: more extra always means less interest and a faster
+		// payoff, for both strategies.
+		avalInterestEl.textContent = formatCurrency(aval.interest);
+		avalTimeEl.textContent = monthsPhrase(BASELINE.months - aval.months);
+		snowInterestEl.textContent = formatCurrency(snow.interest);
+		snowTimeEl.textContent = monthsPhrase(BASELINE.months - snow.months);
+	}
+
+	function monthsPhrase(monthsFaster) {
+		return monthsFaster > 0
+			? monthsFaster + (monthsFaster === 1 ? ' month faster' : ' months faster')
+			: 'same as baseline';
 	}
 
 	slider.addEventListener('input', update);
