@@ -62,7 +62,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
         <div class="sfc-results" id={`${id}-results`}>
           <div class="sfc-stats">
             <div class="sfc-stat">
-              <span class="sfc-stat-label">Save each month</span>
+              <span class="sfc-stat-label sfc-stat-label--primary">Save each month</span>
               <span class="sfc-stat-value sfc-stat-value--primary" id={`${id}-monthly`}>—</span>
             </div>
             <div class="sfc-stat">
@@ -370,6 +370,10 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     font-weight: var(--weight-normal);
     color: var(--color-text-secondary);
   }
+  .sfc-stat-label--primary {
+    color: var(--color-text);
+    font-weight: 600;
+  }
   .sfc-stat-value {
     font-size: var(--text-h3);
     font-weight: var(--weight-normal);
@@ -379,6 +383,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-stat-value--primary {
     color: var(--color-accent-info);
+    font-weight: 600;
   }
   .sfc-tip {
     font-size: var(--text-small);
