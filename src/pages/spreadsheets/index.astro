@@ -26,7 +26,7 @@ const templates = (await getCollection('templates'))
 						<img src={t.data.heroImage} alt={`${t.data.title} preview`} width="600" height="400" loading="lazy" />
 						{t.data.badge && <span class="template-badge">{t.data.badge}</span>}
 					</div>
-					<h2 class="template-name">{t.data.title.replace(/ for Google Sheets & Excel$/, '')}</h2>
+					<h2 class="template-name">{t.data.title.replace(/ for (Google )?Sheets & Excel$/, '')}</h2>
 					<p class="template-desc">{t.data.description}</p>
 				</a>
 			))}

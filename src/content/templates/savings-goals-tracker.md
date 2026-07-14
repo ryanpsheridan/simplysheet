@@ -1,5 +1,5 @@
 ---
-title: "Savings Goals Tracker for Google Sheets & Excel"
+title: "Savings Goals Tracker for Sheets & Excel"
 description: "Set multiple savings goals, track contributions, and watch your progress toward each one. Perfect for emergency funds, sinking funds, and any savings target."
 sku: "2026SFT"
 price: 9.99

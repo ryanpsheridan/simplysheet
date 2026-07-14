@@ -1,5 +1,5 @@
 ---
-title: 'Why Most Budgets Fail (And How to Build One That Lasts)'
+title: 'Why Most Budgets Fail (and How to Fix Yours)'
 description: "Most budgets don't fail from lack of discipline. They fail because the system doesn't fit how you actually manage money. Here's what goes wrong and what works."
 pubDate: 'Jun 26 2026'
 image: '/images/card-v2-why-most-budgets-fail.svg'

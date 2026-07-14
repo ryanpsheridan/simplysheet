@@ -1,5 +1,5 @@
 ---
-title: "Couples Budget Spreadsheet for Google Sheets & Excel"
+title: "Couples Budget Spreadsheet for Sheets & Excel"
 description: "Split bills, track shared and personal expenses, and manage savings together. Built for two incomes, one shared financial picture."
 sku: "2025JBS"
 price: 16.99
