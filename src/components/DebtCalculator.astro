@@ -13,7 +13,7 @@ const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 ---
 
 <div class="visualizer" id={id}>
-	<p class="debt-baseline">Total debt balance: <strong>{formatCurrency(totalDebt)}</strong></p>
+	<p class="debt-baseline">Example Debt Profile: <strong>{formatCurrency(totalDebt)}</strong></p>
 
 	<table class="debt-table">
 		<colgroup>
@@ -450,6 +450,11 @@ const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 		return '$' + Math.round(n).toLocaleString('en-US');
 	}
 
+	// Reference point for the summary line below: total interest and months
+	// to debt-free with $0 extra (order doesn't matter at $0 — there's
+	// nothing yet to redirect between debts).
+	var BASELINE = simulate(AVALANCHE_ORDER, 0);
+
 	function update() {
 		var extra = parseInt(slider.value, 10);
 		amountEl.textContent = '$' + extra.toLocaleString('en-US');
@@ -466,19 +471,24 @@ const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 		avalValueEl.textContent = formatCurrency(aval.interest);
 		snowValueEl.textContent = formatCurrency(snow.interest);
 
+		// Framed against the $0-extra baseline rather than Avalanche vs.
+		// Snowball directly — that head-to-head gap shrinks as extra payments
+		// grow, which reads as "less impact" even though the payoff is
+		// objectively better. Comparing to baseline stays monotonic: more
+		// extra always means less interest and a faster payoff.
 		if (extra === 0) {
 			contextEl.textContent = '';
 		} else {
-			var interestSaved = Math.round(snow.interest - aval.interest);
-			var monthsFaster = snow.months - aval.months;
+			var monthsFaster = BASELINE.months - aval.months;
 
-			var html = 'Avalanche saves you <strong class="compare-highlight">' +
-				formatCurrency(interestSaved) + ' more</strong> in interest';
+			var html = 'By adding <strong class="compare-highlight">' + formatCurrency(extra) +
+				'</strong> to your monthly payment, you slash your total interest down to as low as <strong class="compare-highlight">' +
+				formatCurrency(aval.interest) + '</strong>';
 			if (monthsFaster > 0) {
-				html += ' and gets you debt-free <strong class="compare-highlight">' +
+				html += ' and get debt-free <strong class="compare-highlight">' +
 					monthsFaster + (monthsFaster === 1 ? ' month' : ' months') + ' faster</strong>.';
 			} else {
-				html += ', in the same amount of time.';
+				html += '.';
 			}
 			contextEl.innerHTML = html;
 		}
