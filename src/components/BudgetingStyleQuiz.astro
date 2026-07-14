@@ -30,15 +30,15 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		</div>
 	</div>
 </div>
+<div class="calc-cta-divider"></div>
 <a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
 
 <style>
+	/* No card, border, or fill — the quiz sits directly in the page column. */
 	.quiz {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: 2rem;
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-lg);
 		margin: var(--space-lg) 0;
-		background: var(--color-bg-panel);
 	}
 
 	/* ——— Progress ——— */
@@ -49,7 +49,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 	.quiz-progress-text {
 		display: block;
 		font-size: var(--text-small);
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
 		margin-bottom: var(--space-xs);
 	}
 	.quiz-progress-bar {
@@ -142,10 +142,8 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 	}
 	.quiz-result-label {
 		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wide);
-		color: var(--color-text-muted);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
 		margin-bottom: var(--space-2xs);
 	}
 	.quiz-result-title {
@@ -171,7 +169,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text);
-		background: var(--color-bg-surface);
+		background: var(--color-bg-panel);
 		border-radius: var(--radius-md);
 		padding: var(--space-md);
 		margin-bottom: var(--space-md);
@@ -195,9 +193,9 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		justify-content: center;
 	}
 
-	@media (max-width: 480px) {
+	@media (max-width: 767px) {
 		.quiz {
-			padding: var(--space-md);
+			padding-top: var(--space-md);
 		}
 		.quiz-result-title {
 			font-size: var(--text-h3);
@@ -206,12 +204,16 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 
 	/* ——— Product link ——— */
 
+	.calc-cta-divider {
+		height: 1px;
+		background: var(--color-border);
+		margin-top: var(--space-lg);
+	}
 	.calc-product-link {
 		display: block;
 		width: fit-content;
 		color: var(--color-accent-info);
-		/* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
-		margin-top: calc(var(--space-md) - var(--space-lg));
+		margin-top: var(--space-md);
 		margin-bottom: var(--space-lg);
 		font-size: 0.875rem;
 		text-decoration: none;
@@ -305,7 +307,6 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "event_note",
 			color: "#7E57C2",
 			iconBg: "#F3E5F5",
-			tipBg: "var(--color-bg-surface)",
 			desc: "You like having a system and knowing exactly where your money goes. Structure gives you confidence, and you feel most at ease when every dollar has a job. Your strength is discipline, and your challenge is staying flexible when plans change.",
 			tip: "Tip: Schedule a monthly \"budget review\" to adjust your plan based on real spending. A budget that adapts is one that lasts.",
 			rec: "You would get the most out of a detailed budget spreadsheet with category tracking and monthly review dashboards.",
@@ -317,7 +318,6 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "savings",
 			color: "#2D9D78",
 			iconBg: "#E8F5E9",
-			tipBg: "var(--color-bg-surface)",
 			desc: "You are naturally frugal and feel best when your savings are growing. You are great at saying no to impulse buys, but sometimes you might hold back too much on things that would genuinely improve your life.",
 			tip: "Tip: Set a small \"fun money\" line item in your budget so you can enjoy spending guilt-free. Saving is the goal, not the whole picture.",
 			rec: "A savings goals tracker can help you channel your saving instincts into clear targets with visible progress.",
@@ -329,7 +329,6 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "shopping_bag",
 			color: "#E86A33",
 			iconBg: "#FFF3E0",
-			tipBg: "var(--color-bg-surface)",
 			desc: "You enjoy the present and believe money is meant to be used. You are generous and spontaneous, which makes life fun. Your challenge is building habits that balance today's enjoyment with tomorrow's security.",
 			tip: "Tip: Try the 24-hour rule for non-essential purchases over $50. If you still want it tomorrow, go for it.",
 			rec: "A simple daily expense tracker can help you see patterns without feeling restricted. Awareness is the first step.",
@@ -341,7 +340,6 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "visibility_off",
 			color: "#196EDD",
 			iconBg: "#E3F2FD",
-			tipBg: "var(--color-bg-surface)",
 			desc: "Money stresses you out, so you tend to put off financial decisions. This is more common than you think, and the good news is that even small steps can build big momentum. You do not need to overhaul everything at once.",
 			tip: "Tip: Start with just one habit: check your bank balance every morning. That is it. Familiarity reduces anxiety over time.",
 			rec: "A straightforward budget spreadsheet with minimal setup can make the first step feel approachable instead of overwhelming.",
@@ -407,7 +405,6 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		iconEl.innerHTML = '<span class="material-symbols-rounded">' + s.icon + '</span>';
 		iconEl.style.background = s.iconBg;
 		iconEl.querySelector('.material-symbols-rounded').style.color = s.color;
-		tipEl.style.background = s.tipBg;
 		styleEl.textContent = 'Your Budgeting Style: ' + s.name;
 		descEl.textContent = s.desc;
 		tipEl.innerHTML = s.tip.replace(/^Tip:\s*/, '');

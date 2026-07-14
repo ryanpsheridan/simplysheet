@@ -28,24 +28,22 @@ const id = `efcalc-${Math.random().toString(36).slice(2, 8)}`;
 		</div>
 	</div>
 
-	<div class="calc-results">
-		<div class="calc-result">
-			<span class="calc-result-label">Target emergency fund</span>
-			<span class="calc-result-value">$0</span>
-			<span class="calc-result-math"></span>
-		</div>
+	<div class="calc-highlight">
+		<span class="calc-highlight-label">Target emergency fund</span>
+		<span class="calc-highlight-value">$0</span>
+		<span class="calc-highlight-math"></span>
 	</div>
 
 </div>
+<div class="calc-cta-divider"></div>
 <a href="/spreadsheets/savings-goals-tracker/" class="calc-product-link">Track your savings goal <span class="arrow">&rarr;</span></a>
 
 <style>
+	/* No card, border, or fill — the calculator sits directly in the page column. */
 	.calc {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: var(--space-md);
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-lg);
 		margin: var(--space-lg) 0;
-		background: var(--color-bg-panel);
 	}
 
 	/* ——— Input ——— */
@@ -121,41 +119,52 @@ const id = `efcalc-${Math.random().toString(36).slice(2, 8)}`;
 		border-color: var(--color-bg-inverse);
 	}
 
-	/* ——— Results ——— */
+	/* ——— Results: the one card in the layout, reserved for the hero result ——— */
 
-	.calc-results {
-		margin-top: var(--space-md);
+	.calc-highlight {
+		display: flex;
+		flex-direction: column;
+		margin-top: var(--space-lg);
+		padding: var(--space-md);
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
 	}
-	.calc-result-label {
+	.calc-highlight-label {
 		display: block;
 		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
+		font-weight: var(--weight-medium);
 		color: var(--color-text);
 		margin-bottom: var(--space-2xs);
 	}
-	.calc-result-value {
+	.calc-highlight-value {
 		display: block;
-		font-size: var(--text-h2);
+		font-size: var(--text-h1);
 		font-weight: var(--weight-normal);
 		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
 		margin-bottom: var(--space-2xs);
 	}
-	.calc-result-math {
+	.calc-highlight-math {
 		display: block;
 		font-size: var(--text-small);
-		color: var(--color-text-muted);
-		min-height: 1.4em;
+		color: var(--color-text-secondary);
+	}
+	.calc-highlight-math:empty {
+		display: none;
 	}
 
 	/* ——— Product link ——— */
 
+	.calc-cta-divider {
+		height: 1px;
+		background: var(--color-border);
+		margin-top: var(--space-lg);
+	}
 	.calc-product-link {
 		display: block;
 		width: fit-content;
 		color: var(--color-accent-info);
-		/* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
-		margin-top: calc(var(--space-md) - var(--space-lg));
+		margin-top: var(--space-md);
 		margin-bottom: var(--space-lg);
 		font-size: 0.875rem;
 		text-decoration: none;
@@ -170,6 +179,20 @@ const id = `efcalc-${Math.random().toString(36).slice(2, 8)}`;
 	.calc-product-link:hover .arrow {
 		transform: translateX(2px);
 	}
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 767px) {
+		.calc {
+			padding-top: var(--space-md);
+		}
+		.calc-highlight {
+			margin-top: calc(var(--space-md) * 0.75);
+		}
+		.calc-highlight-value {
+			font-size: var(--text-h2);
+		}
+	}
 </style>
 
 <script is:inline define:vars={{ id }}>
@@ -178,8 +201,8 @@ const id = `efcalc-${Math.random().toString(36).slice(2, 8)}`;
 	if (!root) return;
 
 	var input = root.querySelector('.calc-input');
-	var resultValue = root.querySelector('.calc-result-value');
-	var resultMath = root.querySelector('.calc-result-math');
+	var resultValue = root.querySelector('.calc-highlight-value');
+	var resultMath = root.querySelector('.calc-highlight-math');
 	var monthsBtns = root.querySelectorAll('.calc-months-btn');
 	var months = 6;
 

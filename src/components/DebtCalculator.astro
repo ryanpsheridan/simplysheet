@@ -43,15 +43,15 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	</div>
 
 </div>
+<div class="calc-cta-divider"></div>
 <a href="/spreadsheets/debt-payoff-tracker/" class="calc-product-link">Track your debt payoff <span class="arrow">&rarr;</span></a>
 
 <style>
+	/* No card, border, or fill — the visualizer sits directly in the page column. */
 	.visualizer {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: var(--space-lg) var(--space-md);
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-lg);
 		margin: var(--space-lg) 0;
-		background: var(--color-bg-panel);
 	}
 
 	/* ——— Slider ——— */
@@ -109,16 +109,15 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 		display: flex;
 		justify-content: space-between;
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
 		margin-top: var(--space-2xs);
 		margin-bottom: var(--space-lg);
 	}
 
-	/* ——— Comparison card ——— */
+	/* ——— Comparison card: the one tinted card in the layout, reserved for the result ——— */
 
 	.compare-card {
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
+		background: var(--color-bg-panel);
 		border-radius: var(--radius-md);
 		padding: var(--space-md);
 		margin-bottom: var(--space-md);
@@ -162,12 +161,12 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 
 	.compare-desc {
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
 	}
 
 	.compare-track {
 		height: 1.5rem;
-		background: var(--color-bg-panel);
+		background: var(--color-bg-surface);
 		border-radius: var(--radius-sm);
 		overflow: hidden;
 	}
@@ -201,7 +200,7 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 
 	.compare-note {
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
 		text-align: center;
 		margin: var(--space-xs) 0 0;
 		line-height: var(--leading-normal);
@@ -212,12 +211,16 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 
 	/* ——— Product link ——— */
 
+	.calc-cta-divider {
+		height: 1px;
+		background: var(--color-border);
+		margin-top: var(--space-lg);
+	}
 	.calc-product-link {
 		display: block;
 		width: fit-content;
 		color: var(--color-accent-info);
-		/* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
-		margin-top: calc(var(--space-md) - var(--space-lg));
+		margin-top: var(--space-md);
 		margin-bottom: var(--space-lg);
 		font-size: 0.875rem;
 		text-decoration: none;
@@ -231,6 +234,14 @@ const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 	}
 	.calc-product-link:hover .arrow {
 		transform: translateX(2px);
+	}
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 767px) {
+		.visualizer {
+			padding-top: var(--space-md);
+		}
 	}
 </style>
 
