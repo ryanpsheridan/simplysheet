@@ -80,7 +80,17 @@ const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 				<span class="compare-value" id={`${id}-snow-value`}>$0</span>
 			</div>
 		</div>
-		<p class="compare-context" id={`${id}-context`}></p>
+		<div class="metric-row">
+			<span class="metric-label">Total Interest Paid</span>
+			<div class="metric-value-group">
+				<span class="metric-value" id={`${id}-interest-value`}>$0</span>
+				<span class="metric-subvalue" id={`${id}-interest-baseline`}></span>
+			</div>
+		</div>
+		<div class="metric-row">
+			<span class="metric-label">Time to Debt Freedom</span>
+			<span class="metric-value metric-value--highlight" id={`${id}-months-value`}></span>
+		</div>
 	</div>
 
 	<p class="compare-note">Estimated using typical interest rates — actual results may vary.</p>
@@ -306,19 +316,56 @@ const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 		font-variant-numeric: tabular-nums;
 	}
 
-	.compare-context {
-		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-		margin: var(--space-md) 0 0;
-		line-height: var(--leading-normal);
+	/* Two-row key-value stack: label left, value right. A single hairline
+	   divider sits between the two rows, not above the first one. Values are
+	   right-aligned within their own row (which spans the full width), so
+	   the right edge never shifts as digits change while scrubbing — only
+	   the left edge of each number moves. */
+	.metric-row {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-md);
+		padding: var(--space-sm) 0;
+		border-top: 1px solid var(--color-border);
 	}
-	.compare-context:empty {
-		display: none;
+	.metric-row:first-child {
+		border-top: none;
+		padding-top: var(--space-xs);
 	}
 
-	:global(.compare-highlight) {
+	.metric-label {
+		font-size: var(--text-small);
+		color: var(--color-text);
+		flex-shrink: 0;
+	}
+
+	.metric-value-group {
+		text-align: right;
+		min-width: 0;
+	}
+
+	.metric-value {
+		display: block;
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+	.metric-value--highlight {
 		color: var(--color-debt-avalanche);
+	}
+
+	.metric-subvalue {
+		display: block;
+		font-size: var(--text-xs);
+		font-weight: var(--weight-normal);
+		color: var(--color-text-muted);
+		margin-top: 2px;
+	}
+	.metric-subvalue:empty {
+		display: none;
 	}
 
 	.compare-note {
@@ -380,7 +427,9 @@ const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 	var snowEl = document.getElementById(id + '-snow');
 	var avalValueEl = document.getElementById(id + '-aval-value');
 	var snowValueEl = document.getElementById(id + '-snow-value');
-	var contextEl = document.getElementById(id + '-context');
+	var interestValueEl = document.getElementById(id + '-interest-value');
+	var interestBaselineEl = document.getElementById(id + '-interest-baseline');
+	var monthsValueEl = document.getElementById(id + '-months-value');
 
 	// Minimum payments aren't part of the displayed table (it only shows
 	// balance + APR), so estimate a typical 2.5%-of-balance minimum per debt.
@@ -476,22 +525,15 @@ const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 		// grow, which reads as "less impact" even though the payoff is
 		// objectively better. Comparing to baseline stays monotonic: more
 		// extra always means less interest and a faster payoff.
-		if (extra === 0) {
-			contextEl.textContent = '';
-		} else {
-			var monthsFaster = BASELINE.months - aval.months;
+		interestValueEl.textContent = formatCurrency(aval.interest);
+		interestBaselineEl.textContent = extra > 0
+			? '(Instead of ' + formatCurrency(BASELINE.interest) + ' at $0 extra)'
+			: '';
 
-			var html = 'By adding <strong class="compare-highlight">' + formatCurrency(extra) +
-				'</strong> to your monthly payment, you slash your total interest down to as low as <strong class="compare-highlight">' +
-				formatCurrency(aval.interest) + '</strong>';
-			if (monthsFaster > 0) {
-				html += ' and get debt-free <strong class="compare-highlight">' +
-					monthsFaster + (monthsFaster === 1 ? ' month' : ' months') + ' faster</strong>.';
-			} else {
-				html += '.';
-			}
-			contextEl.innerHTML = html;
-		}
+		var monthsFaster = BASELINE.months - aval.months;
+		monthsValueEl.textContent = monthsFaster > 0
+			? monthsFaster + (monthsFaster === 1 ? ' month faster' : ' months faster')
+			: 'Same as baseline';
 	}
 
 	slider.addEventListener('input', update);
