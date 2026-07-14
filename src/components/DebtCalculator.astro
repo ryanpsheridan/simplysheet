@@ -50,7 +50,10 @@ const DEBTS = [
 			<div class="compare-track">
 				<div class="compare-fill compare-fill--avalanche" id={`${id}-aval`}></div>
 			</div>
-			<p class="compare-metrics-line" id={`${id}-aval-metrics`}></p>
+			<div class="compare-metrics-row">
+				<span class="compare-metrics-cost">Interest paid: <span class="compare-metrics-value" id={`${id}-aval-interest`}>$0</span></span>
+				<span class="compare-metrics-time compare-metrics-time--highlight" id={`${id}-aval-time`}></span>
+			</div>
 		</div>
 		<div class="compare-row">
 			<div class="compare-meta">
@@ -60,7 +63,10 @@ const DEBTS = [
 			<div class="compare-track">
 				<div class="compare-fill compare-fill--snowball" id={`${id}-snow`}></div>
 			</div>
-			<p class="compare-metrics-line" id={`${id}-snow-metrics`}></p>
+			<div class="compare-metrics-row">
+				<span class="compare-metrics-cost">Interest paid: <span class="compare-metrics-value" id={`${id}-snow-interest`}>$0</span></span>
+				<span class="compare-metrics-time" id={`${id}-snow-time`}></span>
+			</div>
 		</div>
 		<p class="compare-baseline" id={`${id}-baseline`}></p>
 	</div>
@@ -224,14 +230,35 @@ const DEBTS = [
 		background: var(--color-debt-snowball);
 	}
 
-	/* Interest + months-faster collapsed into one line directly under each
-	   strategy's own bar, instead of a separate summary list at the bottom —
-	   removes a repeated Avalanche/Snowball breakdown and cuts most of the
-	   component's vertical footprint. */
-	.compare-metrics-line {
+	/* Interest + months-faster read like a table row directly under each
+	   strategy's own bar: cost pinned left, pace pinned right, instead of
+	   both crammed into one running sentence. */
+	.compare-metrics-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: var(--space-sm);
+		margin-top: var(--space-2xs);
+	}
+
+	.compare-metrics-cost {
 		font-size: var(--text-xs);
-		color: var(--color-text-secondary);
-		margin: var(--space-2xs) 0 0;
+		color: var(--color-text-muted);
+	}
+	.compare-metrics-value {
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+	}
+
+	.compare-metrics-time {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+	.compare-metrics-time--highlight {
+		color: var(--color-debt-avalanche);
 	}
 
 	.compare-baseline {
@@ -292,8 +319,10 @@ const DEBTS = [
 	var amountEl = document.getElementById(id + '-amount');
 	var avalEl = document.getElementById(id + '-aval');
 	var snowEl = document.getElementById(id + '-snow');
-	var avalMetricsEl = document.getElementById(id + '-aval-metrics');
-	var snowMetricsEl = document.getElementById(id + '-snow-metrics');
+	var avalInterestEl = document.getElementById(id + '-aval-interest');
+	var avalTimeEl = document.getElementById(id + '-aval-time');
+	var snowInterestEl = document.getElementById(id + '-snow-interest');
+	var snowTimeEl = document.getElementById(id + '-snow-time');
 	var baselineEl = document.getElementById(id + '-baseline');
 
 	// Minimum payments aren't part of the displayed table (it only shows
@@ -383,17 +412,17 @@ const DEBTS = [
 		avalEl.style.width = (aval.interest / maxInterest * 100) + '%';
 		snowEl.style.width = (snow.interest / maxInterest * 100) + '%';
 
-		// Each strategy's own metrics line lives directly under its bar,
+		// Each strategy's own cost/pace row lives directly under its bar,
 		// framed against the $0-extra baseline rather than Avalanche vs.
 		// Snowball directly — that head-to-head gap shrinks as extra
 		// payments grow, which reads as "less impact" even though the
 		// payoff is objectively better. Comparing to baseline stays
 		// monotonic: more extra always means less interest and a faster
 		// payoff, for both strategies.
-		avalMetricsEl.textContent = 'Interest paid: ' + formatCurrency(aval.interest) +
-			' (' + monthsPhrase(BASELINE.months - aval.months) + ')';
-		snowMetricsEl.textContent = 'Interest paid: ' + formatCurrency(snow.interest) +
-			' (' + monthsPhrase(BASELINE.months - snow.months) + ')';
+		avalInterestEl.textContent = formatCurrency(aval.interest);
+		avalTimeEl.textContent = monthsPhrase(BASELINE.months - aval.months);
+		snowInterestEl.textContent = formatCurrency(snow.interest);
+		snowTimeEl.textContent = monthsPhrase(BASELINE.months - snow.months);
 
 		baselineEl.textContent = extra > 0
 			? '(Instead of ' + formatCurrency(BASELINE.interest) + ' at $0 extra)'
