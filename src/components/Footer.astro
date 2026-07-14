@@ -1,13 +1,15 @@
 ---
+import { getEntry } from 'astro:content';
 import { ETSY_SHOP_URL, withEtsyTracking } from '../consts';
 
 const year = new Date().getFullYear();
-const promoUrl = withEtsyTracking(`${ETSY_SHOP_URL}?coupon=SAVENOW`);
+const budgetSpreadsheet = await getEntry('templates', 'budget-spreadsheet');
+const promoUrl = withEtsyTracking(`${budgetSpreadsheet.data.darkListing}?coupon=SAVENOW`);
 ---
 
 <footer>
 	<p class="footer-promo-bar">
-		New to budgeting? Start with our best-selling <a href={promoUrl} class="footer-promo-link" data-cta="footer_promo_banner">Budget Spreadsheet</a> and save 30% this week.
+		New to budgeting? Start with our best-selling <a href={promoUrl} class="footer-promo-link" data-cta="footer_promo_banner">Budget Spreadsheet</a> on Etsy and save 30% this week.
 	</p>
 	<div class="footer-inner">
 		<div class="footer-top">
