@@ -1,40 +1,18 @@
 ---
 const id = `debt-${Math.random().toString(36).slice(2, 8)}`;
 
-// Single source of truth for the example portfolio: the static header, the
-// breakdown table, and the client-side payoff simulation all read from this.
+// Single source of truth for the example portfolio, passed into the
+// client-side payoff simulation via define:vars below.
 const DEBTS = [
 	{ name: 'Credit Card', balance: 3000, apr: 0.24 },
 	{ name: 'Auto Loan', balance: 5000, apr: 0.07 },
 	{ name: 'Student Loan', balance: 2000, apr: 0.05 },
 ];
-const totalDebt = DEBTS.reduce((sum, d) => sum + d.balance, 0);
-const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 ---
 
 <div class="visualizer" id={id}>
-	<p class="debt-baseline">Example Debt Profile: <strong>{formatCurrency(totalDebt)}</strong></p>
-
-	<table class="debt-table">
-		<colgroup>
-			<col class="debt-table-col-name" />
-			<col class="debt-table-col-balance" />
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">Debt</th>
-				<th scope="col">Balance</th>
-			</tr>
-		</thead>
-		<tbody>
-			{DEBTS.map((d) => (
-				<tr>
-					<td>{d.name}</td>
-					<td>{formatCurrency(d.balance)} at {Math.round(d.apr * 100)}% APR</td>
-				</tr>
-			))}
-		</tbody>
-	</table>
+	<h2 class="debt-title">Debt Payoff Strategy Calculator</h2>
+	<p class="debt-subtitle">Based on a typical $10,000 baseline across multiple debts. Drag the slider to see how extra payments slash your interest and fast-track your freedom.</p>
 
 	<div class="slider-group">
 		<label class="slider-label" for={`${id}-range`}>Extra monthly payment</label>
@@ -106,56 +84,21 @@ const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 		margin: var(--space-lg) 0;
 	}
 
-	/* ——— Baseline header + example portfolio table ——— */
+	/* ——— Self-contained title + context ——— */
 
-	.debt-baseline {
-		font-size: var(--text-body);
-		color: var(--color-text-secondary);
-		margin: 0 0 var(--space-md);
-	}
-	.debt-baseline strong {
-		font-weight: var(--weight-medium);
+	.debt-title {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
 		color: var(--color-text);
+		margin: 0 0 var(--space-xs);
 	}
 
-	.debt-table {
-		width: 100%;
-		table-layout: fixed;
-		border-collapse: collapse;
-		margin-bottom: var(--space-lg);
-	}
-	.debt-table-col-name {
-		width: 42%;
-	}
-	.debt-table-col-balance {
-		width: 58%;
-	}
-	.debt-table th {
-		text-align: left;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		color: var(--color-text-secondary);
-		padding: 0 var(--space-sm) var(--space-xs);
-	}
-	.debt-table th:first-child,
-	.debt-table td:first-child {
-		padding-left: 0;
-	}
-	.debt-table th:last-child,
-	.debt-table td:last-child {
-		padding-right: 0;
-		text-align: right;
-	}
-	.debt-table td {
+	.debt-subtitle {
 		font-size: var(--text-small);
 		color: var(--color-text-secondary);
-		padding: var(--space-sm);
-		border-top: 1px solid var(--color-border);
-		white-space: nowrap;
-	}
-	.debt-table td:first-child {
-		color: var(--color-text);
-		white-space: normal;
+		line-height: var(--leading-normal);
+		margin: 0 0 var(--space-lg);
 	}
 
 	/* ——— Slider ——— */
@@ -407,10 +350,6 @@ const formatCurrency = (n: number) => '$' + n.toLocaleString('en-US');
 	@media (max-width: 767px) {
 		.visualizer {
 			padding-top: var(--space-md);
-		}
-		.debt-table th,
-		.debt-table td {
-			font-size: var(--text-xs);
 		}
 		.compare-value {
 			width: 4rem;
