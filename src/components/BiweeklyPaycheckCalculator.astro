@@ -16,7 +16,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 				<button class="calc-freq-btn" data-freq="weekly">Weekly</button>
 				<button class="calc-freq-btn" data-freq="semimonthly">Semi-monthly</button>
 			</div>
-			<p class="calc-freq-hint">Paid monthly? Your income already matches the calendar — skip the buffer math and use the <a href="/tools/50-30-20-budget-calculator/">50/30/20 calculator</a> instead.</p>
+			<p class="calc-freq-hint">Paid monthly? Use the <a href="/tools/50-30-20-budget-calculator/">50/30/20 calculator</a> instead.</p>
 		</div>
 	)}
 
@@ -33,7 +33,14 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 				autocomplete="off"
 			/>
 		</div>
-		<p class="calc-input-hint">If your paycheck amount changes, use your average from the last few months instead of a single one.</p>
+		<p class="calc-input-hint">Use your average paycheck if your income varies.</p>
+	</div>
+
+	<div class="calc-highlight">
+		<span class="calc-highlight-label" data-role="buffer-label">Cushion needed for a 2-paycheck month</span>
+		<span class="calc-highlight-value" data-role="buffer">$0</span>
+		<p class="calc-highlight-desc" data-role="buffer-desc"></p>
+		<span class="calc-highlight-math" data-role="buffer-math"></span>
 	</div>
 
 	<div class="calc-stats-row">
@@ -50,12 +57,6 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 			<span class="calc-stat-value" data-role="average">$0</span>
 			<span class="calc-stat-math" data-role="average-math"></span>
 		</div>
-	</div>
-
-	<div class="calc-highlight">
-		<span class="calc-highlight-label" data-role="buffer-label">Cushion needed for a 2-paycheck month</span>
-		<span class="calc-highlight-value" data-role="buffer">$0</span>
-		<span class="calc-highlight-math" data-role="buffer-math"></span>
 	</div>
 </div>
 <a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
@@ -154,7 +155,50 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		margin: var(--space-xs) 0 0;
 	}
 
-	/* ——— Reference stats (de-emphasized, compact) ——— */
+	/* ——— Highlight card: the primary result + CTA ——— */
+
+	.calc-highlight {
+		display: flex;
+		flex-direction: column;
+		margin-top: var(--space-md);
+		padding: var(--space-md);
+		background: var(--color-bg-surface);
+		border-radius: var(--radius-md);
+	}
+	.calc-highlight-label {
+		display: block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-highlight-value {
+		display: block;
+		font-size: var(--text-h1);
+		font-weight: var(--weight-normal);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-highlight-desc {
+		font-size: var(--text-small);
+		line-height: var(--leading-snug);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-2xs);
+	}
+	.calc-highlight-desc:empty {
+		display: none;
+	}
+	.calc-highlight-math {
+		display: block;
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+	.calc-highlight-math:empty {
+		display: none;
+	}
+
+	/* ——— Reference stats (de-emphasized, compact supporting numbers) ——— */
 
 	.calc-stats-row {
 		display: grid;
@@ -190,38 +234,6 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		color: var(--color-text-muted);
 	}
 
-	/* ——— Highlight card: the actionable takeaway + CTA ——— */
-
-	.calc-highlight {
-		display: flex;
-		flex-direction: column;
-		margin-top: var(--space-md);
-		padding: var(--space-md);
-		background: var(--color-bg-surface);
-		border-radius: var(--radius-md);
-	}
-	.calc-highlight-label {
-		display: block;
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text);
-		margin-bottom: var(--space-2xs);
-	}
-	.calc-highlight-value {
-		display: block;
-		font-size: var(--text-h2);
-		font-weight: var(--weight-normal);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-		margin-bottom: var(--space-2xs);
-	}
-	.calc-highlight-math {
-		display: block;
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-		min-height: 1.4em;
-	}
-
 	/* ——— Product link ——— */
 
 	.calc-product-link {
@@ -247,10 +259,24 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	/* ——— Responsive ——— */
 
-	@media (max-width: 480px) {
+	@media (max-width: 767px) {
+		.calc-freq-group {
+			margin-bottom: calc(var(--space-md) * 0.75);
+			padding-bottom: calc(var(--space-md) * 0.75);
+		}
+		.calc-highlight {
+			margin-top: calc(var(--space-md) * 0.75);
+		}
+		.calc-highlight-value {
+			font-size: var(--text-h2);
+		}
 		.calc-stats-row {
-			grid-template-columns: 1fr;
-			gap: var(--space-sm);
+			grid-template-columns: repeat(2, 1fr);
+			gap: calc(var(--space-sm) * 0.75);
+			margin-top: calc(var(--space-md) * 0.75);
+		}
+		.calc-stats-row:not(.two-col) .calc-stat:last-child {
+			grid-column: 1 / -1;
 		}
 	}
 </style>
@@ -297,6 +323,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	var averageMathEl = root.querySelector('[data-role="average-math"]');
 	var bufferLabelEl = root.querySelector('[data-role="buffer-label"]');
 	var bufferEl = root.querySelector('[data-role="buffer"]');
+	var bufferDescEl = root.querySelector('[data-role="buffer-desc"]');
 	var bufferMathEl = root.querySelector('[data-role="buffer-math"]');
 
 	function formatCurrency(n) {
@@ -333,17 +360,19 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 			extraNoteEl.textContent = '(~' + config.extraTimesAYear + 'x a year)';
 			extraEl.textContent = formatCurrency(extra);
 			bufferLabelEl.textContent = 'Cushion needed for a ' + config.typicalPerMonth + '-paycheck month';
+			bufferDescEl.textContent = 'Set aside this amount each month so your income stays consistent all year.';
 		} else {
 			extraStatEl.style.display = 'none';
 			statsRowEl.classList.add('two-col');
 			bufferLabelEl.textContent = 'Cushion needed';
+			bufferDescEl.textContent = 'Semi-monthly pay always lines up evenly with the calendar. No cushion needed, you\'re all set.';
 		}
 
 		if (paycheck > 0) {
 			averageMathEl.textContent = formatCurrency(paycheck) + ' × ' + config.paychecksPerYear + ' ÷ 12';
 			bufferMathEl.textContent = config.hasExtra
 				? formatCurrency(average) + ' average − ' + formatCurrency(typical) + ' in a ' + config.typicalPerMonth + '-paycheck month'
-				: 'Semi-monthly pay always lines up evenly with the calendar — no buffer needed. You\'re all set.';
+				: '';
 		} else {
 			averageMathEl.textContent = '';
 			bufferMathEl.textContent = '';
