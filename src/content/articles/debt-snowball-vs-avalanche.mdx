@@ -19,6 +19,7 @@ faq:
 ---
 
 import DebtCalculator from '../../components/DebtCalculator.astro';
+import Poll from '../../components/Poll.astro';
 
 ## What's actually different between snowball and avalanche?
 
@@ -53,6 +54,16 @@ Mostly it comes down to two questions: how much is the interest difference actua
 If you want to see the actual gap for your own situation, rather than the general case, the slider below compares both strategies at a glance. Drag it to see how extra monthly payments widen the gap between avalanche and snowball.
 
 <DebtCalculator />
+
+<Poll
+	pollId="debt-payoff-method"
+	question="Which payoff method would you pick for your own debt?"
+	options={[
+		{ key: 'snowball', label: 'Snowball (smallest balance first)' },
+		{ key: 'avalanche', label: 'Avalanche (highest interest first)' },
+		{ key: 'not-started', label: "Haven't started yet" },
+	]}
+/>
 
 ## Does the method matter more than just tracking everything in the first place?
 
