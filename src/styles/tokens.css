@@ -38,11 +38,12 @@
   --color-split-you:           #196EDD;
   --color-split-partner:       #C2185B;
 
-  /* Debt avalanche vs. snowball comparison: avalanche gets an identity color,
-     snowball stays grayscale — neither implies "better," just distinguishes
-     the two equally valid strategies. */
-  --color-debt-avalanche:      #2E5AAC;
-  --color-debt-snowball:       var(--color-text-secondary);
+  /* Debt avalanche vs. snowball comparison: avalanche uses the site's
+     accent blue, snowball gets its own slate identity color — this pair
+     distinguishes the two methods, it doesn't rank them (the copy nearby
+     is what states which one wins for a given scenario). */
+  --color-debt-avalanche:      var(--color-accent-info);
+  --color-debt-snowball:       #475569;
 
   /* ——— Typography ——— */
 
@@ -53,7 +54,7 @@
   --text-h1:        2.25rem;
   --text-h2:        1.5rem;
   --text-h3:        1.25rem;
-  --text-h4:        1.125rem;
+  --text-h4:        1.0625rem;
   --text-body:      1rem;
   --text-body-lg:   1.25rem;
   --text-small:     0.9375rem;

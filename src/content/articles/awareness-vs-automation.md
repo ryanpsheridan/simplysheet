@@ -61,6 +61,13 @@ It does, and it's an underrated part of the comparison. Many budgeting apps run 
 
 A basic spreadsheet can be entirely free in Google Sheets, and even a [pre-built budget template](/spreadsheets/budget-spreadsheet/) is usually a one-time cost rather than an ongoing one. For someone just getting started, that lower barrier alone can make it easier to begin, since there's no account to connect and no new platform to learn.
 
+| | Budgeting apps | Spreadsheets |
+|---|---|---|
+| Setup | Connect your accounts, mostly automatic | You start from a template or blank sheet |
+| Data entry | Automatic | Manual |
+| Typical cost | Ongoing subscription | Free, or a one-time cost |
+| What it builds | Convenience | Awareness |
+
 ## So is a spreadsheet actually better than an app?
 
 Not universally, and it's worth being honest about that. Plenty of people use a budgeting app and would never switch back, and there's nothing wrong with that. The deeper point isn't spreadsheets versus apps, it's awareness versus automation.

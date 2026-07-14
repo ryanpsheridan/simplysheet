@@ -37,8 +37,6 @@ h1, h2, h3, h4, h5, h6 {
 h1 { font-size: var(--text-h1); }
 h2 { font-size: var(--text-h2); }
 h3 { font-size: var(--text-h3); }
-/* h4 is only ~2px larger than body text, so it leans on weight (not size) to
-   read as a heading — a compact sub-subheading for organizing long content. */
 h4 { font-size: var(--text-h4); font-weight: var(--weight-semibold); }
 
 a {
@@ -77,8 +75,8 @@ p {
 }
 
 .prose h4 {
-	margin-top: 1.5em;
-	margin-bottom: 0.5em;
+	margin-top: 1.25em;
+	margin-bottom: 0.4em;
 	scroll-margin-top: 4.5rem;
 }
 
@@ -140,6 +138,19 @@ p {
 	text-align: left;
 	padding: var(--space-sm) var(--space-md);
 	border-bottom: 1px solid var(--color-border);
+}
+
+@media (max-width: 600px) {
+	.prose table {
+		display: block;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.prose th,
+	.prose td {
+		white-space: nowrap;
+	}
 }
 
 .prose th {
@@ -253,12 +264,16 @@ p {
 	overflow: hidden;
 	transition: border-color 0.15s, background 0.15s;
 }
-.product-card:hover {
-	border-color: var(--color-text-muted);
-	background: var(--color-bg-panel);
+@media (hover: hover) {
+	.product-card:hover {
+		border-color: var(--color-text-muted);
+		background: var(--color-bg-panel);
+	}
 }
 .product-card-thumb {
-	aspect-ratio: 3 / 2;
+	/* Matches the midImage source assets' native ratio (1999x1215) so
+	   object-fit: cover shows the full laptop mockup with no side crop. */
+	aspect-ratio: 1999 / 1215;
 	background: var(--color-bg-panel);
 	overflow: hidden;
 }
@@ -406,6 +421,197 @@ p {
 hr {
 	border: none;
 	border-top: 1px solid var(--color-border);
+}
+
+/* ——— Home rows (label left / items right) ———
+   Shared by the homepage (Latest / Spreadsheets / Free tools) and the About
+   page (Spreadsheets / Free tools via SpreadsheetsToolsRows.astro). */
+
+.home-rows {
+	padding: var(--space-lg) var(--space-md) var(--space-section);
+}
+.home-rows-inner {
+	max-width: var(--max-width);
+	margin: 0 auto;
+}
+.home-row {
+	display: grid;
+	grid-template-columns: 12rem 1fr;
+	gap: var(--space-xl);
+	padding: var(--space-lg) 0;
+	border-top: 1px solid var(--color-border);
+}
+.home-row:first-child {
+	border-top: none;
+	padding-top: 0;
+}
+.home-row-heading {
+	font-size: var(--text-h3);
+	font-weight: var(--weight-normal);
+	margin: 0;
+}
+.home-row-items {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 2rem;
+}
+.home-row-item {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-sm);
+	text-decoration: none;
+	color: inherit;
+	transition: opacity 0.15s ease;
+}
+@media (hover: hover) {
+	/* Article cards: hover zooms only the thumbnail (padding shrink), leaving
+	   the title/badge/meta text untouched (dimming text hurt contrast). Tool
+	   cards have no thumbnail, so they keep the whole-item dim for hover. */
+	.home-row-item:hover .home-row-thumb {
+		padding: 1.375rem;
+	}
+	.home-row-item--tool:hover {
+		opacity: 0.7;
+	}
+}
+.home-row-thumb {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 3 / 2;
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	background: var(--color-bg-panel);
+	padding: 1.5rem;
+	transition: padding 0.3s ease;
+}
+.home-row-thumb img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: var(--radius-sm);
+}
+.home-row-text {
+	min-width: 0;
+}
+.home-row-title {
+	font-size: var(--text-body);
+	font-weight: var(--weight-normal);
+	line-height: 1.35;
+	margin: 0 0 var(--space-2xs);
+	color: var(--color-text);
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+.home-row-meta {
+	font-size: var(--text-xs);
+	color: var(--color-text-muted);
+}
+.home-row-viewall {
+	display: flex;
+	align-items: flex-start;
+}
+
+/* Product variant — pre-cropped hero images pinned flush-right (no right
+   padding, object-fit: contain). Never center these or add right padding. */
+.home-row-thumb--product {
+	padding: 1.5rem 0 1.5rem 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.home-row-thumb--product img {
+	object-fit: contain;
+	object-position: right center;
+	transform-origin: right center;
+	transition: transform 0.3s ease;
+}
+@media (hover: hover) {
+	/* Keep the flush-right padding on hover (the article-card padding shrink
+	   would float the bare crop edge); zoom the image from its right edge. */
+	.home-row-item:hover .home-row-thumb--product {
+		padding: 1.5rem 0 1.5rem 1.5rem;
+	}
+	.home-row-item:hover .home-row-thumb--product img {
+		transform: scale(1.01);
+	}
+}
+.home-row-desc {
+	font-size: var(--text-small);
+	color: var(--color-text-secondary);
+	line-height: var(--leading-snug);
+	margin: var(--space-2xs) 0 0;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+.home-row-placeholder {
+	color: var(--color-border);
+}
+.home-row-badge {
+	position: absolute;
+	left: 0.75rem;
+	bottom: 0.75rem;
+	font-size: var(--text-xs);
+	font-weight: var(--weight-normal);
+	color: var(--color-text);
+	background: var(--color-bg);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-sm);
+	padding: 0.125rem 0.5rem;
+	line-height: 1.4;
+	white-space: nowrap;
+}
+
+/* Tools variant — icon + label, 4 across, no thumbnail. */
+.home-row-items--tools {
+	grid-template-columns: repeat(4, 1fr);
+}
+.home-row-item--tool {
+	flex-direction: row;
+	align-items: center;
+}
+.home-row-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: var(--radius-full);
+	background: var(--color-bg-panel);
+	color: var(--color-text);
+}
+.home-row-item--tool .home-row-title {
+	font-size: var(--text-small);
+	-webkit-line-clamp: 2;
+}
+
+@media (max-width: 960px) {
+	.home-row-items {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.home-row-items--tools {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+@media (max-width: 768px) {
+	.home-row {
+		grid-template-columns: 1fr;
+		gap: var(--space-sm);
+	}
+}
+@media (max-width: 600px) {
+	.home-row-items,
+	.home-row-items--tools {
+		grid-template-columns: 1fr;
+	}
+	.home-row-item:not(.home-row-item--tool) .home-row-title {
+		font-size: 1.25rem;
+	}
 }
 
 /* ——— Buttons ——— */

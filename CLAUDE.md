@@ -68,8 +68,9 @@ Every time an article is provided, automatically do all of the following:
 6. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
 7. **Update related articles cross-links** — review existing articles and add natural internal links to/from the new article where topically relevant. Internal cross-linking improves both user navigation and SEO crawlability. The "Related articles" section at the bottom of each page is auto-generated (4 most recent), but in-body links between related topics are more valuable.
 8. **Add natural template page links in body text** — where the article's topic connects to a product (e.g. an article about paying off debt mentioning a [debt payoff tracker](/spreadsheets/debt-payoff-tracker/)), weave in 1–2 internal links to the relevant `/spreadsheets/` pages. These should read as helpful tool suggestions, not sales pitches. Always link to the internal template page, never directly to Etsy — the template page has its own Etsy CTA. This creates an article → template page → Etsy funnel that keeps users on-site longer and builds internal link equity. If the link deserves a visual promo card mid-article (not just a plain text link), use the `<ProductPromo />` component — see "Product Promo Component" below. **Never hand-type product card HTML into an article** — that's what caused broken images in the past.
-9. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
-10. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://www.simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
+9. **Consider whether a reader poll fits** — not required for every article, but worth adding when the topic has a natural multi-way choice (a set of styles, methods, or preferences) and the article isn't already using a calculator or assessment. See "Reader Polls" below for how to add one.
+10. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
+11. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://www.simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
 
 ## SVG Color Registry — Category Hue Families
 
@@ -300,6 +301,17 @@ The article's `tags` field determines which two Etsy products appear at the bott
   - `"row"` — used internally by `ArticleLayout.astro` for the automatic end-of-article recommendations; don't use this variant directly in article bodies (it relies on being part of a list of recommended products for its spacing/border logic).
 - If you need a new variant/layout for a promo, add it to this component (with matching CSS in `src/styles/global.css`) rather than writing one-off HTML in an article.
 
+## Reader Polls
+
+`src/components/Poll.astro` is a lightweight, single-question, click-to-vote poll — a quieter interactive option than a full calculator or assessment for articles that don't call for either. Not every article needs one; use it when the topic has a natural multi-way choice (styles, methods, preferences) and there isn't already a calculator/quiz covering the same ground.
+
+- Requires the article to be `.mdx`. Import: `import Poll from '../../components/Poll.astro';`
+- Props: `pollId` (string), `question` (string), `options` (array of `{ key, label }`).
+- Votes are tallied for real across all visitors via `/api/poll.js`, a standalone Vercel Serverless Function backed by Upstash Redis (connected through the project's Vercel Storage tab). A visitor's own vote is remembered via `localStorage`, so refreshing shows their locked-in result instead of the question again.
+- **Every poll must be registered in the `POLLS` allowlist at the top of `api/poll.js`** (`pollId` mapped to its list of valid option keys) before it will work — the API rejects votes for any `pollId`/option pair not in that list. Adding a `<Poll />` to an article without also adding its entry there will silently fail (shows the "couldn't record your vote" retry message).
+- Placement: put it at a natural pause in the article (e.g. after a comparison table, or as a closing capstone once the article has made its case) rather than immediately after another interactive element like a calculator — stacking two interactive widgets back to back reads as cluttered.
+- Existing polls: `budgeting-style` (in `budgeting-styles.mdx`) and `debt-payoff-method` (in `debt-snowball-vs-avalanche.mdx`) — check these for the pattern before adding a new one.
+
 ## Available Tags
 
 Defined once in `ALL_TAGS`/`TAG_MAP` in `src/consts.ts`:
@@ -362,7 +374,7 @@ Calculators and assessments stay grayscale-first, but may use a small, consisten
 
 Don't apply these to a comparison between two equally valid choices (debt snowball vs. avalanche, the four budgeting styles, etc.) — coloring one option green and the other something else implies it's objectively better when it isn't. Those stay grayscale, or keep their own separate identity colors if they already have them.
 
-The debt snowball vs. avalanche comparison (`DebtCalculator.astro`) uses `--color-debt-avalanche` (blue) for the avalanche bar and keeps the snowball bar grayscale (`--color-debt-snowball` maps to `--color-text-secondary`), defined in `tokens.css`. No green/red judgment implied — just enough distinction to tell the two bars apart.
+The debt snowball vs. avalanche comparison (`DebtCalculator.astro`) uses `--color-debt-avalanche` (the site's accent blue, `--color-accent-info`) for the avalanche bar and `--color-debt-snowball` (a dedicated slate) for the snowball bar, both defined in `tokens.css`. No green/red judgment implied — just enough distinction to tell the two bars apart. The bars themselves plot total interest paid (shorter is better), with the actual dollar-and-months advantage stated in the copy below them, computed from a small illustrative payoff simulation in the component's script — not a color-coded "winner."
 
 ## Content Schema
 

@@ -59,12 +59,13 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
           </div>
         </div>
 
-        <div class="sfc-results" id={`${id}-results`} hidden>
-          <div class="sfc-results-grid">
-            <div class="sfc-stat sfc-stat--hero">
-              <span class="sfc-stat-label">Save each month</span>
-              <span class="sfc-stat-value" id={`${id}-monthly`}>—</span>
-            </div>
+        <div class="sfc-results" id={`${id}-results`}>
+          <div class="sfc-highlight">
+            <span class="sfc-highlight-label">Save each month</span>
+            <span class="sfc-highlight-value" id={`${id}-monthly`}>—</span>
+          </div>
+
+          <div class="sfc-stats">
             <div class="sfc-stat">
               <span class="sfc-stat-label">Months remaining</span>
               <span class="sfc-stat-value" id={`${id}-mcount`}>—</span>
@@ -78,10 +79,11 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
               <span class="sfc-stat-value" id={`${id}-biweekly`}>—</span>
             </div>
           </div>
+
           <p class="sfc-tip" id={`${id}-tip`}></p>
         </div>
 
-        <p class="sfc-hint" id={`${id}-hint`}>Fill in both fields above to see your monthly savings plan.</p>
+        <p class="sfc-hint" id={`${id}-hint`}>Updates automatically as you fill in both fields above.</p>
         <p class="sfc-error" id={`${id}-error`} hidden>Enter a target amount and a future target month to see your savings plan.</p>
       </>
     )}
@@ -97,19 +99,20 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     )}
   </div>
 </div>
+<div class="sfc-cta-divider"></div>
 <a href="/spreadsheets/savings-goals-tracker/" class="sfc-product-link">
   Track your savings progress <span class="arrow">&rarr;</span>
 </a>
 
 <style>
   /* ——— Container ——— */
+  /* No card, border, or fill — the tool sits directly in the page column.
+     A hairline rule + generous top padding opens the section instead. */
 
   .sfc {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-lg);
     margin: var(--space-lg) 0;
-    background: var(--color-bg-panel);
   }
 
   /* ——— Progress ——— */
@@ -120,12 +123,12 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   .sfc-progress-text {
     display: block;
     font-size: var(--text-small);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-xs);
   }
   .sfc-progress-bar {
     height: 4px;
-    background: var(--color-bg-surface);
+    background: var(--color-bg-panel);
     border-radius: 2px;
     overflow: hidden;
   }
@@ -147,7 +150,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-q-hint {
     font-size: var(--text-small);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     line-height: var(--leading-normal);
     margin-bottom: var(--space-md);
     min-height: 1em;
@@ -223,10 +226,8 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   }
   .sfc-rec-eyebrow {
     font-size: var(--text-small);
-    font-weight: var(--weight-normal);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wide);
-    color: var(--color-text-muted);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-2xs);
   }
   .sfc-rec-title {
@@ -271,7 +272,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   .sfc-input-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-sm);
+    gap: var(--space-md);
     margin-bottom: var(--space-md);
   }
   .sfc-field {
@@ -344,18 +345,31 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     color: var(--color-text-muted);
   }
 
-  /* ——— Results ——— */
+  /* ——— Results: one tinted card for the hero number, flush rows below ——— */
 
-  .sfc-results {
-    background: var(--color-bg-surface);
-    border-radius: var(--radius-md);
-    padding: var(--space-md);
-    margin-bottom: var(--space-md);
-  }
-  .sfc-results-grid {
+  .sfc-highlight {
     display: flex;
     flex-direction: column;
-    margin-bottom: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--color-bg-panel);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+  }
+  .sfc-highlight-label {
+    font-size: var(--text-small);
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+    margin-bottom: var(--space-2xs);
+  }
+  .sfc-highlight-value {
+    font-size: var(--text-h1);
+    font-weight: var(--weight-normal);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+  }
+  .sfc-stats {
+    display: flex;
+    flex-direction: column;
   }
   .sfc-stat {
     display: flex;
@@ -375,9 +389,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   .sfc-stat-label {
     font-size: var(--text-xs);
     font-weight: var(--weight-normal);
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wide);
+    color: var(--color-text-secondary);
   }
   .sfc-stat-value {
     font-size: var(--text-h3);
@@ -386,28 +398,19 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     color: var(--color-text);
     white-space: nowrap;
   }
-  .sfc-stat--hero .sfc-stat-label {
-    font-size: var(--text-body);
-    font-weight: var(--weight-normal);
-    color: var(--color-text);
-    text-transform: none;
-    letter-spacing: normal;
-  }
-  .sfc-stat--hero .sfc-stat-value {
-    font-size: var(--text-h1);
-  }
   .sfc-tip {
     font-size: var(--text-small);
     line-height: var(--leading-normal);
     color: var(--color-text-secondary);
-    margin: 0;
-    padding-top: var(--space-xs);
-    border-top: 1px solid var(--color-border);
+    margin: var(--space-sm) 0 0;
+  }
+  .sfc-tip:empty {
+    display: none;
   }
   .sfc-hint,
   .sfc-error {
     font-size: var(--text-small);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-sm);
   }
 
@@ -420,12 +423,16 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   .sfc-cta[hidden] {
     display: none;
   }
+  .sfc-cta-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin-top: var(--space-lg);
+  }
   .sfc-product-link {
     display: block;
     width: fit-content;
     color: var(--color-accent-info);
-    /* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
-    margin-top: calc(var(--space-md) - var(--space-lg));
+    margin-top: var(--space-md);
     margin-bottom: var(--space-lg);
     font-size: 0.875rem;
     text-decoration: none;
@@ -446,7 +453,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   .sfc-retake {
     font-family: var(--font-sans);
     font-size: var(--text-small);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     background: none;
     border: none;
     cursor: pointer;
@@ -459,18 +466,22 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
 
   /* ——— Responsive ——— */
 
-  @media (max-width: 480px) {
+  @media (max-width: 767px) {
     .sfc {
-      padding: var(--space-sm);
+      padding-top: var(--space-md);
     }
     .sfc-opts.sfc-opts--grid {
       grid-template-columns: repeat(2, 1fr);
     }
     .sfc-input-grid {
       grid-template-columns: 1fr;
+      gap: var(--space-sm);
     }
     .sfc-rec-title {
       font-size: var(--text-h3);
+    }
+    .sfc-highlight-value {
+      font-size: var(--text-h2);
     }
   }
 </style>
@@ -497,7 +508,6 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
   var calcCtaEl  = document.getElementById(id + '-calc-cta');
   var amountEl   = document.getElementById(id + '-amount');
   var dateEl     = document.getElementById(id + '-date');
-  var resultsEl  = document.getElementById(id + '-results');
   var monthlyEl  = document.getElementById(id + '-monthly');
   var mcountEl   = document.getElementById(id + '-mcount');
   var weeklyEl   = document.getElementById(id + '-weekly');
@@ -789,13 +799,24 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
 
   /* ——— Calculate ——— */
 
+  // The results card stays visible at all times (with — placeholders) so it
+  // reads as a live preview that fills in, rather than a form to submit.
+  function resetResults() {
+    if (!monthlyEl) return;
+    monthlyEl.textContent  = '—';
+    mcountEl.textContent   = '—';
+    weeklyEl.textContent   = '—';
+    biweeklyEl.textContent = '—';
+    tipEl.textContent      = '';
+  }
+
   function calculate() {
     var rawAmount = amountEl.value.replace(/[^0-9.]/g, '');
     var amount = parseFloat(rawAmount) || 0;
     var dateVal = dateEl.value; // "YYYY-MM"
 
     if (!amount || !dateVal) {
-      resultsEl.hidden = true;
+      resetResults();
       errorEl.hidden = true;
       if (hintEl) hintEl.hidden = false;
       if (ctaEl) ctaEl.hidden = true;
@@ -808,7 +829,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     var months = (targetYear - todayYear) * 12 + (targetMonth - todayMonth);
 
     if (months <= 0) {
-      resultsEl.hidden = true;
+      resetResults();
       if (hintEl) hintEl.hidden = true;
       errorEl.hidden = false;
       errorEl.textContent = 'Target month must be in the future.';
@@ -829,7 +850,6 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     biweeklyEl.textContent = fmt(biweekly, 2);
     tipEl.textContent      = getTip(selectedCategory, months, monthly);
 
-    resultsEl.hidden = false;
     if (ctaEl) ctaEl.hidden = false;
   }
 
@@ -858,7 +878,7 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
       answers  = [];
       selectedCategory = '';
       preset   = null;
-      if (resultsEl) resultsEl.hidden = true;
+      resetResults();
       if (errorEl) errorEl.hidden = true;
       if (hintEl) hintEl.hidden = false;
       if (ctaEl) ctaEl.hidden = true;

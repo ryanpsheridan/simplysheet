@@ -46,7 +46,13 @@ That's why the first useful step usually isn't cutting anything. It's seeing cle
 
 ## What should you actually look at first?
 
-Instead of trying to optimize every category at once, it helps to sort expenses into three simple groups: fixed expenses that rarely change month to month, like rent or a mortgage, insurance, and loan payments; variable expenses that shift based on habits and choices, like groceries, restaurants, transportation, and entertainment; and irregular expenses that are easy to forget until they show up, like annual subscriptions, holiday spending, car maintenance, or medical bills.
+Instead of trying to optimize every category at once, it helps to sort expenses into three simple groups:
+
+| Group | What it covers | Examples |
+|---|---|---|
+| Fixed | Rarely changes month to month | Rent or mortgage, insurance, loan payments |
+| Variable | Shifts based on habits and choices | Groceries, restaurants, transportation, entertainment |
+| Irregular | Easy to forget until it shows up | Annual subscriptions, holiday spending, car maintenance, medical bills |
 
 Separating these three groups often makes a fixed income feel a lot more manageable, simply because you can finally see which parts of your spending are locked in and which parts have some give.
 

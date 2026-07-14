@@ -1,10 +1,16 @@
 ---
+import { getEntry } from 'astro:content';
 import { ETSY_SHOP_URL, withEtsyTracking } from '../consts';
 
 const year = new Date().getFullYear();
+const budgetSpreadsheet = await getEntry('templates', 'budget-spreadsheet');
+const promoUrl = withEtsyTracking(`${budgetSpreadsheet.data.darkListing}?coupon=SAVENOW`);
 ---
 
 <footer>
+	<p class="footer-promo-bar">
+		New to budgeting? Start with our best-selling <a href={promoUrl} class="footer-promo-link" data-cta="footer_promo_banner">Budget Spreadsheet</a> on Etsy and save 30% this week.
+	</p>
 	<div class="footer-inner">
 		<div class="footer-top">
 			<div class="footer-brand">
@@ -56,6 +62,25 @@ const year = new Date().getFullYear();
 		border-top: 1px solid var(--color-border);
 		padding: var(--space-xl) var(--space-md) var(--space-lg);
 		background: var(--color-bg-panel);
+	}
+
+	.footer-promo-bar {
+		max-width: var(--max-width);
+		margin: calc(var(--space-xl) * -1) auto var(--space-xl);
+		padding: var(--space-sm) 0;
+		border-bottom: 1px solid var(--color-border);
+		text-align: center;
+		font-size: var(--text-small);
+		color: var(--color-text);
+		font-weight: var(--weight-normal);
+	}
+	.footer-promo-link {
+		color: var(--color-accent-info);
+		font-weight: var(--weight-normal);
+		text-decoration: underline;
+	}
+	.footer-promo-link:hover {
+		color: var(--color-text);
 	}
 	.footer-inner {
 		max-width: var(--max-width);

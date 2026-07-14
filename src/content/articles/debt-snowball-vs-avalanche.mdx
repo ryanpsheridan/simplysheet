@@ -19,6 +19,7 @@ faq:
 ---
 
 import DebtCalculator from '../../components/DebtCalculator.astro';
+import Poll from '../../components/Poll.astro';
 
 ## What's actually different between snowball and avalanche?
 
@@ -27,6 +28,12 @@ Both methods do the same basic thing: pay the minimum on every debt, then put wh
 Snowball targets the smallest balance first, regardless of interest rate. Avalanche targets the highest interest rate first, regardless of balance. Everything else, the minimums, the rolling payments, the basic mechanics, is identical. The disagreement between the two methods is really just a disagreement about which order to attack the list.
 
 Both methods require you to keep making the same total monthly payment. The difference is simply where the extra payment goes first.
+
+| | Snowball | Avalanche |
+|---|---|---|
+| Targets first | Smallest balance | Highest interest rate |
+| Best for | An early, visible win | Minimizing total interest paid |
+| Trade-off | Can cost more in interest overall | Can feel slow before a balance disappears |
 
 ## Why would anyone choose avalanche if it saves more money?
 
@@ -57,3 +64,13 @@ If paying off debt is stretching your monthly budget more than expected, underst
 ## So which one actually works better?
 
 Avalanche usually wins on the math. Snowball often wins on motivation. The better method isn't the one that's theoretically optimal, it's the one you'll still be following six months from now. Knowing the actual tradeoff with your own numbers, rather than guessing which type of person you are, tends to make that decision a lot easier.
+
+<Poll
+	pollId="debt-payoff-method"
+	question="Which payoff method would you pick for your own debt?"
+	options={[
+		{ key: 'snowball', label: 'Snowball (smallest balance first)' },
+		{ key: 'avalanche', label: 'Avalanche (highest interest first)' },
+		{ key: 'not-started', label: "Haven't started yet" },
+	]}
+/>

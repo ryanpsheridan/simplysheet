@@ -20,6 +20,7 @@ relatedProduct:
 ---
 
 import ProductPromo from '../../components/ProductPromo.astro';
+import Poll from '../../components/Poll.astro';
 
 Most budgeting advice assumes everyone manages money the same way. They don't. Some people feel calm when every dollar has a job. Others feel calm when they stop looking at their bank account altogether. In our experience, most people tend to lean toward one of four broad budgeting styles: Planner, Saver, Spender, or Avoider. Most people show traits of more than one depending on the situation, but one style usually feels more natural than the others.
 
@@ -50,6 +51,24 @@ A useful starting point is the 24-hour rule: wait a day before buying anything n
 Avoiders tend to put off financial decisions because money causes stress. This is far more common than people assume, and small steps tend to work better than trying to overhaul everything at once.
 
 The simplest place to start is checking your bank balance every morning, nothing more. Familiarity lowers anxiety over time, and that's usually the real barrier, not the numbers themselves.
+
+| Style | Strength | Watch out for | Quick tip |
+|---|---|---|---|
+| Planner | Discipline | Staying flexible when life doesn't follow the plan | Schedule a monthly budget review |
+| Saver | Building savings steadily | Under-enjoying things that would genuinely help | Set aside guilt-free spending money each month |
+| Spender | Generosity and spontaneity | Balancing today's enjoyment with tomorrow's stability | Try the 24-hour rule on non-essential purchases |
+| Avoider | Responds well to small, low-pressure steps | Putting off financial decisions | Check your bank balance every morning |
+
+<Poll
+	pollId="budgeting-style"
+	question="Which budgeting style sounds most like you?"
+	options={[
+		{ key: 'planner', label: 'Planner' },
+		{ key: 'saver', label: 'Saver' },
+		{ key: 'spender', label: 'Spender' },
+		{ key: 'avoider', label: 'Avoider' },
+	]}
+/>
 
 ## Most people aren't just one type
 

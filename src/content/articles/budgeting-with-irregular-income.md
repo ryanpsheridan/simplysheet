@@ -31,11 +31,19 @@ The core idea is simple: budget from your floor, not your ceiling.
 
 Look at your income over the past six months and find the lowest number. That's your baseline: the amount you can reasonably expect even in a slow period. Build your entire budget around that number, not your average and definitely not your best month.
 
-How you calculate that baseline depends on your situation:
+How you calculate that baseline depends on your situation.
 
-- **Freelancers and self-employed:** Your income might swing 30–50% month to month. Look back six months minimum, ideally twelve. Use the lowest month, not the average. Averages hide the bad months and give you a number that feels safe but isn't.
-- **Gig workers (delivery, rideshare, contract work):** Income tends to be more volatile and seasonal. Look at your worst stretch, not just your worst single month. If December was slow and so was January, your baseline should reflect that pattern, not just the single worst data point.
-- **Commission earners:** You probably have a base salary plus variable compensation. Your baseline is the base alone. Treat commissions as surplus, even if they've been consistent, because the quarter they drop is the quarter that breaks your budget if you were counting on them.
+### Freelancers and self-employed
+
+Your income might swing 30–50% month to month. Look back six months minimum, ideally twelve. Use the lowest month, not the average. Averages hide the bad months and give you a number that feels safe but isn't.
+
+### Gig workers (delivery, rideshare, contract work)
+
+Income tends to be more volatile and seasonal. Look at your worst stretch, not just your worst single month. If December was slow and so was January, your baseline should reflect that pattern, not just the single worst data point.
+
+### Commission earners
+
+You probably have a base salary plus variable compensation. Your baseline is the base alone. Treat commissions as surplus, even if they've been consistent, because the quarter they drop is the quarter that breaks your budget if you were counting on them.
 
 If you've been at your current work situation for less than six months, use the lowest month you have and subtract another 10–15% as a cushion. Being conservative here costs you nothing. Any month above baseline is a bonus, not a surprise.
 
@@ -71,11 +79,13 @@ I track the tax set-aside alongside everything else in a [Budget Spreadsheet](/s
 
 When you earn more than your baseline in a given month, that extra money needs a plan. Otherwise it gets absorbed into spending you won't remember by the time the next slow month hits.
 
-Here's a simple framework. Say your baseline is $3,000 and you bring in $4,200 this month. That's $1,200 in surplus. Before you spend any of it:
+Here's a simple framework. Say your baseline is $3,000 and you bring in $4,200 this month. That's $1,200 in surplus. Before you spend any of it, split it:
 
-- **50% to your buffer** ($600): this is what carries you through lean months
-- **30% to financial goals** ($360): debt payoff, emergency fund, whatever you're working toward
-- **20% to discretionary spending** ($240): spend this without guilt, you earned it
+| Allocation | Share | Amount | Purpose |
+|---|---|---|---|
+| Buffer | 50% | $600 | Carries you through lean months |
+| Financial goals | 30% | $360 | Debt payoff, emergency fund, whatever you're working toward |
+| Discretionary spending | 20% | $240 | Spend this without guilt, you earned it |
 
 The exact percentages don't matter as much as the habit. What matters is that you decide what happens to the surplus before it arrives. When $1,200 shows up in your account with no plan, it disappears into meals out and online orders. When it shows up with a plan, most of it actually ends up where you intended.
 

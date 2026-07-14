@@ -30,15 +30,15 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 		</div>
 	</div>
 </div>
+<div class="calc-cta-divider"></div>
 <a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
 
 <style>
+	/* No card, border, or fill — the assessment sits directly in the page column. */
 	.quiz {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: 2rem;
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--space-lg);
 		margin: var(--space-lg) 0;
-		background: var(--color-bg-panel);
 	}
 
 	/* ——— Progress ——— */
@@ -49,7 +49,7 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 	.quiz-progress-text {
 		display: block;
 		font-size: var(--text-small);
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
 		margin-bottom: var(--space-xs);
 	}
 	.quiz-progress-bar {
@@ -142,10 +142,8 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 	}
 	.quiz-result-label {
 		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wide);
-		color: var(--color-text-muted);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-secondary);
 		margin-bottom: var(--space-2xs);
 	}
 	.quiz-result-title {
@@ -171,7 +169,7 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text);
-		background: var(--color-bg-surface);
+		background: var(--color-bg-panel);
 		border-radius: var(--radius-md);
 		padding: var(--space-md);
 		margin-bottom: var(--space-md);
@@ -195,9 +193,9 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 		justify-content: center;
 	}
 
-	@media (max-width: 480px) {
+	@media (max-width: 767px) {
 		.quiz {
-			padding: var(--space-md);
+			padding-top: var(--space-md);
 		}
 		.quiz-result-title {
 			font-size: var(--text-h3);
@@ -206,12 +204,16 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 
 	/* ——— Product link ——— */
 
+	.calc-cta-divider {
+		height: 1px;
+		background: var(--color-border);
+		margin-top: var(--space-lg);
+	}
 	.calc-product-link {
 		display: block;
 		width: fit-content;
 		color: var(--color-accent-info);
-		/* Collapses against the container's space-lg bottom margin to net space-md (24px) below the box */
-		margin-top: calc(var(--space-md) - var(--space-lg));
+		margin-top: var(--space-md);
 		margin-bottom: var(--space-lg);
 		font-size: 0.875rem;
 		text-decoration: none;
@@ -290,7 +292,6 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "check_circle",
 			color: "var(--color-accent-positive)",
 			iconBg: "var(--color-accent-positive-bg)",
-			tipBg: "var(--color-bg-surface)",
 			desc: "You've done the hard part. You have real data, you understand your patterns, and you know where your money actually goes. A budget built on this foundation is far more likely to stick than one built on assumptions.",
 			tip: "Take your tracked expenses and group them into five or six broad categories. Use your actual averages as starting points — not aspirational targets. You can adjust over time, but starting with reality gives you a budget you can actually follow.",
 			rec: "A budget spreadsheet with category tracking would help you turn your tracked data into an organized monthly plan.",
@@ -302,7 +303,6 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "trending_up",
 			color: "var(--color-accent-caution-strong)",
 			iconBg: "var(--color-accent-caution-bg)",
-			tipBg: "var(--color-bg-surface)",
 			desc: "You've started building awareness, and that matters more than most people realize. A few areas are still fuzzy, which is completely normal at this stage. Another week or two of tracking will fill in the gaps and give you much more confidence.",
 			tip: "Focus on the categories that still feel unclear. Pay extra attention to spending that varies week to week — restaurants, shopping, and entertainment tend to be the hardest to estimate without real data. A couple more weeks will sharpen the picture significantly.",
 			rec: "Keep tracking for now, and when you're ready, a simple budget template can help you organize everything you've learned.",
@@ -314,7 +314,6 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 			icon: "edit_note",
 			color: "var(--color-accent-critical)",
 			iconBg: "var(--color-accent-critical-bg)",
-			tipBg: "var(--color-bg-surface)",
 			desc: "You're at the beginning of the process, and that's a perfectly good place to be. Starting a budget right now would mean guessing at most of your numbers, which is exactly how budgets end up feeling unrealistic. Give yourself time to collect real information first.",
 			tip: "Start with something simple. Write down every expense for the next thirty days — just the date, the amount, and a broad category. Don't try to organize or judge anything yet. The goal right now is awareness, not control. The patterns will start showing up on their own.",
 			rec: "Once you have a month of data, you'll be in a much stronger position to build a budget that actually reflects your life.",
@@ -381,7 +380,6 @@ const id = `assess-${Math.random().toString(36).slice(2, 8)}`;
 		iconEl.innerHTML = '<span class="material-symbols-rounded">' + result.icon + '</span>';
 		iconEl.style.background = result.iconBg;
 		iconEl.querySelector('.material-symbols-rounded').style.color = result.color;
-		tipEl.style.background = result.tipBg;
 		styleEl.textContent = result.name;
 		descEl.textContent = result.desc;
 		tipEl.textContent = result.tip;
