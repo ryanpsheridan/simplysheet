@@ -19,7 +19,7 @@ const DEBTS = [
 	{showHeader && (
 		<>
 			<h2 class="debt-title">Debt Payoff Strategy Calculator</h2>
-			<p class="debt-subtitle">Most people know that paying more than the minimum helps. Based on a sample $10,000 total debt, drag the slider below to find out how much of a difference an extra monthly payment can make.</p>
+			<p class="debt-subtitle">Most people know that paying more than the minimum helps. <strong>Based on a sample $10,000 total debt, drag the slider below to find out how much of a difference an extra monthly payment can make.</strong></p>
 		</>
 	)}
 
@@ -44,8 +44,8 @@ const DEBTS = [
 	<div class="compare-card">
 		<div class="compare-row">
 			<div class="compare-meta">
-				<span class="compare-method compare-method--avalanche">Avalanche</span>
-				<span class="compare-desc">Highest rate first</span>
+				<span class="compare-method">Avalanche</span>
+				<span class="compare-badge">Highest rate first</span>
 			</div>
 			<div class="compare-track">
 				<div class="compare-fill compare-fill--avalanche" id={`${id}-aval`}></div>
@@ -57,8 +57,8 @@ const DEBTS = [
 		</div>
 		<div class="compare-row">
 			<div class="compare-meta">
-				<span class="compare-method compare-method--snowball">Snowball</span>
-				<span class="compare-desc">Smallest balance first</span>
+				<span class="compare-method">Snowball</span>
+				<span class="compare-badge">Smallest balance first</span>
 			</div>
 			<div class="compare-track">
 				<div class="compare-fill compare-fill--snowball" id={`${id}-snow`}></div>
@@ -98,6 +98,12 @@ const DEBTS = [
 		color: var(--color-text-secondary);
 		line-height: var(--leading-normal);
 		margin: 0 0 var(--space-lg);
+	}
+	/* Article bodies reset strong to normal weight (.prose strong in
+	   global.css); this sentence is a calculator UI cue, not body prose,
+	   so it needs to win that override regardless of embed context. */
+	.debt-subtitle strong {
+		font-weight: var(--weight-semibold);
 	}
 
 	/* ——— Slider ——— */
@@ -176,7 +182,7 @@ const DEBTS = [
 
 	.compare-meta {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 		gap: var(--space-xs);
 		margin-bottom: var(--space-2xs);
 	}
@@ -185,27 +191,17 @@ const DEBTS = [
 		font-size: var(--text-small);
 		font-weight: var(--weight-normal);
 		color: var(--color-text);
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-	}
-	.compare-method::before {
-		content: '';
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: 50%;
-		flex-shrink: 0;
-	}
-	.compare-method--avalanche::before {
-		background: var(--color-debt-avalanche);
-	}
-	.compare-method--snowball::before {
-		background: var(--color-debt-snowball);
 	}
 
-	.compare-desc {
+	.compare-badge {
+		display: inline-block;
 		font-size: var(--text-xs);
-		color: var(--color-text-secondary);
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
+		background: var(--color-bg-panel);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		padding: 0.125rem 0.5rem;
 	}
 
 	.compare-track {
