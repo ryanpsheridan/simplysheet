@@ -42,57 +42,27 @@ const DEBTS = [
 	</div>
 
 	<div class="compare-card">
-		<div class="compare-columns-heading">
-			<span>Strategy</span>
-			<span>Total interest</span>
-		</div>
 		<div class="compare-row">
 			<div class="compare-meta">
 				<span class="compare-method compare-method--avalanche">Avalanche</span>
 				<span class="compare-desc">Highest rate first</span>
 			</div>
-			<div class="compare-bar-row">
-				<div class="compare-track">
-					<div class="compare-fill compare-fill--avalanche" id={`${id}-aval`}></div>
-				</div>
-				<span class="compare-value" id={`${id}-aval-value`}>$0</span>
+			<div class="compare-track">
+				<div class="compare-fill compare-fill--avalanche" id={`${id}-aval`}></div>
 			</div>
+			<p class="compare-metrics-line" id={`${id}-aval-metrics`}></p>
 		</div>
 		<div class="compare-row">
 			<div class="compare-meta">
 				<span class="compare-method compare-method--snowball">Snowball</span>
 				<span class="compare-desc">Smallest balance first</span>
 			</div>
-			<div class="compare-bar-row">
-				<div class="compare-track">
-					<div class="compare-fill compare-fill--snowball" id={`${id}-snow`}></div>
-				</div>
-				<span class="compare-value" id={`${id}-snow-value`}>$0</span>
+			<div class="compare-track">
+				<div class="compare-fill compare-fill--snowball" id={`${id}-snow`}></div>
 			</div>
+			<p class="compare-metrics-line" id={`${id}-snow-metrics`}></p>
 		</div>
-		<div class="metric-section">
-			<p class="metric-section-title">Total Interest Paid</p>
-			<div class="metric-subrow">
-				<span class="metric-sublabel">Avalanche <span class="metric-sublabel-tag">(Fastest)</span></span>
-				<span class="metric-subvalue" id={`${id}-interest-aval`}>$0</span>
-			</div>
-			<div class="metric-subrow">
-				<span class="metric-sublabel">Snowball</span>
-				<span class="metric-subvalue" id={`${id}-interest-snow`}>$0</span>
-			</div>
-			<p class="metric-baseline" id={`${id}-interest-baseline`}></p>
-		</div>
-		<div class="metric-section">
-			<p class="metric-section-title">Time to Debt Freedom</p>
-			<div class="metric-subrow">
-				<span class="metric-sublabel">Avalanche</span>
-				<span class="metric-subvalue metric-subvalue--highlight" id={`${id}-months-aval`}></span>
-			</div>
-			<div class="metric-subrow">
-				<span class="metric-sublabel">Snowball</span>
-				<span class="metric-subvalue" id={`${id}-months-snow`}></span>
-			</div>
-		</div>
+		<p class="compare-baseline" id={`${id}-baseline`}></p>
 	</div>
 
 	<p class="compare-note">Estimated using typical interest rates — actual results may vary.</p>
@@ -189,24 +159,11 @@ const DEBTS = [
 	/* ——— Comparison: no card — sits flush on the page like the rest of the site ——— */
 
 	.compare-card {
-		margin-bottom: var(--space-md);
-	}
-
-	/* Small all-caps anchor row so the two bars below have a clear header,
-	   the same way a table would. */
-	.compare-columns-heading {
-		display: flex;
-		justify-content: space-between;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		color: var(--color-text-muted);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wide);
-		margin: 0 0 var(--space-sm);
+		margin-bottom: var(--space-sm);
 	}
 
 	.compare-row {
-		margin-bottom: var(--space-md);
+		margin-bottom: var(--space-sm);
 	}
 	.compare-row:last-of-type {
 		margin-bottom: 0;
@@ -246,17 +203,7 @@ const DEBTS = [
 		color: var(--color-text-secondary);
 	}
 
-	/* Track + value sit in one row; the track shrinks first so the dollar
-	   figure never wraps or gets pushed off narrow screens. */
-	.compare-bar-row {
-		display: flex;
-		align-items: center;
-		gap: var(--space-sm);
-	}
-
 	.compare-track {
-		flex: 1;
-		min-width: 0;
 		height: 1.5rem;
 		background: var(--color-bg-panel);
 		border-radius: var(--radius-sm);
@@ -277,83 +224,29 @@ const DEBTS = [
 		background: var(--color-debt-snowball);
 	}
 
-	.compare-value {
-		flex-shrink: 0;
-		width: 4.5rem;
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text);
-		text-align: right;
-		font-variant-numeric: tabular-nums;
-	}
-
-	/* Stacked mobile-first sections: one section per metric category, with
-	   Avalanche/Snowball as sub-rows underneath rather than side by side —
-	   avoids squeezing two strategies' worth of labels and numbers into one
-	   horizontal row on narrow screens. Each sub-row spans the section's
-	   full width with the label on the left and the value pinned to that
-	   same right edge, so only the digits' own left edge moves as they
-	   change while scrubbing — nothing shifts position. */
-	.metric-section {
-		padding: var(--space-sm) 0;
-		border-top: 1px solid var(--color-border);
-	}
-	.metric-section:first-child {
-		border-top: none;
-		padding-top: var(--space-xs);
-	}
-
-	.metric-section-title {
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text);
-		margin: 0 0 var(--space-xs);
-	}
-
-	.metric-subrow {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: var(--space-md);
-		padding: 0.1875rem 0;
-	}
-
-	.metric-sublabel {
-		font-size: var(--text-small);
+	/* Interest + months-faster collapsed into one line directly under each
+	   strategy's own bar, instead of a separate summary list at the bottom —
+	   removes a repeated Avalanche/Snowball breakdown and cuts most of the
+	   component's vertical footprint. */
+	.compare-metrics-line {
+		font-size: var(--text-xs);
 		color: var(--color-text-secondary);
-		flex-shrink: 0;
-	}
-	.metric-sublabel-tag {
-		color: var(--color-text-muted);
-		font-size: var(--text-xs);
-	}
-
-	.metric-subvalue {
-		font-size: var(--text-body);
-		font-weight: var(--weight-medium);
-		color: var(--color-text);
-		font-variant-numeric: tabular-nums;
-		white-space: nowrap;
-		text-align: right;
-	}
-	.metric-subvalue--highlight {
-		color: var(--color-debt-avalanche);
-	}
-
-	.metric-baseline {
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		text-align: right;
 		margin: var(--space-2xs) 0 0;
 	}
-	.metric-baseline:empty {
+
+	.compare-baseline {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		margin: var(--space-xs) 0 0;
+	}
+	.compare-baseline:empty {
 		display: none;
 	}
 
 	.compare-note {
 		font-size: var(--text-xs);
 		color: var(--color-text-secondary);
-		margin: 0;
+		margin: var(--space-sm) 0 0;
 		line-height: var(--leading-normal);
 	}
 
@@ -390,10 +283,6 @@ const DEBTS = [
 		.visualizer {
 			padding-top: var(--space-md);
 		}
-		.compare-value {
-			width: 4rem;
-			font-size: var(--text-xs);
-		}
 	}
 </style>
 
@@ -403,13 +292,9 @@ const DEBTS = [
 	var amountEl = document.getElementById(id + '-amount');
 	var avalEl = document.getElementById(id + '-aval');
 	var snowEl = document.getElementById(id + '-snow');
-	var avalValueEl = document.getElementById(id + '-aval-value');
-	var snowValueEl = document.getElementById(id + '-snow-value');
-	var interestAvalEl = document.getElementById(id + '-interest-aval');
-	var interestSnowEl = document.getElementById(id + '-interest-snow');
-	var interestBaselineEl = document.getElementById(id + '-interest-baseline');
-	var monthsAvalEl = document.getElementById(id + '-months-aval');
-	var monthsSnowEl = document.getElementById(id + '-months-snow');
+	var avalMetricsEl = document.getElementById(id + '-aval-metrics');
+	var snowMetricsEl = document.getElementById(id + '-snow-metrics');
+	var baselineEl = document.getElementById(id + '-baseline');
 
 	// Minimum payments aren't part of the displayed table (it only shows
 	// balance + APR), so estimate a typical 2.5%-of-balance minimum per debt.
@@ -497,28 +382,28 @@ const DEBTS = [
 		var maxInterest = Math.max(aval.interest, snow.interest, 1);
 		avalEl.style.width = (aval.interest / maxInterest * 100) + '%';
 		snowEl.style.width = (snow.interest / maxInterest * 100) + '%';
-		avalValueEl.textContent = formatCurrency(aval.interest);
-		snowValueEl.textContent = formatCurrency(snow.interest);
 
-		// Framed against the $0-extra baseline rather than Avalanche vs.
-		// Snowball directly — that head-to-head gap shrinks as extra payments
-		// grow, which reads as "less impact" even though the payoff is
-		// objectively better. Comparing to baseline stays monotonic: more
-		// extra always means less interest and a faster payoff.
-		interestAvalEl.textContent = formatCurrency(aval.interest);
-		interestSnowEl.textContent = formatCurrency(snow.interest);
-		interestBaselineEl.textContent = extra > 0
+		// Each strategy's own metrics line lives directly under its bar,
+		// framed against the $0-extra baseline rather than Avalanche vs.
+		// Snowball directly — that head-to-head gap shrinks as extra
+		// payments grow, which reads as "less impact" even though the
+		// payoff is objectively better. Comparing to baseline stays
+		// monotonic: more extra always means less interest and a faster
+		// payoff, for both strategies.
+		avalMetricsEl.textContent = 'Interest paid: ' + formatCurrency(aval.interest) +
+			' (' + monthsPhrase(BASELINE.months - aval.months) + ')';
+		snowMetricsEl.textContent = 'Interest paid: ' + formatCurrency(snow.interest) +
+			' (' + monthsPhrase(BASELINE.months - snow.months) + ')';
+
+		baselineEl.textContent = extra > 0
 			? '(Instead of ' + formatCurrency(BASELINE.interest) + ' at $0 extra)'
 			: '';
-
-		monthsAvalEl.textContent = formatMonthsFaster(BASELINE.months - aval.months);
-		monthsSnowEl.textContent = formatMonthsFaster(BASELINE.months - snow.months);
 	}
 
-	function formatMonthsFaster(monthsFaster) {
+	function monthsPhrase(monthsFaster) {
 		return monthsFaster > 0
 			? monthsFaster + (monthsFaster === 1 ? ' month faster' : ' months faster')
-			: 'Same as baseline';
+			: 'same as baseline';
 	}
 
 	slider.addEventListener('input', update);
