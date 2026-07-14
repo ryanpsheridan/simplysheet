@@ -88,6 +88,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		</tbody>
 	</table>
 </div>
+<div class="calc-cta-divider"></div>
 <a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track it in a budget spreadsheet <span class="arrow">&rarr;</span></a>
 
 <style>
@@ -308,6 +309,11 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	/* ——— Product link ——— */
 
+	.calc-cta-divider {
+		height: 1px;
+		background: var(--color-border);
+		margin-top: var(--space-lg);
+	}
 	.calc-product-link {
 		display: block;
 		width: fit-content;
