@@ -163,14 +163,14 @@ p {
 .article-promo {
 	display: grid;
 	grid-template-columns: 1fr 2fr;
-	align-items: stretch;
-	gap: var(--space-lg);
+	align-items: center;
+	gap: var(--space-md);
 	margin: var(--space-lg) 0;
 }
 .article-promo-thumb {
 	display: block;
 	width: 100%;
-	aspect-ratio: 10 / 9;
+	aspect-ratio: 3 / 2;
 	border-radius: var(--radius-md);
 	background: var(--color-bg-panel);
 	overflow: hidden;
@@ -201,6 +201,25 @@ p {
 	font-size: var(--text-xs);
 	color: var(--color-text-muted);
 	margin: 0 0 var(--space-2xs);
+}
+/* Keep the in-body interstitial compact. The card renders inside .prose, whose
+   `.prose p` / `.prose h3` rules (specificity 0,1,1) otherwise beat the promo's
+   single-class rules and bleed article-sized margins between the label, title,
+   description, and CTA. These two-class selectors (0,2,0) win and reset that
+   spacing to a tight card rhythm. */
+.article-promo .interstitial-label {
+	margin-bottom: var(--space-2xs);
+}
+.article-promo .product-name {
+	margin-top: 0;
+	margin-bottom: var(--space-2xs);
+}
+.article-promo .product-desc {
+	margin: 0;
+	line-height: var(--leading-snug);
+}
+.article-promo .product-cta {
+	margin-top: var(--space-sm);
 }
 @media (max-width: 600px) {
 	.article-promo {

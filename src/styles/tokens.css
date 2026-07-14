@@ -32,6 +32,12 @@
   --color-accent-info:         #196EDD;
   --color-accent-info-bg:      #EEF4FF;
 
+  /* Per-partner identity colors for couples tools — neutral, no value
+     judgment (mirrors the color-coded partner names in the couples template).
+     Never used to rank one option/method over another. */
+  --color-split-you:           var(--color-accent-info);
+  --color-split-partner:       #C2185B;
+
   /* Debt avalanche vs. snowball comparison: avalanche uses the site's
      accent blue, snowball gets its own slate identity color — this pair
      distinguishes the two methods, it doesn't rank them (the copy nearby

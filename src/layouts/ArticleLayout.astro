@@ -458,6 +458,10 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		font-family: var(--font-sans);
 		font-size: var(--text-small);
 		font-weight: var(--weight-normal);
+		/* Reset the UA default line-height (`normal`) that the <button> uses but
+		   the <a> doesn't — without this the two share buttons render at
+		   different heights. */
+		line-height: 1;
 		color: var(--color-text-secondary);
 		background: none;
 		border: 1px solid var(--color-border);
