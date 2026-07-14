@@ -378,7 +378,7 @@ function featureIcon(text: string): string {
 									<img src={t.data.heroImage} alt={`${t.data.title} preview`} width="600" height="400" loading="lazy" />
 									{t.data.badge && <span class="template-badge">{t.data.badge}</span>}
 								</div>
-								<h3 class="template-name">{t.data.title.replace(/ for Google Sheets & Excel$/, '')}</h3>
+								<h3 class="template-name">{t.data.title.replace(/ for (Google )?Sheets & Excel$/, '')}</h3>
 								<p class="template-desc">{t.data.description}</p>
 							</a>
 						))}

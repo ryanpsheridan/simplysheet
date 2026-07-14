@@ -16,7 +16,7 @@ const templates = (await getCollection('templates'))
 	.sort((a, b) => a.data.order - b.data.order)
 	.slice(0, 2)
 	.map((t) => ({
-		name: t.data.title.replace(/ for Google Sheets & Excel$/, ''),
+		name: t.data.title.replace(/ for (Google )?Sheets & Excel$/, ''),
 		desc: t.data.description,
 		url: `/spreadsheets/${t.id}/`,
 		image: t.data.heroImage,
