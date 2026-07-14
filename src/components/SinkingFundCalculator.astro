@@ -60,12 +60,11 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
         </div>
 
         <div class="sfc-results" id={`${id}-results`}>
-          <div class="sfc-highlight">
-            <span class="sfc-highlight-label">Save each month</span>
-            <span class="sfc-highlight-value" id={`${id}-monthly`}>—</span>
-          </div>
-
           <div class="sfc-stats">
+            <div class="sfc-stat">
+              <span class="sfc-stat-label">Save each month</span>
+              <span class="sfc-stat-value sfc-stat-value--primary" id={`${id}-monthly`}>—</span>
+            </div>
             <div class="sfc-stat">
               <span class="sfc-stat-label">Months remaining</span>
               <span class="sfc-stat-value" id={`${id}-mcount`}>—</span>
@@ -345,28 +344,8 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     color: var(--color-text-muted);
   }
 
-  /* ——— Results: one tinted card for the hero number, flush rows below ——— */
+  /* ——— Results: flush rows, with "Save each month" as the emphasized first row ——— */
 
-  .sfc-highlight {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-md);
-    background: var(--color-bg-panel);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-md);
-  }
-  .sfc-highlight-label {
-    font-size: var(--text-small);
-    font-weight: var(--weight-medium);
-    color: var(--color-text);
-    margin-bottom: var(--space-2xs);
-  }
-  .sfc-highlight-value {
-    font-size: var(--text-h1);
-    font-weight: var(--weight-normal);
-    letter-spacing: var(--tracking-tight);
-    color: var(--color-text);
-  }
   .sfc-stats {
     display: flex;
     flex-direction: column;
@@ -397,6 +376,10 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
     letter-spacing: var(--tracking-tight);
     color: var(--color-text);
     white-space: nowrap;
+  }
+  .sfc-stat-value--primary {
+    color: var(--color-accent-info);
+    font-weight: 600;
   }
   .sfc-tip {
     font-size: var(--text-small);
