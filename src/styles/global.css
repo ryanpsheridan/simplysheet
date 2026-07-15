@@ -141,14 +141,14 @@ p {
 }
 
 @media (max-width: 600px) {
-	.prose table {
+	.prose table:not(.calc-table) {
 		display: block;
 		overflow-x: auto;
 		-webkit-overflow-scrolling: touch;
 	}
 
-	.prose th,
-	.prose td {
+	.prose table:not(.calc-table) th,
+	.prose table:not(.calc-table) td {
 		white-space: nowrap;
 	}
 }
