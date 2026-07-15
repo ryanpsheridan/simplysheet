@@ -1,0 +1,269 @@
+---
+// Free, browser-only narration: reads the surrounding article's prose aloud
+// using the Web Speech API (SpeechSynthesis). No audio files, no API cost —
+// but voice quality/availability depends on the visitor's browser and OS.
+const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="audio-narration" id={id}>
+	<button type="button" class="narr-restart" id={`${id}-restart`} aria-label="Restart narration">
+		<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M3 12a9 9 0 1 1 3 6.7" />
+			<polyline points="3 16 3 21 8 21" />
+		</svg>
+	</button>
+	<button type="button" class="narr-play" id={`${id}-play`} aria-label="Play narration">
+		<svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+			<path d="M8 5v14l11-7z" />
+		</svg>
+		<svg class="icon-pause is-hidden" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+			<rect x="6" y="5" width="4" height="14" />
+			<rect x="14" y="5" width="4" height="14" />
+		</svg>
+	</button>
+	<div class="narr-body">
+		<p class="narr-label">Listen to this article</p>
+		<div class="narr-bar-track">
+			<div class="narr-bar-fill" id={`${id}-fill`}></div>
+		</div>
+	</div>
+	<span class="narr-time" id={`${id}-time`}>0:00 / --:--</span>
+</div>
+
+<style>
+	.audio-narration {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background: var(--color-bg-panel);
+		padding: var(--space-sm) var(--space-md);
+		margin: 0 0 var(--space-lg);
+	}
+
+	.narr-restart,
+	.narr-play {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: var(--radius-full);
+		cursor: pointer;
+		flex-shrink: 0;
+		padding: 0;
+	}
+
+	.narr-restart {
+		width: 2rem;
+		height: 2rem;
+		border: 1px solid var(--color-border);
+		background: none;
+		color: var(--color-text-secondary);
+		transition: color 0.15s, border-color 0.15s;
+	}
+
+	.narr-restart:hover {
+		color: var(--color-text);
+		border-color: var(--color-text-muted);
+	}
+
+	.narr-play {
+		width: 2.5rem;
+		height: 2.5rem;
+		border: none;
+		background: var(--color-text-heading);
+		color: var(--color-bg);
+	}
+
+	.narr-body {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.narr-label {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		margin: 0 0 0.375rem;
+	}
+
+	.narr-bar-track {
+		height: 4px;
+		border-radius: var(--radius-full);
+		background: var(--color-border);
+		overflow: hidden;
+	}
+
+	.narr-bar-fill {
+		height: 100%;
+		width: 0%;
+		background: var(--color-text-heading);
+		transition: width 0.2s linear;
+	}
+
+	.narr-time {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	/* SVG elements don't get the UA [hidden] { display: none } rule
+	   HTML elements get, so toggle visibility with a class instead. */
+	.is-hidden {
+		display: none;
+	}
+</style>
+
+<script is:inline define:vars={{ id }}>
+	function initAudioNarration() {
+		var root = document.getElementById(id);
+		if (!root) return;
+
+		if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+			root.remove();
+			return;
+		}
+
+		var playBtn = document.getElementById(id + '-play');
+		var restartBtn = document.getElementById(id + '-restart');
+		var fillEl = document.getElementById(id + '-fill');
+		var timeEl = document.getElementById(id + '-time');
+		var iconPlay = playBtn.querySelector('.icon-play');
+		var iconPause = playBtn.querySelector('.icon-pause');
+
+		var prose = root.closest('.prose') || root.parentElement;
+		var SKIP_SELECTOR = '.audio-narration, .calc, .poll, .article-promo, .product-cards';
+
+		var chunks = Array.prototype.slice
+			.call(prose.querySelectorAll('h2, h3, p, li, blockquote'))
+			.filter(function (el) { return !el.closest(SKIP_SELECTOR); })
+			.map(function (el) { return el.textContent.trim(); })
+			.filter(function (t) { return t.length > 0; });
+
+		if (chunks.length === 0) {
+			root.remove();
+			return;
+		}
+
+		var wordCount = chunks.join(' ').split(/\s+/).filter(Boolean).length;
+		var estimatedTotal = Math.max(Math.round(wordCount / 2.5), 1);
+
+		var index = 0;
+		var elapsed = 0;
+		var isPlaying = false;
+		var started = false;
+		var timerId = null;
+
+		function formatTime(sec) {
+			sec = Math.max(0, Math.round(sec));
+			var m = Math.floor(sec / 60);
+			var s = sec % 60;
+			return m + ':' + (s < 10 ? '0' : '') + s;
+		}
+
+		function updateTime() {
+			timeEl.textContent = formatTime(elapsed) + ' / ' + formatTime(estimatedTotal);
+			fillEl.style.width = Math.min((elapsed / estimatedTotal) * 100, 100) + '%';
+		}
+		updateTime();
+
+		function startTimer() {
+			stopTimer();
+			timerId = window.setInterval(function () {
+				elapsed += 0.25;
+				updateTime();
+			}, 250);
+		}
+
+		function stopTimer() {
+			if (timerId) {
+				clearInterval(timerId);
+				timerId = null;
+			}
+		}
+
+		function setPlayingUI(playing) {
+			isPlaying = playing;
+			iconPlay.classList.toggle('is-hidden', playing);
+			iconPause.classList.toggle('is-hidden', !playing);
+			playBtn.setAttribute('aria-label', playing ? 'Pause narration' : 'Play narration');
+		}
+
+		function speakChunk() {
+			if (index >= chunks.length) {
+				finish();
+				return;
+			}
+			var utter = new SpeechSynthesisUtterance(chunks[index]);
+			utter.rate = 1;
+			utter.onend = function () {
+				index += 1;
+				if (index < chunks.length) {
+					speakChunk();
+				} else {
+					finish();
+				}
+			};
+			utter.onerror = function () {
+				finish();
+			};
+			window.speechSynthesis.speak(utter);
+		}
+
+		function finish() {
+			stopTimer();
+			setPlayingUI(false);
+			started = false;
+			index = 0;
+			elapsed = estimatedTotal;
+			updateTime();
+		}
+
+		function play() {
+			if (!started) {
+				started = true;
+				index = 0;
+				elapsed = 0;
+				window.speechSynthesis.cancel();
+				speakChunk();
+			} else {
+				window.speechSynthesis.resume();
+			}
+			setPlayingUI(true);
+			startTimer();
+		}
+
+		function pause() {
+			window.speechSynthesis.pause();
+			setPlayingUI(false);
+			stopTimer();
+		}
+
+		playBtn.addEventListener('click', function () {
+			if (isPlaying) {
+				pause();
+			} else {
+				play();
+			}
+		});
+
+		restartBtn.addEventListener('click', function () {
+			window.speechSynthesis.cancel();
+			started = false;
+			index = 0;
+			elapsed = 0;
+			updateTime();
+			play();
+		});
+
+		window.addEventListener('pagehide', function () {
+			window.speechSynthesis.cancel();
+		});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initAudioNarration);
+	} else {
+		initAudioNarration();
+	}
+</script>
