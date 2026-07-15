@@ -184,6 +184,14 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 		audio.addEventListener('pause', function () { setPlayingUI(false); });
 		audio.addEventListener('ended', function () { setPlayingUI(false); });
 
+		// The browser starts loading audio metadata as soon as it parses the
+		// <audio> tag, independent of script timing — on a fast (local/cached)
+		// load, 'loadedmetadata' can fire before this listener attaches.
+		if (audio.readyState >= 1) {
+			duration = audio.duration;
+			updateDisplay(audio.currentTime);
+		}
+
 		playBtn.addEventListener('click', function () {
 			if (audio.paused) {
 				audio.play();
