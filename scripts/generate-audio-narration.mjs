@@ -1,6 +1,7 @@
 // Generates a narration MP3 for one article via Google Cloud Text-to-Speech
-// (Neural2 voice) and saves it to public/audio/{slug}.mp3. Run manually per
-// article, not part of the build — it costs a real (free-tier) API call and
+// (Studio voice) and saves it to public/audio/{slug}.mp3. Run manually per
+// article, not part of the build. Studio voices aren't in Google's always-free
+// tier (unlike Neural2/WaveNet), but the per-article cost is a few cents and
 // each article only needs to be generated once.
 //
 // Usage: GOOGLE_TTS_API_KEY=... node scripts/generate-audio-narration.mjs <slug> [--force]
@@ -10,7 +11,8 @@ import path from 'node:path';
 const articlesDir = path.resolve(import.meta.dirname, '../src/content/articles');
 const audioDir = path.resolve(import.meta.dirname, '../public/audio');
 
-const VOICE = { languageCode: 'en-US', name: 'en-US-Neural2-F' };
+const VOICE = { languageCode: 'en-US', name: 'en-US-Studio-O' };
+const SPEAKING_RATE = 1.12;
 const MAX_CHUNK_CHARS = 4500; // Google's per-request input limit is 5000 bytes.
 
 function stripFrontmatter(raw) {
@@ -64,7 +66,7 @@ async function synthesizeChunk(apiKey, text) {
 		body: JSON.stringify({
 			input: { text },
 			voice: VOICE,
-			audioConfig: { audioEncoding: 'MP3' },
+			audioConfig: { audioEncoding: 'MP3', speakingRate: SPEAKING_RATE },
 		}),
 	});
 
