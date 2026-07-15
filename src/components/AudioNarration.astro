@@ -6,12 +6,6 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div class="audio-narration" id={id}>
-	<button type="button" class="narr-restart" id={`${id}-restart`} aria-label="Restart narration">
-		<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-			<path d="M3 12a9 9 0 1 1 3 6.7" />
-			<polyline points="3 16 3 21 8 21" />
-		</svg>
-	</button>
 	<button type="button" class="narr-play" id={`${id}-play`} aria-label="Play narration">
 		<svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 			<path d="M8 5v14l11-7z" />
@@ -23,8 +17,17 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 	</button>
 	<div class="narr-body">
 		<p class="narr-label">Listen to this article</p>
-		<div class="narr-bar-track">
+		<div
+			class="narr-bar-track"
+			id={`${id}-track`}
+			role="slider"
+			tabindex="0"
+			aria-label="Seek narration"
+			aria-valuemin="0"
+			aria-valuenow="0"
+		>
 			<div class="narr-bar-fill" id={`${id}-fill`}></div>
+			<div class="narr-bar-thumb" id={`${id}-thumb`}></div>
 		</div>
 	</div>
 	<span class="narr-time" id={`${id}-time`}>0:00 / --:--</span>
@@ -42,7 +45,6 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 		margin: 0 0 var(--space-lg);
 	}
 
-	.narr-restart,
 	.narr-play {
 		display: inline-flex;
 		align-items: center;
@@ -51,23 +53,6 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 		cursor: pointer;
 		flex-shrink: 0;
 		padding: 0;
-	}
-
-	.narr-restart {
-		width: 2rem;
-		height: 2rem;
-		border: 1px solid var(--color-border);
-		background: none;
-		color: var(--color-text-secondary);
-		transition: color 0.15s, border-color 0.15s;
-	}
-
-	.narr-restart:hover {
-		color: var(--color-text);
-		border-color: var(--color-text-muted);
-	}
-
-	.narr-play {
 		width: 2.5rem;
 		height: 2.5rem;
 		border: none;
@@ -87,17 +72,42 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 	}
 
 	.narr-bar-track {
+		position: relative;
+		display: flex;
+		align-items: center;
+		height: 1rem;
+		cursor: pointer;
+		touch-action: none;
+	}
+
+	.narr-bar-track::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
 		height: 4px;
 		border-radius: var(--radius-full);
 		background: var(--color-border);
-		overflow: hidden;
 	}
 
 	.narr-bar-fill {
-		height: 100%;
+		position: absolute;
+		left: 0;
+		height: 4px;
 		width: 0%;
+		border-radius: var(--radius-full);
 		background: var(--color-text-heading);
-		transition: width 0.2s linear;
+	}
+
+	.narr-bar-thumb {
+		position: absolute;
+		left: 0%;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: var(--color-text-heading);
+		transform: translateX(-50%);
+		box-shadow: 0 0 0 3px var(--color-bg-panel);
 	}
 
 	.narr-time {
@@ -125,8 +135,9 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 		}
 
 		var playBtn = document.getElementById(id + '-play');
-		var restartBtn = document.getElementById(id + '-restart');
+		var track = document.getElementById(id + '-track');
 		var fillEl = document.getElementById(id + '-fill');
+		var thumbEl = document.getElementById(id + '-thumb');
 		var timeEl = document.getElementById(id + '-time');
 		var iconPlay = playBtn.querySelector('.icon-play');
 		var iconPause = playBtn.querySelector('.icon-pause');
@@ -145,13 +156,22 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 			return;
 		}
 
-		var wordCount = chunks.join(' ').split(/\s+/).filter(Boolean).length;
-		var estimatedTotal = Math.max(Math.round(wordCount / 2.5), 1);
+		var WORDS_PER_SECOND = 2.5;
+		var chunkStartTimes = [];
+		var acc = 0;
+		chunks.forEach(function (text) {
+			chunkStartTimes.push(acc);
+			var wc = text.split(/\s+/).filter(Boolean).length;
+			acc += wc / WORDS_PER_SECOND;
+		});
+		var estimatedTotal = Math.max(Math.round(acc), 1);
 
 		var index = 0;
 		var elapsed = 0;
 		var isPlaying = false;
 		var started = false;
+		var pendingSeek = false;
+		var scrubbing = false;
 		var timerId = null;
 
 		function formatTime(sec) {
@@ -163,7 +183,12 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 
 		function updateTime() {
 			timeEl.textContent = formatTime(elapsed) + ' / ' + formatTime(estimatedTotal);
-			fillEl.style.width = Math.min((elapsed / estimatedTotal) * 100, 100) + '%';
+			var pct = Math.min((elapsed / estimatedTotal) * 100, 100);
+			fillEl.style.width = pct + '%';
+			thumbEl.style.left = pct + '%';
+			track.setAttribute('aria-valuemax', String(estimatedTotal));
+			track.setAttribute('aria-valuenow', String(Math.round(elapsed)));
+			track.setAttribute('aria-valuetext', formatTime(elapsed) + ' of ' + formatTime(estimatedTotal));
 		}
 		updateTime();
 
@@ -187,6 +212,19 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 			iconPlay.classList.toggle('is-hidden', playing);
 			iconPause.classList.toggle('is-hidden', !playing);
 			playBtn.setAttribute('aria-label', playing ? 'Pause narration' : 'Play narration');
+		}
+
+		function findChunkIndexForTime(t) {
+			for (var i = chunkStartTimes.length - 1; i >= 0; i--) {
+				if (t >= chunkStartTimes[i]) return i;
+			}
+			return 0;
+		}
+
+		function speakFrom(startIndex) {
+			window.speechSynthesis.cancel();
+			index = startIndex;
+			speakChunk();
 		}
 
 		function speakChunk() {
@@ -214,18 +252,17 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 			stopTimer();
 			setPlayingUI(false);
 			started = false;
+			pendingSeek = false;
 			index = 0;
 			elapsed = estimatedTotal;
 			updateTime();
 		}
 
 		function play() {
-			if (!started) {
+			if (!started || pendingSeek) {
 				started = true;
-				index = 0;
-				elapsed = 0;
-				window.speechSynthesis.cancel();
-				speakChunk();
+				pendingSeek = false;
+				speakFrom(index);
 			} else {
 				window.speechSynthesis.resume();
 			}
@@ -239,6 +276,32 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 			stopTimer();
 		}
 
+		function seekToFraction(fraction) {
+			fraction = Math.min(Math.max(fraction, 0), 1);
+			var targetTime = fraction * estimatedTotal;
+			var wasPlaying = isPlaying;
+
+			window.speechSynthesis.cancel();
+			stopTimer();
+			index = findChunkIndexForTime(targetTime);
+			elapsed = targetTime;
+			started = true;
+			pendingSeek = true;
+			updateTime();
+
+			if (wasPlaying) {
+				play();
+			} else {
+				setPlayingUI(false);
+			}
+		}
+
+		function fractionFromEvent(e) {
+			var rect = track.getBoundingClientRect();
+			var x = (e.clientX - rect.left) / rect.width;
+			return Math.min(Math.max(x, 0), 1);
+		}
+
 		playBtn.addEventListener('click', function () {
 			if (isPlaying) {
 				pause();
@@ -247,13 +310,39 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 			}
 		});
 
-		restartBtn.addEventListener('click', function () {
-			window.speechSynthesis.cancel();
-			started = false;
-			index = 0;
-			elapsed = 0;
+		track.addEventListener('pointerdown', function (e) {
+			scrubbing = true;
+			track.setPointerCapture(e.pointerId);
+			elapsed = fractionFromEvent(e) * estimatedTotal;
 			updateTime();
-			play();
+		});
+
+		track.addEventListener('pointermove', function (e) {
+			if (!scrubbing) return;
+			elapsed = fractionFromEvent(e) * estimatedTotal;
+			updateTime();
+		});
+
+		track.addEventListener('pointerup', function (e) {
+			if (!scrubbing) return;
+			scrubbing = false;
+			seekToFraction(fractionFromEvent(e));
+		});
+
+		track.addEventListener('keydown', function (e) {
+			var step = 5;
+			if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+				seekToFraction((elapsed + step) / estimatedTotal);
+			} else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+				seekToFraction((elapsed - step) / estimatedTotal);
+			} else if (e.key === 'Home') {
+				seekToFraction(0);
+			} else if (e.key === 'End') {
+				seekToFraction(1);
+			} else {
+				return;
+			}
+			e.preventDefault();
 		});
 
 		window.addEventListener('pagehide', function () {
