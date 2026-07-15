@@ -17,7 +17,7 @@ const featuredSlug = '50-30-20-budget-rule';
 const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
 const rest = allArticles.filter((a) => a.id !== featured.id);
 
-const latest = rest.slice(0, 6);
+const latest = rest.slice(0, 9);
 
 const usedTags = new Set(allArticles.flatMap((a) => a.data.tags ?? []));
 const topicTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
