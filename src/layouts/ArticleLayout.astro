@@ -1,12 +1,15 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ProductPromo from '../components/ProductPromo.astro';
 import TagPills from '../components/TagPills.astro';
+import AudioNarration from '../components/AudioNarration.astro';
 import { SITE_TITLE, TAG_MAP } from '../consts';
 
 function slugifyFaq(text: string): string {
@@ -30,6 +33,13 @@ type Props = CollectionEntry<'articles'>['data'] & {
 
 const { title, description, pubDate, updatedDate, image, cardImage, id, headings = [], readTime, faq, tags = [] } = Astro.props;
 const heroImage = cardImage || image;
+
+// Narration audio is generated per-article via scripts/generate-audio-narration.mjs
+// and lives at public/audio/{id}.mp3 by convention — render the player only if
+// that file actually exists, so articles awaiting generation don't break.
+const audioSrc = id && existsSync(path.resolve('public/audio', `${id}.mp3`))
+	? `/audio/${id}.mp3`
+	: undefined;
 
 const tocHeadings = headings.filter((h) => h.depth === 2);
 
@@ -200,6 +210,8 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 							<span>Email</span>
 						</a>
 					</div>
+
+					{audioSrc && <AudioNarration src={audioSrc} />}
 
 					<div class="prose">
 						<slot />

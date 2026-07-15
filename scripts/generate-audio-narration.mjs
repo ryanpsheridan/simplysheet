@@ -12,7 +12,7 @@ const articlesDir = path.resolve(import.meta.dirname, '../src/content/articles')
 const audioDir = path.resolve(import.meta.dirname, '../public/audio');
 
 const VOICE = { languageCode: 'en-US', name: 'en-US-Studio-O' };
-const SPEAKING_RATE = 1.12;
+const SPEAKING_RATE = 1.08;
 const MAX_CHUNK_CHARS = 4500; // Google's per-request input limit is 5000 bytes.
 
 function stripFrontmatter(raw) {
@@ -22,8 +22,22 @@ function stripFrontmatter(raw) {
 function stripJsx(body) {
 	return body
 		.replace(/^import .*$/gm, '')
+		// Custom Astro/JSX components (capitalized tags, e.g. <BudgetCalculator />,
+		// <Poll ... />) — drop entirely, including any multi-line props.
 		.replace(/<[A-Z][A-Za-z0-9]*(\s[^>]*)?\/>/g, '')
-		.replace(/<[A-Z][A-Za-z0-9]*(\s[^>]*)?>[\s\S]*?<\/[A-Z][A-Za-z0-9]*>/g, '');
+		.replace(/<[A-Z][A-Za-z0-9]*(\s[^>]*)?>[\s\S]*?<\/[A-Z][A-Za-z0-9]*>/g, '')
+		// Plain HTML tags (e.g. <a href="...">, <div class="...">) — unwrap but
+		// keep the inner text, since these usually wrap real prose (a CTA link).
+		.replace(/<\/?[a-z][^>]*>/g, '');
+}
+
+function stripTables(body) {
+	// Markdown tables read aloud as gibberish (pipes, dashes, cell fragments
+	// with no sentence structure) — drop them rather than trying to narrate.
+	return body
+		.split('\n')
+		.filter((line) => !/^\s*\|.*\|\s*$/.test(line))
+		.join('\n');
 }
 
 function markdownToPlainText(body) {
@@ -122,7 +136,7 @@ async function main() {
 		process.exit(1);
 	}
 
-	const body = stripJsx(stripFrontmatter(raw));
+	const body = stripTables(stripJsx(stripFrontmatter(raw)));
 	const text = markdownToPlainText(body);
 	const chunks = splitIntoChunks(text, MAX_CHUNK_CHARS);
 
