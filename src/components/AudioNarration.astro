@@ -1,11 +1,18 @@
 ---
-// Free, browser-only narration: reads the surrounding article's prose aloud
-// using the Web Speech API (SpeechSynthesis). No audio files, no API cost —
-// but voice quality/availability depends on the visitor's browser and OS.
+// Plays a pre-generated narration MP3 (see scripts/generate-audio-narration.mjs)
+// through a real <audio> element. Native playback means accurate duration,
+// sample-accurate scrubbing, and consistent voice quality for every visitor —
+// unlike the browser-speech-synthesis approach this replaced.
+interface Props {
+	src: string;
+}
+
+const { src } = Astro.props;
 const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div class="audio-narration" id={id}>
+	<audio id={`${id}-audio`} src={src} preload="metadata"></audio>
 	<button type="button" class="narr-play" id={`${id}-play`} aria-label="Play narration">
 		<svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
 			<path d="M8 5v14l11-7z" />
@@ -129,11 +136,7 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 		var root = document.getElementById(id);
 		if (!root) return;
 
-		if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
-			root.remove();
-			return;
-		}
-
+		var audio = document.getElementById(id + '-audio');
 		var playBtn = document.getElementById(id + '-play');
 		var track = document.getElementById(id + '-track');
 		var fillEl = document.getElementById(id + '-fill');
@@ -142,68 +145,8 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 		var iconPlay = playBtn.querySelector('.icon-play');
 		var iconPause = playBtn.querySelector('.icon-pause');
 
-		var prose = root.closest('.prose') || root.parentElement;
-		var SKIP_SELECTOR = '.audio-narration, .calc, .poll, .article-promo, .product-cards';
-
-		var chunks = Array.prototype.slice
-			.call(prose.querySelectorAll('h2, h3, p, li, blockquote'))
-			.filter(function (el) { return !el.closest(SKIP_SELECTOR); })
-			.map(function (el) { return el.textContent.trim(); })
-			.filter(function (t) { return t.length > 0; });
-
-		if (chunks.length === 0) {
-			root.remove();
-			return;
-		}
-
-		var WORDS_PER_SECOND = 2.5;
-		var chunkStartTimes = [];
-		var acc = 0;
-		chunks.forEach(function (text) {
-			chunkStartTimes.push(acc);
-			var wc = text.split(/\s+/).filter(Boolean).length;
-			acc += wc / WORDS_PER_SECOND;
-		});
-		var estimatedTotal = Math.max(Math.round(acc), 1);
-
-		// Browsers default to whatever voice is first in the list, which is
-		// often the worst-sounding one installed. Prefer known better-quality
-		// voices when available; otherwise fall back to any English voice.
-		var PREFERRED_VOICE_NAMES = [
-			'Google US English',
-			'Microsoft Aria Online (Natural)',
-			'Microsoft Jenny Online (Natural)',
-			'Microsoft Guy Online (Natural)',
-			'Samantha',
-			'Google UK English Female',
-			'Google UK English Male',
-		];
-		var selectedVoice = null;
-
-		function pickVoice() {
-			var voices = window.speechSynthesis.getVoices();
-			if (!voices || voices.length === 0) return null;
-			for (var i = 0; i < PREFERRED_VOICE_NAMES.length; i++) {
-				var match = voices.find(function (v) { return v.name.indexOf(PREFERRED_VOICE_NAMES[i]) !== -1; });
-				if (match) return match;
-			}
-			return voices.find(function (v) { return v.lang && v.lang.indexOf('en') === 0; }) || voices[0];
-		}
-
-		selectedVoice = pickVoice();
-		if (!selectedVoice && 'onvoiceschanged' in window.speechSynthesis) {
-			window.speechSynthesis.addEventListener('voiceschanged', function () {
-				if (!selectedVoice) selectedVoice = pickVoice();
-			});
-		}
-
-		var index = 0;
-		var elapsed = 0;
-		var isPlaying = false;
-		var started = false;
-		var pendingSeek = false;
 		var scrubbing = false;
-		var timerId = null;
+		var duration = 0;
 
 		function formatTime(sec) {
 			sec = Math.max(0, Math.round(sec));
@@ -212,124 +155,42 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 			return m + ':' + (s < 10 ? '0' : '') + s;
 		}
 
-		function updateTime() {
-			timeEl.textContent = formatTime(elapsed) + ' / ' + formatTime(estimatedTotal);
-			var pct = Math.min((elapsed / estimatedTotal) * 100, 100);
+		function updateDisplay(currentTime) {
+			var pct = duration > 0 ? Math.min((currentTime / duration) * 100, 100) : 0;
 			fillEl.style.width = pct + '%';
 			thumbEl.style.left = pct + '%';
-			track.setAttribute('aria-valuemax', String(estimatedTotal));
-			track.setAttribute('aria-valuenow', String(Math.round(elapsed)));
-			track.setAttribute('aria-valuetext', formatTime(elapsed) + ' of ' + formatTime(estimatedTotal));
-		}
-		updateTime();
-
-		function startTimer() {
-			stopTimer();
-			timerId = window.setInterval(function () {
-				elapsed += 0.25;
-				updateTime();
-			}, 250);
-		}
-
-		function stopTimer() {
-			if (timerId) {
-				clearInterval(timerId);
-				timerId = null;
-			}
+			timeEl.textContent = formatTime(currentTime) + ' / ' + (duration ? formatTime(duration) : '--:--');
+			track.setAttribute('aria-valuemax', String(Math.round(duration)));
+			track.setAttribute('aria-valuenow', String(Math.round(currentTime)));
+			track.setAttribute('aria-valuetext', formatTime(currentTime) + ' of ' + formatTime(duration));
 		}
 
 		function setPlayingUI(playing) {
-			isPlaying = playing;
 			iconPlay.classList.toggle('is-hidden', playing);
 			iconPause.classList.toggle('is-hidden', !playing);
 			playBtn.setAttribute('aria-label', playing ? 'Pause narration' : 'Play narration');
 		}
 
-		function findChunkIndexForTime(t) {
-			for (var i = chunkStartTimes.length - 1; i >= 0; i--) {
-				if (t >= chunkStartTimes[i]) return i;
-			}
-			return 0;
-		}
+		audio.addEventListener('loadedmetadata', function () {
+			duration = audio.duration;
+			updateDisplay(audio.currentTime);
+		});
 
-		function speakFrom(startIndex) {
-			if (!selectedVoice) selectedVoice = pickVoice();
-			window.speechSynthesis.cancel();
-			index = startIndex;
-			speakChunk();
-		}
+		audio.addEventListener('timeupdate', function () {
+			if (!scrubbing) updateDisplay(audio.currentTime);
+		});
 
-		function speakChunk() {
-			if (index >= chunks.length) {
-				finish();
-				return;
-			}
-			var utter = new SpeechSynthesisUtterance(chunks[index]);
-			utter.rate = 1;
-			if (selectedVoice) {
-				utter.voice = selectedVoice;
-			}
-			utter.onend = function () {
-				index += 1;
-				if (index < chunks.length) {
-					speakChunk();
-				} else {
-					finish();
-				}
-			};
-			utter.onerror = function () {
-				finish();
-			};
-			window.speechSynthesis.speak(utter);
-		}
+		audio.addEventListener('play', function () { setPlayingUI(true); });
+		audio.addEventListener('pause', function () { setPlayingUI(false); });
+		audio.addEventListener('ended', function () { setPlayingUI(false); });
 
-		function finish() {
-			stopTimer();
-			setPlayingUI(false);
-			started = false;
-			pendingSeek = false;
-			index = 0;
-			elapsed = estimatedTotal;
-			updateTime();
-		}
-
-		function play() {
-			if (!started || pendingSeek) {
-				started = true;
-				pendingSeek = false;
-				speakFrom(index);
+		playBtn.addEventListener('click', function () {
+			if (audio.paused) {
+				audio.play();
 			} else {
-				window.speechSynthesis.resume();
+				audio.pause();
 			}
-			setPlayingUI(true);
-			startTimer();
-		}
-
-		function pause() {
-			window.speechSynthesis.pause();
-			setPlayingUI(false);
-			stopTimer();
-		}
-
-		function seekToFraction(fraction) {
-			fraction = Math.min(Math.max(fraction, 0), 1);
-			var targetTime = fraction * estimatedTotal;
-			var wasPlaying = isPlaying;
-
-			window.speechSynthesis.cancel();
-			stopTimer();
-			index = findChunkIndexForTime(targetTime);
-			elapsed = targetTime;
-			started = true;
-			pendingSeek = true;
-			updateTime();
-
-			if (wasPlaying) {
-				play();
-			} else {
-				setPlayingUI(false);
-			}
-		}
+		});
 
 		function fractionFromEvent(e) {
 			var rect = track.getBoundingClientRect();
@@ -337,51 +198,37 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 			return Math.min(Math.max(x, 0), 1);
 		}
 
-		playBtn.addEventListener('click', function () {
-			if (isPlaying) {
-				pause();
-			} else {
-				play();
-			}
-		});
-
 		track.addEventListener('pointerdown', function (e) {
 			scrubbing = true;
 			track.setPointerCapture(e.pointerId);
-			elapsed = fractionFromEvent(e) * estimatedTotal;
-			updateTime();
+			updateDisplay(fractionFromEvent(e) * duration);
 		});
 
 		track.addEventListener('pointermove', function (e) {
 			if (!scrubbing) return;
-			elapsed = fractionFromEvent(e) * estimatedTotal;
-			updateTime();
+			updateDisplay(fractionFromEvent(e) * duration);
 		});
 
 		track.addEventListener('pointerup', function (e) {
 			if (!scrubbing) return;
 			scrubbing = false;
-			seekToFraction(fractionFromEvent(e));
+			audio.currentTime = fractionFromEvent(e) * duration;
 		});
 
 		track.addEventListener('keydown', function (e) {
 			var step = 5;
 			if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
-				seekToFraction((elapsed + step) / estimatedTotal);
+				audio.currentTime = Math.min(audio.currentTime + step, duration);
 			} else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
-				seekToFraction((elapsed - step) / estimatedTotal);
+				audio.currentTime = Math.max(audio.currentTime - step, 0);
 			} else if (e.key === 'Home') {
-				seekToFraction(0);
+				audio.currentTime = 0;
 			} else if (e.key === 'End') {
-				seekToFraction(1);
+				audio.currentTime = duration;
 			} else {
 				return;
 			}
 			e.preventDefault();
-		});
-
-		window.addEventListener('pagehide', function () {
-			window.speechSynthesis.cancel();
 		});
 	}
 
