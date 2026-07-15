@@ -166,6 +166,37 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 		});
 		var estimatedTotal = Math.max(Math.round(acc), 1);
 
+		// Browsers default to whatever voice is first in the list, which is
+		// often the worst-sounding one installed. Prefer known better-quality
+		// voices when available; otherwise fall back to any English voice.
+		var PREFERRED_VOICE_NAMES = [
+			'Google US English',
+			'Microsoft Aria Online (Natural)',
+			'Microsoft Jenny Online (Natural)',
+			'Microsoft Guy Online (Natural)',
+			'Samantha',
+			'Google UK English Female',
+			'Google UK English Male',
+		];
+		var selectedVoice = null;
+
+		function pickVoice() {
+			var voices = window.speechSynthesis.getVoices();
+			if (!voices || voices.length === 0) return null;
+			for (var i = 0; i < PREFERRED_VOICE_NAMES.length; i++) {
+				var match = voices.find(function (v) { return v.name.indexOf(PREFERRED_VOICE_NAMES[i]) !== -1; });
+				if (match) return match;
+			}
+			return voices.find(function (v) { return v.lang && v.lang.indexOf('en') === 0; }) || voices[0];
+		}
+
+		selectedVoice = pickVoice();
+		if (!selectedVoice && 'onvoiceschanged' in window.speechSynthesis) {
+			window.speechSynthesis.addEventListener('voiceschanged', function () {
+				if (!selectedVoice) selectedVoice = pickVoice();
+			});
+		}
+
 		var index = 0;
 		var elapsed = 0;
 		var isPlaying = false;
@@ -222,6 +253,7 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 		}
 
 		function speakFrom(startIndex) {
+			if (!selectedVoice) selectedVoice = pickVoice();
 			window.speechSynthesis.cancel();
 			index = startIndex;
 			speakChunk();
@@ -234,6 +266,9 @@ const id = `audio-narr-${Math.random().toString(36).slice(2, 8)}`;
 			}
 			var utter = new SpeechSynthesisUtterance(chunks[index]);
 			utter.rate = 1;
+			if (selectedVoice) {
+				utter.voice = selectedVoice;
+			}
 			utter.onend = function () {
 				index += 1;
 				if (index < chunks.length) {
