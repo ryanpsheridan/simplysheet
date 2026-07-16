@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="20%" y1="-10%" x2="80%" y2="110%">
+      <stop offset="0%" stop-color="#072B1E"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+    <filter id="blurM" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+
+  <circle cx="860" cy="-20" r="230" fill="#FFC107" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="180" cy="460" r="170" fill="#FFE9A8" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="560" cy="460" r="90" fill="#FFEE58" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="-60" cy="560" r="200" fill="#04140D" opacity="0.45" filter="url(#blurXL)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
+
+  <!-- Decorative motif: an abstract stack of coins, bottom-left -->
+  <g filter="url(#blurM)">
+    <circle cx="230" cy="462" r="55" fill="#FFFFFF" opacity="0.08"/>
+    <circle cx="230" cy="462" r="55" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.4"/>
+    <circle cx="230" cy="415" r="42" fill="#FFFFFF" opacity="0.1"/>
+    <circle cx="230" cy="415" r="42" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.35"/>
+    <circle cx="230" cy="378" r="30" fill="#FFFFFF" opacity="0.12"/>
+    <circle cx="230" cy="378" r="30" fill="none" stroke="#FFFFFF" stroke-width="4" opacity="0.3"/>
+  </g>
+
+  <!-- Wireframe overlay: Full Horizontal Bleed, a run of typical pay periods with one spiking bar (the extra paycheck) routed into a goal ring -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <line x1="144" y1="108" x2="144" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="108" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="108" x2="960" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="216" x2="960" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="324" x2="960" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="432" x2="960" y2="432" vector-effect="non-scaling-stroke"/>
+  </g>
+  <line x1="0" y1="432" x2="960" y2="432" stroke="#FFFFFF" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round">
+    <line x1="144" y1="432" x2="144" y2="324" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
+    <line x1="256" y1="432" x2="256" y2="324" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="432" x2="368" y2="324" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
+    <line x1="480" y1="432" x2="480" y2="108" stroke-width="1.5" opacity="0.95" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="432" x2="592" y2="324" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
+    <line x1="704" y1="432" x2="704" y2="324" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="432" x2="816" y2="324" stroke-width="1" opacity="0.45" vector-effect="non-scaling-stroke"/>
+  </g>
+
+  <path d="M480,108 Q592,140 704,162" stroke="#FFFFFF" stroke-width="1" opacity="0.45" stroke-dasharray="4,4" fill="none" vector-effect="non-scaling-stroke"/>
+  <circle cx="704" cy="162" r="28" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.5" vector-effect="non-scaling-stroke"/>
+  <circle cx="704" cy="162" r="4" fill="#FFFFFF" opacity="0.7"/>
+
+  <g fill="#FFFFFF">
+    <circle cx="144" cy="324" r="5" opacity="0.25"/>
+    <circle cx="144" cy="324" r="1.6" opacity="0.8"/>
+    <circle cx="256" cy="324" r="5" opacity="0.25"/>
+    <circle cx="256" cy="324" r="1.6" opacity="0.8"/>
+    <circle cx="368" cy="324" r="5" opacity="0.25"/>
+    <circle cx="368" cy="324" r="1.6" opacity="0.8"/>
+    <circle cx="480" cy="108" r="6" opacity="0.3"/>
+    <circle cx="480" cy="108" r="2" opacity="1"/>
+    <circle cx="592" cy="324" r="5" opacity="0.25"/>
+    <circle cx="592" cy="324" r="1.6" opacity="0.8"/>
+    <circle cx="704" cy="324" r="5" opacity="0.25"/>
+    <circle cx="704" cy="324" r="1.6" opacity="0.8"/>
+    <circle cx="816" cy="324" r="5" opacity="0.25"/>
+    <circle cx="816" cy="324" r="1.6" opacity="0.8"/>
+  </g>
+</svg>
