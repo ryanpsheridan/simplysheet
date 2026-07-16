@@ -1,6 +1,6 @@
 ---
 title: 'Where Is My Money Going? How to Find Out'
-description: "If you've ever looked at your bank account and wondered where it all went, here's the simplest way to find out, and what to do once you know."
+description: "Wondering where your money is actually going each month? Here's the simplest way to find out, and what to do once you know."
 pubDate: 'Jun 23 2026'
 image: '/images/card-v2-where-is-money-going.svg'
 cardImage: '/images/card-v2-where-is-money-going.svg'
