@@ -8,7 +8,7 @@ export default defineConfig({
 	integrations: [
 		mdx(),
 		sitemap({
-			filter: (page) => !page.includes('/style-guide'),
+			filter: (page) => !page.includes('/style-guide') && !page.endsWith('/rss.xml'),
 		}),
 	],
 	redirects: {

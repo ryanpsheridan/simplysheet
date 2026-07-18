@@ -6,6 +6,15 @@ const { mode = 'full' } = Astro.props;
 const showAssessment = mode !== 'calculator';
 const showCalculator = mode !== 'assessment';
 const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
+
+// Static server-rendered snapshot of question 1, mirrored by the client script
+// (see CATEGORIES/questions[0] below) — gives crawlers real quiz content instead
+// of empty placeholder divs that only fill in after JS runs.
+const firstQuestionCategories = [
+  'Christmas', 'Vacation', 'Annual Insurance', 'Car Maintenance',
+  'Home Repairs', 'Property Taxes', 'Gifts', 'School Expenses',
+  'Pet Care', 'Other'
+];
 ---
 
 <div class="sfc" id={id} data-mode={mode}>
@@ -19,9 +28,13 @@ const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
           <div class="sfc-progress-fill" id={`${id}-pfill`} style="width:20%"></div>
         </div>
       </div>
-      <h2 class="sfc-q-text" id={`${id}-qtext`}></h2>
-      <p class="sfc-q-hint" id={`${id}-qhint`}></p>
-      <div class="sfc-opts" id={`${id}-opts`}></div>
+      <h2 class="sfc-q-text" id={`${id}-qtext`}>What are you saving for?</h2>
+      <p class="sfc-q-hint" id={`${id}-qhint`} style="display:none"></p>
+      <div class="sfc-opts sfc-opts--grid" id={`${id}-opts`}>
+        {firstQuestionCategories.map((category) => (
+          <button class="sfc-opt" type="button">{category}</button>
+        ))}
+      </div>
     </div>
   )}
 
