@@ -6,6 +6,7 @@ import { Redis } from '@upstash/redis';
 const POLLS = {
 	'budgeting-style': ['planner', 'saver', 'spender', 'avoider'],
 	'debt-payoff-method': ['snowball', 'avalanche', 'not-started'],
+	'extra-paycheck-plan': ['savings', 'debt', 'emergency', 'mixed'],
 };
 
 const VOTER_TTL_SECONDS = 60 * 60 * 24 * 365;
