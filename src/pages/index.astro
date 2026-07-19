@@ -26,6 +26,7 @@ const organizationSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'Organization',
 	name: SITE_TITLE,
+	alternateName: 'Simply Sheet Design',
 	url: Astro.site?.toString(),
 	logo: new URL('/images/logo-256px.jpg', Astro.site).toString(),
 	description: SITE_DESCRIPTION,
@@ -40,6 +41,7 @@ const websiteSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'WebSite',
 	name: SITE_TITLE,
+	alternateName: 'Simply Sheet Design',
 	url: Astro.site?.toString(),
 	description: SITE_DESCRIPTION,
 	publisher: {
@@ -49,7 +51,7 @@ const websiteSchema = {
 };
 ---
 
-<BaseLayout title={`${SITE_TITLE} — Budget Templates & Money Guides`} description={SITE_DESCRIPTION}>
+<BaseLayout title={`${SITE_TITLE} — Budget Templates, Tools & Money Guides`} description={SITE_DESCRIPTION}>
 	<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 	<section class="hero">
