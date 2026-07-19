@@ -22,13 +22,6 @@ export const TOOLS: Tool[] = [
 		group: 'calculator',
 	},
 	{
-		name: 'Bill Split Calculator',
-		desc: 'Enter both take-home incomes and your shared bills to compare a 50/50 split with a fair split weighted by income.',
-		url: '/tools/bill-split-calculator/',
-		icon: '<circle cx="7" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2 20c0-2.8 2.2-5 5-5s5 2.2 5 5"/><path d="M12 20c0-2.8 2.2-5 5-5s5 2.2 5 5"/>',
-		group: 'calculator',
-	},
-	{
 		name: 'Debt Strategy Comparison',
 		desc: 'Compare avalanche vs. snowball payoff strategies and see how extra monthly payments affect each one differently.',
 		url: '/tools/debt-snowball-vs-avalanche-calculator/',
