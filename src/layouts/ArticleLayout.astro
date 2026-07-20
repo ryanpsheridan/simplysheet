@@ -34,6 +34,12 @@ type Props = CollectionEntry<'articles'>['data'] & {
 const { title, description, pubDate, updatedDate, image, cardImage, id, headings = [], readTime, faq, tags = [] } = Astro.props;
 const heroImage = cardImage || image;
 
+// Human-readable publish (or last-updated) date shown in the article header,
+// alongside the machine-readable <time datetime> the same value feeds.
+const displayDate = updatedDate ?? pubDate;
+const displayDateLabel = updatedDate ? 'Updated' : undefined;
+const formattedDate = displayDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
 // Narration audio is generated per-article via scripts/generate-audio-narration.mjs
 // and lives at public/audio/{id}.mp3 by convention — render the player only if
 // that file actually exists, so articles awaiting generation don't break.
@@ -183,7 +189,8 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 						<TagPills tags={tags} tagMap={TAG_MAP} />
 						<h1 class="article-title">{title}</h1>
 						<p class="article-meta">
-							{readTime && <span>{readTime} min read</span>}
+							<time datetime={displayDate.toISOString()}>{displayDateLabel && `${displayDateLabel} `}{formattedDate}</time>
+							{readTime && <><span class="article-meta-sep" aria-hidden="true">·</span><span>{readTime} min read</span></>}
 						</p>
 					</header>
 
