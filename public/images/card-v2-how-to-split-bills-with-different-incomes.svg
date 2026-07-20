@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="15%" y1="-10%" x2="95%" y2="110%">
+      <stop offset="0%" stop-color="#4A0E42"/>
+      <stop offset="100%" stop-color="#A61E7B"/>
+    </linearGradient>
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+    <filter id="blurM" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+
+  <circle cx="-40" cy="580" r="230" fill="#81C784" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="980" cy="120" r="175" fill="#A5D6A7" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="250" cy="150" r="88" fill="#69F0AE" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="1010" cy="600" r="170" fill="#2A0722" opacity="0.45" filter="url(#blurXL)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
+
+  <g filter="url(#blurM)">
+    <circle cx="380" cy="290" r="145" fill="none" stroke="#FFFFFF" stroke-width="7" opacity="0.5"/>
+    <circle cx="380" cy="290" r="145" fill="#FFFFFF" opacity="0.1"/>
+    <circle cx="615" cy="290" r="105" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.45"/>
+    <circle cx="615" cy="290" r="105" fill="#FFFFFF" opacity="0.12"/>
+  </g>
+
+  <!-- Wireframe overlay: Full Vertical Bleed, two income bars of different
+       heights (different incomes). Each bar's shaded base is the same share of
+       its own height, so the higher earner's dollar share is larger while both
+       give up the same slice of their income. -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <line x1="144" y1="0" x2="144" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="0" x2="368" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="0" x2="592" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="0" x2="816" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="108" x2="816" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="216" x2="816" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="324" x2="816" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
+  </g>
+  <!-- Emphasized origin: left wall + baseline -->
+  <g stroke="#FFFFFF" fill="none">
+    <line x1="144" y1="0" x2="144" y2="540" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="816" y2="432" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+  </g>
+  <!-- Shaded bill share (lower half of each bar) -->
+  <g fill="#FFFFFF" opacity="0.16">
+    <rect x="332" y="324" width="72" height="108"/>
+    <rect x="556" y="378" width="72" height="54"/>
+  </g>
+  <!-- Bar outlines + the bills/leftover divide -->
+  <g stroke="#FFFFFF" fill="none">
+    <rect x="332" y="216" width="72" height="216" rx="4" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <rect x="556" y="324" width="72" height="108" rx="4" stroke-width="1.5" opacity="0.9" vector-effect="non-scaling-stroke"/>
+    <line x1="332" y1="324" x2="404" y2="324" stroke-width="1" opacity="0.6" vector-effect="non-scaling-stroke"/>
+    <line x1="556" y1="378" x2="628" y2="378" stroke-width="1" opacity="0.6" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="368" cy="216" r="6" opacity="0.3"/>
+    <circle cx="368" cy="216" r="2" opacity="1"/>
+    <circle cx="592" cy="324" r="6" opacity="0.3"/>
+    <circle cx="592" cy="324" r="2" opacity="1"/>
+    <circle cx="368" cy="324" r="5" opacity="0.22"/>
+    <circle cx="368" cy="324" r="1.6" opacity="0.8"/>
+    <circle cx="592" cy="378" r="5" opacity="0.22"/>
+    <circle cx="592" cy="378" r="1.6" opacity="0.8"/>
+  </g>
+</svg>

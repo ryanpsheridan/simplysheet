@@ -1,0 +1,76 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import BillSplitCalculator from '../../components/BillSplitCalculator.astro';
+
+const title = 'Bill Split Calculator for Couples';
+const metaTitle = 'Bill Split Calculator — Split Bills Fairly by Income';
+const description = 'Free bill split calculator for couples with different incomes. Enter both take-home pays and your shared bills to compare a 50/50 split with a fair split by income.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'even-vs-proportional', text: '50/50 vs. splitting by income' },
+	{ slug: 'what-counts', text: 'What counts as a shared bill' },
+	{ slug: 'making-it-work', text: 'Making the split work in practice' },
+];
+
+const faq = [
+	{
+		question: 'How should couples split bills when they earn different incomes?',
+		answer: 'There is no single right answer, but the most common fair approach is to split shared bills in proportion to income. If one partner earns 60% of the household total, they cover 60% of the shared bills. This leaves both people with a similar share of their own income left over, which a flat 50/50 split does not when incomes are far apart.',
+	},
+	{
+		question: 'Is it better to split bills 50/50 or by income?',
+		answer: 'A 50/50 split is simplest and works well when two incomes are close. When incomes differ a lot, a 50/50 split takes a much bigger bite out of the lower earner\'s paycheck, so many couples switch to splitting in proportion to income. Both are valid. The point is to pick one on purpose rather than defaulting to 50/50 because it feels even on paper.',
+	},
+	{
+		question: 'What income should we use in the calculator?',
+		answer: 'Use monthly take-home pay, meaning what actually lands in each person\'s account after taxes, retirement contributions, and insurance. Splitting on gross pay distorts the ratio because deductions rarely line up between two people, and it overstates how much is really available for bills.',
+	},
+	{
+		question: 'Which bills should we split, and which stay personal?',
+		answer: 'Split the costs you share: rent or mortgage, utilities, groceries, insurance, and subscriptions you both use. Keep individual spending, personal debt, and solo hobbies separate so each person still has money that is clearly their own. The calculator is for the shared pool only.',
+	},
+	{
+		question: 'Do we need a joint account to split bills by income?',
+		answer: 'No. Many couples keep separate accounts and each transfer their share into one shared account that pays the bills, or one person pays and the other reimburses their portion. A joint account can make it smoother, but the split itself works the same either way.',
+	},
+];
+---
+
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="Bill Split Calculator"
+	toc={toc}
+	faq={faq}
+	tags={['couples-budgeting']}
+	productSlug="couples-budget-spreadsheet"
+	productLabel="Split bills fairly in one shared sheet"
+	relatedToolUrls={[
+		'/tools/50-30-20-budget-calculator/',
+		'/tools/emergency-fund-calculator/',
+		'/tools/sinking-fund-calculator/',
+		'/tools/expense-tracking-readiness/',
+	]}
+>
+	<Fragment slot="intro">When two people earn different amounts, an even 50/50 split can quietly leave the lower earner with much less breathing room. Enter both take-home incomes and your total shared bills to compare a flat 50/50 split with a split weighted by income, so you can pick the one that actually feels fair.</Fragment>
+
+	<BillSplitCalculator slot="calculator" />
+
+	<h2 id="how-it-works">How this calculator works</h2>
+	<p>The calculator takes three numbers: each partner's monthly take-home pay and the total you spend on shared bills each month. From those it works out two things. First, a flat 50/50 split, where each person pays half of the shared bills regardless of income. Second, a proportional split, where each person covers the same share of the bills as their share of your combined income.</p>
+	<p>Take-home pay means what actually reaches each account after taxes, retirement, and insurance. Using gross salary throws off the ratio, because payroll deductions rarely line up the same way for two different people. If you're not sure how much of your income is really free after essentials, the <a href="/tools/50-30-20-budget-calculator/">50/30/20 budget calculator</a> is a good companion.</p>
+
+	<h2 id="even-vs-proportional">50/50 vs. splitting by income</h2>
+	<p>A 50/50 split is the default a lot of couples reach for because it looks even. And when two incomes are close, it more or less is. The trouble starts when incomes are far apart. Half the rent is a small slice of a large paycheck and a large slice of a small one, so the person earning less ends up with far less money left for everything else, even though you both paid the same dollar amount.</p>
+	<p>Splitting in proportion to income fixes that. If you earn 60% of the household total, you cover 60% of the shared bills, and both people are left with a similar percentage of their own pay. Neither method is objectively correct, and plenty of couples happily split everything down the middle. The value of running the numbers is seeing the actual gap so you can choose on purpose. For more on why this matters, read <a href="/articles/how-to-split-bills-with-different-incomes/">how couples split bills fairly when they earn different incomes</a>.</p>
+
+	<h2 id="what-counts">What counts as a shared bill</h2>
+	<p>This calculator is only for the money you spend together. Shared bills usually include rent or mortgage, utilities, groceries, home and auto insurance, internet, and any subscriptions you both use. Add those up and enter the monthly total.</p>
+	<p>Keep personal spending out of it: individual hobbies, solo subscriptions, and each person's own debt payments. Splitting the shared pool fairly while leaving each partner their own money is what keeps the arrangement from feeling like one merged budget with no personal room. If tracking who paid for what is the sticking point, a shared <a href="/spreadsheets/couples-budget-spreadsheet/">couples budget spreadsheet</a> tags each expense as one partner's or joint so the shared total is always clear.</p>
+
+	<h2 id="making-it-work">Making the split work in practice</h2>
+	<p>Once you've picked a split, the mechanics are simple. Many couples each transfer their share into one shared account that pays the bills, so no single person is fronting the money. Others have one person pay and the other reimburse their portion on payday. You don't need a joint account for either approach, though it can make the transfers smoother.</p>
+	<p>Recheck the numbers whenever an income changes, since a raise or a new job shifts the fair ratio. And treat the split as a shared decision you revisit together, not a fixed rule. Couples who talk through the plan tend to argue about money less, which is the whole point. See <a href="/articles/couples-budgeting/">how to budget as a couple without fighting about money</a> for the bigger picture.</p>
+</CalculatorLayout>
