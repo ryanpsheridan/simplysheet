@@ -166,6 +166,16 @@ p {
 
 	.table-scroll-wrap {
 		position: relative;
+		/* The wrap itself carries the bleed now (rather than the table), so
+		   the shadow below — pinned to the wrap's right edge — lines up with
+		   the table's actual clipped edge instead of sitting short of it. */
+		width: calc(100% + var(--space-md));
+		margin-right: calc(-1 * var(--space-md));
+	}
+
+	.prose .table-scroll-wrap table {
+		width: 100%;
+		margin-right: 0;
 	}
 
 	.table-edge-shadow {
@@ -174,7 +184,7 @@ p {
 		right: 0;
 		bottom: 0;
 		width: 32px;
-		background: linear-gradient(to left, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0));
+		background: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
 		opacity: 0;
 		pointer-events: none;
 		transition: opacity 0.2s ease;
