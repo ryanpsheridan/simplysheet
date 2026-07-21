@@ -138,6 +138,12 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 	/* ——— Comparison table: flush with the page, no wrapping card ——— */
 
 	.calc-table {
+		/* Explicit display:table so the calculator keeps its fixed table layout
+		   when embedded in an article: the global `.prose table` mobile rule
+		   switches tables to display:block/overflow-x:auto, which would let these
+		   cells shrink-wrap and stop the row dividers short of full width. This
+		   scoped selector outranks `.prose table`, so the layout stays put. */
+		display: table;
 		width: 100%;
 		table-layout: fixed;
 		border-collapse: collapse;
