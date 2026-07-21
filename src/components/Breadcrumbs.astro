@@ -35,6 +35,21 @@ const { crumbs } = Astro.props;
 		.breadcrumbs {
 			margin-bottom: calc(var(--space-xl) / 2);
 		}
+
+		/* Force the current-page crumb onto its own full-width row and
+		   truncate it there instead of letting it wrap into a third line. */
+		.breadcrumbs li:last-child {
+			flex: 1 1 100%;
+			min-width: 0;
+			overflow: hidden;
+		}
+
+		.breadcrumbs li:last-child span {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			min-width: 0;
+		}
 	}
 	.breadcrumbs ol {
 		list-style: none;
