@@ -14,7 +14,7 @@ const templates = (await getCollection('templates'))
 		name: t.data.title.replace(/ for (Google )?Sheets & Excel$/, ''),
 		desc: t.data.description,
 		url: `/spreadsheets/${t.id}/`,
-		image: t.data.heroImage,
+		image: t.data.midImage,
 		badge: t.data.badge,
 	}));
 
