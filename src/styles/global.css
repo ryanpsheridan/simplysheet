@@ -259,13 +259,11 @@ p {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
-	object-position: right center;
+	object-position: center;
 	display: block;
-	transform-origin: right center;
+	transform-origin: center;
 	transition: transform 0.3s ease;
 }
-/* Hover zooms the flush-right product image from its pinned right edge
-   (overflow: hidden clips the leftward growth). Pointer devices only. */
 @media (hover: hover) {
 	.article-promo-thumb:hover img {
 		transform: scale(1.01);
@@ -446,13 +444,11 @@ p {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
-	object-position: right center;
+	object-position: center;
 	display: block;
-	transform-origin: right center;
+	transform-origin: center;
 	transition: transform 0.3s ease;
 }
-/* Hover zooms the flush-right product image from its pinned right edge
-   (overflow: hidden clips the leftward growth). Pointer devices only. */
 @media (hover: hover) {
 	.product-thumb:hover img {
 		transform: scale(1.01);
@@ -552,11 +548,10 @@ hr {
 	transition: opacity 0.15s ease;
 }
 @media (hover: hover) {
-	/* Article cards: hover zooms only the thumbnail (padding shrink), leaving
-	   the title/badge/meta text untouched (dimming text hurt contrast). Tool
-	   cards have no thumbnail, so they keep the whole-item dim for hover. */
-	.home-row-item:hover .home-row-thumb {
-		padding: 1.375rem;
+	/* Article cards (no outer container): hover zooms the image itself.
+	   Tool cards have no thumbnail, so they keep the whole-item dim for hover. */
+	.home-row-item:hover .home-row-thumb:not(.home-row-thumb--product) img {
+		transform: scale(1.02);
 	}
 	.home-row-item--tool:hover {
 		opacity: 0.7;
@@ -568,9 +563,10 @@ hr {
 	aspect-ratio: 3 / 2;
 	border-radius: var(--radius-md);
 	overflow: hidden;
-	background: var(--color-bg-panel);
-	padding: 1.5rem;
-	transition: padding 0.3s ease;
+}
+.home-row-thumb:not(.home-row-thumb--product) {
+	background: none;
+	padding: 0;
 }
 .home-row-thumb img {
 	display: block;
@@ -578,6 +574,9 @@ hr {
 	height: 100%;
 	object-fit: cover;
 	border-radius: var(--radius-sm);
+}
+.home-row-thumb:not(.home-row-thumb--product) img {
+	transition: transform 0.3s ease;
 }
 .home-row-text {
 	min-width: 0;
@@ -605,22 +604,21 @@ hr {
 /* Product variant — pre-cropped hero images pinned flush-right (no right
    padding, object-fit: contain). Never center these or add right padding. */
 .home-row-thumb--product {
-	padding: 1.5rem 0 1.5rem 1.5rem;
+	background: var(--color-bg-panel);
+	padding: 0.75rem 1.5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 .home-row-thumb--product img {
 	object-fit: contain;
-	object-position: right center;
-	transform-origin: right center;
+	object-position: center;
+	transform-origin: center;
 	transition: transform 0.3s ease;
 }
 @media (hover: hover) {
-	/* Keep the flush-right padding on hover (the article-card padding shrink
-	   would float the bare crop edge); zoom the image from its right edge. */
 	.home-row-item:hover .home-row-thumb--product {
-		padding: 1.5rem 0 1.5rem 1.5rem;
+		padding: 0.75rem 1.5rem;
 	}
 	.home-row-item:hover .home-row-thumb--product img {
 		transform: scale(1.01);

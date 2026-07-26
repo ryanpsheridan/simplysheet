@@ -77,26 +77,26 @@ const templates = [
 		name: 'Budget Template',
 		desc: 'Track income and daily expenses with real-time progress indicators that show where you stand each month.',
 		url: withEtsyTracking('https://simplysheetdesign.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel'),
-		image: '/images/featured budget thumbnail- budget template-right-positioned-v2.png',
+		image: '/images/featured budget thumbnail- budget template-v2.png',
 		badge: 'Best Seller',
 	},
 	{
 		name: 'Couples Budget Spreadsheet',
 		desc: 'Split bills, track shared and personal expenses, and manage savings together. Built for two incomes.',
 		url: withEtsyTracking('https://simplysheetdesign.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets'),
-		image: '/images/featured budget thumbnail-couples-right-positioned-v2.png',
+		image: '/images/featured budget thumbnail-couples-v2.png',
 	},
 	{
 		name: 'Debt Payoff Tracker',
 		desc: 'See your total debt, log payments, and watch your balances drop month by month with clear visual progress.',
 		url: withEtsyTracking('https://simplysheetdesign.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets'),
-		image: '/images/featured budget thumbnail-debt-tracker-right-positioned-v2.png',
+		image: '/images/featured budget thumbnail-debt-tracker-v2.png',
 	},
 	{
 		name: 'Savings Goals Tracker',
 		desc: 'Set multiple savings goals, automate contributions, and track your progress toward each one.',
 		url: withEtsyTracking('https://simplysheetdesign.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets'),
-		image: '/images/featured budget thumbnail-savings goals tracker-right-positioned-v2.png',
+		image: '/images/featured budget thumbnail-savings goals tracker-v2.png',
 	},
 ];
 ---
@@ -187,9 +187,7 @@ const templates = [
 		text-decoration: none;
 		color: inherit;
 	}
-	/* Hover zooms only the thumbnail, leaving the name/badge text untouched.
-	   The image is pinned flush-right, so scale from the right edge to keep
-	   that edge fixed (overflow: hidden clips the leftward growth). */
+	/* Hover zooms only the thumbnail, leaving the name/badge text untouched. */
 	@media (hover: hover) {
 		.resource-card:hover .resource-thumb img {
 			transform: scale(1.01);
@@ -198,20 +196,20 @@ const templates = [
 	.resource-thumb {
 		position: relative;
 		width: 100%;
-		aspect-ratio: 10 / 9;
+		aspect-ratio: 3 / 2;
 		border-radius: var(--radius-md);
 		overflow: hidden;
 		background: var(--color-bg-panel);
-		padding: 1.5rem 0 1.5rem 1.5rem;
+		padding: 0.75rem 1.5rem;
 	}
 	.resource-thumb img {
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
-		object-position: right center;
+		object-position: center;
 		border-radius: var(--radius-sm);
 		display: block;
-		transform-origin: right center;
+		transform-origin: center;
 		transition: transform 0.3s ease;
 	}
 	.resource-badge {

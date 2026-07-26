@@ -24,12 +24,6 @@ const { tool } = Astro.props;
 		flex-direction: column;
 		text-decoration: none;
 		color: inherit;
-		transition: opacity 0.15s ease;
-	}
-	@media (hover: hover) {
-		.tool-thumb-card:hover {
-			opacity: 0.7;
-		}
 	}
 	.tool-thumb-illustration {
 		aspect-ratio: 3 / 2;
@@ -39,6 +33,12 @@ const { tool } = Astro.props;
 		padding: var(--space-md);
 		color: var(--color-text);
 		margin-bottom: var(--space-sm);
+		transition: background 0.15s ease;
+	}
+	@media (hover: hover) {
+		.tool-thumb-card:hover .tool-thumb-illustration {
+			background: var(--color-bg-emphasis);
+		}
 	}
 	.tool-thumb-illustration svg {
 		display: block;
