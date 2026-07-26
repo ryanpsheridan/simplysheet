@@ -654,36 +654,9 @@ hr {
 	white-space: nowrap;
 }
 
-/* Tools variant — icon + label, 4 across, no thumbnail. */
-.home-row-items--tools {
-	grid-template-columns: repeat(4, 1fr);
-}
-.home-row-item--tool {
-	flex-direction: row;
-	align-items: center;
-}
-.home-row-icon {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-	width: 2.5rem;
-	height: 2.5rem;
-	border-radius: var(--radius-full);
-	background: var(--color-bg-panel);
-	color: var(--color-text);
-}
-.home-row-item--tool .home-row-title {
-	font-size: var(--text-small);
-	-webkit-line-clamp: 2;
-}
-
 @media (max-width: 960px) {
 	.home-row-items {
 		grid-template-columns: repeat(2, 1fr);
-	}
-	.home-row-items--tools {
-		grid-template-columns: repeat(3, 1fr);
 	}
 }
 @media (max-width: 768px) {
@@ -693,11 +666,10 @@ hr {
 	}
 }
 @media (max-width: 600px) {
-	.home-row-items,
-	.home-row-items--tools {
+	.home-row-items {
 		grid-template-columns: 1fr;
 	}
-	.home-row-item:not(.home-row-item--tool) .home-row-title {
+	.home-row-item .home-row-title {
 		font-size: 1.25rem;
 	}
 }

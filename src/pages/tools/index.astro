@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ToolThumbCard from '../../components/ToolThumbCard.astro';
 import { SITE_TITLE } from '../../consts';
 import { TOOLS } from '../../data/tools';
 
@@ -26,13 +27,7 @@ const assessments = TOOLS.filter((t) => t.group === 'assessment');
 				</div>
 				<div class="tools-row-items">
 					{calculators.map((tool) => (
-						<a href={tool.url} class="tools-row-item">
-							<span class="tools-row-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
-							<div class="tools-row-text">
-								<h3 class="tools-row-title">{tool.name}</h3>
-								<p class="tools-row-desc">{tool.desc}</p>
-							</div>
-						</a>
+						<ToolThumbCard tool={tool} />
 					))}
 				</div>
 			</div>
@@ -43,13 +38,7 @@ const assessments = TOOLS.filter((t) => t.group === 'assessment');
 				</div>
 				<div class="tools-row-items">
 					{assessments.map((tool) => (
-						<a href={tool.url} class="tools-row-item">
-							<span class="tools-row-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
-							<div class="tools-row-text">
-								<h3 class="tools-row-title">{tool.name}</h3>
-								<p class="tools-row-desc">{tool.desc}</p>
-							</div>
-						</a>
+						<ToolThumbCard tool={tool} />
 					))}
 				</div>
 			</div>
@@ -87,46 +76,6 @@ const assessments = TOOLS.filter((t) => t.group === 'assessment');
 		grid-template-columns: repeat(3, 1fr);
 		row-gap: 3rem;
 		column-gap: 2rem;
-	}
-	.tools-row-item {
-		display: flex;
-		align-items: flex-start;
-		gap: var(--space-sm);
-		text-decoration: none;
-		color: inherit;
-		transition: opacity 0.15s ease;
-	}
-	@media (hover: hover) {
-		.tools-row-item:hover {
-			opacity: 0.7;
-		}
-	}
-	.tools-row-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-		width: 2.5rem;
-		height: 2.5rem;
-		border-radius: var(--radius-full);
-		background: var(--color-bg-panel);
-		color: var(--color-text);
-	}
-	.tools-row-text {
-		min-width: 0;
-	}
-	.tools-row-title {
-		font-size: var(--text-body);
-		font-weight: var(--weight-normal);
-		line-height: 1.35;
-		margin: 0 0 var(--space-2xs);
-		color: var(--color-text);
-	}
-	.tools-row-desc {
-		font-size: var(--text-small);
-		line-height: var(--leading-snug);
-		color: var(--color-text-secondary);
-		margin: 0;
 	}
 
 	@media (max-width: 960px) {
