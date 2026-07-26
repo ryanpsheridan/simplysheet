@@ -254,6 +254,7 @@ p {
 	border-radius: var(--radius-md);
 	background: var(--color-bg-panel);
 	overflow: hidden;
+	transition: background 0.15s ease;
 }
 .article-promo-thumb img {
 	width: 100%;
@@ -261,12 +262,10 @@ p {
 	object-fit: contain;
 	object-position: center;
 	display: block;
-	transform-origin: center;
-	transition: transform 0.3s ease;
 }
 @media (hover: hover) {
-	.article-promo-thumb:hover img {
-		transform: scale(1.01);
+	.article-promo-thumb:hover {
+		background: var(--color-bg-emphasis);
 	}
 }
 .article-promo-content {
@@ -364,6 +363,7 @@ p {
 	aspect-ratio: 1999 / 1215;
 	background: var(--color-bg-panel);
 	overflow: hidden;
+	transition: background 0.15s ease;
 }
 .product-card-thumb img {
 	width: 100%;
@@ -371,13 +371,10 @@ p {
 	object-fit: cover;
 	display: block;
 	border-radius: 0;
-	transition: transform 0.3s ease;
 }
-/* This variant's image is centered (object-fit: cover), so zoom from the
-   center on hover. Pairs with the card's existing border/background shift. */
 @media (hover: hover) {
-	.product-card:hover .product-card-thumb img {
-		transform: scale(1.01);
+	.product-card:hover .product-card-thumb {
+		background: var(--color-bg-emphasis);
 	}
 }
 .product-card-badge {
@@ -439,6 +436,7 @@ p {
 	border-radius: var(--radius-md);
 	background: var(--color-bg-panel);
 	overflow: hidden;
+	transition: background 0.15s ease;
 }
 .product-thumb img {
 	width: 100%;
@@ -446,12 +444,10 @@ p {
 	object-fit: contain;
 	object-position: center;
 	display: block;
-	transform-origin: center;
-	transition: transform 0.3s ease;
 }
 @media (hover: hover) {
-	.product-thumb:hover img {
-		transform: scale(1.01);
+	.product-thumb:hover {
+		background: var(--color-bg-emphasis);
 	}
 }
 .product-content {
@@ -548,13 +544,10 @@ hr {
 	transition: opacity 0.15s ease;
 }
 @media (hover: hover) {
-	/* Article cards (no outer container): hover zooms the image itself.
-	   Tool cards have no thumbnail, so they keep the whole-item dim for hover. */
-	.home-row-item:hover .home-row-thumb:not(.home-row-thumb--product) img {
-		transform: scale(1.02);
-	}
-	.home-row-item--tool:hover {
-		opacity: 0.7;
+	/* Article/product cards: hover darkens the thumbnail's gray container
+	   (matches the tool thumbnail cards), not a zoom on the image. */
+	.home-row-item:hover .home-row-thumb:not(.home-row-thumb--product) {
+		background: var(--color-bg-emphasis);
 	}
 }
 .home-row-thumb {
@@ -563,10 +556,9 @@ hr {
 	aspect-ratio: 3 / 2;
 	border-radius: var(--radius-md);
 	overflow: hidden;
-}
-.home-row-thumb:not(.home-row-thumb--product) {
-	background: none;
-	padding: 0;
+	background: var(--color-bg-panel);
+	padding: 1.5rem;
+	transition: background 0.15s ease;
 }
 .home-row-thumb img {
 	display: block;
@@ -574,9 +566,6 @@ hr {
 	height: 100%;
 	object-fit: cover;
 	border-radius: var(--radius-sm);
-}
-.home-row-thumb:not(.home-row-thumb--product) img {
-	transition: transform 0.3s ease;
 }
 .home-row-text {
 	min-width: 0;
@@ -613,15 +602,10 @@ hr {
 .home-row-thumb--product img {
 	object-fit: contain;
 	object-position: center;
-	transform-origin: center;
-	transition: transform 0.3s ease;
 }
 @media (hover: hover) {
 	.home-row-item:hover .home-row-thumb--product {
-		padding: 0.75rem 1.5rem;
-	}
-	.home-row-item:hover .home-row-thumb--product img {
-		transform: scale(1.01);
+		background: var(--color-bg-emphasis);
 	}
 }
 .home-row-desc {

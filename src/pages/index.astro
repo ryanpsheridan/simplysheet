@@ -177,11 +177,11 @@ const websiteSchema = {
 		flex-direction: column;
 		text-decoration: none;
 	}
-	/* Hover zooms only the thumbnail (transform, so the text below doesn't
-	   reflow), leaving the title/meta text untouched for contrast. */
+	/* Hover darkens the thumbnail's gray container, matching the tool
+	   thumbnail cards, leaving the title/meta text untouched for contrast. */
 	@media (hover: hover) {
-		.hero-featured:hover .hero-featured-thumb img {
-			transform: scale(1.01);
+		.hero-featured:hover .hero-featured-thumb {
+			background: var(--color-bg-emphasis);
 		}
 	}
 	.hero-featured-thumb {
@@ -189,13 +189,15 @@ const websiteSchema = {
 		border-radius: var(--radius-md);
 		overflow: hidden;
 		margin-bottom: var(--space-md);
+		background: var(--color-bg-panel);
+		padding: 1.5rem;
+		transition: background 0.15s ease;
 	}
 	.hero-featured-thumb img {
 		display: block;
 		width: 100%;
 		height: auto;
 		border-radius: var(--radius-sm);
-		transition: transform 0.3s ease;
 	}
 	.hero-featured-title {
 		font-size: var(--text-h3);

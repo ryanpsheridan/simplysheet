@@ -768,6 +768,7 @@ function featureIcon(text: string): string {
 		background: var(--color-bg-panel);
 		border-bottom: 1px solid var(--color-border);
 		overflow: hidden;
+		transition: background 0.15s ease;
 	}
 
 	.bundle-thumb img {
@@ -776,13 +777,12 @@ function featureIcon(text: string): string {
 		height: 100%;
 		object-fit: contain;
 		object-position: center;
-		transition: transform 0.3s ease;
 	}
-	/* This image is centered, so zoom from the center on hover. Pairs with
-	   the card's existing border/background shift. Pointer devices only. */
+	/* Hover darkens the thumbnail's gray container, matching the tool
+	   thumbnail cards. Pointer devices only. */
 	@media (hover: hover) {
-		.bundle-card:hover .bundle-thumb img {
-			transform: scale(1.01);
+		.bundle-card:hover .bundle-thumb {
+			background: var(--color-bg-emphasis);
 		}
 	}
 
@@ -1124,10 +1124,11 @@ function featureIcon(text: string): string {
 		text-decoration: none;
 		color: inherit;
 	}
-	/* Hover zooms only the thumbnail, leaving the name/badge text untouched. */
+	/* Hover darkens the thumbnail's gray container (matches the tool
+	   thumbnail cards), leaving the name/badge text untouched. */
 	@media (hover: hover) {
-		.template-card:hover .template-thumb img {
-			transform: scale(1.01);
+		.template-card:hover .template-thumb {
+			background: var(--color-bg-emphasis);
 		}
 	}
 
@@ -1139,6 +1140,7 @@ function featureIcon(text: string): string {
 		overflow: hidden;
 		background: var(--color-bg-panel);
 		padding: 0.75rem 1.5rem;
+		transition: background 0.15s ease;
 	}
 	.template-thumb img {
 		width: 100%;
@@ -1147,8 +1149,6 @@ function featureIcon(text: string): string {
 		object-position: center;
 		border-radius: var(--radius-sm);
 		display: block;
-		transform-origin: center;
-		transition: transform 0.3s ease;
 	}
 
 	.template-badge {

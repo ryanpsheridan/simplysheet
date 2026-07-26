@@ -80,10 +80,11 @@ const templates = (await getCollection('templates'))
 		color: inherit;
 	}
 
-	/* Hover zooms only the thumbnail, leaving the name/badge text untouched. */
+	/* Hover darkens the thumbnail's gray container (matches the tool
+	   thumbnail cards), leaving the name/badge text untouched. */
 	@media (hover: hover) {
-		.template-card:hover .template-thumb img {
-			transform: scale(1.01);
+		.template-card:hover .template-thumb {
+			background: var(--color-bg-emphasis);
 		}
 	}
 
@@ -95,6 +96,7 @@ const templates = (await getCollection('templates'))
 		overflow: hidden;
 		background: var(--color-bg-panel);
 		padding: 0.75rem 1.5rem;
+		transition: background 0.15s ease;
 	}
 
 	.template-thumb img {
@@ -104,8 +106,6 @@ const templates = (await getCollection('templates'))
 		object-position: center;
 		border-radius: var(--radius-sm);
 		display: block;
-		transform-origin: center;
-		transition: transform 0.3s ease;
 	}
 
 	.template-badge {

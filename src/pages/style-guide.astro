@@ -787,15 +787,16 @@ const toolThumbnails = [
 		overflow: hidden;
 		margin-bottom: var(--space-sm);
 		background: var(--color-bg-panel);
+		padding: 1.5rem;
+		transition: background 0.15s ease;
 	}
 	.editorial-card-thumb img {
 		display: block;
 		width: 100%;
 		height: auto;
-		transition: transform 0.2s ease;
 	}
-	.editorial-card:hover .editorial-card-thumb img {
-		transform: scale(1.02);
+	.editorial-card:hover .editorial-card-thumb {
+		background: var(--color-bg-emphasis);
 	}
 	.editorial-card-title {
 		font-size: var(--text-h3);
