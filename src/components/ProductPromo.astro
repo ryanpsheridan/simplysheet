@@ -14,11 +14,11 @@ if (!template) {
 	throw new Error(`ProductPromo: no template found for slug "${slug}"`);
 }
 
-const { title, description, badge, midImage, heroImage } = template.data;
+const { title, description, badge, midImage } = template.data;
 const name = title.replace(/ for (Google )?Sheets & Excel$/, '');
 const url = `/spreadsheets/${slug}/`;
 const alt = `${name} preview`;
-const image = variant === 'card' ? midImage : heroImage;
+const image = midImage;
 ---
 
 {variant === 'interstitial' && (

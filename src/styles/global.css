@@ -259,13 +259,11 @@ p {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
-	object-position: right center;
+	object-position: center;
 	display: block;
-	transform-origin: right center;
+	transform-origin: center;
 	transition: transform 0.3s ease;
 }
-/* Hover zooms the flush-right product image from its pinned right edge
-   (overflow: hidden clips the leftward growth). Pointer devices only. */
 @media (hover: hover) {
 	.article-promo-thumb:hover img {
 		transform: scale(1.01);
@@ -446,13 +444,11 @@ p {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
-	object-position: right center;
+	object-position: center;
 	display: block;
-	transform-origin: right center;
+	transform-origin: center;
 	transition: transform 0.3s ease;
 }
-/* Hover zooms the flush-right product image from its pinned right edge
-   (overflow: hidden clips the leftward growth). Pointer devices only. */
 @media (hover: hover) {
 	.product-thumb:hover img {
 		transform: scale(1.01);
@@ -605,22 +601,20 @@ hr {
 /* Product variant — pre-cropped hero images pinned flush-right (no right
    padding, object-fit: contain). Never center these or add right padding. */
 .home-row-thumb--product {
-	padding: 1.5rem 0 1.5rem 1.5rem;
+	padding: 0.75rem 1.5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 .home-row-thumb--product img {
 	object-fit: contain;
-	object-position: right center;
-	transform-origin: right center;
+	object-position: center;
+	transform-origin: center;
 	transition: transform 0.3s ease;
 }
 @media (hover: hover) {
-	/* Keep the flush-right padding on hover (the article-card padding shrink
-	   would float the bare crop edge); zoom the image from its right edge. */
 	.home-row-item:hover .home-row-thumb--product {
-		padding: 1.5rem 0 1.5rem 1.5rem;
+		padding: 0.75rem 1.5rem;
 	}
 	.home-row-item:hover .home-row-thumb--product img {
 		transform: scale(1.01);
