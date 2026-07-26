@@ -9,7 +9,8 @@
 }
 
 body {
-	font-family: var(--font-sans);
+	font-family: var(--font-body);
+	font-weight: var(--weight-light);
 	font-size: var(--text-body);
 	line-height: var(--leading-normal);
 	color: var(--color-text);
