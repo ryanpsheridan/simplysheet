@@ -46,29 +46,31 @@ const DEBTS = [
 			<div class="compare-meta">
 				<span class="compare-method">Avalanche</span>
 				<span class="compare-badge">Highest rate first</span>
+				<span class="compare-best" id={`${id}-aval-best`} hidden>Best value</span>
 			</div>
 			<div class="compare-track">
 				<div class="compare-fill compare-fill--avalanche" id={`${id}-aval`}></div>
 			</div>
 			<div class="compare-metrics-row">
 				<span class="compare-metrics-cost">Interest paid: <span class="compare-metrics-value" id={`${id}-aval-interest`}>$0</span></span>
-				<span class="compare-metrics-time compare-metrics-time--highlight" id={`${id}-aval-time`}></span>
 			</div>
 		</div>
 		<div class="compare-row">
 			<div class="compare-meta">
 				<span class="compare-method">Snowball</span>
 				<span class="compare-badge">Smallest balance first</span>
+				<span class="compare-best" id={`${id}-snow-best`} hidden>Best value</span>
 			</div>
 			<div class="compare-track">
 				<div class="compare-fill compare-fill--snowball" id={`${id}-snow`}></div>
 			</div>
 			<div class="compare-metrics-row">
 				<span class="compare-metrics-cost">Interest paid: <span class="compare-metrics-value" id={`${id}-snow-interest`}>$0</span></span>
-				<span class="compare-metrics-time" id={`${id}-snow-time`}></span>
 			</div>
 		</div>
 	</div>
+
+	<p class="compare-summary" id={`${id}-summary`}></p>
 
 	<p class="compare-note">Estimated using typical interest rates — actual results may vary.</p>
 </div>
@@ -137,23 +139,36 @@ const DEBTS = [
 		outline: none;
 		cursor: pointer;
 	}
+	/* Thumb hit box is 44x44 (WCAG touch target minimum) even though the
+	   visible dot stays 22px — the extra hit area is transparent, drawn via
+	   the radial-gradient stops below, with a drop-shadow (not box-shadow)
+	   so the shadow follows the visible dot's alpha shape, not the full box. */
 	.slider-input::-webkit-slider-thumb {
 		-webkit-appearance: none;
-		width: 22px;
-		height: 22px;
+		width: 44px;
+		height: 44px;
 		border-radius: 50%;
-		background: var(--color-btn);
-		border: 2px solid var(--color-bg-surface);
-		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+		background: radial-gradient(
+			circle,
+			var(--color-btn) 0 9px,
+			var(--color-bg-surface) 9px 11px,
+			transparent 11px 100%
+		);
+		filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.15));
 		cursor: pointer;
 	}
 	.slider-input::-moz-range-thumb {
-		width: 22px;
-		height: 22px;
+		width: 44px;
+		height: 44px;
+		border: none;
 		border-radius: 50%;
-		background: var(--color-btn);
-		border: 2px solid var(--color-bg-surface);
-		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+		background: radial-gradient(
+			circle,
+			var(--color-btn) 0 9px,
+			var(--color-bg-surface) 9px 11px,
+			transparent 11px 100%
+		);
+		filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.15));
 		cursor: pointer;
 	}
 
@@ -202,6 +217,24 @@ const DEBTS = [
 		padding: 0.125rem 0.5rem;
 	}
 
+	/* Neutral, not a judgment color — avalanche and snowball are both
+	   presented as equally valid strategies elsewhere on the site, so this
+	   only states which one is cheaper in dollar terms right now, styled
+	   the same as the other method badge rather than a green "winner". */
+	.compare-best {
+		display: inline-block;
+		font-size: 0.6875rem;
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		background: var(--color-bg-panel);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		padding: 0.125rem 0.5rem;
+	}
+	.compare-best[hidden] {
+		display: none;
+	}
+
 	.compare-track {
 		height: 6px;
 		background: var(--color-bg-panel);
@@ -212,7 +245,7 @@ const DEBTS = [
 	.compare-fill {
 		height: 100%;
 		border-radius: 3px;
-		transition: width 0.35s ease;
+		transition: width 0.25s ease-out;
 	}
 
 	.compare-fill--avalanche {
@@ -223,14 +256,7 @@ const DEBTS = [
 		background: var(--color-debt-snowball);
 	}
 
-	/* Interest + months-faster read like a table row directly under each
-	   strategy's own bar: cost pinned left, pace pinned right, instead of
-	   both crammed into one running sentence. */
 	.compare-metrics-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: var(--space-sm);
 		margin-top: var(--space-xs);
 	}
 
@@ -243,15 +269,14 @@ const DEBTS = [
 		color: var(--color-text);
 	}
 
-	.compare-metrics-time {
-		font-size: var(--text-xs);
-		font-weight: var(--weight-semibold);
+	/* Total months faster is identical for both strategies at any slider
+	   position (it depends only on total extra payment, not payoff order),
+	   so it's stated once here instead of duplicated under each bar. */
+	.compare-summary {
+		font-size: var(--text-small);
 		color: var(--color-text);
-		white-space: nowrap;
-		flex-shrink: 0;
-	}
-	.compare-metrics-time--highlight {
-		color: var(--color-debt-avalanche);
+		line-height: var(--leading-normal);
+		margin: var(--space-md) 0 0;
 	}
 
 	.compare-note {
@@ -302,9 +327,10 @@ const DEBTS = [
 	var avalEl = document.getElementById(id + '-aval');
 	var snowEl = document.getElementById(id + '-snow');
 	var avalInterestEl = document.getElementById(id + '-aval-interest');
-	var avalTimeEl = document.getElementById(id + '-aval-time');
 	var snowInterestEl = document.getElementById(id + '-snow-interest');
-	var snowTimeEl = document.getElementById(id + '-snow-time');
+	var avalBestEl = document.getElementById(id + '-aval-best');
+	var snowBestEl = document.getElementById(id + '-snow-best');
+	var summaryEl = document.getElementById(id + '-summary');
 
 	// Minimum payments aren't part of the displayed table (it only shows
 	// balance + APR), so estimate a typical 2.5%-of-balance minimum per debt.
@@ -379,6 +405,15 @@ const DEBTS = [
 	// nothing yet to redirect between debts).
 	var BASELINE = simulate(AVALANCHE_ORDER, 0);
 
+	// Fixed reference for both bars: interest paid with $0 extra (the same
+	// baseline the summary line below compares against). Scaling both bars
+	// to this shared, unmoving denominator — instead of to whichever
+	// strategy costs more at the current slider value — keeps them on a
+	// consistent scale as the slider moves, and lets the cheaper strategy's
+	// bar actually read as shorter instead of always filling relative to
+	// the pricier one.
+	var baselineInterest = BASELINE.interest || 1;
+
 	function update() {
 		var extra = parseInt(slider.value, 10);
 		amountEl.textContent = '$' + extra.toLocaleString('en-US');
@@ -386,30 +421,31 @@ const DEBTS = [
 		var aval = simulate(AVALANCHE_ORDER, extra);
 		var snow = simulate(SNOWBALL_ORDER, extra);
 
-		// Bars represent total interest paid — shorter is the goal — scaled
-		// against whichever method costs more, so the pricier one always
-		// fills the full track and the cheaper one visibly falls short of it.
-		var maxInterest = Math.max(aval.interest, snow.interest, 1);
-		avalEl.style.width = (aval.interest / maxInterest * 100) + '%';
-		snowEl.style.width = (snow.interest / maxInterest * 100) + '%';
+		avalEl.style.width = Math.min(100, aval.interest / baselineInterest * 100) + '%';
+		snowEl.style.width = Math.min(100, snow.interest / baselineInterest * 100) + '%';
 
-		// Each strategy's own cost/pace row lives directly under its bar,
-		// framed against the $0-extra baseline rather than Avalanche vs.
-		// Snowball directly — that head-to-head gap shrinks as extra
-		// payments grow, which reads as "less impact" even though the
-		// payoff is objectively better. Comparing to baseline stays
-		// monotonic: more extra always means less interest and a faster
-		// payoff, for both strategies.
 		avalInterestEl.textContent = formatCurrency(aval.interest);
-		avalTimeEl.textContent = monthsPhrase(BASELINE.months - aval.months);
 		snowInterestEl.textContent = formatCurrency(snow.interest);
-		snowTimeEl.textContent = monthsPhrase(BASELINE.months - snow.months);
-	}
 
-	function monthsPhrase(monthsFaster) {
-		return monthsFaster > 0
-			? monthsFaster + (monthsFaster === 1 ? ' month faster' : ' months faster')
-			: 'same as baseline';
+		// Compare rounded dollar amounts, not raw floats: floating-point
+		// summation order can leave sub-cent noise between two amounts that
+		// are genuinely tied (e.g. at $0 extra, where payoff order can't
+		// matter), which would otherwise flag a "Best value" difference the
+		// displayed numbers don't actually show.
+		var avalRounded = Math.round(aval.interest);
+		var snowRounded = Math.round(snow.interest);
+		avalBestEl.hidden = !(avalRounded < snowRounded);
+		snowBestEl.hidden = !(snowRounded < avalRounded);
+
+		// Total months faster is identical for both strategies at any given
+		// extra payment (it depends only on the total payment, not payoff
+		// order), so it's stated once rather than duplicated per strategy.
+		var monthsFaster = BASELINE.months - aval.months;
+		summaryEl.textContent = extra > 0
+			? 'Paying an extra ' + formatCurrency(extra) + '/month gets you debt-free '
+				+ monthsFaster + (monthsFaster === 1 ? ' month' : ' months')
+				+ ' faster than making minimum payments only.'
+			: 'Drag the slider to see how an extra monthly payment speeds up your payoff.';
 	}
 
 	slider.addEventListener('input', update);
