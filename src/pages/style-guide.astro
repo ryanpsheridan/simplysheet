@@ -4,6 +4,164 @@ import FormattedDate from '../components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE } from '../consts';
 
+const calcThumbs = [
+	{
+		name: '50/30/20 Budget Calculator',
+		desc: 'Split take-home pay into needs, wants, and savings.',
+		url: '/tools/50-30-20-budget-calculator/',
+		svg: `
+			<line x1="40" y1="35" x2="40" y2="125" stroke-width="1" opacity="0.25"/>
+			<line x1="40" y1="55" x2="170" y2="55" stroke-width="3" opacity="0.9"/>
+			<line x1="40" y1="80" x2="130" y2="80" stroke-width="3" opacity="0.6"/>
+			<line x1="40" y1="105" x2="95" y2="105" stroke-width="3" opacity="0.4"/>
+			<circle cx="170" cy="55" r="7" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="170" cy="55" r="2.5" fill="currentColor" stroke="none"/>
+			<circle cx="130" cy="80" r="6" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="130" cy="80" r="2.2" fill="currentColor" stroke="none"/>
+			<circle cx="95" cy="105" r="5" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="95" cy="105" r="2" fill="currentColor" stroke="none"/>
+		`,
+	},
+	{
+		name: 'Biweekly & Weekly Paycheck Calculator',
+		desc: 'Budget around real paydays, including the extra one.',
+		url: '/tools/biweekly-paycheck-calculator/',
+		svg: `
+			<rect x="40" y="30" width="160" height="100" rx="8" stroke-width="1.5" opacity="0.3"/>
+			<line x1="70" y1="18" x2="70" y2="38" stroke-width="1.5" opacity="0.4"/>
+			<line x1="170" y1="18" x2="170" y2="38" stroke-width="1.5" opacity="0.4"/>
+			<line x1="40" y1="55" x2="200" y2="55" stroke-width="1" opacity="0.25"/>
+			<path d="M55 100 L85 92 L115 78 L145 66 L175 60" stroke-width="1" stroke-dasharray="3 3" opacity="0.35"/>
+			<circle cx="55" cy="100" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="55" cy="100" r="1.5" fill="currentColor" stroke="none"/>
+			<circle cx="85" cy="92" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="85" cy="92" r="1.5" fill="currentColor" stroke="none"/>
+			<circle cx="115" cy="78" r="7" opacity="0.2" fill="currentColor" stroke="none"/>
+			<circle cx="115" cy="78" r="2.5" fill="currentColor" stroke="none"/>
+			<circle cx="145" cy="66" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="145" cy="66" r="1.5" fill="currentColor" stroke="none"/>
+			<circle cx="175" cy="60" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="175" cy="60" r="1.5" fill="currentColor" stroke="none"/>
+		`,
+	},
+	{
+		name: 'Bill Split Calculator',
+		desc: 'Split shared bills fairly by income, not just in half.',
+		url: '/tools/bill-split-calculator/',
+		svg: `
+			<circle cx="95" cy="80" r="38" stroke-width="1.5" opacity="0.5"/>
+			<circle cx="145" cy="80" r="38" stroke-width="1.5" opacity="0.5"/>
+			<line x1="120" y1="32" x2="120" y2="128" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+			<line x1="60" y1="80" x2="110" y2="20" stroke-width="1" opacity="0.25"/>
+			<circle cx="95" cy="80" r="4" opacity="0.2" fill="currentColor" stroke="none"/>
+			<circle cx="95" cy="80" r="1.6" fill="currentColor" stroke="none"/>
+			<circle cx="145" cy="80" r="4" opacity="0.2" fill="currentColor" stroke="none"/>
+			<circle cx="145" cy="80" r="1.6" fill="currentColor" stroke="none"/>
+		`,
+	},
+	{
+		name: 'Debt Strategy Comparison',
+		desc: 'See snowball and avalanche side by side.',
+		url: '/tools/debt-snowball-vs-avalanche-calculator/',
+		svg: `
+			<line x1="50" y1="130" x2="200" y2="130" stroke-width="1" opacity="0.2"/>
+			<path d="M50 40 C 70 75, 95 110, 150 130" stroke-width="2" opacity="0.9"/>
+			<path d="M50 40 C 130 42, 180 70, 200 130" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+			<circle cx="50" cy="40" r="6" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="50" cy="40" r="2.2" fill="currentColor" stroke="none"/>
+			<circle cx="150" cy="130" r="7" opacity="0.2" fill="currentColor" stroke="none"/>
+			<circle cx="150" cy="130" r="2.5" fill="currentColor" stroke="none"/>
+			<circle cx="200" cy="130" r="5" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="200" cy="130" r="2" fill="currentColor" stroke="none"/>
+		`,
+	},
+	{
+		name: 'Emergency Fund Calculator',
+		desc: 'Know exactly how many months of coverage you need.',
+		url: '/tools/emergency-fund-calculator/',
+		svg: `
+			<rect x="70" y="30" width="100" height="110" rx="12" stroke-width="1.5" opacity="0.4"/>
+			<line x1="70" y1="70" x2="170" y2="70" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4"/>
+			<line x1="70" y1="90" x2="170" y2="90" stroke-width="2" opacity="0.9"/>
+			<line x1="176" y1="40" x2="184" y2="40" stroke-width="1" opacity="0.35"/>
+			<line x1="176" y1="55" x2="184" y2="55" stroke-width="1" opacity="0.35"/>
+			<line x1="176" y1="70" x2="184" y2="70" stroke-width="1" opacity="0.35"/>
+			<line x1="176" y1="85" x2="184" y2="85" stroke-width="1" opacity="0.35"/>
+			<circle cx="170" cy="90" r="6" opacity="0.2" fill="currentColor" stroke="none"/>
+			<circle cx="170" cy="90" r="2.2" fill="currentColor" stroke="none"/>
+		`,
+	},
+	{
+		name: 'Sinking Fund Calculator',
+		desc: 'Hit a savings goal by a set date, one month at a time.',
+		url: '/tools/sinking-fund-calculator/',
+		svg: `
+			<circle cx="120" cy="80" r="45" stroke-width="1.5" opacity="0.2"/>
+			<circle cx="120" cy="80" r="30" stroke-width="1.5" opacity="0.3"/>
+			<circle cx="120" cy="80" r="15" stroke-width="1.5" opacity="0.4"/>
+			<line x1="120" y1="80" x2="120" y2="55" stroke-width="2" opacity="0.85"/>
+			<circle cx="120" cy="80" r="3" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="55" r="4" opacity="0.2" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="55" r="1.6" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="35" r="7" opacity="0.25" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="35" r="2.5" fill="currentColor" stroke="none"/>
+		`,
+	},
+	{
+		name: 'Expense Tracking Readiness',
+		desc: "Find out if you've tracked enough to build a budget.",
+		url: '/tools/expense-tracking-readiness/',
+		svg: `
+			<rect x="55" y="25" width="130" height="115" rx="8" stroke-width="1.5" opacity="0.3"/>
+			<rect x="100" y="18" width="40" height="14" rx="4" stroke-width="1.5" opacity="0.4"/>
+			<line x1="80" y1="55" x2="155" y2="55" stroke-width="1" opacity="0.25"/>
+			<line x1="80" y1="80" x2="155" y2="80" stroke-width="1" opacity="0.25"/>
+			<line x1="80" y1="105" x2="130" y2="105" stroke-width="1" stroke-dasharray="3 3" opacity="0.3"/>
+			<path d="M62 55 L66 59 L74 49" stroke-width="1.5" opacity="0.9"/>
+			<path d="M62 80 L66 84 L74 74" stroke-width="1.5" opacity="0.9"/>
+			<circle cx="68" cy="105" r="5" stroke-width="1.2" opacity="0.35" fill="none"/>
+		`,
+	},
+	{
+		name: 'Sinking Fund Assessment',
+		desc: 'Figure out where an expense actually belongs.',
+		url: '/tools/sinking-fund-assessment/',
+		svg: `
+			<circle cx="65" cy="80" r="7" opacity="0.2" fill="currentColor" stroke="none"/>
+			<circle cx="65" cy="80" r="2.5" fill="currentColor" stroke="none"/>
+			<path d="M72 76 C 110 55, 140 45, 175 40" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.45"/>
+			<path d="M72 84 C 110 105, 140 115, 175 120" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.45"/>
+			<line x1="72" y1="80" x2="185" y2="80" stroke-width="2" opacity="0.9"/>
+			<circle cx="175" cy="40" r="5" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="175" cy="40" r="2" fill="currentColor" stroke="none"/>
+			<circle cx="175" cy="120" r="5" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="175" cy="120" r="2" fill="currentColor" stroke="none"/>
+			<circle cx="185" cy="80" r="7" opacity="0.25" fill="currentColor" stroke="none"/>
+			<circle cx="185" cy="80" r="2.5" fill="currentColor" stroke="none"/>
+		`,
+	},
+	{
+		name: 'Find Your Budgeting Style',
+		desc: 'A 60-second quiz to find your money personality.',
+		url: '/quiz/budgeting-style/',
+		svg: `
+			<line x1="120" y1="80" x2="120" y2="35" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+			<line x1="120" y1="80" x2="165" y2="80" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+			<line x1="120" y1="80" x2="120" y2="125" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+			<line x1="120" y1="80" x2="75" y2="80" stroke-width="2" opacity="0.9"/>
+			<circle cx="120" cy="80" r="3" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="35" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="35" r="1.6" fill="currentColor" stroke="none"/>
+			<circle cx="165" cy="80" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="165" cy="80" r="1.6" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="125" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="125" r="1.6" fill="currentColor" stroke="none"/>
+			<circle cx="75" cy="80" r="7" opacity="0.25" fill="currentColor" stroke="none"/>
+			<circle cx="75" cy="80" r="2.5" fill="currentColor" stroke="none"/>
+		`,
+	},
+];
+
 const allArticles = (await getCollection('articles'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const sampleArticles = allArticles.slice(0, 3).map((a) => {
@@ -254,6 +412,25 @@ const toolThumbnails = [
 			</div>
 		</section>
 
+
+		<!-- ============ CALCULATOR THUMBNAILS ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Calculator Thumbnail — Line Art (WIP)</h2>
+			<p class="section-desc">Second pass: bespoke illustrations (not scaled-up nav icons) built from the same grid-snapped hairline language as the article wireframes — dashed secondary paths, compound node markers, no gradient or color. Light mode, left-aligned title + one-line description below the illustration, matching a directory-card layout.</p>
+			<div class="calc-thumb-grid">
+				{calcThumbs.map((item) => (
+					<a href={item.url} class="calc-thumb-card">
+						<div class="calc-thumb-illustration">
+							<svg viewBox="0 0 240 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" set:html={item.svg} />
+						</div>
+						<div class="calc-thumb-body">
+							<h3 class="calc-thumb-title">{item.name}</h3>
+							<p class="calc-thumb-desc">{item.desc}</p>
+						</div>
+					</a>
+				))}
+			</div>
+		</section>
 
 		<!-- ============ CARDS: PRODUCT / TEMPLATE ============ -->
 		<section class="guide-section">
@@ -730,6 +907,60 @@ const toolThumbnails = [
 	}
 	@media (max-width: 600px) {
 		.card-demo-2col { grid-template-columns: 1fr; }
+	}
+
+	/* ——— Calculator thumbnail (line-art WIP) ——— */
+
+	.calc-thumb-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-md);
+	}
+	@media (max-width: 900px) {
+		.calc-thumb-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+	@media (max-width: 600px) {
+		.calc-thumb-grid { grid-template-columns: 1fr; }
+	}
+
+	.calc-thumb-card {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		background: var(--color-bg-panel);
+		border-radius: 1rem;
+		overflow: hidden;
+		transition: background 0.15s;
+	}
+	.calc-thumb-card:hover {
+		background: var(--color-bg-emphasis);
+	}
+	.calc-thumb-illustration {
+		padding: var(--space-lg) var(--space-md) var(--space-sm);
+		color: var(--color-text);
+	}
+	.calc-thumb-illustration svg {
+		display: block;
+		width: 100%;
+		height: 9rem;
+	}
+	.calc-thumb-body {
+		padding: 0 var(--space-md) var(--space-md);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2xs);
+	}
+	.calc-thumb-title {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
+		margin: 0;
+	}
+	.calc-thumb-desc {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		margin: 0;
+		line-height: var(--leading-snug);
 	}
 
 	.demo-card-tags {
