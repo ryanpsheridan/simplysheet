@@ -83,9 +83,7 @@ const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
 <style>
 	/* No card, border, or fill — the calculator sits directly in the page column. */
 	.calc {
-		border-top: 1px solid var(--color-border);
-		padding-top: var(--space-lg);
-		margin: var(--space-lg) 0;
+		margin: calc(var(--space-lg) * 2) 0 var(--space-lg);
 	}
 
 	/* ——— Input ——— */
@@ -260,7 +258,7 @@ const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
 
 	@media (max-width: 767px) {
 		.calc {
-			padding-top: var(--space-md);
+			margin-top: calc(var(--space-md) * 2);
 		}
 		.calc-custom-row {
 			flex-direction: column;
@@ -270,8 +268,6 @@ const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
 	/* ——— Product link ——— */
 
 	.calc-cta-divider {
-		height: 1px;
-		background: var(--color-border);
 		margin-top: var(--space-lg);
 	}
 	.calc-product-link {

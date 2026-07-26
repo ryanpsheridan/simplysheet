@@ -78,9 +78,7 @@ const DEBTS = [
 <style>
 	/* No card, border, or fill — the visualizer sits directly in the page column. */
 	.visualizer {
-		border-top: 1px solid var(--color-border);
-		padding-top: var(--space-lg);
-		margin: var(--space-lg) 0;
+		margin: calc(var(--space-lg) * 2) 0 var(--space-lg);
 	}
 
 	/* ——— Self-contained title + context ——— */
@@ -205,15 +203,15 @@ const DEBTS = [
 	}
 
 	.compare-track {
-		height: 1.5rem;
+		height: 6px;
 		background: var(--color-bg-panel);
-		border-radius: var(--radius-sm);
+		border-radius: 3px;
 		overflow: hidden;
 	}
 
 	.compare-fill {
 		height: 100%;
-		border-radius: var(--radius-sm);
+		border-radius: 3px;
 		transition: width 0.35s ease;
 	}
 
@@ -266,8 +264,6 @@ const DEBTS = [
 	/* ——— Product link ——— */
 
 	.calc-cta-divider {
-		height: 1px;
-		background: var(--color-border);
 		margin-top: var(--space-lg);
 	}
 	.calc-product-link {
@@ -294,7 +290,7 @@ const DEBTS = [
 
 	@media (max-width: 767px) {
 		.visualizer {
-			padding-top: var(--space-md);
+			margin-top: calc(var(--space-md) * 2);
 		}
 	}
 </style>

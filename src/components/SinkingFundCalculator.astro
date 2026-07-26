@@ -6,6 +6,7 @@ const { mode = 'full' } = Astro.props;
 const showAssessment = mode !== 'calculator';
 const showCalculator = mode !== 'assessment';
 const id = `sfc-${Math.random().toString(36).slice(2, 8)}`;
+const TOTAL_QUESTIONS = 5;
 
 // Static server-rendered snapshot of question 1, mirrored by the client script
 // (see CATEGORIES/questions[0] below) — gives crawlers real quiz content instead
@@ -24,8 +25,10 @@ const firstQuestionCategories = [
     <div class="sfc-assess" id={`${id}-assess`}>
       <div class="sfc-progress">
         <span class="sfc-progress-text" id={`${id}-ptext`}>Question 1 of 5</span>
-        <div class="sfc-progress-bar">
-          <div class="sfc-progress-fill" id={`${id}-pfill`} style="width:20%"></div>
+        <div class="sfc-progress-bar" id={`${id}-pfill`}>
+          {Array.from({ length: TOTAL_QUESTIONS }).map((_, i) => (
+            <div class={`sfc-progress-seg${i === 0 ? ' filled' : ''}`}></div>
+          ))}
         </div>
       </div>
       <h2 class="sfc-q-text" id={`${id}-qtext`}>What are you saving for?</h2>
@@ -122,9 +125,7 @@ const firstQuestionCategories = [
      A hairline rule + generous top padding opens the section instead. */
 
   .sfc {
-    border-top: 1px solid var(--color-border);
-    padding-top: var(--space-lg);
-    margin: var(--space-lg) 0;
+    margin: calc(var(--space-lg) * 2) 0 var(--space-lg);
   }
 
   /* ——— Progress ——— */
@@ -139,16 +140,18 @@ const firstQuestionCategories = [
     margin-bottom: var(--space-xs);
   }
   .sfc-progress-bar {
+    display: flex;
+    gap: 6px;
+  }
+  .sfc-progress-seg {
+    flex: 1;
     height: 4px;
     background: var(--color-bg-panel);
     border-radius: 2px;
-    overflow: hidden;
+    transition: background-color 0.25s ease;
   }
-  .sfc-progress-fill {
-    height: 100%;
+  .sfc-progress-seg.filled {
     background: var(--color-text-heading);
-    border-radius: 2px;
-    transition: width 0.3s ease;
   }
 
   /* ——— Question ——— */
@@ -425,8 +428,6 @@ const firstQuestionCategories = [
     display: none;
   }
   .sfc-cta-divider {
-    height: 1px;
-    background: var(--color-border);
     margin-top: var(--space-lg);
   }
   .sfc-product-link {
@@ -469,7 +470,7 @@ const firstQuestionCategories = [
 
   @media (max-width: 767px) {
     .sfc {
-      padding-top: var(--space-md);
+      margin-top: calc(var(--space-md) * 2);
     }
     .sfc-opts.sfc-opts--grid {
       grid-template-columns: repeat(2, 1fr);
@@ -704,7 +705,10 @@ const firstQuestionCategories = [
     var q = questions[currentQ];
     var total = questions.length;
     ptextEl.textContent = 'Question ' + (currentQ + 1) + ' of ' + total;
-    pfillEl.style.width = ((currentQ + 1) / total * 100) + '%';
+    var segs = pfillEl.children;
+    for (var i = 0; i < segs.length; i++) {
+      segs[i].classList.toggle('filled', i <= currentQ);
+    }
     qtextEl.textContent = q.text;
     qhintEl.textContent = q.hint || '';
     qhintEl.style.display = q.hint ? '' : 'none';

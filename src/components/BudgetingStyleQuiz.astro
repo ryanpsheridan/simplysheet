@@ -1,5 +1,6 @@
 ---
 const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
+const TOTAL_QUESTIONS = 7;
 ---
 
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
@@ -8,7 +9,11 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 	<div class="quiz-questions" id={`${id}-questions`}>
 		<div class="quiz-progress">
 			<span class="quiz-progress-text" id={`${id}-progress`}>Question 1 of 7</span>
-			<div class="quiz-progress-bar"><div class="quiz-progress-fill" id={`${id}-fill`}></div></div>
+			<div class="quiz-progress-bar" id={`${id}-fill`}>
+				{Array.from({ length: TOTAL_QUESTIONS }).map((_, i) => (
+					<div class={`quiz-progress-seg${i === 0 ? ' filled' : ''}`}></div>
+				))}
+			</div>
 		</div>
 		<div class="quiz-question" id={`${id}-q`}>
 			<h2 class="quiz-question-text" id={`${id}-qtext`}></h2>
@@ -36,9 +41,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 <style>
 	/* No card, border, or fill — the quiz sits directly in the page column. */
 	.quiz {
-		border-top: 1px solid var(--color-border);
-		padding-top: var(--space-lg);
-		margin: var(--space-lg) 0;
+		margin: calc(var(--space-lg) * 2) 0 var(--space-lg);
 	}
 
 	/* ——— Progress ——— */
@@ -53,17 +56,18 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 		margin-bottom: var(--space-xs);
 	}
 	.quiz-progress-bar {
-		height: 4px;
-		background: var(--color-bg-surface);
-		border-radius: 2px;
-		overflow: hidden;
+		display: flex;
+		gap: 6px;
 	}
-	.quiz-progress-fill {
-		height: 100%;
-		background: var(--color-text-heading);
+	.quiz-progress-seg {
+		flex: 1;
+		height: 4px;
+		background: var(--color-bg-panel);
 		border-radius: 2px;
-		width: 14.28%;
-		transition: width 0.3s ease;
+		transition: background-color 0.25s ease;
+	}
+	.quiz-progress-seg.filled {
+		background: var(--color-text-heading);
 	}
 
 	/* ——— Question ——— */
@@ -195,7 +199,7 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 
 	@media (max-width: 767px) {
 		.quiz {
-			padding-top: var(--space-md);
+			margin-top: calc(var(--space-md) * 2);
 		}
 		.quiz-result-title {
 			font-size: var(--text-h3);
@@ -205,8 +209,6 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 	/* ——— Product link ——— */
 
 	.calc-cta-divider {
-		height: 1px;
-		background: var(--color-border);
 		margin-top: var(--space-lg);
 	}
 	.calc-product-link {
@@ -368,7 +370,10 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 	function renderQuestion() {
 		var q = questions[currentQ];
 		progressText.textContent = 'Question ' + (currentQ + 1) + ' of ' + questions.length;
-		progressFill.style.width = ((currentQ + 1) / questions.length * 100) + '%';
+		var segs = progressFill.children;
+		for (var i = 0; i < segs.length; i++) {
+			segs[i].classList.toggle('filled', i <= currentQ);
+		}
 		qText.textContent = q.q;
 		optsEl.innerHTML = '';
 		q.opts.forEach(function (opt) {
