@@ -116,7 +116,8 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 	</div>
 
 	<p class="debt-empty" data-role="empty">Enter at least one debt's balance and monthly payment above to see your debt-free date.</p>
-	<p class="debt-warning" data-role="warning" hidden>These payments don't cover the interest on this debt. Increase a monthly payment to see a payoff date.</p>
+	<p class="debt-empty" data-role="all-muted" hidden>All your debts are hidden. Click the eye icon on a debt to include it again.</p>
+	<p class="debt-warning" data-role="warning" hidden>These payments won't pay off this debt within 50 years. Increase a monthly payment to see a payoff date.</p>
 
 	<p class="calc-note">Debts are paid off highest interest rate first, with each payment that frees up rolling to the next debt. Estimate assumes rates and payments stay the same &mdash; actual results may vary.</p>
 </div>
@@ -507,6 +508,7 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 	var interestEl = root.querySelector('[data-role="interest"]');
 	var totalPaidEl = root.querySelector('[data-role="total-paid"]');
 	var emptyEl = root.querySelector('[data-role="empty"]');
+	var allMutedEl = root.querySelector('[data-role="all-muted"]');
 	var warningEl = root.querySelector('[data-role="warning"]');
 
 	function formatCurrency(n) {
@@ -581,11 +583,11 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		addBtn.hidden = rows.length >= MAX_ROWS;
 	}
 
-	function readDebts() {
+	function readDebts(ignoreMute) {
 		var rows = rowsContainer.querySelectorAll('[data-row]');
 		var debts = [];
 		rows.forEach(function (row) {
-			if (row.dataset.muted === 'true') return;
+			if (!ignoreMute && row.dataset.muted === 'true') return;
 			var balance = parseFloat((row.querySelector('[data-role="balance"]').value || '').replace(/[^0-9.]/g, '')) || 0;
 			var rate = parseFloat((row.querySelector('[data-role="rate"]').value || '').replace(/[^0-9.]/g, '')) || 0;
 			var payment = parseFloat((row.querySelector('[data-role="payment"]').value || '').replace(/[^0-9.]/g, '')) || 0;
@@ -661,11 +663,14 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 			highlightEl.hidden = true;
 			resultsEl.hidden = true;
 			warningEl.hidden = true;
-			emptyEl.hidden = false;
+			var hasMutedDebts = readDebts(true).length > 0;
+			emptyEl.hidden = hasMutedDebts;
+			allMutedEl.hidden = !hasMutedDebts;
 			return;
 		}
 
 		emptyEl.hidden = true;
+		allMutedEl.hidden = true;
 		summaryEl.hidden = false;
 		summaryTotal.textContent = formatCurrency(totalDebt);
 		summaryCount.textContent = String(debts.length);
