@@ -11,7 +11,7 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 	</div>
 
 	<div class="debt-rows" data-role="rows">
-		<div class="debt-row" data-row>
+		<div class="debt-row" data-row data-muted="false">
 			<div class="debt-field">
 				<span class="debt-field-label-mobile">Debt name</span>
 				<input type="text" class="debt-input" data-role="name" placeholder="Debt name (optional)" autocomplete="off" aria-label="Debt name (optional)" />
@@ -37,9 +37,15 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 					<input type="text" class="calc-input" data-role="payment" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Monthly payment" />
 				</div>
 			</div>
-			<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt" hidden>&times;</button>
+			<div class="debt-row-actions">
+				<button type="button" class="debt-mute" data-action="mute" aria-pressed="false" aria-label="Hide this debt from the calculation">
+					<svg class="icon-eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+					<svg class="icon-eye-off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+				</button>
+				<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt" hidden>&times;</button>
+			</div>
 		</div>
-		<div class="debt-row" data-row>
+		<div class="debt-row" data-row data-muted="false">
 			<div class="debt-field">
 				<span class="debt-field-label-mobile">Debt name</span>
 				<input type="text" class="debt-input" data-role="name" placeholder="Debt name (optional)" autocomplete="off" aria-label="Debt name (optional)" />
@@ -65,7 +71,13 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 					<input type="text" class="calc-input" data-role="payment" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Monthly payment" />
 				</div>
 			</div>
-			<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt" hidden>&times;</button>
+			<div class="debt-row-actions">
+				<button type="button" class="debt-mute" data-action="mute" aria-pressed="false" aria-label="Hide this debt from the calculation">
+					<svg class="icon-eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+					<svg class="icon-eye-off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+				</button>
+				<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt" hidden>&times;</button>
+			</div>
 		</div>
 	</div>
 
@@ -121,7 +133,7 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	.debt-header {
 		display: grid;
-		grid-template-columns: 1.3fr 1fr 0.8fr 1fr 1.75rem;
+		grid-template-columns: 1.3fr 1fr 0.8fr 1fr 3.75rem;
 		gap: var(--space-xs);
 		margin-bottom: var(--space-xs);
 	}
@@ -140,9 +152,17 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	.debt-row {
 		display: grid;
-		grid-template-columns: 1.3fr 1fr 0.8fr 1fr 1.75rem;
+		grid-template-columns: 1.3fr 1fr 0.8fr 1fr 3.75rem;
 		gap: var(--space-xs);
 		align-items: center;
+		transition: opacity 0.15s;
+	}
+
+	/* Muted debts stay filled in but are excluded from the calculation —
+	   dimming (rather than clearing their fields) makes it obvious at a
+	   glance without losing the entered numbers. */
+	.debt-row[data-muted="true"] {
+		opacity: 0.45;
 	}
 
 	/* min-width: 0 overrides the grid item's automatic min sizing, which
@@ -222,10 +242,18 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		color: var(--color-text-muted);
 	}
 
+	.debt-row-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2xs);
+	}
+
+	.debt-mute,
 	.debt-remove {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		flex-shrink: 0;
 		width: 1.75rem;
 		height: 1.75rem;
 		font-size: 1.125rem;
@@ -237,12 +265,27 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		cursor: pointer;
 		transition: color 0.15s, border-color 0.15s;
 	}
+	.debt-mute:hover,
 	.debt-remove:hover {
 		color: var(--color-text);
 		border-color: var(--color-text-muted);
 	}
 	.debt-remove[hidden] {
 		visibility: hidden;
+	}
+
+	.debt-mute .icon-eye-off {
+		display: none;
+	}
+	.debt-row[data-muted="true"] .debt-mute .icon-eye {
+		display: none;
+	}
+	.debt-row[data-muted="true"] .debt-mute .icon-eye-off {
+		display: block;
+	}
+	.debt-row[data-muted="true"] .debt-mute {
+		color: var(--color-text);
+		border-color: var(--color-text-muted);
 	}
 
 	/* ——— Add row button ——— */
@@ -430,7 +473,7 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 			font-size: var(--text-xs);
 			color: var(--color-text-secondary);
 		}
-		.debt-remove {
+		.debt-row-actions {
 			position: absolute;
 			top: var(--space-sm);
 			right: var(--space-sm);
@@ -500,6 +543,7 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		var row = document.createElement('div');
 		row.className = 'debt-row';
 		row.setAttribute('data-row', '');
+		row.setAttribute('data-muted', 'false');
 		row.innerHTML =
 			'<div class="debt-field">' +
 				'<span class="debt-field-label-mobile">Debt name</span>' +
@@ -517,7 +561,13 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 				'<span class="debt-field-label-mobile">Monthly payment</span>' +
 				'<div class="calc-field"><span class="calc-prefix">$</span><input type="text" class="calc-input" data-role="payment" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Monthly payment" /></div>' +
 			'</div>' +
-			'<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt">&times;</button>';
+			'<div class="debt-row-actions">' +
+				'<button type="button" class="debt-mute" data-action="mute" aria-pressed="false" aria-label="Hide this debt from the calculation">' +
+					'<svg class="icon-eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
+					'<svg class="icon-eye-off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>' +
+				'</button>' +
+				'<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt">&times;</button>' +
+			'</div>';
 		applyScope(row);
 		return row;
 	}
@@ -535,6 +585,7 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		var rows = rowsContainer.querySelectorAll('[data-row]');
 		var debts = [];
 		rows.forEach(function (row) {
+			if (row.dataset.muted === 'true') return;
 			var balance = parseFloat((row.querySelector('[data-role="balance"]').value || '').replace(/[^0-9.]/g, '')) || 0;
 			var rate = parseFloat((row.querySelector('[data-role="rate"]').value || '').replace(/[^0-9.]/g, '')) || 0;
 			var payment = parseFloat((row.querySelector('[data-role="payment"]').value || '').replace(/[^0-9.]/g, '')) || 0;
@@ -661,6 +712,17 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 				updateRemoveVisibility();
 				calculate();
 			}
+			return;
+		}
+
+		var muteBtn = e.target.closest('[data-action="mute"]');
+		if (muteBtn) {
+			var muteRow = muteBtn.closest('[data-row]');
+			var nowMuted = muteRow.dataset.muted !== 'true';
+			muteRow.dataset.muted = nowMuted ? 'true' : 'false';
+			muteBtn.setAttribute('aria-pressed', nowMuted ? 'true' : 'false');
+			muteBtn.setAttribute('aria-label', nowMuted ? 'Show this debt in the calculation' : 'Hide this debt from the calculation');
+			calculate();
 		}
 	});
 
