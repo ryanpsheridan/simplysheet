@@ -1,0 +1,677 @@
+---
+const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="calc" id={id}>
+	<div class="debt-header" aria-hidden="true">
+		<span class="debt-header-name">Debt name</span>
+		<span class="debt-header-balance">Balance</span>
+		<span class="debt-header-rate">Rate</span>
+		<span class="debt-header-payment">Monthly payment</span>
+	</div>
+
+	<div class="debt-rows" data-role="rows">
+		<div class="debt-row" data-row>
+			<div class="debt-field">
+				<span class="debt-field-label-mobile">Debt name</span>
+				<input type="text" class="debt-input" data-role="name" placeholder="Debt name (optional)" autocomplete="off" aria-label="Debt name (optional)" />
+			</div>
+			<div class="debt-field">
+				<span class="debt-field-label-mobile">Balance</span>
+				<div class="calc-field">
+					<span class="calc-prefix">$</span>
+					<input type="text" class="calc-input" data-role="balance" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Balance" />
+				</div>
+			</div>
+			<div class="debt-field">
+				<span class="debt-field-label-mobile">Interest rate</span>
+				<div class="calc-field">
+					<input type="text" class="calc-input" data-role="rate" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Interest rate" />
+					<span class="calc-suffix">%</span>
+				</div>
+			</div>
+			<div class="debt-field">
+				<span class="debt-field-label-mobile">Monthly payment</span>
+				<div class="calc-field">
+					<span class="calc-prefix">$</span>
+					<input type="text" class="calc-input" data-role="payment" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Monthly payment" />
+				</div>
+			</div>
+			<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt" hidden>&times;</button>
+		</div>
+		<div class="debt-row" data-row>
+			<div class="debt-field">
+				<span class="debt-field-label-mobile">Debt name</span>
+				<input type="text" class="debt-input" data-role="name" placeholder="Debt name (optional)" autocomplete="off" aria-label="Debt name (optional)" />
+			</div>
+			<div class="debt-field">
+				<span class="debt-field-label-mobile">Balance</span>
+				<div class="calc-field">
+					<span class="calc-prefix">$</span>
+					<input type="text" class="calc-input" data-role="balance" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Balance" />
+				</div>
+			</div>
+			<div class="debt-field">
+				<span class="debt-field-label-mobile">Interest rate</span>
+				<div class="calc-field">
+					<input type="text" class="calc-input" data-role="rate" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Interest rate" />
+					<span class="calc-suffix">%</span>
+				</div>
+			</div>
+			<div class="debt-field">
+				<span class="debt-field-label-mobile">Monthly payment</span>
+				<div class="calc-field">
+					<span class="calc-prefix">$</span>
+					<input type="text" class="calc-input" data-role="payment" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Monthly payment" />
+				</div>
+			</div>
+			<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt" hidden>&times;</button>
+		</div>
+	</div>
+
+	<button type="button" class="debt-add" data-action="add">+ Add another debt</button>
+
+	<div class="debt-summary" data-role="summary" hidden>
+		<div class="debt-summary-stat">
+			<span class="debt-summary-label">Total debt</span>
+			<span class="debt-summary-value" data-role="summary-total">$0</span>
+		</div>
+		<div class="debt-summary-stat">
+			<span class="debt-summary-label">Number of debts</span>
+			<span class="debt-summary-value" data-role="summary-count">0</span>
+		</div>
+		<div class="debt-summary-stat">
+			<span class="debt-summary-label">Total monthly payments</span>
+			<span class="debt-summary-value" data-role="summary-payments">$0</span>
+		</div>
+	</div>
+
+	<div class="calc-highlight" data-role="highlight" hidden>
+		<span class="calc-highlight-label">You'll be debt-free in</span>
+		<span class="calc-highlight-value" data-role="date">&mdash;</span>
+		<span class="calc-highlight-math" data-role="timespan"></span>
+	</div>
+
+	<div class="debt-results" data-role="results" hidden>
+		<div class="debt-result">
+			<span class="debt-result-label">Total interest paid</span>
+			<span class="debt-result-value" data-role="interest">$0</span>
+		</div>
+		<div class="debt-result">
+			<span class="debt-result-label">Total payments made</span>
+			<span class="debt-result-value" data-role="total-paid">$0</span>
+		</div>
+	</div>
+
+	<p class="debt-empty" data-role="empty">Enter at least one debt's balance and monthly payment above to see your debt-free date.</p>
+	<p class="debt-warning" data-role="warning" hidden>These payments don't cover the interest on this debt. Increase a monthly payment to see a payoff date.</p>
+
+	<p class="calc-note">Debts are paid off highest interest rate first, with each payment that frees up rolling to the next debt. Estimate assumes rates and payments stay the same &mdash; actual results may vary.</p>
+</div>
+<div class="calc-cta-divider"></div>
+<a href="/spreadsheets/debt-payoff-tracker/" class="calc-product-link">Track your debt payoff <span class="arrow">&rarr;</span></a>
+
+<style>
+	/* No card, border, or fill — the calculator sits directly in the page column. */
+	.calc {
+		margin: calc(var(--space-lg) * 2) 0 var(--space-lg);
+	}
+
+	/* ——— Debt row header (desktop column labels) ——— */
+
+	.debt-header {
+		display: grid;
+		grid-template-columns: 1.3fr 1fr 0.8fr 1fr 1.75rem;
+		gap: var(--space-xs);
+		margin-bottom: var(--space-xs);
+	}
+	.debt-header span {
+		font-size: var(--text-xs);
+		color: var(--color-text-secondary);
+	}
+
+	/* ——— Rows ——— */
+
+	.debt-rows {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+	}
+
+	.debt-row {
+		display: grid;
+		grid-template-columns: 1.3fr 1fr 0.8fr 1fr 1.75rem;
+		gap: var(--space-xs);
+		align-items: center;
+	}
+
+	/* min-width: 0 overrides the grid item's automatic min sizing, which
+	   otherwise ignores .debt-input's width: 100% and sizes this track off
+	   the bare input's intrinsic min-content instead — collapsing this
+	   column relative to the other fields, which avoid the issue via
+	   min-width: 0 on their own flex-item inputs (.calc-input below). */
+	.debt-field {
+		min-width: 0;
+	}
+
+	.debt-field-label-mobile {
+		display: none;
+	}
+
+	.debt-input {
+		width: 100%;
+		height: 2.75rem;
+		box-sizing: border-box;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		padding: 0.625rem 0.75rem;
+		color: var(--color-text);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		outline: none;
+		transition: border-color 0.15s;
+	}
+	.debt-input:focus {
+		border-color: var(--color-link);
+	}
+	.debt-input::placeholder {
+		color: var(--color-text-muted);
+	}
+
+	.calc-field {
+		display: flex;
+		align-items: center;
+		height: 2.75rem;
+		box-sizing: border-box;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+		background: var(--color-bg-surface);
+		transition: border-color 0.15s;
+	}
+	.calc-field:focus-within {
+		border-color: var(--color-link);
+	}
+	.calc-prefix,
+	.calc-suffix {
+		padding: 0 0.75rem;
+		font-size: var(--text-body);
+		color: var(--color-text-muted);
+		user-select: none;
+	}
+	.calc-prefix {
+		padding-right: 0;
+	}
+	.calc-input {
+		flex: 1;
+		min-width: 0;
+		border: none;
+		outline: none;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		padding: 0.625rem 0.75rem 0.625rem 0.25rem;
+		color: var(--color-text);
+		background: transparent;
+	}
+	.calc-suffix ~ .calc-input,
+	.calc-input:first-child {
+		padding-left: 0.75rem;
+	}
+	.calc-input::placeholder {
+		color: var(--color-text-muted);
+	}
+
+	.debt-remove {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.75rem;
+		height: 1.75rem;
+		font-size: 1.125rem;
+		line-height: 1;
+		color: var(--color-text-secondary);
+		background: var(--color-bg-panel);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-full);
+		cursor: pointer;
+		transition: color 0.15s, border-color 0.15s;
+	}
+	.debt-remove:hover {
+		color: var(--color-text);
+		border-color: var(--color-text-muted);
+	}
+	.debt-remove[hidden] {
+		visibility: hidden;
+	}
+
+	/* ——— Add row button ——— */
+
+	.debt-add {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
+		background: var(--color-bg-surface);
+		border: 1px dashed var(--color-border);
+		border-radius: var(--radius-sm);
+		padding: 0.5rem 0.875rem;
+		margin-top: var(--space-sm);
+		cursor: pointer;
+		transition: border-color 0.15s, background 0.15s;
+	}
+	.debt-add:hover {
+		border-color: var(--color-text-muted);
+		background: var(--color-bg-panel);
+	}
+	.debt-add[hidden] {
+		display: none;
+	}
+
+	/* ——— Debt summary ——— */
+
+	.debt-summary {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-lg);
+		margin-top: var(--space-lg);
+		padding-top: var(--space-md);
+		border-top: 1px solid var(--color-border);
+	}
+	.debt-summary[hidden] {
+		display: none;
+	}
+	.debt-summary-stat {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2xs);
+	}
+	.debt-summary-label {
+		font-size: var(--text-xs);
+		color: var(--color-text-secondary);
+	}
+	.debt-summary-value {
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+	}
+
+	/* ——— Highlight result ——— */
+
+	.calc-highlight {
+		display: flex;
+		flex-direction: column;
+		margin-top: var(--space-md);
+		padding: var(--space-md);
+		background: var(--color-bg-panel);
+		border-radius: var(--radius-md);
+	}
+	.calc-highlight[hidden] {
+		display: none;
+	}
+	.calc-highlight-label {
+		display: block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-highlight-value {
+		display: block;
+		font-size: var(--text-h1);
+		font-weight: var(--weight-normal);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-highlight-math {
+		display: block;
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+	}
+	.calc-highlight-math:empty {
+		display: none;
+	}
+
+	/* ——— Secondary results ——— */
+
+	.debt-results {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-lg);
+		margin-top: var(--space-md);
+	}
+	.debt-results[hidden] {
+		display: none;
+	}
+	.debt-result {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2xs);
+	}
+	.debt-result-label {
+		font-size: var(--text-xs);
+		color: var(--color-text-secondary);
+	}
+	.debt-result-value {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-normal);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+	}
+
+	/* ——— Empty / warning states ——— */
+
+	.debt-empty,
+	.debt-warning {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		margin: var(--space-md) 0 0;
+	}
+	.debt-empty[hidden],
+	.debt-warning[hidden] {
+		display: none;
+	}
+	.debt-warning {
+		color: var(--color-accent-critical);
+	}
+
+	.calc-note {
+		font-size: var(--text-xs);
+		color: var(--color-text-secondary);
+		margin: var(--space-sm) 0 0;
+		line-height: var(--leading-normal);
+	}
+
+	/* ——— Product link ——— */
+
+	.calc-cta-divider {
+		margin-top: var(--space-lg);
+	}
+	.calc-product-link {
+		display: block;
+		width: fit-content;
+		color: var(--color-accent-info);
+		margin-top: var(--space-md);
+		margin-bottom: var(--space-lg);
+		font-size: 0.875rem;
+		text-decoration: none;
+	}
+	.calc-product-link:hover {
+		text-decoration: underline;
+	}
+	.calc-product-link .arrow {
+		display: inline-block;
+		transition: transform 0.15s ease;
+	}
+	.calc-product-link:hover .arrow {
+		transform: translateX(2px);
+	}
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 767px) {
+		.calc {
+			margin-top: calc(var(--space-md) * 2);
+		}
+		.debt-header {
+			display: none;
+		}
+		.debt-row {
+			grid-template-columns: 1fr;
+			gap: var(--space-2xs);
+			padding: var(--space-sm);
+			background: var(--color-bg-panel);
+			border-radius: var(--radius-sm);
+			position: relative;
+		}
+		.debt-field-label-mobile {
+			display: block;
+			font-size: var(--text-xs);
+			color: var(--color-text-secondary);
+		}
+		.debt-remove {
+			position: absolute;
+			top: var(--space-sm);
+			right: var(--space-sm);
+		}
+		.calc-highlight-value {
+			font-size: var(--text-h2);
+		}
+		.debt-summary,
+		.debt-results {
+			gap: var(--space-md);
+		}
+	}
+</style>
+
+<script is:inline define:vars={{ id }}>
+(function () {
+	var root = document.getElementById(id);
+	if (!root) return;
+
+	var MAX_ROWS = 8;
+	var rowsContainer = root.querySelector('[data-role="rows"]');
+	var addBtn = root.querySelector('[data-action="add"]');
+	var summaryEl = root.querySelector('[data-role="summary"]');
+	var summaryTotal = root.querySelector('[data-role="summary-total"]');
+	var summaryCount = root.querySelector('[data-role="summary-count"]');
+	var summaryPayments = root.querySelector('[data-role="summary-payments"]');
+	var highlightEl = root.querySelector('[data-role="highlight"]');
+	var dateEl = root.querySelector('[data-role="date"]');
+	var timespanEl = root.querySelector('[data-role="timespan"]');
+	var resultsEl = root.querySelector('[data-role="results"]');
+	var interestEl = root.querySelector('[data-role="interest"]');
+	var totalPaidEl = root.querySelector('[data-role="total-paid"]');
+	var emptyEl = root.querySelector('[data-role="empty"]');
+	var warningEl = root.querySelector('[data-role="warning"]');
+
+	function formatCurrency(n) {
+		return '$' + Math.round(n).toLocaleString('en-US');
+	}
+
+	function formatInput(val) {
+		var num = val.replace(/[^0-9.]/g, '');
+		var parts = num.split('.');
+		if (parts[0]) parts[0] = parseInt(parts[0], 10).toLocaleString('en-US');
+		return parts.join('.');
+	}
+
+	// Astro's scoped styles only apply to elements present in the built HTML
+	// (via a data-astro-cid-* attribute) — elements created client-side via
+	// innerHTML don't get it automatically and would silently lose all
+	// component styling, so it's copied from an existing element onto every
+	// node in a newly built row.
+	var scopeAttr = null;
+	for (var i = 0; i < root.attributes.length; i++) {
+		if (root.attributes[i].name.indexOf('data-astro-cid-') === 0) {
+			scopeAttr = root.attributes[i].name;
+			break;
+		}
+	}
+
+	function applyScope(el) {
+		if (!scopeAttr) return;
+		el.setAttribute(scopeAttr, '');
+		el.querySelectorAll('*').forEach(function (child) { child.setAttribute(scopeAttr, ''); });
+	}
+
+	function buildRow() {
+		var row = document.createElement('div');
+		row.className = 'debt-row';
+		row.setAttribute('data-row', '');
+		row.innerHTML =
+			'<div class="debt-field">' +
+				'<span class="debt-field-label-mobile">Debt name</span>' +
+				'<input type="text" class="debt-input" data-role="name" placeholder="Debt name (optional)" autocomplete="off" aria-label="Debt name (optional)" />' +
+			'</div>' +
+			'<div class="debt-field">' +
+				'<span class="debt-field-label-mobile">Balance</span>' +
+				'<div class="calc-field"><span class="calc-prefix">$</span><input type="text" class="calc-input" data-role="balance" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Balance" /></div>' +
+			'</div>' +
+			'<div class="debt-field">' +
+				'<span class="debt-field-label-mobile">Interest rate</span>' +
+				'<div class="calc-field"><input type="text" class="calc-input" data-role="rate" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Interest rate" /><span class="calc-suffix">%</span></div>' +
+			'</div>' +
+			'<div class="debt-field">' +
+				'<span class="debt-field-label-mobile">Monthly payment</span>' +
+				'<div class="calc-field"><span class="calc-prefix">$</span><input type="text" class="calc-input" data-role="payment" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Monthly payment" /></div>' +
+			'</div>' +
+			'<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt">&times;</button>';
+		applyScope(row);
+		return row;
+	}
+
+	function updateRemoveVisibility() {
+		var rows = rowsContainer.querySelectorAll('[data-row]');
+		rows.forEach(function (row) {
+			var btn = row.querySelector('[data-action="remove"]');
+			btn.hidden = rows.length <= 1;
+		});
+		addBtn.hidden = rows.length >= MAX_ROWS;
+	}
+
+	function readDebts() {
+		var rows = rowsContainer.querySelectorAll('[data-row]');
+		var debts = [];
+		rows.forEach(function (row) {
+			var balance = parseFloat((row.querySelector('[data-role="balance"]').value || '').replace(/[^0-9.]/g, '')) || 0;
+			var rate = parseFloat((row.querySelector('[data-role="rate"]').value || '').replace(/[^0-9.]/g, '')) || 0;
+			var payment = parseFloat((row.querySelector('[data-role="payment"]').value || '').replace(/[^0-9.]/g, '')) || 0;
+			if (balance > 0 && payment > 0) {
+				debts.push({ balance: balance, apr: rate / 100, payment: payment });
+			}
+		});
+		return debts;
+	}
+
+	// Highest interest rate first (avalanche); every payment freed up when a
+	// debt clears rolls to the next-highest-rate debt still owing.
+	function simulate(debts) {
+		var order = debts.slice().sort(function (a, b) { return b.apr - a.apr; });
+		var sim = order.map(function (d) { return { balance: d.balance, apr: d.apr, minPayment: d.payment }; });
+		var totalInterest = 0;
+		var months = 0;
+		var MAX_MONTHS = 600; // 50-year safety cap
+
+		while (months < MAX_MONTHS && sim.some(function (d) { return d.balance > 0.01; })) {
+			months++;
+
+			sim.forEach(function (d) {
+				if (d.balance > 0) {
+					var interest = d.balance * (d.apr / 12);
+					totalInterest += interest;
+					d.balance += interest;
+				}
+			});
+
+			var budget = 0;
+			sim.forEach(function (d) { if (d.balance > 0) budget += d.minPayment; });
+
+			var target = sim.find(function (d) { return d.balance > 0; });
+			sim.forEach(function (d) {
+				if (d !== target && d.balance > 0) {
+					var pay = Math.min(d.minPayment, d.balance);
+					d.balance -= pay;
+					budget -= pay;
+				}
+			});
+
+			while (budget > 0.01) {
+				var next = sim.find(function (d) { return d.balance > 0.01; });
+				if (!next) break;
+				var pay = Math.min(budget, next.balance);
+				next.balance -= pay;
+				budget -= pay;
+			}
+		}
+
+		return { interest: totalInterest, months: months, maxedOut: months >= MAX_MONTHS };
+	}
+
+	function formatTimespan(months) {
+		var years = Math.floor(months / 12);
+		var rem = months % 12;
+		var parts = [];
+		if (years > 0) parts.push(years + (years === 1 ? ' year' : ' years'));
+		if (rem > 0 || years === 0) parts.push(rem + (rem === 1 ? ' month' : ' months'));
+		return parts.join(' ');
+	}
+
+	function calculate() {
+		var debts = readDebts();
+		var totalDebt = 0;
+		debts.forEach(function (d) { totalDebt += d.balance; });
+		var totalPayments = 0;
+		debts.forEach(function (d) { totalPayments += d.payment; });
+
+		if (debts.length === 0) {
+			summaryEl.hidden = true;
+			highlightEl.hidden = true;
+			resultsEl.hidden = true;
+			warningEl.hidden = true;
+			emptyEl.hidden = false;
+			return;
+		}
+
+		emptyEl.hidden = true;
+		summaryEl.hidden = false;
+		summaryTotal.textContent = formatCurrency(totalDebt);
+		summaryCount.textContent = String(debts.length);
+		summaryPayments.textContent = formatCurrency(totalPayments);
+
+		var result = simulate(debts);
+
+		if (result.maxedOut) {
+			highlightEl.hidden = true;
+			resultsEl.hidden = true;
+			warningEl.hidden = false;
+			return;
+		}
+
+		warningEl.hidden = true;
+		highlightEl.hidden = false;
+		resultsEl.hidden = false;
+
+		var freeDate = new Date();
+		freeDate.setMonth(freeDate.getMonth() + result.months);
+		dateEl.textContent = freeDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+		timespanEl.textContent = 'Total payoff time: ' + formatTimespan(result.months);
+
+		interestEl.textContent = formatCurrency(result.interest);
+		totalPaidEl.textContent = formatCurrency(totalDebt + result.interest);
+	}
+
+	rowsContainer.addEventListener('input', function (e) {
+		var target = e.target;
+		if (!target.classList.contains('calc-input')) return;
+		var pos = target.selectionStart;
+		var before = target.value.length;
+		target.value = formatInput(target.value);
+		var after = target.value.length;
+		target.setSelectionRange(pos + (after - before), pos + (after - before));
+		calculate();
+	});
+
+	rowsContainer.addEventListener('click', function (e) {
+		if (e.target.closest('[data-action="remove"]')) {
+			var row = e.target.closest('[data-row]');
+			if (rowsContainer.querySelectorAll('[data-row]').length > 1) {
+				row.remove();
+				updateRemoveVisibility();
+				calculate();
+			}
+		}
+	});
+
+	addBtn.addEventListener('click', function () {
+		var rows = rowsContainer.querySelectorAll('[data-row]');
+		if (rows.length >= MAX_ROWS) return;
+		rowsContainer.appendChild(buildRow());
+		updateRemoveVisibility();
+	});
+
+	updateRemoveVisibility();
+	calculate();
+})();
+</script>

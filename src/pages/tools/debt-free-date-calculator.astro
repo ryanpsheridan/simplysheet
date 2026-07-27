@@ -1,0 +1,75 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import DebtFreeDateCalculator from '../../components/DebtFreeDateCalculator.astro';
+
+const title = 'Debt-Free Date Calculator';
+const metaTitle = 'Debt-Free Date Calculator — When Will You Be Debt-Free?';
+const description = 'Free debt-free date calculator. Enter your debts, interest rates, and monthly payments to see the month you’ll be debt-free and how much interest you’ll pay along the way.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'why-a-date', text: 'Why a date matters' },
+	{ slug: 'speeding-it-up', text: 'How to move your date up' },
+	{ slug: 'after-the-date', text: 'After you calculate your date' },
+];
+
+const faq = [
+	{
+		question: 'How is my debt-free date calculated?',
+		answer: 'The calculator takes each debt’s balance, interest rate, and monthly payment, then simulates paying them down month by month using the avalanche method: your highest-interest debt gets priority, and once a debt is paid off, its payment rolls onto the next highest-interest balance still owing. The date is the month your last debt reaches zero.',
+	},
+	{
+		question: 'Why does it use the avalanche method instead of snowball?',
+		answer: 'Avalanche (highest interest rate first) minimizes total interest paid, which keeps this calculator’s date and interest numbers as accurate as possible. If you’d rather compare avalanche against the snowball method (smallest balance first) to see the psychological trade-off, the debt strategy comparison tool walks through both side by side.',
+	},
+	{
+		question: 'What if I don’t know my exact interest rate?',
+		answer: 'Check a recent statement or your online account, both usually show it labeled as APR. If you truly can’t find it, a reasonable placeholder is 20–24% for credit cards, 6–8% for most auto loans, and 5–7% for federal student loans, but your real date will shift once you enter the actual rate.',
+	},
+	{
+		question: 'Does this calculator account for extra one-time payments?',
+		answer: 'Not yet. It assumes the monthly payment you enter for each debt stays the same every month until that debt is paid off. If you make an extra lump-sum payment later, your real payoff date will move up faster than what’s shown here.',
+	},
+	{
+		question: 'Why is my debt-free date so far away?',
+		answer: 'Usually because monthly payments are close to the minimum, which mostly covers interest and barely touches the balance on high-rate debt. Increasing even one payment by a modest amount, especially on your highest-rate debt, often moves the date up by months or years — try adjusting the numbers above to see the effect.',
+	},
+];
+---
+
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="Debt-Free Date Calculator"
+	toc={toc}
+	faq={faq}
+	tags={['debt-payoff']}
+	productSlug="debt-payoff-tracker"
+	productLabel="Manage every debt in one place"
+	relatedToolUrls={[
+		'/tools/debt-snowball-vs-avalanche-calculator/',
+		'/tools/50-30-20-budget-calculator/',
+		'/tools/emergency-fund-calculator/',
+		'/tools/biweekly-paycheck-calculator/',
+	]}
+>
+	<Fragment slot="intro">Enter each debt’s balance, interest rate, and monthly payment below to see the month you’ll be debt-free, how much interest you’ll pay in total, and how much you’ll pay altogether by the time your last debt is gone.</Fragment>
+
+	<DebtFreeDateCalculator slot="calculator" />
+
+	<h2 id="how-it-works">How this calculator works</h2>
+	<p>Add every debt you’re carrying: credit cards, car loans, student loans, personal loans, anything with a balance and a monthly payment. For each one, enter the current balance, the interest rate, and how much you pay toward it each month. The calculator then runs a month-by-month simulation using the avalanche method, sending any payment freed up by a paid-off debt straight to whichever remaining debt has the highest interest rate.</p>
+	<p>The result is an estimate, not a guarantee. It assumes your rates and payments stay constant, which real life rarely does exactly, but it’s accurate enough to answer the question that matters most: roughly when does this end.</p>
+
+	<h2 id="why-a-date">Why a date matters more than a plan</h2>
+	<p>Most debt payoff strategies focus on how, not when: which method to use, which debt to attack first, how much extra to send. All useful, but none of it answers the question people actually ask themselves at 2am: when am I actually going to be done with this. A concrete month and year turns an abstract slog into a countdown, and countdowns are motivating in a way that open-ended effort isn’t.</p>
+	<p>If you’re earlier in the process and still deciding how to attack your debts, <a href="/articles/how-to-pay-off-debt/">how to pay off debt</a> walks through the full decision, and <a href="/articles/debt-snowball-vs-avalanche/">debt snowball vs. avalanche</a> compares the two most common methods in detail.</p>
+
+	<h2 id="speeding-it-up">How to move your date up</h2>
+	<p>Two levers move the date: pay more each month, or pay off your highest-interest debt first so less of every payment goes to interest. The avalanche order this calculator uses already handles the second lever for you. For the first, even a modest increase on your highest-rate debt often has an outsized effect, since less of that debt’s payment is being eaten by interest to begin with.</p>
+	<p>Try re-entering the numbers above with a slightly higher payment on your highest-rate debt and watch how much the date moves. That gap between what you’re paying now and what you could pay is usually where the real opportunity is.</p>
+
+	<h2 id="after-the-date">After you calculate your date</h2>
+	<p>A calculator gives you a snapshot, but debt payoff plays out over months or years, and balances, rates, and payments all shift along the way. Once you’ve got a date in mind, a <a href="/spreadsheets/debt-payoff-tracker/">debt payoff tracker</a> is where you’d actually manage the process: logging payments, watching balances drop, and comparing snowball and avalanche views as your situation changes, instead of re-running a calculator every time something moves.</p>
+</CalculatorLayout>
