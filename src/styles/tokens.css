@@ -49,7 +49,7 @@
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-heading: var(--font-sans);
-  --font-body: "Geist", var(--font-sans);
+  --font-body: "DM Sans", var(--font-sans);
 
   --text-display:   clamp(2.5rem, 3.5vw + 0.75rem, 3rem);
   --text-h1:        2.25rem;

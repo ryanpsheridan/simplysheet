@@ -252,14 +252,6 @@ const { articles, manifest, tagMap } = Astro.props;
 		text-decoration: none;
 		color: inherit;
 	}
-	/* Hover darkens the thumbnail's gray container (matches the tool
-	   thumbnail cards), never the title/description/badge/meta — dimming
-	   text hurt contrast. */
-	@media (hover: hover) {
-		.article-list :global(.article-list-item:hover .article-list-thumb) {
-			background: var(--color-bg-emphasis);
-		}
-	}
 	.article-list :global(.article-list-text) {
 		min-width: 0;
 	}
@@ -293,15 +285,12 @@ const { articles, manifest, tagMap } = Astro.props;
 		aspect-ratio: 3 / 2;
 		border-radius: var(--radius-md);
 		overflow: hidden;
-		background: var(--color-bg-panel);
-		padding: 1.5rem;
-		transition: background 0.15s ease;
 	}
 	.article-list :global(.article-list-thumb img) {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-md);
 	}
 
 	/* Client-rendered search/sort results inject raw <div class="tag-pills">
