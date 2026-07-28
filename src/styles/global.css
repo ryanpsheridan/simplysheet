@@ -543,29 +543,19 @@ hr {
 	color: inherit;
 	transition: opacity 0.15s ease;
 }
-@media (hover: hover) {
-	/* Article/product cards: hover darkens the thumbnail's gray container
-	   (matches the tool thumbnail cards), not a zoom on the image. */
-	.home-row-item:hover .home-row-thumb:not(.home-row-thumb--product) {
-		background: var(--color-bg-emphasis);
-	}
-}
 .home-row-thumb {
 	position: relative;
 	width: 100%;
-	aspect-ratio: 3 / 2;
+	aspect-ratio: 16 / 9;
 	border-radius: var(--radius-md);
 	overflow: hidden;
-	background: var(--color-bg-panel);
-	padding: 1.5rem;
-	transition: background 0.15s ease;
 }
 .home-row-thumb img {
 	display: block;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	border-radius: var(--radius-sm);
+	border-radius: var(--radius-md);
 }
 .home-row-text {
 	min-width: 0;

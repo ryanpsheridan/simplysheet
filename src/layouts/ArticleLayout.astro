@@ -442,18 +442,18 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 
 	.article-hero-img {
 		position: relative;
+		aspect-ratio: 16 / 9;
 		margin-bottom: var(--space-lg);
 		border-radius: var(--radius-md);
 		overflow: hidden;
-		background: var(--color-bg-panel);
-		padding: 1.5rem;
 	}
 
 	.article-hero-img img {
 		display: block;
 		width: 100%;
-		height: auto;
-		border-radius: var(--radius-sm);
+		height: 100%;
+		object-fit: cover;
+		border-radius: var(--radius-md);
 	}
 
 

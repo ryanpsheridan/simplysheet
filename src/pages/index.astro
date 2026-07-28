@@ -177,27 +177,19 @@ const websiteSchema = {
 		flex-direction: column;
 		text-decoration: none;
 	}
-	/* Hover darkens the thumbnail's gray container, matching the tool
-	   thumbnail cards, leaving the title/meta text untouched for contrast. */
-	@media (hover: hover) {
-		.hero-featured:hover .hero-featured-thumb {
-			background: var(--color-bg-emphasis);
-		}
-	}
 	.hero-featured-thumb {
 		position: relative;
+		aspect-ratio: 16 / 9;
 		border-radius: var(--radius-md);
 		overflow: hidden;
 		margin-bottom: var(--space-md);
-		background: var(--color-bg-panel);
-		padding: 1.5rem;
-		transition: background 0.15s ease;
 	}
 	.hero-featured-thumb img {
 		display: block;
 		width: 100%;
-		height: auto;
-		border-radius: var(--radius-sm);
+		height: 100%;
+		object-fit: cover;
+		border-radius: var(--radius-md);
 	}
 	.hero-featured-title {
 		font-size: var(--text-h3);
