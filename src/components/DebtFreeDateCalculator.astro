@@ -45,40 +45,6 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 				<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt" hidden>&times;</button>
 			</div>
 		</div>
-		<div class="debt-row" data-row data-muted="false">
-			<div class="debt-field">
-				<span class="debt-field-label-mobile">Debt name</span>
-				<input type="text" class="debt-input" data-role="name" placeholder="Debt name (optional)" autocomplete="off" aria-label="Debt name (optional)" />
-			</div>
-			<div class="debt-field">
-				<span class="debt-field-label-mobile">Balance</span>
-				<div class="calc-field">
-					<span class="calc-prefix">$</span>
-					<input type="text" class="calc-input" data-role="balance" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Balance" />
-				</div>
-			</div>
-			<div class="debt-field">
-				<span class="debt-field-label-mobile">Interest rate</span>
-				<div class="calc-field">
-					<input type="text" class="calc-input" data-role="rate" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Interest rate" />
-					<span class="calc-suffix">%</span>
-				</div>
-			</div>
-			<div class="debt-field">
-				<span class="debt-field-label-mobile">Monthly payment</span>
-				<div class="calc-field">
-					<span class="calc-prefix">$</span>
-					<input type="text" class="calc-input" data-role="payment" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Monthly payment" />
-				</div>
-			</div>
-			<div class="debt-row-actions">
-				<button type="button" class="debt-mute" data-action="mute" aria-pressed="false" aria-label="Hide this debt from the calculation">
-					<svg class="icon-eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-					<svg class="icon-eye-off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-				</button>
-				<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt" hidden>&times;</button>
-			</div>
-		</div>
 	</div>
 
 	<button type="button" class="debt-add" data-action="add">+ Add another debt</button>
