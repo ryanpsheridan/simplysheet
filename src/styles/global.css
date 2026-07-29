@@ -253,6 +253,7 @@ p {
 	aspect-ratio: 3 / 2;
 	border-radius: var(--radius-md);
 	background: var(--color-bg-panel);
+	padding: 1.5rem;
 	overflow: hidden;
 	transition: background 0.15s ease;
 }
@@ -276,6 +277,8 @@ p {
 }
 .interstitial-label {
 	font-size: var(--text-xs);
+	font-weight: var(--weight-normal);
+	letter-spacing: var(--tracking-wide);
 	color: var(--color-text-muted);
 	margin: 0 0 var(--space-2xs);
 }
@@ -435,6 +438,7 @@ p {
 	aspect-ratio: 10 / 9;
 	border-radius: var(--radius-md);
 	background: var(--color-bg-panel);
+	padding: 1.25rem 1.5rem;
 	overflow: hidden;
 	transition: background 0.15s ease;
 }
@@ -615,14 +619,14 @@ hr {
 	position: absolute;
 	left: 0.75rem;
 	bottom: 0.75rem;
-	font-size: var(--text-xs);
-	font-weight: var(--weight-normal);
+	font-size: 0.8125rem;
+	font-weight: var(--weight-medium);
 	color: var(--color-text);
 	background: var(--color-bg);
 	border: 1px solid var(--color-border);
-	border-radius: var(--radius-sm);
-	padding: 0.125rem 0.5rem;
-	line-height: 1.4;
+	border-radius: var(--radius-full);
+	padding: 0.4375rem 0.875rem;
+	line-height: 1;
 	white-space: nowrap;
 }
 
