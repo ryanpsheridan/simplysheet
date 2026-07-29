@@ -70,6 +70,21 @@ export const TOOLS: Tool[] = [
 		group: 'calculator',
 	},
 	{
+		name: 'Debt-Free Date Calculator',
+		desc: 'Enter your debts, interest rates, and monthly payments to see the month you’ll be debt-free and how much interest you’ll pay along the way.',
+		url: '/tools/debt-free-date-calculator/',
+		icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 15l2 2 4-4"/>',
+		illustration: `
+			<line x1="50" y1="130" x2="200" y2="130" stroke-width="1" opacity="0.2"/>
+			<path d="M50 45 L95 45 L95 70 L130 70 L130 95 L165 95 L165 118 L200 118" stroke-width="2" opacity="0.9" fill="none"/>
+			<circle cx="50" cy="45" r="5" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="50" cy="45" r="1.8" fill="currentColor" stroke="none"/>
+			<circle cx="200" cy="118" r="9" opacity="0.22" fill="currentColor" stroke="none"/>
+			<path d="M195 118 L199 122 L206 113" stroke-width="1.5" opacity="0.9"/>
+		`,
+		group: 'calculator',
+	},
+	{
 		name: 'Debt Strategy Comparison',
 		desc: 'Compare avalanche vs. snowball payoff strategies and see how extra monthly payments affect each one differently.',
 		url: '/tools/debt-snowball-vs-avalanche-calculator/',
