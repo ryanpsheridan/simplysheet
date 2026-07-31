@@ -260,12 +260,23 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 			margin-top: calc(var(--space-md) * 0.75);
 		}
 		/* Give the amount columns more room so "Proportional" and the dollar
-		   figures never clip against the page edge on narrow phones. */
+		   figures never clip against the page edge on narrow phones. The
+		   previous 40/30/30 split left "Proportional" filling its column
+		   with zero pixels of slack in Chromium, so slightly wider font
+		   rendering in mobile Safari pushed it past the edge. Shrinking the
+		   header font size and widening the amount columns further adds a
+		   real buffer, and allowing headers to wrap is a fallback if a
+		   device's text is wider still. */
 		.calc-col-person {
-			width: 40%;
+			width: 34%;
 		}
 		.calc-col-amount {
-			width: 30%;
+			width: 33%;
+		}
+		.calc-table th {
+			font-size: 0.75rem;
+			white-space: normal;
+			line-height: var(--leading-snug);
 		}
 	}
 </style>
