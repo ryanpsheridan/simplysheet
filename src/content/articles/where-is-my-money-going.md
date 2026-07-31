@@ -65,7 +65,7 @@ This is where the real value shows up. Once you have a few months of real number
 
 ![Budget spreadsheet overview panel showing an expense log next to a spending breakdown chart of actual versus expected amounts by category](/images/inline-article-image-overview-section.jpg)
 
-From there, adjusting is straightforward. You're not cutting spending across the board and hoping it works. You're looking at specific categories with specific totals and deciding, one at a time, what still earns a place in your budget. If you're not sure whether you've tracked enough to start budgeting, a quick [readiness assessment](/tools/expense-tracking-readiness/) can help you decide.
+From there, adjusting is straightforward. You're not cutting spending across the board and hoping it works. You're looking at specific categories with specific totals and deciding, one at a time, what still earns a place in your budget. If you want a simple structure to compare those totals against, the [50/30/20 rule](/articles/50-30-20-budget-rule/) splits take-home pay into needs, wants, and savings, and now you have the real numbers to check yourself against it. If you're not sure whether you've tracked enough to start budgeting, a quick [readiness assessment](/tools/expense-tracking-readiness/) can help you decide.
 
 The financial anxiety that comes from not knowing tends to fade quietly once you actually know. Not because the numbers are necessarily great, but because uncertainty is almost always more stressful than the truth, whatever the truth turns out to be.
 

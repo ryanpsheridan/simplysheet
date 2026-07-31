@@ -70,7 +70,7 @@ The goal isn't a perfect budget. It's a slightly easier month than the last one.
 
 The core principles stay the same. The priorities usually shift.
 
-Getting a clear picture of essential expenses tends to matter more than chasing an ideal split between categories. Building even a modest emergency fund can matter more too, since there's no extra paycheck waiting to absorb a surprise cost.
+Getting a clear picture of essential expenses tends to matter more than chasing an ideal split between categories, like the [50/30/20 rule](/articles/50-30-20-budget-rule/)'s 50% needs, 30% wants, 20% savings breakdown. That framework is still a useful reference point, but on a fixed income the needs share often runs higher than 50%, and that's fine. Building even a modest emergency fund can matter more too, since there's no extra paycheck waiting to absorb a surprise cost.
 
 Simple systems also tend to hold up better than complicated ones. A spreadsheet or method that's easy to check in on every week is usually more useful than one that takes real effort to maintain.
 
