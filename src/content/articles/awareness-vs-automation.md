@@ -43,7 +43,7 @@ There's a visual difference too. An app spreads your financial life across multi
 
 Most budgets that actually stick aren't built on motivation, they're built on routine. Five minutes at the end of the day isn't exciting, but it works. A weekly review isn't revolutionary either, but it works too.
 
-Simple systems are easier to turn into habits mainly because there's less to manage. There's no account connection to troubleshoot, no subscription to keep paying for, no settings menu to configure, just a place to record what's happening and a reason to look at it regularly. The goal isn't building the most advanced financial system possible, it's building one you're still using six months from now.
+Simple systems are easier to turn into habits mainly because there's less to manage. There's no account connection to troubleshoot, no subscription to keep paying for, no settings menu to configure, just a place to record what's happening and a reason to look at it regularly. The goal isn't building the most advanced financial system possible, it's building one you're still using six months from now. If you're not sure how to size your categories once you start logging, the [50/30/20 rule](/articles/50-30-20-budget-rule/) is a simple starting structure: 50% needs, 30% wants, 20% savings and debt.
 
 This is also where the anxiety piece comes in. It's rarely the math that's stressful, it's not knowing. A system you update yourself tends to close that gap faster than a dashboard ever does, because you're the one entering the number and you're the one who watches the total move.
 

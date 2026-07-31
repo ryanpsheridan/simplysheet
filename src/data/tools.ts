@@ -70,6 +70,27 @@ export const TOOLS: Tool[] = [
 		group: 'calculator',
 	},
 	{
+		name: 'Bill Split Calculator for Groups',
+		desc: 'Enter a total bill, the number of people, and tax and tip to see exactly what each person owes.',
+		url: '/tools/group-bill-split-calculator/',
+		icon: '<circle cx="8" cy="9" r="2.5"/><circle cx="16" cy="9" r="2.5"/><path d="M3 20c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5"/><path d="M11 20c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5"/><line x1="12" y1="2" x2="12" y2="6"/>',
+		illustration: `
+			<circle cx="65" cy="55" r="6" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="65" cy="55" r="2.2" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="50" r="6" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="50" r="2.2" fill="currentColor" stroke="none"/>
+			<circle cx="175" cy="55" r="6" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="175" cy="55" r="2.2" fill="currentColor" stroke="none"/>
+			<line x1="65" y1="65" x2="65" y2="90" stroke-width="1" stroke-dasharray="3 3" opacity="0.35"/>
+			<line x1="120" y1="60" x2="120" y2="90" stroke-width="1" stroke-dasharray="3 3" opacity="0.35"/>
+			<line x1="175" y1="65" x2="175" y2="90" stroke-width="1" stroke-dasharray="3 3" opacity="0.35"/>
+			<line x1="55" y1="90" x2="185" y2="90" stroke-width="2" opacity="0.85"/>
+			<circle cx="120" cy="115" r="9" opacity="0.2" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="115" r="3.2" fill="currentColor" stroke="none"/>
+		`,
+		group: 'calculator',
+	},
+	{
 		name: 'Debt-Free Date Calculator',
 		desc: 'Enter your debts, interest rates, and monthly payments to see the month you’ll be debt-free and how much interest you’ll pay along the way.',
 		url: '/tools/debt-free-date-calculator/',

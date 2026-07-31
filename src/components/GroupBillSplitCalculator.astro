@@ -1,0 +1,403 @@
+---
+const id = `gsc-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="gsc" id={id}>
+	<div class="gsc-input-group">
+		<label class="gsc-label" for={`${id}-bill`}>Total bill</label>
+		<div class="gsc-field">
+			<span class="gsc-prefix">$</span>
+			<input type="text" id={`${id}-bill`} class="gsc-input" data-role="bill" inputmode="decimal" placeholder="0" autocomplete="off" />
+		</div>
+	</div>
+
+	<div class="gsc-input-group">
+		<label class="gsc-label" id={`${id}-people-label`}>Number of people</label>
+		<div class="gsc-stepper">
+			<button type="button" class="gsc-step-btn" data-action="decrement" aria-label="Decrease number of people">&minus;</button>
+			<span class="gsc-step-value" data-role="people" aria-live="polite">2</span>
+			<button type="button" class="gsc-step-btn" data-action="increment" aria-label="Increase number of people">+</button>
+		</div>
+	</div>
+
+	<div class="gsc-input-group">
+		<label class="gsc-label">Tip</label>
+		<div class="gsc-tip-toggle">
+			<button type="button" class="gsc-tip-btn" data-tip="0">No tip</button>
+			<button type="button" class="gsc-tip-btn" data-tip="15">15%</button>
+			<button type="button" class="gsc-tip-btn active" data-tip="18">18%</button>
+			<button type="button" class="gsc-tip-btn" data-tip="20">20%</button>
+			<button type="button" class="gsc-tip-btn" data-tip="custom">Custom</button>
+		</div>
+		<div class="gsc-custom-row" hidden>
+			<div class="gsc-field gsc-custom-field">
+				<input type="number" id={`${id}-custom-tip`} class="gsc-custom-input" data-role="custom-tip" min="0" max="100" placeholder="0" />
+				<span class="gsc-suffix">%</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="gsc-input-group">
+		<label class="gsc-label" for={`${id}-tax`}>Sales tax <span class="gsc-optional">(optional)</span></label>
+		<div class="gsc-field gsc-tax-field">
+			<input type="number" id={`${id}-tax`} class="gsc-custom-input" data-role="tax" min="0" max="100" placeholder="0" />
+			<span class="gsc-suffix">%</span>
+		</div>
+	</div>
+
+	<div class="gsc-stats">
+		<div class="gsc-stat">
+			<span class="gsc-stat-label">Tax</span>
+			<span class="gsc-stat-value" data-role="tax-amount">$0</span>
+		</div>
+		<div class="gsc-stat">
+			<span class="gsc-stat-label">Tip</span>
+			<span class="gsc-stat-value" data-role="tip-amount">$0</span>
+		</div>
+		<div class="gsc-stat">
+			<span class="gsc-stat-label">Total bill</span>
+			<span class="gsc-stat-value" data-role="total-amount">$0</span>
+		</div>
+		<div class="gsc-stat gsc-stat--primary">
+			<span class="gsc-stat-label gsc-stat-label--primary">Each person pays</span>
+			<span class="gsc-stat-value gsc-stat-value--primary" data-role="per-person">$0</span>
+		</div>
+	</div>
+</div>
+<div class="gsc-cta-divider"></div>
+<a href="/spreadsheets/budget-spreadsheet/" class="gsc-product-link">Track shared spending in a budget spreadsheet <span class="arrow">&rarr;</span></a>
+
+<style>
+	/* No card, border, or fill — the calculator sits directly in the page column.
+	   A hairline rule + generous top padding is the only signal that a new,
+	   interactive section is starting. */
+	.gsc {
+		margin: calc(var(--space-lg) * 2) 0 var(--space-lg);
+	}
+
+	.gsc-input-group {
+		margin-bottom: var(--space-md);
+	}
+	.gsc-input-group:last-of-type {
+		margin-bottom: var(--space-lg);
+	}
+
+	/* ——— Inputs ——— */
+
+	.gsc-label {
+		display: block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+	}
+	.gsc-optional {
+		color: var(--color-text-muted);
+		font-weight: var(--weight-normal);
+	}
+	.gsc-field {
+		display: flex;
+		align-items: center;
+		height: 2.75rem;
+		box-sizing: border-box;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+		background: var(--color-bg-surface);
+		transition: border-color 0.15s;
+	}
+	.gsc-field:focus-within {
+		border-color: var(--color-link);
+	}
+	.gsc-prefix,
+	.gsc-suffix {
+		padding: 0.625rem 0.75rem;
+		font-size: var(--text-body);
+		color: var(--color-text-muted);
+		user-select: none;
+	}
+	.gsc-prefix {
+		padding-right: 0;
+	}
+	.gsc-input {
+		flex: 1;
+		min-width: 0;
+		border: none;
+		outline: none;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		padding: 0.625rem 0.75rem 0.625rem 0.25rem;
+		color: var(--color-text);
+		background: transparent;
+	}
+	.gsc-input::placeholder {
+		color: var(--color-text-muted);
+	}
+	.gsc-custom-field {
+		max-width: 8rem;
+	}
+	.gsc-tax-field {
+		max-width: 8rem;
+	}
+	.gsc-custom-input {
+		flex: 1;
+		min-width: 0;
+		width: 100%;
+		border: none;
+		outline: none;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		padding: 0.625rem 0 0.625rem 0.75rem;
+		color: var(--color-text);
+		background: transparent;
+	}
+	.gsc-custom-input::-webkit-outer-spin-button,
+	.gsc-custom-input::-webkit-inner-spin-button {
+		margin: 0;
+	}
+
+	/* ——— Number-of-people stepper ——— */
+
+	.gsc-stepper {
+		display: flex;
+		align-items: center;
+		gap: var(--space-md);
+	}
+	.gsc-step-btn {
+		width: 2.75rem;
+		height: 2.75rem;
+		flex-shrink: 0;
+		font-family: var(--font-sans);
+		font-size: 1.25rem;
+		line-height: 1;
+		color: var(--color-text);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		cursor: pointer;
+		transition: border-color 0.15s, background 0.15s;
+	}
+	.gsc-step-btn:hover {
+		border-color: var(--color-text-muted);
+		background: var(--color-bg-emphasis);
+	}
+	.gsc-step-value {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
+		min-width: 2ch;
+		text-align: center;
+	}
+
+	/* ——— Tip toggle (mirrors the split-preset pill pattern used elsewhere) ——— */
+
+	.gsc-tip-toggle {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+	}
+	.gsc-tip-btn {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-normal);
+		letter-spacing: 0.2px;
+		color: var(--color-text-secondary);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-full);
+		padding: 0.375rem 0.875rem;
+		cursor: pointer;
+		transition: color 0.15s, border-color 0.15s, background 0.15s;
+	}
+	.gsc-tip-btn:hover {
+		color: var(--color-text);
+		border-color: var(--color-text-muted);
+	}
+	.gsc-tip-btn.active {
+		color: var(--color-bg);
+		background: var(--color-bg-inverse);
+		border-color: var(--color-bg-inverse);
+	}
+	.gsc-custom-row {
+		margin-top: var(--space-sm);
+	}
+	.gsc-custom-row[hidden] {
+		display: none;
+	}
+
+	/* ——— Results: flush rows, with "Each person pays" emphasized ——— */
+
+	.gsc-stats {
+		display: flex;
+		flex-direction: column;
+	}
+	.gsc-stat {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-md);
+		padding: var(--space-sm) 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+	.gsc-stat:first-child {
+		padding-top: 0;
+	}
+	.gsc-stat--primary {
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+	.gsc-stat-label {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-normal);
+		color: var(--color-text-secondary);
+	}
+	.gsc-stat-label--primary {
+		color: var(--color-text);
+		font-weight: 600;
+	}
+	.gsc-stat-value {
+		font-size: var(--text-small);
+		font-weight: var(--weight-normal);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		white-space: nowrap;
+		font-variant-numeric: tabular-nums;
+	}
+	.gsc-stat-value--primary {
+		font-size: var(--text-h2);
+		font-weight: 600;
+	}
+
+	/* ——— Product link ——— */
+
+	.gsc-cta-divider {
+		margin-top: var(--space-lg);
+	}
+	.gsc-product-link {
+		display: block;
+		width: fit-content;
+		color: var(--color-accent-info);
+		margin-top: var(--space-md);
+		margin-bottom: var(--space-lg);
+		font-size: 0.875rem;
+		text-decoration: none;
+	}
+	.gsc-product-link:hover {
+		text-decoration: underline;
+	}
+	.gsc-product-link .arrow {
+		display: inline-block;
+		transition: transform 0.15s ease;
+	}
+	.gsc-product-link:hover .arrow {
+		transform: translateX(2px);
+	}
+
+	/* ——— Responsive ——— */
+
+	@media (max-width: 767px) {
+		.gsc {
+			margin-top: calc(var(--space-md) * 2);
+		}
+	}
+</style>
+
+<script is:inline define:vars={{ id }}>
+(function () {
+	var root = document.getElementById(id);
+	if (!root) return;
+
+	var billEl = root.querySelector('[data-role="bill"]');
+	var peopleEl = root.querySelector('[data-role="people"]');
+	var taxEl = root.querySelector('[data-role="tax"]');
+	var customTipEl = root.querySelector('[data-role="custom-tip"]');
+	var customRow = root.querySelector('.gsc-custom-row');
+	var tipBtns = root.querySelectorAll('.gsc-tip-btn');
+
+	var taxAmountEl = root.querySelector('[data-role="tax-amount"]');
+	var tipAmountEl = root.querySelector('[data-role="tip-amount"]');
+	var totalAmountEl = root.querySelector('[data-role="total-amount"]');
+	var perPersonEl = root.querySelector('[data-role="per-person"]');
+
+	var people = 2;
+	var tipPct = 18;
+
+	var MIN_PEOPLE = 2;
+	var MAX_PEOPLE = 20;
+
+	function formatCurrency(n) {
+		return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+	}
+
+	function formatInput(val) {
+		var num = val.replace(/[^0-9.]/g, '');
+		var parts = num.split('.');
+		if (parts[0]) parts[0] = parseInt(parts[0], 10).toLocaleString('en-US');
+		return parts.join('.');
+	}
+
+	function num(el) {
+		return parseFloat(String(el.value).replace(/[^0-9.]/g, '')) || 0;
+	}
+
+	function calculate() {
+		var bill = num(billEl);
+		var taxPct = Math.min(100, num(taxEl));
+
+		var taxAmount = bill * (taxPct / 100);
+		var tipAmount = bill * (tipPct / 100);
+		var total = bill + taxAmount + tipAmount;
+
+		taxAmountEl.textContent = formatCurrency(taxAmount);
+		tipAmountEl.textContent = formatCurrency(tipAmount);
+		totalAmountEl.textContent = formatCurrency(total);
+		perPersonEl.textContent = formatCurrency(total / people);
+	}
+
+	billEl.addEventListener('input', function () {
+		var pos = billEl.selectionStart;
+		var before = billEl.value.length;
+		billEl.value = formatInput(billEl.value);
+		var after = billEl.value.length;
+		billEl.setSelectionRange(pos + (after - before), pos + (after - before));
+		calculate();
+	});
+
+	taxEl.addEventListener('input', calculate);
+
+	root.querySelectorAll('.gsc-step-btn').forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			if (btn.dataset.action === 'increment') {
+				people = Math.min(MAX_PEOPLE, people + 1);
+			} else {
+				people = Math.max(MIN_PEOPLE, people - 1);
+			}
+			peopleEl.textContent = String(people);
+			calculate();
+		});
+	});
+
+	tipBtns.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			tipBtns.forEach(function (b) { b.classList.remove('active'); });
+			btn.classList.add('active');
+
+			if (btn.dataset.tip === 'custom') {
+				customRow.hidden = false;
+				tipPct = Math.min(100, num(customTipEl));
+			} else {
+				customRow.hidden = true;
+				tipPct = parseFloat(btn.dataset.tip) || 0;
+			}
+			calculate();
+		});
+	});
+
+	customTipEl.addEventListener('input', function () {
+		tipPct = Math.min(100, num(customTipEl));
+		calculate();
+	});
+
+	calculate();
+})();
+</script>
