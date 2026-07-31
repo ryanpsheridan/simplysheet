@@ -380,12 +380,12 @@ p {
 .product-card-badge {
 	display: inline-block;
 	align-self: flex-start;
-	font-size: 0.8125rem;
+	font-size: var(--text-xs);
 	font-weight: var(--weight-medium);
 	color: var(--color-text-secondary);
 	background: var(--color-bg-panel);
 	border-radius: var(--radius-full);
-	padding: 0.4375rem 0.875rem;
+	padding: 0.5rem 0.875rem 0.4375rem;
 	line-height: 1;
 	white-space: nowrap;
 	margin: var(--space-md) var(--space-md) 0;
@@ -467,12 +467,12 @@ p {
 }
 .product-badge {
 	display: inline-block;
-	font-size: 0.8125rem;
+	font-size: var(--text-xs);
 	font-weight: var(--weight-medium);
 	color: var(--color-text-secondary);
 	background: var(--color-bg-panel);
 	border-radius: var(--radius-full);
-	padding: 0.4375rem 0.875rem;
+	padding: 0.5rem 0.875rem 0.4375rem;
 	line-height: 1;
 	margin-bottom: var(--space-xs);
 }
