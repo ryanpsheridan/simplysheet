@@ -39,7 +39,7 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 			<tr>
 				<th scope="col">Each person</th>
 				<th scope="col">50/50</th>
-				<th scope="col">By income</th>
+				<th scope="col">Proportional</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -62,7 +62,7 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		</tbody>
 	</table>
 
-	<p class="bs-note">"By income" splits the same bills in proportion to what each person earns, so both cover the same share of their own paycheck.</p>
+	<p class="bs-note">"Proportional" splits the same bills in proportion to what each person earns, so both cover the same share of their own paycheck.</p>
 </div>
 <div class="calc-cta-divider"></div>
 <a href="/spreadsheets/couples-budget-spreadsheet/" class="calc-product-link">Track it in a couples budget spreadsheet <span class="arrow">&rarr;</span></a>
@@ -259,7 +259,7 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		.calc-table {
 			margin-top: calc(var(--space-md) * 0.75);
 		}
-		/* Give the amount columns more room so "By income" and the dollar
+		/* Give the amount columns more room so "Proportional" and the dollar
 		   figures never clip against the page edge on narrow phones. */
 		.calc-col-person {
 			width: 40%;
