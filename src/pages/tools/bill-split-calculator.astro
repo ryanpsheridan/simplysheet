@@ -1,38 +1,38 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
-import BillSplitCalculator from '../../components/BillSplitCalculator.astro';
+import GroupBillSplitCalculator from '../../components/GroupBillSplitCalculator.astro';
 
-const title = 'Bill Split Calculator for Couples';
-const metaTitle = 'Bill Split Calculator — Split Bills Fairly by Income';
-const description = 'Free bill split calculator for couples with different incomes. Enter both take-home pays and your shared bills to compare a 50/50 split with a fair split by income.';
+const title = 'Bill Split Calculator';
+const metaTitle = 'Bill Split Calculator — Split a Restaurant or Group Bill Evenly';
+const description = 'Free bill split calculator for splitting a restaurant, group, or shared bill evenly. Enter the total, number of people, tax, and tip to see exactly what everyone owes.';
 
 const toc = [
 	{ slug: 'how-it-works', text: 'How this calculator works' },
-	{ slug: 'even-vs-proportional', text: '50/50 vs. splitting by income' },
-	{ slug: 'what-counts', text: 'What counts as a shared bill' },
-	{ slug: 'making-it-work', text: 'Making the split work in practice' },
+	{ slug: 'tax-and-tip', text: 'Handling tax and tip' },
+	{ slug: 'uneven-splits', text: 'When an even split is not fair' },
+	{ slug: 'settling-up', text: 'Settling up without the back and forth' },
 ];
 
 const faq = [
 	{
-		question: 'How should couples split bills when they earn different incomes?',
-		answer: 'There is no single right answer, but the most common fair approach is to split shared bills in proportion to income. If one partner earns 60% of the household total, they cover 60% of the shared bills. This leaves both people with a similar share of their own income left over, which a flat 50/50 split does not when incomes are far apart.',
+		question: 'How do you split a bill evenly between multiple people?',
+		answer: 'Add up the total bill, including tax and tip, then divide by the number of people. This calculator does that automatically: enter the total, the number of people, and your tip and tax percentages, and it shows exactly what each person owes.',
 	},
 	{
-		question: 'Is it better to split bills 50/50 or by income?',
-		answer: 'A 50/50 split is simplest and works well when two incomes are close. When incomes differ a lot, a 50/50 split takes a much bigger bite out of the lower earner\'s paycheck, so many couples switch to splitting in proportion to income. Both are valid. The point is to pick one on purpose rather than defaulting to 50/50 because it feels even on paper.',
+		question: 'Should tax and tip be included before or after splitting?',
+		answer: 'Include them before splitting so the amount everyone pays covers their fair share of the whole bill, not just the food and drinks. Calculating tip on the pre-tax subtotal is the most common convention, but this calculator applies both tax and tip to the base bill amount you enter for a simple, consistent result.',
 	},
 	{
-		question: 'What income should we use in the calculator?',
-		answer: 'Use monthly take-home pay, meaning what actually lands in each person\'s account after taxes, retirement contributions, and insurance. Splitting on gross pay distorts the ratio because deductions rarely line up between two people, and it overstates how much is really available for bills.',
+		question: 'What is a normal tip percentage to use?',
+		answer: '15% is generally considered the low end for adequate service, 18% to 20% is standard for good service in the United States, and 25% or more is common for exceptional service. Use whatever percentage matches your own norms; the calculator defaults to 18% but lets you pick any percentage.',
 	},
 	{
-		question: 'Which bills should we split, and which stay personal?',
-		answer: 'Split the costs you share: rent or mortgage, utilities, groceries, insurance, and subscriptions you both use. Keep individual spending, personal debt, and solo hobbies separate so each person still has money that is clearly their own. The calculator is for the shared pool only.',
+		question: 'What if everyone did not order the same amount?',
+		answer: 'An even split works well for groups who ordered roughly similar amounts. If costs were very unequal, such as one person ordering drinks and appetizers and another just an entree, it may feel fairer to split by what each person actually ordered instead. This calculator handles the equal-split case; for itemized splitting, add up each person\'s own items separately.',
 	},
 	{
-		question: 'Do we need a joint account to split bills by income?',
-		answer: 'No. Many couples keep separate accounts and each transfer their share into one shared account that pays the bills, or one person pays and the other reimburses their portion. A joint account can make it smoother, but the split itself works the same either way.',
+		question: 'How do people typically pay their share back?',
+		answer: 'Common options include one person covering the bill and everyone else paying them back via a payment app, or splitting the payment directly on the card machine if the restaurant supports it. Agreeing on the total per person before anyone reaches for a card avoids the awkward math at the table.',
 	},
 ];
 ---
@@ -44,33 +44,32 @@ const faq = [
 	breadcrumbLabel="Bill Split Calculator"
 	toc={toc}
 	faq={faq}
-	tags={['couples-budgeting']}
-	productSlug="couples-budget-spreadsheet"
-	productLabel="Split bills fairly in one shared sheet"
+	tags={['expense-tracking']}
+	productSlug="budget-spreadsheet"
+	productLabel="Track shared spending in one place"
 	relatedToolUrls={[
+		'/tools/monthly-bill-split-calculator/',
 		'/tools/50-30-20-budget-calculator/',
-		'/tools/emergency-fund-calculator/',
-		'/tools/sinking-fund-calculator/',
 		'/tools/expense-tracking-readiness/',
+		'/tools/emergency-fund-calculator/',
 	]}
 >
-	<Fragment slot="intro">When two people earn different amounts, an even 50/50 split can quietly leave the lower earner with much less breathing room. Enter both take-home incomes and your total shared bills, and the calculator shows two versions side by side: a flat 50/50 split and a split weighted by income, so you can pick the one that actually feels fair.</Fragment>
+	<Fragment slot="intro">Splitting a dinner, group outing, or shared bill down the middle gets messy once tax and tip are involved. Enter the total, the number of people, and your tip and tax percentages, and this calculator works out exactly what each person owes.</Fragment>
 
-	<BillSplitCalculator slot="calculator" />
+	<GroupBillSplitCalculator slot="calculator" />
 
 	<h2 id="how-it-works">How this calculator works</h2>
-	<p>The calculator takes three numbers: each partner's monthly take-home pay and the total you spend on shared bills each month. From those it works out two things. First, a flat 50/50 split, where each person pays half of the shared bills regardless of income. Second, a proportional split, where each person covers the same share of the bills as their share of your combined income.</p>
-	<p>Take-home pay means what actually reaches each account after taxes, retirement, and insurance. Using gross salary throws off the ratio, because payroll deductions rarely line up the same way for two different people. If you're not sure how much of your income is really free after essentials, the <a href="/tools/50-30-20-budget-calculator/">50/30/20 budget calculator</a> is a good companion.</p>
+	<p>Enter the bill total before tax and tip, then set the number of people splitting it. Add a tip percentage (or pick one of the presets) and a sales tax percentage if it applies. The calculator adds tax and tip to the total, then divides that final number evenly across everyone splitting the bill.</p>
+	<p>This gives you a single number per person that already accounts for everything, so nobody has to do napkin math at the table.</p>
 
-	<h2 id="even-vs-proportional">50/50 vs. splitting by income</h2>
-	<p>A 50/50 split is the default a lot of couples reach for because it looks even. And when two incomes are close, it more or less is. The trouble starts when incomes are far apart. Half the rent is a small slice of a large paycheck and a large slice of a small one, so the person earning less ends up with far less money left for everything else, even though you both paid the same dollar amount.</p>
-	<p>Splitting in proportion to income fixes that. If you earn 60% of the household total, you cover 60% of the shared bills, and both people are left with a similar percentage of their own pay. Neither method is objectively correct, and plenty of couples happily split everything down the middle. The value of running the numbers is seeing the actual gap so you can choose on purpose. For more on why this matters, read <a href="/articles/how-to-split-bills-with-different-incomes/">how couples split bills fairly when they earn different incomes</a>.</p>
+	<h2 id="tax-and-tip">Handling tax and tip</h2>
+	<p>Tax and tip both add real money on top of the listed prices, and skipping them when splitting a bill is one of the most common ways a group ends up short when the check comes. Enter your local sales tax rate if the venue does not already show it on the receipt, and pick a tip percentage that matches your own standard. 18% to 20% is typical for good service at a sit-down restaurant in the United States.</p>
 
-	<h2 id="what-counts">What counts as a shared bill</h2>
-	<p>This calculator is only for the money you spend together. Shared bills usually include rent or mortgage, utilities, groceries, home and auto insurance, internet, and any subscriptions you both use. Add those up and enter the monthly total.</p>
-	<p>Keep personal spending out of it: individual hobbies, solo subscriptions, and each person's own debt payments. Splitting the shared pool fairly while leaving each partner their own money is what keeps the arrangement from feeling like one merged budget with no personal room. If tracking who paid for what is the sticking point, a shared <a href="/spreadsheets/couples-budget-spreadsheet/">couples budget spreadsheet</a> tags each expense as one partner's or joint so the shared total is always clear.</p>
+	<h2 id="uneven-splits">When an even split is not fair</h2>
+	<p>An even split works best when everyone in the group ordered roughly the same amount. It gets less fair when spending is lopsided, for example one person ordering a full meal with drinks and another ordering only an appetizer. In those cases, some groups prefer splitting by what each person actually ordered instead of dividing the total evenly. That still starts with the same tax and tip math, just applied to each person's own subtotal rather than the group total.</p>
+	<p>This same tension shows up in recurring household bills too, just for a different reason: two partners splitting rent and utilities evenly can feel unfair if their incomes are far apart, even though everyone is "sharing" the same costs. If that is the situation you are working through, the <a href="/tools/monthly-bill-split-calculator/">monthly bill split calculator</a> compares an even split against one weighted by income.</p>
 
-	<h2 id="making-it-work">Making the split work in practice</h2>
-	<p>Once you've picked a split, the mechanics are simple. Many couples each transfer their share into one shared account that pays the bills, so no single person is fronting the money. Others have one person pay and the other reimburse their portion on payday. You don't need a joint account for either approach, though it can make the transfers smoother.</p>
-	<p>Recheck the numbers whenever an income changes, since a raise or a new job shifts the fair ratio. And treat the split as a shared decision you revisit together, not a fixed rule. Couples who talk through the plan tend to argue about money less, which is the whole point. See <a href="/articles/couples-budgeting/">how to budget as a couple without fighting about money</a> for the bigger picture.</p>
+	<h2 id="settling-up">Settling up without the back and forth</h2>
+	<p>Agreeing on the per-person total before anyone pays avoids the usual scramble of passing a card around or trying to remember who ordered what after the fact. Many groups have one person cover the bill and everyone else pay them back through a payment app, or split the total directly across multiple cards if the venue allows it. Either way, knowing the exact number ahead of time keeps the moment simple.</p>
+	<p>If you are trying to keep a running tab on recurring shared costs rather than a one-off bill, a <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> is a better fit than a one-time split, since it tracks spending across the whole month instead of a single outing.</p>
 </CalculatorLayout>

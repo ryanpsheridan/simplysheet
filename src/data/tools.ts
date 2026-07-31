@@ -52,9 +52,9 @@ export const TOOLS: Tool[] = [
 		group: 'calculator',
 	},
 	{
-		name: 'Bill Split Calculator',
+		name: 'Monthly Bill Split Calculator',
 		desc: 'Enter both take-home incomes and your shared bills to compare a 50/50 split with a fair split weighted by income.',
-		url: '/tools/bill-split-calculator/',
+		url: '/tools/monthly-bill-split-calculator/',
 		icon: '<circle cx="7" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2 20c0-2.8 2.2-5 5-5s5 2.2 5 5"/><path d="M12 20c0-2.8 2.2-5 5-5s5 2.2 5 5"/>',
 		illustration: `
 			<line x1="50" y1="55" x2="115" y2="55" stroke-width="4" opacity="0.85"/>
@@ -66,6 +66,27 @@ export const TOOLS: Tool[] = [
 			<circle cx="75" cy="107" r="2.2" fill="currentColor" stroke="none"/>
 			<circle cx="155" cy="107" r="9" opacity="0.2" fill="currentColor" stroke="none"/>
 			<circle cx="155" cy="107" r="3.2" fill="currentColor" stroke="none"/>
+		`,
+		group: 'calculator',
+	},
+	{
+		name: 'Bill Split Calculator',
+		desc: 'Enter a total bill, the number of people, and tax and tip to see exactly what each person owes.',
+		url: '/tools/bill-split-calculator/',
+		icon: '<circle cx="8" cy="9" r="2.5"/><circle cx="16" cy="9" r="2.5"/><path d="M3 20c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5"/><path d="M11 20c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5"/><line x1="12" y1="2" x2="12" y2="6"/>',
+		illustration: `
+			<circle cx="65" cy="55" r="6" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="65" cy="55" r="2.2" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="50" r="6" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="50" r="2.2" fill="currentColor" stroke="none"/>
+			<circle cx="175" cy="55" r="6" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="175" cy="55" r="2.2" fill="currentColor" stroke="none"/>
+			<line x1="65" y1="65" x2="65" y2="90" stroke-width="1" stroke-dasharray="3 3" opacity="0.35"/>
+			<line x1="120" y1="60" x2="120" y2="90" stroke-width="1" stroke-dasharray="3 3" opacity="0.35"/>
+			<line x1="175" y1="65" x2="175" y2="90" stroke-width="1" stroke-dasharray="3 3" opacity="0.35"/>
+			<line x1="55" y1="90" x2="185" y2="90" stroke-width="2" opacity="0.85"/>
+			<circle cx="120" cy="115" r="9" opacity="0.2" fill="currentColor" stroke="none"/>
+			<circle cx="120" cy="115" r="3.2" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
 	},
