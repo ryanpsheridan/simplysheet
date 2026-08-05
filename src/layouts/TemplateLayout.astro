@@ -6,12 +6,25 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { SITE_TITLE, ETSY_SHOP_URL, withEtsyTracking } from '../consts';
+import { intrinsicSize } from '../../scripts/image-size.mjs';
 
 type Props = CollectionEntry<'templates'>['data'] & {
 	id?: string;
 };
 
 const { title, description, badge, platforms, darkListing, lightListing, heroImage, lightImage, features, howItWorks, relatedArticles, bundles, faq, reviews, id, price, sku } = Astro.props;
+
+// The "how it works" images are styled `width: 100%; height: auto` with no
+// aspect-ratio container, so without dimensions the browser cannot reserve
+// space and everything below them shifts once they load. Probed at build time
+// from the file itself, so the ratio can never drift from the real asset.
+const howToSizes = new Map(
+	await Promise.all(
+		howItWorks
+			.filter((row: { image?: string }) => row.image)
+			.map(async (row: { image: string }) => [row.image, await intrinsicSize(row.image)] as const),
+	),
+);
 
 const allArticles = await getCollection('articles');
 const linkedArticles = relatedArticles
@@ -233,7 +246,7 @@ function featureIcon(text: string): string {
 								<h2>{row.heading}</h2>
 								<div class="howto-content">
 									<p set:html={row.body} />
-									{row.image && <img src={row.image} alt={row.imageAlt ?? row.heading} loading="lazy" />}
+									{row.image && <img src={row.image} alt={row.imageAlt ?? row.heading} {...howToSizes.get(row.image) ?? {}} loading="lazy" decoding="async" />}
 								</div>
 							</div>
 						))}
