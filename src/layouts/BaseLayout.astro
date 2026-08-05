@@ -23,25 +23,33 @@ const { title, description, noindex } = Astro.props;
 		<slot />
 		<Footer />
 		<script>
-			import Lenis from 'lenis';
+			// Smooth scroll is a motion effect, so honour the OS-level request
+			// for less of it. Lenis has no built-in reduced-motion handling, and
+			// hijacking the scroll wheel is exactly what that preference is
+			// meant to switch off; skipping init leaves native scrolling intact.
+			if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				const { default: Lenis } = await import('lenis');
 
-			const lenis = new Lenis({
-				duration: 0.72,
-				easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-				smoothWheel: true,
-			});
+				const lenis = new Lenis({
+					duration: 0.72,
+					easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+					smoothWheel: true,
+				});
 
-			function raf(time: number) {
-				lenis.raf(time);
+				const raf = (time: number) => {
+					lenis.raf(time);
+					requestAnimationFrame(raf);
+				};
 				requestAnimationFrame(raf);
 			}
-			requestAnimationFrame(raf);
 		</script>
 	</body>
 </html>
 
 <style is:global>
-	html {
-		scroll-behavior: smooth;
+	@media (prefers-reduced-motion: no-preference) {
+		html {
+			scroll-behavior: smooth;
+		}
 	}
 </style>
