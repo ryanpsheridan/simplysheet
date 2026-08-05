@@ -143,10 +143,25 @@ function extractInPage() {
 		// Visible copy, word for word. A length proxy would miss a same-length
 		// edit, and raw textContent picks up inlined <style>/<script> text,
 		// so both are excluded and whitespace is normalised.
+		// Visible copy. Each text node is trimmed and empties dropped, then the
+		// rest joined with a fixed separator — so whitespace *between* tags,
+		// which the Astro compiler varies when markup is restructured and which
+		// no browser renders, cannot register as a copy change. Text *within* a
+		// node keeps its spacing, so a real wording change still shows up.
+		// (textContent alone inherits source whitespace; a character count
+		// misses same-length edits. Both were tried and rejected.)
 		bodyText: (() => {
 			const clone = document.body.cloneNode(true);
 			for (const el of clone.querySelectorAll('script,style,template,noscript')) el.remove();
-			return clone.textContent.replace(/\s+/g, ' ').trim();
+			const parts = [];
+			for (const node of clone.querySelectorAll('*')) {
+				for (const child of node.childNodes) {
+					if (child.nodeType !== 3) continue;
+					const t = child.nodeValue.replace(/\s+/g, ' ').trim();
+					if (t) parts.push(t);
+				}
+			}
+			return parts.join('␟');
 		})(),
 	};
 }
@@ -299,6 +314,14 @@ async function capture(label) {
 
 // ——— Diff —————————————————————————————————————————————————————————————
 
+// Arrays of primitives (hrefs, data-cta values, JSON-LD blocks) are stored
+// sorted, so their order carries no meaning — comparing them positionally turns
+// one inserted link into a diff on every later index. Compare those as sets and
+// report only what actually appeared or vanished. Arrays of objects (the
+// heading outline, the image list) stay positional, because there order is
+// exactly what we are protecting.
+const isPrimitiveArray = (v) => Array.isArray(v) && v.every((x) => x === null || typeof x !== 'object');
+
 function diffJson(a, b, pathPrefix = '', out = []) {
 	const keys = [...new Set([...Object.keys(a ?? {}), ...Object.keys(b ?? {})])].sort();
 	for (const k of keys) {
@@ -306,7 +329,13 @@ function diffJson(a, b, pathPrefix = '', out = []) {
 		const bv = b?.[k];
 		const p = pathPrefix ? `${pathPrefix}.${k}` : k;
 		const isObj = (v) => v && typeof v === 'object';
-		if (isObj(av) && isObj(bv)) diffJson(av, bv, p, out);
+		if (isPrimitiveArray(av) && isPrimitiveArray(bv)) {
+			const removed = av.filter((x) => !bv.includes(x));
+			const added = bv.filter((x) => !av.includes(x));
+			if (removed.length) out.push({ path: `${p} [removed]`, baseline: removed, current: null });
+			if (added.length) out.push({ path: `${p} [added]`, baseline: null, current: added });
+		}
+		else if (isObj(av) && isObj(bv)) diffJson(av, bv, p, out);
 		else if (JSON.stringify(av) !== JSON.stringify(bv)) {
 			out.push({ path: p, baseline: av, current: bv });
 		}
