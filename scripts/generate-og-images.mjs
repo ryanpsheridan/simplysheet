@@ -13,8 +13,15 @@ const svgs = files.filter(
 	(f) => (f.startsWith('card-v2-') || f === 'og-default.svg') && f.endsWith('.svg'),
 );
 
+// These renders are flat gradients plus a grain overlay, which a full RGBA PNG
+// stores very inefficiently — the default encode runs 850 KB–1 MB each. A
+// quantized palette cuts that by ~75% with no visible difference, since the
+// grain masks any banding. They are never loaded by a visitor (og:image is
+// fetched by social crawlers only), so this is deploy weight, not page weight.
+const PNG_OPTIONS = { palette: true, quality: 90, effort: 10 };
+
 for (const svg of svgs) {
 	const pngName = svg.replace(/\.svg$/, '.png');
-	await sharp(path.join(imagesDir, svg)).png().toFile(path.join(imagesDir, pngName));
+	await sharp(path.join(imagesDir, svg)).png(PNG_OPTIONS).toFile(path.join(imagesDir, pngName));
 	console.log(`Generated ${pngName}`);
 }
