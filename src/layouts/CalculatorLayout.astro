@@ -133,10 +133,11 @@ const faqSchema = faq.length ? {
 		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 	</head>
 	<body>
+		<a href="#main-content" class="skip-link">Skip to content</a>
 		<Header />
 		<div class="reading-progress" id="reading-progress"></div>
 
-		<main class="calc-main">
+		<main id="main-content" class="calc-main">
 			<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: breadcrumbLabel }]} />
 			<div class="calc-grid">
 				<div class="toc-rail">

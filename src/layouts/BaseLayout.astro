@@ -18,6 +18,7 @@ const { title, description, noindex } = Astro.props;
 		<BaseHead title={title} description={description} noindex={noindex} />
 	</head>
 	<body>
+		<a href="#main-content" class="skip-link">Skip to content</a>
 		<Header />
 		<slot />
 		<Footer />

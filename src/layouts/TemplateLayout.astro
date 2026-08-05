@@ -171,9 +171,10 @@ function featureIcon(text: string): string {
 		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 	</head>
 	<body>
+		<a href="#main-content" class="skip-link">Skip to content</a>
 		<Header />
 
-		<main class="template-main">
+		<main id="main-content" class="template-main">
 			<Breadcrumbs crumbs={[{ label: 'Spreadsheets', href: '/spreadsheets' }, { label: title }]} />
 
 			<section class="product-hero">

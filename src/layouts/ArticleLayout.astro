@@ -164,10 +164,11 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 	</head>
 	<body>
+		<a href="#main-content" class="skip-link">Skip to content</a>
 		<Header />
 		<div class="reading-progress" id="reading-progress"></div>
 
-		<main class:list={['article-main', { 'has-toc': tocHeadings.length > 1 }]}>
+		<main id="main-content" class:list={['article-main', { 'has-toc': tocHeadings.length > 1 }]}>
 			<Breadcrumbs crumbs={[{ label: 'Articles', href: '/articles' }, { label: title }]} />
 			<div class="article-grid">
 				{tocHeadings.length > 1 && (

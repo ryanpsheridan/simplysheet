@@ -88,7 +88,7 @@ const toolThumbnails = [
 ---
 
 <BaseLayout title={`Style Guide — ${SITE_TITLE}`} description="Living reference for Simply Sheets components, tokens, and patterns." noindex>
-	<div class="guide">
+	<main id="main-content" class="guide">
 
 		<header class="guide-header">
 			<h1>Style Guide</h1>
@@ -406,7 +406,7 @@ const toolThumbnails = [
 			</div>
 		</section>
 
-	</div>
+	</main>
 </BaseLayout>
 
 <style>
@@ -415,6 +415,10 @@ const toolThumbnails = [
 	.guide {
 		max-width: calc(var(--max-width) + var(--space-md) * 2);
 		margin: 0 auto;
+		/* This wrapper became <main> for the landmark and the skip-link target.
+		   The global `main` rule adds section padding, which this page does not
+		   want — .guide-header and each section carry their own. */
+		padding: 0;
 	}
 
 	.guide-header {

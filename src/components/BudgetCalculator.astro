@@ -35,16 +35,16 @@ const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
 	{!simplified && (
 		<div class="calc-custom-row" hidden>
 			<div class="calc-custom-field">
-				<label class="calc-custom-label">Needs %</label>
-				<input type="number" class="calc-custom-input" data-role="needs" value="50" min="0" max="100" />
+				<label class="calc-custom-label" for={`${id}-needs`}>Needs %</label>
+				<input type="number" id={`${id}-needs`} class="calc-custom-input" data-role="needs" value="50" min="0" max="100" />
 			</div>
 			<div class="calc-custom-field">
-				<label class="calc-custom-label">Wants %</label>
-				<input type="number" class="calc-custom-input" data-role="wants" value="30" min="0" max="100" />
+				<label class="calc-custom-label" for={`${id}-wants`}>Wants %</label>
+				<input type="number" id={`${id}-wants`} class="calc-custom-input" data-role="wants" value="30" min="0" max="100" />
 			</div>
 			<div class="calc-custom-field">
-				<label class="calc-custom-label">Savings %</label>
-				<input type="number" class="calc-custom-input" data-role="savings" value="20" min="0" max="100" />
+				<label class="calc-custom-label" for={`${id}-savings`}>Savings %</label>
+				<input type="number" id={`${id}-savings`} class="calc-custom-input" data-role="savings" value="20" min="0" max="100" />
 			</div>
 			<p class="calc-custom-total">Total: <span class="calc-custom-total-num">100</span>%</p>
 		</div>

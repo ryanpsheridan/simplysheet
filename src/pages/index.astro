@@ -51,6 +51,7 @@ const websiteSchema = {
 <BaseLayout title={`${SITE_TITLE} — Budget Templates, Tools & Money Guides`} description={SITE_DESCRIPTION}>
 	<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+	<main id="main-content" class="home-main">
 	<section class="hero">
 		<div class="hero-inner">
 			<div class="hero-text">
@@ -124,9 +125,19 @@ const websiteSchema = {
 			</div>
 		</div>
 	</section>
+	</main>
 </BaseLayout>
 
 <style>
+	/* The global `main` rule constrains width and adds section padding, which
+	   suits the inner pages but not this one — the homepage sections are
+	   full-bleed and carry their own padding. The element is here for the
+	   landmark and the skip link target, so its own layout is neutralised. */
+	.home-main {
+		max-width: none;
+		padding: 0;
+	}
+
 	/* ——— Hero (2-col) ——— */
 
 	.hero {
