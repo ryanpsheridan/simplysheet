@@ -3,9 +3,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import SpreadsheetsToolsRows from '../components/SpreadsheetsToolsRows.astro';
 import { SITE_TITLE } from '../consts';
+
+const description = 'The story behind Simply Sheets — how six years of personal budgeting and 12 years of design experience turned into a spreadsheet business on Etsy.';
+
+// Names the person behind the site, matching the `founder` already declared on
+// the homepage Organization, so the two references describe the same entity.
+const aboutSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'AboutPage',
+	name: `About ${SITE_TITLE}`,
+	description,
+	url: Astro.url.toString(),
+	mainEntity: {
+		'@type': 'Person',
+		name: 'Ryan Sheridan',
+		jobTitle: 'Founder',
+		worksFor: {
+			'@type': 'Organization',
+			name: SITE_TITLE,
+			url: Astro.site?.toString(),
+		},
+	},
+};
+
+const breadcrumbSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Home', item: Astro.site?.toString() },
+		{ '@type': 'ListItem', position: 2, name: 'About' },
+	],
+};
 ---
 
-<BaseLayout title={`About ${SITE_TITLE} — The Story Behind the Templates`} description="The story behind Simply Sheets — how six years of personal budgeting and 12 years of design experience turned into a spreadsheet business on Etsy.">
+<BaseLayout title={`About ${SITE_TITLE} — The Story Behind the Templates`} description={description}>
+	<script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 	<main id="main-content">
 		<Breadcrumbs crumbs={[{ label: 'About' }]} />
 		<article>

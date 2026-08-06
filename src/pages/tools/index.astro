@@ -10,9 +10,32 @@ const description = 'Free calculators and assessments to help you manage your mo
 
 const calculators = TOOLS.filter((t) => t.group === 'calculator');
 const assessments = TOOLS.filter((t) => t.group === 'assessment');
+
+// Mirrors the CollectionPage + ItemList pair the /articles/ hub already emits,
+// so every listing hub describes itself the same way to crawlers.
+const collectionSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	name: title,
+	description,
+	url: Astro.url.toString(),
+};
+
+const itemListSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'ItemList',
+	itemListElement: TOOLS.map((tool, i) => ({
+		'@type': 'ListItem',
+		position: i + 1,
+		url: new URL(tool.url, Astro.site).toString(),
+		name: tool.name,
+	})),
+};
 ---
 
 <BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+	<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
 	<main id="main-content">
 		<Breadcrumbs crumbs={[{ label: 'Tools' }]} />
 		<header class="tools-header">

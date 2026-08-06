@@ -6,9 +6,39 @@ import { SITE_TITLE } from '../../consts';
 
 const title = "What's Your Budgeting Style? Free Quiz";
 const description = 'Take our 60-second quiz to uncover your unique money personality and get one actionable tip to reach your goals faster.';
+
+// This quiz predates the /tools/ pages and their CalculatorLayout, which emits
+// this pair automatically. Same shape here so the quiz is described to crawlers
+// exactly like every other interactive tool on the site.
+const appSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'WebApplication',
+	name: title,
+	description,
+	url: Astro.url.toString(),
+	applicationCategory: 'FinanceApplication',
+	operatingSystem: 'Any',
+	offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+	publisher: {
+		'@type': 'Organization',
+		name: SITE_TITLE,
+		url: Astro.site?.toString(),
+	},
+};
+
+const breadcrumbSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Home', item: Astro.site?.toString() },
+		{ '@type': 'ListItem', position: 2, name: 'Budgeting Style Quiz' },
+	],
+};
 ---
 
 <BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+	<script type="application/ld+json" set:html={JSON.stringify(appSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 	<main id="main-content">
 		<Breadcrumbs crumbs={[{ label: 'Budgeting Style Quiz' }]} />
 		<article>

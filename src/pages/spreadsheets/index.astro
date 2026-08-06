@@ -9,9 +9,32 @@ const description = 'Ready-made spreadsheet templates to track your budget, pay 
 
 const templates = (await getCollection('templates'))
 	.sort((a, b) => a.data.order - b.data.order);
+
+// Mirrors the CollectionPage + ItemList pair the /articles/ hub already emits,
+// so both listing hubs describe themselves the same way to crawlers.
+const collectionSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	name: title,
+	description,
+	url: Astro.url.toString(),
+};
+
+const itemListSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'ItemList',
+	itemListElement: templates.map((template, i) => ({
+		'@type': 'ListItem',
+		position: i + 1,
+		url: new URL(`/spreadsheets/${template.id}/`, Astro.site).toString(),
+		name: template.data.title,
+	})),
+};
 ---
 
 <BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+	<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
 	<main id="main-content" class="templates-page">
 		<Breadcrumbs crumbs={[{ label: 'Spreadsheets' }]} />
 		<header class="templates-header">
