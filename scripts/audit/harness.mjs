@@ -258,8 +258,14 @@ async function capture(label) {
 		// Chromium here cannot reach Google Fonts, so without this every capture
 		// renders in fallback faces. Mirrored locally and served by
 		// interception, so both sides of a comparison show the real type.
-		const homepage = readFileSync(path.join(DIST, 'index.html'), 'utf8');
-		const fontCache = await primeFontCache(path.join(AUDIT, 'fontcache'), fontCssUrlsFrom(homepage));
+		// Scanned across every built page, not just the homepage: the two
+		// assessment components pull in a second stylesheet (Material Symbols)
+		// that only appears on three routes.
+		const fontUrls = [...new Set(routes.flatMap((r) => {
+			const file = path.join(DIST, r === '/404.html' ? '404.html' : path.join(r, 'index.html'));
+			return existsSync(file) ? fontCssUrlsFrom(readFileSync(file, 'utf8')) : [];
+		}))];
+		const fontCache = await primeFontCache(path.join(AUDIT, 'fontcache'), fontUrls);
 		for (const width of WIDTHS) {
 			const ctx = await browser.newContext({
 				viewport: { width, height: 900 },
