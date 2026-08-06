@@ -3,7 +3,20 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 const TOTAL_QUESTIONS = 7;
 ---
 
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+{/* Loaded non-render-blocking: media="print" keeps it out of the critical
+    path, and the onload flip applies it once fetched. This font is 369 KB and
+    supplies the single icon shown in the result panel, which nobody reaches
+    until they have answered every question — so it must not delay first paint.
+    The <noscript> copy keeps it working without JavaScript. */}
+<link
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
+	rel="stylesheet"
+	media="print"
+	onload="this.media='all'"
+/>
+<noscript>
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+</noscript>
 
 <div class="quiz" id={id}>
 	<div class="quiz-questions" id={`${id}-questions`}>
