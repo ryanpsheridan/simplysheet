@@ -37,6 +37,14 @@ export default defineConfig({
 			filter: (page) => !page.includes('/style-guide') && !page.endsWith('/rss.xml'),
 		}),
 	],
+	// With no adapter, these compile to meta-refresh HTML stubs rather than
+	// server redirects. The same three routes are also declared in vercel.json,
+	// which serves a real 308 — a stronger and faster signal to search engines,
+	// and Vercel evaluates redirects before static files, so the rule wins and
+	// the stub is never reached. They are kept here as a fallback: if a rule
+	// ever fails to match, the stub still redirects rather than 404ing a URL
+	// that has search history. Removing either layer alone is safe; removing
+	// both is not.
 	redirects: {
 		'/articles/debt-payoff': '/articles/how-to-pay-off-debt/',
 		'/tools/debt-snowball-avalanche-calculator': '/tools/debt-snowball-vs-avalanche-calculator/',

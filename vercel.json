@@ -2,7 +2,14 @@
   "redirects": [
     { "source": "/templates", "destination": "/spreadsheets", "permanent": true },
     { "source": "/templates/", "destination": "/spreadsheets/", "permanent": true },
-    { "source": "/templates/:slug*", "destination": "/spreadsheets/:slug*", "permanent": true }
+    { "source": "/templates/:slug*", "destination": "/spreadsheets/:slug*", "permanent": true },
+
+    { "source": "/articles/debt-payoff", "destination": "/articles/how-to-pay-off-debt/", "permanent": true },
+    { "source": "/articles/debt-payoff/", "destination": "/articles/how-to-pay-off-debt/", "permanent": true },
+    { "source": "/tools/debt-snowball-avalanche-calculator", "destination": "/tools/debt-snowball-vs-avalanche-calculator/", "permanent": true },
+    { "source": "/tools/debt-snowball-avalanche-calculator/", "destination": "/tools/debt-snowball-vs-avalanche-calculator/", "permanent": true },
+    { "source": "/calculators/50-30-20-budget-calculator", "destination": "/tools/50-30-20-budget-calculator/", "permanent": true },
+    { "source": "/calculators/50-30-20-budget-calculator/", "destination": "/tools/50-30-20-budget-calculator/", "permanent": true }
   ],
   "headers": [
     {
