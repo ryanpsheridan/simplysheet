@@ -62,7 +62,7 @@ const websiteSchema = {
 				<a href={`/articles/${featured.id}/`} class="hero-featured">
 					{(featured.data.cardImage || featured.data.image) && (
 						<div class="hero-featured-thumb">
-							<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" />
+							<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" fetchpriority="high" />
 						</div>
 					)}
 					<TagPills tags={featured.data.tags} tagMap={TAG_MAP} />

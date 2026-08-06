@@ -197,7 +197,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 
 					{heroImage && (
 						<div class="article-hero-img">
-							<img src={heroImage} alt={title} />
+							<img src={heroImage} alt={title} fetchpriority="high" />
 						</div>
 					)}
 

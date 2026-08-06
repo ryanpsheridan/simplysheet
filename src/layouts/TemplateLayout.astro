@@ -192,7 +192,7 @@ function featureIcon(text: string): string {
 
 			<section class="product-hero">
 				<div class="product-image">
-					<img src={heroImage} alt={`${title} preview`} width="960" height="640" id={`hero-img-${templateId}`} />
+					<img src={heroImage} alt={`${title} preview`} width="960" height="640" id={`hero-img-${templateId}`} fetchpriority="high" />
 				</div>
 				<div class="product-info">
 					{badge && <span class="product-badge">{badge}</span>}
