@@ -272,12 +272,12 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		<script>
 			if (location.hash) {
 				const linkedFaq = document.getElementById(location.hash.slice(1));
-				if (linkedFaq && linkedFaq.classList.contains('faq-item')) linkedFaq.open = true;
+				if (linkedFaq && linkedFaq.classList.contains('faq-item')) (linkedFaq as HTMLDetailsElement).open = true;
 			}
 
-			document.querySelectorAll('.faq-item').forEach((details) => {
+			document.querySelectorAll<HTMLDetailsElement>('.faq-item').forEach((details) => {
 				const summary = details.querySelector('summary');
-				const wrap = details.querySelector('.faq-a-wrap');
+				const wrap = details.querySelector<HTMLElement>('.faq-a-wrap');
 				if (!summary || !wrap) return;
 
 				summary.addEventListener('click', (e) => {

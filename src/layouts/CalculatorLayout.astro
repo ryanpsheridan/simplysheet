@@ -227,7 +227,7 @@ const faqSchema = faq.length ? {
 		<script>
 			if (location.hash) {
 				const linkedFaq = document.getElementById(location.hash.slice(1));
-				if (linkedFaq && linkedFaq.classList.contains('faq-item')) linkedFaq.open = true;
+				if (linkedFaq && linkedFaq.classList.contains('faq-item')) (linkedFaq as HTMLDetailsElement).open = true;
 			}
 
 			document.querySelectorAll<HTMLDetailsElement>('.faq-item').forEach((details) => {

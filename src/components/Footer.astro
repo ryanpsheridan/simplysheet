@@ -4,7 +4,7 @@ import { ETSY_SHOP_URL, withEtsyTracking } from '../consts';
 
 const year = new Date().getFullYear();
 const budgetSpreadsheet = await getEntry('templates', 'budget-spreadsheet');
-const promoUrl = withEtsyTracking(`${budgetSpreadsheet.data.darkListing}?coupon=SAVENOW`);
+const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon=SAVENOW`);
 ---
 
 <footer>

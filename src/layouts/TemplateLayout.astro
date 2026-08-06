@@ -18,11 +18,12 @@ const { title, description, badge, platforms, darkListing, lightListing, heroIma
 // aspect-ratio container, so without dimensions the browser cannot reserve
 // space and everything below them shifts once they load. Probed at build time
 // from the file itself, so the ratio can never drift from the real asset.
+type HowToRow = { heading: string; body: string; image?: string; imageAlt?: string };
 const howToSizes = new Map(
 	await Promise.all(
-		howItWorks
-			.filter((row: { image?: string }) => row.image)
-			.map(async (row: { image: string }) => [row.image, await intrinsicSize(row.image)] as const),
+		(howItWorks as HowToRow[])
+			.flatMap((row) => (row.image ? [row.image] : []))
+			.map(async (image) => [image, await intrinsicSize(image)] as const),
 	),
 );
 
