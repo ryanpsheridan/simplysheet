@@ -98,9 +98,11 @@ const ogImage = new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString()
 <meta name="msvalidate.01" content="381616FE7F40C68FCB63685CE836A381" />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@300&display=swap" rel="stylesheet" />
+{/* Inter and DM Sans are self-hosted — the @font-face rules live in
+    src/styles/fonts.css, which global.css imports and Astro inlines into every
+    page. The browser therefore finds the font files while parsing the HTML,
+    rather than after a render-blocking round trip to a third-party stylesheet.
+    Regenerate with: node scripts/fetch-fonts.mjs */}
 
 <link rel="canonical" href={canonicalURL} />
 
