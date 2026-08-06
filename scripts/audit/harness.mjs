@@ -23,6 +23,7 @@ import path from 'node:path';
 import { chromium } from 'playwright-core';
 import sharp from 'sharp';
 import { startServer } from './serve.mjs';
+import { primeFontCache, serveCachedFonts, fontCssUrlsFrom } from './fontcache.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const DIST = path.join(ROOT, 'dist');
@@ -254,6 +255,11 @@ async function capture(label) {
 
 	// Pass 2 — screenshots and console errors, JavaScript on.
 	if (!seoOnly) {
+		// Chromium here cannot reach Google Fonts, so without this every capture
+		// renders in fallback faces. Mirrored locally and served by
+		// interception, so both sides of a comparison show the real type.
+		const homepage = readFileSync(path.join(DIST, 'index.html'), 'utf8');
+		const fontCache = await primeFontCache(path.join(AUDIT, 'fontcache'), fontCssUrlsFrom(homepage));
 		for (const width of WIDTHS) {
 			const ctx = await browser.newContext({
 				viewport: { width, height: 900 },
@@ -261,6 +267,9 @@ async function capture(label) {
 				reducedMotion: 'reduce',
 			});
 			await disableMetaRefresh(ctx);
+			// Registered after the catch-all above: Playwright matches handlers
+			// in reverse registration order, so this one must win for font URLs.
+			await serveCachedFonts(ctx, fontCache);
 			for (const route of routes) {
 				const page = await ctx.newPage();
 				const errs = [];
