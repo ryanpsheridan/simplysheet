@@ -25,8 +25,28 @@ const FAMILIES = [
 	},
 ];
 
+// Google's CSS declares seven unicode subsets per family. A browser only
+// downloads the ones it needs, so the extra files cost nothing to serve — but
+// the @font-face rules themselves are inlined into every page by
+// build.inlineStylesheets, where 37 rules added 9 KB to every HTML document and
+// measurably delayed LCP. The site's content is entirely Latin, so only these
+// subsets are kept. Re-check with a scan of src/ before adding content in
+// another script.
+const KEEP_SUBSETS = new Set(['latin', 'latin-ext']);
+
 const FONT_DIR = path.resolve(process.cwd(), 'public/fonts');
 const CSS_OUT = path.resolve(process.cwd(), 'src/styles/fonts.css');
+
+// Google's CSS labels each @font-face with a `/* subset */` comment above it.
+function keepOnlyWantedSubsets(css) {
+	const blocks = css.split(/(?=\/\* [a-z-]+ \*\/)/);
+	return blocks
+		.filter((b) => {
+			const label = /^\/\* ([a-z-]+) \*\//.exec(b.trim())?.[1];
+			return label ? KEEP_SUBSETS.has(label) : true;
+		})
+		.join('');
+}
 
 await mkdir(FONT_DIR, { recursive: true });
 
@@ -54,7 +74,7 @@ let bytes = 0;
 for (const family of FAMILIES) {
 	const res = await fetch(family.url, { headers: { 'user-agent': CHROME_UA } });
 	if (!res.ok) throw new Error(`CSS fetch failed (${res.status}): ${family.url}`);
-	let css = await res.text();
+	let css = keepOnlyWantedSubsets(await res.text());
 
 	const urls = [...new Set([...css.matchAll(/url\((https:\/\/fonts\.gstatic\.com[^)]+)\)/g)].map((m) => m[1]))];
 	for (const url of urls) {
