@@ -64,8 +64,8 @@ const id = `gsc-${Math.random().toString(36).slice(2, 8)}`;
 		</div>
 	</div>
 </div>
-<div class="gsc-cta-divider"></div>
-<a href="/spreadsheets/budget-spreadsheet/" class="gsc-product-link">Track shared spending in a budget spreadsheet <span class="arrow">&rarr;</span></a>
+<div class="calc-cta-divider"></div>
+<a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link">Track shared spending in a budget spreadsheet <span class="arrow">&rarr;</span></a>
 
 <style>
 	/* No card, border, or fill — the calculator sits directly in the page column.
@@ -266,31 +266,6 @@ const id = `gsc-${Math.random().toString(36).slice(2, 8)}`;
 	.gsc-stat-value--primary {
 		font-size: var(--text-h2);
 		font-weight: 600;
-	}
-
-	/* ——— Product link ——— */
-
-	.gsc-cta-divider {
-		margin-top: var(--space-lg);
-	}
-	.gsc-product-link {
-		display: block;
-		width: fit-content;
-		color: var(--color-accent-info);
-		margin-top: var(--space-md);
-		margin-bottom: var(--space-lg);
-		font-size: 0.875rem;
-		text-decoration: none;
-	}
-	.gsc-product-link:hover {
-		text-decoration: underline;
-	}
-	.gsc-product-link .arrow {
-		display: inline-block;
-		transition: transform 0.15s ease;
-	}
-	.gsc-product-link:hover .arrow {
-		transform: translateX(2px);
 	}
 
 	/* ——— Responsive ——— */

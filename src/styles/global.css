@@ -369,6 +369,61 @@ p {
 	transform: translateX(2px);
 }
 
+/* ——— Calculator / assessment product CTA ———
+   Shared by every calculator and assessment component, so the button below
+   each tool looks identical everywhere. Defined globally (not in each
+   component's scoped <style>) because nine components were carrying
+   byte-identical copies of it. Secondary/outline treatment: full width on
+   mobile so it's an easy tap target, hugging its text and left aligned from
+   the tablet breakpoint up. */
+
+.calc-cta-divider {
+	margin-top: var(--space-lg);
+}
+
+.calc-product-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	width: 100%;
+	margin-top: var(--space-md);
+	margin-bottom: var(--space-lg);
+	padding: 0.625rem 1.25rem;
+	font-family: var(--font-heading);
+	font-size: var(--text-small);
+	font-weight: var(--weight-normal);
+	line-height: 1;
+	gap: 0.375rem;
+	color: var(--color-btn);
+	background: transparent;
+	border: 1px solid var(--color-btn);
+	border-radius: var(--radius-full);
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.calc-product-link:hover {
+	color: white;
+	background: var(--color-btn);
+	text-decoration: none;
+}
+.calc-product-link[hidden] {
+	display: none;
+}
+.calc-product-link .arrow {
+	display: inline-block;
+	transition: transform 0.15s ease;
+}
+.calc-product-link:hover .arrow {
+	transform: translateX(2px);
+}
+
+@media (min-width: 768px) {
+	.calc-product-link {
+		width: auto;
+	}
+}
+
 /* ——— Inline product cards (used in article prose) ——— */
 
 .product-cards {

@@ -2,67 +2,58 @@
 const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<div class="calc" id={id}>
+<div class="calc" id={id} data-multi="false">
 	<div class="debt-header" aria-hidden="true">
-		<span class="debt-header-name">Debt name</span>
-		<span class="debt-header-balance">Balance</span>
-		<span class="debt-header-rate">Rate</span>
-		<span class="debt-header-payment">Monthly payment</span>
+		<span>Debt name</span>
+		<span>Balance</span>
+		<span>Rate</span>
+		<span>Monthly payment</span>
+		<span class="debt-header-actions"></span>
 	</div>
 
 	<div class="debt-rows" data-role="rows">
 		<div class="debt-row" data-row data-muted="false">
 			<div class="debt-field">
-				<span class="debt-field-label-mobile">Debt name</span>
+				<label class="calc-label">Debt name</label>
 				<input type="text" class="debt-input" data-role="name" placeholder="Debt name (optional)" autocomplete="off" aria-label="Debt name (optional)" />
 			</div>
 			<div class="debt-field">
-				<span class="debt-field-label-mobile">Balance</span>
+				<label class="calc-label">Balance</label>
 				<div class="calc-field">
 					<span class="calc-prefix">$</span>
 					<input type="text" class="calc-input" data-role="balance" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Balance" />
 				</div>
 			</div>
 			<div class="debt-field">
-				<span class="debt-field-label-mobile">Interest rate</span>
+				<label class="calc-label">Interest rate</label>
 				<div class="calc-field">
 					<input type="text" class="calc-input" data-role="rate" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Interest rate" />
 					<span class="calc-suffix">%</span>
 				</div>
 			</div>
 			<div class="debt-field">
-				<span class="debt-field-label-mobile">Monthly payment</span>
+				<label class="calc-label">Monthly payment</label>
 				<div class="calc-field">
 					<span class="calc-prefix">$</span>
 					<input type="text" class="calc-input" data-role="payment" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Monthly payment" />
 				</div>
 			</div>
-			<div class="debt-row-actions">
-				<button type="button" class="debt-mute" data-action="mute" aria-pressed="false" aria-label="Hide this debt from the calculation">
-					<svg class="icon-eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-					<svg class="icon-eye-off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-				</button>
-				<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt" hidden>&times;</button>
+			<div class="debt-row-head">
+				<span class="debt-row-title" data-role="row-title">Debt 1</span>
+				<div class="debt-row-actions">
+					<button type="button" class="debt-action" data-action="mute" aria-pressed="false" aria-label="Hide this debt from the calculation">
+						<svg class="icon-eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+						<svg class="icon-eye-off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+					</button>
+					<button type="button" class="debt-action" data-action="remove" aria-label="Remove this debt">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<button type="button" class="debt-add" data-action="add">+ Add another debt</button>
-
-	<div class="debt-summary" data-role="summary" hidden>
-		<div class="debt-summary-stat">
-			<span class="debt-summary-label">Total debt</span>
-			<span class="debt-summary-value" data-role="summary-total">$0</span>
-		</div>
-		<div class="debt-summary-stat">
-			<span class="debt-summary-label">Number of debts</span>
-			<span class="debt-summary-value" data-role="summary-count">0</span>
-		</div>
-		<div class="debt-summary-stat">
-			<span class="debt-summary-label">Total monthly payments</span>
-			<span class="debt-summary-value" data-role="summary-payments">$0</span>
-		</div>
-	</div>
+	<button type="button" class="debt-add" data-action="add"><span class="debt-add-plus" aria-hidden="true">+</span> Add another debt</button>
 
 	<div class="calc-highlight" data-role="highlight" hidden>
 		<span class="calc-highlight-label">You'll be debt-free in</span>
@@ -70,20 +61,32 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		<span class="calc-highlight-math" data-role="timespan"></span>
 	</div>
 
-	<div class="debt-results" data-role="results" hidden>
-		<div class="debt-result">
-			<span class="debt-result-label">Total interest paid</span>
-			<span class="debt-result-value" data-role="interest">$0</span>
+	<div class="calc-stats" data-role="summary" hidden>
+		<div class="calc-stat">
+			<span class="calc-stat-label">Total debt</span>
+			<span class="calc-stat-value" data-role="summary-total">$0</span>
 		</div>
-		<div class="debt-result">
-			<span class="debt-result-label">Total payments made</span>
-			<span class="debt-result-value" data-role="total-paid">$0</span>
+		<div class="calc-stat">
+			<span class="calc-stat-label">Debts included</span>
+			<span class="calc-stat-value" data-role="summary-count">0</span>
+		</div>
+		<div class="calc-stat">
+			<span class="calc-stat-label">Total monthly payments</span>
+			<span class="calc-stat-value" data-role="summary-payments">$0</span>
+		</div>
+		<div class="calc-stat" data-role="row-interest">
+			<span class="calc-stat-label">Total interest paid</span>
+			<span class="calc-stat-value" data-role="interest">$0</span>
+		</div>
+		<div class="calc-stat" data-role="row-total-paid">
+			<span class="calc-stat-label">Total payments made</span>
+			<span class="calc-stat-value" data-role="total-paid">$0</span>
 		</div>
 	</div>
 
-	<p class="debt-empty" data-role="empty">Enter at least one debt's balance and monthly payment above to see your debt-free date.</p>
-	<p class="debt-empty" data-role="all-muted" hidden>All your debts are hidden. Click the eye icon on a debt to include it again.</p>
-	<p class="debt-warning" data-role="warning" hidden>These payments won't pay off this debt within 50 years. Increase a monthly payment to see a payoff date.</p>
+	<p class="calc-note" data-role="empty">Enter at least one debt's balance and monthly payment above to see your debt-free date.</p>
+	<p class="calc-note" data-role="all-muted" hidden>All your debts are hidden. Click the eye icon on a debt to include it again.</p>
+	<p class="calc-warning" data-role="warning" hidden>These payments won't pay off this debt within 50 years. Increase a monthly payment to see a payoff date.</p>
 
 	<p class="calc-note">Debts are paid off highest interest rate first, with each payment that frees up rolling to the next debt. Estimate assumes rates and payments stay the same &mdash; actual results may vary.</p>
 </div>
@@ -91,22 +94,38 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 <a href="/spreadsheets/debt-payoff-tracker/" class="calc-product-link">Track your debt payoff <span class="arrow">&rarr;</span></a>
 
 <style>
-	/* No card, border, or fill — the calculator sits directly in the page column. */
+	/* No card, border, or fill — the calculator sits directly in the page column,
+	   same as every other calculator on the site. */
 	.calc {
 		margin: calc(var(--space-lg) * 2) 0 var(--space-lg);
+
+		/* One source of truth for the row grid so the desktop column headers and
+		   every debt row stay aligned. The actions column only exists once there
+		   are two or more debts — with a single debt there is nothing to hide or
+		   remove, so reserving a gutter for it would just leave dead space. */
+		--debt-cols: 1.3fr 1fr 0.8fr 1fr;
+	}
+	.calc[data-multi="true"] {
+		--debt-cols: 1.3fr 1fr 0.8fr 1fr 3.75rem;
 	}
 
-	/* ——— Debt row header (desktop column labels) ——— */
+	/* ——— Desktop column headers ——— */
 
 	.debt-header {
 		display: grid;
-		grid-template-columns: 1.3fr 1fr 0.8fr 1fr 3.75rem;
-		gap: var(--space-xs);
+		grid-template-columns: var(--debt-cols);
+		gap: var(--space-sm);
 		margin-bottom: var(--space-xs);
 	}
 	.debt-header span {
 		font-size: var(--text-xs);
+		font-weight: var(--weight-medium);
 		color: var(--color-text-secondary);
+	}
+	/* No actions column below two debts, so its (empty) header cell would
+	   otherwise wrap onto a second grid row. */
+	.calc:not([data-multi="true"]) .debt-header-actions {
+		display: none;
 	}
 
 	/* ——— Rows ——— */
@@ -119,9 +138,9 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 
 	.debt-row {
 		display: grid;
-		grid-template-columns: 1.3fr 1fr 0.8fr 1fr 3.75rem;
-		gap: var(--space-xs);
-		align-items: center;
+		grid-template-columns: var(--debt-cols);
+		gap: var(--space-sm);
+		align-items: end;
 		transition: opacity 0.15s;
 	}
 
@@ -129,7 +148,7 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 	   dimming (rather than clearing their fields) makes it obvious at a
 	   glance without losing the entered numbers. */
 	.debt-row[data-muted="true"] {
-		opacity: 0.45;
+		opacity: 0.4;
 	}
 
 	/* min-width: 0 overrides the grid item's automatic min sizing, which
@@ -141,9 +160,17 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		min-width: 0;
 	}
 
-	.debt-field-label-mobile {
+	/* On desktop the column headers already label every field, so the per-field
+	   labels only show in the mobile stack. */
+	.calc-label {
 		display: none;
+		font-size: var(--text-small);
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
 	}
+
+	/* ——— Inputs ——— */
 
 	.debt-input {
 		width: 100%;
@@ -209,48 +236,65 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		color: var(--color-text-muted);
 	}
 
+	/* ——— Row head: title + hide/remove controls ———
+	   Part of the row's own flow (a header line above the fields on mobile, the
+	   last grid column on desktop) rather than floated over the top of a field.
+	   Hidden entirely while there is only one debt: with nothing to compare it
+	   against, there is nothing to hide or remove. */
+
+	.debt-row-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-sm);
+		height: 2.75rem;
+	}
+	.calc:not([data-multi="true"]) .debt-row-head {
+		display: none;
+	}
+	.debt-row-title {
+		display: none;
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+		color: var(--color-text);
+		white-space: nowrap;
+	}
 	.debt-row-actions {
 		display: flex;
 		align-items: center;
 		gap: var(--space-2xs);
 	}
-
-	.debt-mute,
-	.debt-remove {
+	.debt-action {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
 		width: 1.75rem;
 		height: 1.75rem;
-		font-size: 1.125rem;
+		padding: 0;
 		line-height: 1;
 		color: var(--color-text-secondary);
-		background: var(--color-bg-panel);
+		background: var(--color-bg-surface);
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-full);
 		cursor: pointer;
 		transition: color 0.15s, border-color 0.15s;
 	}
-	.debt-mute:hover,
-	.debt-remove:hover {
+	.debt-action:hover {
 		color: var(--color-text);
 		border-color: var(--color-text-muted);
 	}
-	.debt-remove[hidden] {
-		visibility: hidden;
-	}
 
-	.debt-mute .icon-eye-off {
+	.debt-action .icon-eye-off {
 		display: none;
 	}
-	.debt-row[data-muted="true"] .debt-mute .icon-eye {
+	.debt-row[data-muted="true"] .debt-action .icon-eye {
 		display: none;
 	}
-	.debt-row[data-muted="true"] .debt-mute .icon-eye-off {
+	.debt-row[data-muted="true"] .debt-action .icon-eye-off {
 		display: block;
 	}
-	.debt-row[data-muted="true"] .debt-mute {
+	.debt-row[data-muted="true"] [data-action="mute"] {
 		color: var(--color-text);
 		border-color: var(--color-text-muted);
 	}
@@ -258,60 +302,38 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 	/* ——— Add row button ——— */
 
 	.debt-add {
-		font-family: var(--font-sans);
-		font-size: var(--text-small);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		margin-top: var(--space-md);
+		padding: 0.5rem 1rem;
+		font-family: var(--font-heading);
+		font-size: var(--text-xs);
 		font-weight: var(--weight-normal);
+		line-height: 1;
 		color: var(--color-text);
-		background: var(--color-bg-surface);
-		border: 1px dashed var(--color-border);
-		border-radius: var(--radius-sm);
-		padding: 0.5rem 0.875rem;
-		margin-top: var(--space-sm);
+		background: transparent;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-full);
 		cursor: pointer;
 		transition: border-color 0.15s, background 0.15s;
 	}
 	.debt-add:hover {
-		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
+		border-color: var(--color-text);
 	}
 	.debt-add[hidden] {
 		display: none;
 	}
-
-	/* ——— Debt summary ——— */
-
-	.debt-summary {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-lg);
-		margin-top: var(--space-lg);
-		padding-top: var(--space-md);
-		border-top: 1px solid var(--color-border);
-	}
-	.debt-summary[hidden] {
-		display: none;
-	}
-	.debt-summary-stat {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2xs);
-	}
-	.debt-summary-label {
-		font-size: var(--text-xs);
-		color: var(--color-text-secondary);
-	}
-	.debt-summary-value {
-		font-size: var(--text-body);
-		font-weight: var(--weight-medium);
-		color: var(--color-text);
+	.debt-add-plus {
+		font-size: var(--text-small);
 	}
 
-	/* ——— Highlight result ——— */
+	/* ——— Results: the one card in the layout, reserved for the hero result ——— */
 
 	.calc-highlight {
 		display: flex;
 		flex-direction: column;
-		margin-top: var(--space-md);
+		margin-top: var(--space-lg);
 		padding: var(--space-md);
 		background: var(--color-bg-panel);
 		border-radius: var(--radius-md);
@@ -343,79 +365,56 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		display: none;
 	}
 
-	/* ——— Secondary results ——— */
+	/* ——— Supporting numbers: flush label/value rows, same pattern as the
+	   group bill split calculator ——— */
 
-	.debt-results {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-lg);
-		margin-top: var(--space-md);
-	}
-	.debt-results[hidden] {
-		display: none;
-	}
-	.debt-result {
+	.calc-stats {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-2xs);
-	}
-	.debt-result-label {
-		font-size: var(--text-xs);
-		color: var(--color-text-secondary);
-	}
-	.debt-result-value {
-		font-size: var(--text-h3);
-		font-weight: var(--weight-normal);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-	}
-
-	/* ——— Empty / warning states ——— */
-
-	.debt-empty,
-	.debt-warning {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		margin: var(--space-md) 0 0;
-	}
-	.debt-empty[hidden],
-	.debt-warning[hidden] {
-		display: none;
-	}
-	.debt-warning {
-		color: var(--color-accent-critical);
-	}
-
-	.calc-note {
-		font-size: var(--text-xs);
-		color: var(--color-text-secondary);
-		margin: var(--space-sm) 0 0;
-		line-height: var(--leading-normal);
-	}
-
-	/* ——— Product link ——— */
-
-	.calc-cta-divider {
 		margin-top: var(--space-lg);
 	}
-	.calc-product-link {
-		display: block;
-		width: fit-content;
-		color: var(--color-accent-info);
-		margin-top: var(--space-md);
-		margin-bottom: var(--space-lg);
-		font-size: 0.875rem;
-		text-decoration: none;
+	.calc-stats[hidden] {
+		display: none;
 	}
-	.calc-product-link:hover {
-		text-decoration: underline;
+	.calc-stat {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-md);
+		padding: var(--space-sm) 0;
+		border-top: 1px solid var(--color-border);
 	}
-	.calc-product-link .arrow {
-		display: inline-block;
-		transition: transform 0.15s ease;
+	.calc-stat[hidden] {
+		display: none;
 	}
-	.calc-product-link:hover .arrow {
-		transform: translateX(2px);
+	.calc-stat-label {
+		font-size: var(--text-xs);
+		color: var(--color-text-secondary);
+	}
+	.calc-stat-value {
+		/* Smaller than the hero value on purpose — these are supporting numbers, not the answer */
+		font-size: var(--text-small);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		white-space: nowrap;
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* ——— Notes and warnings ——— */
+
+	.calc-note,
+	.calc-warning {
+		font-size: var(--text-xs);
+		color: var(--color-text-secondary);
+		margin: var(--space-md) 0 0;
+		line-height: var(--leading-normal);
+	}
+	.calc-note[hidden],
+	.calc-warning[hidden] {
+		display: none;
+	}
+	.calc-warning {
+		color: var(--color-accent-critical);
 	}
 
 	/* ——— Responsive ——— */
@@ -427,30 +426,33 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		.debt-header {
 			display: none;
 		}
+
+		/* Each debt stacks into a labelled group. No fill or card — a hairline
+		   rule between groups is all the separation it needs, which keeps this
+		   reading like the rest of the calculators on the site. */
+		.debt-rows {
+			gap: var(--space-md);
+		}
 		.debt-row {
 			grid-template-columns: 1fr;
-			gap: var(--space-2xs);
-			padding: var(--space-sm);
-			background: var(--color-bg-panel);
-			border-radius: var(--radius-sm);
-			position: relative;
+			gap: var(--space-sm);
 		}
-		.debt-field-label-mobile {
+		.debt-row + .debt-row {
+			padding-top: var(--space-md);
+			border-top: 1px solid var(--color-border);
+		}
+		.debt-row-head {
+			order: -1;
+			height: auto;
+		}
+		.debt-row-title {
 			display: block;
-			font-size: var(--text-xs);
-			color: var(--color-text-secondary);
 		}
-		.debt-row-actions {
-			position: absolute;
-			top: var(--space-sm);
-			right: var(--space-sm);
+		.calc-label {
+			display: block;
 		}
 		.calc-highlight-value {
 			font-size: var(--text-h2);
-		}
-		.debt-summary,
-		.debt-results {
-			gap: var(--space-md);
 		}
 	}
 </style>
@@ -470,7 +472,8 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 	var highlightEl = root.querySelector('[data-role="highlight"]');
 	var dateEl = root.querySelector('[data-role="date"]');
 	var timespanEl = root.querySelector('[data-role="timespan"]');
-	var resultsEl = root.querySelector('[data-role="results"]');
+	var interestRow = root.querySelector('[data-role="row-interest"]');
+	var totalPaidRow = root.querySelector('[data-role="row-total-paid"]');
 	var interestEl = root.querySelector('[data-role="interest"]');
 	var totalPaidEl = root.querySelector('[data-role="total-paid"]');
 	var emptyEl = root.querySelector('[data-role="empty"]');
@@ -514,37 +517,46 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		row.setAttribute('data-muted', 'false');
 		row.innerHTML =
 			'<div class="debt-field">' +
-				'<span class="debt-field-label-mobile">Debt name</span>' +
+				'<label class="calc-label">Debt name</label>' +
 				'<input type="text" class="debt-input" data-role="name" placeholder="Debt name (optional)" autocomplete="off" aria-label="Debt name (optional)" />' +
 			'</div>' +
 			'<div class="debt-field">' +
-				'<span class="debt-field-label-mobile">Balance</span>' +
+				'<label class="calc-label">Balance</label>' +
 				'<div class="calc-field"><span class="calc-prefix">$</span><input type="text" class="calc-input" data-role="balance" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Balance" /></div>' +
 			'</div>' +
 			'<div class="debt-field">' +
-				'<span class="debt-field-label-mobile">Interest rate</span>' +
+				'<label class="calc-label">Interest rate</label>' +
 				'<div class="calc-field"><input type="text" class="calc-input" data-role="rate" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Interest rate" /><span class="calc-suffix">%</span></div>' +
 			'</div>' +
 			'<div class="debt-field">' +
-				'<span class="debt-field-label-mobile">Monthly payment</span>' +
+				'<label class="calc-label">Monthly payment</label>' +
 				'<div class="calc-field"><span class="calc-prefix">$</span><input type="text" class="calc-input" data-role="payment" inputmode="decimal" placeholder="0" autocomplete="off" aria-label="Monthly payment" /></div>' +
 			'</div>' +
-			'<div class="debt-row-actions">' +
-				'<button type="button" class="debt-mute" data-action="mute" aria-pressed="false" aria-label="Hide this debt from the calculation">' +
-					'<svg class="icon-eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
-					'<svg class="icon-eye-off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>' +
-				'</button>' +
-				'<button type="button" class="debt-remove" data-action="remove" aria-label="Remove this debt">&times;</button>' +
+			'<div class="debt-row-head">' +
+				'<span class="debt-row-title" data-role="row-title"></span>' +
+				'<div class="debt-row-actions">' +
+					'<button type="button" class="debt-action" data-action="mute" aria-pressed="false" aria-label="Hide this debt from the calculation">' +
+						'<svg class="icon-eye" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
+						'<svg class="icon-eye-off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>' +
+					'</button>' +
+					'<button type="button" class="debt-action" data-action="remove" aria-label="Remove this debt">' +
+						'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>' +
+					'</button>' +
+				'</div>' +
 			'</div>';
 		applyScope(row);
 		return row;
 	}
 
-	function updateRemoveVisibility() {
+	// The hide/remove controls only make sense once a second debt exists, so the
+	// whole head row (and the desktop column it sits in) is dropped below that.
+	// Titles stay positional rather than echoing the typed name — the name is
+	// already visible in the field directly beneath the heading.
+	function updateRowChrome() {
 		var rows = rowsContainer.querySelectorAll('[data-row]');
-		rows.forEach(function (row) {
-			var btn = row.querySelector('[data-action="remove"]');
-			btn.hidden = rows.length <= 1;
+		root.dataset.multi = rows.length > 1 ? 'true' : 'false';
+		rows.forEach(function (row, index) {
+			row.querySelector('[data-role="row-title"]').textContent = 'Debt ' + (index + 1);
 		});
 		addBtn.hidden = rows.length >= MAX_ROWS;
 	}
@@ -627,7 +639,6 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		if (debts.length === 0) {
 			summaryEl.hidden = true;
 			highlightEl.hidden = true;
-			resultsEl.hidden = true;
 			warningEl.hidden = true;
 			var hasMutedDebts = readDebts(true).length > 0;
 			emptyEl.hidden = hasMutedDebts;
@@ -646,14 +657,16 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 
 		if (result.maxedOut) {
 			highlightEl.hidden = true;
-			resultsEl.hidden = true;
+			interestRow.hidden = true;
+			totalPaidRow.hidden = true;
 			warningEl.hidden = false;
 			return;
 		}
 
 		warningEl.hidden = true;
 		highlightEl.hidden = false;
-		resultsEl.hidden = false;
+		interestRow.hidden = false;
+		totalPaidRow.hidden = false;
 
 		var freeDate = new Date();
 		freeDate.setMonth(freeDate.getMonth() + result.months);
@@ -680,7 +693,7 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 			var row = e.target.closest('[data-row]');
 			if (rowsContainer.querySelectorAll('[data-row]').length > 1) {
 				row.remove();
-				updateRemoveVisibility();
+				updateRowChrome();
 				calculate();
 			}
 			return;
@@ -701,10 +714,10 @@ const id = `dfcalc-${Math.random().toString(36).slice(2, 8)}`;
 		var rows = rowsContainer.querySelectorAll('[data-row]');
 		if (rows.length >= MAX_ROWS) return;
 		rowsContainer.appendChild(buildRow());
-		updateRemoveVisibility();
+		updateRowChrome();
 	});
 
-	updateRemoveVisibility();
+	updateRowChrome();
 	calculate();
 })();
 </script>
