@@ -58,7 +58,7 @@ const breadcrumbSchema = {
 				<a href="/articles/budgeting-styles/">
 					<img src="/images/card-v2-budgeting-styles.svg" alt="The 4 Budgeting Styles" width="960" height="540" loading="lazy" />
 					<div class="quiz-article-link-text">
-						<span class="quiz-article-link-label">Related article</span>
+						<span class="eyebrow quiz-article-link-label" style="--eyebrow-tint: var(--tint-lavender)">Related article</span>
 						<span class="quiz-article-link-title">The 4 Budgeting Styles: Which One Are You?</span>
 						<span class="quiz-article-link-desc">Learn what each budgeting style looks like, what trips each one up, and how to build a system that works with your natural tendencies.</span>
 					</div>
@@ -127,14 +127,11 @@ const breadcrumbSchema = {
 	.quiz-article-link-text {
 		padding: var(--space-md);
 	}
+	/* Look comes from the global .eyebrow pill; this only sets the gap down to
+	   the article title. Astro's scoping raises specificity above .eyebrow, so
+	   anything restated here would silently win — keep it to layout. */
 	.quiz-article-link-label {
-		display: block;
-		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-wide);
-		color: var(--color-text-muted);
-		margin-bottom: var(--space-2xs);
+		margin-bottom: var(--space-xs);
 	}
 	.quiz-article-link-title {
 		display: block;

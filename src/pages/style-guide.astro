@@ -144,6 +144,56 @@ const toolThumbnails = [
 				<p style="font-weight: var(--weight-semibold)">600 Semibold — The quick brown fox jumps over the lazy dog</p>
 				<p style="font-weight: var(--weight-bold)">700 Bold — The quick brown fox jumps over the lazy dog</p>
 			</div>
+			<p class="section-desc">Headings sit at 500. Semibold is a rarely-needed emphasis step, not the heading default — reach for a larger size or tighter tracking before reaching for more weight.</p>
+		</section>
+
+		<!-- ============ EYEBROWS ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Eyebrows</h2>
+			<p class="section-desc">The uppercase overline above a heading. A tinted pill rather than plain muted caps, which disappeared next to the type they introduce. Which tint to use is a question about where the eyebrow points, not about variety.</p>
+			<div class="eyebrow-demo">
+				<div>
+					<p class="eyebrow">Recommended template</p>
+					<h3 class="demo-eyebrow-heading">Sky — points at a product</h3>
+					<p class="section-desc">The default. Used on product promos, the sidebar template link, and template page sections.</p>
+				</div>
+				<div>
+					<p class="eyebrow" style="--eyebrow-tint: var(--tint-lavender)">Related article</p>
+					<h3 class="demo-eyebrow-heading">Lavender — points at content</h3>
+					<p class="section-desc">Set via <code>--eyebrow-tint</code>, not a second class. Used where the eyebrow introduces an article, tool, or quiz.</p>
+				</div>
+				<div>
+					<p class="eyebrow eyebrow-plain">Plain variant</p>
+					<h3 class="demo-eyebrow-heading">No pill</h3>
+					<p class="section-desc">Escape hatch for places a pill is too loud — stacked directly above another label, or inside an already-busy card.</p>
+				</div>
+			</div>
+			<p class="section-desc">Text always stays <code>--color-text</code>: the tints are only guaranteed AA against the primary text role, so a muted or secondary tone on one of these fills is not safe.</p>
+		</section>
+
+		<!-- ============ BUTTONS ============ -->
+		<section class="guide-section">
+			<h2 class="section-title">Buttons</h2>
+			<div class="btn-demo">
+				<a href="#buttons" class="btn btn-primary">Primary</a>
+				<a href="#buttons" class="btn btn-brand">Brand</a>
+				<a href="#buttons" class="btn btn-secondary">Secondary</a>
+				<a href="#buttons" class="btn btn-ghost">Ghost</a>
+			</div>
+			<div class="btn-demo">
+				<a href="#buttons" class="btn btn-primary btn-sm">Small</a>
+				<a href="#buttons" class="btn btn-primary">Default</a>
+				<a href="#buttons" class="btn btn-primary btn-lg">Large</a>
+			</div>
+			<p class="section-desc">Medium weight rather than semibold: at button size on a filled pill, semibold reads heavy, and it would cost the headings some of their authority. Hover and press states are live above.</p>
+
+			<h3 class="demo-eyebrow-heading">Arrow badge</h3>
+			<div class="btn-demo">
+				<a href="#buttons" class="btn btn-brand btn-arrow">Brand</a>
+				<a href="#buttons" class="btn btn-primary btn-arrow">Primary</a>
+				<a href="#buttons" class="btn btn-secondary btn-arrow">Secondary</a>
+			</div>
+			<p class="section-desc"><code>.btn-arrow</code> adds an inverted disc inside the pill's right edge — the detail that makes a button read as a destination rather than a form control. Each variant's badge is its own inverse, so a dark button gets a light disc and a light one gets a dark disc.</p>
 		</section>
 
 		<!-- ============ SPACING ============ -->
@@ -565,6 +615,32 @@ const toolThumbnails = [
 		font-size: var(--text-body-lg);
 		color: var(--color-text);
 		margin-bottom: 0;
+	}
+
+	/* ——— Eyebrows & buttons ——— */
+
+	.eyebrow-demo {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+		gap: var(--space-lg);
+		margin-bottom: var(--space-md);
+	}
+
+	.eyebrow-demo > div > .section-desc:last-child {
+		margin-bottom: 0;
+	}
+
+	.demo-eyebrow-heading {
+		font-size: var(--text-h3);
+		margin-bottom: var(--space-xs);
+	}
+
+	.btn-demo {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-sm);
+		margin-bottom: var(--space-md);
 	}
 
 	/* ——— Spacing ——— */

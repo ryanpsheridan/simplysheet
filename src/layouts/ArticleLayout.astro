@@ -418,14 +418,17 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 <style>
 	/* ——— Reading progress bar ——— */
 
+	/* Pinned to the viewport top rather than to the header's bottom edge: the
+	   header floats now and no longer touches the top, so an offset bar would
+	   hang in the gap beside it instead of reading as a page-level indicator. */
 	.reading-progress {
 		position: fixed;
-		top: 3.5rem;
+		top: 0;
 		left: 0;
 		height: 3px;
 		background: var(--color-text-heading);
 		width: 0%;
-		z-index: 49;
+		z-index: 51;
 		transition: width 50ms linear;
 		display: none;
 	}
@@ -596,7 +599,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 
 		.has-toc .toc-rail {
 			position: sticky;
-			top: 4.5rem;
+			top: var(--header-offset);
 			margin-bottom: 0;
 		}
 
@@ -629,7 +632,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 
 	.faq-item {
 		border-bottom: 1px solid var(--color-border);
-		scroll-margin-top: 4.5rem;
+		scroll-margin-top: var(--header-offset);
 	}
 
 	.faq-item:last-child {

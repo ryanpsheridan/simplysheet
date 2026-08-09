@@ -368,6 +368,36 @@ One typeface for the whole site: **Aspekta Variable** (`--font-sans`, with `--fo
 - Weight discipline: body and headings both sit at `--weight-normal` (400), with `--weight-medium`/`--weight-semibold` as the emphasis steps. Reaching for 700+ is almost always the wrong fix; make the type bigger or tighten its tracking instead.
 - Tracking is a real hierarchy tool here, not a rounding detail: `--tracking-tight` (-0.024em) for display, `--tracking-snug` (-0.02em) for headings and buttons, `--tracking-normal` (0) for body, `--tracking-caps` (0.06em) for uppercase eyebrows. Never set body copy at positive tracking.
 
+## Eyebrows
+
+The uppercase overline label above a heading is the shared `.eyebrow` class in `global.css` — a tinted pill, not plain muted caps (as loose gray text it disappeared next to the type it introduces). Never hand-roll one.
+
+- Which tint to use is a question about **where the eyebrow points**, not about variety:
+  - **Sky** (`--tint-sky`, the default) — the thing below points at a product or template.
+  - **Lavender** (`--tint-lavender`) — the thing below points at an article, tool, or quiz.
+- Set the non-default via the knob, not a new class: `<p class="eyebrow" style="--eyebrow-tint: var(--tint-lavender)">`. A third context should pick one of the two existing meanings rather than introduce a third tint.
+- `.eyebrow-plain` drops the pill for places it's too loud — stacked directly above another label, or inside an already-busy card.
+- Eyebrow text is always `--color-text`. The tints are only guaranteed AA against the primary text role, so a secondary or muted tone on one of these fills is not safe.
+- The pill carries `align-self: start` / `justify-self: start` because an `inline-flex` child of a flex or grid parent gets blockified and would otherwise stretch across the whole column. Don't remove those — two of the four current call sites sit in column flex containers and regress immediately without them.
+- If a local rule needs to adjust an eyebrow, keep it to layout (margins). Astro's scoped styles outrank the global `.eyebrow` class, so restating color, size, or `text-transform` in a component's `<style>` silently wins and re-breaks the pill.
+
+## Buttons
+
+`.btn` plus one variant, defined in `global.css`. Medium weight, pill radius, `:active` scale.
+
+- Variants: `.btn-primary` (ink fill), `.btn-brand` (the sky-blue highlight field — `--color-brand`, ink text), `.btn-secondary` (outline), `.btn-ghost`. Sizes: `.btn-sm`, default, `.btn-lg`.
+- `--color-brand` is a **field color, never text.** It is not `--color-accent-info`, which is the link/UI blue that has to pass contrast as text and is far too dark to sit behind ink.
+- `.btn-arrow` adds the inverted disc inside the pill's right edge, for buttons that are destinations rather than form controls. The arrow is a masked data URI, not a text glyph — an arrow character in a webfont is a fallback lottery and lands off-centre and off-weight at this size. Each variant supplies its own `--badge-bg`/`--badge-glyph` inverse; a new variant needs both or it falls back to ink-on-page.
+
+## Navigation
+
+`Header.astro` is a floating pill bar: sticky in normal flow (never `position: fixed`, which would make every page reserve matching top padding by hand and hide its own first heading if it forgot), translucent white over a `saturate(180%) blur(16px)` backdrop filter, hairline border, and a shadow that deepens on scroll via a scroll-driven animation behind `@supports`.
+
+- Desktop (≥860px): logo left, links centered, brand CTA right. Below that: logo left, CTA and menu button hard right, links in the dropdown panel.
+- The mobile panel is a floating card hung under the bar with a blurred backdrop, not a full-screen takeover — the page stays visible behind it. It has a focus trap, Escape handling, and outside-click close; keep all three if you touch the script.
+- The bar's horizontal budget on a phone is genuinely tight. The wordmark hides below 400px (mark only), and the CTA carries a short label below 480px. If you add anything to the bar, re-check 320/360/390px for truncation before shipping.
+- `--header-offset` is the clearance below the floating bar. Sticky rails and `scroll-margin-top` on anchor targets read it — don't hardcode a pixel value, it was wrong everywhere the moment the header stopped being flush to the viewport top.
+
 ## Calculator Components
 
 When building new calculators, follow the pattern in `src/components/BudgetCalculator.astro`:

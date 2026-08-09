@@ -61,6 +61,24 @@
   --color-debt-avalanche:      var(--color-accent-info);
   --color-debt-snowball:       #475569;
 
+  /* ——— Tints ——— */
+
+  /* Saturated-but-light fields. Used as whole backgrounds (eyebrow pills, the
+     brand button) rather than as small accents, always with --color-text on
+     top — that inversion is what lets them be far more saturated than
+     anything else here without failing contrast. They are only guaranteed AA
+     against the primary text role, so never set a tint behind secondary or
+     muted text. */
+  --tint-sky:      #B0E0FF;   /* 14.2:1 with --color-text */
+  --tint-lavender: #DAD6FF;   /* 15.1:1 with --color-text */
+
+  /* The brand highlight: a field color, never text. Sky rather than the site's
+     existing --color-accent-info, which is a link/UI blue that has to work as
+     text and is therefore far too dark to sit behind ink. */
+  --color-brand:          var(--tint-sky);
+  --color-brand-hover:    #9BD6FF;
+  --color-brand-contrast: var(--color-text);
+
   /* ——— Typography ——— */
 
   /* One family for everything. Hierarchy comes from size, tracking, and
@@ -125,9 +143,52 @@
   --max-width:         80rem;     /* 1280px */
   --max-width-narrow:  42rem;     /*  672px */
 
+  /* Clearance below the floating header bar, for sticky rails and for
+     scroll-margin-top on anchor targets. The bar is no longer flush to the
+     viewport top — it sits --space-sm down and is roughly 4rem tall — so
+     anything that needs to come to rest below it reads this rather than
+     hardcoding a number that only matched the old flush header. */
+  --header-offset:     5.5rem;
+
   /* ——— Misc ——— */
 
   --radius-sm: 0.125rem;  /*  2px */
   --radius-md: 0.25rem;   /*  4px */
+  /* The two large steps exist for floating surfaces — the header bar and its
+     mobile panel — where the site's usual near-square corners read as a box
+     stuck to the page rather than a card hovering over it. */
+  --radius-lg: 1rem;      /* 16px */
+  --radius-xl: 1.5rem;    /* 24px */
   --radius-full: 999px;
+
+  /* ——— Elevation ——— */
+
+  /* Stacked rather than single-blur: a tight contact shadow for the edge plus
+     a wider ambient one for the lift. One 10px blur at 6% reads as a gray
+     smudge; two layers at 4% read as a surface above another surface. Kept
+     neutral (the ink RGB) so elevation never picks up a hue. */
+  --shadow-rgb: 8, 17, 34;
+
+  --shadow-xs: 0 1px 2px rgba(var(--shadow-rgb), 0.04);
+  --shadow-sm:
+    0 1px 2px rgba(var(--shadow-rgb), 0.04),
+    0 1px 1px rgba(var(--shadow-rgb), 0.03);
+  --shadow-md:
+    0 2px 4px rgba(var(--shadow-rgb), 0.04),
+    0 4px 8px rgba(var(--shadow-rgb), 0.04);
+  --shadow-lg:
+    0 4px 8px rgba(var(--shadow-rgb), 0.04),
+    0 12px 24px rgba(var(--shadow-rgb), 0.06);
+
+  /* ——— Motion ——— */
+
+  /* One easing family, three durations. --ease-out is the workhorse for
+     anything entering or responding to input: fast at the start, long settle,
+     which reads as responsive rather than floaty. Everything using these must
+     still sit behind the prefers-reduced-motion block in global.css. */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
