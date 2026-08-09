@@ -1,24 +1,40 @@
 :root {
   /* ——— Colors ——— */
 
-  --color-text:           #1A1A1A;
-  --color-text-heading:   #000000;
-  --color-text-secondary: #595959;
-  --color-text-muted:     #8A8A8A;
+  /* The neutral ramp is warm on surfaces and cool-navy on ink, rather than
+     pure grayscale. It is deliberately compressed at the dark end: every text
+     role has to clear WCAG AA (4.5:1) against both --color-bg and
+     --color-bg-panel, which puts a hard floor around #707070. The old
+     #8A8A8A muted tone sat below that floor and failed AA. */
 
-  --color-link:           #4A4A4A;
-  --color-link-hover:     #000000;
+  --color-text:           #081122;
+  --color-text-heading:   #081122;
+  --color-text-secondary: #575D68;
+  --color-text-muted:     #666B75;
 
-  --color-bg:             #FFFFFF;
+  /* Links stay monochrome. The ramp has no step between secondary (#575D68)
+     and text (#081122), so this one is interpolated to sit between them —
+     dark enough to read as emphasis, light enough to distinguish from body
+     copy without spending a hue on it. */
+  --color-link:           #3F4553;
+  --color-link-hover:     #081122;
+
+  /* Surfaces are a layering vocabulary: `bg` is the page, `panel` recesses a
+     band out of it, `surface` lifts a card back up. A card reads as raised by
+     being cleaner (pure white) than the warm off-white page behind it, rather
+     than by leaning on a shadow. */
+  --color-bg:             #FBFAF9;
   --color-bg-surface:     #FFFFFF;
-  --color-bg-panel:       #F2F2F2;
-  --color-bg-emphasis:    #ECECEC;
-  --color-bg-inverse:     #000000;
+  --color-bg-panel:       #F4F2EE;
+  --color-bg-emphasis:    #EFEDE8;
+  --color-bg-inverse:     #081122;
 
-  --color-btn:            #000000;
-  --color-btn-hover:      #333333;
+  --color-btn:            #081122;
+  --color-btn-hover:      #030812;
 
-  --color-border:         #E0E0E0;
+  --color-border:         #DCD8D1;
+  --color-border-hairline: #E7E4DE;
+  --color-border-strong:  #C6C2B9;
 
   /* ——— Accent colors (semantic, used sparingly on calculators/assessments) ——— */
 
@@ -47,9 +63,13 @@
 
   /* ——— Typography ——— */
 
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  /* One family for everything. Hierarchy comes from size, tracking, and
+     leading rather than from a second typeface — Inter for UI over DM Sans
+     Light for body was doing that job before, and the split is no longer
+     needed. `--font-body` is kept as an alias so existing rules resolve. */
+  --font-sans: "Aspekta Variable", system-ui, -apple-system, sans-serif;
   --font-heading: var(--font-sans);
-  --font-body: "DM Sans", var(--font-sans);
+  --font-body: var(--font-sans);
 
   --text-display:   clamp(2.5rem, 3.5vw + 0.75rem, 3rem);
   --text-h1:        2.25rem;
@@ -61,10 +81,13 @@
   --text-small:     0.9375rem;
   --text-xs:        0.875rem;
 
-  /* Leading */
-  --leading-tight:  1.2;
-  --leading-snug:   1.35;
-  --leading-normal: 1.58;
+  /* Leading. Tighter as type gets larger — a display headline at 1.2 has
+     caverns between its lines, while a label at 1.2 is cramped. */
+  --leading-display: 1.08;
+  --leading-tight:   1.12;
+  --leading-snug:    1.25;
+  --leading-body:    1.5;
+  --leading-normal:  var(--leading-body);
 
   /* Weight */
   --weight-light:     300;
@@ -74,11 +97,16 @@
   --weight-bold:      700;
   --weight-extrabold: 800;
 
-  /* Tracking */
-  --tracking-tight:   -0.02em;
-  --tracking-heading: -0.01em;
-  --tracking-normal:  0;
-  --tracking-wide:    0.04em;
+  /* Tracking. Large type set at default tracking reads loose and generic;
+     pulling it in is most of what separates a display headline from a big
+     paragraph. Small uppercase type needs the opposite treatment. */
+  --tracking-tight:   -0.024em;  /* display */
+  --tracking-snug:    -0.02em;   /* h1–h4, buttons */
+  --tracking-heading: var(--tracking-snug);
+  --tracking-body:    -0.01em;   /* lead paragraphs at 20px+ */
+  --tracking-normal:  0;         /* body at 16px and below */
+  --tracking-caps:    0.06em;    /* eyebrows, uppercase labels */
+  --tracking-wide:    var(--tracking-caps);
 
   /* ——— Spacing ——— */
 

@@ -35,20 +35,25 @@ const TAG_MAP: Record<string, string> = {
 	'budgeting-styles': 'Budgeting Styles',
 };
 
+/* Keep these hexes in sync with src/styles/tokens.css — the swatch renders
+   from the token, but the caption underneath is this literal string, so a
+   stale value here silently misreports the palette. */
 const colors = [
-	{ token: '--color-text',           label: 'Text',           hex: '#1A1A1A' },
-	{ token: '--color-text-secondary', label: 'Text Secondary', hex: '#5C5C5C' },
-	{ token: '--color-text-muted',     label: 'Text Muted',     hex: '#8A8A8A' },
-	{ token: '--color-link',           label: 'Link',           hex: '#5C5C5C' },
-	{ token: '--color-link-hover',     label: 'Link Hover',     hex: '#000000' },
-	{ token: '--color-btn',            label: 'Button',         hex: '#000000' },
-	{ token: '--color-btn-hover',      label: 'Button Hover',   hex: '#333333' },
-	{ token: '--color-bg',             label: 'Background',     hex: '#FFFFFF' },
-	{ token: '--color-bg-surface',     label: 'Surface',        hex: '#FFFFFF' },
-	{ token: '--color-bg-panel',       label: 'Panel',          hex: '#F2F2F2' },
-	{ token: '--color-bg-emphasis',    label: 'Emphasis',       hex: '#ECECEC' },
-	{ token: '--color-bg-inverse',     label: 'Inverse',        hex: '#000000' },
-	{ token: '--color-border',         label: 'Border',         hex: '#E0E0E0' },
+	{ token: '--color-text',            label: 'Text',            hex: '#081122' },
+	{ token: '--color-text-secondary',  label: 'Text Secondary',  hex: '#575D68' },
+	{ token: '--color-text-muted',      label: 'Text Muted',      hex: '#666B75' },
+	{ token: '--color-link',            label: 'Link',            hex: '#3F4553' },
+	{ token: '--color-link-hover',      label: 'Link Hover',      hex: '#081122' },
+	{ token: '--color-btn',             label: 'Button',          hex: '#081122' },
+	{ token: '--color-btn-hover',       label: 'Button Hover',    hex: '#030812' },
+	{ token: '--color-bg',              label: 'Background',      hex: '#FBFAF9' },
+	{ token: '--color-bg-surface',      label: 'Surface',         hex: '#FFFFFF' },
+	{ token: '--color-bg-panel',        label: 'Panel',           hex: '#F4F2EE' },
+	{ token: '--color-bg-emphasis',     label: 'Emphasis',        hex: '#EFEDE8' },
+	{ token: '--color-bg-inverse',      label: 'Inverse',         hex: '#081122' },
+	{ token: '--color-border-hairline', label: 'Border Hairline', hex: '#E7E4DE' },
+	{ token: '--color-border',          label: 'Border',          hex: '#DCD8D1' },
+	{ token: '--color-border-strong',   label: 'Border Strong',   hex: '#C6C2B9' },
 ];
 
 const typeScale = [

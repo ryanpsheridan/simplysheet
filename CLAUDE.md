@@ -360,9 +360,13 @@ The articles hub is statically paginated for SEO/AEO crawlability — there is n
 
 ## Typography
 
-- Body font: **Inter** (`--font-sans` in `tokens.css`)
-- Heading font: **Urbanist** (`--font-heading` in `tokens.css`)
-- Both loaded via Google Fonts in `BaseHead.astro`
+One typeface for the whole site: **Aspekta Variable** (`--font-sans`, with `--font-heading` and `--font-body` both aliased to it in `tokens.css`). Hierarchy comes from size, tracking, and leading, never from a second family and barely from weight.
+
+- Self-hosted from `public/fonts/AspektaVF.woff2` — a single variable file covering weights 100–900 in 30 KB. The `@font-face` rule lives in `src/styles/fonts.css`, which `global.css` imports and Astro inlines into every page; `BaseHead.astro` also preloads the file.
+- OFL 1.1 licensed, licence shipped at `public/fonts/Aspekta-OFL-LICENSE.txt`. Keep it there.
+- The site no longer uses Google Fonts. `scripts/fetch-fonts.mjs` (which mirrored Inter + DM Sans locally and generated `fonts.css`) has been removed — don't reintroduce a generated `fonts.css`, edit it directly.
+- Weight discipline: body and headings both sit at `--weight-normal` (400), with `--weight-medium`/`--weight-semibold` as the emphasis steps. Reaching for 700+ is almost always the wrong fix; make the type bigger or tighten its tracking instead.
+- Tracking is a real hierarchy tool here, not a rounding detail: `--tracking-tight` (-0.024em) for display, `--tracking-snug` (-0.02em) for headings and buttons, `--tracking-normal` (0) for body, `--tracking-caps` (0.06em) for uppercase eyebrows. Never set body copy at positive tracking.
 
 ## Calculator Components
 
@@ -412,3 +416,15 @@ Use CSS variables from `src/styles/tokens.css` for all styling. Key tokens:
 - Spacing: `--space-xs` through `--space-2xl`
 - Typography: `--text-body`, `--text-h1` through `--text-h3`, `--text-small`
 - Weights: `--weight-normal`, `--weight-medium`, `--weight-semibold`, `--weight-bold`
+
+### Surfaces are a layering vocabulary
+
+The neutral ramp is warm on surfaces and cool-navy on ink, not pure grayscale — don't mix a literal `#FFF`/`#000`/mid-gray into it. Three surface tokens, and which one to use is a question about depth, not taste:
+
+- `--color-bg` (`#FBFAF9`) — the page itself. Full-bleed sections that should read as "the page" use this.
+- `--color-bg-surface` (`#FFFFFF`) — anything raised off the page: cards, the header, overlay panels, chips floating on top of a thumbnail. These read as lifted by being *cleaner* than the warm page behind them rather than by spending a shadow, so a raised element set to `--color-bg` nearly vanishes into its own background.
+- `--color-bg-panel` (`#F4F2EE`) — a recessed band or a filled result card, sunk below the page. `--color-bg-emphasis` is the next step down again.
+
+Borders come in three weights: `--color-border-hairline` for subtle dividers, `--color-border` as the default, `--color-border-strong` for emphasized or hover edges.
+
+Every text role has to clear WCAG AA (4.5:1) against `--color-bg`, `--color-bg-surface`, *and* `--color-bg-panel`. That puts a hard floor around `#707070`, which is why the ramp has no `#999`-class step and why `--color-text-muted` is `#666B75` rather than something lighter. A previous lighter muted tone (`#8A8A8A`) failed AA on all three. Check any new text color against all three surfaces before shipping it.
