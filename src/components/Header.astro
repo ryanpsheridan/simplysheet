@@ -29,7 +29,7 @@ const MENU_LINKS = [
 	DOM order is logo → links → menu button → CTA, which is the order they
 	should be read in. Visual placement uses explicit grid columns per
 	breakpoint, so mobile can put the CTA and menu button hard right of the
-	logo while desktop centres the links between logo and CTA — neither needs
+	logo while desktop right-aligns the links against the CTA — neither needs
 	the markup reordered underneath it.
 */}
 <div class="header-shell">
@@ -73,7 +73,7 @@ const MENU_LINKS = [
 			    logo and menu button on a narrow phone, and truncating a CTA reads
 			    as broken. Whichever is hidden is display:none, so it leaves the
 			    accessibility tree too and the button never announces both. */}
-			<a href="/quiz/budgeting-style/" class="btn btn-brand btn-sm header-cta">
+			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-sm header-cta">
 				<span class="cta-label-full">Find Your Budget Style</span>
 				<span class="cta-label-short">Budget Quiz</span>
 			</a>
@@ -503,11 +503,14 @@ const MENU_LINKS = [
 			grid-column: 3;
 		}
 
+		/* Right-aligned against the CTA rather than centred in the track: the
+		   links and the CTA then read as one control cluster, instead of the
+		   links floating in the middle with dead space on both sides. */
 		.desktop-nav {
 			display: block;
 			grid-row: 1;
 			grid-column: 2;
-			justify-self: center;
+			justify-self: end;
 		}
 
 		.menu-toggle,

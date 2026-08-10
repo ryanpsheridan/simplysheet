@@ -24,10 +24,15 @@ const visible = tags.slice(0, 2);
 		margin-bottom: var(--space-sm);
 	}
 
+	/* Emphasis fill and primary text, not panel fill and secondary text. On the
+	   old pure-white page a panel-filled chip had a clear edge; against the
+	   warm off-white page it sits only a shade off its own background and the
+	   secondary text on top made it read as disabled rather than as a label.
+	   Emphasis separates from the page, and the darker text stops it fading. */
 	.tag-pill {
 		display: inline-block;
-		background: var(--color-bg-panel);
-		color: var(--color-text-secondary);
+		background: var(--color-bg-emphasis);
+		color: var(--color-text);
 		font-size: 0.8125rem;
 		font-weight: var(--weight-medium);
 		line-height: 1;

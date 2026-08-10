@@ -104,6 +104,12 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 		background: var(--color-bg-surface);
 		transition: border-color 0.15s;
 	}
+	/* Hover raises the edge to --color-border-strong before focus takes it all
+	   the way to the link tone, so the field reads as interactive on approach
+	   rather than only once it is active. */
+	.calc-field:hover {
+		border-color: var(--color-border-strong);
+	}
 	.calc-field:focus-within {
 		border-color: var(--color-link);
 	}

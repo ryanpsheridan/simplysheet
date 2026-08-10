@@ -380,6 +380,13 @@ The uppercase overline label above a heading is the shared `.eyebrow` class in `
 - Eyebrow text is always `--color-text`. The tints are only guaranteed AA against the primary text role, so a secondary or muted tone on one of these fills is not safe.
 - The pill carries `align-self: start` / `justify-self: start` because an `inline-flex` child of a flex or grid parent gets blockified and would otherwise stretch across the whole column. Don't remove those — two of the four current call sites sit in column flex containers and regress immediately without them.
 - If a local rule needs to adjust an eyebrow, keep it to layout (margins). Astro's scoped styles outrank the global `.eyebrow` class, so restating color, size, or `text-transform` in a component's `<style>` silently wins and re-breaks the pill.
+- The pill is 11px, deliberately off the reading scale — an eyebrow is a label, not a body size. At `--text-xs` (14px) it competed with the heading underneath it. The caps tracking is what keeps it legible that small, so don't trade the letter-spacing away for width.
+
+## Table Scroll Affordance
+
+`ArticleLayout` wraps every `.prose table` in a `.table-scroll-wrap` and appends an edge shadow plus a "Swipe to scroll" hint — at **every** viewport width, since the script doesn't check one.
+
+Their CSS therefore has to live outside the `max-width: 600px` block, and visibility is gated on `.has-overflow` (which the script sets only when the table genuinely overflows). When those styles were scoped to the mobile block, the hint had no styles at all on desktop and rendered as a stray, permanently visible line of text in the middle of the article. If you touch this, check a desktop article with a table before shipping.
 
 ## Buttons
 

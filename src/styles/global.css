@@ -137,14 +137,18 @@ p {
 	   keep it hugging its own text in any parent, and are inert in block flow. */
 	align-self: start;
 	justify-self: start;
-	font-size: var(--text-xs);
+	/* 11px, not --text-xs. An eyebrow is a label, not a size in the reading
+	   scale — at 14px the pill competed with the heading it introduces instead
+	   of sitting above it. The caps tracking is what keeps it legible this
+	   small, so don't drop the letter-spacing to buy back width. */
+	font-size: 0.6875rem;
 	font-weight: var(--weight-medium);
 	line-height: var(--leading-snug);
 	letter-spacing: var(--tracking-caps);
 	text-transform: uppercase;
 	color: var(--color-text);
 	background: var(--eyebrow-tint, var(--tint-sky));
-	padding: var(--space-2xs) var(--space-xs);
+	padding: 0.1875rem 0.4375rem;
 	border-radius: var(--radius-sm);
 	margin: 0 0 var(--space-xs);
 }
@@ -264,18 +268,11 @@ p {
 		white-space: nowrap;
 	}
 
-	/* ——— Scroll affordance overlay ———
-	   ArticleLayout's client script wraps each .prose table in a
-	   .table-scroll-wrap and appends these two elements: a shadow that
-	   signals more content sits off the visible right edge, and a one-time
-	   swipe hint. Both are inert without JS — the table above already
-	   scrolls fine on its own. */
-
+	/* The wrap carries the bleed (rather than the table), so the edge shadow —
+	   pinned to the wrap's right edge — lines up with the table's actual
+	   clipped edge instead of sitting short of it. Bleed is mobile-only; the
+	   wrap's other styles are not, see below. */
 	.table-scroll-wrap {
-		position: relative;
-		/* The wrap itself carries the bleed now (rather than the table), so
-		   the shadow below — pinned to the wrap's right edge — lines up with
-		   the table's actual clipped edge instead of sitting short of it. */
 		width: calc(100% + var(--space-md));
 		margin-right: calc(-1 * var(--space-md));
 	}
@@ -284,58 +281,81 @@ p {
 		width: 100%;
 		margin-right: 0;
 	}
+}
 
-	.table-edge-shadow {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		width: 32px;
-		background: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
-		opacity: 0;
-		pointer-events: none;
-		transition: opacity 0.2s ease;
-	}
+/* ——— Table scroll affordance ———
+   ArticleLayout's client script wraps every .prose table in a
+   .table-scroll-wrap and appends two elements: a shadow signalling that more
+   content sits off the visible right edge, and a one-time swipe hint. Both are
+   inert without JS — the table already scrolls fine on its own.
 
-	.table-scroll-wrap.has-overflow .table-edge-shadow {
-		opacity: 1;
-	}
+   These rules deliberately sit OUTSIDE the mobile media query. The script
+   appends both elements at every viewport width, so when their styles were
+   scoped to max-width 600px the hint had no styles at all on desktop and
+   rendered as a stray, permanently visible "Swipe to scroll" line in the
+   middle of the article. Visibility is gated on .has-overflow instead, which
+   the script only sets when the table genuinely overflows — so a desktop table
+   that fits shows neither element, at any width. */
 
-	.table-swipe-hint {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.375rem;
-		padding: 0.75rem 1.25rem;
-		background: rgba(0, 0, 0, 0.6);
-		border-radius: var(--radius-md);
-		color: #fff;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		white-space: nowrap;
-		pointer-events: none;
-		opacity: 1;
-		transition: opacity 0.5s ease;
-	}
+.table-scroll-wrap {
+	position: relative;
+}
 
-	.table-swipe-hint.dismissed {
-		opacity: 0;
-	}
+.table-edge-shadow,
+.table-swipe-hint {
+	opacity: 0;
+	pointer-events: none;
+}
 
-	.table-swipe-hint svg {
-		animation: table-swipe-gesture 1.4s ease-in-out infinite;
-	}
+.table-edge-shadow {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 32px;
+	background: linear-gradient(to left, rgba(var(--shadow-rgb), 0.1), rgba(var(--shadow-rgb), 0));
+	transition: opacity 0.2s ease;
+}
 
-	@keyframes table-swipe-gesture {
-		0%   { transform: translateX(7px); opacity: 0.3; }
-		35%  { opacity: 1; }
-		70%  { transform: translateX(-9px); opacity: 1; }
-		100% { transform: translateX(-9px); opacity: 0; }
-	}
+.table-swipe-hint {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.75rem 1.25rem;
+	background: color-mix(in srgb, var(--color-bg-inverse) 72%, transparent);
+	border-radius: var(--radius-md);
+	color: var(--color-bg);
+	font-size: var(--text-xs);
+	font-weight: var(--weight-medium);
+	white-space: nowrap;
+	transition: opacity 0.5s ease;
+}
+
+.table-scroll-wrap.has-overflow .table-edge-shadow {
+	opacity: 1;
+}
+
+/* :not(.dismissed) rather than a separate override — the descendant selector
+   above outranks a bare .table-swipe-hint.dismissed rule, so dismissing would
+   otherwise never take. */
+.table-scroll-wrap.has-overflow .table-swipe-hint:not(.dismissed) {
+	opacity: 1;
+}
+
+.table-swipe-hint svg {
+	animation: table-swipe-gesture 1.4s ease-in-out infinite;
+}
+
+@keyframes table-swipe-gesture {
+	0%   { transform: translateX(7px); opacity: 0.3; }
+	35%  { opacity: 1; }
+	70%  { transform: translateX(-9px); opacity: 1; }
+	100% { transform: translateX(-9px); opacity: 0; }
 }
 
 .prose th {
@@ -345,17 +365,24 @@ p {
 
 /* ——— Article promo (single product mention within article body) ——— */
 
+/* `stretch`, not `center`: the text column is taller than a 3:2 thumb, and
+   centring left the image panel floating with dead space above and below it
+   against the card's own height. The panel now runs the full height of the
+   row and the laptop stays centred inside it. */
 .article-promo {
 	display: grid;
 	grid-template-columns: 1fr 2fr;
-	align-items: center;
+	align-items: stretch;
 	gap: var(--space-md);
 	margin: var(--space-lg) 0;
 }
 .article-promo-thumb {
 	display: block;
 	width: 100%;
-	aspect-ratio: 3 / 2;
+	height: 100%;
+	/* A floor, not a fixed ratio — the panel takes the row's height whenever
+	   the text column is taller, and only falls back to this when it isn't. */
+	min-height: 11rem;
 	border-radius: var(--radius-md);
 	background: var(--color-bg-panel);
 	overflow: hidden;
