@@ -30,7 +30,10 @@
   --color-bg-inverse:     #081122;
 
   --color-btn:            #081122;
-  --color-btn-hover:      #030812;
+  /* Lighter than the base, not darker. The old #030812 sat *below* near-black
+     ink, so a filled primary button had no perceptible hover at all. This is a
+     dark slate in the same navy family — 13.85:1 with white, well clear of AA. */
+  --color-btn-hover:      #232D3E;
 
   --color-border:         #DCD8D1;
   --color-border-hairline: #E7E4DE;

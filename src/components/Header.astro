@@ -5,18 +5,21 @@ const path = Astro.url.pathname;
 const isActive = (href: string) =>
 	href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`);
 
+/* `id` is the analytics label, not the visible text — see the data-cta
+   attributes below. Naming a nav item by what it *is* rather than what it
+   currently says means rewording a link doesn't split its history in GA4. */
 const NAV_LINKS = [
-	{ href: '/articles/', label: 'Articles' },
-	{ href: '/spreadsheets/', label: 'Spreadsheets' },
-	{ href: '/tools/', label: 'Tools' },
+	{ href: '/articles/', label: 'Articles', id: 'articles' },
+	{ href: '/spreadsheets/', label: 'Spreadsheets', id: 'spreadsheets' },
+	{ href: '/tools/', label: 'Tools', id: 'tools' },
 ];
 
 /* The mobile panel carries Home and the quiz alongside the desktop links —
    the bar has no room for either, and both are reachable there instead. */
 const MENU_LINKS = [
-	{ href: '/', label: 'Home' },
+	{ href: '/', label: 'Home', id: 'home' },
 	...NAV_LINKS,
-	{ href: '/quiz/budgeting-style/', label: 'Budgeting Style Quiz' },
+	{ href: '/quiz/budgeting-style/', label: 'Budgeting Style Quiz', id: 'quiz' },
 ];
 ---
 
@@ -35,6 +38,8 @@ const MENU_LINKS = [
 <div class="header-shell">
 	<div class="header-inner">
 		<header class="site-header">
+			{/* Deliberately untracked: a logo click is "go home", not a choice
+			    between destinations, and it would swamp the nav numbers. */}
 			<a href="/" class="site-logo">
 				<img src="/images/logo-svg.svg" alt="Simply Sheets logo" class="site-logo-mark" width="24" height="26" />
 				<span class="site-logo-text">{SITE_TITLE}</span>
@@ -47,6 +52,7 @@ const MENU_LINKS = [
 							<a
 								href={link.href}
 								class="nav-link"
+								data-cta={`nav_link:${link.id}`}
 								aria-current={isActive(link.href) ? 'page' : undefined}
 							>
 								{link.label}
@@ -71,7 +77,7 @@ const MENU_LINKS = [
 
 			{/* Desktop only — see .header-cta below. The quiz is reachable from the
 			    mobile panel, so the bar doesn't carry it twice. */}
-			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-sm header-cta">Find Your Budget Style</a>
+			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-sm header-cta" data-cta="nav_cta">Find Your Budget Style</a>
 		</header>
 
 		<div id="app-menu" class="app-menu" role="dialog" aria-modal="true" aria-label="Menu">
@@ -82,6 +88,7 @@ const MENU_LINKS = [
 							<a
 								href={link.href}
 								class="menu-item"
+								data-cta={`nav_menu_link:${link.id}`}
 								aria-current={isActive(link.href) ? 'page' : undefined}
 							>
 								{link.label}
@@ -478,6 +485,9 @@ const MENU_LINKS = [
 			grid-row: 1;
 			grid-column: 2;
 			justify-self: end;
+			/* On top of the grid gap. Right-aligned, the last link otherwise sits
+			   almost against the CTA and the two read as one run of controls. */
+			margin-right: var(--space-md);
 		}
 
 		.menu-toggle,

@@ -41,6 +41,21 @@ The primary goal of this site is organic Google discovery. Every change — new 
 - The site already has a sitemap (`/sitemap-index.xml`), canonical URLs, and Open Graph tags — these are handled automatically by `BaseHead.astro`.
 - Social crawlers (Facebook, iMessage, Slack, etc.) can't render SVG for link previews, so `BaseHead.astro` points `og:image`/`twitter:image` at a PNG counterpart of the article's SVG (same filename, `.png` instead of `.svg`). `scripts/generate-og-images.mjs` rasterizes every `card-v2-*.svg` in `public/images/` to a matching `.png` and runs automatically via the `prebuild` npm script — no manual step needed, but if you add a new article's SVG in this session (without running `npm run build`), also run `node scripts/generate-og-images.mjs` so the PNG exists for local testing/sharing before the next real build.
 
+## Click Tracking — `data-cta`
+
+Two GA4 click handlers live in `BaseHead.astro`, and which one fires is decided by the link's host:
+
+- **Etsy links** → `etsy_outbound_click`, with `link_label` taken from `data-cta` (or the link text as a fallback). Hrefs are never rewritten, so Etsy's own params stay intact.
+- **Everything else carrying `data-cta`** → `cta_click`, with the attribute's value as `cta_id`.
+
+Etsy links are explicitly skipped by the second handler so one click can't be counted twice.
+
+- To track a new on-site link, add `data-cta="..."` and nothing else — no wiring required.
+- **Name a CTA for what it is, not what it says.** `nav_cta`, not `find_your_budget_style`. Rewording a button then doesn't split its history in GA4.
+- Convention in use: `nav_link:<id>` for the desktop bar, `nav_menu_link:<id>` for the mobile panel (kept separate so the two surfaces can be compared), `nav_cta` for the header button, and `<page>_<element>` elsewhere (`footer_etsy_link`, `articles_index_resource_card:<name>`).
+- The header logo is deliberately untracked — a logo click is "go home", not a choice between destinations, and it would swamp the nav numbers.
+- Note the ordering trap this fixed: the Etsy handler returns early for every non-Etsy host, so before the second handler existed, `data-cta` on an internal link recorded nothing at all. If you add a third handler, check it doesn't sit behind an early return meant for a different link type.
+
 ## Etsy Links — Share & Save Domain + UTM Tracking
 
 Every user-clickable link to Etsy, anywhere on the site, must follow these rules (helper and rationale live in `src/consts.ts`):

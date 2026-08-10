@@ -201,8 +201,10 @@ p {
    Tool and product thumbnails darken their panel container on hover
    (--color-bg-panel → --color-bg-emphasis). An article thumbnail is a
    full-bleed image with no container showing, so the equivalent gesture is to
-   darken the image itself — same intent, and roughly the same perceptual step,
-   since a 2% fill change would be invisible over a saturated gradient.
+   darken the image itself. The step is deliberately larger than the 2% fill
+   change the panel thumbnails use: brightness() scales linearly, so on a dark
+   saturated gradient the same ratio moves far fewer absolute levels and a
+   subtle value reads as no hover at all.
 
    Covers all three article card surfaces: the homepage featured card and
    Latest row, and the articles index / tag archive list. The last of those is
@@ -221,7 +223,7 @@ p {
 	.hero-featured:hover .hero-featured-thumb img,
 	.home-row-item:hover .home-row-thumb:not(.home-row-thumb--product) img,
 	.article-list-item:hover .article-list-thumb img {
-		filter: brightness(0.92);
+		filter: brightness(0.85);
 	}
 }
 
