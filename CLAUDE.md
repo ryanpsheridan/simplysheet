@@ -382,6 +382,27 @@ The uppercase overline label above a heading is the shared `.eyebrow` class in `
 - If a local rule needs to adjust an eyebrow, keep it to layout (margins). Astro's scoped styles outrank the global `.eyebrow` class, so restating color, size, or `text-transform` in a component's `<style>` silently wins and re-breaks the pill.
 - The pill is 11px, deliberately off the reading scale — an eyebrow is a label, not a body size. At `--text-xs` (14px) it competed with the heading underneath it. The caps tracking is what keeps it legible that small, so don't trade the letter-spacing away for width.
 
+## Badges
+
+`.badge` in `global.css` is the **only** chip on the site: product badges ("Best Seller"), article tag pills, platform tags ("Google Sheets"), resource labels. Emphasis fill, primary text, pill radius, 13px.
+
+- There were seven near-identical definitions of this before they were consolidated, drifting apart on radius, fill, weight, and text tone — the same "Best Seller" rendered square and grey on the homepage and as a rounded pill on `/spreadsheets/`. Don't add an eighth. A new badge is warranted only when it is genuinely a different *thing*, not when it appears on a different page.
+- `.badge-overlay` is the one variant: for a chip floating on a product thumbnail. The thumbnail box is already `--color-bg-panel`, so the standard emphasis fill would vanish against it — the overlay uses a surface fill plus a real border, and carries its own absolute positioning.
+- **Local rules may set layout only** (margins, `align-self`). Anything visual belongs in `.badge`. Astro's scoped styles outrank it, so a component that restates `background`, `font-size`, or `border-radius` silently wins and re-forks the badge — which is exactly how the seven came about.
+- Both render paths for article tags emit `.badge`: `TagPills.astro` and the client-rendered search results in `ArticleGrid.astro`. If you change one, the other already matches by construction — don't reintroduce a mirrored copy of the chip styles.
+- `.compare-badge` in `DebtCalculator.astro` is deliberately *not* a `.badge`. It's an 11px inline qualifier inside a dense comparison row ("Highest rate first"), not a label chip on a card, and a full pill would bloat that row.
+
+### Badges vs. eyebrows
+
+They are different things and should not both appear on the same element:
+
+- A **badge** is a factual attribute of the item ("Best Seller", "Excel", a tag).
+- An **eyebrow** is an editorial pointer, saying why the thing below is here.
+
+`ProductPromo`'s interstitial variant enforces this: when an article passes a `label`, the eyebrow renders and the template's generic `badge` stands down, because the article's framing is the more specific of the two. Stacking both is what the eyebrow-plus-badge pileup looked like before.
+
+Eyebrows are deliberately rare — four places sitewide. They are loud by design, so reach for a badge unless the label genuinely needs to editorialize.
+
 ## Table Scroll Affordance
 
 `ArticleLayout` wraps every `.prose table` in a `.table-scroll-wrap` and appends an edge shadow plus a "Swipe to scroll" hint — at **every** viewport width, since the script doesn't check one.

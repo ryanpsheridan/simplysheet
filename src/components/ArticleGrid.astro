@@ -110,7 +110,7 @@ const { articles, manifest, tagMap } = Astro.props;
 	function renderCard(item: ManifestItem): string {
 		const tags = (item.tags || []).slice(0, 2);
 		const pillsHtml = tags.length
-			? `<div class="tag-pills">${tags.map((t) => `<span class="tag-pill">${escapeHtml(tagMap[t] ?? t)}</span>`).join('')}</div>`
+			? `<div class="tag-pills">${tags.map((t) => `<span class="badge">${escapeHtml(tagMap[t] ?? t)}</span>`).join('')}</div>`
 			: '';
 		const imgHtml = item.image
 			? `<div class="article-list-thumb"><img src="${item.image}" alt="${escapeHtml(item.title)}" width="960" height="540" loading="lazy" /></div>`
@@ -296,24 +296,15 @@ const { articles, manifest, tagMap } = Astro.props;
 		border-radius: var(--radius-md);
 	}
 
-	/* Client-rendered search/sort results inject raw <div class="tag-pills">
-	   markup that bypasses TagPills.astro's own scoped styles, so mirror
-	   them here as global rules to keep both render paths visually identical. */
+	/* Client-rendered search/sort results inject raw markup that bypasses
+	   TagPills.astro's scoped styles, so the row layout is mirrored here as a
+	   global rule. The chips themselves need no mirror — both render paths
+	   emit .badge, which is defined globally. */
 	.article-list :global(.tag-pills) {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 6px;
 		margin-bottom: var(--space-xs);
-	}
-	.article-list :global(.tag-pill) {
-		background: var(--color-bg-emphasis);
-		color: var(--color-text);
-		font-size: 12px;
-		font-weight: 400;
-		line-height: 1;
-		padding: 6px 10px;
-		border-radius: 999px;
-		white-space: nowrap;
 	}
 
 	/* ——— Empty state ——— */

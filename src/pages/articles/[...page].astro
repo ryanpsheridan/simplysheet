@@ -127,7 +127,7 @@ const templates = [
 						<div class="resource-thumb">
 							<img src={t.image} alt={`${t.name} preview`} width="600" height="400" loading="lazy" />
 						</div>
-						{t.badge && <span class="resource-badge">{t.badge}</span>}
+						{t.badge && <span class="badge resource-badge">{t.badge}</span>}
 						<h3 class="resource-name">{t.name}</h3>
 						<p class="resource-desc">{t.desc}</p>
 					</a>
@@ -212,17 +212,9 @@ const templates = [
 		border-radius: var(--radius-sm);
 		display: block;
 	}
+	/* Look comes from .badge. Astro scoping outranks it, so only layout here. */
 	.resource-badge {
-		display: inline-block;
 		align-self: flex-start;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-normal);
-		color: var(--color-link);
-		background: var(--color-bg-panel);
-		border-radius: var(--radius-sm);
-		padding: 0.125rem 0.5rem;
-		line-height: 1.4;
-		white-space: nowrap;
 	}
 	.resource-name {
 		font-size: var(--text-body);

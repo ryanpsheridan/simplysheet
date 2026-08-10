@@ -47,7 +47,7 @@ const itemListSchema = {
 				<a href={`/spreadsheets/${t.id}/`} class="template-card">
 					<div class="template-thumb">
 						<img src={t.data.midImage} alt={`${t.data.title} preview`} width="600" height="400" loading="lazy" />
-						{t.data.badge && <span class="template-badge">{t.data.badge}</span>}
+						{t.data.badge && <span class="badge badge-overlay">{t.data.badge}</span>}
 					</div>
 					<h2 class="template-name">{t.data.title.replace(/ for (Google )?Sheets & Excel$/, '')}</h2>
 					<p class="template-desc">{t.data.description}</p>
@@ -131,19 +131,7 @@ const itemListSchema = {
 		display: block;
 	}
 
-	.template-badge {
-		position: absolute;
-		left: 0.75rem;
-		bottom: 0.75rem;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		color: var(--color-text);
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-full);
-		padding: 0.5rem 0.875rem 0.4375rem;
-		line-height: 1;
-	}
+	/* Look and placement come from .badge .badge-overlay in global.css. */
 
 	.template-name {
 		font-size: var(--text-h3);

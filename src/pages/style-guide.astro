@@ -262,7 +262,7 @@ const toolThumbnails = [
 						{(article.data.tags ?? []).length > 0 && (
 							<div class="demo-card-tags">
 								{(article.data.tags ?? []).map((tag: string) => (
-									<span class="demo-card-tag">{TAG_MAP[tag] ?? tag}</span>
+									<span class="badge">{TAG_MAP[tag] ?? tag}</span>
 								))}
 							</div>
 						)}
@@ -294,7 +294,7 @@ const toolThumbnails = [
 							{(article.data.tags ?? []).length > 0 && (
 								<div class="demo-card-tags">
 									{(article.data.tags ?? []).map((tag: string) => (
-										<span class="demo-card-tag">{TAG_MAP[tag] ?? tag}</span>
+										<span class="badge">{TAG_MAP[tag] ?? tag}</span>
 									))}
 								</div>
 							)}
@@ -333,7 +333,7 @@ const toolThumbnails = [
 						<div class="template-demo-thumb">
 							{t.image && <img src={t.image} alt={`${t.name} preview`} width="600" height="400" loading="lazy" />}
 						</div>
-						{t.badge && <span class="template-demo-badge">{t.badge}</span>}
+						{t.badge && <span class="badge template-demo-badge">{t.badge}</span>}
 						<h3 class="template-demo-name">{t.name}</h3>
 						<p class="template-demo-desc">{t.desc}</p>
 					</a>
@@ -850,15 +850,8 @@ const toolThumbnails = [
 		gap: 0.375rem;
 		margin-bottom: var(--space-xs);
 	}
-	.demo-card-tag {
-		font-size: var(--text-xs);
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-		background: var(--color-bg-emphasis);
-		border-radius: var(--radius-sm);
-		padding: 0.1875rem 0.625rem;
-		line-height: 1.4;
-	}
+	/* The demo cards render the real .badge, so there is no lookalike here to
+	   drift out of sync with it. */
 
 	/* ——— Editorial card (homepage style) ——— */
 
@@ -1097,16 +1090,9 @@ const toolThumbnails = [
 		object-fit: cover;
 		display: block;
 	}
+	/* Look comes from .badge. Astro scoping outranks it, so only layout here. */
 	.template-demo-badge {
-		display: inline-block;
 		align-self: flex-start;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-normal);
-		color: var(--color-link);
-		background: var(--color-bg-panel);
-		border-radius: var(--radius-sm);
-		padding: 0.125rem 0.5rem;
-		line-height: 1.4;
 		margin: var(--space-md) var(--space-md) 0;
 	}
 	.template-demo-name {

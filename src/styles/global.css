@@ -162,6 +162,45 @@ p {
 	color: var(--color-text-muted);
 }
 
+/* ——— Badge ———
+
+   The one chip for every short label on the site: product badges ("Best
+   Seller"), article tags, platform tags. There were seven near-identical
+   definitions of this before, drifting apart on radius, fill, weight, and
+   text tone — so the same "Best Seller" rendered square and grey in one
+   place and as a rounded pill in another. Add a new one only if it is
+   genuinely a different thing, not a different page.
+
+   Emphasis fill with primary text, not panel fill with secondary text: on
+   the warm page a panel chip sits a shade off its own background, and
+   secondary text on top makes it read as disabled rather than as a label.
+
+   Layout (margins, alignment) still belongs to the local rule that places
+   it. Everything visual belongs here. */
+.badge {
+	display: inline-block;
+	font-size: 0.8125rem;
+	font-weight: var(--weight-medium);
+	line-height: 1;
+	color: var(--color-text);
+	background: var(--color-bg-emphasis);
+	border-radius: var(--radius-full);
+	padding: 0.4375rem 0.875rem;
+	white-space: nowrap;
+}
+
+/* Floating on a product thumbnail rather than sitting in text flow. The
+   thumbnail box is already --color-bg-panel, so an emphasis fill would nearly
+   vanish against it — this one lifts off the image with a surface fill and a
+   real border instead. */
+.badge-overlay {
+	position: absolute;
+	left: 0.75rem;
+	bottom: 0.75rem;
+	background: var(--color-bg-surface);
+	border: 1px solid var(--color-border);
+}
+
 .prose p {
 	margin-bottom: 1.5em;
 	line-height: var(--leading-normal);
@@ -562,17 +601,9 @@ p {
 		background: var(--color-bg-emphasis);
 	}
 }
+/* Look comes from .badge; this only places it in the card. */
 .product-card-badge {
-	display: inline-block;
 	align-self: flex-start;
-	font-size: var(--text-xs);
-	font-weight: var(--weight-medium);
-	color: var(--color-text-secondary);
-	background: var(--color-bg-panel);
-	border-radius: var(--radius-full);
-	padding: 0.5rem 0.875rem 0.4375rem;
-	line-height: 1;
-	white-space: nowrap;
 	margin: var(--space-md) var(--space-md) 0;
 }
 .product-card-name {
@@ -650,15 +681,8 @@ p {
 	color: var(--color-text);
 	margin-bottom: var(--space-2xs);
 }
+/* Look comes from .badge; this only sets the gap to the product name. */
 .product-badge {
-	display: inline-block;
-	font-size: var(--text-xs);
-	font-weight: var(--weight-medium);
-	color: var(--color-text-secondary);
-	background: var(--color-bg-panel);
-	border-radius: var(--radius-full);
-	padding: 0.5rem 0.875rem 0.4375rem;
-	line-height: 1;
 	margin-bottom: var(--space-xs);
 }
 .product-desc {
@@ -796,20 +820,9 @@ hr {
 .home-row-placeholder {
 	color: var(--color-border);
 }
-.home-row-badge {
-	position: absolute;
-	left: 0.75rem;
-	bottom: 0.75rem;
-	font-size: var(--text-xs);
-	font-weight: var(--weight-normal);
-	color: var(--color-text);
-	background: var(--color-bg-surface);
-	border: 1px solid var(--color-border);
-	border-radius: var(--radius-sm);
-	padding: 0.125rem 0.5rem;
-	line-height: 1.4;
-	white-space: nowrap;
-}
+/* Placement and look both come from .badge .badge-overlay now. Kept as a
+   name the markup can still hook if this row ever needs an offset of its
+   own. */
 
 @media (max-width: 960px) {
 	.home-row-items {

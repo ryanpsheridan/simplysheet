@@ -29,7 +29,12 @@ const image = midImage;
 		<div class="article-promo-content">
 			{label && <p class="eyebrow interstitial-label">{label}</p>}
 			<div class="product-text">
-				{badge && <span class="product-badge">{badge}</span>}
+				{/* One label, not two. When an article supplies its own `label` the
+				    eyebrow already says why this product is here, and stacking the
+				    template's generic badge under it just repeats the job in a
+				    second style. The article's framing is the more specific of the
+				    two, so it wins and the badge stands down. */}
+				{!label && badge && <span class="badge product-badge">{badge}</span>}
 				<h3 class="product-name">{name}</h3>
 				<p class="product-desc">{description}</p>
 			</div>
@@ -43,7 +48,7 @@ const image = midImage;
 		<div class="product-card-thumb">
 			<img src={image} alt={alt} width="600" height="400" loading="lazy" />
 		</div>
-		{badge && <span class="product-card-badge">{badge}</span>}
+		{badge && <span class="badge product-card-badge">{badge}</span>}
 		<h3 class="product-card-name">{name}</h3>
 		<p class="product-card-desc">{description}</p>
 	</a>
@@ -63,7 +68,7 @@ const image = midImage;
 		</a>
 		<div class="product-content">
 			<div class="product-text">
-				{badge && <span class="product-badge">{badge}</span>}
+				{badge && <span class="badge product-badge">{badge}</span>}
 				<h3 class="product-name">{name}</h3>
 				<p class="product-desc">{description}</p>
 			</div>
