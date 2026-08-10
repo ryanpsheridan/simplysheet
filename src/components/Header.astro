@@ -305,9 +305,14 @@ const MENU_LINKS = [
 
 	/* --- Menu button ------------------------------------------------------- */
 
-	/* A filled disc rather than bare bars, so it reads as a control at the same
-	   weight as the CTA opposite it. Two bars that rotate into an X — the same
-	   elements in both states, so there's no icon swap. */
+	/* A filled disc rather than bare bars, so it reads as a control. Light
+	   surface with ink bars, not the inverse: sitting immediately beside the
+	   ink CTA, a second dark pill made the two compete for the same emphasis
+	   and read as one heavy black mass. The border is what keeps the disc
+	   legible now that its fill matches the bar behind it.
+
+	   Two bars that rotate into an X — the same elements in both states, so
+	   there's no icon swap. */
 	.menu-toggle {
 		grid-row: 1;
 		grid-column: 3;
@@ -315,19 +320,21 @@ const MENU_LINKS = [
 		position: relative;
 		width: 2.5rem;
 		height: 2.5rem;
-		border: none;
+		border: 1px solid var(--color-border);
 		border-radius: 50%;
-		background: var(--color-btn);
+		background: var(--color-bg-surface);
 		padding: 0;
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent;
 		transition:
 			background-color var(--duration-fast) var(--ease-out),
+			border-color var(--duration-fast) var(--ease-out),
 			transform var(--duration-fast) var(--ease-out);
 	}
 
 	.menu-toggle:hover {
-		background: var(--color-btn-hover);
+		background: var(--color-bg-panel);
+		border-color: var(--color-border-strong);
 	}
 
 	.menu-toggle:active {
@@ -341,7 +348,7 @@ const MENU_LINKS = [
 		margin-left: -8px;
 		height: 1.5px;
 		border-radius: 2px;
-		background: var(--color-bg);
+		background: var(--color-text);
 		transition:
 			top var(--duration-base) var(--ease-out),
 			transform var(--duration-base) var(--ease-out);

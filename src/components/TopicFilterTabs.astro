@@ -26,13 +26,16 @@ const { tags, activeSlug } = Astro.props;
 	.filter-tabs::-webkit-scrollbar {
 		display: none;
 	}
+	/* Same fill and text tone as .badge — these are the same kind of chip, just
+	   at a larger tap-target size, so they should not read as washed out next
+	   to the tag pills on the cards below them. Size stays as it was. */
 	.filter-tab {
 		flex-shrink: 0;
 		font-family: var(--font-sans);
 		font-size: var(--text-xs);
-		font-weight: var(--weight-normal);
-		color: var(--color-text-secondary);
-		background: var(--color-bg-panel);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+		background: var(--color-bg-emphasis);
 		border: 1px solid transparent;
 		border-radius: var(--radius-full);
 		padding: 0.5rem 1rem;

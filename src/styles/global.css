@@ -129,12 +129,19 @@ p {
 
      <p class="eyebrow" style="--eyebrow-tint: var(--tint-lavender)">…</p> */
 .eyebrow {
-	display: inline-flex;
+	/* Block-level flex with a fit-content width, NOT inline-flex. An eyebrow
+	   introduces the thing below it, so it has to own its line — as an
+	   inline-level box the following sibling wrapped up alongside the pill and
+	   then continued underneath it ("RECOMMENDED TEMPLATE Debt / Payoff
+	   Tracker"). fit-content is what still keeps it hugging its own text
+	   rather than spanning the column. */
+	display: flex;
+	width: fit-content;
 	align-items: center;
-	/* An inline-flex child of a flex or grid parent is blockified into an item,
-	   and the default `stretch` alignment then pulls the pill across the whole
-	   column — which is exactly what happens in the two product promos. These
-	   keep it hugging its own text in any parent, and are inert in block flow. */
+	/* A flex or grid parent blockifies this into an item, and the default
+	   `stretch` alignment would then pull the pill across the whole column —
+	   which is exactly what happened in the two product promos. These keep it
+	   hugging its text in any parent, and are inert in block flow. */
 	align-self: start;
 	justify-self: start;
 	/* 11px, not --text-xs. An eyebrow is a label, not a size in the reading
