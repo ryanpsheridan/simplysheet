@@ -345,6 +345,13 @@ p {
 		white-space: nowrap;
 	}
 
+	/* The rail sits just under the table, so a rule on the final row landed
+	   directly above it and the two read as one doubled line. */
+	.prose tbody tr:last-child > td {
+		border-bottom: none;
+	}
+
+
 	/* The wrap carries the bleed (rather than the table), so the edge shadow —
 	   pinned to the wrap's right edge — lines up with the table's actual
 	   clipped edge instead of sitting short of it. Bleed is mobile-only; the
@@ -369,8 +376,7 @@ p {
    much, and a "Swipe to scroll" chip covered the very data it was pointing
    at. The rail says both things at once and covers nothing: it is persistent,
    and its thumb width is the visible fraction of the table, so its size is
-   the message. Discovery is handled by the one-time nudge in the script
-   instead — demonstrating the gesture rather than describing it.
+   the message.
 
    These rules deliberately sit OUTSIDE the mobile media query. The script
    appends the rail at every viewport width, and gating on .is-scrollable —
@@ -425,6 +431,19 @@ p {
 	height: 100%;
 	border-radius: inherit;
 	background: var(--color-border-strong);
+}
+
+/* The wrap bleeds to the screen edge so an overflowing table visibly runs off
+   it, but the rail is a control rather than content — it stays inside the text
+   column instead of trailing off the side of the screen.
+
+   This has to sit after the base rule above: both are single-class selectors,
+   so source order is what decides, and the same declaration placed in the
+   earlier mobile block simply lost. */
+@media (max-width: 600px) {
+	.table-scroll-rail {
+		right: var(--space-md);
+	}
 }
 
 .prose th {

@@ -353,14 +353,13 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 				updateActiveToc();
 			}
 
-			/* Easing pair for the nudge below. Out fast and settle (ease-out),
-			   then back symmetrically (ease-in-out) so the return reads as the
-			   table relaxing rather than a second, separate movement. */
-			const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
-			const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-			document.querySelectorAll<HTMLTableElement>('.prose table').forEach((table) => {
+			/* :not(.calc-table) is load-bearing. Calculator tables opt out of
+			   scrolling on purpose — they set display:table + table-layout:fixed so
+			   their columns stay aligned inside an article — and wrapping one gave
+			   it the wrap's mobile right-bleed while leaving it unable to scroll.
+			   The result was a table 24px wider than the column, pinned flush to
+			   the screen edge with its last header clipped and no way to reach it. */
+			document.querySelectorAll<HTMLTableElement>('.prose table:not(.calc-table)').forEach((table) => {
 				const wrap = document.createElement('div');
 				wrap.className = 'table-scroll-wrap';
 				table.parentNode?.insertBefore(wrap, table);
@@ -391,56 +390,6 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 				updateOverflow();
 				window.addEventListener('resize', updateOverflow, { passive: true });
 				table.addEventListener('scroll', updateOverflow, { passive: true });
-
-				/* One-time nudge, the first time this table scrolls into view: it
-				   slides out a little and settles back, taking the rail's thumb with
-				   it. Demonstrating the gesture beats describing it — the chip this
-				   replaced had to sit on top of the data it was pointing at.
-
-				   Hand-tweened rather than scroll-behavior: smooth, because two
-				   chained smooth scrolls have no reliable completion signal and the
-				   second frequently cancels the first. */
-				let nudgeCancelled = false;
-				const cancelNudge = () => { nudgeCancelled = true; };
-				['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((evt) =>
-					table.addEventListener(evt, cancelNudge, { passive: true, once: true }),
-				);
-
-				function tween(from: number, to: number, duration: number, ease: (t: number) => number, done?: () => void) {
-					const startedAt = performance.now();
-					function step(now: number) {
-						// Bail the moment the reader takes over, so the animation can
-						// never fight a real gesture.
-						if (nudgeCancelled) return;
-						const t = Math.min(1, (now - startedAt) / duration);
-						table.scrollLeft = from + (to - from) * ease(t);
-						updateOverflow();
-						if (t < 1) requestAnimationFrame(step);
-						else if (done) done();
-					}
-					requestAnimationFrame(step);
-				}
-
-				function nudge() {
-					const max = table.scrollWidth - table.clientWidth;
-					// Nothing to demonstrate, or the reader already got there first.
-					if (max <= 4 || table.scrollLeft > 4 || nudgeCancelled) return;
-					const distance = Math.min(56, max);
-					tween(0, distance, 380, easeOut, () => {
-						setTimeout(() => tween(distance, 0, 480, easeInOut), 140);
-					});
-				}
-
-				if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-					const io = new IntersectionObserver((entries) => {
-						entries.forEach((entry) => {
-							if (!entry.isIntersecting) return;
-							io.disconnect();
-							nudge();
-						});
-					}, { threshold: 0.4 });
-					io.observe(wrap);
-				}
 			});
 
 			const progressBar = document.getElementById('reading-progress');

@@ -425,17 +425,15 @@ Eyebrows are deliberately rare — four places sitewide. They are loud by design
 
 Their CSS therefore has to live outside the `max-width: 600px` block, and visibility is gated on state classes the script sets only when the table genuinely overflows. When those styles were scoped to the mobile block, the hint had no styles at all on desktop and rendered as a stray, permanently visible line of text in the middle of the article. If you touch this, check a desktop article with a table before shipping.
 
-Two things carry the affordance, and both were arrived at by removing things:
+The affordance is a single **scroll rail** — a drawn scrollbar under the table, shown only when `.is-scrollable` is set. It says both *that* there is more and *how much*, because the thumb's width is the visible fraction. Mobile browsers hide the native scrollbar until you're already scrolling, which is too late to advertise that you can.
 
-- **Scroll rail** (`.is-scrollable`) — a drawn scrollbar under the table. Persistent, and it says *how much* more there is because the thumb's width is the visible fraction. Mobile browsers hide the native scrollbar until you're already scrolling, which is too late to advertise that you can.
-- **One-time nudge** — the first time a table scrolls into view (IntersectionObserver, `threshold: 0.4`), it slides ~56px and settles back, taking the thumb with it. Demonstrating the gesture beats describing it.
+Edge fades, a "Swipe to scroll" chip, and a one-time nudge animation were each tried and removed. The fades said "there is more" without saying how much; the chip covered the data it pointed at; the nudge was more motion than the job needed.
 
-Edge fades and a "Swipe to scroll" chip were both tried and removed: the fades said "there is more" without saying how much, and the chip had to sit on top of the data it was pointing at.
+Three details that are load-bearing:
 
-Two things about the nudge that are load-bearing:
-
-- It is hand-tweened with `requestAnimationFrame`, not `scroll-behavior: smooth`. Two chained smooth scrolls have no reliable completion signal and the second frequently cancels the first.
-- It bails on the first `pointerdown`/`touchstart`/`wheel`/`keydown`, and skips entirely under `prefers-reduced-motion` or if the reader already scrolled. An animation that fights a real gesture is worse than no animation.
+- **The script wraps `.prose table:not(.calc-table)`.** Calculator tables opt out of scrolling on purpose — they set `display: table` + `table-layout: fixed` so their columns stay aligned inside an article. Wrapping one gave it the wrap's mobile right-bleed while leaving it unable to scroll, producing a table 24px wider than the column, pinned flush to the screen edge with its last header clipped and unreachable.
+- **The wrap bleeds to the screen edge; the rail does not.** The table running off the edge is the point; the rail is a control, so it stays inside the text column. That override lives *after* the base `.table-scroll-rail` rule — both are single-class selectors, so source order decides, and the same declaration placed in the earlier mobile block simply lost.
+- **The last row carries no bottom rule.** The rail sits just under the table, and a rule on the final row landed directly above it so the two read as one doubled line.
 
 ## Buttons
 
