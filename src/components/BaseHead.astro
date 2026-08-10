@@ -106,7 +106,12 @@ const ogImage = new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString()
 	}, true);
 </script>
 
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+{/* viewport-fit=cover is what makes env(safe-area-inset-*) report real
+    values. Content deliberately scrolls under the status bar — that is the
+    floating-bar effect — but the bar itself and the reading progress rail
+    both offset by the inset so they never sit beneath system chrome. In an
+    ordinary browser tab every inset is 0px and nothing moves. */}
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" type="image/png" sizes="48x48" href="/images/logo-favicon.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192.png" />

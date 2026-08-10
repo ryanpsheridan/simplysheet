@@ -111,7 +111,14 @@ const MENU_LINKS = [
 		top: var(--space-sm);
 		z-index: 50;
 		margin-top: var(--space-sm);
-		padding-inline: var(--space-md);
+		/* Clears the status bar / notch when the page is drawn edge to edge —
+		   an installed PWA (the manifest is display: standalone) or Android
+		   Chrome's edge-to-edge default. Both insets resolve to 0px in a normal
+		   browser tab, so this is inert there. The inline max() covers a
+		   landscape notch eating into the side gutters. */
+		padding-top: env(safe-area-inset-top, 0px);
+		padding-left: max(var(--space-md), env(safe-area-inset-left, 0px));
+		padding-right: max(var(--space-md), env(safe-area-inset-right, 0px));
 	}
 
 	/* Anchors the dropdown panel: it's positioned against this, not against the

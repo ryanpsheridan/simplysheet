@@ -310,12 +310,14 @@ const faqSchema = faq.length ? {
 <style>
 	/* ——— Reading progress bar ——— */
 
-	/* Pinned to the viewport top rather than to the header's bottom edge: the
-	   header floats now and no longer touches the top, so an offset bar would
-	   hang in the gap beside it instead of reading as a page-level indicator. */
+	/* Pinned to the top of the safe area rather than the top of the viewport:
+	   the header floats and no longer touches the top, so a page-level
+	   indicator belongs at the very top — but under edge-to-edge rendering
+	   "the very top" is behind the status bar, where the rail is invisible.
+	   The inset is 0px in a normal browser tab. */
 	.reading-progress {
 		position: fixed;
-		top: 0;
+		top: env(safe-area-inset-top, 0px);
 		left: 0;
 		height: 3px;
 		background: var(--color-text-heading);

@@ -359,9 +359,20 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 				table.parentNode?.insertBefore(wrap, table);
 				wrap.appendChild(table);
 
+				const shadowStart = document.createElement('div');
+				shadowStart.className = 'table-edge-shadow table-edge-shadow--start';
+				wrap.appendChild(shadowStart);
+
 				const shadow = document.createElement('div');
 				shadow.className = 'table-edge-shadow';
 				wrap.appendChild(shadow);
+
+				const rail = document.createElement('div');
+				rail.className = 'table-scroll-rail';
+				const thumb = document.createElement('span');
+				thumb.className = 'table-scroll-thumb';
+				rail.appendChild(thumb);
+				wrap.appendChild(rail);
 
 				const hint = document.createElement('div');
 				hint.className = 'table-swipe-hint';
@@ -374,9 +385,30 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 				</svg><span>Swipe to scroll</span>`;
 				wrap.appendChild(hint);
 
+				/* Three separate states, because they answer different questions.
+				   `is-scrollable` is about the table (does it overflow at all)
+				   and drives the rail; the two direction flags are about where
+				   you currently are, and drive one edge fade each. Folding them
+				   into a single class is what made the old affordance vanish the
+				   moment you reached the right-hand end. */
 				function updateOverflow() {
-					const hasOverflow = table.scrollWidth - table.clientWidth - table.scrollLeft > 4;
-					wrap.classList.toggle('has-overflow', hasOverflow);
+					const max = table.scrollWidth - table.clientWidth;
+					const scrollable = max > 4;
+
+					wrap.classList.toggle('is-scrollable', scrollable);
+					wrap.classList.toggle('can-scroll-right', scrollable && table.scrollLeft < max - 4);
+					wrap.classList.toggle('can-scroll-left', scrollable && table.scrollLeft > 4);
+
+					if (!scrollable) return;
+
+					// Thumb width is the visible fraction, so its size states how
+					// much table there is. Translation is expressed in multiples of
+					// the thumb's own width, which is what a percentage transform
+					// resolves against.
+					const visible = table.clientWidth / table.scrollWidth;
+					const travelled = table.scrollLeft / max;
+					thumb.style.width = `${visible * 100}%`;
+					thumb.style.transform = `translateX(${travelled * (100 / visible - 100)}%)`;
 				}
 				updateOverflow();
 				window.addEventListener('resize', updateOverflow, { passive: true });
@@ -418,12 +450,14 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 <style>
 	/* ——— Reading progress bar ——— */
 
-	/* Pinned to the viewport top rather than to the header's bottom edge: the
-	   header floats now and no longer touches the top, so an offset bar would
-	   hang in the gap beside it instead of reading as a page-level indicator. */
+	/* Pinned to the top of the safe area rather than the top of the viewport:
+	   the header floats and no longer touches the top, so a page-level
+	   indicator belongs at the very top — but under edge-to-edge rendering
+	   "the very top" is behind the status bar, where the rail is invisible.
+	   The inset is 0px in a normal browser tab. */
 	.reading-progress {
 		position: fixed;
-		top: 0;
+		top: env(safe-area-inset-top, 0px);
 		left: 0;
 		height: 3px;
 		background: var(--color-text-heading);

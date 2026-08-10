@@ -423,7 +423,15 @@ Eyebrows are deliberately rare — four places sitewide. They are loud by design
 
 `ArticleLayout` wraps every `.prose table` in a `.table-scroll-wrap` and appends an edge shadow plus a "Swipe to scroll" hint — at **every** viewport width, since the script doesn't check one.
 
-Their CSS therefore has to live outside the `max-width: 600px` block, and visibility is gated on `.has-overflow` (which the script sets only when the table genuinely overflows). When those styles were scoped to the mobile block, the hint had no styles at all on desktop and rendered as a stray, permanently visible line of text in the middle of the article. If you touch this, check a desktop article with a table before shipping.
+Their CSS therefore has to live outside the `max-width: 600px` block, and visibility is gated on state classes the script sets only when the table genuinely overflows. When those styles were scoped to the mobile block, the hint had no styles at all on desktop and rendered as a stray, permanently visible line of text in the middle of the article. If you touch this, check a desktop article with a table before shipping.
+
+Three signals, deliberately doing different jobs — don't collapse them:
+
+- **Scroll rail** (`.is-scrollable`) — a drawn scrollbar under the table. Persistent for the whole interaction, and the only signal that says *how much* more there is: the thumb's width is the visible fraction. Mobile browsers hide the native scrollbar until you're already scrolling, which is too late to advertise that you can.
+- **Edge fades** (`.can-scroll-left` / `.can-scroll-right`) — directional, one per side, each shown only when that direction has somewhere to go, so they also signal "you can go back".
+- **Swipe hint** — first-run only, dismissed on scroll or after 2.6s.
+
+The state is three classes rather than one because they answer different questions. An earlier single `.has-overflow` flag meant every affordance disappeared the moment you reached the right-hand end.
 
 ## Buttons
 
