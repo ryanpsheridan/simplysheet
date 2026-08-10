@@ -353,19 +353,18 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 				updateActiveToc();
 			}
 
+			/* Easing pair for the nudge below. Out fast and settle (ease-out),
+			   then back symmetrically (ease-in-out) so the return reads as the
+			   table relaxing rather than a second, separate movement. */
+			const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+			const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 			document.querySelectorAll<HTMLTableElement>('.prose table').forEach((table) => {
 				const wrap = document.createElement('div');
 				wrap.className = 'table-scroll-wrap';
 				table.parentNode?.insertBefore(wrap, table);
 				wrap.appendChild(table);
-
-				const shadowStart = document.createElement('div');
-				shadowStart.className = 'table-edge-shadow table-edge-shadow--start';
-				wrap.appendChild(shadowStart);
-
-				const shadow = document.createElement('div');
-				shadow.className = 'table-edge-shadow';
-				wrap.appendChild(shadow);
 
 				const rail = document.createElement('div');
 				rail.className = 'table-scroll-rail';
@@ -374,37 +373,16 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 				rail.appendChild(thumb);
 				wrap.appendChild(rail);
 
-				const hint = document.createElement('div');
-				hint.className = 'table-swipe-hint';
-				hint.innerHTML = `<svg width="36" height="22" viewBox="0 0 36 22" fill="none" aria-hidden="true">
-					<path d="M27 5H33" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity="0.3" />
-					<path d="M29 11H35" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity="0.5" />
-					<path d="M27 17H33" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity="0.3" />
-					<circle cx="13" cy="11" r="5" fill="#fff" />
-					<path d="M9 11H4M4 11L8 7M4 11L8 15" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-				</svg><span>Swipe to scroll</span>`;
-				wrap.appendChild(hint);
-
-				/* Three separate states, because they answer different questions.
-				   `is-scrollable` is about the table (does it overflow at all)
-				   and drives the rail; the two direction flags are about where
-				   you currently are, and drive one edge fade each. Folding them
-				   into a single class is what made the old affordance vanish the
-				   moment you reached the right-hand end. */
 				function updateOverflow() {
 					const max = table.scrollWidth - table.clientWidth;
 					const scrollable = max > 4;
-
 					wrap.classList.toggle('is-scrollable', scrollable);
-					wrap.classList.toggle('can-scroll-right', scrollable && table.scrollLeft < max - 4);
-					wrap.classList.toggle('can-scroll-left', scrollable && table.scrollLeft > 4);
-
 					if (!scrollable) return;
 
-					// Thumb width is the visible fraction, so its size states how
-					// much table there is. Translation is expressed in multiples of
-					// the thumb's own width, which is what a percentage transform
-					// resolves against.
+					// Thumb width is the visible fraction, so its size states how much
+					// table there is. Translation is expressed in multiples of the
+					// thumb's own width, which is what a percentage transform resolves
+					// against.
 					const visible = table.clientWidth / table.scrollWidth;
 					const travelled = table.scrollLeft / max;
 					thumb.style.width = `${visible * 100}%`;
@@ -412,20 +390,57 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 				}
 				updateOverflow();
 				window.addEventListener('resize', updateOverflow, { passive: true });
+				table.addEventListener('scroll', updateOverflow, { passive: true });
 
-				let dismissed = false;
-				function dismissHint() {
-					if (dismissed) return;
-					dismissed = true;
-					hint.classList.add('dismissed');
+				/* One-time nudge, the first time this table scrolls into view: it
+				   slides out a little and settles back, taking the rail's thumb with
+				   it. Demonstrating the gesture beats describing it — the chip this
+				   replaced had to sit on top of the data it was pointing at.
+
+				   Hand-tweened rather than scroll-behavior: smooth, because two
+				   chained smooth scrolls have no reliable completion signal and the
+				   second frequently cancels the first. */
+				let nudgeCancelled = false;
+				const cancelNudge = () => { nudgeCancelled = true; };
+				['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((evt) =>
+					table.addEventListener(evt, cancelNudge, { passive: true, once: true }),
+				);
+
+				function tween(from: number, to: number, duration: number, ease: (t: number) => number, done?: () => void) {
+					const startedAt = performance.now();
+					function step(now: number) {
+						// Bail the moment the reader takes over, so the animation can
+						// never fight a real gesture.
+						if (nudgeCancelled) return;
+						const t = Math.min(1, (now - startedAt) / duration);
+						table.scrollLeft = from + (to - from) * ease(t);
+						updateOverflow();
+						if (t < 1) requestAnimationFrame(step);
+						else if (done) done();
+					}
+					requestAnimationFrame(step);
 				}
 
-				table.addEventListener('scroll', () => {
-					updateOverflow();
-					dismissHint();
-				}, { passive: true });
+				function nudge() {
+					const max = table.scrollWidth - table.clientWidth;
+					// Nothing to demonstrate, or the reader already got there first.
+					if (max <= 4 || table.scrollLeft > 4 || nudgeCancelled) return;
+					const distance = Math.min(56, max);
+					tween(0, distance, 380, easeOut, () => {
+						setTimeout(() => tween(distance, 0, 480, easeInOut), 140);
+					});
+				}
 
-				setTimeout(dismissHint, 2600);
+				if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+					const io = new IntersectionObserver((entries) => {
+						entries.forEach((entry) => {
+							if (!entry.isIntersecting) return;
+							io.disconnect();
+							nudge();
+						});
+					}, { threshold: 0.4 });
+					io.observe(wrap);
+				}
 			});
 
 			const progressBar = document.getElementById('reading-progress');
