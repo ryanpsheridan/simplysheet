@@ -422,9 +422,9 @@ Their CSS therefore has to live outside the `max-width: 600px` block, and visibi
 
 `Header.astro` is a floating pill bar: sticky in normal flow (never `position: fixed`, which would make every page reserve matching top padding by hand and hide its own first heading if it forgot), translucent white over a `saturate(180%) blur(16px)` backdrop filter, hairline border, and a shadow that deepens on scroll via a scroll-driven animation behind `@supports`.
 
-- Desktop (≥860px): logo left, links centered, brand CTA right. Below that: logo left, CTA and menu button hard right, links in the dropdown panel.
+- Desktop (≥860px): logo left, links right-aligned against the CTA, CTA far right. Below that the bar is **logo + menu button only** — the CTA is hidden, since the quiz already sits in the dropdown panel and a second pill beside the menu button both squeezed the wordmark and put two competing weights side by side. That is also why the menu button can be a solid ink disc: nothing sits next to it now.
 - The mobile panel is a floating card hung under the bar with a blurred backdrop, not a full-screen takeover — the page stays visible behind it. It has a focus trap, Escape handling, and outside-click close; keep all three if you touch the script.
-- The bar's horizontal budget on a phone is genuinely tight. The wordmark hides below 400px (mark only), and the CTA carries a short label below 480px. If you add anything to the bar, re-check 320/360/390px for truncation before shipping.
+- With the CTA gone from the mobile bar there is room for the full wordmark at every width, down to 320px. If you add anything back to the bar, re-check 320/360/390px for truncation before shipping — it was tight enough to force a mark-only logo the last time something else lived there.
 - `--header-offset` is the clearance below the floating bar. Sticky rails and `scroll-margin-top` on anchor targets read it — don't hardcode a pixel value, it was wrong everywhere the moment the header stopped being flush to the viewport top.
 
 ## Calculator Components

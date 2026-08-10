@@ -69,14 +69,9 @@ const MENU_LINKS = [
 				<span class="bar bar-bottom"></span>
 			</button>
 
-			{/* Two labels rather than one: the full wording doesn't fit beside the
-			    logo and menu button on a narrow phone, and truncating a CTA reads
-			    as broken. Whichever is hidden is display:none, so it leaves the
-			    accessibility tree too and the button never announces both. */}
-			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-sm header-cta">
-				<span class="cta-label-full">Find Your Budget Style</span>
-				<span class="cta-label-short">Budget Quiz</span>
-			</a>
+			{/* Desktop only — see .header-cta below. The quiz is reachable from the
+			    mobile panel, so the bar doesn't carry it twice. */}
+			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-sm header-cta">Find Your Budget Style</a>
 		</header>
 
 		<div id="app-menu" class="app-menu" role="dialog" aria-modal="true" aria-label="Menu">
@@ -109,12 +104,7 @@ const MENU_LINKS = [
 		top: var(--space-sm);
 		z-index: 50;
 		margin-top: var(--space-sm);
-		/* Narrower gutter than the page's own, only on mobile. The bar has to
-		   fit a wordmark, a CTA, and the menu button on a 360px screen, and the
-		   wordmark is the one that loses — reclaiming the gutter is what keeps
-		   "Simply Sheets" from truncating to "Simply …". Realigns with the page
-		   gutter at the desktop breakpoint, where there is room to spare. */
-		padding-inline: var(--space-sm);
+		padding-inline: var(--space-md);
 	}
 
 	/* Anchors the dropdown panel: it's positioned against this, not against the
@@ -135,7 +125,7 @@ const MENU_LINKS = [
 		   a plain 1fr refuses to shrink and shoves the controls past the right
 		   edge on a narrow phone. Letting the track go to zero lets the logo
 		   truncate instead, which keeps the controls reachable. */
-		grid-template-columns: minmax(0, 1fr) auto auto;
+		grid-template-columns: minmax(0, 1fr) auto;
 		align-items: center;
 		gap: var(--space-xs);
 		padding: 0.75rem;
@@ -191,7 +181,7 @@ const MENU_LINKS = [
 		align-items: center;
 		gap: 0.5rem;
 		font-family: var(--font-heading);
-		font-size: 1.0625rem;
+		font-size: 1.2rem;
 		font-weight: var(--weight-medium);
 		letter-spacing: var(--tracking-snug);
 		color: var(--color-text);
@@ -210,41 +200,19 @@ const MENU_LINKS = [
 		flex-shrink: 0;
 	}
 
-	/* Below 400px the bar cannot fit the wordmark, the CTA, and the menu button
-	   at once, and a wordmark truncated to "Simply …" reads as broken in a way
-	   a mark-only logo does not. So the wordmark drops and the mark carries the
-	   brand, which is the conventional phone treatment anyway. The <a> still
-	   points home and is still labelled by the mark's alt text. */
 	.site-logo-text {
-		display: none;
 		min-width: 0;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
 
-	@media (min-width: 400px) {
-		.site-logo-text {
-			display: block;
-		}
-	}
-
+	/* Hidden below the desktop breakpoint. On a phone the bar is logo + menu
+	   button only: the quiz already sits in the panel, and a second pill beside
+	   the menu button was both a space squeeze and a second competing weight. */
 	.header-cta {
-		grid-row: 1;
-		grid-column: 2;
-		justify-self: end;
-	}
-
-	.cta-label-full {
 		display: none;
-	}
-
-	@media (min-width: 480px) {
-		.cta-label-full {
-			display: inline;
-		}
-		.cta-label-short {
-			display: none;
-		}
+		grid-row: 1;
+		justify-self: end;
 	}
 
 	/* --- Desktop nav ------------------------------------------------------- */
@@ -305,36 +273,32 @@ const MENU_LINKS = [
 
 	/* --- Menu button ------------------------------------------------------- */
 
-	/* A filled disc rather than bare bars, so it reads as a control. Light
-	   surface with ink bars, not the inverse: sitting immediately beside the
-	   ink CTA, a second dark pill made the two compete for the same emphasis
-	   and read as one heavy black mass. The border is what keeps the disc
-	   legible now that its fill matches the bar behind it.
+	/* A filled disc rather than bare bars, so it reads as a control with real
+	   weight. It can be ink again now that the CTA no longer sits beside it —
+	   two dark pills side by side were what made the bar feel heavy.
 
 	   Two bars that rotate into an X — the same elements in both states, so
 	   there's no icon swap. */
 	.menu-toggle {
 		grid-row: 1;
-		grid-column: 3;
+		grid-column: 2;
 		justify-self: end;
 		position: relative;
 		width: 2.5rem;
 		height: 2.5rem;
-		border: 1px solid var(--color-border);
+		border: none;
 		border-radius: 50%;
-		background: var(--color-bg-surface);
+		background: var(--color-btn);
 		padding: 0;
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent;
 		transition:
 			background-color var(--duration-fast) var(--ease-out),
-			border-color var(--duration-fast) var(--ease-out),
 			transform var(--duration-fast) var(--ease-out);
 	}
 
 	.menu-toggle:hover {
-		background: var(--color-bg-panel);
-		border-color: var(--color-border-strong);
+		background: var(--color-btn-hover);
 	}
 
 	.menu-toggle:active {
@@ -348,7 +312,7 @@ const MENU_LINKS = [
 		margin-left: -8px;
 		height: 1.5px;
 		border-radius: 2px;
-		background: var(--color-text);
+		background: var(--color-bg);
 		transition:
 			top var(--duration-base) var(--ease-out),
 			transform var(--duration-base) var(--ease-out);
@@ -501,12 +465,8 @@ const MENU_LINKS = [
 			padding-inline: var(--space-md);
 		}
 
-		.site-logo {
-			font-size: 1.2rem;
-			padding-inline: 0;
-		}
-
 		.header-cta {
+			display: inline-flex;
 			grid-column: 3;
 		}
 

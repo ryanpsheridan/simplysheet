@@ -749,27 +749,29 @@ function featureIcon(text: string): string {
 		gap: var(--space-md);
 	}
 
+	/* Same treatment as .template-card in the "More spreadsheets" grid further
+	   down this very page — a panel-filled thumbnail sitting directly on the
+	   page, with its label underneath. There is no card chrome.
+
+	   The card wrapper this replaced put three surfaces in conflict: a white
+	   card, a panel image well inside it, and the warm page behind, with a
+	   border under the thumbnail redrawing the edge the tone change already
+	   drew. It read as a grey block with a white strip stuck to the bottom,
+	   and it was the only product surface on the site wearing a card at all. */
 	.bundle-card {
 		display: flex;
 		flex-direction: column;
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		overflow: hidden;
+		gap: var(--space-sm);
 		text-decoration: none;
-		transition: border-color 0.15s, background 0.15s;
-	}
-
-	.bundle-card:hover {
-		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
+		color: inherit;
 	}
 
 	.bundle-thumb {
 		width: 100%;
 		aspect-ratio: 3 / 2;
+		border-radius: var(--radius-md);
 		background: var(--color-bg-panel);
-		border-bottom: 1px solid var(--color-border);
+		padding: 0.75rem 1.5rem;
 		overflow: hidden;
 		transition: background 0.15s ease;
 	}
@@ -781,8 +783,9 @@ function featureIcon(text: string): string {
 		object-fit: contain;
 		object-position: center;
 	}
-	/* Hover darkens the thumbnail's gray container, matching the tool
-	   thumbnail cards. Pointer devices only. */
+
+	/* Hover darkens the thumbnail's container, matching the template and tool
+	   cards. Pointer devices only. */
 	@media (hover: hover) {
 		.bundle-card:hover .bundle-thumb {
 			background: var(--color-bg-emphasis);
@@ -794,7 +797,6 @@ function featureIcon(text: string): string {
 		align-items: center;
 		justify-content: space-between;
 		gap: var(--space-sm);
-		padding: var(--space-md) var(--space-lg);
 	}
 
 	.bundle-name {

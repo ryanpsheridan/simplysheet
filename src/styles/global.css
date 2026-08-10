@@ -196,6 +196,35 @@ p {
 	white-space: nowrap;
 }
 
+/* ——— Article thumbnail hover ———
+
+   Tool and product thumbnails darken their panel container on hover
+   (--color-bg-panel → --color-bg-emphasis). An article thumbnail is a
+   full-bleed image with no container showing, so the equivalent gesture is to
+   darken the image itself — same intent, and roughly the same perceptual step,
+   since a 2% fill change would be invisible over a saturated gradient.
+
+   Covers all three article card surfaces: the homepage featured card and
+   Latest row, and the articles index / tag archive list. The last of those is
+   also emitted by ArticleGrid's client-rendered search results, which is why
+   this lives here rather than in a component's scoped styles.
+
+   The product variant of .home-row-thumb is excluded — it darkens its own
+   container already, and doing both would double the effect. */
+.hero-featured-thumb img,
+.home-row-thumb:not(.home-row-thumb--product) img,
+.article-list-thumb img {
+	transition: filter 0.15s ease;
+}
+
+@media (hover: hover) {
+	.hero-featured:hover .hero-featured-thumb img,
+	.home-row-item:hover .home-row-thumb:not(.home-row-thumb--product) img,
+	.article-list-item:hover .article-list-thumb img {
+		filter: brightness(0.92);
+	}
+}
+
 /* Floating on a product thumbnail rather than sitting in text flow. The
    thumbnail box is already --color-bg-panel, so an emphasis fill would nearly
    vanish against it — this one lifts off the image with a surface fill and a
