@@ -37,6 +37,31 @@ body {
 	overflow-x: hidden;
 }
 
+/* ——— Status bar shield ———
+
+   A page-coloured band pinned over the safe-area strip at the top of the
+   screen, so nothing ever scrolls up behind the system clock and battery.
+
+   Fixed, not padding on <body>: body padding is part of the document flow and
+   scrolls away with everything else, so it only holds content clear at scroll
+   position zero — one flick and the article image is back under the status
+   bar. This stays put.
+
+   Collapses to zero height in an ordinary browser tab, where the inset is
+   0px, so it paints nothing there. z-index clears the header (50) and the
+   reading progress rail (51); the skip link (1000) still sits above it. */
+body::before {
+	content: '';
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: env(safe-area-inset-top, 0px);
+	background: var(--color-bg);
+	z-index: 60;
+	pointer-events: none;
+}
+
 /* Keyboard-only shortcut past the header nav. Removed from the layout entirely
    until focused, so it occupies no space and is never painted for anyone
    navigating with a pointer. */
