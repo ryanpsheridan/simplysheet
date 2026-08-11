@@ -715,10 +715,12 @@ function featureIcon(text: string): string {
 
 	/* ——— Details (What's included + How it works) ——— */
 
+	/* No rule on top. This is the first section under the hero, and a line
+	   there reads as closing the hero off rather than opening the details —
+	   the space alone is enough of a break. */
 	.product-details {
 		margin-bottom: var(--space-2xl);
 		padding: var(--space-xl) 0 0;
-		border-top: 1px solid var(--color-border);
 	}
 
 	.detail-row {
@@ -977,10 +979,17 @@ function featureIcon(text: string): string {
 
 	/* ——— Related articles + FAQ panel (full-bleed) ——— */
 
-	/* A page-coloured section with a rule on top, like every other section on
-	   this page (details, bundles, reviews, more spreadsheets). It used to be a
-	   full-bleed --color-bg-panel band, which made related articles and the FAQ
-	   the one recessed slab on an otherwise flat page. */
+	/* A page-coloured section rather than the full-bleed --color-bg-panel band
+	   it used to be, which made related articles and the FAQ the one recessed
+	   slab on an otherwise flat page.
+
+	   It keeps its rule where details, reviews, and more-spreadsheets dropped
+	   theirs. Those three are each one continuous idea, so a line above them
+	   only restated a break the spacing already made. This one is a change of
+	   subject — the product is finished being described and the page turns to
+	   reading material — and it is also the only place two unlike blocks
+	   (articles, then FAQ) are stacked inside one section, which is why the
+	   divider between them survives too. */
 	.product-extras {
 		margin-top: var(--space-2xl);
 		margin-bottom: var(--space-2xl);
@@ -1109,13 +1118,16 @@ function featureIcon(text: string): string {
 
 	/* ——— Reviews ——— */
 
+	/* No rule, and a bigger gap above it than below. A pull quote is the one
+	   section here that is someone else's voice rather than the site's, so it
+	   needs separating from the section above — but the separation is the
+	   space, not a line drawn across it. */
 	.product-reviews {
 		display: grid;
 		grid-template-columns: 2fr 1fr;
 		gap: var(--space-2xl);
-		padding-top: var(--space-xl);
+		padding-top: var(--space-2xl);
 		padding-bottom: var(--space-xl);
-		border-top: 1px solid var(--color-border);
 		align-items: start;
 	}
 	.product-reviews.is-single {
@@ -1275,7 +1287,6 @@ function featureIcon(text: string): string {
 
 	.other-templates {
 		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
 	}
 
 	.other-templates h2 {
