@@ -29,8 +29,8 @@ export const TOOLS: Tool[] = [
 		group: 'calculator',
 	},
 	{
-		name: 'Biweekly & Weekly Paycheck Calculator',
-		desc: 'Enter your take-home pay per paycheck and see your typical month, your extra-paycheck months, and a steady average to budget against.',
+		name: 'Biweekly Paycheck Calculator',
+		desc: 'Paid every two weeks? See your typical two-paycheck month, your two three-paycheck months, and a steady average to budget against.',
 		url: '/tools/biweekly-paycheck-calculator/',
 		icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
 		illustration: `
@@ -48,6 +48,55 @@ export const TOOLS: Tool[] = [
 			<circle cx="130" cy="60" r="3" fill="currentColor" stroke="none"/>
 			<circle cx="165" cy="75" r="5" opacity="0.18" fill="currentColor" stroke="none"/>
 			<circle cx="165" cy="75" r="1.8" fill="currentColor" stroke="none"/>
+		`,
+		group: 'calculator',
+	},
+	{
+		name: 'Weekly Paycheck Calculator',
+		desc: 'Paid every week? See your typical four-paycheck month, your four five-paycheck months, and a steady average to budget against.',
+		url: '/tools/weekly-paycheck-calculator/',
+		icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="7" y1="14" x2="17" y2="14"/><line x1="7" y1="18" x2="17" y2="18"/>',
+		illustration: `
+			<line x1="45" y1="120" x2="205" y2="120" stroke-width="1" opacity="0.25"/>
+			<line x1="45" y1="92" x2="205" y2="92" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+			<line x1="62" y1="120" x2="62" y2="92" stroke-width="2" opacity="0.55"/>
+			<line x1="95" y1="120" x2="95" y2="92" stroke-width="2" opacity="0.55"/>
+			<line x1="128" y1="120" x2="128" y2="92" stroke-width="2" opacity="0.55"/>
+			<line x1="161" y1="120" x2="161" y2="92" stroke-width="2" opacity="0.55"/>
+			<line x1="194" y1="120" x2="194" y2="52" stroke-width="2" opacity="0.9"/>
+			<circle cx="62" cy="92" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="62" cy="92" r="1.5" fill="currentColor" stroke="none"/>
+			<circle cx="95" cy="92" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="95" cy="92" r="1.5" fill="currentColor" stroke="none"/>
+			<circle cx="128" cy="92" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="128" cy="92" r="1.5" fill="currentColor" stroke="none"/>
+			<circle cx="161" cy="92" r="4" opacity="0.15" fill="currentColor" stroke="none"/>
+			<circle cx="161" cy="92" r="1.5" fill="currentColor" stroke="none"/>
+			<circle cx="194" cy="52" r="8" opacity="0.22" fill="currentColor" stroke="none"/>
+			<circle cx="194" cy="52" r="3" fill="currentColor" stroke="none"/>
+		`,
+		group: 'calculator',
+	},
+	{
+		name: 'Semi-Monthly Paycheck Calculator',
+		desc: 'Paid twice a month on fixed dates? See your monthly and annual income from 24 paychecks, and how it differs from biweekly pay.',
+		url: '/tools/semi-monthly-paycheck-calculator/',
+		icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="9" cy="15.5" r="1.5"/><circle cx="15" cy="15.5" r="1.5"/>',
+		illustration: `
+			<line x1="38" y1="120" x2="208" y2="120" stroke-width="1" opacity="0.25"/>
+			<line x1="38" y1="68" x2="208" y2="68" stroke-width="1" stroke-dasharray="4 4" opacity="0.35"/>
+			<line x1="48" y1="120" x2="48" y2="68" stroke-width="2" opacity="0.8"/>
+			<line x1="60" y1="120" x2="60" y2="68" stroke-width="2" opacity="0.8"/>
+			<line x1="96" y1="120" x2="96" y2="68" stroke-width="2" opacity="0.8"/>
+			<line x1="108" y1="120" x2="108" y2="68" stroke-width="2" opacity="0.8"/>
+			<line x1="144" y1="120" x2="144" y2="68" stroke-width="2" opacity="0.8"/>
+			<line x1="156" y1="120" x2="156" y2="68" stroke-width="2" opacity="0.8"/>
+			<line x1="192" y1="120" x2="192" y2="68" stroke-width="2" opacity="0.8"/>
+			<line x1="204" y1="120" x2="204" y2="68" stroke-width="2" opacity="0.8"/>
+			<circle cx="54" cy="134" r="2" opacity="0.35" fill="currentColor" stroke="none"/>
+			<circle cx="102" cy="134" r="2" opacity="0.35" fill="currentColor" stroke="none"/>
+			<circle cx="150" cy="134" r="2" opacity="0.35" fill="currentColor" stroke="none"/>
+			<circle cx="198" cy="134" r="2" opacity="0.35" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
 	},

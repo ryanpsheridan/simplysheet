@@ -1,0 +1,75 @@
+---
+import { PAY_FREQUENCIES, PAY_FREQUENCY_ORDER, type PayFrequencyKey } from '../data/payFrequencies';
+
+interface Props {
+	current: PayFrequencyKey;
+}
+
+const { current } = Astro.props;
+---
+
+{/* The dedicated tool pages hide the calculator's own frequency select, so this
+    is the frequency switcher on those pages. Navigation rather than component
+    state: each frequency has a page whose heading, results, and copy all agree.
+    Built from spans and anchors, not a list, so .prose's list styles don't
+    apply to it. */}
+<nav class="freq-nav" aria-label="Choose your pay frequency">
+	<span class="freq-nav-label">Paid on a different schedule?</span>
+	<span class="freq-nav-options">
+		{PAY_FREQUENCY_ORDER.map((key) => (
+			key === current
+				? <span class="freq-nav-item freq-nav-item-current" aria-current="page">{PAY_FREQUENCIES[key].label}</span>
+				: <a class="freq-nav-item" href={PAY_FREQUENCIES[key].url}>{PAY_FREQUENCIES[key].label}</a>
+		))}
+	</span>
+</nav>
+
+<style>
+	.freq-nav {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-2xs) var(--space-sm);
+		margin: var(--space-lg) 0 0;
+		padding-top: var(--space-md);
+		border-top: 1px solid var(--color-border);
+	}
+
+	.freq-nav-label {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+	}
+
+	.freq-nav-options {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-2xs) var(--space-sm);
+	}
+
+	.freq-nav-item {
+		font-size: var(--text-small);
+		line-height: var(--leading-snug);
+	}
+
+	a.freq-nav-item {
+		text-decoration: none;
+	}
+
+	a.freq-nav-item:hover {
+		text-decoration: underline;
+	}
+
+	/* The current frequency stays in the row as plain text so the set always reads
+	   as a complete three-way choice, with this page's own place in it visible. */
+	.freq-nav-item-current {
+		color: var(--color-text);
+	}
+
+	@media (max-width: 480px) {
+		.freq-nav {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+</style>
