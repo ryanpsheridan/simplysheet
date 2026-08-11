@@ -14,6 +14,13 @@ type Props = CollectionEntry<'templates'>['data'] & {
 
 const { title, description, badge, platforms, darkListing, lightListing, heroImage, lightImage, features, howItWorks, relatedArticles, bundles, faq, reviews, id, price, sku } = Astro.props;
 
+// Optional long-form buyer's guide, written as the markdown body of the
+// template's own content file. Rendered to a string rather than gated on
+// `Astro.slots.has('default')`, because the route always passes a <Content />
+// — `has` would report true even for a template whose body is empty, and the
+// section would render as a stray rule with nothing under it.
+const guide = (await Astro.slots.render('default')).trim();
+
 // The "how it works" images are styled `width: 100%; height: auto` with no
 // aspect-ratio container, so without dimensions the browser cannot reserve
 // space and everything below them shifts once they load. Probed at build time
@@ -252,6 +259,12 @@ function featureIcon(text: string): string {
 							</div>
 						))}
 					</div>
+				</section>
+			)}
+
+			{guide && (
+				<section class="product-guide">
+					<div class="prose" set:html={guide} />
 				</section>
 			)}
 
@@ -728,6 +741,44 @@ function featureIcon(text: string): string {
 		height: auto;
 		border-radius: var(--radius-md);
 		margin-top: var(--space-md);
+	}
+
+	/* ——— Buyer's guide ——— */
+
+	/* Long-form prose, so it takes a reading measure rather than the full
+	   product width. Everything above it on this page is a grid or a media
+	   row that wants the whole column; body copy set to that width runs well
+	   past a comfortable line length.
+
+	   The measure is centred, not left-aligned. Every section above this one
+	   is a `1fr 2fr` row with its heading left and its copy starting midway
+	   across, so a left-aligned column of the same width leaves the entire
+	   right half of the section empty and reads as a detail-row that failed
+	   to render its second cell rather than as a new section. */
+	.product-guide {
+		margin-bottom: var(--space-2xl);
+		padding-top: var(--space-xl);
+		border-top: 1px solid var(--color-border);
+	}
+
+	.product-guide .prose {
+		max-width: 68ch;
+		margin-inline: auto;
+	}
+
+	/* `.prose h2` carries a 2em top margin for headings that follow body copy.
+	   The first one here sits directly under the section's own rule, where
+	   that margin doubles the gap the padding already set.
+
+	   `:global()` is load-bearing. The guide's markup arrives through
+	   `set:html`, so none of it carries the `data-astro-cid-*` attribute that
+	   Astro appends to every element selector in a scoped rule. Written plain,
+	   this compiles to `> [data-astro-cid-…]:first-child` and silently matches
+	   nothing. Only the two class names either side of it are real elements in
+	   this template; anything selecting *inside* the prose has to opt out of
+	   scoping the same way. */
+	.product-guide .prose > :global(:first-child) {
+		margin-top: 0;
 	}
 
 	/* ——— Bundles ——— */

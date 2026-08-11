@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { type CollectionEntry, getCollection, render } from 'astro:content';
 import TemplateLayout from '../../layouts/TemplateLayout.astro';
 
 export async function getStaticPaths() {
@@ -13,6 +13,16 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'templates'>;
 
 const template = Astro.props;
+
+// Product pages were frontmatter-only for a long time: any markdown written
+// below the closing `---` was parsed and then silently dropped, because this
+// route only ever passed `template.data`. Rendering the body here (and giving
+// it a slot in TemplateLayout) is what lets a template carry a real buyer's
+// guide under the feature list. Templates with an empty body are unaffected —
+// the layout omits the whole section when nothing is slotted.
+const { Content } = await render(template);
 ---
 
-<TemplateLayout {...template.data} id={template.id} />
+<TemplateLayout {...template.data} id={template.id}>
+	<Content />
+</TemplateLayout>
