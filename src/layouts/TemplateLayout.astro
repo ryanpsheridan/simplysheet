@@ -1370,6 +1370,19 @@ function featureIcon(text: string): string {
 			grid-template-columns: 1fr;
 			gap: var(--space-md);
 		}
+		/* The disc is sized for a three-across grid, where it anchors a cell
+		   roughly a third of the page wide. In one column it sits above a single
+		   line of label with the whole width to itself, and at 40px it outweighs
+		   the text it introduces. The glyph comes down with it so the disc keeps
+		   its ~45% fill ratio rather than tightening as the disc shrinks. */
+		.feature-icon {
+			width: 2rem;
+			height: 2rem;
+		}
+		.feature-icon .check-icon {
+			width: 16px;
+			height: 16px;
+		}
 		.bundles-grid {
 			grid-template-columns: 1fr;
 		}
