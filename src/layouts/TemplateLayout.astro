@@ -225,7 +225,7 @@ function featureIcon(text: string): string {
 					    finds it cheaper than advertised, never dearer. */}
 					<p class="product-price">
 						<span class="product-price-amount">${price.toFixed(2)}</span>
-						<span class="product-price-note">Usually less on Etsy, where a sale is often running</span>
+						<span class="product-price-note">Good odds it's on sale for less right now</span>
 					</p>
 
 					<a
@@ -266,7 +266,7 @@ function featureIcon(text: string): string {
 						)}
 
 						{howItWorks.map((row: { heading: string; body: string; image?: string; imageAlt?: string }) => (
-							<div class:list={['detail-row', !row.image && 'is-text-only']}>
+							<div class="detail-row">
 								<h2>{row.heading}</h2>
 								<div class="howto-content">
 									<p set:html={row.body} />
@@ -281,6 +281,23 @@ function featureIcon(text: string): string {
 			{guide && (
 				<section class="product-guide">
 					<div class="prose" set:html={guide} />
+
+					{/* Sits at the end of the guide, where a reader who has just worked
+					    through ~900 words is as convinced as the page can make them.
+					    Tracked separately from the hero so the two positions can be
+					    compared in GA4 rather than blended into one number. */}
+					<div class="product-cta-footer">
+						<a
+							href={darkListingUrl}
+							class="btn btn-primary"
+							target="_blank"
+							rel="noopener noreferrer"
+							data-cta={`template_footer_cta:${id}`}
+						>
+							Get this template on Etsy
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+						</a>
+					</div>
 				</section>
 			)}
 
@@ -409,28 +426,6 @@ function featureIcon(text: string): string {
 							</div>
 						)}
 
-						{/* The last chance to buy the thing the page is about. Everything
-						    below this point navigates away from it: "More spreadsheets"
-						    is a grid of other products, so without this the page's final
-						    impression offers no way to act on the one just read about,
-						    and the hero CTA is several thousand pixels back up. Placed
-						    after the FAQ rather than after the buyer's guide, where it
-						    would have stacked against the bundle links a screen below.
-
-						    Tracked separately from the hero so the two positions can be
-						    compared in GA4 instead of blended into one number. */}
-						<div class="product-cta-footer">
-							<a
-								href={darkListingUrl}
-								class="btn btn-primary"
-								target="_blank"
-								rel="noopener noreferrer"
-								data-cta={`template_footer_cta:${id}`}
-							>
-								Get this template on Etsy
-								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-							</a>
-						</div>
 					</div>
 				</section>
 			)}
@@ -763,46 +758,40 @@ function featureIcon(text: string): string {
 		margin: 0;
 	}
 
-	/* The side-heading layout earns its keep on rows carrying a screenshot:
-	   the image wants the wide column and the heading column gives it air.
-	   On a text-only row it inverts — a two-word heading reserves a ~390px
-	   column beside 70px of copy, leaving most of the row empty and setting
-	   the heading 96px from the body it belongs to, while the rows above and
-	   below sit closer. Stacking those puts the heading back against its own
-	   text. Rows with an image keep the two-column treatment, as does the
-	   feature list, which is tall enough to fill it. */
-	.detail-row.is-text-only {
-		grid-template-columns: 1fr;
-		gap: var(--space-sm);
-	}
+	/* Every row keeps the side-heading grid. Stacking the text-only ones was
+	   tried and reverted: it fixed the emptiness beside a short paragraph but
+	   broke the scan. "What's included" stayed two-column while the how-it-
+	   works rows under it went full width, so the eye lost the heading rail
+	   exactly where the page starts explaining the product. Consistency down
+	   the column beat the per-row fit. */
 
-	/* Full container width is ~1230px, well past a comfortable line. Same
-	   measure as the buyer's guide further down the page. */
-	.detail-row.is-text-only .howto-content {
-		max-width: 68ch;
-	}
+	/* Two rows of three rather than a six-item stack. Every template carries
+	   exactly six features, so the grid always fills; `auto-fit` would still
+	   cope if one ever ran five or seven, leaving a short last row instead of
+	   a gap in the middle.
 
+	   The row dividers the vertical list used are gone. They were reading the
+	   list as a table of successive rows, which is wrong for a set of
+	   unordered peers, and in a grid they would have drawn a line under three
+	   unrelated items at once. Gestalt proximity does the grouping now: each
+	   icon sits tight to its own label, and the gaps between cells are wider
+	   than the gap inside one. */
 	.features-list {
 		list-style: none;
 		padding: 0;
 		margin: 0;
-		border-top: 1px solid var(--color-border);
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-lg) var(--space-md);
 	}
 
 	.features-list li {
 		display: flex;
 		align-items: flex-start;
-		gap: var(--space-sm);
+		gap: 0.625rem;
 		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text);
-		padding: var(--space-md) 0;
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.features-list li:last-child {
-		border-bottom: none;
-		padding-bottom: 0;
 	}
 
 	.check-icon {
@@ -862,6 +851,33 @@ function featureIcon(text: string): string {
 	   scoping the same way. */
 	.product-guide .prose > :global(:first-child) {
 		margin-top: 0;
+	}
+
+	/* Shares the prose measure and its centring, so the button reads as the
+	   end of the column it follows rather than as a new full-width band.
+
+	   The rule and the spacing belong to this wrapper, never to the button:
+	   a border-top on a `.btn` draws a line straight across the pill. */
+	.product-cta-footer {
+		max-width: 68ch;
+		margin: var(--space-lg) auto 0;
+		padding-top: var(--space-lg);
+		border-top: 1px solid var(--color-border);
+	}
+
+	/* Full width on mobile, hugging its text from 600px up — the same shape
+	   the calculator product links take sitewide. */
+	.product-cta-footer .btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	@media (min-width: 600px) {
+		.product-cta-footer .btn {
+			display: inline-flex;
+		}
 	}
 
 	/* ——— Bundles ——— */
@@ -978,28 +994,6 @@ function featureIcon(text: string): string {
 		margin-bottom: var(--space-md);
 	}
 
-	/* The rule and the spacing belong to the wrapper, never to the button:
-	   a border-top on a `.btn` draws a line straight across the pill. */
-	.product-cta-footer {
-		margin-top: var(--space-lg);
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
-	}
-
-	/* Full width on mobile, hugging its text from 600px up — the same shape
-	   the calculator product links take sitewide. */
-	.product-cta-footer .btn {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.5rem;
-	}
-
-	@media (min-width: 600px) {
-		.product-cta-footer .btn {
-			display: inline-flex;
-		}
-	}
 
 	.product-articles-list {
 		list-style: none;
@@ -1348,7 +1342,21 @@ function featureIcon(text: string): string {
 		}
 	}
 
+	/* Three across only while the cells stay wide enough to read. The longest
+	   feature string on the site runs 61 characters, so below roughly 700px
+	   of grid width a third column starts breaking short labels over four
+	   lines. */
+	@media (max-width: 700px) {
+		.features-list {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
 	@media (max-width: 600px) {
+		.features-list {
+			grid-template-columns: 1fr;
+			gap: var(--space-md);
+		}
 		.bundles-grid {
 			grid-template-columns: 1fr;
 		}
