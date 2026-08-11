@@ -383,6 +383,18 @@ One typeface for the whole site: **Aspekta Variable** (`--font-sans`, with `--fo
 - Weight discipline: body and headings both sit at `--weight-normal` (400), with `--weight-medium`/`--weight-semibold` as the emphasis steps. Reaching for 700+ is almost always the wrong fix; make the type bigger or tighten its tracking instead.
 - Tracking is a real hierarchy tool here, not a rounding detail: `--tracking-tight` (-0.024em) for display, `--tracking-snug` (-0.02em) for headings and buttons, `--tracking-normal` (0) for body, `--tracking-caps` (0.06em) for uppercase eyebrows. Never set body copy at positive tracking.
 
+### Reading copy vs. UI text
+
+`--text-read` and `--text-body` are both 16px on desktop and diverge on mobile — 18px vs. 16px. Which one to reach for is a question about what the text *is*:
+
+- **`--text-read`** — prose meant to be read in paragraphs: article bodies (`.prose`), calculator intros, FAQ answers. It steps up on a phone, where the column is a third as wide and held further from the eye than the screen size suggests.
+- **`--text-body`** — everything else at that size, including text that also has to fit a box: buttons, nav, card titles. It stays at 16px on mobile, where growing costs layout rather than buying legibility.
+
+A paragraph inside a component is reading copy even though it lives in a component. `.debt-subtitle` in `DebtCalculator.astro` is the example: it makes the same kind of point as the article paragraph above it, so it takes `--text-read` and moves with it.
+
+- **Don't hand-roll the bump.** `@media (max-width: 600px) { font-size: 1.125rem }` was written out in four separate places before this token existed, and two of them had already drifted: the template page's FAQ answers never got it at all, and the calculator layout's copy was dead — the `.faq-a` base rule was declared *after* the media query at equal specificity, so source order silently won. A token can't drift that way.
+- **The small end of the scale also moves on mobile**, in the `@media (max-width: 600px)` block at the bottom of `tokens.css`: `--text-small` 15→16px and `--text-xs` 14→15px. This is what keeps calculators in step — they're built almost entirely out of those two tokens, and before the block existed their labels and captions rendered at desktop sizes inside enlarged body copy (a 15px calculator intro directly beneath an 18px paragraph making the same point). The ramp stays in order: read (18) > body (16) = small (16) > xs (15). `--text-small` landing exactly on `--text-body` is intended; pushing it past body would invert the scale.
+
 ## Eyebrows
 
 The uppercase overline label above a heading is the shared `.eyebrow` class in `global.css` — a tinted pill, not plain muted caps (as loose gray text it disappeared next to the type it introduces). Never hand-roll one.
@@ -406,7 +418,7 @@ The uppercase overline label above a heading is the shared `.eyebrow` class in `
 - `.badge-overlay` is the one variant: for a chip floating on a product thumbnail. The thumbnail box is already `--color-bg-panel`, so the standard emphasis fill would vanish against it — the overlay uses a surface fill plus a real border, and carries its own absolute positioning.
 - **Local rules may set layout only** (margins, `align-self`). Anything visual belongs in `.badge`. Astro's scoped styles outrank it, so a component that restates `background`, `font-size`, or `border-radius` silently wins and re-forks the badge — which is exactly how the seven came about.
 - Both render paths for article tags emit `.badge`: `TagPills.astro` and the client-rendered search results in `ArticleGrid.astro`. If you change one, the other already matches by construction — don't reintroduce a mirrored copy of the chip styles.
-- `.compare-badge` in `DebtCalculator.astro` is deliberately *not* a `.badge`. It's an 11px inline qualifier inside a dense comparison row ("Highest rate first"), not a label chip on a card, and a full pill would bloat that row.
+- `.compare-badge` in `DebtCalculator.astro` is deliberately *not* a `.badge`. It's an inline qualifier inside a dense comparison row ("Highest rate first"), not a label chip on a card, and a full pill would bloat that row — so it keeps the square chip and the tighter padding. It does match `.badge`'s 13px, though: it was 11px, which made it the smallest text on the page, and on mobile it sat directly under an 18px paragraph and read as unreadable fine print rather than as deliberately quiet. Its row (`.compare-meta`) wraps, because the method name plus two variable-width chips does not fit one line at 320px.
 
 ### Badges vs. eyebrows
 

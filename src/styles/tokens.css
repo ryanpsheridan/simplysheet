@@ -102,6 +102,15 @@
   --text-small:     0.9375rem;
   --text-xs:        0.875rem;
 
+  /* Reading copy: prose meant to be read in paragraphs, as distinct from
+     --text-body, which also covers UI (buttons, card titles, nav). The two are
+     the same size on desktop and diverge on mobile — see the block at the
+     bottom of this file. Article bodies, calculator intros, and FAQ answers
+     each hand-rolled their own `@media (max-width: 600px) { font-size:
+     1.125rem }` before this existed, which is why the template page's FAQ
+     answers were the one set that never got the bump. */
+  --text-read:      1rem;
+
   /* Leading. Tighter as type gets larger — a display headline at 1.2 has
      caverns between its lines, while a label at 1.2 is cramped. */
   --leading-display: 1.08;
@@ -194,4 +203,28 @@
   --duration-slow: 320ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ——— Mobile type scale ———
+
+   A phone is held further from the eye than the size of its screen suggests,
+   and its text column is roughly a third the width of the desktop one, so the
+   bottom of the scale has to come up to stay comfortable. Article bodies
+   already did this on their own; everything below --text-body did not, which
+   is what left calculators and their labels rendering at desktop sizes inside
+   enlarged body copy — a 15px calculator intro directly under an 18px
+   paragraph making the same point.
+
+   Only the small end moves. --text-body stays at 16px because it also sizes
+   buttons, nav, and card titles, where growing on mobile costs layout rather
+   than buying legibility. The order of the scale is preserved: read (18) >
+   body (16) = small (16) > xs (15). --text-small landing on --text-body is
+   deliberate — at this width the distinction it draws is no longer worth a
+   step, and pushing it past body would invert the ramp. */
+@media (max-width: 600px) {
+  :root {
+    --text-read:  1.125rem;   /* 18px */
+    --text-small: 1rem;       /* 16px */
+    --text-xs:    0.9375rem;  /* 15px */
+  }
 }

@@ -93,8 +93,12 @@ const DEBTS = [
 		margin: 0 0 var(--space-xs);
 	}
 
+	/* Reading copy, not a caption — it makes the same kind of point as the
+	   article paragraph directly above it, so it takes the same size and
+	   follows it up on mobile. At --text-small it read as fine print sitting
+	   under a full-size heading. */
 	.debt-subtitle {
-		font-size: var(--text-small);
+		font-size: var(--text-read);
 		color: var(--color-text-secondary);
 		line-height: var(--leading-normal);
 		margin: 0 0 var(--space-lg);
@@ -193,10 +197,14 @@ const DEBTS = [
 		margin-bottom: 0;
 	}
 
+	/* Wraps rather than overflows: the qualifier and the "Best value" chip are
+	   both variable-width, and on a 320px screen "Snowball / Smallest balance
+	   first / Best value" does not fit on one line at any legible size. */
 	.compare-meta {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
-		gap: var(--space-xs);
+		gap: var(--space-2xs) var(--space-xs);
 		margin-bottom: 0.75rem;
 	}
 
@@ -206,9 +214,15 @@ const DEBTS = [
 		color: var(--color-text);
 	}
 
+	/* Still not a .badge — a full pill would bloat this row, and the square
+	   chip is what keeps the qualifier reading as an aside to the method name
+	   rather than a label on a card. But it now matches .badge's 13px: at 11px
+	   it was the smallest text on the page by 3px, and on mobile it sat under
+	   an 18px paragraph, which is what made it read as unreadably fine print
+	   rather than as deliberately quiet. */
 	.compare-badge {
 		display: inline-block;
-		font-size: 0.6875rem;
+		font-size: 0.8125rem;
 		font-weight: var(--weight-normal);
 		color: var(--color-text);
 		background: var(--color-bg-panel);
@@ -223,7 +237,7 @@ const DEBTS = [
 	   the same as the other method badge rather than a green "winner". */
 	.compare-best {
 		display: inline-block;
-		font-size: 0.6875rem;
+		font-size: 0.8125rem;
 		font-weight: var(--weight-semibold);
 		color: var(--color-text);
 		background: var(--color-bg-panel);
