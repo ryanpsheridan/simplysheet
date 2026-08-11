@@ -1,21 +1,29 @@
 ---
+import { PAY_FREQUENCIES, PAY_FREQUENCY_ORDER, type PayFrequencyKey } from '../data/payFrequencies';
+
 interface Props {
 	showFrequencyToggle?: boolean;
+	defaultFrequency?: PayFrequencyKey;
 }
 
-const { showFrequencyToggle = false } = Astro.props;
+const { showFrequencyToggle = false, defaultFrequency = 'biweekly' } = Astro.props;
 const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
+
+// The initial table is rendered from the default frequency's own numbers rather
+// than hardcoded biweekly values that the script corrects on load. Crawlers and
+// the pre-hydration paint both see the figures the page's copy actually claims.
+const initial = PAY_FREQUENCIES[defaultFrequency];
 ---
 
-<div class="calc" id={id} data-freq="biweekly">
+<div class="calc" id={id} data-freq={defaultFrequency}>
 	<div class="calc-form-grid">
 		{showFrequencyToggle && (
 			<div class="calc-freq-group">
 				<label class="calc-label" for={`${id}-freq`}>Pay frequency</label>
 				<select id={`${id}-freq`} class="calc-select" data-role="freq-select">
-					<option value="biweekly">Biweekly</option>
-					<option value="weekly">Weekly</option>
-					<option value="semimonthly">Semi-monthly</option>
+					{PAY_FREQUENCY_ORDER.map((key) => (
+						<option value={key} selected={key === defaultFrequency}>{PAY_FREQUENCIES[key].label}</option>
+					))}
 				</select>
 			</div>
 		)}
@@ -59,15 +67,15 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		<tbody>
 			<tr>
 				<td>Typical Month</td>
-				<td data-role="typical-count">2</td>
+				<td data-role="typical-count">{initial.typicalPerMonth}</td>
 				<td class="calc-table-amount" data-role="typical">$0</td>
 			</tr>
-			<tr data-role="extra-row">
-				<td data-role="extra-label">3-Paycheck Month</td>
-				<td data-role="extra-count">3</td>
+			<tr data-role="extra-row" hidden={!initial.extraPerMonth}>
+				<td data-role="extra-label">{initial.extraPerMonth ?? 3}-Paycheck Month</td>
+				<td data-role="extra-count">{initial.extraPerMonth ?? 3}</td>
 				<td class="calc-table-amount" data-role="extra">$0</td>
 			</tr>
-			<tr data-role="buffer-row">
+			<tr data-role="buffer-row" hidden={!initial.extraPerMonth}>
 				<td>
 					Monthly Buffer Needed
 					<span class="calc-tooltip-wrap">
@@ -84,6 +92,11 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 				</td>
 				<td>—</td>
 				<td class="calc-table-amount" data-role="buffer">$0</td>
+			</tr>
+			<tr>
+				<td>Per Year</td>
+				<td data-role="annual-count">{initial.paychecksPerYear}</td>
+				<td class="calc-table-amount" data-role="annual">$0</td>
 			</tr>
 		</tbody>
 	</table>
@@ -255,6 +268,13 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		padding: var(--space-sm);
 		border-top: 1px solid var(--color-border);
 	}
+	/* Rows that don't apply to the current frequency (the extra-paycheck month and
+	   its buffer, on a semi-monthly schedule) are dropped via the `hidden`
+	   attribute, set server-side and kept in sync by the script. Stated
+	   explicitly because the UA default for `tr` is display:table-row. */
+	.calc-table tr[hidden] {
+		display: none;
+	}
 	/* Paychecks count and dollar amounts stay on one line; only the period label may wrap */
 	.calc-table td:nth-child(2),
 	.calc-table-amount {
@@ -333,32 +353,12 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	}
 </style>
 
-<script is:inline define:vars={{ id }}>
+<script is:inline define:vars={{ id, FREQUENCIES: PAY_FREQUENCIES, defaultFrequency }}>
 (function () {
 	var root = document.getElementById(id);
 	if (!root) return;
 
-	var FREQUENCIES = {
-		biweekly: {
-			paychecksPerYear: 26,
-			typicalPerMonth: 2,
-			extraPerMonth: 3,
-			hasExtra: true,
-		},
-		weekly: {
-			paychecksPerYear: 52,
-			typicalPerMonth: 4,
-			extraPerMonth: 5,
-			hasExtra: true,
-		},
-		semimonthly: {
-			paychecksPerYear: 24,
-			typicalPerMonth: 2,
-			hasExtra: false,
-		},
-	};
-
-	var freq = 'biweekly';
+	var freq = defaultFrequency;
 
 	var input = root.querySelector('.calc-input');
 	var freqSelect = root.querySelector('[data-role="freq-select"]');
@@ -373,6 +373,8 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 	var extraLabelEl = root.querySelector('[data-role="extra-label"]');
 	var averageEl = root.querySelector('[data-role="average"]');
 	var bufferEl = root.querySelector('[data-role="buffer"]');
+	var annualEl = root.querySelector('[data-role="annual"]');
+	var annualCountEl = root.querySelector('[data-role="annual-count"]');
 
 	function formatCurrency(n) {
 		return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -398,18 +400,22 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 		typicalCountEl.textContent = config.typicalPerMonth;
 		typicalEl.textContent = formatCurrency(typical);
 		averageEl.textContent = formatCurrency(average);
+		annualCountEl.textContent = config.paychecksPerYear;
+		annualEl.textContent = formatCurrency(annual);
 
-		if (config.hasExtra) {
+		// Semi-monthly pays on fixed dates, so it never gains an extra check and
+		// needs no buffer. Both rows drop out rather than showing a zero.
+		if (config.extraPerMonth) {
 			var extra = paycheck * config.extraPerMonth;
-			extraRowEl.style.display = '';
-			bufferRowEl.style.display = '';
+			extraRowEl.hidden = false;
+			bufferRowEl.hidden = false;
 			extraCountEl.textContent = config.extraPerMonth;
 			extraLabelEl.textContent = config.extraPerMonth + '-Paycheck Month';
 			extraEl.textContent = formatCurrency(extra);
 			bufferEl.textContent = formatCurrency(buffer);
 		} else {
-			extraRowEl.style.display = 'none';
-			bufferRowEl.style.display = 'none';
+			extraRowEl.hidden = true;
+			bufferRowEl.hidden = true;
 		}
 	}
 

@@ -1,0 +1,82 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import PaycheckCalculator from '../../components/PaycheckCalculator.astro';
+import PaycheckFrequencyNav from '../../components/PaycheckFrequencyNav.astro';
+
+const title = 'Semi-Monthly Paycheck Calculator';
+const metaTitle = 'Semi-Monthly Paycheck Calculator';
+const description = 'Free semi-monthly paycheck calculator. Enter your take-home pay to see your monthly and annual income from 24 paychecks, and how semi-monthly pay differs from biweekly.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'vs-biweekly', text: 'Semi-monthly vs. biweekly pay' },
+	{ slug: 'steady-months', text: 'The tradeoff: steady months, no windfall' },
+];
+
+const faq = [
+	{
+		question: 'How many paychecks do you get in a year if you are paid semi-monthly?',
+		answer: 'You receive 24 paychecks a year: two every month, without exception. Semi-monthly pay is tied to calendar dates rather than a repeating interval, so every month contains exactly two paydays and there is never a month with a third one.',
+	},
+	{
+		question: 'Is semi-monthly the same as biweekly?',
+		answer: 'No, and the difference is two paychecks a year. Semi-monthly means twice a month, which is 24 paychecks. Biweekly means every two weeks, which is 26. If two people earn the same annual salary but one is paid semi-monthly and the other biweekly, the semi-monthly paychecks are larger, because the same yearly total is divided into 24 pieces instead of 26.',
+	},
+	{
+		question: 'Why does my semi-monthly paycheck never change but my biweekly friend gets an extra one?',
+		answer: 'Biweekly pay follows a 14-day cycle that drifts against the calendar, so twice a year a third payday slips into a month. Semi-monthly pay is anchored to fixed dates, commonly the 15th and the last day of the month, so it cannot drift. Your monthly income is the same every month, which is why this calculator shows no extra-paycheck month or buffer for a semi-monthly schedule.',
+	},
+	{
+		question: 'How do I convert semi-monthly pay to monthly and annual income?',
+		answer: 'Multiply your take-home pay per paycheck by 2 for your monthly income and by 24 for your annual income. Semi-monthly is the one common pay schedule where the monthly figure needs no averaging, because two paychecks a month is both the typical month and the actual month, every month.',
+	},
+	{
+		question: 'Are semi-monthly paydays always the 15th and the last day of the month?',
+		answer: 'Those are the most common dates, but the 1st and 16th are also widely used, and some employers pick their own pair. What defines semi-monthly pay is that the dates are fixed rather than the interval, so the gap between paydays varies slightly, from about 13 days in February to about 16 days across a 31-day month.',
+	},
+	{
+		question: 'Should I use gross pay or take-home pay in this calculator?',
+		answer: 'Use take-home pay, meaning what actually lands in your account after taxes, retirement contributions, and insurance are withheld. Entering your gross salary produces a monthly figure your budget cannot actually spend.',
+	},
+];
+---
+
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="Semi-Monthly Paycheck Calculator"
+	toc={toc}
+	faq={faq}
+	tags={['expense-tracking']}
+	productSlug="budget-spreadsheet"
+	productLabel="Turn your paycheck math into a plan"
+	relatedToolUrls={[
+		'/tools/biweekly-paycheck-calculator/',
+		'/tools/50-30-20-budget-calculator/',
+		'/tools/sinking-fund-calculator/',
+		'/tools/emergency-fund-calculator/',
+	]}
+>
+	<Fragment slot="intro">Semi-monthly pay means two paychecks every month on fixed dates, 24 a year. It's the one common schedule where your income lines up cleanly with the calendar, so there's no extra-paycheck month to plan around. Enter your take-home pay per paycheck below to see your monthly and annual income, and how the 24-paycheck year compares to a biweekly 26.</Fragment>
+
+	<PaycheckCalculator defaultFrequency="semimonthly" slot="calculator" />
+
+	<PaycheckFrequencyNav current="semimonthly" />
+
+	<h2 id="how-it-works">How this calculator works</h2>
+	<p>Enter your take-home pay for one paycheck. Because semi-monthly pay delivers exactly two checks in every month, your monthly income is simply that figure doubled, and it's the same in January as it is in July. The Per Year row multiplies it by 24 for your annual total, which is the number most worth writing down: it's what you'd compare against a job offer quoted as a salary, or use to sanity-check what you can save in a year.</p>
+	<p>You'll notice this calculator shows fewer rows than the weekly and biweekly versions. That's the point rather than an omission. Those schedules need an extra-paycheck month and a buffer figure because their income doesn't divide evenly into months. Yours does, so there's nothing to smooth out.</p>
+	<p>Use take-home pay rather than your gross wage. Semi-monthly checks are among the larger ones by frequency, which makes the gap between gross and net correspondingly larger in absolute terms, and budgeting against the pre-tax number overstates every month by the same amount.</p>
+
+	<h2 id="vs-biweekly">Semi-monthly vs. biweekly pay</h2>
+	<p>These two get confused constantly, and the confusion is understandable: both deliver roughly two paychecks a month. The difference is what they're anchored to.</p>
+	<p>Semi-monthly pay is anchored to dates. You're paid on the 15th and the last day of the month, or the 1st and the 16th, or some other fixed pair. Twelve months, two paydays each, 24 a year. The interval between them stretches and shrinks slightly, from about 13 days in February to about 16 across a long month.</p>
+	<p>Biweekly pay is anchored to an interval. You're paid every 14 days regardless of the date, which comes to 26 checks a year. Because 26 is more than 24, that schedule produces <a href="/tools/biweekly-paycheck-calculator/">two months a year with three paychecks</a>, and the payday itself moves earlier through the month over time.</p>
+	<p>The practical consequence: on the same annual salary, semi-monthly paychecks are larger than biweekly ones, because the same yearly total is split 24 ways rather than 26. A person receiving noticeably bigger checks than a biweekly-paid colleague on similar pay isn't earning more. They're receiving the same money in fewer, larger pieces.</p>
+
+	<h2 id="steady-months">The tradeoff: steady months, no windfall</h2>
+	<p>Semi-monthly pay is the easiest schedule to budget on. Your income is identical every month, so a monthly budget needs no averaging, no buffer, and no adjustment for the calendar. Bills are mostly monthly too, which means your income and your obligations share the same rhythm.</p>
+	<p>The cost is that nothing ever arrives unexpectedly. Biweekly and weekly earners get a few months a year where an extra check shows up with no job attached, and that surplus is where a lot of people quietly fund their emergency savings or make progress on debt. You don't get that, so irregular expenses have to be planned for deliberately instead.</p>
+	<p>That makes <a href="/articles/sinking-funds-explained/">sinking funds</a> more useful on a semi-monthly schedule than on any other: setting aside a fixed amount from each of your 24 checks does the same job the third paycheck does elsewhere, just on purpose rather than by accident. Work out the monthly amount with the <a href="/tools/sinking-fund-calculator/">sinking fund calculator</a>, then track your two paychecks and their assignments in a <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> so the steadiness of your income becomes an advantage rather than just a fact.</p>
+</CalculatorLayout>

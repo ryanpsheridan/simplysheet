@@ -1,0 +1,82 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import PaycheckCalculator from '../../components/PaycheckCalculator.astro';
+import PaycheckFrequencyNav from '../../components/PaycheckFrequencyNav.astro';
+
+const title = 'Weekly Paycheck Calculator';
+const metaTitle = 'Weekly Paycheck Calculator';
+const description = 'Free weekly paycheck calculator. Enter your take-home pay and see your typical four-paycheck month, your five-paycheck months, and a steady monthly average to budget on.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'five-paycheck-months', text: 'Why four months have five paychecks' },
+	{ slug: 'four-vs-average', text: 'Budget on four checks or the average?' },
+	{ slug: 'fifth-paycheck', text: 'What to do with the fifth paycheck' },
+];
+
+const faq = [
+	{
+		question: 'How many paychecks do you get in a year if you are paid weekly?',
+		answer: 'You receive 52 weekly paychecks a year. Because 52 does not divide evenly into 12 months, eight months contain four paydays and four months contain five. Multiplying a weekly paycheck by four understates your annual income by four full checks, which is why the monthly average in the calculator above is higher than the typical month.',
+	},
+	{
+		question: 'Which months have five paychecks?',
+		answer: 'It depends on which day of the week you are paid and where that day falls in the year, so it is different for people at different companies and it changes from year to year. To find yours, take your first payday of the year and count forward in 7-day steps. Any month containing five of those dates is a five-paycheck month. A month whose first payday lands on the 1st, 2nd, or 3rd will usually be one of them.',
+	},
+	{
+		question: 'How do I convert weekly pay to monthly income?',
+		answer: 'Multiply your weekly take-home pay by 52 to get your annual income, then divide by 12. That figure is the monthly average shown above. Multiplying by four instead gives you the typical month, which is what most months will actually deposit. Multiplying by 4.33 approximates the average, but the 52-divided-by-12 method is exact.',
+	},
+	{
+		question: 'Should I use gross pay or take-home pay in this calculator?',
+		answer: 'Use take-home pay, meaning the amount that actually reaches your bank account after taxes, retirement contributions, and insurance are withheld. This matters more on a weekly schedule than most, because deductions are spread across 52 smaller checks and the gap between gross and net on any single check can look small enough to ignore.',
+	},
+	{
+		question: 'Is it harder to budget on weekly pay than biweekly?',
+		answer: 'Not harder, but the rhythm is different. Weekly pay means money arrives more often in smaller amounts, so short-term cash flow is smoother and running out before payday is less likely. The tradeoff is that a single weekly check rarely covers a large bill on its own, so weekly earners tend to do better setting money aside across several checks rather than assigning each bill to one payday.',
+	},
+];
+---
+
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="Weekly Paycheck Calculator"
+	toc={toc}
+	faq={faq}
+	tags={['expense-tracking', 'irregular-income']}
+	productSlug="budget-spreadsheet"
+	productLabel="Turn your paycheck math into a plan"
+	relatedToolUrls={[
+		'/tools/biweekly-paycheck-calculator/',
+		'/tools/50-30-20-budget-calculator/',
+		'/tools/emergency-fund-calculator/',
+		'/tools/sinking-fund-calculator/',
+	]}
+>
+	<Fragment slot="intro">Weekly pay arrives 52 times a year, which doesn't divide evenly into 12 months. Most months bring four paychecks, but four months a year bring five. Enter your take-home pay per paycheck below to see what a normal month deposits, what a five-paycheck month adds, and a steady monthly average you can plan a budget around.</Fragment>
+
+	<PaycheckCalculator defaultFrequency="weekly" slot="calculator" />
+
+	<PaycheckFrequencyNav current="weekly" />
+
+	<h2 id="how-it-works">How this calculator works</h2>
+	<p>Enter one number, your take-home pay for a single week, and the calculator converts it into the figures a monthly budget actually needs. The typical month is four paychecks. The five-paycheck month adds one more. The monthly average spreads all 52 checks evenly across 12 months, and the Per Year row shows the annual total those checks add up to.</p>
+	<p>The gap between the typical month and the average is the part worth noticing. Four weekly checks is only 48 checks a year, so budgeting as though every month brings four means four full paychecks a year are unaccounted for. That gap is the buffer figure, and it's money you already earn rather than money you need to find.</p>
+	<p>Use take-home pay, not your gross wage. On a weekly schedule the deductions on any one check are small enough to feel negligible, but across 52 checks the difference between gross and net is the difference between a budget that works and one that fails in week one.</p>
+
+	<h2 id="five-paycheck-months">Why four months have five paychecks</h2>
+	<p>A week is 7 days and 52 weeks is 364 days, one day short of a calendar year. Your payday drifts forward by a day each year, and within any given year the mismatch between 7-day weeks and 28-to-31-day months means the fifth payday lands inside a month four separate times.</p>
+	<p>Which four months those are depends entirely on the weekday you're paid and where that weekday falls in the calendar, so it differs between people and shifts from one year to the next. Counting forward from your first payday of the year in 7-day steps is the only reliable way to map them.</p>
+	<p>If you're paid every two weeks instead, the same drift produces a smaller version of the same effect: 26 checks a year and <a href="/tools/biweekly-paycheck-calculator/">two three-paycheck months</a> rather than four five-paycheck ones.</p>
+
+	<h2 id="four-vs-average">Should you budget on four checks or the average?</h2>
+	<p>Build the budget on four. If your rent, bills, and regular spending all fit inside four weekly paychecks, then every month of the year works without adjustment, and the four five-paycheck months arrive as surplus rather than as relief you were counting on.</p>
+	<p>The monthly average is the better number for a different kind of question. When you're deciding whether you can afford a particular rent, or working out what you can realistically save over a year, the average reflects your true annual income where the four-check month understates it. Treat it as a planning figure and not a spending allowance, because spending to the average every month quietly commits the fifth checks before they arrive.</p>
+	<p>Weekly pay has one real advantage worth using here: money arrives often enough that setting a little aside from every check is easy. Rather than trying to cover a large annual bill out of one payday, spreading it across a <a href="/tools/sinking-fund-calculator/">sinking fund</a> fits the weekly rhythm naturally.</p>
+
+	<h2 id="fifth-paycheck">What to do with the fifth paycheck</h2>
+	<p>If your budget runs on four checks, the fifth one has no job assigned to it. Four times a year is a meaningful amount of unassigned income, and it's the easiest money in your year to point at something that actually matters: an emergency fund top-up, an extra debt payment, or an annual expense you'd otherwise scramble for. The <a href="/tools/emergency-fund-calculator/">emergency fund calculator</a> shows how far those four checks move you toward a fully funded cushion.</p>
+	<p>The one approach that reliably fails is deciding when it lands. An unassigned check sitting in a checking account gets absorbed into ordinary spending within a couple of weeks. Name its job before the month starts, and track it alongside your regular paychecks in a <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> so the surplus ends up where you aimed it.</p>
+</CalculatorLayout>
