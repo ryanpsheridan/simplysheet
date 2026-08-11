@@ -5,12 +5,21 @@
      pure grayscale. It is deliberately compressed at the dark end: every text
      role has to clear WCAG AA (4.5:1) against both --color-bg and
      --color-bg-panel, which puts a hard floor around #707070. The old
-     #8A8A8A muted tone sat below that floor and failed AA. */
+     #8A8A8A muted tone sat below that floor and failed AA.
+
+     Both light roles were darkened one step (secondary #575D68 -> #515764,
+     muted #666B75 -> #5F646F) because the lighter pair read as washed out
+     against this warm page even though both already passed. Worst-case
+     contrast across bg, surface, and panel is now 6.48:1 for secondary and
+     5.31:1 for muted, up from 5.92 and 4.79. Going further was tried and
+     rejected: the ramp is short, and another step closed the gap between
+     secondary and --color-link enough that emphasis stopped reading as
+     distinct from body copy. */
 
   --color-text:           #081122;
   --color-text-heading:   #081122;
-  --color-text-secondary: #575D68;
-  --color-text-muted:     #666B75;
+  --color-text-secondary: #515764;
+  --color-text-muted:     #5F646F;
 
   /* Links stay monochrome. The ramp has no step between secondary (#575D68)
      and text (#081122), so this one is interpolated to sit between them —

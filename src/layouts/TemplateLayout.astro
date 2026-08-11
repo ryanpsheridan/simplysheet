@@ -217,16 +217,13 @@ function featureIcon(text: string): string {
 					    have to be visible to the reader. This is the same `price` the
 					    schema emits, so the two cannot drift apart.
 
-					    The note stays deliberately vague. There is nearly always a sale
-					    running on Etsy, so the real price is usually below this one, and
-					    naming a percentage or an end date would put sale admin on the
-					    site as well as on Etsy. Worded this way there is nothing to keep
-					    current, and the mismatch runs the harmless direction: the visitor
-					    finds it cheaper than advertised, never dearer. */}
-					<p class="product-price">
-						<span class="product-price-amount">${price.toFixed(2)}</span>
-						<span class="product-price-note">Good odds it's on sale for less right now</span>
-					</p>
+					    Deliberately bare. A sale is nearly always running on Etsy, so the
+					    real price is usually below this one, but the caveat line that sat
+					    here explained a discrepancy the visitor never experiences as a
+					    problem: they reach the listing to find it cheaper than advertised,
+					    never dearer. Announcing the sale also edges toward a discount
+					    promise the site cannot keep in sync with the shop. */}
+					<p class="product-price">${price.toFixed(2)}</p>
 
 					<a
 						href={darkListingUrl}
@@ -257,7 +254,9 @@ function featureIcon(text: string): string {
 								<ul class="features-list">
 									{features.map((f: string) => (
 										<li>
-											<svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={featureIcon(f)} />
+											<span class="feature-icon">
+												<svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={featureIcon(f)} />
+											</span>
 											<span>{f}</span>
 										</li>
 									))}
@@ -690,23 +689,10 @@ function featureIcon(text: string): string {
 	   the action it commits you to are one decision, and Gestalt proximity
 	   groups them by being closer to each other than to anything else. */
 	.product-price {
-		display: flex;
-		flex-direction: column;
-		gap: 0.125rem;
 		margin: 0 0 var(--space-sm);
-	}
-
-	.product-price-amount {
 		font-size: var(--text-h3);
 		letter-spacing: var(--tracking-snug);
 		color: var(--color-text);
-	}
-
-	/* `--color-text-secondary`, not muted: this is the floor that still clears
-	   AA on page, surface, and panel alike. */
-	.product-price-note {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
 	}
 
 	/* ——— CTA ——— */
@@ -782,22 +768,49 @@ function featureIcon(text: string): string {
 		margin: 0;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-lg) var(--space-md);
+		/* Row gap is --space-xl against a --space-md column gap. The two rows
+		   need to read as two, and a uniform gap let them run together into one
+		   six-cell field. Deliberately a step up the scale rather than a one-off
+		   60px: it lands close to the 1.5x this was aiming for and stays on the
+		   spacing ramp. */
+		gap: var(--space-xl) var(--space-md);
 	}
 
+	/* Icon above the label, both flush left, rather than the icon inline beside
+	   it. The stack gives every cell the same left edge for the eye to run
+	   down, and it lets the label wrap to three lines without the second and
+	   third lines hanging under the icon. */
 	.features-list li {
 		display: flex;
+		flex-direction: column;
 		align-items: flex-start;
-		gap: 0.625rem;
+		gap: var(--space-sm);
 		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text);
 	}
 
+	/* Same fill as the sky eyebrow. The tint is only guaranteed against the
+	   primary text role, so the glyph is --color-text and not the link slate
+	   the icon used inline: 13.4:1 rather than 6.8:1, and well past the 3:1
+	   WCAG 1.4.11 asks of a meaningful graphic. */
+	.feature-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 50%;
+		background: var(--tint-sky);
+		color: var(--color-text);
+	}
+
+	/* Colour and the optical nudge that used to align it to the first line of
+	   an inline label both belong to `.feature-icon` now: the glyph is centred
+	   in the disc, and the disc sits above the text rather than beside it. */
 	.check-icon {
 		flex-shrink: 0;
-		color: var(--color-link);
-		margin-top: 0.1875rem;
 	}
 
 	.howto-content p {

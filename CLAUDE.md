@@ -513,4 +513,6 @@ The neutral ramp is warm on surfaces and cool-navy on ink, not pure grayscale �
 
 Borders come in three weights: `--color-border-hairline` for subtle dividers, `--color-border` as the default, `--color-border-strong` for emphasized or hover edges.
 
-Every text role has to clear WCAG AA (4.5:1) against `--color-bg`, `--color-bg-surface`, *and* `--color-bg-panel`. That puts a hard floor around `#707070`, which is why the ramp has no `#999`-class step and why `--color-text-muted` is `#666B75` rather than something lighter. A previous lighter muted tone (`#8A8A8A`) failed AA on all three. Check any new text color against all three surfaces before shipping it.
+Every text role has to clear WCAG AA (4.5:1) against `--color-bg`, `--color-bg-surface`, *and* `--color-bg-panel`. That puts a hard floor around `#707070`, which is why the ramp has no `#999`-class step and why `--color-text-muted` is `#5F646F` rather than something lighter. A previous lighter muted tone (`#8A8A8A`) failed AA on all three. Check any new text color against all three surfaces before shipping it.
+
+The two light roles are darker than mere AA compliance requires — secondary `#515764` (worst case 6.48:1) and muted `#5F646F` (5.31:1) — because the earlier pair (`#575D68`/`#666B75`) passed on paper and still read as washed out against the warm page. Don't darken them further without checking `--color-link`: the ramp is short, and one more step closes the gap between secondary and link enough that emphasis stops reading as distinct from body copy.
