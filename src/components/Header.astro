@@ -469,9 +469,11 @@ const MENU_LINKS = [
 	   accessibility tree when not in use, so exactly one "Primary" navigation
 	   landmark is ever exposed. */
 	@media (min-width: 860px) {
-		.header-shell {
-			padding-inline: var(--space-md);
-		}
+		/* No padding-inline override here. It is a shorthand, so it would reset
+		   the base rule's max(--space-md, env(safe-area-inset-*)) back to a
+		   plain gutter and let a landscape notch clip the bar — and since the
+		   base already resolves to --space-md whenever the inset is smaller,
+		   the override bought nothing anyway. */
 
 		.site-header {
 			grid-template-columns: auto minmax(0, 1fr) auto;
