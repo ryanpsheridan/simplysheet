@@ -661,7 +661,16 @@ function featureIcon(text: string): string {
 		margin-bottom: var(--space-md);
 	}
 
+	/* min-height rather than more padding: the pill's own 3px inset means a
+	   44px button makes the toggle 50px tall, so the height is set on the
+	   button and the label stays optically centred inside it. 34px was
+	   comfortable with a mouse and tight under a thumb, and this is the
+	   product's main interactive control before the CTA. */
 	.theme-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2.75rem;
 		font-family: var(--font-sans);
 		font-size: var(--text-small);
 		font-weight: var(--weight-normal);
@@ -1226,12 +1235,16 @@ function featureIcon(text: string): string {
 		color: var(--color-text-muted);
 		margin-left: var(--space-xs);
 	}
+	/* 44px, not 36. These are the smallest controls on the page and the only
+	   ones a reader taps repeatedly — stepping through several quotes means
+	   hitting the same small circle over and over, which is exactly the case
+	   an undersized target punishes. The 16px glyph inside is unchanged. */
 	.reviews-nav-btn {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 2.25rem;
-		height: 2.25rem;
+		width: 2.75rem;
+		height: 2.75rem;
 		border-radius: 50%;
 		border: 1px solid var(--color-border);
 		background: transparent;
