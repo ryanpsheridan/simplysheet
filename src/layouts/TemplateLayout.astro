@@ -212,6 +212,22 @@ function featureIcon(text: string): string {
 						<button class="theme-btn" data-theme="light">Light</button>
 					</div>
 
+					{/* The price was in the Product JSON-LD but rendered nowhere, which
+					    Google's structured data guidelines disallow: marked-up values
+					    have to be visible to the reader. This is the same `price` the
+					    schema emits, so the two cannot drift apart.
+
+					    The note stays deliberately vague. There is nearly always a sale
+					    running on Etsy, so the real price is usually below this one, and
+					    naming a percentage or an end date would put sale admin on the
+					    site as well as on Etsy. Worded this way there is nothing to keep
+					    current, and the mismatch runs the harmless direction: the visitor
+					    finds it cheaper than advertised, never dearer. */}
+					<p class="product-price">
+						<span class="product-price-amount">${price.toFixed(2)}</span>
+						<span class="product-price-note">Usually less on Etsy, where a sale is often running</span>
+					</p>
+
 					<a
 						href={darkListingUrl}
 						class="btn btn-primary product-cta"
@@ -250,7 +266,7 @@ function featureIcon(text: string): string {
 						)}
 
 						{howItWorks.map((row: { heading: string; body: string; image?: string; imageAlt?: string }) => (
-							<div class="detail-row">
+							<div class:list={['detail-row', !row.image && 'is-text-only']}>
 								<h2>{row.heading}</h2>
 								<div class="howto-content">
 									<p set:html={row.body} />
@@ -392,6 +408,29 @@ function featureIcon(text: string): string {
 								</div>
 							</div>
 						)}
+
+						{/* The last chance to buy the thing the page is about. Everything
+						    below this point navigates away from it: "More spreadsheets"
+						    is a grid of other products, so without this the page's final
+						    impression offers no way to act on the one just read about,
+						    and the hero CTA is several thousand pixels back up. Placed
+						    after the FAQ rather than after the buyer's guide, where it
+						    would have stacked against the bundle links a screen below.
+
+						    Tracked separately from the hero so the two positions can be
+						    compared in GA4 instead of blended into one number. */}
+						<div class="product-cta-footer">
+							<a
+								href={darkListingUrl}
+								class="btn btn-primary"
+								target="_blank"
+								rel="noopener noreferrer"
+								data-cta={`template_footer_cta:${id}`}
+							>
+								Get this template on Etsy
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+							</a>
+						</div>
 					</div>
 				</section>
 			)}
@@ -650,6 +689,31 @@ function featureIcon(text: string): string {
 		background: var(--color-btn);
 	}
 
+	/* ——— Price ——— */
+
+	/* Sits directly above the CTA rather than up by the title: the amount and
+	   the action it commits you to are one decision, and Gestalt proximity
+	   groups them by being closer to each other than to anything else. */
+	.product-price {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+		margin: 0 0 var(--space-sm);
+	}
+
+	.product-price-amount {
+		font-size: var(--text-h3);
+		letter-spacing: var(--tracking-snug);
+		color: var(--color-text);
+	}
+
+	/* `--color-text-secondary`, not muted: this is the floor that still clears
+	   AA on page, surface, and panel alike. */
+	.product-price-note {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+	}
+
 	/* ——— CTA ——— */
 
 	.product-cta {
@@ -697,6 +761,25 @@ function featureIcon(text: string): string {
 	.detail-row h2 {
 		font-size: var(--text-h2);
 		margin: 0;
+	}
+
+	/* The side-heading layout earns its keep on rows carrying a screenshot:
+	   the image wants the wide column and the heading column gives it air.
+	   On a text-only row it inverts — a two-word heading reserves a ~390px
+	   column beside 70px of copy, leaving most of the row empty and setting
+	   the heading 96px from the body it belongs to, while the rows above and
+	   below sit closer. Stacking those puts the heading back against its own
+	   text. Rows with an image keep the two-column treatment, as does the
+	   feature list, which is tall enough to fill it. */
+	.detail-row.is-text-only {
+		grid-template-columns: 1fr;
+		gap: var(--space-sm);
+	}
+
+	/* Full container width is ~1230px, well past a comfortable line. Same
+	   measure as the buyer's guide further down the page. */
+	.detail-row.is-text-only .howto-content {
+		max-width: 68ch;
 	}
 
 	.features-list {
@@ -892,7 +975,30 @@ function featureIcon(text: string): string {
 
 	.product-articles h2 {
 		font-size: var(--text-h2);
-		margin-bottom: var(--space-sm);
+		margin-bottom: var(--space-md);
+	}
+
+	/* The rule and the spacing belong to the wrapper, never to the button:
+	   a border-top on a `.btn` draws a line straight across the pill. */
+	.product-cta-footer {
+		margin-top: var(--space-lg);
+		padding-top: var(--space-lg);
+		border-top: 1px solid var(--color-border);
+	}
+
+	/* Full width on mobile, hugging its text from 600px up — the same shape
+	   the calculator product links take sitewide. */
+	.product-cta-footer .btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	@media (min-width: 600px) {
+		.product-cta-footer .btn {
+			display: inline-flex;
+		}
 	}
 
 	.product-articles-list {
@@ -900,18 +1006,20 @@ function featureIcon(text: string): string {
 		padding: 0;
 	}
 
+	/* Matches `.faq-q` exactly: --space-md rows under a --space-md heading gap.
+	   These two lists sit one above the other in the same block, so the
+	   tighter --space-sm rhythm this used read as an inconsistency rather
+	   than a distinction. The first row keeps its top padding for the same
+	   reason — the FAQ below has one, and removing it here was what made the
+	   gap under the heading look roughly half the FAQ's. */
 	.product-articles-list li {
-		padding: var(--space-sm) 0;
+		padding: var(--space-md) 0;
 		border-bottom: 1px solid var(--color-border);
 	}
 
 	.product-articles-list li:last-child {
 		border-bottom: none;
 		padding-bottom: 0;
-	}
-
-	.product-articles-list li:first-child {
-		padding-top: 0;
 	}
 
 	.product-articles-list a {
