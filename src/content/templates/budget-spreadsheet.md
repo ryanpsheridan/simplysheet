@@ -113,3 +113,51 @@ reviews:
     text: "Amazing resource! I love the visuals, it has great instructions and is easy to use. Ryan was so helpful when I wanted to add something. Definitely worth it!"
     date: "2026-02-08"
 ---
+
+## Who this budget spreadsheet is for
+
+This is a manual budget, and that is the whole design. You type in what you spent, and the sheet does the arithmetic. Nothing connects to your bank, nothing categorizes transactions for you, and nothing happens unless you sit down and enter it.
+
+That trade is the point rather than a limitation. Apps that sync automatically are better at record keeping and worse at changing behaviour, because the entering is what makes you notice. If what you want is a tidy history of money that already left, an app will beat this. If you want to spend differently next month, the friction is doing the work. That distinction is worth understanding before you buy, and [awareness versus automation](/articles/awareness-vs-automation/) covers it properly.
+
+It suits one person with a reasonably regular income. Two people sharing money will outgrow it quickly, since there is nowhere to record who spent what, and the [couples budget spreadsheet](/spreadsheets/couples-budget-spreadsheet/) exists for that.
+
+## What you need before you start
+
+You need a rough idea of what you currently spend, not a perfect one. The template asks for an expected amount per category, and the expected amounts are where most first budgets go wrong: people fill them in with what they wish they spent, then abandon the sheet in week three when reality disagrees.
+
+If you have never tracked before, the honest move is to spend a few weeks recording expenses without budgeting at all, then set your expected amounts from what you actually find. That is slower and it works far better. [Tracking expenses before budgeting](/articles/track-expenses-before-budgeting/) makes the case, and the [expense tracking readiness check](/tools/expense-tracking-readiness/) will tell you which of the two you should be doing right now.
+
+You also need your fixed costs to hand: rent or mortgage, utilities, insurance, subscriptions, loan payments. Those go in Bills and barely change, which makes them the easiest part of the sheet and the part worth getting exactly right.
+
+## Using it in Google Sheets or Excel
+
+The two versions are functionally identical, so pick based on where you will actually open it.
+
+Google Sheets syncs to your phone without any thought, and that matters more than it sounds. A manual budget only works if entries go in near the moment you spend, and the version you can open at the counter is the version that stays honest. Excel is the better choice if you already work in it daily, or if you would rather the file lived on your machine than in a Google account.
+
+Make your own copy before you enter anything, whichever you choose. Working in the original leaves you nothing to fall back on when a formula gets pasted over, and it will get pasted over eventually.
+
+## Setting your expected amounts
+
+The five sections are Income, Bills, Expenses, Debt, and Savings. Bills and Debt are close to fixed. Income is usually knowable. Expenses is the section that decides whether the budget holds.
+
+Groceries, dining, and the general miscellaneous category are where estimates drift, because they are the ones made of many small decisions rather than one monthly commitment. Set them slightly higher than feels right on the first month. A category you breach in the second week stops being a target and becomes a thing you avoid looking at.
+
+If you want a starting framework rather than a blank sheet, the 50/30/20 split is a reasonable default to build from: half to needs, thirty percent to wants, twenty to savings and debt. The [50/30/20 calculator](/tools/50-30-20-budget-calculator/) turns your income into those three numbers, and [the rule explained](/articles/50-30-20-budget-rule/) covers where it holds up and where it does not. Treat it as a first draft. Rent above about a third of take-home breaks the maths, and pretending otherwise just moves the problem into another category.
+
+## Logging expenses without giving up
+
+Four fields per entry: amount, category, date, optional note. The actual column updates as you go, and the progress bars fill against the expected amounts you set.
+
+The realistic cadence is once a day, not once per purchase. Thirty seconds in the evening covers everything, and it survives a busy week in a way that per-transaction logging does not. Reconstructing a whole month from bank statements on the last day is the version that fails, because by then the numbers are history and the point was to change the decisions while they were still ahead of you.
+
+You will miss days. Missing days is fine and normal, and [tracking without burning out](/articles/track-expenses-without-burnout/) is about exactly that. Catching up on Sunday for the week is far better than a perfect system you quit.
+
+## When the numbers are not the real problem
+
+A budget shows you the gap. It does not close it, and it is worth being clear about which one you have.
+
+If you overspend the same category every month by roughly the same amount, that is not a discipline failure, it is an expected amount set wrong. Change the number. If the total is short no matter how you distribute it, no arrangement of categories fixes that, and the work is upstream of the sheet: [where the money is actually going](/articles/where-is-my-money-going/) is the first place to look, and [why most budgets fail](/articles/why-most-budgets-fail/) covers the more common reasons a sheet like this gets abandoned in month two.
+
+Two things pair naturally with this one. If a chunk of your income goes to balances, the [debt payoff tracker](/spreadsheets/debt-payoff-tracker/) handles the payoff order and projected dates that a budget's Debt section deliberately does not. If your savings line is really several goals stacked together, the [savings goals tracker](/spreadsheets/savings-goals-tracker/) splits them apart so the holiday fund and the emergency fund stop competing for one number. And if you are not sure a detailed monthly sheet suits how you think about money at all, the [budgeting style quiz](/quiz/budgeting-style/) is five minutes and may point you somewhere simpler.
