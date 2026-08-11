@@ -264,15 +264,13 @@ p {
 	border: 1px solid var(--color-border);
 }
 
+.prose {
+	font-size: var(--text-read);
+}
+
 .prose p {
 	margin-bottom: 1.5em;
 	line-height: var(--leading-normal);
-}
-
-@media (max-width: 600px) {
-	.prose {
-		font-size: 1.125rem;
-	}
 }
 
 .prose h2 {

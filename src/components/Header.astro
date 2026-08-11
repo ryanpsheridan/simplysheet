@@ -80,7 +80,9 @@ const MENU_LINKS = [
 			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-sm header-cta" data-cta="nav_cta">Find Your Budget Style</a>
 		</header>
 
-		<div id="app-menu" class="app-menu" role="dialog" aria-modal="true" aria-label="Menu">
+		{/* tabindex="-1" makes the panel itself the focus target when it opens —
+		    see openMenu(). Not reachable by Tab, only by script. */}
+		<div id="app-menu" class="app-menu" role="dialog" aria-modal="true" aria-label="Menu" tabindex="-1">
 			<nav aria-label="Primary">
 				<ul>
 					{MENU_LINKS.map((link, i) => (
@@ -287,9 +289,17 @@ const MENU_LINKS = [
 
 	/* --- Menu button ------------------------------------------------------- */
 
-	/* A filled disc rather than bare bars, so it reads as a control with real
-	   weight. It can be ink again now that the CTA no longer sits beside it —
-	   two dark pills side by side were what made the bar feel heavy.
+	/* A ring rather than a fill. Still a disc, so it reads as a control with a
+	   real edge rather than as bare bars floating at the end of the bar — but
+	   an ink fill made it the darkest element on the page sitting on the
+	   lightest, which is what made it feel harsh. The glyph carries the
+	   contrast now and the container just says "this is a button".
+
+	   The ring is an inset shadow, not a border. The bars below are absolutely
+	   positioned, so they resolve against the padding box — which border-box
+	   sizing shrinks by the border width. A real 1px border drops the glyph a
+	   further 1px off centre, in the X state too. The shadow draws the same
+	   ring and leaves the geometry identical to the filled version.
 
 	   Two bars that rotate into an X — the same elements in both states, so
 	   there's no icon swap. */
@@ -302,17 +312,26 @@ const MENU_LINKS = [
 		height: 2.5rem;
 		border: none;
 		border-radius: 50%;
-		background: var(--color-btn);
+		background: transparent;
+		box-shadow: inset 0 0 0 1px var(--color-border);
 		padding: 0;
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent;
 		transition:
 			background-color var(--duration-fast) var(--ease-out),
+			box-shadow var(--duration-fast) var(--ease-out),
 			transform var(--duration-fast) var(--ease-out);
 	}
 
-	.menu-toggle:hover {
-		background: var(--color-btn-hover);
+	/* Guarded, unlike the fill it replaces: a stuck :hover after a tap was
+	   barely visible as a slightly lighter ink disc, but on a ghost control it
+	   would leave a filled panel sitting there. This button is only on screen
+	   below 860px, so the rule is for tablets with a pointer. */
+	@media (hover: hover) {
+		.menu-toggle:hover {
+			background: var(--color-bg-panel);
+			box-shadow: inset 0 0 0 1px var(--color-border-strong);
+		}
 	}
 
 	.menu-toggle:active {
@@ -326,7 +345,7 @@ const MENU_LINKS = [
 		margin-left: -8px;
 		height: 1.5px;
 		border-radius: 2px;
-		background: var(--color-bg);
+		background: var(--color-text);
 		transition:
 			top var(--duration-base) var(--ease-out),
 			transform var(--duration-base) var(--ease-out);
@@ -388,6 +407,15 @@ const MENU_LINKS = [
 			opacity var(--duration-base) var(--ease-out),
 			transform var(--duration-base) var(--ease-out),
 			visibility 0s linear 0s;
+	}
+
+	/* The panel is only ever focused by script, on open, and is never in the tab
+	   order — so there is no keyboard affordance to preserve here and the ring
+	   is pure noise. Deliberately :focus and not :focus-visible: the point is to
+	   be unconditional rather than to leave it to a per-browser heuristic. The
+	   links inside keep their real rings. */
+	.app-menu:focus {
+		outline: none;
 	}
 
 	.app-menu ul {
@@ -524,7 +552,15 @@ const MENU_LINKS = [
 				// transitions it — setting both in one frame skips the animation.
 				requestAnimationFrame(() => backdrop.classList.add('open'));
 			}
-			menu.querySelector<HTMLAnchorElement>('.menu-item')?.focus();
+			// Focus the panel, not its first link. Two reasons: a link is a thing
+			// that can legitimately draw a focus ring, and whether it does after a
+			// programmatic .focus() is left to each browser's :focus-visible
+			// heuristic — so a plain tap on the menu button drew a ring around
+			// "Home" on some opens and not others. Focusing the dialog itself is
+			// also the better pattern: a screen reader announces "Menu, dialog"
+			// before its contents, instead of jumping straight to "Home, link"
+			// with no indication that a menu opened.
+			menu.focus({ preventScroll: true });
 		};
 
 		const closeMenu = () => {
@@ -589,7 +625,13 @@ const MENU_LINKS = [
 			const last = items[items.length - 1];
 			const active = document.activeElement;
 
-			if (e.shiftKey && (active === first || !menu.contains(active))) {
+			// `active === menu` is the just-opened state, before the first Tab has
+			// moved focus off the panel and onto a link. Node.contains() counts a
+			// node as containing itself, so without this the shift-Tab guard reads
+			// the panel as "somewhere inside" and lets focus escape backwards out
+			// of the dialog. A forward Tab from the panel needs no handling — the
+			// browser moves into the first link on its own.
+			if (e.shiftKey && (active === first || active === menu || !menu.contains(active))) {
 				e.preventDefault();
 				last.focus();
 			} else if (!e.shiftKey && active === last) {
