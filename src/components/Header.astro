@@ -80,7 +80,9 @@ const MENU_LINKS = [
 			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-sm header-cta" data-cta="nav_cta">Find Your Budget Style</a>
 		</header>
 
-		<div id="app-menu" class="app-menu" role="dialog" aria-modal="true" aria-label="Menu">
+		{/* tabindex="-1" makes the panel itself the focus target when it opens —
+		    see openMenu(). Not reachable by Tab, only by script. */}
+		<div id="app-menu" class="app-menu" role="dialog" aria-modal="true" aria-label="Menu" tabindex="-1">
 			<nav aria-label="Primary">
 				<ul>
 					{MENU_LINKS.map((link, i) => (
@@ -390,6 +392,15 @@ const MENU_LINKS = [
 			visibility 0s linear 0s;
 	}
 
+	/* The panel is only ever focused by script, on open, and is never in the tab
+	   order — so there is no keyboard affordance to preserve here and the ring
+	   is pure noise. Deliberately :focus and not :focus-visible: the point is to
+	   be unconditional rather than to leave it to a per-browser heuristic. The
+	   links inside keep their real rings. */
+	.app-menu:focus {
+		outline: none;
+	}
+
 	.app-menu ul {
 		list-style: none;
 		margin: 0;
@@ -524,7 +535,15 @@ const MENU_LINKS = [
 				// transitions it — setting both in one frame skips the animation.
 				requestAnimationFrame(() => backdrop.classList.add('open'));
 			}
-			menu.querySelector<HTMLAnchorElement>('.menu-item')?.focus();
+			// Focus the panel, not its first link. Two reasons: a link is a thing
+			// that can legitimately draw a focus ring, and whether it does after a
+			// programmatic .focus() is left to each browser's :focus-visible
+			// heuristic — so a plain tap on the menu button drew a ring around
+			// "Home" on some opens and not others. Focusing the dialog itself is
+			// also the better pattern: a screen reader announces "Menu, dialog"
+			// before its contents, instead of jumping straight to "Home, link"
+			// with no indication that a menu opened.
+			menu.focus({ preventScroll: true });
 		};
 
 		const closeMenu = () => {
@@ -589,7 +608,13 @@ const MENU_LINKS = [
 			const last = items[items.length - 1];
 			const active = document.activeElement;
 
-			if (e.shiftKey && (active === first || !menu.contains(active))) {
+			// `active === menu` is the just-opened state, before the first Tab has
+			// moved focus off the panel and onto a link. Node.contains() counts a
+			// node as containing itself, so without this the shift-Tab guard reads
+			// the panel as "somewhere inside" and lets focus escape backwards out
+			// of the dialog. A forward Tab from the panel needs no handling — the
+			// browser moves into the first link on its own.
+			if (e.shiftKey && (active === first || active === menu || !menu.contains(active))) {
 				e.preventDefault();
 				last.focus();
 			} else if (!e.shiftKey && active === last) {
