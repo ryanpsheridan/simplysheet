@@ -1,8 +1,12 @@
 {
   "redirects": [
-    { "source": "/templates", "destination": "/spreadsheets", "permanent": true },
+    { "source": "/templates", "destination": "/spreadsheets/", "permanent": true },
     { "source": "/templates/", "destination": "/spreadsheets/", "permanent": true },
-    { "source": "/templates/:slug*", "destination": "/spreadsheets/:slug*", "permanent": true },
+    { "source": "/templates/:slug*", "destination": "/spreadsheets/:slug*/", "permanent": true },
+
+    { "source": "/tools/50-30-20-budget-calculator", "destination": "/tools/50-30-20-budget-calculator/", "permanent": true },
+    { "source": "/quiz/budgeting-style", "destination": "/quiz/budgeting-style/", "permanent": true },
+    { "source": "/articles", "destination": "/articles/", "permanent": true },
 
     { "source": "/articles/debt-payoff", "destination": "/articles/how-to-pay-off-debt/", "permanent": true },
     { "source": "/articles/debt-payoff/", "destination": "/articles/how-to-pay-off-debt/", "permanent": true },
