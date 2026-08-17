@@ -124,6 +124,29 @@ const MENU_LINKS = [
 		   Chrome's edge-to-edge default. Both insets resolve to 0px in a normal
 		   browser tab, so this is inert there. */
 		padding-top: env(safe-area-inset-top, 0px);
+		transition: transform var(--duration-base) var(--ease-out);
+	}
+
+	/* Mobile only (see the script's mobileQuery match) — the bar slides out of
+	   view on scroll-down and back in on scroll-up, rather than staying
+	   permanently docked. transform, not display/visibility, so the sticky
+	   positioning and the slide both keep working off the same box. Guarded
+	   at the desktop breakpoint too, in case the class is still set from a
+	   narrower viewport when the window is resized up. */
+	.header-shell.nav-hidden {
+		transform: translateY(-100%);
+	}
+
+	@media (min-width: 860px) {
+		.header-shell.nav-hidden {
+			transform: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.header-shell {
+			transition: none;
+		}
 	}
 
 	/* Anchors the dropdown panel: it's positioned against this, not against the
@@ -340,12 +363,18 @@ const MENU_LINKS = [
 
 	/* A floating card hung under the bar, not a full-screen takeover. The page
 	   stays visible and blurred behind it, so the menu reads as a layer over
-	   the site rather than a different screen. */
+	   the site rather than a different screen.
+
+	   left/right match .header-inner's own gutter rather than 0 — absolute
+	   positioning resolves against the padding box of the nearest positioned
+	   ancestor (.header-inner), which is the *outer* edge of that padding, so
+	   a plain 0 ignored the gutter entirely and stretched the panel to the
+	   screen edges instead of floating inside it. */
 	.app-menu {
 		position: absolute;
 		top: calc(100% + 0.75rem);
-		left: 0;
-		right: 0;
+		left: max(var(--space-md), env(safe-area-inset-left, 0px));
+		right: max(var(--space-md), env(safe-area-inset-right, 0px));
 		z-index: 1;
 		padding: var(--space-md);
 		border-radius: var(--radius-xl);
@@ -597,5 +626,61 @@ const MENU_LINKS = [
 				first.focus();
 			}
 		});
+	}
+
+	// Mobile-only auto-hide: the bar slides out of view once the page has
+	// scrolled past its own height, and slides back in as soon as the user
+	// scrolls back up — rather than staying permanently docked. Desktop keeps
+	// the bar always visible, since there's no equivalent request there and
+	// the CTA/links are reachable without it.
+	const headerShell = document.querySelector<HTMLDivElement>('.header-shell');
+	const mobileQuery = window.matchMedia('(max-width: 859.98px)');
+
+	if (headerShell) {
+		let lastY = window.scrollY;
+		let ticking = false;
+
+		const applyScroll = () => {
+			ticking = false;
+
+			// Never hide while the dropdown is open — closing it out from under
+			// the user mid-scroll would be disorienting.
+			if (!mobileQuery.matches || menu?.classList.contains('open')) {
+				headerShell.classList.remove('nav-hidden');
+				lastY = window.scrollY;
+				return;
+			}
+
+			const y = Math.max(window.scrollY, 0);
+			const delta = y - lastY;
+
+			// A small deadzone so sub-pixel scroll jitter (iOS rubber-banding,
+			// trackpad noise) doesn't flicker the bar. Only start hiding once
+			// the bar's own height has scrolled past, so it doesn't vanish
+			// while still sitting right at the top of the page.
+			if (Math.abs(delta) > 4) {
+				if (delta > 0 && y > headerShell.offsetHeight) {
+					headerShell.classList.add('nav-hidden');
+				} else if (delta < 0) {
+					headerShell.classList.remove('nav-hidden');
+				}
+				lastY = y;
+			}
+		};
+
+		window.addEventListener(
+			'scroll',
+			() => {
+				if (!ticking) {
+					ticking = true;
+					requestAnimationFrame(applyScroll);
+				}
+			},
+			{ passive: true }
+		);
+
+		// Crossing the breakpoint (e.g. rotating a tablet) shouldn't leave the
+		// bar stuck hidden on what's now effectively a desktop layout.
+		mobileQuery.addEventListener('change', () => headerShell.classList.remove('nav-hidden'));
 	}
 </script>
