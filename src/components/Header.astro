@@ -24,16 +24,18 @@ const MENU_LINKS = [
 ---
 
 {/*
-	Floating navigation. The shell stays in normal flow and sticks, rather than
-	being fixed and overlaying — fixed positioning would need every page to
-	reserve matching top padding by hand, and any page that forgot would hide
-	its own first heading under the bar.
+	Full-width navigation bar with a bottom border, content pinned to the
+	max-width container. The shell stays in normal flow and sticks, rather
+	than being fixed and overlaying — fixed positioning would need every page
+	to reserve matching top padding by hand, and any page that forgot would
+	hide its own first heading under the bar.
 
 	DOM order is logo → links → menu button → CTA, which is the order they
 	should be read in. Visual placement uses explicit grid columns per
 	breakpoint, so mobile can put the CTA and menu button hard right of the
-	logo while desktop right-aligns the links against the CTA — neither needs
-	the markup reordered underneath it.
+	logo while desktop left-aligns the links against the logo with the CTA
+	anchored on the far right — neither needs the markup reordered underneath
+	it.
 */}
 <div class="header-shell">
 	<div class="header-inner">
@@ -110,17 +112,18 @@ const MENU_LINKS = [
 
 	.header-shell {
 		position: sticky;
-		top: var(--space-sm);
+		top: 0;
 		z-index: 50;
-		margin-top: var(--space-sm);
+		width: 100%;
+		background: color-mix(in srgb, var(--color-bg-surface) 85%, transparent);
+		border-bottom: 1px solid var(--color-border-hairline);
+		-webkit-backdrop-filter: saturate(180%) blur(16px);
+		backdrop-filter: saturate(180%) blur(16px);
 		/* Clears the status bar / notch when the page is drawn edge to edge —
 		   an installed PWA (the manifest is display: standalone) or Android
 		   Chrome's edge-to-edge default. Both insets resolve to 0px in a normal
-		   browser tab, so this is inert there. The inline max() covers a
-		   landscape notch eating into the side gutters. */
+		   browser tab, so this is inert there. */
 		padding-top: env(safe-area-inset-top, 0px);
-		padding-left: max(var(--space-md), env(safe-area-inset-left, 0px));
-		padding-right: max(var(--space-md), env(safe-area-inset-right, 0px));
 	}
 
 	/* Anchors the dropdown panel: it's positioned against this, not against the
@@ -129,6 +132,8 @@ const MENU_LINKS = [
 		position: relative;
 		max-width: var(--max-width);
 		margin-inline: auto;
+		padding-left: max(var(--space-md), env(safe-area-inset-left, 0px));
+		padding-right: max(var(--space-md), env(safe-area-inset-right, 0px));
 	}
 
 	.site-header {
@@ -144,21 +149,7 @@ const MENU_LINKS = [
 		grid-template-columns: minmax(0, 1fr) auto;
 		align-items: center;
 		gap: var(--space-xs);
-		padding: 0.75rem;
-		border-radius: var(--radius-full);
-		/* Pure white rather than the page's warm off-white: at this size a cream
-		   fill has almost nothing to separate it from the page behind and reads
-		   as a smudge instead of a surface. Held translucent because the blur
-		   needs something to see through — at 85% it still reads as white while
-		   the page stays visible moving underneath.
-
-		   No shadow: the border alone draws the edge, so it's the default
-		   --color-border rather than the hairline, which read as too faint on
-		   its own without a shadow reinforcing it. */
-		background: color-mix(in srgb, var(--color-bg-surface) 85%, transparent);
-		border: 1px solid var(--color-border);
-		-webkit-backdrop-filter: saturate(180%) blur(16px);
-		backdrop-filter: saturate(180%) blur(16px);
+		padding-block: 0.9rem;
 	}
 
 	.site-logo {
@@ -473,34 +464,25 @@ const MENU_LINKS = [
 	   accessibility tree when not in use, so exactly one "Primary" navigation
 	   landmark is ever exposed. */
 	@media (min-width: 860px) {
-		/* No padding-inline override here. It is a shorthand, so it would reset
-		   the base rule's max(--space-md, env(safe-area-inset-*)) back to a
-		   plain gutter and let a landscape notch clip the bar — and since the
-		   base already resolves to --space-md whenever the inset is smaller,
-		   the override bought nothing anyway. */
-
 		.site-header {
-			grid-template-columns: auto minmax(0, 1fr) auto;
+			grid-template-columns: auto auto minmax(0, 1fr) auto;
 			gap: var(--space-sm);
-			padding-inline: var(--space-md);
 		}
 
 		.header-cta {
 			display: inline-flex;
-			grid-column: 3;
+			grid-column: 4;
 		}
 
-		/* Right-aligned against the CTA rather than centred in the track: the
-		   links and the CTA then read as one control cluster, instead of the
-		   links floating in the middle with dead space on both sides. */
+		/* Left-aligned right after the logo, not right-aligned against the CTA —
+		   the logo and links read as one cluster on the left, with the CTA
+		   anchored alone on the right and a spacer track between them. */
 		.desktop-nav {
 			display: block;
 			grid-row: 1;
 			grid-column: 2;
-			justify-self: end;
-			/* On top of the grid gap. Right-aligned, the last link otherwise sits
-			   almost against the CTA and the two read as one run of controls. */
-			margin-right: var(--space-md);
+			justify-self: start;
+			margin-left: var(--space-lg);
 		}
 
 		.menu-toggle,
