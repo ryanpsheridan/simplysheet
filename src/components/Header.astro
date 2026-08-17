@@ -152,37 +152,13 @@ const MENU_LINKS = [
 		   needs something to see through — at 85% it still reads as white while
 		   the page stays visible moving underneath.
 
-		   The hairline does the edge definition, so the shadow stays a hint of
-		   lift. A border and a heavy shadow both drawing the same edge is what
-		   makes a bar like this feel heavy. */
+		   No shadow: the border alone draws the edge, so it's the default
+		   --color-border rather than the hairline, which read as too faint on
+		   its own without a shadow reinforcing it. */
 		background: color-mix(in srgb, var(--color-bg-surface) 85%, transparent);
-		border: 1px solid var(--color-border-hairline);
+		border: 1px solid var(--color-border);
 		-webkit-backdrop-filter: saturate(180%) blur(16px);
 		backdrop-filter: saturate(180%) blur(16px);
-		box-shadow: var(--shadow-sm);
-	}
-
-	/* Floating over content, the bar's only separation is its own shadow — so
-	   it deepens as the page scrolls under it rather than changing fill.
-	   Longhands, not the `animation` shorthand: the shorthand resets
-	   animation-timeline to auto, and a minifier may reorder declarations so
-	   the reset lands last. */
-	@supports (animation-timeline: scroll()) {
-		@media (prefers-reduced-motion: no-preference) {
-			.site-header {
-				animation-name: header-lift;
-				animation-timing-function: linear;
-				animation-fill-mode: both;
-				animation-timeline: scroll(root block);
-				animation-range: 0 96px;
-			}
-
-			@keyframes header-lift {
-				to {
-					box-shadow: var(--shadow-md);
-				}
-			}
-		}
 	}
 
 	.site-logo {
