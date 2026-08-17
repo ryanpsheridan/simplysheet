@@ -29,6 +29,9 @@ const templates = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
+		metaTitle: z.string().optional(),
+		metaDescription: z.string().optional(),
+		intro: z.string().optional(),
 		badge: z.string().optional(),
 		sku: z.string(),
 		price: z.number(),
