@@ -164,12 +164,12 @@
   --max-width:         80rem;     /* 1280px */
   --max-width-narrow:  42rem;     /*  672px */
 
-  /* Clearance below the floating header bar, for sticky rails and for
-     scroll-margin-top on anchor targets. The bar is no longer flush to the
-     viewport top — it sits --space-sm down and is roughly 4rem tall — so
-     anything that needs to come to rest below it reads this rather than
-     hardcoding a number that only matched the old flush header. */
-  --header-offset:     5.5rem;
+  /* Clearance below the header bar, for sticky rails and for
+     scroll-margin-top on anchor targets. The bar is flush to the viewport
+     top and roughly 4.3rem tall — anything that needs to come to rest below
+     it reads this rather than hardcoding a number that only matched one
+     header treatment. */
+  --header-offset:     4.5rem;
 
   /* ——— Misc ——— */
 
