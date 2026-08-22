@@ -46,14 +46,26 @@ The primary goal of this site is organic Google discovery. Every change — new 
 Two GA4 click handlers live in `BaseHead.astro`, and which one fires is decided by the link's host:
 
 - **Etsy links** → `etsy_outbound_click`, with `link_label` taken from `data-cta` (or the link text as a fallback). Hrefs are never rewritten, so Etsy's own params stay intact.
-- **Everything else carrying `data-cta`** → `cta_click`, with the attribute's value as `cta_id`.
+- **Everything else carrying `data-cta`** (`<a>` or `<button>`) → `cta_click`, with the attribute's value as `cta_id`.
 
-Etsy links are explicitly skipped by the second handler so one click can't be counted twice.
+Etsy links are explicitly skipped by the second handler so one click can't be counted twice. A `<button data-cta>` has no `href`, so the handler only runs the Etsy-host check when `link.href` exists — buttons always fall through to `cta_click`.
 
-- To track a new on-site link, add `data-cta="..."` and nothing else — no wiring required.
+- To track a new on-site link or button, add `data-cta="..."` and nothing else — no wiring required.
 - **Name a CTA for what it is, not what it says.** `nav_cta`, not `find_your_budget_style`. Rewording a button then doesn't split its history in GA4.
-- Convention in use: `nav_link:<id>` for the desktop bar, `nav_menu_link:<id>` for the mobile panel (kept separate so the two surfaces can be compared), `nav_cta` for the header button, and `<page>_<element>` elsewhere (`footer_etsy_link`, `articles_index_resource_card:<name>`).
-- The header logo is deliberately untracked — a logo click is "go home", not a choice between destinations, and it would swamp the nav numbers.
+- **Every distinct surface gets its own `cta_id`, down to the individual item where one exists.** Nav links, footer links, pagination arrows, article/template/tool cards, and product promo CTAs are each tagged per-instance (with a `:<id>` suffix) rather than sharing one generic tag for the whole group — that's what makes "which button" answerable from GA4 instead of just "was any button in this area clicked."
+- Convention in use, grouped by surface:
+  - **Header nav**: `nav_link:<id>` (desktop bar), `nav_menu_link:<id>` (mobile panel, kept separate so the two surfaces can be compared), `nav_cta` (header button).
+  - **Footer**: `footer_link:<id>` (per nav item), `footer_promo_banner`, `footer_etsy_link`.
+  - **Pagination** (`Pagination.astro`): `pagination_prev`, `pagination_page:<n>`, `pagination_next`.
+  - **Topic/tag filters** (`TopicFilterTabs.astro`): `topic_filter_tab:<slug>` (`all` for the unfiltered tab).
+  - **Product promos** (`ProductPromo.astro`, every variant): `product_promo_cta:<slug>:<variant>`, `product_promo_thumb:<slug>:<variant>`, `product_promo_card:<slug>`, `product_promo_mini:<slug>`.
+  - **Calculators**: `calc_product_link:<templateSlug>` for the `.calc-product-link` funnel CTA every calculator/assessment carries.
+  - **Article listing/cards**: `articles_grid_item:<id>` (`ArticleGrid.astro`, both the static and client-rendered paths), `article_related_link:<id>`, `article_share_button`, `article_share_email`.
+  - **Template pages** (`TemplateLayout.astro`): `template_hero_cta:<id>`, `template_footer_cta:<id>`, `template_bundle_cta:<id>:<name>`, `template_reviews_cta:<id>`, `template_related_article:<id>`, `template_more_spreadsheets_card:<id>`.
+  - **Tool pages**: `tool_thumb_card:<toolId>` (homepage/about tool grid), `calculator_more_tools_item:<toolId>`, `calculator_more_tools_view_all`, `calculator_related_article:<id>` (`CalculatorLayout.astro`).
+  - **Homepage** (`index.astro`, `SpreadsheetsToolsRows.astro`): `index_hero_featured_article`, `index_latest_article_card:<id>`, `index_latest_view_all`, `index_quiz_banner_cta`, `index_about_brief_cta`, `home_tools_row_view_all`, `home_spreadsheets_row_item:<id>`, `home_spreadsheets_row_view_all`.
+  - Everything else not yet broken out this way still follows `<page>_<element>` (e.g. `spreadsheets_index_etsy_link`, `articles_index_explore_all_cta`).
+- The header logo and footer logo are deliberately untracked — a logo click is "go home", not a choice between destinations, and it would swamp the nav numbers. In-article table-of-contents anchors are also untracked — they're internal wayfinding within a page a visitor is already on, not a destination choice.
 - Note the ordering trap this fixed: the Etsy handler returns early for every non-Etsy host, so before the second handler existed, `data-cta` on an internal link recorded nothing at all. If you add a third handler, check it doesn't sit behind an early return meant for a different link type.
 
 ## Etsy Links — Share & Save Domain + UTM Tracking

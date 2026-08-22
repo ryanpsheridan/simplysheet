@@ -191,7 +191,7 @@ const faqSchema = faq.length ? {
 						<h2 class="more-tools-heading">More free tools</h2>
 						<div class="more-tools-grid">
 							{relatedTools.map((tool) => (
-								<a href={tool.url} class="more-tool">
+								<a href={tool.url} class="more-tool" data-cta={`calculator_more_tools_item:${tool.url.replace(/^\/tools\/|\/$/g, '')}`}>
 									<span class="more-tool-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
 									<div class="more-tool-text">
 										<h3 class="more-tool-title">{tool.name}</h3>
@@ -200,7 +200,7 @@ const faqSchema = faq.length ? {
 								</a>
 							))}
 						</div>
-						<p class="more-tools-all"><a href="/tools/">View all tools <span class="arrow">&rarr;</span></a></p>
+						<p class="more-tools-all"><a href="/tools/" data-cta="calculator_more_tools_view_all">View all tools <span class="arrow">&rarr;</span></a></p>
 					</section>
 
 					{related.length > 0 && (
@@ -209,7 +209,7 @@ const faqSchema = faq.length ? {
 							<ul class="related-list">
 								{related.map((r) => (
 									<li>
-										<a href={`/articles/${r.id}/`}>{r.data.title}</a>
+										<a href={`/articles/${r.id}/`} data-cta={`calculator_related_article:${r.id}`}>{r.data.title}</a>
 									</li>
 								))}
 							</ul>

@@ -23,7 +23,7 @@ const image = midImage;
 
 {variant === 'interstitial' && (
 	<div class="article-promo">
-		<a href={url} class="article-promo-thumb">
+		<a href={url} class="article-promo-thumb" data-cta={`product_promo_thumb:${slug}:interstitial`}>
 			<img src={image} alt={alt} width="600" height="400" loading="lazy" />
 		</a>
 		<div class="article-promo-content">
@@ -38,13 +38,13 @@ const image = midImage;
 				<h3 class="product-name">{name}</h3>
 				<p class="product-desc">{description}</p>
 			</div>
-			<a href={url} class="btn btn-secondary product-cta">View template <span class="arrow">&rarr;</span></a>
+			<a href={url} class="btn btn-secondary product-cta" data-cta={`product_promo_cta:${slug}:interstitial`}>View template <span class="arrow">&rarr;</span></a>
 		</div>
 	</div>
 )}
 
 {variant === 'card' && (
-	<a href={url} class="product-card">
+	<a href={url} class="product-card" data-cta={`product_promo_card:${slug}`}>
 		<div class="product-card-thumb">
 			<img src={image} alt={alt} width="600" height="400" loading="lazy" />
 		</div>
@@ -57,13 +57,13 @@ const image = midImage;
 {variant === 'mini' && (
 	<aside class="promo-mini">
 		<p class="eyebrow promo-mini-label">{label ?? 'Recommended template'}</p>
-		<a href={url} class="promo-mini-link">{name} <span class="arrow">&rarr;</span></a>
+		<a href={url} class="promo-mini-link" data-cta={`product_promo_mini:${slug}`}>{name} <span class="arrow">&rarr;</span></a>
 	</aside>
 )}
 
 {variant === 'row' && (
 	<div class="product-row">
-		<a href={url} class="product-thumb">
+		<a href={url} class="product-thumb" data-cta={`product_promo_thumb:${slug}:row`}>
 			<img src={image} alt={alt} width="600" height="400" loading="lazy" />
 		</a>
 		<div class="product-content">
@@ -72,7 +72,7 @@ const image = midImage;
 				<h3 class="product-name">{name}</h3>
 				<p class="product-desc">{description}</p>
 			</div>
-			<a href={url} class="btn btn-secondary product-cta">View template <span class="arrow">&rarr;</span></a>
+			<a href={url} class="btn btn-secondary product-cta" data-cta={`product_promo_cta:${slug}:row`}>View template <span class="arrow">&rarr;</span></a>
 		</div>
 	</div>
 )}

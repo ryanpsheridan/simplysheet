@@ -400,7 +400,7 @@ function featureIcon(text: string): string {
 								<ul class="product-articles-list">
 									{linkedArticles.map((a: any) => (
 										<li>
-											<a href={`/articles/${a.id}/`}>{a.data.title}</a>
+											<a href={`/articles/${a.id}/`} data-cta={`template_related_article:${a.id}`}>{a.data.title}</a>
 										</li>
 									))}
 								</ul>
@@ -437,7 +437,7 @@ function featureIcon(text: string): string {
 					<h2>More spreadsheets</h2>
 					<div class="other-templates-grid">
 						{otherTemplates.map((t) => (
-							<a href={`/spreadsheets/${t.id}/`} class="template-card">
+							<a href={`/spreadsheets/${t.id}/`} class="template-card" data-cta={`template_more_spreadsheets_card:${t.id}`}>
 								<div class="template-thumb">
 									<img src={t.data.midImage} alt={`${t.data.title} preview`} width="600" height="400" loading="lazy" />
 									{t.data.badge && <span class="badge badge-overlay">{t.data.badge}</span>}

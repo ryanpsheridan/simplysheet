@@ -8,9 +8,9 @@ const { tags, activeSlug } = Astro.props;
 ---
 
 <nav class="filter-tabs" aria-label="Filter articles by topic">
-	<a href="/articles/" class={`filter-tab ${activeSlug === 'all' ? 'active' : ''}`}>All articles</a>
+	<a href="/articles/" class={`filter-tab ${activeSlug === 'all' ? 'active' : ''}`} data-cta="topic_filter_tab:all">All articles</a>
 	{tags.map((tag) => (
-		<a href={`/articles/tag/${tag.slug}/`} class={`filter-tab ${activeSlug === tag.slug ? 'active' : ''}`}>{tag.label}</a>
+		<a href={`/articles/tag/${tag.slug}/`} class={`filter-tab ${activeSlug === tag.slug ? 'active' : ''}`} data-cta={`topic_filter_tab:${tag.slug}`}>{tag.label}</a>
 	))}
 </nav>
 

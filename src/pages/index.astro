@@ -59,7 +59,7 @@ const websiteSchema = {
 				<p class="hero-desc">Whether you are paying off debt or navigating an irregular income, find the guidance and tools you need to organize your money, stay on track, and move forward with confidence.</p>
 			</div>
 			{featured && (
-				<a href={`/articles/${featured.id}/`} class="hero-featured">
+				<a href={`/articles/${featured.id}/`} class="hero-featured" data-cta="index_hero_featured_article">
 					{(featured.data.cardImage || featured.data.image) && (
 						<div class="hero-featured-thumb">
 							<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" fetchpriority="high" />
@@ -86,7 +86,7 @@ const websiteSchema = {
 					</div>
 					<div class="home-row-items">
 						{latest.map((article) => (
-							<a href={`/articles/${article.id}/`} class="home-row-item">
+							<a href={`/articles/${article.id}/`} class="home-row-item" data-cta={`index_latest_article_card:${article.id}`}>
 								{(article.data.cardImage || article.data.image) && (
 									<div class="home-row-thumb">
 										<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
@@ -100,7 +100,7 @@ const websiteSchema = {
 							</a>
 						))}
 						<div class="home-row-viewall">
-							<a href="/articles/" class="btn btn-secondary">All articles <span class="arrow">&rarr;</span></a>
+							<a href="/articles/" class="btn btn-secondary" data-cta="index_latest_view_all">All articles <span class="arrow">&rarr;</span></a>
 						</div>
 					</div>
 				</div>
@@ -112,7 +112,7 @@ const websiteSchema = {
 	<section class="quiz-banner">
 		<div class="quiz-banner-inner">
 			<h2 class="quiz-banner-heading">Curious which budgeting style fits you best?</h2>
-			<a href="/quiz/budgeting-style/" class="btn btn-primary">Take the 60-second quiz</a>
+			<a href="/quiz/budgeting-style/" class="btn btn-primary" data-cta="index_quiz_banner_cta">Take the 60-second quiz</a>
 		</div>
 	</section>
 
@@ -121,7 +121,7 @@ const websiteSchema = {
 			<div class="about-brief-label">Creating a sustainable system</div>
 			<div class="about-brief-content">
 				<p class="about-brief-body" id="about-text">I spent years frustrated by complicated budgeting apps that didn't fit my life. After six years of refining my own spreadsheet systems, I realized that clarity comes from simplicity, not extra features. I combined my background in UX design with my passion for personal finance to build the tools I wish I had from the start.</p>
-				<a href="/about/" class="btn btn-secondary about-brief-link">Read the full story <span class="arrow">&rarr;</span></a>
+				<a href="/about/" class="btn btn-secondary about-brief-link" data-cta="index_about_brief_cta">Read the full story <span class="arrow">&rarr;</span></a>
 			</div>
 		</div>
 	</section>

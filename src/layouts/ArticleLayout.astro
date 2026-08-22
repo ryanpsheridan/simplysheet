@@ -202,7 +202,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 					)}
 
 					<div class="article-actions">
-						<button class="action-btn" id="share-btn" aria-label="Share this article">
+						<button class="action-btn" id="share-btn" aria-label="Share this article" data-cta="article_share_button">
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
 								<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
 								<polyline points="16 6 12 2 8 6" />
@@ -210,7 +210,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 							</svg>
 							<span>Share</span>
 						</button>
-						<a href={emailShareUrl} class="action-btn" aria-label="Share via email">
+						<a href={emailShareUrl} class="action-btn" aria-label="Share via email" data-cta="article_share_email">
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
 								<rect x="2" y="4" width="20" height="16" rx="2" />
 								<path d="M22 4l-10 8L2 4" />
@@ -233,7 +233,7 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 					<ul class="related-list">
 						{related.map((r) => (
 							<li>
-								<a href={`/articles/${r.id}/`}>{r.data.title}</a>
+								<a href={`/articles/${r.id}/`} data-cta={`article_related_link:${r.id}`}>{r.data.title}</a>
 							</li>
 						))}
 					</ul>

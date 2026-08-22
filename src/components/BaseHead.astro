@@ -79,28 +79,33 @@ const ogImage = new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString()
 		});
 	}, true);
 
-	// Fires a GA4 event for any link carrying data-cta, so on-site calls to
-	// action can be compared the same way Etsy outbound clicks already are.
+	// Fires a GA4 event for any link or button carrying data-cta, so on-site
+	// calls to action can be compared the same way Etsy outbound clicks
+	// already are.
 	//
 	// The handler above returns early for every non-Etsy host, so until now a
 	// data-cta on an internal link (the nav, the quiz result CTA, the articles
 	// index cards) was recorded nowhere — the attribute was there, nothing read
 	// it. Etsy links are skipped here so a single click can't be counted twice.
+	// A plain <button> (e.g. the share button) has no href, so the Etsy check
+	// only runs when there is one to check.
 	document.addEventListener('click', function (e) {
-		var link = e.target.closest('a[data-cta]');
+		var link = e.target.closest('a[data-cta], button[data-cta]');
 		if (!link) return;
 
-		var url;
-		try {
-			url = new URL(link.href, window.location.href);
-		} catch (err) {
-			return;
+		if (link.href) {
+			var url;
+			try {
+				url = new URL(link.href, window.location.href);
+			} catch (err) {
+				return;
+			}
+			if (/(^|\.)etsy\.com$/i.test(url.hostname)) return;
 		}
-		if (/(^|\.)etsy\.com$/i.test(url.hostname)) return;
 
 		gtag('event', 'cta_click', {
 			cta_id: link.dataset.cta,
-			link_url: link.href,
+			link_url: link.href || undefined,
 			page_path: window.location.pathname,
 		});
 	}, true);

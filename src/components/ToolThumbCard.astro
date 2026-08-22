@@ -6,9 +6,10 @@ interface Props {
 }
 
 const { tool } = Astro.props;
+const toolId = tool.url.replace(/\/$/, '').split('/').pop();
 ---
 
-<a href={tool.url} class="tool-thumb-card">
+<a href={tool.url} class="tool-thumb-card" data-cta={`tool_thumb_card:${toolId}`}>
 	<div class="tool-thumb-illustration">
 		<svg viewBox="0 0 240 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" set:html={tool.illustration} />
 	</div>

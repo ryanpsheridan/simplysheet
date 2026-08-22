@@ -51,7 +51,7 @@ const { articles, manifest, tagMap } = Astro.props;
 	<div class="articles-content">
 		<div class="article-list" id="article-list">
 			{articles.map((article) => (
-				<a href={`/articles/${article.id}/`} class="article-list-item">
+				<a href={`/articles/${article.id}/`} class="article-list-item" data-cta={`articles_grid_item:${article.id}`}>
 					{(article.data.cardImage || article.data.image) && (
 						<div class="article-list-thumb">
 							<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
@@ -115,7 +115,7 @@ const { articles, manifest, tagMap } = Astro.props;
 		const imgHtml = item.image
 			? `<div class="article-list-thumb"><img src="${item.image}" alt="${escapeHtml(item.title)}" width="960" height="540" loading="lazy" /></div>`
 			: '';
-		return `<a href="/articles/${item.id}/" class="article-list-item">${imgHtml}<div class="article-list-text">${pillsHtml}<h2 class="article-list-title">${escapeHtml(item.title)}</h2><p class="article-list-desc">${escapeHtml(item.desc)}</p><span class="article-list-read">${item.readTime} min read</span></div></a>`;
+		return `<a href="/articles/${item.id}/" class="article-list-item" data-cta="articles_grid_item:${escapeHtml(item.id)}">${imgHtml}<div class="article-list-text">${pillsHtml}<h2 class="article-list-title">${escapeHtml(item.title)}</h2><p class="article-list-desc">${escapeHtml(item.desc)}</p><span class="article-list-read">${item.readTime} min read</span></div></a>`;
 	}
 
 	function applyFilterAndSort() {

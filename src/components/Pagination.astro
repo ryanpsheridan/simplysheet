@@ -31,7 +31,7 @@ const hasNext = currentPage < lastPage;
 {lastPage > 1 && (
 	<nav class="pagination" aria-label="Pagination">
 		{hasPrev
-			? <a href={pageUrl(currentPage - 1)} class="pagination-arrow" aria-label="Previous page" rel="prev">
+			? <a href={pageUrl(currentPage - 1)} class="pagination-arrow" aria-label="Previous page" rel="prev" data-cta="pagination_prev">
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
 				</a>
 			: <span class="pagination-arrow disabled" aria-hidden="true">
@@ -46,13 +46,13 @@ const hasNext = currentPage < lastPage;
 				) : p === currentPage ? (
 					<span class="pagination-page active" aria-current="page">{p}</span>
 				) : (
-					<a href={pageUrl(p)} class="pagination-page">{p}</a>
+					<a href={pageUrl(p)} class="pagination-page" data-cta={`pagination_page:${p}`}>{p}</a>
 				)
 			)}
 		</div>
 
 		{hasNext
-			? <a href={pageUrl(currentPage + 1)} class="pagination-arrow enabled" aria-label="Next page" rel="next">
+			? <a href={pageUrl(currentPage + 1)} class="pagination-arrow enabled" aria-label="Next page" rel="next" data-cta="pagination_next">
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
 				</a>
 			: <span class="pagination-arrow disabled" aria-hidden="true">
