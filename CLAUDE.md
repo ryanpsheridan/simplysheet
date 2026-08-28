@@ -63,7 +63,7 @@ Etsy links are explicitly skipped by the second handler so one click can't be co
   - **Article listing/cards**: `articles_grid_item:<id>` (`ArticleGrid.astro`, both the static and client-rendered paths), `article_related_link:<id>`, `article_share_button`, `article_share_email`.
   - **Template pages** (`TemplateLayout.astro`): `template_hero_cta:<id>`, `template_footer_cta:<id>`, `template_bundle_cta:<id>:<name>`, `template_reviews_cta:<id>`, `template_related_article:<id>`, `template_more_spreadsheets_card:<id>`.
   - **Tool pages**: `tool_thumb_card:<toolId>` (homepage/about tool grid), `calculator_more_tools_item:<toolId>`, `calculator_more_tools_view_all`, `calculator_related_article:<id>` (`CalculatorLayout.astro`).
-  - **Homepage** (`index.astro`, `SpreadsheetsToolsRows.astro`): `index_hero_featured_article`, `index_latest_article_card:<id>`, `index_latest_view_all`, `index_quiz_banner_cta`, `index_about_brief_cta`, `home_tools_row_view_all`, `home_spreadsheets_row_item:<id>`, `home_spreadsheets_row_view_all`.
+  - **Homepage** (`index.astro`, `SpreadsheetsToolsRows.astro`): `index_hero_primary_cta`, `index_hero_secondary_cta`, `index_hero_featured_article`, `index_hero_more_article:<id>`, `index_latest_article_card:<id>`, `index_latest_view_all`, `index_quiz_banner_cta`, `index_about_brief_cta`, `home_tools_row_view_all`, `home_spreadsheets_row_item:<id>`, `home_spreadsheets_row_view_all`.
   - Everything else not yet broken out this way still follows `<page>_<element>` (e.g. `spreadsheets_index_etsy_link`, `articles_index_explore_all_cta`).
 - The header logo and footer logo are deliberately untracked — a logo click is "go home", not a choice between destinations, and it would swamp the nav numbers. In-article table-of-contents anchors are also untracked — they're internal wayfinding within a page a visitor is already on, not a destination choice.
 - Note the ordering trap this fixed: the Etsy handler returns early for every non-Etsy host, so before the second handler existed, `data-cta` on an internal link recorded nothing at all. If you add a third handler, check it doesn't sit behind an early return meant for a different link type.
@@ -383,7 +383,25 @@ The articles hub is statically paginated for SEO/AEO crawlability — there is n
 ## Homepage
 
 - The featured article is pinned by slug in `src/pages/index.astro`: `const featuredSlug = '50-30-20-budget-rule'`. Do not change unless explicitly told to.
-- The six secondary article cards truncate descriptions to **3 lines** with ellipsis (`-webkit-line-clamp: 3`) so all cards stay the same height. Do not remove this.
+
+### The hero has a job, and it isn't decoration
+
+It was a headline, a paragraph, and one article tile — no call to action anywhere, on any breakpoint (the header CTA is `display: none` below 860px, so the first tap target on a phone was that article at 428px). It now states the offer, gives two destinations, and backs them with counted facts:
+
+- **The H1 names the product and carries the search terms** ("budget spreadsheets", "Google Sheets", "Excel"). It is the strongest on-page signal after the title tag; a generic line like "A simpler way to manage your personal finances" spends it on nothing. Keep it specific.
+- **Two CTAs, pointing at different surfaces.** Primary to `/spreadsheets/`, secondary to `/tools/`. The secondary deliberately does *not* point at the quiz: the header CTA and the quiz banner further down both already do, and a third link would spend the slot on a destination the page sells twice.
+- **Every number in `.hero-trust` is counted from the repo at build time** — templates in the collection, `TOOLS.length`, reviews summed across all templates. Never hardcode one, and never add a figure that can't be counted here (Etsy sales, an average rating) unless there is a real source for it in the repo.
+- **`.hero-inner` is `align-items: start`, never `center`.** The text column is far shorter than the article column beside it, so centring split the difference into two equal voids — 318px of nothing across a 513px row.
+- **`.hero-text` keeps the flex default `stretch`.** `align-items: start` shrink-wraps every child to fit-content, which makes the mobile rule widening the buttons to 100% resolve against a fit-content parent and silently do nothing.
+- The hero rail shows the featured article plus the next three; `latest` therefore starts at `rest.slice(3, 9)` so the same three headlines don't appear twice on one screen.
+
+### Section rhythm
+
+Latest / Free tools / Spreadsheets were four identical label-left grids on one ground, which is what actually read as monotonous — the hero got the blame for a whole-page problem. Spreadsheets now breaks out into a full-bleed `.home-band`, since it is the surface the site sells from.
+
+- The band is **`--color-bg-surface`, not `--color-bg-panel`**. The product thumbs are themselves panel-filled and their Best Seller chip is `.badge-overlay` (a surface fill plus a border), so a panel band would swallow both. A white plane on the warm page ground reads as lifted and needs no overrides.
+- `SpreadsheetsToolsRows.astro` takes an `only` prop (`"tools"` / `"spreadsheets"`) so the homepage can wrap one row in that band. About still calls it bare and gets both rows in order.
+- Heading ranks: section headings are `h2`, card titles `h3`. The featured article's title is also `h2` — a peer of the sections, which is right for a top-level item on the page.
 
 ## Typography
 

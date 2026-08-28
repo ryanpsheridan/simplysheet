@@ -4,9 +4,22 @@ import { TOOLS } from '../data/tools';
 import ToolThumbCard from './ToolThumbCard.astro';
 
 // The Free tools + Spreadsheets rows shared by the homepage and the About
-// page. Renders two `.home-row` fragments (no section wrapper) so the caller
+// page. Renders `.home-row` fragments (no section wrapper) so the caller
 // controls the surrounding `.home-rows` / `.home-rows-inner` layout. All
 // styling lives in the global "Home rows" block in src/styles/global.css.
+//
+// `only` lets a caller take one row at a time: the homepage pulls Spreadsheets
+// out into its own full-bleed band, which needs a separate wrapper element, so
+// the two rows can't be emitted as one adjacent pair there. About still asks
+// for both and gets them in order.
+interface Props {
+	only?: 'tools' | 'spreadsheets';
+}
+
+const { only } = Astro.props;
+const showTools = only !== 'spreadsheets';
+const showTemplates = only !== 'tools';
+
 const templates = (await getCollection('templates'))
 	.sort((a, b) => a.data.order - b.data.order)
 	.slice(0, 3)
@@ -21,23 +34,25 @@ const templates = (await getCollection('templates'))
 const topTools = TOOLS.slice(0, 3);
 ---
 
-<div class="home-row">
-	<div class="home-row-label">
-		<h3 class="home-row-heading">Free tools</h3>
-	</div>
-	<div class="home-row-items">
-		{topTools.map((tool) => (
-			<ToolThumbCard tool={tool} />
-		))}
-		<div class="home-row-viewall">
-			<a href="/tools/" class="btn btn-secondary" data-cta="home_tools_row_view_all">All tools <span class="arrow">&rarr;</span></a>
-		</div>
-	</div>
-</div>
-{templates.length > 0 && (
+{showTools && (
 	<div class="home-row">
 		<div class="home-row-label">
-			<h3 class="home-row-heading">Spreadsheets</h3>
+			<h2 class="home-row-heading">Free tools</h2>
+		</div>
+		<div class="home-row-items">
+			{topTools.map((tool) => (
+				<ToolThumbCard tool={tool} />
+			))}
+			<div class="home-row-viewall">
+				<a href="/tools/" class="btn btn-secondary" data-cta="home_tools_row_view_all">All tools <span class="arrow">&rarr;</span></a>
+			</div>
+		</div>
+	</div>
+)}
+{showTemplates && templates.length > 0 && (
+	<div class="home-row">
+		<div class="home-row-label">
+			<h2 class="home-row-heading">Spreadsheets</h2>
 		</div>
 		<div class="home-row-items">
 			{templates.map((t) => (
@@ -50,7 +65,7 @@ const topTools = TOOLS.slice(0, 3);
 						{t.badge && <span class="badge badge-overlay">{t.badge}</span>}
 					</div>
 					<div class="home-row-text">
-						<h4 class="home-row-title">{t.name}</h4>
+						<h3 class="home-row-title">{t.name}</h3>
 						<p class="home-row-desc">{t.desc}</p>
 					</div>
 				</a>

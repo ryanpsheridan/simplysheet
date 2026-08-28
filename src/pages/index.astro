@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import TagPills from '../components/TagPills.astro';
 import SpreadsheetsToolsRows from '../components/SpreadsheetsToolsRows.astro';
 import { getCollection } from 'astro:content';
+import { TOOLS } from '../data/tools';
 import { SITE_DESCRIPTION, SITE_TITLE, TAG_MAP } from '../consts';
 
 const allArticles = (await getCollection('articles'))
@@ -17,7 +18,19 @@ const featuredSlug = '50-30-20-budget-rule';
 const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
 const rest = allArticles.filter((a) => a.id !== featured.id);
 
-const latest = rest.slice(0, 9);
+// The hero carries the featured article plus the next three, so Latest starts
+// after them — otherwise the same three headlines appear twice on one screen.
+const heroMore = rest.slice(0, 3);
+const latest = rest.slice(3, 9);
+
+// Every figure in the hero's trust strip is counted from the repo at build
+// time rather than typed in, so none of them can quietly go stale. Anything
+// that can't be counted here (Etsy sales, an average rating) is deliberately
+// absent rather than estimated.
+const templates = await getCollection('templates');
+const templateCount = templates.length;
+const reviewCount = templates.reduce((n, t) => n + (t.data.reviews?.length ?? 0), 0);
+const toolCount = TOOLS.length;
 
 const organizationSchema = {
 	'@context': 'https://schema.org',
@@ -55,23 +68,59 @@ const websiteSchema = {
 	<section class="hero">
 		<div class="hero-inner">
 			<div class="hero-text">
-				<h1 class="hero-title">A simpler way to manage your personal finances.</h1>
-				<p class="hero-desc">Whether you are paying off debt or navigating an irregular income, find the guidance and tools you need to organize your money, stay on track, and move forward with confidence.</p>
+				<h1 class="hero-title">Budget spreadsheets that actually get used.</h1>
+				<p class="hero-desc">Plain-English guides, free calculators, and Google Sheets and Excel templates for people who have tried a budgeting app and quit by March.</p>
+				<div class="hero-actions">
+					<a href="/spreadsheets/" class="btn btn-primary btn-arrow" data-cta="index_hero_primary_cta">Browse the spreadsheets</a>
+					{/* Tools, not the quiz: the header CTA and the banner further
+					    down both already point at the quiz, and a third link to it
+					    here would spend the hero's one secondary slot on a
+					    destination the page sells twice over. This way the first
+					    screen offers all three of the site's surfaces — buy,
+					    calculate, read — with the articles in the rail beside it. */}
+					<a href="/tools/" class="btn btn-secondary" data-cta="index_hero_secondary_cta">Try a free calculator</a>
+				</div>
+				<p class="hero-trust">
+					<span>{templateCount} spreadsheets</span>
+					<span aria-hidden="true">&middot;</span>
+					<span>{toolCount} free tools</span>
+					<span aria-hidden="true">&middot;</span>
+					<span>{reviewCount} buyer reviews</span>
+					<span aria-hidden="true">&middot;</span>
+					<span>No subscription</span>
+				</p>
 			</div>
-			{featured && (
-				<a href={`/articles/${featured.id}/`} class="hero-featured" data-cta="index_hero_featured_article">
-					{(featured.data.cardImage || featured.data.image) && (
-						<div class="hero-featured-thumb">
-							<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" fetchpriority="high" />
+			<div class="hero-side">
+				<p class="eyebrow" style="--eyebrow-tint: var(--tint-lavender)">Start here</p>
+				{featured && (
+					<a href={`/articles/${featured.id}/`} class="hero-featured" data-cta="index_hero_featured_article">
+						{(featured.data.cardImage || featured.data.image) && (
+							<div class="hero-featured-thumb">
+								<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" fetchpriority="high" />
+							</div>
+						)}
+						<div class="hero-featured-text">
+							<TagPills tags={featured.data.tags} tagMap={TAG_MAP} />
+							<h2 class="hero-featured-title">{featured.data.title}</h2>
+							<p class="hero-featured-meta">
+								<span>{featured.readTime} min read</span>
+							</p>
 						</div>
-					)}
-					<TagPills tags={featured.data.tags} tagMap={TAG_MAP} />
-					<h2 class="hero-featured-title">{featured.data.title}</h2>
-					<p class="hero-featured-meta">
-						<span>{featured.readTime} min read</span>
-					</p>
-				</a>
-			)}
+					</a>
+				)}
+				{heroMore.length > 0 && (
+					<ul class="hero-more">
+						{heroMore.map((article) => (
+							<li>
+								<a href={`/articles/${article.id}/`} data-cta={`index_hero_more_article:${article.id}`}>
+									<span class="hero-more-title">{article.data.title}</span>
+									<span class="hero-more-meta">{article.readTime} min</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				)}
+			</div>
 		</div>
 	</section>
 
@@ -82,7 +131,7 @@ const websiteSchema = {
 			{latest.length > 0 && (
 				<div class="home-row">
 					<div class="home-row-label">
-						<h3 class="home-row-heading">Latest</h3>
+						<h2 class="home-row-heading">Latest</h2>
 					</div>
 					<div class="home-row-items">
 						{latest.map((article) => (
@@ -94,7 +143,7 @@ const websiteSchema = {
 								)}
 								<div class="home-row-text">
 									<TagPills tags={article.data.tags} tagMap={TAG_MAP} />
-									<h4 class="home-row-title">{article.data.title}</h4>
+									<h3 class="home-row-title">{article.data.title}</h3>
 									<span class="home-row-meta">{article.readTime} min read</span>
 								</div>
 							</a>
@@ -105,14 +154,27 @@ const websiteSchema = {
 					</div>
 				</div>
 			)}
-			<SpreadsheetsToolsRows />
+			<SpreadsheetsToolsRows only="tools" />
+		</div>
+	</section>
+
+	{/* Spreadsheets breaks out of the shared rows into its own full-bleed band.
+	    Four identical label-left grids in a row is what made the page read as
+	    one flat texture, and this is the surface the site actually sells from,
+	    so it is the one that earns the break. Surface rather than panel: the
+	    product thumbs and their Best Seller chip are both built to sit on
+	    panel, and a panel band would swallow them. */}
+	<section class="home-band">
+		<div class="home-rows-inner">
+			<SpreadsheetsToolsRows only="spreadsheets" />
 		</div>
 	</section>
 
 	<section class="quiz-banner">
 		<div class="quiz-banner-inner">
-			<h2 class="quiz-banner-heading">Curious which budgeting style fits you best?</h2>
-			<a href="/quiz/budgeting-style/" class="btn btn-primary" data-cta="index_quiz_banner_cta">Take the 60-second quiz</a>
+			<h2 class="quiz-banner-heading">Which budgeting style actually fits you?</h2>
+			<p class="quiz-banner-desc">Seven questions about how you already handle money, and a method that suits it. No email, no sign-up.</p>
+			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-lg" data-cta="index_quiz_banner_cta">Take the 60-second quiz</a>
 		</div>
 	</section>
 
@@ -143,14 +205,22 @@ const websiteSchema = {
 	.hero {
 		padding: var(--space-section) var(--space-md);
 	}
+	/* `align-items: start`, never `center`. The text column is much shorter
+	   than the article column beside it, so centring split the difference into
+	   two equal voids above and below it — 318px of nothing across a 513px
+	   row. Both columns start at the same line instead. */
 	.hero-inner {
 		max-width: var(--max-width);
 		margin: 0 auto;
 		display: grid;
-		grid-template-columns: 0.75fr 1fr;
+		grid-template-columns: 1fr 1fr;
 		gap: var(--space-xl);
-		align-items: center;
+		align-items: start;
 	}
+	/* Children stay stretched (the flex default). `align-items: start` here
+	   shrink-wraps every child to fit-content, which makes the mobile rule
+	   that widens the buttons to 100% resolve against a fit-content parent
+	   and quietly do nothing. */
 	.hero-text {
 		display: flex;
 		flex-direction: column;
@@ -163,15 +233,47 @@ const websiteSchema = {
 		color: var(--color-text-heading);
 		margin-bottom: var(--space-sm);
 	}
+	/* Reading copy, not UI text: this is the one paragraph on the page a
+	   stranger actually reads, and on a phone it is most of the first screen,
+	   so it takes the token that steps up there. */
 	.hero-desc {
-		font-size: var(--text-body);
+		font-size: var(--text-read);
 		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
 		margin: 0;
+		max-width: 34em;
 	}
-	.hero-featured {
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+		margin-top: var(--space-lg);
+	}
+	.hero-trust {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: var(--space-2xs) var(--space-sm);
+		margin: var(--space-md) 0 0;
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+	}
+
+	/* ——— Hero side rail (featured article + the next three) ——— */
+
+	.hero-side {
 		display: flex;
 		flex-direction: column;
+		align-items: stretch;
+	}
+	.hero-side .eyebrow {
+		margin-bottom: var(--space-sm);
+	}
+	.hero-featured {
+		display: grid;
+		grid-template-columns: minmax(0, 13rem) 1fr;
+		gap: var(--space-md);
+		align-items: start;
 		text-decoration: none;
 	}
 	.hero-featured-thumb {
@@ -179,7 +281,6 @@ const websiteSchema = {
 		aspect-ratio: 16 / 9;
 		border-radius: var(--radius-md);
 		overflow: hidden;
-		margin-bottom: var(--space-md);
 	}
 	.hero-featured-thumb img {
 		display: block;
@@ -189,18 +290,50 @@ const websiteSchema = {
 		border-radius: var(--radius-md);
 	}
 	.hero-featured-title {
-		font-size: var(--text-h3);
+		font-size: var(--text-h4);
+		font-weight: var(--weight-normal);
 		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-snug);
 		color: var(--color-text);
-		margin-bottom: var(--space-xs);
+		margin: var(--space-2xs) 0 var(--space-2xs);
 	}
 	.hero-featured-meta {
-		font-size: var(--text-small);
+		font-size: var(--text-xs);
 		color: var(--color-text-muted);
 		margin: 0;
+	}
+	.hero-more {
+		list-style: none;
+		margin: var(--space-md) 0 0;
+		padding: 0;
+		border-top: 1px solid var(--color-border-hairline);
+	}
+	.hero-more a {
 		display: flex;
-		align-items: center;
-		gap: 0.375rem;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: var(--space-sm);
+		padding: var(--space-sm) 0;
+		border-bottom: 1px solid var(--color-border-hairline);
+		text-decoration: none;
+		color: var(--color-text);
+	}
+	.hero-more-title {
+		font-size: var(--text-body);
+		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-snug);
+	}
+	.hero-more-meta {
+		flex-shrink: 0;
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+	@media (hover: hover) {
+		.hero-more a:hover .hero-more-title {
+			color: var(--color-link-hover);
+			text-decoration: underline;
+			text-underline-offset: 0.2em;
+		}
 	}
 
 	/* ——— Section divider ——— */
@@ -211,28 +344,51 @@ const websiteSchema = {
 		border-top: 1px solid var(--color-border);
 	}
 
+	/* ——— Spreadsheets band ———
+	   The one full-bleed break in the page's rhythm. Surface, not panel: the
+	   product thumbs are themselves `--color-bg-panel` and their Best Seller
+	   chip is a surface fill with a border, so a panel band would flatten
+	   both. On the warm page ground a clean white plane reads as lifted. */
+
+	.home-band {
+		padding: var(--space-xl) var(--space-md);
+		background: var(--color-bg-surface);
+		border-top: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+	}
+
 	/* ——— Quiz banner ——— */
 
 	.quiz-banner {
-		padding: var(--space-lg) var(--space-md);
+		padding: var(--space-xl) var(--space-md);
 		background: var(--color-bg-panel);
-		border-top: 1px solid var(--color-border);
 		border-bottom: 1px solid var(--color-border);
 		text-align: center;
 	}
 	.quiz-banner-inner {
-		max-width: var(--max-width);
+		max-width: 40rem;
 		margin: 0 auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: var(--space-sm);
+		gap: var(--space-xs);
 	}
+	/* Was --text-body in --color-text-secondary, which made the site's best
+	   low-commitment entry point quieter than the card titles above it. */
 	.quiz-banner-heading {
-		font-size: var(--text-body);
+		font-size: var(--text-h2);
 		font-weight: var(--weight-normal);
-		color: var(--color-text-secondary);
+		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-snug);
+		color: var(--color-text-heading);
 		margin: 0;
+	}
+	.quiz-banner-desc {
+		font-size: var(--text-read);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-sm);
+		max-width: 34em;
 	}
 
 	/* ——— About brief ——— */
@@ -283,10 +439,40 @@ const websiteSchema = {
 	@media (max-width: 960px) {
 		.hero-inner {
 			grid-template-columns: 1fr;
+			gap: var(--space-lg);
 		}
 		.about-brief-inner {
 			grid-template-columns: 1fr;
 			gap: var(--space-md);
+		}
+	}
+
+	/* The featured card's two columns are what keeps it from out-shouting the
+	   headline on desktop. On a phone there is no headline beside it, so it
+	   stacks and takes the full width back. */
+	@media (max-width: 600px) {
+		.hero-featured {
+			grid-template-columns: 1fr;
+			gap: var(--space-sm);
+		}
+		/* Four facts on one line become two ragged ones on a phone, and the
+		   middots then strand at a line end. A 2×2 grid drops the separators
+		   and lets the columns do that job instead. */
+		.hero-trust {
+			display: grid;
+			grid-template-columns: repeat(2, auto);
+			justify-content: start;
+			gap: var(--space-2xs) var(--space-lg);
+		}
+		.hero-trust [aria-hidden] {
+			display: none;
+		}
+		.hero-actions .btn {
+			width: 100%;
+			justify-content: center;
+		}
+		.hero-actions .btn-arrow {
+			justify-content: space-between;
 		}
 	}
 </style>
