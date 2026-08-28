@@ -467,13 +467,24 @@ const websiteSchema = {
 		.hero-trust [aria-hidden] {
 			display: none;
 		}
+		/* Both buttons keep `.btn`'s centred content when they stretch. Pinning
+		   the arrow disc to the right edge with `space-between` was tried and
+		   reverted: it left the primary's label hard left while the secondary
+		   below it stayed centred, and stranded the disc a hundred pixels from
+		   the words it belongs to. `.calc-product-link`, the site's other
+		   full-width button, centres for the same reason.
+
+		   `.btn-arrow` trades away its right padding so the disc can sit snug
+		   inside a content-width pill; stretched to full width there is no
+		   right edge to hug, so the symmetric padding comes back or the
+		   centred group sits visibly off-centre. */
 		.hero-actions .btn {
 			width: 100%;
-			justify-content: center;
 		}
-		.hero-actions .btn-arrow {
-			justify-content: space-between;
-		}
+		/* No padding override needed: `.btn`'s shorthand in the 960px block
+		   already resets `.btn-arrow`'s clipped right padding (same
+		   specificity, later in source order), so the stretched pill is
+		   symmetric on its own. Don't add one back. */
 	}
 </style>
 
