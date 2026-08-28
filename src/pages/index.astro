@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import TagPills from '../components/TagPills.astro';
 import SpreadsheetsToolsRows from '../components/SpreadsheetsToolsRows.astro';
 import { getCollection } from 'astro:content';
-import { TOOLS } from '../data/tools';
 import { SITE_DESCRIPTION, SITE_TITLE, TAG_MAP } from '../consts';
 
 const allArticles = (await getCollection('articles'))
@@ -23,15 +22,6 @@ const rest = allArticles.filter((a) => a.id !== featured.id);
 // twice on one screen.
 const heroArticles = [featured, ...rest.slice(0, 3)];
 const latest = rest.slice(3, 9);
-
-// Every figure in the hero's trust strip is counted from the repo at build
-// time rather than typed in, so none of them can quietly go stale. Anything
-// that can't be counted here (Etsy sales, an average rating) is deliberately
-// absent rather than estimated.
-const templates = await getCollection('templates');
-const templateCount = templates.length;
-const reviewCount = templates.reduce((n, t) => n + (t.data.reviews?.length ?? 0), 0);
-const toolCount = TOOLS.length;
 
 const organizationSchema = {
 	'@context': 'https://schema.org',
@@ -81,32 +71,20 @@ const websiteSchema = {
 					    calculate, read — with the articles in the rail beside it. */}
 					<a href="/tools/" class="btn btn-secondary" data-cta="index_hero_secondary_cta">Try a free calculator</a>
 				</div>
-				<p class="hero-trust">
-					<span>{templateCount} spreadsheets</span>
-					<span aria-hidden="true">&middot;</span>
-					<span>{toolCount} free tools</span>
-					<span aria-hidden="true">&middot;</span>
-					<span>{reviewCount} buyer reviews</span>
-					<span aria-hidden="true">&middot;</span>
-					<span>No subscription</span>
-				</p>
 			</div>
-			<div class="hero-side">
-				<p class="eyebrow" id="hero-rail-label" style="--eyebrow-tint: var(--tint-lavender)">Start here</p>
-				<ul class="hero-rail" aria-labelledby="hero-rail-label">
-					{heroArticles.map((article) => (
-						<li>
-							<a href={`/articles/${article.id}/`} data-cta={`index_hero_article:${article.id}`}>
-								<span class="hero-rail-thumb">
-									<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" />
-								</span>
-								<span class="hero-rail-title">{article.data.title}</span>
-								<span class="hero-rail-meta">{article.readTime} min</span>
-							</a>
-						</li>
-					))}
-				</ul>
-			</div>
+			<ul class="hero-rail" aria-label="Featured articles">
+				{heroArticles.map((article) => (
+					<li>
+						<a href={`/articles/${article.id}/`} data-cta={`index_hero_article:${article.id}`}>
+							<span class="hero-rail-thumb">
+								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" />
+							</span>
+							<span class="hero-rail-title">{article.data.title}</span>
+							<span class="hero-rail-meta">{article.readTime} min</span>
+						</a>
+					</li>
+				))}
+			</ul>
 		</div>
 	</section>
 
@@ -235,15 +213,6 @@ const websiteSchema = {
 		gap: var(--space-sm);
 		margin-top: var(--space-lg);
 	}
-	.hero-trust {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: baseline;
-		gap: var(--space-2xs) var(--space-sm);
-		margin: var(--space-md) 0 0;
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-	}
 
 	/* ——— Hero rail ———
 	   Four uniform rows rather than one big card over three bare links. The
@@ -252,14 +221,6 @@ const websiteSchema = {
 	   gradient — carry it. The thumbnails are deliberately small: they anchor
 	   each row and give the stack a rhythm without competing with the H1. */
 
-	.hero-side {
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-	}
-	.hero-side .eyebrow {
-		margin-bottom: var(--space-sm);
-	}
 	.hero-rail {
 		list-style: none;
 		margin: 0;
@@ -440,18 +401,6 @@ const websiteSchema = {
 		}
 		.hero-rail-meta {
 			grid-column: 2;
-		}
-		/* Four facts on one line become two ragged ones on a phone, and the
-		   middots then strand at a line end. A 2×2 grid drops the separators
-		   and lets the columns do that job instead. */
-		.hero-trust {
-			display: grid;
-			grid-template-columns: repeat(2, auto);
-			justify-content: start;
-			gap: var(--space-2xs) var(--space-lg);
-		}
-		.hero-trust [aria-hidden] {
-			display: none;
 		}
 		/* Both buttons keep `.btn`'s centred content when they stretch. Pinning
 		   the arrow disc to the right edge with `space-between` was tried and
