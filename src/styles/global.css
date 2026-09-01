@@ -110,7 +110,7 @@ main {
 h1, h2, h3, h4, h5, h6 {
 	margin: 0 0 0.5rem 0;
 	font-family: var(--font-heading);
-	font-weight: var(--weight-medium);
+	font-weight: var(--weight-semibold);
 	color: var(--color-text-heading);
 	line-height: var(--leading-tight);
 	letter-spacing: var(--tracking-heading);
