@@ -22,12 +22,17 @@ const quiz = TOOLS.find((t) => t.url === '/quiz/budgeting-style/')!;
 
 // The gap+background seam technique paints the "hairline" as the mesh's own
 // background showing through a 1px gap — which means any grid track with no
-// cell in it also shows that background, as a solid filled block. Padding
-// each group out to a multiple of 6 (the LCM of the 3-col/2-col breakpoints)
-// guarantees every row divides evenly at 3, 2, and 1 columns, so there's
-// never a dangling row for a real cell to be missing from.
-function fillerCount(n: number) {
-	return (6 - (n % 6)) % 6;
+// cell in it also shows that background, as a solid filled block. Rather
+// than padding out with several 1-col filler cells (which draws a hairline
+// between each pair of them too — a divider with nothing on either side of
+// it to divide), each incomplete row gets exactly one filler cell spanning
+// the leftover columns via `grid-column: span`, shown only at the
+// breakpoint it's needed for and hidden the rest of the time (including
+// fully hidden once everything stacks to 1 column, where no group ever has
+// a remainder).
+function fillerAt(n: number, cols: number) {
+	const remainder = n % cols;
+	return remainder === 0 ? 0 : cols - remainder;
 }
 
 const title = 'Design preview: bordered grid';
@@ -66,9 +71,12 @@ const description = 'Internal design exploration. Not part of the live site.';
 											</a>
 										);
 									})}
-									{Array.from({ length: fillerCount(calculators.length) }).map(() => (
-										<div class="cell cell--filler" aria-hidden="true" />
-									))}
+									{fillerAt(calculators.length, 3) > 0 && (
+										<div class="cell cell--filler cell--filler-desktop" style={`--fill:${fillerAt(calculators.length, 3)}`} aria-hidden="true" />
+									)}
+									{fillerAt(calculators.length, 2) > 0 && (
+										<div class="cell cell--filler cell--filler-tablet" style={`--fill:${fillerAt(calculators.length, 2)}`} aria-hidden="true" />
+									)}
 								</div>
 							</div>
 						</div>
@@ -92,9 +100,12 @@ const description = 'Internal design exploration. Not part of the live site.';
 											</a>
 										);
 									})}
-									{Array.from({ length: fillerCount(assessments.length) }).map(() => (
-										<div class="cell cell--filler" aria-hidden="true" />
-									))}
+									{fillerAt(assessments.length, 3) > 0 && (
+										<div class="cell cell--filler cell--filler-desktop" style={`--fill:${fillerAt(assessments.length, 3)}`} aria-hidden="true" />
+									)}
+									{fillerAt(assessments.length, 2) > 0 && (
+										<div class="cell cell--filler cell--filler-tablet" style={`--fill:${fillerAt(assessments.length, 2)}`} aria-hidden="true" />
+									)}
 								</div>
 							</div>
 						</div>
@@ -117,19 +128,19 @@ const description = 'Internal design exploration. Not part of the live site.';
 									</div>
 									<p class="quiz-mock-question">When an unexpected bill shows up, you...</p>
 									<div class="quiz-mock-options">
-										<div class="quiz-mock-option quiz-mock-option--selected">
+										<div class="quiz-mock-option quiz-mock-option--selected" style="--i: 0">
 											<span class="quiz-mock-radio"></span>
 											<span>Check the budget first</span>
 										</div>
-										<div class="quiz-mock-option">
+										<div class="quiz-mock-option" style="--i: 1">
 											<span class="quiz-mock-radio"></span>
 											<span>Pay it, sort it out later</span>
 										</div>
-										<div class="quiz-mock-option">
+										<div class="quiz-mock-option" style="--i: 2">
 											<span class="quiz-mock-radio"></span>
 											<span>Ask a partner or friend</span>
 										</div>
-										<div class="quiz-mock-option">
+										<div class="quiz-mock-option" style="--i: 3">
 											<span class="quiz-mock-radio"></span>
 											<span>Put it on a credit card</span>
 										</div>
@@ -144,6 +155,32 @@ const description = 'Internal design exploration. Not part of the live site.';
 		</div>
 	</main>
 </BaseLayout>
+
+<script>
+	// Stagger the quiz options in once the mockup scrolls into view. The
+	// CSS transition itself is neutralized under prefers-reduced-motion
+	// (see the media query beside .quiz-mock-option), so this script stays
+	// simple rather than duplicating that check.
+	const quizMock = document.querySelector('.quiz-mock');
+	if (quizMock && 'IntersectionObserver' in window) {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+						observer.unobserve(entry.target);
+					}
+				}
+			},
+			{ threshold: 0.4 },
+		);
+		observer.observe(quizMock);
+	} else if (quizMock) {
+		// No IntersectionObserver support — skip the reveal rather than
+		// leave the options permanently at opacity: 0.
+		quizMock.classList.add('is-visible');
+	}
+</script>
 
 <style>
 	.preview-main {
@@ -298,6 +335,35 @@ const description = 'Internal design exploration. Not part of the live site.';
 	}
 	.cell--filler {
 		pointer-events: none;
+		padding: 0;
+	}
+	/* One spanning cell instead of several 1-col ones — a real cell divides
+	   fine, but a hairline with nothing on either side of it is just a
+	   stray line. Each variant is shown at exactly the breakpoint its
+	   remainder applies to (see fillerAt in the frontmatter) and hidden
+	   everywhere else, including once the grid stacks to 1 column, where
+	   no group ever has a remainder. */
+	.cell--filler-desktop {
+		display: block;
+		grid-column: span var(--fill);
+	}
+	.cell--filler-tablet {
+		display: none;
+		grid-column: span var(--fill);
+	}
+	@media (max-width: 860px) {
+		.cell--filler-desktop {
+			display: none;
+		}
+		.cell--filler-tablet {
+			display: block;
+		}
+	}
+	@media (max-width: 600px) {
+		.cell--filler-desktop,
+		.cell--filler-tablet {
+			display: none;
+		}
 	}
 
 	/* ——— Promo split, same gap+background seam technique ——— */
@@ -327,6 +393,10 @@ const description = 'Internal design exploration. Not part of the live site.';
 	}
 	.promo-copy .btn-primary {
 		background: var(--pv-text);
+		/* Never let this stretch to the column width — a CTA that isn't a
+		   form control should hug its own label, not become a bar. */
+		align-self: flex-start;
+		width: fit-content;
 	}
 	.promo-visual {
 		display: flex;
@@ -345,7 +415,6 @@ const description = 'Internal design exploration. Not part of the live site.';
 		border: 1px solid var(--pv-border);
 		border-radius: var(--radius-md);
 		background: var(--pv-surface);
-		box-shadow: var(--shadow-sm);
 		padding: var(--space-md);
 	}
 	.quiz-mock-progress {
@@ -398,6 +467,21 @@ const description = 'Internal design exploration. Not part of the live site.';
 		border-radius: var(--radius-md);
 		font-size: var(--text-small);
 		color: var(--pv-text-secondary);
+		opacity: 0;
+		transform: translateY(8px);
+		transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out);
+		transition-delay: calc(var(--i, 0) * 90ms);
+	}
+	.quiz-mock.is-visible .quiz-mock-option {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.quiz-mock-option {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
 	}
 	.quiz-mock-option--selected {
 		border-color: var(--pv-accent);
@@ -421,7 +505,7 @@ const description = 'Internal design exploration. Not part of the live site.';
 		left: 0;
 		right: 0;
 		bottom: 0;
-		height: 2rem;
+		height: 3.5rem;
 		background: linear-gradient(to bottom, transparent, var(--pv-surface));
 		pointer-events: none;
 	}
