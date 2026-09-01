@@ -4,13 +4,20 @@
  *
  * Manrope Variable — OFL 1.1, The Manrope Project Authors.
  * https://github.com/sharanda/manrope. Licence shipped alongside at
- * /fonts/Manrope-OFL-LICENSE.txt. Site-wide typeface (`--font-sans`);
- * one variable file covers the 200–800 range. Preloaded in BaseHead.astro.
+ * /fonts/Manrope-OFL-LICENSE.txt. Headings and UI text (`--font-sans` /
+ * `--font-heading`); one variable file covers the 200–800 range. Preloaded
+ * in BaseHead.astro.
+ *
+ * DM Sans Variable — OFL 1.1, The DM Sans Project Authors.
+ * https://github.com/googlefonts/dm-fonts. Licence shipped alongside at
+ * /fonts/DMSans-OFL-LICENSE.txt. Body/reading copy only (`--font-body`,
+ * applied on the `body` element in global.css — every element that doesn't
+ * explicitly set its own font-family inherits it from there). Preloaded in
+ * BaseHead.astro since nearly all reading copy depends on it.
  *
  * Aspekta Variable — OFL 1.1, Ivo Dolenc. https://github.com/ivodolenc/aspekta
  * Licence shipped alongside at /fonts/Aspekta-OFL-LICENSE.txt. Kept only for
- * the site wordmark (`--font-logo`) — every other typographic role uses
- * Manrope above. */
+ * the site wordmark (`--font-logo`). */
 
 @font-face {
   font-family: 'Manrope Variable';
@@ -18,6 +25,14 @@
   font-weight: 200 800;
   font-display: swap;
   src: url('/fonts/ManropeVF.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans Variable';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/DMSansVF.woff2') format('woff2');
 }
 
 @font-face {

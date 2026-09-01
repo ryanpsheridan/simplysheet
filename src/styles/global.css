@@ -749,7 +749,6 @@ p {
 }
 .product-name {
 	font-size: var(--text-h3);
-	font-weight: var(--weight-normal);
 	color: var(--color-text);
 	margin-bottom: var(--space-2xs);
 }
@@ -808,7 +807,6 @@ hr {
 }
 .home-row-heading {
 	font-size: var(--text-h3);
-	font-weight: var(--weight-normal);
 	margin: 0;
 }
 .home-row-items {
@@ -843,7 +841,6 @@ hr {
 }
 .home-row-title {
 	font-size: var(--text-body);
-	font-weight: var(--weight-normal);
 	line-height: 1.35;
 	margin: 0 0 var(--space-2xs);
 	color: var(--color-text);

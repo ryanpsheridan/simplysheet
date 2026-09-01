@@ -93,16 +93,19 @@
 
   /* ——— Typography ——— */
 
-  /* One family for everything except the wordmark. Hierarchy comes from size,
-     tracking, and leading rather than from a second typeface — Inter for UI
-     over DM Sans Light for body was doing that job before, and the split is
-     no longer needed. `--font-body` is kept as an alias so existing rules
-     resolve. `--font-logo` stays pinned to the previous sitewide face so the
-     "Simply Sheets" wordmark in Header.astro/Footer.astro doesn't move when
-     `--font-sans` changes. */
+  /* Two families: Manrope for headings and UI text, DM Sans for reading
+     copy. `--font-sans` is the UI/heading face — `--font-heading` aliases it,
+     and it's also what components reach for directly (buttons, labels,
+     calculator text, nav). `--font-body` is DM Sans and is applied once, on
+     `body` in global.css; anything that doesn't explicitly set its own
+     font-family (paragraphs, prose, list items) inherits DM Sans from there,
+     while every element with an explicit `--font-sans`/`--font-heading`
+     declaration stays on Manrope regardless. `--font-logo` stays pinned to
+     the site's original sitewide face so the "Simply Sheets" wordmark in
+     Header.astro/Footer.astro doesn't move when either family changes. */
   --font-sans: "Manrope Variable", system-ui, -apple-system, sans-serif;
   --font-heading: var(--font-sans);
-  --font-body: var(--font-sans);
+  --font-body: "DM Sans Variable", system-ui, -apple-system, sans-serif;
   --font-logo: "Aspekta Variable", system-ui, -apple-system, sans-serif;
 
   --text-display:   clamp(2.5rem, 3.5vw + 0.75rem, 3rem);
