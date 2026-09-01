@@ -10,10 +10,11 @@
 
      --color-text-muted is darkened one step from the slate this was sourced
      from (#6B7180 -> #5E6472): #6B7180 clears bg (4.60) and surface (4.88)
-     but fails against panel at 4.36. #5E6472 clears all three, worst case
-     5.30:1 against panel. --color-text-secondary (#565C6B) already clears
-     all three with margin (worst case 5.98:1 against panel) and didn't need
-     adjustment. */
+     but fails against panel at 4.36. #5E6472 clears bg/surface/panel, worst
+     case 4.88:1 against panel (recheck after any further panel darkening —
+     it's the tightest margin in the ramp). --color-text-secondary (#565C6B)
+     already clears all three with margin (worst case 5.51:1 against panel)
+     and didn't need adjustment. */
 
   --color-text:           #14171F;
   --color-text-heading:   #14171F;
@@ -30,11 +31,20 @@
   /* Surfaces are a layering vocabulary: `bg` is the page, `panel` recesses a
      band out of it, `surface` lifts a card back up. A card reads as raised by
      being cleaner (pure white) than the cool-gray page behind it, rather
-     than by leaning on a shadow. */
+     than by leaning on a shadow.
+
+     `panel` and `emphasis` were darkened one step past the first slate-ramp
+     pass (panel #F1F2F5 -> #E7E9EE, emphasis #EAECF0 -> #DEE1E8) because the
+     first pass sat close enough to `bg` (#F7F8FA) that a recessed panel — the
+     calculator `.calc-highlight` result card in particular — nearly
+     disappeared into the page. `bg` and `surface` are unchanged; going to a
+     pure-white `bg` was considered and rejected since `surface` is already
+     pure white, which would collapse the bg/surface distinction instead of
+     fixing the bg/panel one. */
   --color-bg:             #F7F8FA;
   --color-bg-surface:     #FFFFFF;
-  --color-bg-panel:       #F1F2F5;
-  --color-bg-emphasis:    #EAECF0;
+  --color-bg-panel:       #E7E9EE;
+  --color-bg-emphasis:    #DEE1E8;
   --color-bg-inverse:     #14171F;
 
   --color-btn:            #14171F;

@@ -59,28 +59,43 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 
 <style>
 	footer {
-		border-top: 1px solid var(--color-border);
+		/* Inverse surface: --color-bg-inverse background with text flipped to the
+		   light end of the ramp. --footer-fg-secondary/muted are color-mixed
+		   from --color-bg rather than pulled from the light-mode secondary/muted
+		   tokens, which are calibrated for light surfaces and read too dark
+		   here. Both clear WCAG AA against this background (8.26:1 and 5.32:1),
+		   preserving the same text/secondary/muted contrast ordering as the
+		   light-mode ramp. */
+		--footer-fg: var(--color-bg);
+		--footer-fg-secondary: color-mix(in srgb, var(--color-bg) 68%, var(--color-bg-inverse));
+		--footer-fg-muted: color-mix(in srgb, var(--color-bg) 52%, var(--color-bg-inverse));
+		--footer-divider: color-mix(in srgb, var(--color-bg) 18%, var(--color-bg-inverse));
+
 		padding: var(--space-xl) var(--space-md) var(--space-lg);
-		background: var(--color-bg-panel);
+		background: var(--color-bg-inverse);
 	}
 
 	.footer-promo-bar {
 		max-width: var(--max-width);
 		margin: calc(var(--space-xl) * -1) auto var(--space-xl);
 		padding: var(--space-sm) 0;
-		border-bottom: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--footer-divider);
 		text-align: center;
 		font-size: var(--text-small);
-		color: var(--color-text);
+		color: var(--footer-fg);
 		font-weight: var(--weight-normal);
 	}
 	.footer-promo-link {
-		color: var(--color-accent-info);
+		/* --tint-sky rather than --color-accent-info: the site's link/UI blue
+		   is calibrated for light surfaces and only clears 3.68:1 here, below
+		   AA. --tint-sky was already built to sit on dark ink (14.2:1 there) and
+		   clears this background with the same margin (12.76:1). */
+		color: var(--tint-sky);
 		font-weight: var(--weight-normal);
 		text-decoration: underline;
 	}
 	.footer-promo-link:hover {
-		color: var(--color-text);
+		color: var(--footer-fg);
 	}
 	.footer-inner {
 		max-width: var(--max-width);
@@ -94,7 +109,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 		justify-content: space-between;
 		gap: var(--space-xl);
 		padding-bottom: var(--space-lg);
-		border-bottom: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--footer-divider);
 	}
 
 	/* ——— Brand column ——— */
@@ -111,7 +126,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 		font-family: var(--font-logo);
 		font-size: 1.2rem;
 		font-weight: var(--weight-normal);
-		color: var(--color-text);
+		color: var(--footer-fg);
 		text-decoration: none;
 		letter-spacing: -0.02em;
 		line-height: 1.29;
@@ -124,7 +139,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 	.footer-tagline {
 		margin-top: var(--space-xs);
 		font-size: var(--text-small);
-		color: var(--color-text-muted);
+		color: var(--footer-fg-muted);
 	}
 
 	/* ——— Nav columns ——— */
@@ -143,17 +158,17 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 	.footer-heading {
 		font-size: var(--text-small);
 		font-weight: var(--weight-normal);
-		color: var(--color-text);
+		color: var(--footer-fg);
 		margin-bottom: var(--space-xs);
 	}
 	.footer-col a {
 		font-size: var(--text-small);
-		color: var(--color-text-secondary);
+		color: var(--footer-fg-secondary);
 		text-decoration: none;
 		transition: color 0.15s;
 	}
 	.footer-col a:hover {
-		color: var(--color-text);
+		color: var(--footer-fg);
 	}
 	.footer-view-all {
 		margin-top: var(--space-2xs);
@@ -166,7 +181,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 	}
 	.footer-bottom p {
 		font-size: var(--text-small);
-		color: var(--color-text-muted);
+		color: var(--footer-fg-muted);
 		margin: 0;
 	}
 
