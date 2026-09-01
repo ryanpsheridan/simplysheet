@@ -1,52 +1,50 @@
 :root {
   /* ——— Colors ——— */
 
-  /* The neutral ramp is warm on surfaces and cool-navy on ink, rather than
-     pure grayscale. It is deliberately compressed at the dark end: every text
-     role has to clear WCAG AA (4.5:1) against both --color-bg and
-     --color-bg-panel, which puts a hard floor around #707070. The old
-     #8A8A8A muted tone sat below that floor and failed AA.
+  /* The neutral ramp is cool slate on surfaces and near-black ink, rather
+     than the warm off-white system this replaced (bg #FBFAF9, panel #F4F2EE,
+     border #DCD8D1 family). Every text role still has to clear WCAG AA
+     (4.5:1) against --color-bg, --color-bg-surface, AND --color-bg-panel —
+     that requirement doesn't move with the hue, and it isn't automatic just
+     because a value looks dark enough on one surface.
 
-     Both light roles were darkened one step (secondary #575D68 -> #515764,
-     muted #666B75 -> #5F646F) because the lighter pair read as washed out
-     against this warm page even though both already passed. Worst-case
-     contrast across bg, surface, and panel is now 6.48:1 for secondary and
-     5.31:1 for muted, up from 5.92 and 4.79. Going further was tried and
-     rejected: the ramp is short, and another step closed the gap between
-     secondary and --color-link enough that emphasis stopped reading as
-     distinct from body copy. */
+     --color-text-muted is darkened one step from the slate this was sourced
+     from (#6B7180 -> #5E6472): #6B7180 clears bg (4.60) and surface (4.88)
+     but fails against panel at 4.36. #5E6472 clears all three, worst case
+     5.30:1 against panel. --color-text-secondary (#565C6B) already clears
+     all three with margin (worst case 5.98:1 against panel) and didn't need
+     adjustment. */
 
-  --color-text:           #081122;
-  --color-text-heading:   #081122;
-  --color-text-secondary: #515764;
-  --color-text-muted:     #5F646F;
+  --color-text:           #14171F;
+  --color-text-heading:   #14171F;
+  --color-text-secondary: #565C6B;
+  --color-text-muted:     #5E6472;
 
-  /* Links stay monochrome. The ramp has no step between secondary (#575D68)
-     and text (#081122), so this one is interpolated to sit between them —
-     dark enough to read as emphasis, light enough to distinguish from body
-     copy without spending a hue on it. */
-  --color-link:           #3F4553;
-  --color-link-hover:     #081122;
+  /* Links stay monochrome. Interpolated between secondary (#565C6B) and text
+     (#14171F) — dark enough to read as emphasis, light enough to distinguish
+     from body copy without spending a hue on it. Worst case 8.96:1 against
+     panel, well clear of AA. */
+  --color-link:           #3D4250;
+  --color-link-hover:     #14171F;
 
   /* Surfaces are a layering vocabulary: `bg` is the page, `panel` recesses a
      band out of it, `surface` lifts a card back up. A card reads as raised by
-     being cleaner (pure white) than the warm off-white page behind it, rather
+     being cleaner (pure white) than the cool-gray page behind it, rather
      than by leaning on a shadow. */
-  --color-bg:             #FBFAF9;
+  --color-bg:             #F7F8FA;
   --color-bg-surface:     #FFFFFF;
-  --color-bg-panel:       #F4F2EE;
-  --color-bg-emphasis:    #EFEDE8;
-  --color-bg-inverse:     #081122;
+  --color-bg-panel:       #F1F2F5;
+  --color-bg-emphasis:    #EAECF0;
+  --color-bg-inverse:     #14171F;
 
-  --color-btn:            #081122;
-  /* Lighter than the base, not darker. The old #030812 sat *below* near-black
-     ink, so a filled primary button had no perceptible hover at all. This is a
-     dark slate in the same navy family — 13.85:1 with white, well clear of AA. */
-  --color-btn-hover:      #232D3E;
+  --color-btn:            #14171F;
+  /* Lighter than the base, not darker, so a filled primary button has a
+     perceptible hover — 13.35:1 with white, well clear of AA. */
+  --color-btn-hover:      #2B2F3B;
 
-  --color-border:         #DCD8D1;
-  --color-border-hairline: #E7E4DE;
-  --color-border-strong:  #C6C2B9;
+  --color-border:         #E3E5E9;
+  --color-border-hairline: #EBEDF1;
+  --color-border-strong:  #C7CBD1;
 
   /* ——— Accent colors (semantic, used sparingly on calculators/assessments) ——— */
 
