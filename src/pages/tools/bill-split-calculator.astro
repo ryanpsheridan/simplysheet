@@ -2,9 +2,9 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import BillSplitCalculator from '../../components/BillSplitCalculator.astro';
 
-const title = 'Monthly Bill Split Calculator for Couples';
-const metaTitle = 'Bill Split Calculator — Split Bills Fairly by Income';
-const description = 'Free bill split calculator for couples with different incomes. Enter both take-home pays and your shared bills to compare a 50/50 split with a fair split by income.';
+const title = 'Bill Split Calculator for Couples with Different Incomes';
+const metaTitle = 'Income-Based Bill Split Calculator for Couples';
+const description = 'Free bill split calculator for couples with different incomes. Enter both take-home pays and shared bills to compare a 50/50 split with a fair split by income.';
 
 const toc = [
 	{ slug: 'how-it-works', text: 'How this calculator works' },
@@ -48,9 +48,9 @@ const faq = [
 	productSlug="couples-budget-spreadsheet"
 	productLabel="Split bills fairly in one shared sheet"
 	relatedToolUrls={[
+		'/tools/group-bill-split-calculator/',
 		'/tools/50-30-20-budget-calculator/',
 		'/tools/emergency-fund-calculator/',
-		'/tools/sinking-fund-calculator/',
 		'/tools/expense-tracking-readiness/',
 	]}
 >
@@ -61,6 +61,8 @@ const faq = [
 	<h2 id="how-it-works">How this calculator works</h2>
 	<p>The calculator takes three numbers: each partner's monthly take-home pay and the total you spend on shared bills each month. From those it works out two things. First, a flat 50/50 split, where each person pays half of the shared bills regardless of income. Second, a proportional split, where each person covers the same share of the bills as their share of your combined income.</p>
 	<p>Take-home pay means what actually reaches each account after taxes, retirement, and insurance. Using gross salary throws off the ratio, because payroll deductions rarely line up the same way for two different people. If you're not sure how much of your income is really free after essentials, the <a href="/tools/50-30-20-budget-calculator/">50/30/20 budget calculator</a> is a good companion.</p>
+
+	<p>Splitting a restaurant or group bill instead? The <a href="/tools/group-bill-split-calculator/">group bill split calculator</a> divides a single total between any number of people, with tax and tip.</p>
 
 	<h2 id="even-vs-proportional">50/50 vs. splitting by income</h2>
 	<p>A 50/50 split is the default a lot of couples reach for because it looks even. And when two incomes are close, it more or less is. The trouble starts when incomes are far apart. Half the rent is a small slice of a large paycheck and a large slice of a small one, so the person earning less ends up with far less money left for everything else, even though you both paid the same dollar amount.</p>
