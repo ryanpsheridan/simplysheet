@@ -186,7 +186,9 @@ const MENU_LINKS = [
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		font-family: var(--font-heading);
+		/* Pinned to --font-logo, not --font-heading: the wordmark keeps its own
+		   face when --font-sans changes site-wide. */
+		font-family: var(--font-logo);
 		font-size: 1.2rem;
 		font-weight: var(--weight-medium);
 		letter-spacing: var(--tracking-snug);

@@ -2,12 +2,23 @@
  * page, so the browser discovers the font file while parsing the HTML rather
  * than after a blocking round trip to a third-party stylesheet.
  *
- * Aspekta Variable — OFL 1.1, Ivo Dolenc. https://github.com/ivodolenc/aspekta
- * Licence shipped alongside at /fonts/Aspekta-OFL-LICENSE.txt.
+ * Manrope Variable — OFL 1.1, The Manrope Project Authors.
+ * https://github.com/sharanda/manrope. Licence shipped alongside at
+ * /fonts/Manrope-OFL-LICENSE.txt. Site-wide typeface (`--font-sans`);
+ * one variable file covers the 200–800 range. Preloaded in BaseHead.astro.
  *
- * One variable file covers the whole 100–900 range in 30 KB, which is why the
- * site no longer needs a per-weight @font-face table (nor the Google Fonts
- * mirroring script that used to generate one). Preloaded in BaseHead.astro. */
+ * Aspekta Variable — OFL 1.1, Ivo Dolenc. https://github.com/ivodolenc/aspekta
+ * Licence shipped alongside at /fonts/Aspekta-OFL-LICENSE.txt. Kept only for
+ * the site wordmark (`--font-logo`) — every other typographic role uses
+ * Manrope above. */
+
+@font-face {
+  font-family: 'Manrope Variable';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/ManropeVF.woff2') format('woff2');
+}
 
 @font-face {
   font-family: 'Aspekta Variable';

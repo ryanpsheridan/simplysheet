@@ -93,13 +93,17 @@
 
   /* ——— Typography ——— */
 
-  /* One family for everything. Hierarchy comes from size, tracking, and
-     leading rather than from a second typeface — Inter for UI over DM Sans
-     Light for body was doing that job before, and the split is no longer
-     needed. `--font-body` is kept as an alias so existing rules resolve. */
-  --font-sans: "Aspekta Variable", system-ui, -apple-system, sans-serif;
+  /* One family for everything except the wordmark. Hierarchy comes from size,
+     tracking, and leading rather than from a second typeface — Inter for UI
+     over DM Sans Light for body was doing that job before, and the split is
+     no longer needed. `--font-body` is kept as an alias so existing rules
+     resolve. `--font-logo` stays pinned to the previous sitewide face so the
+     "Simply Sheets" wordmark in Header.astro/Footer.astro doesn't move when
+     `--font-sans` changes. */
+  --font-sans: "Manrope Variable", system-ui, -apple-system, sans-serif;
   --font-heading: var(--font-sans);
   --font-body: var(--font-sans);
+  --font-logo: "Aspekta Variable", system-ui, -apple-system, sans-serif;
 
   --text-display:   clamp(2.5rem, 3.5vw + 0.75rem, 3rem);
   --text-h1:        2.25rem;

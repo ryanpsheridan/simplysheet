@@ -407,11 +407,13 @@ Latest / Free tools / Spreadsheets were four identical label-left grids on one g
 
 ## Typography
 
-One typeface for the whole site: **Aspekta Variable** (`--font-sans`, with `--font-heading` and `--font-body` both aliased to it in `tokens.css`). Hierarchy comes from size, tracking, and leading, never from a second family and barely from weight.
+One typeface for the whole site: **Manrope Variable** (`--font-sans`, with `--font-heading` and `--font-body` both aliased to it in `tokens.css`), except the "Simply Sheets" wordmark, which stays on the site's former typeface, Aspekta Variable, via a dedicated `--font-logo` token. Hierarchy comes from size, tracking, and leading, never from a second family and barely from weight.
 
-- Self-hosted from `public/fonts/AspektaVF.woff2` — a single variable file covering weights 100–900 in 30 KB. The `@font-face` rule lives in `src/styles/fonts.css`, which `global.css` imports and Astro inlines into every page; `BaseHead.astro` also preloads the file.
-- OFL 1.1 licensed, licence shipped at `public/fonts/Aspekta-OFL-LICENSE.txt`. Keep it there.
-- The site no longer uses Google Fonts. `scripts/fetch-fonts.mjs` (which mirrored Inter + DM Sans locally and generated `fonts.css`) has been removed — don't reintroduce a generated `fonts.css`, edit it directly.
+- Self-hosted from `public/fonts/ManropeVF.woff2` — a single variable file covering weights 200–800 in ~25 KB, mirrored locally from Google Fonts. The `@font-face` rule lives in `src/styles/fonts.css`, which `global.css` imports and Astro inlines into every page; `BaseHead.astro` also preloads the file.
+- OFL 1.1 licensed, licence shipped at `public/fonts/Manrope-OFL-LICENSE.txt`. Keep it there.
+- The site doesn't load fonts from Google Fonts' own CDN — even though Manrope originates there, it's mirrored into `public/fonts/` and served self-hosted like Aspekta was, for the same reason: the browser finds the file while parsing the HTML instead of after a round trip to a third-party stylesheet. Don't swap this for a `<link>` to `fonts.googleapis.com`.
+- `--font-logo` (`"Aspekta Variable", system-ui, -apple-system, sans-serif`) is used in exactly two places — `.site-logo` in `Header.astro` and `.footer-logo-link` in `Footer.astro` — both wrapping the literal "Simply Sheets" wordmark text next to the SVG mark. Its `@font-face` rule stays in `fonts.css` alongside Manrope's, and its licence file (`public/fonts/Aspekta-OFL-LICENSE.txt`) stays in place, even though nothing else on the site renders in it. Don't point any other element at `--font-logo`, and don't let `--font-heading`/`--font-body` resolve to it — those alias `--font-sans` (Manrope).
+- `scripts/fetch-fonts.mjs` (which mirrored Inter + DM Sans locally and generated `fonts.css`) was removed when the site consolidated onto Aspekta — don't reintroduce a generated `fonts.css`, edit it directly.
 - Weight discipline: body and headings both sit at `--weight-normal` (400), with `--weight-medium`/`--weight-semibold` as the emphasis steps. Reaching for 700+ is almost always the wrong fix; make the type bigger or tighten its tracking instead.
 - Tracking is a real hierarchy tool here, not a rounding detail: `--tracking-tight` (-0.024em) for display, `--tracking-snug` (-0.02em) for headings and buttons, `--tracking-normal` (0) for body, `--tracking-caps` (0.06em) for uppercase eyebrows. Never set body copy at positive tracking.
 
