@@ -18,110 +18,98 @@ a pre-committed metric, a null result, and a decision date fixed in advance.
 
 ## EXP-001 — Bill Split Calculator intent repositioning
 
-**Status:** awaiting deploy · **Opened:** 2026-09-01
+**Status: CLOSED — hypothesis FALSIFIED at baseline, before deploy.**
+**Opened 2026-09-01 · Closed 2026-09-01 on Search Console data.**
 
-### Hypothesis
+### What was hypothesised
 
-`/tools/bill-split-calculator/` was accumulating impressions from the ambiguous
-`bill split calculator` head term, whose dominant search intent is splitting a
-restaurant check with tax and tip, rather than from the income-based/fair-share
-cluster the page actually serves. Its title tag led with that head term, and
-`/tools/group-bill-split-calculator/` led with the identical string, so the two
-pages also competed with each other for it.
+That the page was accumulating impressions from the ambiguous `bill split
+calculator` head term, whose dominant intent is splitting a restaurant check,
+rather than from the income/fair-share cluster it serves. Confidence was rated
+MEDIUM, with the impression-share claim explicitly flagged as unverified.
 
-Repositioning the couples page onto the qualified term should shed unqualified
-impressions and improve ranking on income/couples queries.
+### What the data showed (GSC, 2026-06-26 to 2026-08-29, site-wide)
 
-### Confidence at open: MEDIUM
+The hypothesis was wrong.
 
-Verified directly: the head-term SERP is restaurant/tip-dominated; every winner
-in the income cluster leads its title with a qualifier; both our pages led with
-the same string.
-
-**Not verified:** that head-term impressions were *disproportionate*. No
-Search Console query data was available when this experiment was designed, and
-Vercel Web Analytics is not enabled on the project. The core impression-share
-claim rests on inference, not measurement.
-
-Counter-hypothesis held open: the income cluster is dominated by high-authority
-finance domains (credit unions, Ellevest, HerMoney, BECU). Domain authority on a
-~10-week-old site may be the binding constraint, not targeting. If so this change
-does little, and that is a legitimate outcome.
-
-### Baseline (GSC period ending 2026-09-01, pre-change)
-
-| Metric | Baseline |
+| Check | Result |
 |---|---|
-| Impressions | 2,195 |
-| Clicks | 4 |
-| CTR | ~0.18% |
-| Average position | 13.9 |
-| Fixed-cohort income/couples queries | **TO BE FILLED from GSC export before merge** |
+| Restaurant/tip/dinner/group-intent queries | **0 impressions** |
+| Bare head term `bill split calculator` | **Absent from the export entirely** |
+| Nearest head-term row, `split bills calculator` | 3 impressions, position 64.3 |
+| Income/fair-share cluster (43 queries) | 165 impressions, 0 clicks, avg position **69.9** |
 
-Site first deployed ~2026-06-23. Page ~6 weeks old at baseline.
+A head term with real volume would not be anonymized by Google — anonymization
+hits rare queries. Its absence is positive evidence that the page receives very
+few head-term impressions, not that they are hidden.
 
-### The change
+### What is actually happening
 
-Commit `e38135f`. Titles, H1s, and meta description only — no URL, content,
-calculator, or schema changes.
+Visible query rows account for only 1,983 of 6,878 site impressions (28.8%), and
+**zero of the 22 clicks.** Reconciling the page's 2,195 impressions at position
+13.9 against its visible queries (~165-227 impressions at position ~70) implies
+the remaining ~2,000 anonymized impressions sit at an average position of
+roughly **6-11 — inside the top 10 — while producing ~4 clicks (~0.2% CTR).**
 
-- Couples page title: `Bill Split Calculator — Split Bills Fairly by Income`
-  → `Income-Based Bill Split Calculator for Couples`
-- Couples H1: → `Bill Split Calculator for Couples with Different Incomes`
-- Group page title: `Bill Split Calculator — Split a Restaurant or Group Bill Evenly`
-  → `Restaurant Bill Splitter — Split a Check with Tax and Tip`
-- Group H1: → `Restaurant & Group Bill Splitter`
-- Added a disambiguation link to the group calculator, and surfaced it in
-  related tools.
+Top-10 impressions converting at 0.2% is 25-50x below expectation. So there IS
+an intent problem, but it is not the one hypothesised. The three visible top-10
+queries are all textbook/homework phrasings ("will earns $200 a week. he spends
+1/4 of his pay on bills", position 5.8). That is a suggestive but thin sample
+(17 impressions) and the composition of the anonymized mass remains unknown.
 
-### Primary metric: fixed-cohort query position
+### The finding that actually matters
 
-Track the **named income/couples queries present in the baseline export**, and
-follow those same queries over time. Do NOT track the bucket average.
+The failure is **uniform across the entire site, not specific to this page**:
 
-Reason: if the change works, Google will surface the page for *new* income
-queries, which enter at poor positions and drag a bucket average down. A working
-change would read as a failure. New queries entering the cluster are logged
-separately as a secondary positive signal.
+- Median position across all 471 visible queries: **73.0**
+- 394 queries (1,739 impressions) at position 51+; only 16 queries in the top 10,
+  totalling 40 impressions, three of which are homework questions
+- `50 30 20 budget` — position 87.2 · `what is the 50 30 20 rule` — 86.6
+- `splitting bills based on income` — 86.8 · `sinking fund calculator` — 56.6
+- `/articles/50-30-20-budget-rule/` — 959 impressions, position 75.9, 0 clicks
 
-Secondary: clicks from the cohort; `calc_product_link:couples-budget-spreadsheet`
-GA4 events (traffic reaching the product page).
+A page-level targeting problem shows up on one page. This shows up on every page,
+across every topic, which rules targeting out as the explanation.
 
-### Metrics to explicitly ignore
+Impressions are meanwhile **growing strongly, not stagnating**: 922 -> 1,303 ->
+2,014 -> 2,639 across four ~16-day windows, roughly 3x in two months, while
+clicks stay flat at 4-7. Google is testing the site steadily more and ranking it
+no better.
 
-- **Total page impressions.** Expected to fall. That is the change working.
-- **Page-level average position.** Will improve mechanically once low-ranking
-  head-term impressions stop. Arithmetic, not ranking.
-- **Page-level CTR.** At position ~14 CTR is dominated by page-two burial, not
-  snippet relevance. It is not informative until the page is inside the top 10.
+**Conclusion: the binding constraint is site/domain authority, not on-page
+targeting or search intent.** Confidence: HIGH.
 
-### Null result (pre-committed)
+### Disposition of the change
 
-If the fixed cohort has not improved by the decision date, conclude the
-constraint is **domain authority, not targeting**. Stop on-page optimization of
-this page entirely. Do not retitle again, extend the content, or rebuild the
-calculator. The strategic question becomes authority, and this page is done.
+Commit `e38135f` is kept but **is not an experiment and must not be measured as
+one.** Its stated predictions are void: there are no head-term impressions to
+shed, so "total impressions will fall, and that is success" was wrong and is
+withdrawn.
 
-### Decision date
+It is retained on its own smaller merits: the two calculators' title tags no
+longer both lead with the identical string, and the couples page now matches the
+income phrasing that its real visible queries actually use. Expected ranking
+effect: approximately nil, because those queries rank at ~70 and a title does not
+close a 60-position gap.
 
-Do not judge before 6 weeks post-deploy. Decide at **8–12 weeks post-deploy**
-(~late Nov 2026 for a September deploy).
+### Lessons for the next experiment
 
-### Frozen until decision date
+1. **Get the data before designing the experiment.** The whole hypothesis rested
+   on an inferred impression mix that one export disproved in minutes.
+2. **A missing high-volume query in GSC is evidence of absence**, not of
+   anonymization. Anonymization hits the rare tail.
+3. **Check whether the symptom is page-specific before proposing a page-level
+   fix.** One look at the site-wide median position (73) would have redirected
+   this from the outset.
+4. CTR at a *page-level* average position is close to uninformative when the
+   page's impressions are split between a visible tail at ~70 and an anonymized
+   mass at ~8. Blended averages hide exactly the structure that matters.
 
-`/tools/bill-split-calculator/`, `/tools/group-bill-split-calculator/`, and
-`/articles/how-to-split-bills-with-different-incomes/`.
+### Still open, unaddressed by this change
 
-Also held for the duration, per the original constraint: **no new calculators**
-until this experiment reports. Determining what limits this page is the whole
-point; building more before it answers forecloses the finding.
-
-### Known, deliberately deferred
-
-- Tool page and article overlap on the same cluster with the same embedded
-  calculator and partly overlapping FAQ. Real, but consolidating mid-experiment
-  would confound it.
-- No roommate/rent coverage (`roommate` appears zero times sitewide). Largest
-  volume gap in the cluster, but lower commercial relevance than couples.
-- Calculator takes one lump bill total and exactly two people; competitors
-  support itemized expenses and N people.
+- What the ~2,000 anonymized top-10 impressions actually are. A page-filtered
+  GSC export, or the Performance API, would resolve it.
+- Authority. Now the primary question, and undefined as a strategy.
+- The paycheck cluster is the site's one bright spot and deserves its own look:
+  `/tools/biweekly-paycheck-calculator/` (971 impressions, position 13.1, 0.51%
+  CTR, best on the site) and `/tools/weekly-paycheck-calculator/` (position 11.9).
