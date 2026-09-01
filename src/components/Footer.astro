@@ -59,20 +59,23 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 
 <style>
 	footer {
-		/* Inverse surface: --color-bg-inverse background with text flipped to the
-		   light end of the ramp. --footer-fg-secondary/muted are color-mixed
-		   from --color-bg rather than pulled from the light-mode secondary/muted
-		   tokens, which are calibrated for light surfaces and read too dark
-		   here. Both clear WCAG AA against this background (8.26:1 and 5.32:1),
-		   preserving the same text/secondary/muted contrast ordering as the
-		   light-mode ramp. */
+		/* Inverse surface: --color-bg-inverse-deep background with text flipped
+		   to the light end of the ramp. --color-bg-inverse-deep rather than
+		   --color-bg-inverse (the text/button ink color) because that value
+		   reads as dark gray rather than black at full-footer scale — see its
+		   definition in tokens.css. --footer-fg-secondary/muted are color-mixed
+		   from --color-bg rather than pulled from the light-mode
+		   secondary/muted tokens, which are calibrated for light surfaces and
+		   read too dark here. Both clear WCAG AA against this background
+		   (8.68:1 and 5.42:1), preserving the same text/secondary/muted
+		   contrast ordering as the light-mode ramp. */
 		--footer-fg: var(--color-bg);
-		--footer-fg-secondary: color-mix(in srgb, var(--color-bg) 68%, var(--color-bg-inverse));
-		--footer-fg-muted: color-mix(in srgb, var(--color-bg) 52%, var(--color-bg-inverse));
-		--footer-divider: color-mix(in srgb, var(--color-bg) 18%, var(--color-bg-inverse));
+		--footer-fg-secondary: color-mix(in srgb, var(--color-bg) 68%, var(--color-bg-inverse-deep));
+		--footer-fg-muted: color-mix(in srgb, var(--color-bg) 52%, var(--color-bg-inverse-deep));
+		--footer-divider: color-mix(in srgb, var(--color-bg) 18%, var(--color-bg-inverse-deep));
 
 		padding: var(--space-xl) var(--space-md) var(--space-lg);
-		background: var(--color-bg-inverse);
+		background: var(--color-bg-inverse-deep);
 	}
 
 	.footer-promo-bar {

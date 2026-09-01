@@ -46,6 +46,13 @@
   --color-bg-panel:       #E7E9EE;
   --color-bg-emphasis:    #DEE1E8;
   --color-bg-inverse:     #14171F;
+  /* A deeper black than --color-bg-inverse, for large dark surfaces (the
+     footer) where --color-bg-inverse's ink tone read closer to a dark gray
+     than black at that scale. Not used for text/button ink — --color-text
+     and --color-btn stay on --color-bg-inverse, which is calibrated as a
+     text/UI color, not a surface fill. Text on this surface clears AA with
+     even more margin than on --color-bg-inverse (white text: 18.5:1). */
+  --color-bg-inverse-deep: #0A0B10;
 
   --color-btn:            #14171F;
   /* Lighter than the base, not darker, so a filled primary button has a

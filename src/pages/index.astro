@@ -122,12 +122,9 @@ const websiteSchema = {
 		</div>
 	</section>
 
-	{/* Spreadsheets breaks out of the shared rows into its own full-bleed band.
-	    Four identical label-left grids in a row is what made the page read as
-	    one flat texture, and this is the surface the site actually sells from,
-	    so it is the one that earns the break. Surface rather than panel: the
-	    product thumbs and their Best Seller chip are both built to sit on
-	    panel, and a panel band would swallow them. */}
+	{/* Spreadsheets breaks out of the shared rows into its own full-bleed band —
+	    this is the surface the site actually sells from, so it earns hairline
+	    borders even though its background now matches the rest of the page. */}
 	<section class="home-band">
 		<div class="home-rows-inner">
 			<SpreadsheetsToolsRows only="spreadsheets" />
@@ -283,14 +280,16 @@ const websiteSchema = {
 	}
 
 	/* ——— Spreadsheets band ———
-	   The one full-bleed break in the page's rhythm. Surface, not panel: the
-	   product thumbs are themselves `--color-bg-panel` and their Best Seller
-	   chip is a surface fill with a border, so a panel band would flatten
-	   both. On the warm page ground a clean white plane reads as lifted. */
+	   The one full-bleed break in the page's rhythm, marked by hairline
+	   borders alone now — background matches the rest of the page
+	   (--color-bg) rather than alternating to a different surface. The
+	   alternating surface/panel/bg treatment across this section, the quiz
+	   banner, and the page background was tried and dropped: it read as
+	   stripes rather than rhythm. */
 
 	.home-band {
 		padding: var(--space-xl) var(--space-md);
-		background: var(--color-bg-surface);
+		background: var(--color-bg);
 		border-top: 1px solid var(--color-border);
 		border-bottom: 1px solid var(--color-border);
 	}
@@ -299,7 +298,7 @@ const websiteSchema = {
 
 	.quiz-banner {
 		padding: var(--space-xl) var(--space-md);
-		background: var(--color-bg-panel);
+		background: var(--color-bg);
 		border-bottom: 1px solid var(--color-border);
 		text-align: center;
 	}
