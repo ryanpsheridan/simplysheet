@@ -113,3 +113,22 @@ close a 60-position gap.
 - The paycheck cluster is the site's one bright spot and deserves its own look:
   `/tools/biweekly-paycheck-calculator/` (971 impressions, position 13.1, 0.51%
   CTR, best on the site) and `/tools/weekly-paycheck-calculator/` (position 11.9).
+
+### Addendum: page-filtered export (2026-09-01, same day)
+
+A second GSC export filtered to pages containing `bill-split` (both
+`/tools/bill-split-calculator/` and `/tools/group-bill-split-calculator/`)
+corroborates the closure above rather than reopening it: 43 queries, 126
+impressions, 0 clicks. No restaurant/tip intent, no dominant head term, every
+income/fair-share query at position 51-98 bar the three homework-phrasing
+outliers already noted. Cross-checked against the site-wide export (`salary
+split` 14 here vs. 21 site-wide; `split salary` 16 vs. 20) confirms the scope
+is real, not a coincidental query-text match.
+
+It also sets a ceiling on what this investigation can resolve with the tools
+available: only ~6% of this page grouping's impressions attach to a named
+query even when filtered directly to the page (vs. ~29% site-wide) — per-page
+query volume trips GSC's anonymization harder than aggregate volume. The
+~2,000 impressions estimated earlier at position ~6-11 remain unidentified.
+That requires Search Console API access this session does not have; treat it
+as a known unknown, not a further finding.
