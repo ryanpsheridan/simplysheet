@@ -59,46 +59,31 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 
 <style>
 	footer {
-		/* Inverse surface: --color-bg-inverse-deep background with text flipped
-		   to the light end of the ramp. --color-bg-inverse-deep rather than
-		   --color-bg-inverse (the text/button ink color) because that value
-		   reads as dark gray rather than black at full-footer scale — see its
-		   definition in tokens.css. --footer-fg-secondary/muted are color-mixed
-		   from --color-bg rather than pulled from the light-mode
-		   secondary/muted tokens, which are calibrated for light surfaces and
-		   read too dark here. Both clear WCAG AA against this background
-		   (8.68:1 and 5.42:1), preserving the same text/secondary/muted
-		   contrast ordering as the light-mode ramp. */
-		--footer-fg: var(--color-bg);
-		--footer-fg-secondary: color-mix(in srgb, var(--color-bg) 68%, var(--color-bg-inverse-deep));
-		--footer-fg-muted: color-mix(in srgb, var(--color-bg) 52%, var(--color-bg-inverse-deep));
-		--footer-divider: color-mix(in srgb, var(--color-bg) 18%, var(--color-bg-inverse-deep));
-
+		/* Light surface, not the inverse dark treatment tried earlier: white
+		   background (--color-bg-surface, distinct from the page's --color-bg)
+		   with the standard light-mode text ramp. */
+		border-top: 1px solid var(--color-border);
 		padding: var(--space-xl) var(--space-md) var(--space-lg);
-		background: var(--color-bg-inverse-deep);
+		background: var(--color-bg-surface);
 	}
 
 	.footer-promo-bar {
 		max-width: var(--max-width);
 		margin: calc(var(--space-xl) * -1) auto var(--space-xl);
 		padding: var(--space-sm) 0;
-		border-bottom: 1px solid var(--footer-divider);
+		border-bottom: 1px solid var(--color-border);
 		text-align: center;
 		font-size: var(--text-small);
-		color: var(--footer-fg);
+		color: var(--color-text);
 		font-weight: var(--weight-normal);
 	}
 	.footer-promo-link {
-		/* --tint-sky rather than --color-accent-info: the site's link/UI blue
-		   is calibrated for light surfaces and only clears 3.68:1 here, below
-		   AA. --tint-sky was already built to sit on dark ink (14.2:1 there) and
-		   clears this background with the same margin (12.76:1). */
-		color: var(--tint-sky);
+		color: var(--color-accent-info);
 		font-weight: var(--weight-normal);
 		text-decoration: underline;
 	}
 	.footer-promo-link:hover {
-		color: var(--footer-fg);
+		color: var(--color-text);
 	}
 	.footer-inner {
 		max-width: var(--max-width);
@@ -112,7 +97,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 		justify-content: space-between;
 		gap: var(--space-xl);
 		padding-bottom: var(--space-lg);
-		border-bottom: 1px solid var(--footer-divider);
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	/* ——— Brand column ——— */
@@ -129,7 +114,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 		font-family: var(--font-logo);
 		font-size: 1.2rem;
 		font-weight: var(--weight-normal);
-		color: var(--footer-fg);
+		color: var(--color-text);
 		text-decoration: none;
 		letter-spacing: -0.02em;
 		line-height: 1.29;
@@ -142,7 +127,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 	.footer-tagline {
 		margin-top: var(--space-xs);
 		font-size: var(--text-small);
-		color: var(--footer-fg-muted);
+		color: var(--color-text-muted);
 	}
 
 	/* ——— Nav columns ——— */
@@ -161,17 +146,17 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 	.footer-heading {
 		font-size: var(--text-small);
 		font-weight: var(--weight-normal);
-		color: var(--footer-fg);
+		color: var(--color-text);
 		margin-bottom: var(--space-xs);
 	}
 	.footer-col a {
 		font-size: var(--text-small);
-		color: var(--footer-fg-secondary);
+		color: var(--color-text-secondary);
 		text-decoration: none;
 		transition: color 0.15s;
 	}
 	.footer-col a:hover {
-		color: var(--footer-fg);
+		color: var(--color-text);
 	}
 	.footer-view-all {
 		margin-top: var(--space-2xs);
@@ -184,7 +169,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 	}
 	.footer-bottom p {
 		font-size: var(--text-small);
-		color: var(--footer-fg-muted);
+		color: var(--color-text-muted);
 		margin: 0;
 	}
 
