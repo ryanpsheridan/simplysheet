@@ -150,25 +150,15 @@ const toolThumbnails = [
 		<!-- ============ EYEBROWS ============ -->
 		<section class="guide-section">
 			<h2 class="section-title">Eyebrows</h2>
-			<p class="section-desc">The uppercase overline above a heading. A tinted pill rather than plain muted caps, which disappeared next to the type they introduce. Which tint to use is a question about where the eyebrow points, not about variety.</p>
+			<p class="section-desc">The overline above a heading. Always paired with <code>.eyebrow-badge</code>, which gives it the same grey pill as <code>.badge</code> (sentence case, not uppercase caps) rather than the tinted all-caps pill this used to be.</p>
 			<div class="eyebrow-demo">
 				<div>
-					<p class="eyebrow">Recommended template</p>
-					<h3 class="demo-eyebrow-heading">Sky — points at a product</h3>
-					<p class="section-desc">The default. Used on product promos, the sidebar template link, and template page sections.</p>
-				</div>
-				<div>
-					<p class="eyebrow" style="--eyebrow-tint: var(--tint-lavender)">Related article</p>
-					<h3 class="demo-eyebrow-heading">Lavender — points at content</h3>
-					<p class="section-desc">Set via <code>--eyebrow-tint</code>, not a second class. Used where the eyebrow introduces an article, tool, or quiz.</p>
-				</div>
-				<div>
-					<p class="eyebrow eyebrow-plain">Plain variant</p>
-					<h3 class="demo-eyebrow-heading">No pill</h3>
-					<p class="section-desc">Escape hatch for places a pill is too loud — stacked directly above another label, or inside an already-busy card.</p>
+					<p class="eyebrow eyebrow-badge">Recommended template</p>
+					<h3 class="demo-eyebrow-heading">Every eyebrow site-wide</h3>
+					<p class="section-desc">Used on product promos, the sidebar template link, the template page's reviews label, and the quiz's related-article label. <code>.eyebrow</code> supplies the own-line layout (flex, fit-content); <code>.eyebrow-badge</code> supplies the look.</p>
 				</div>
 			</div>
-			<p class="section-desc">Text always stays <code>--color-text</code>: the tints are only guaranteed AA against the primary text role, so a muted or secondary tone on one of these fills is not safe.</p>
+			<p class="section-desc">Text stays <code>--color-text</code>, matching <code>.badge</code>.</p>
 		</section>
 
 		<!-- ============ BUTTONS ============ -->

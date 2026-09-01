@@ -27,7 +27,7 @@ const image = midImage;
 			<img src={image} alt={alt} width="600" height="400" loading="lazy" />
 		</a>
 		<div class="article-promo-content">
-			{label && <p class="eyebrow eyebrow-plain interstitial-label">{label}</p>}
+			{label && <p class="eyebrow eyebrow-badge interstitial-label">{label}</p>}
 			<div class="product-text">
 				{/* One label, not two. When an article supplies its own `label` the
 				    eyebrow already says why this product is here, and stacking the
@@ -56,7 +56,7 @@ const image = midImage;
 
 {variant === 'mini' && (
 	<aside class="promo-mini">
-		<p class="eyebrow eyebrow-plain promo-mini-label">{label ?? 'Recommended template'}</p>
+		<p class="eyebrow eyebrow-badge promo-mini-label">{label ?? 'Recommended template'}</p>
 		<a href={url} class="promo-mini-link" data-cta={`product_promo_mini:${slug}`}>{name} <span class="arrow">&rarr;</span></a>
 	</aside>
 )}

@@ -185,13 +185,20 @@ p {
 	margin: 0 0 var(--space-xs);
 }
 
-/* Escape hatch for places a pill is too loud — stacked directly above another
-   label, or inside an already-busy card. */
-.eyebrow-plain {
-	display: block;
-	background: none;
-	padding: 0;
-	color: var(--color-text-muted);
+/* Grey pill treatment for eyebrows, matching .badge (same background, radius,
+   padding, size, weight, sentence case) rather than the uppercase-caps
+   .eyebrow default. Layout (own-line, fit-content) still comes from the base
+   .eyebrow rule above — this only overrides the visual properties. */
+.eyebrow-badge {
+	text-transform: none;
+	letter-spacing: normal;
+	font-size: 0.8125rem;
+	font-weight: var(--weight-medium);
+	line-height: 1;
+	color: var(--color-text);
+	background: var(--color-bg-emphasis);
+	padding: 0.4375rem 0.875rem;
+	border-radius: var(--radius-full);
 }
 
 /* ——— Badge ———

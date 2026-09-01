@@ -432,14 +432,14 @@ A paragraph inside a component is reading copy even though it lives in a compone
 
 ## Eyebrows
 
-The uppercase overline label above a heading is the shared `.eyebrow` class in `global.css`, always paired with `.eyebrow-plain` — quiet muted caps with no pill background. Never hand-roll one.
+The overline label above a heading is the shared `.eyebrow` class in `global.css`, always paired with `.eyebrow-badge` — the same grey pill as `.badge` (`--color-bg-emphasis` fill, `--radius-full`, sentence case), not the uppercase-caps tinted pill this used to be. Never hand-roll one.
 
-- `.eyebrow` alone used to render a tinted pill (sky or lavender, depending on what the label pointed at). That pill treatment was tried across all four call sites and dropped as a UI misstep — a chip that loud for a label wasn't earning its weight. `.eyebrow-plain` is now applied everywhere `.eyebrow` is: `<p class="eyebrow eyebrow-plain">…</p>`. Don't reintroduce a bare `.eyebrow` with no `.eyebrow-plain` — that brings the pill back.
-- The `--eyebrow-tint` knob (sky vs. lavender) and the two tint tokens (`--tint-sky`, `--tint-lavender`) still exist in `tokens.css` for anything else that needs a light background fill, but `.eyebrow-plain` ignores `--eyebrow-tint` entirely (it sets `background: none`), so don't bother passing it to an eyebrow anymore.
-- `.eyebrow-plain` sets `color: var(--color-text-muted)` — eyebrows are quiet by design now, not `--color-text` the way the pill version was.
-- The base `.eyebrow` class still supplies layout: `display: flex` + `width: fit-content` (not `inline-flex`) so the eyebrow owns its own line rather than letting the next sibling wrap up beside it, plus `align-self: start` / `justify-self: start` so a flex/grid parent's `stretch` default doesn't pull it across the column. Keep both classes on every eyebrow — `.eyebrow` for layout, `.eyebrow-plain` for the quiet look.
-- Still 11px, deliberately off the reading scale, with the caps tracking that keeps it legible that small — that part is unchanged from the pill version.
-- If a local rule needs to adjust an eyebrow, keep it to layout (margins). Astro's scoped styles outrank the global `.eyebrow`/`.eyebrow-plain` classes, so restating color, size, or `text-transform` in a component's `<style>` silently wins and re-breaks it.
+- This went through two revisions: `.eyebrow` originally rendered a tinted uppercase pill (sky/lavender depending on what the label pointed at); that was replaced with `.eyebrow-plain` (quiet muted caps, no background) as a UI fix; `.eyebrow-plain` was then replaced with `.eyebrow-badge` because the grey `.badge` pill (see "Best Seller") read better than plain caps. `.eyebrow-plain` no longer exists — don't reintroduce it or a bare `.eyebrow` with neither modifier.
+- `.eyebrow-badge` is applied everywhere `.eyebrow` is: `<p class="eyebrow eyebrow-badge">…</p>`, on all four sitewide call sites (`ProductPromo`'s interstitial and mini labels, the template page's reviews label, the quiz's related-article label).
+- The `--eyebrow-tint` knob (sky vs. lavender) and the two tint tokens (`--tint-sky`, `--tint-lavender`) still exist in `tokens.css` for anything else that needs a light background fill, but `.eyebrow-badge` ignores `--eyebrow-tint` entirely (it sets its own `background: var(--color-bg-emphasis)`), so don't bother passing it to an eyebrow.
+- `.eyebrow-badge` sets `color: var(--color-text)`, `font-size: 0.8125rem`, `font-weight: var(--weight-medium)`, `text-transform: none` — it deliberately mirrors `.badge`'s exact values rather than duplicating a second set of pill constants, so if `.badge`'s look ever changes, update `.eyebrow-badge` to match by hand (there's no shared mixin).
+- The base `.eyebrow` class still supplies layout only: `display: flex` + `width: fit-content` (not `inline-flex`) so the eyebrow owns its own line rather than letting the next sibling wrap up beside it, plus `align-self: start` / `justify-self: start` so a flex/grid parent's `stretch` default doesn't pull it across the column, plus the bottom margin. Keep both classes on every eyebrow — `.eyebrow` for layout, `.eyebrow-badge` for the look.
+- If a local rule needs to adjust an eyebrow, keep it to layout (margins). Astro's scoped styles outrank the global `.eyebrow`/`.eyebrow-badge` classes, so restating color, size, or padding in a component's `<style>` silently wins and re-breaks it.
 
 ## Badges
 
@@ -460,7 +460,7 @@ They are different things and should not both appear on the same element:
 
 `ProductPromo`'s interstitial variant enforces this: when an article passes a `label`, the eyebrow renders and the template's generic `badge` stands down, because the article's framing is the more specific of the two. Stacking both is what the eyebrow-plus-badge pileup looked like before.
 
-Eyebrows are deliberately rare — four places sitewide. Now that they're quiet muted caps rather than a pill, reach for a badge when the label is a factual attribute rather than editorializing, same as before.
+Eyebrows are deliberately rare — four places sitewide. They're visually identical to a badge now (`.eyebrow-badge` mirrors `.badge`'s pill), so the distinction that matters is purely semantic: reach for a badge when the label is a factual attribute, an eyebrow when it's editorializing about what's below it. Don't let the shared look tempt you into using one component's class for the other's job — `.badge` on something that should own its own line above a heading loses `.eyebrow`'s layout guarantees.
 
 ## Table Scroll Affordance
 
