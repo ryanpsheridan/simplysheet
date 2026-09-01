@@ -6,10 +6,29 @@ import { TOOLS } from '../../data/tools';
 // treatment (Vercel/Stripe/Formspree register) against real tool content
 // before deciding whether it belongs anywhere in production nav.
 // Not linked from anywhere; noindex so it never surfaces in search.
+//
+// Iteration 2: fixed doubled hairlines (grid-gap + background technique
+// instead of adjacent borders on both sides of a seam), the dot backdrop
+// now runs full viewport width behind the frame instead of only in its
+// gutters, the palette is locally overridden to a cooler slate register
+// for this page only (the site's real tokens are deliberately warm — see
+// tokens.css — so this stays scoped rather than touching them), and the
+// promo visual is a small quiz-step mockup (progress + question + options)
+// with the third option fading out, rather than a generic stat card.
 
 const calculators = TOOLS.filter((t) => t.group === 'calculator');
 const assessments = TOOLS.filter((t) => t.group === 'assessment');
 const quiz = TOOLS.find((t) => t.url === '/quiz/budgeting-style/')!;
+
+// The gap+background seam technique paints the "hairline" as the mesh's own
+// background showing through a 1px gap — which means any grid track with no
+// cell in it also shows that background, as a solid filled block. Padding
+// each group out to a multiple of 6 (the LCM of the 3-col/2-col breakpoints)
+// guarantees every row divides evenly at 3, 2, and 1 columns, so there's
+// never a dangling row for a real cell to be missing from.
+function fillerCount(n: number) {
+	return (6 - (n % 6)) % 6;
+}
 
 const title = 'Design preview: bordered grid';
 const description = 'Internal design exploration. Not part of the live site.';
@@ -17,81 +36,109 @@ const description = 'Internal design exploration. Not part of the live site.';
 
 <BaseLayout title={title} description={description} noindex={true}>
 	<main id="main-content" class="preview-main">
-		<p class="preview-tag">Design exploration — not linked in navigation, not indexed</p>
+		<div class="preview-page">
+			<div class="preview-tag-wrap">
+				<p class="preview-tag">Design exploration — not linked in navigation, not indexed</p>
+			</div>
 
-		<div class="frame">
-			<section class="row row--intro">
-				<h1>Free tools</h1>
-				<p>Free calculators and assessments to help you make clearer decisions about your money.</p>
-			</section>
+			<section class="preview-bleed">
+				<div class="frame">
+					<section class="row row--intro">
+						<h1>Free tools</h1>
+						<p>Free calculators and assessments to help you make clearer decisions about your money.</p>
+					</section>
 
-			<section class="row row--split">
-				<div class="row-label">
-					<h2>Calculators</h2>
-					<p>Run the numbers on a payoff date, a paycheck split, or a savings target.</p>
-				</div>
-				<div class="row-content">
-					<div class="mesh">
-						{calculators.map((tool) => {
-							const toolId = tool.url.replace(/\/$/, '').split('/').pop();
-							return (
-								<a href={tool.url} class="cell" data-cta={`design_preview_tool_card:${toolId}`}>
-									<svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={tool.icon} />
-									<h3>{tool.name}</h3>
-									<p>{tool.desc}</p>
-								</a>
-							);
-						})}
-					</div>
-				</div>
-			</section>
+					<section class="row">
+						<div class="row-split">
+							<div class="row-label">
+								<h2>Calculators</h2>
+								<p>Run the numbers on a payoff date, a paycheck split, or a savings target.</p>
+							</div>
+							<div class="row-content">
+								<div class="mesh">
+									{calculators.map((tool) => {
+										const toolId = tool.url.replace(/\/$/, '').split('/').pop();
+										return (
+											<a href={tool.url} class="cell" data-cta={`design_preview_tool_card:${toolId}`}>
+												<svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={tool.icon} />
+												<h3>{tool.name}</h3>
+												<p>{tool.desc}</p>
+											</a>
+										);
+									})}
+									{Array.from({ length: fillerCount(calculators.length) }).map(() => (
+										<div class="cell cell--filler" aria-hidden="true" />
+									))}
+								</div>
+							</div>
+						</div>
+					</section>
 
-			<section class="row row--split">
-				<div class="row-label">
-					<h2>Assessments</h2>
-					<p>Answer a few quick questions to find out where you stand.</p>
-				</div>
-				<div class="row-content">
-					<div class="mesh mesh--narrow">
-						{assessments.map((tool) => {
-							const toolId = tool.url.replace(/\/$/, '').split('/').pop();
-							return (
-								<a href={tool.url} class="cell" data-cta={`design_preview_tool_card:${toolId}`}>
-									<svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={tool.icon} />
-									<h3>{tool.name}</h3>
-									<p>{tool.desc}</p>
-								</a>
-							);
-						})}
-					</div>
-				</div>
-			</section>
+					<section class="row">
+						<div class="row-split">
+							<div class="row-label">
+								<h2>Assessments</h2>
+								<p>Answer a few quick questions to find out where you stand.</p>
+							</div>
+							<div class="row-content">
+								<div class="mesh">
+									{assessments.map((tool) => {
+										const toolId = tool.url.replace(/\/$/, '').split('/').pop();
+										return (
+											<a href={tool.url} class="cell" data-cta={`design_preview_tool_card:${toolId}`}>
+												<svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={tool.icon} />
+												<h3>{tool.name}</h3>
+												<p>{tool.desc}</p>
+											</a>
+										);
+									})}
+									{Array.from({ length: fillerCount(assessments.length) }).map(() => (
+										<div class="cell cell--filler" aria-hidden="true" />
+									))}
+								</div>
+							</div>
+						</div>
+					</section>
 
-			<section class="row row--promo">
-				<div class="promo-copy">
-					<h2>Not sure where to start?</h2>
-					<p>Take the 60-second quiz and get one actionable tip matched to your money personality — no numbers to enter, no login.</p>
-					<a href={quiz.url} class="btn btn-primary btn-arrow" data-cta="design_preview_quiz_promo">Take the quiz</a>
-				</div>
-				<div class="promo-visual">
-					<div class="preview-card">
-						<div class="preview-card-row">
-							<span class="preview-dot"></span>
-							<span class="preview-bar preview-bar--full"></span>
+					<section class="row">
+						<div class="row-promo">
+							<div class="promo-copy">
+								<h2>Not sure where to start?</h2>
+								<p>Take the 60-second quiz and get one actionable tip matched to your money personality — no numbers to enter, no login.</p>
+								<a href={quiz.url} class="btn btn-primary btn-arrow" data-cta="design_preview_quiz_promo">Take the quiz</a>
+							</div>
+							<div class="promo-visual" aria-hidden="true">
+								<div class="quiz-mock">
+									<div class="quiz-mock-progress">
+										<span class="quiz-mock-progress-track">
+											<span class="quiz-mock-progress-fill"></span>
+										</span>
+										<span class="quiz-mock-progress-label">Question 2 of 6</span>
+									</div>
+									<p class="quiz-mock-question">When an unexpected bill shows up, you...</p>
+									<div class="quiz-mock-options">
+										<div class="quiz-mock-option quiz-mock-option--selected">
+											<span class="quiz-mock-radio"></span>
+											<span>Check the budget first</span>
+										</div>
+										<div class="quiz-mock-option">
+											<span class="quiz-mock-radio"></span>
+											<span>Pay it, sort it out later</span>
+										</div>
+										<div class="quiz-mock-option">
+											<span class="quiz-mock-radio"></span>
+											<span>Ask a partner or friend</span>
+										</div>
+										<div class="quiz-mock-option">
+											<span class="quiz-mock-radio"></span>
+											<span>Put it on a credit card</span>
+										</div>
+										<div class="quiz-mock-fade"></div>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="preview-card-row">
-							<span class="preview-dot preview-dot--muted"></span>
-							<span class="preview-bar preview-bar--wide"></span>
-						</div>
-						<div class="preview-card-row">
-							<span class="preview-dot preview-dot--muted"></span>
-							<span class="preview-bar preview-bar--mid"></span>
-						</div>
-						<div class="preview-card-footer">
-							<span class="preview-result-label">Your style</span>
-							<span class="preview-result-value">The Planner</span>
-						</div>
-					</div>
+					</section>
 				</div>
 			</section>
 		</div>
@@ -100,33 +147,69 @@ const description = 'Internal design exploration. Not part of the live site.';
 
 <style>
 	.preview-main {
+		max-width: none;
+		padding: 0;
+	}
+
+	/* Cooler, slate-toned local palette for this page only — the site's real
+	   tokens (tokens.css) are deliberately warm, so this stays scoped rather
+	   than touching them. Structural tokens (space/text/radius/weight) are
+	   still pulled from the shared system; only color moves. */
+	.preview-page {
+		--pv-bg:             #F7F8FA;
+		--pv-surface:        #FFFFFF;
+		--pv-panel:          #F1F2F5;
+		--pv-border:         #E3E5E9;
+		--pv-border-strong:  #C7CBD1;
+		--pv-text:           #14171F;
+		--pv-text-secondary: #565C6B;
+		--pv-text-muted:     #6B7180;
+		--pv-accent:         #4C51F7;
+		--pv-accent-bg:      #ECEDFE;
+
+		background: var(--pv-bg);
+		color: var(--pv-text);
+	}
+
+	.preview-tag-wrap {
 		max-width: calc(var(--max-width) + var(--space-md) * 2);
 		margin: 0 auto;
-		padding: var(--space-xl) var(--space-md);
-		background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
-		background-size: 24px 24px;
+		padding: var(--space-lg) var(--space-md) 0;
 	}
 	.preview-tag {
 		font-size: var(--text-xs);
-		color: var(--color-text-muted);
+		color: var(--pv-text-muted);
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-caps);
-		margin: 0 0 var(--space-lg);
+		margin: 0;
 	}
 
-	/* ——— The frame: border-x on the container, border-top between rows,
-	   a faint dot grid behind everything — the Formspree/Vercel "content
-	   lives inside a drawn box" mechanism, ported to this site's hairline
-	   token rather than a foreign gray. ——— */
+	/* Dot backdrop runs the full viewport width behind the frame, not just
+	   in the frame's own gutters — the frame itself stays constrained and
+	   centered inside it. */
+	.preview-bleed {
+		width: 100%;
+		padding: var(--space-xl) 0 var(--space-2xl);
+		background-image: radial-gradient(var(--pv-border-strong) 1px, transparent 1px);
+		background-size: 24px 24px;
+	}
+
 	.frame {
-		position: relative;
-		border-left: 1px solid var(--color-border-hairline);
-		border-right: 1px solid var(--color-border-hairline);
+		max-width: calc(var(--max-width) + var(--space-md) * 2);
+		margin: 0 auto;
+		padding: 0 var(--space-md);
+	}
+	.frame > .row {
+		border-left: 1px solid var(--pv-border);
+		border-right: 1px solid var(--pv-border);
 	}
 	.row {
 		position: relative;
-		border-top: 1px solid var(--color-border-hairline);
-		background: var(--color-bg);
+		border-top: 1px solid var(--pv-border);
+		background: var(--pv-bg);
+	}
+	.row:last-child {
+		border-bottom: 1px solid var(--pv-border);
 	}
 
 	.row--intro {
@@ -134,44 +217,50 @@ const description = 'Internal design exploration. Not part of the live site.';
 	}
 	.row--intro h1 {
 		font-size: var(--text-h1);
+		color: var(--pv-text);
 		margin-bottom: var(--space-xs);
 	}
 	.row--intro p {
 		font-size: var(--text-body);
-		color: var(--color-text-secondary);
+		color: var(--pv-text-secondary);
 		max-width: 36rem;
 	}
 
-	.row--split {
+	/* ——— Label/content split. The gap+background technique below draws
+	   exactly one hairline at every seam: the parent's background shows
+	   through the 1px gap, and each child paints over the rest with its
+	   own fill. No two elements ever contribute their own border to the
+	   same seam, so nothing can double up. ——— */
+	.row-split {
 		display: grid;
 		grid-template-columns: 16rem 1fr;
+		gap: 1px;
+		background: var(--pv-border);
 	}
 	.row-label {
 		padding: var(--space-lg);
-		border-right: 1px solid var(--color-border-hairline);
+		background: var(--pv-bg);
 	}
 	.row-label h2 {
 		font-size: var(--text-h3);
 		font-weight: var(--weight-medium);
+		color: var(--pv-text);
 		margin-bottom: var(--space-xs);
 	}
 	.row-label p {
 		font-size: var(--text-small);
-		color: var(--color-text-secondary);
+		color: var(--pv-text-secondary);
 		margin: 0;
 	}
 	.row-content {
-		background: var(--color-bg-surface);
+		background: var(--pv-surface);
 	}
 
 	.mesh {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		border-top: 1px solid var(--color-border-hairline);
-		border-left: 1px solid var(--color-border-hairline);
-	}
-	.mesh--narrow {
-		grid-template-columns: repeat(3, 1fr);
+		gap: 1px;
+		background: var(--pv-border);
 	}
 	.cell {
 		display: flex;
@@ -179,127 +268,173 @@ const description = 'Internal design exploration. Not part of the live site.';
 		align-items: flex-start;
 		gap: var(--space-sm);
 		padding: var(--space-lg);
-		border-right: 1px solid var(--color-border-hairline);
-		border-bottom: 1px solid var(--color-border-hairline);
+		background: var(--pv-surface);
 		text-decoration: none;
 		color: inherit;
 		transition: background var(--duration-base) var(--ease-out);
 	}
 	@media (hover: hover) {
 		.cell:hover {
-			background: var(--color-bg-panel);
+			background: var(--pv-panel);
 		}
 	}
 	.cell-icon {
 		width: 1.75rem;
 		height: 1.75rem;
-		color: var(--color-text);
+		color: var(--pv-text);
 	}
 	.cell h3 {
 		font-size: var(--text-body);
 		font-weight: var(--weight-medium);
+		color: var(--pv-text);
 		margin: 0;
 		line-height: var(--leading-snug);
 	}
 	.cell p {
 		font-size: var(--text-small);
-		color: var(--color-text-secondary);
+		color: var(--pv-text-secondary);
 		line-height: var(--leading-snug);
 		margin: 0;
 	}
+	.cell--filler {
+		pointer-events: none;
+	}
 
-	.row--promo {
+	/* ——— Promo split, same gap+background seam technique ——— */
+	.row-promo {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		align-items: center;
+		gap: 1px;
+		background: var(--pv-border);
 	}
 	.promo-copy {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 		padding: var(--space-xl) var(--space-lg);
-		border-right: 1px solid var(--color-border-hairline);
+		background: var(--pv-bg);
 	}
 	.promo-copy h2 {
 		font-size: var(--text-h2);
+		color: var(--pv-text);
 		margin-bottom: var(--space-xs);
 	}
 	.promo-copy p {
 		font-size: var(--text-body);
-		color: var(--color-text-secondary);
+		color: var(--pv-text-secondary);
 		margin-bottom: var(--space-md);
 		max-width: 28rem;
 	}
+	.promo-copy .btn-primary {
+		background: var(--pv-text);
+	}
 	.promo-visual {
 		display: flex;
+		align-items: center;
 		justify-content: center;
 		padding: var(--space-xl) var(--space-lg);
+		background: var(--pv-bg);
 	}
 
-	.preview-card {
+	/* ——— Quiz-step mockup: progress bar, question, three options, the
+	   last one fading out under a gradient — an intentional "there's more
+	   below" cue rather than the card just ending mid-list. ——— */
+	.quiz-mock {
 		width: 100%;
 		max-width: 20rem;
-		border: 1px solid var(--color-border);
+		border: 1px solid var(--pv-border);
 		border-radius: var(--radius-md);
-		background: var(--color-bg-surface);
+		background: var(--pv-surface);
 		box-shadow: var(--shadow-sm);
 		padding: var(--space-md);
 	}
-	.preview-card-row {
+	.quiz-mock-progress {
 		display: flex;
 		align-items: center;
 		gap: var(--space-sm);
-		padding: var(--space-xs) 0;
+		margin-bottom: var(--space-md);
 	}
-	.preview-dot {
-		width: 0.5rem;
-		height: 0.5rem;
+	.quiz-mock-progress-track {
+		flex: 1;
+		height: 0.25rem;
 		border-radius: var(--radius-full);
-		background: var(--color-text);
+		background: var(--pv-panel);
+		overflow: hidden;
+	}
+	.quiz-mock-progress-fill {
+		display: block;
+		width: 33%;
+		height: 100%;
+		background: var(--pv-accent);
+	}
+	.quiz-mock-progress-label {
+		font-size: var(--text-xs);
+		color: var(--pv-text-muted);
+		white-space: nowrap;
+	}
+	.quiz-mock-question {
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--pv-text);
+		margin: 0 0 var(--space-sm);
+	}
+	.quiz-mock-options {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		/* Clips the 4th option to a visible sliver so the fade below has
+		   something to hide — the cue is "there's more", not decoration on
+		   its own. */
+		max-height: 10.25rem;
+		overflow: hidden;
+	}
+	.quiz-mock-option {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+		padding: var(--space-xs) var(--space-sm);
+		border: 1px solid var(--pv-border);
+		border-radius: var(--radius-md);
+		font-size: var(--text-small);
+		color: var(--pv-text-secondary);
+	}
+	.quiz-mock-option--selected {
+		border-color: var(--pv-accent);
+		background: var(--pv-accent-bg);
+		color: var(--pv-text);
+	}
+	.quiz-mock-radio {
+		width: 0.875rem;
+		height: 0.875rem;
+		border-radius: var(--radius-full);
+		border: 1.5px solid var(--pv-border-strong);
 		flex-shrink: 0;
 	}
-	.preview-dot--muted {
-		background: var(--color-border-strong);
+	.quiz-mock-option--selected .quiz-mock-radio {
+		border-color: var(--pv-accent);
+		background: var(--pv-accent);
+		box-shadow: inset 0 0 0 2px var(--pv-accent-bg);
 	}
-	.preview-bar {
-		height: 0.5rem;
-		border-radius: var(--radius-full);
-		background: var(--color-bg-panel);
-	}
-	.preview-bar--full { width: 100%; }
-	.preview-bar--wide { width: 78%; }
-	.preview-bar--mid { width: 55%; }
-	.preview-card-footer {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		margin-top: var(--space-sm);
-		padding-top: var(--space-sm);
-		border-top: 1px solid var(--color-border-hairline);
-	}
-	.preview-result-label {
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-	}
-	.preview-result-value {
-		font-size: var(--text-body);
-		font-weight: var(--weight-medium);
+	.quiz-mock-fade {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 2rem;
+		background: linear-gradient(to bottom, transparent, var(--pv-surface));
+		pointer-events: none;
 	}
 
 	@media (max-width: 860px) {
-		.row--split {
+		.row-split {
 			grid-template-columns: 1fr;
-		}
-		.row-label {
-			border-right: none;
-			border-bottom: 1px solid var(--color-border-hairline);
 		}
 		.mesh {
 			grid-template-columns: repeat(2, 1fr);
 		}
-		.row--promo {
+		.row-promo {
 			grid-template-columns: 1fr;
-		}
-		.promo-copy {
-			border-right: none;
-			border-bottom: 1px solid var(--color-border-hairline);
 		}
 	}
 
