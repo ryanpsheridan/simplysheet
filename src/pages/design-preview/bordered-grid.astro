@@ -1,0 +1,311 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { TOOLS } from '../../data/tools';
+
+// Sandbox page only — testing a bordered-grid, hairline-divided layout
+// treatment (Vercel/Stripe/Formspree register) against real tool content
+// before deciding whether it belongs anywhere in production nav.
+// Not linked from anywhere; noindex so it never surfaces in search.
+
+const calculators = TOOLS.filter((t) => t.group === 'calculator');
+const assessments = TOOLS.filter((t) => t.group === 'assessment');
+const quiz = TOOLS.find((t) => t.url === '/quiz/budgeting-style/')!;
+
+const title = 'Design preview: bordered grid';
+const description = 'Internal design exploration. Not part of the live site.';
+---
+
+<BaseLayout title={title} description={description} noindex={true}>
+	<main id="main-content" class="preview-main">
+		<p class="preview-tag">Design exploration — not linked in navigation, not indexed</p>
+
+		<div class="frame">
+			<section class="row row--intro">
+				<h1>Free tools</h1>
+				<p>Free calculators and assessments to help you make clearer decisions about your money.</p>
+			</section>
+
+			<section class="row row--split">
+				<div class="row-label">
+					<h2>Calculators</h2>
+					<p>Run the numbers on a payoff date, a paycheck split, or a savings target.</p>
+				</div>
+				<div class="row-content">
+					<div class="mesh">
+						{calculators.map((tool) => {
+							const toolId = tool.url.replace(/\/$/, '').split('/').pop();
+							return (
+								<a href={tool.url} class="cell" data-cta={`design_preview_tool_card:${toolId}`}>
+									<svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={tool.icon} />
+									<h3>{tool.name}</h3>
+									<p>{tool.desc}</p>
+								</a>
+							);
+						})}
+					</div>
+				</div>
+			</section>
+
+			<section class="row row--split">
+				<div class="row-label">
+					<h2>Assessments</h2>
+					<p>Answer a few quick questions to find out where you stand.</p>
+				</div>
+				<div class="row-content">
+					<div class="mesh mesh--narrow">
+						{assessments.map((tool) => {
+							const toolId = tool.url.replace(/\/$/, '').split('/').pop();
+							return (
+								<a href={tool.url} class="cell" data-cta={`design_preview_tool_card:${toolId}`}>
+									<svg class="cell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={tool.icon} />
+									<h3>{tool.name}</h3>
+									<p>{tool.desc}</p>
+								</a>
+							);
+						})}
+					</div>
+				</div>
+			</section>
+
+			<section class="row row--promo">
+				<div class="promo-copy">
+					<h2>Not sure where to start?</h2>
+					<p>Take the 60-second quiz and get one actionable tip matched to your money personality — no numbers to enter, no login.</p>
+					<a href={quiz.url} class="btn btn-primary btn-arrow" data-cta="design_preview_quiz_promo">Take the quiz</a>
+				</div>
+				<div class="promo-visual">
+					<div class="preview-card">
+						<div class="preview-card-row">
+							<span class="preview-dot"></span>
+							<span class="preview-bar preview-bar--full"></span>
+						</div>
+						<div class="preview-card-row">
+							<span class="preview-dot preview-dot--muted"></span>
+							<span class="preview-bar preview-bar--wide"></span>
+						</div>
+						<div class="preview-card-row">
+							<span class="preview-dot preview-dot--muted"></span>
+							<span class="preview-bar preview-bar--mid"></span>
+						</div>
+						<div class="preview-card-footer">
+							<span class="preview-result-label">Your style</span>
+							<span class="preview-result-value">The Planner</span>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.preview-main {
+		max-width: calc(var(--max-width) + var(--space-md) * 2);
+		margin: 0 auto;
+		padding: var(--space-xl) var(--space-md);
+		background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+		background-size: 24px 24px;
+	}
+	.preview-tag {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-caps);
+		margin: 0 0 var(--space-lg);
+	}
+
+	/* ——— The frame: border-x on the container, border-top between rows,
+	   a faint dot grid behind everything — the Formspree/Vercel "content
+	   lives inside a drawn box" mechanism, ported to this site's hairline
+	   token rather than a foreign gray. ——— */
+	.frame {
+		position: relative;
+		border-left: 1px solid var(--color-border-hairline);
+		border-right: 1px solid var(--color-border-hairline);
+	}
+	.row {
+		position: relative;
+		border-top: 1px solid var(--color-border-hairline);
+		background: var(--color-bg);
+	}
+
+	.row--intro {
+		padding: var(--space-xl) var(--space-lg) var(--space-lg);
+	}
+	.row--intro h1 {
+		font-size: var(--text-h1);
+		margin-bottom: var(--space-xs);
+	}
+	.row--intro p {
+		font-size: var(--text-body);
+		color: var(--color-text-secondary);
+		max-width: 36rem;
+	}
+
+	.row--split {
+		display: grid;
+		grid-template-columns: 16rem 1fr;
+	}
+	.row-label {
+		padding: var(--space-lg);
+		border-right: 1px solid var(--color-border-hairline);
+	}
+	.row-label h2 {
+		font-size: var(--text-h3);
+		font-weight: var(--weight-medium);
+		margin-bottom: var(--space-xs);
+	}
+	.row-label p {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+	.row-content {
+		background: var(--color-bg-surface);
+	}
+
+	.mesh {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		border-top: 1px solid var(--color-border-hairline);
+		border-left: 1px solid var(--color-border-hairline);
+	}
+	.mesh--narrow {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.cell {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-sm);
+		padding: var(--space-lg);
+		border-right: 1px solid var(--color-border-hairline);
+		border-bottom: 1px solid var(--color-border-hairline);
+		text-decoration: none;
+		color: inherit;
+		transition: background var(--duration-base) var(--ease-out);
+	}
+	@media (hover: hover) {
+		.cell:hover {
+			background: var(--color-bg-panel);
+		}
+	}
+	.cell-icon {
+		width: 1.75rem;
+		height: 1.75rem;
+		color: var(--color-text);
+	}
+	.cell h3 {
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		margin: 0;
+		line-height: var(--leading-snug);
+	}
+	.cell p {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-snug);
+		margin: 0;
+	}
+
+	.row--promo {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+	}
+	.promo-copy {
+		padding: var(--space-xl) var(--space-lg);
+		border-right: 1px solid var(--color-border-hairline);
+	}
+	.promo-copy h2 {
+		font-size: var(--text-h2);
+		margin-bottom: var(--space-xs);
+	}
+	.promo-copy p {
+		font-size: var(--text-body);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-md);
+		max-width: 28rem;
+	}
+	.promo-visual {
+		display: flex;
+		justify-content: center;
+		padding: var(--space-xl) var(--space-lg);
+	}
+
+	.preview-card {
+		width: 100%;
+		max-width: 20rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background: var(--color-bg-surface);
+		box-shadow: var(--shadow-sm);
+		padding: var(--space-md);
+	}
+	.preview-card-row {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		padding: var(--space-xs) 0;
+	}
+	.preview-dot {
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: var(--radius-full);
+		background: var(--color-text);
+		flex-shrink: 0;
+	}
+	.preview-dot--muted {
+		background: var(--color-border-strong);
+	}
+	.preview-bar {
+		height: 0.5rem;
+		border-radius: var(--radius-full);
+		background: var(--color-bg-panel);
+	}
+	.preview-bar--full { width: 100%; }
+	.preview-bar--wide { width: 78%; }
+	.preview-bar--mid { width: 55%; }
+	.preview-card-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		margin-top: var(--space-sm);
+		padding-top: var(--space-sm);
+		border-top: 1px solid var(--color-border-hairline);
+	}
+	.preview-result-label {
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+	.preview-result-value {
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+	}
+
+	@media (max-width: 860px) {
+		.row--split {
+			grid-template-columns: 1fr;
+		}
+		.row-label {
+			border-right: none;
+			border-bottom: 1px solid var(--color-border-hairline);
+		}
+		.mesh {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.row--promo {
+			grid-template-columns: 1fr;
+		}
+		.promo-copy {
+			border-right: none;
+			border-bottom: 1px solid var(--color-border-hairline);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.mesh {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
