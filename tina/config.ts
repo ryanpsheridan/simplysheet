@@ -4,7 +4,7 @@ import { defineConfig } from 'tinacms';
 // committed. Set TINA_CLIENT_ID and TINA_TOKEN wherever this is deployed
 // (falls back to local-only mode if they're unset).
 export default defineConfig({
-	branch: 'claude/tina-io-integration-test-rl17tr',
+	branch: process.env.VERCEL_GIT_COMMIT_REF ?? 'main',
 	clientId: process.env.TINA_CLIENT_ID ?? null,
 	token: process.env.TINA_TOKEN ?? null,
 	search: process.env.TINA_SEARCH_TOKEN
