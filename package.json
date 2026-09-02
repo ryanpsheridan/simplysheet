@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "tina-dev": "tinacms dev -c \"astro dev\"",
     "prebuild": "node scripts/generate-og-images.mjs",
-    "build": "astro build",
+    "build": "tinacms build && astro build",
     "postbuild": "node scripts/submit-indexnow.mjs",
     "preview": "astro preview",
     "astro": "astro",

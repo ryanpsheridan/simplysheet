@@ -1,12 +1,22 @@
 import { defineConfig } from 'tinacms';
 
-// Local-only test setup: no clientId/token, so this runs entirely against
-// the local filesystem/git (no Tina Cloud account needed). See
-// https://tina.io/docs/self-hosted/overview for what going further requires.
+// Reads Tina Cloud credentials from env vars so nothing sensitive is
+// committed. Set TINA_CLIENT_ID and TINA_TOKEN wherever this is deployed
+// (falls back to local-only mode if they're unset).
 export default defineConfig({
 	branch: 'claude/tina-io-integration-test-rl17tr',
-	clientId: null,
-	token: null,
+	clientId: process.env.TINA_CLIENT_ID ?? null,
+	token: process.env.TINA_TOKEN ?? null,
+	search: process.env.TINA_SEARCH_TOKEN
+		? {
+				tina: {
+					indexerToken: process.env.TINA_SEARCH_TOKEN,
+					stopwordLanguages: ['eng'],
+				},
+				indexBatchSize: 100,
+				maxSearchIndexFieldLength: 100,
+			}
+		: undefined,
 	build: {
 		outputFolder: 'admin',
 		publicFolder: 'public',
