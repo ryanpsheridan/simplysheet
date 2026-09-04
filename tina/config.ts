@@ -3,8 +3,13 @@ import { defineConfig } from 'tinacms';
 // Reads Tina Cloud credentials from env vars so nothing sensitive is
 // committed. Set TINA_CLIENT_ID and TINA_TOKEN wherever this is deployed
 // (falls back to local-only mode if they're unset).
+//
+// `branch` is hardcoded rather than resolved from VERCEL_GIT_COMMIT_REF:
+// Tina Cloud's own schema indexer doesn't run inside a Vercel build, so it
+// falls back to a different value there than what Vercel resolves at build
+// time, permanently failing the "local schema doesn't match remote" check.
 export default defineConfig({
-	branch: process.env.VERCEL_GIT_COMMIT_REF ?? 'main',
+	branch: 'claude/tina-io-integration-test-rl17tr',
 	clientId: process.env.TINA_CLIENT_ID ?? null,
 	token: process.env.TINA_TOKEN ?? null,
 	search: process.env.TINA_SEARCH_TOKEN
