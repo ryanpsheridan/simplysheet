@@ -17,11 +17,7 @@ const featuredSlug = '50-30-20-budget-rule';
 const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
 const rest = allArticles.filter((a) => a.id !== featured.id);
 
-// The hero rail is four uniform rows: the pinned featured article, then the
-// next three. Latest starts after them — otherwise the same headlines appear
-// twice on one screen.
-const heroArticles = [featured, ...rest.slice(0, 3)];
-const latest = rest.slice(3, 9);
+const latest = rest.slice(0, 9);
 
 const organizationSchema = {
 	'@context': 'https://schema.org',
@@ -59,32 +55,23 @@ const websiteSchema = {
 	<section class="hero">
 		<div class="hero-inner">
 			<div class="hero-text">
-				<h1 class="hero-title">Budget spreadsheets that actually get used.</h1>
-				<p class="hero-desc">Plain-English guides, free calculators, and Google Sheets and Excel templates for people who have tried a budgeting app and quit by March.</p>
-				<div class="hero-actions">
-					<a href="/spreadsheets/" class="btn btn-primary btn-arrow" data-cta="index_hero_primary_cta">Browse the spreadsheets</a>
-					{/* Tools, not the quiz: the header CTA and the banner further
-					    down both already point at the quiz, and a third link to it
-					    here would spend the hero's one secondary slot on a
-					    destination the page sells twice over. This way the first
-					    screen offers all three of the site's surfaces — buy,
-					    calculate, read — with the articles in the rail beside it. */}
-					<a href="/tools/" class="btn btn-secondary" data-cta="index_hero_secondary_cta">Try a free calculator</a>
-				</div>
+				<h1 class="hero-title">A simpler way to manage your personal finances.</h1>
+				<p class="hero-desc">Whether you are paying off debt or navigating an irregular income, find the guidance and tools you need to organize your money, stay on track, and move forward with confidence.</p>
 			</div>
-			<ul class="hero-rail" aria-label="Featured articles">
-				{heroArticles.map((article) => (
-					<li>
-						<a href={`/articles/${article.id}/`} data-cta={`index_hero_article:${article.id}`}>
-							<span class="hero-rail-thumb">
-								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" />
-							</span>
-							<span class="hero-rail-title">{article.data.title}</span>
-							<span class="hero-rail-meta">{article.readTime} min</span>
-						</a>
-					</li>
-				))}
-			</ul>
+			{featured && (
+				<a href={`/articles/${featured.id}/`} class="hero-featured" data-cta="index_hero_featured_article">
+					{(featured.data.cardImage || featured.data.image) && (
+						<div class="hero-featured-thumb">
+							<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" fetchpriority="high" />
+						</div>
+					)}
+					<TagPills tags={featured.data.tags} tagMap={TAG_MAP} />
+					<h2 class="hero-featured-title">{featured.data.title}</h2>
+					<p class="hero-featured-meta">
+						<span>{featured.readTime} min read</span>
+					</p>
+				</a>
+			)}
 		</div>
 	</section>
 
@@ -92,6 +79,7 @@ const websiteSchema = {
 
 	<section class="home-rows">
 		<div class="home-rows-inner">
+			<SpreadsheetsToolsRows only="tools" toolLimit={6} />
 			{latest.length > 0 && (
 				<div class="home-row">
 					<div class="home-row-label">
@@ -118,7 +106,6 @@ const websiteSchema = {
 					</div>
 				</div>
 			)}
-			<SpreadsheetsToolsRows only="tools" />
 		</div>
 	</section>
 
@@ -169,26 +156,21 @@ const websiteSchema = {
 	.hero {
 		padding: var(--space-section) var(--space-md);
 	}
-	/* `align-items: start`, never `center`. The text column is much shorter
-	   than the article column beside it, so centring split the difference into
-	   two equal voids above and below it — 318px of nothing across a 513px
-	   row. Both columns start at the same line instead. */
 	.hero-inner {
 		max-width: var(--max-width);
 		margin: 0 auto;
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 0.75fr 1fr;
 		gap: var(--space-xl);
-		align-items: start;
+		align-items: center;
 	}
-	/* Children stay stretched (the flex default). `align-items: start` here
-	   shrink-wraps every child to fit-content, which makes the mobile rule
-	   that widens the buttons to 100% resolve against a fit-content parent
-	   and quietly do nothing. */
 	.hero-text {
 		display: flex;
 		flex-direction: column;
 	}
+	/* No `font-weight` here on purpose. Headings take --weight-semibold from the
+	   shared h1–h6 rule in global.css; a local override on a heading class is the
+	   bug the Manrope switch fixed twice. */
 	.hero-title {
 		font-size: var(--text-display);
 		line-height: var(--leading-tight);
@@ -196,82 +178,44 @@ const websiteSchema = {
 		color: var(--color-text-heading);
 		margin-bottom: var(--space-sm);
 	}
-	/* Reading copy, not UI text: this is the one paragraph on the page a
-	   stranger actually reads, and on a phone it is most of the first screen,
-	   so it takes the token that steps up there. */
 	.hero-desc {
-		font-size: var(--text-read);
+		font-size: var(--text-body);
 		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
 		margin: 0;
-		max-width: 34em;
 	}
-	.hero-actions {
+	.hero-featured {
 		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-sm);
-		margin-top: var(--space-lg);
-	}
-
-	/* ——— Hero rail ———
-	   Four uniform rows rather than one big card over three bare links. The
-	   featured article keeps the first slot but not a different shape, so the
-	   column reads as a list of ways in and the headlines — not one large
-	   gradient — carry it. The thumbnails are deliberately small: they anchor
-	   each row and give the stack a rhythm without competing with the H1. */
-
-	.hero-rail {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		border-top: 1px solid var(--color-border-hairline);
-	}
-	.hero-rail a {
-		display: grid;
-		grid-template-columns: 5rem minmax(0, 1fr) auto;
-		gap: var(--space-sm);
-		align-items: center;
-		padding: var(--space-sm) 0;
-		border-bottom: 1px solid var(--color-border-hairline);
+		flex-direction: column;
 		text-decoration: none;
-		color: var(--color-text);
 	}
-	.hero-rail-thumb {
-		display: block;
+	.hero-featured-thumb {
+		position: relative;
 		aspect-ratio: 16 / 9;
 		border-radius: var(--radius-md);
 		overflow: hidden;
-		background: var(--color-bg-panel);
+		margin-bottom: var(--space-md);
 	}
-	.hero-rail-thumb img {
+	.hero-featured-thumb img {
 		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		border-radius: var(--radius-md);
 	}
-	/* Two lines, then clamp. Headlines here run long enough to make a third
-	   line likely once the column narrows, and an uneven stack of 2- and
-	   4-line rows loses the rhythm the dividers are there to give it. */
-	.hero-rail-title {
-		font-size: var(--text-body);
+	.hero-featured-title {
+		font-size: var(--text-h3);
 		line-height: var(--leading-snug);
-		letter-spacing: var(--tracking-snug);
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
 	}
-	.hero-rail-meta {
-		font-size: var(--text-xs);
+	.hero-featured-meta {
+		font-size: var(--text-small);
 		color: var(--color-text-muted);
-		white-space: nowrap;
-	}
-	@media (hover: hover) {
-		.hero-rail a:hover .hero-rail-title {
-			color: var(--color-link-hover);
-			text-decoration: underline;
-			text-underline-offset: 0.2em;
-		}
+		margin: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
 	}
 
 	/* ——— Section divider ——— */
@@ -376,48 +320,11 @@ const websiteSchema = {
 	@media (max-width: 960px) {
 		.hero-inner {
 			grid-template-columns: 1fr;
-			gap: var(--space-lg);
 		}
 		.about-brief-inner {
 			grid-template-columns: 1fr;
 			gap: var(--space-md);
 		}
-	}
-
-	@media (max-width: 600px) {
-		/* The thumbnail shrinks and the read time drops under the headline
-		   rather than sitting beside it: held out to the right edge, it cost
-		   the headline about a fifth of an already narrow column and pushed
-		   every row into an ellipsis. */
-		.hero-rail a {
-			grid-template-columns: 4rem minmax(0, 1fr);
-			gap: var(--space-2xs) var(--space-sm);
-		}
-		.hero-rail-thumb {
-			grid-row: span 2;
-			align-self: center;
-		}
-		.hero-rail-meta {
-			grid-column: 2;
-		}
-		/* Both buttons keep `.btn`'s centred content when they stretch. Pinning
-		   the arrow disc to the right edge with `space-between` was tried and
-		   reverted: it left the primary's label hard left while the secondary
-		   below it stayed centred, and stranded the disc a hundred pixels from
-		   the words it belongs to. `.calc-product-link`, the site's other
-		   full-width button, centres for the same reason.
-
-		   `.btn-arrow` trades away its right padding so the disc can sit snug
-		   inside a content-width pill; stretched to full width there is no
-		   right edge to hug, so the symmetric padding comes back or the
-		   centred group sits visibly off-centre. */
-		.hero-actions .btn {
-			width: 100%;
-		}
-		/* No padding override needed: `.btn`'s shorthand in the 960px block
-		   already resets `.btn-arrow`'s clipped right padding (same
-		   specificity, later in source order), so the stretched pill is
-		   symmetric on its own. Don't add one back. */
 	}
 </style>
 

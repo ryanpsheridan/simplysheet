@@ -63,7 +63,7 @@ Etsy links are explicitly skipped by the second handler so one click can't be co
   - **Article listing/cards**: `articles_grid_item:<id>` (`ArticleGrid.astro`, both the static and client-rendered paths), `article_related_link:<id>`, `article_share_button`, `article_share_email`.
   - **Template pages** (`TemplateLayout.astro`): `template_hero_cta:<id>`, `template_footer_cta:<id>`, `template_bundle_cta:<id>:<name>`, `template_reviews_cta:<id>`, `template_related_article:<id>`, `template_more_spreadsheets_card:<id>`.
   - **Tool pages**: `tool_thumb_card:<toolId>` (homepage/about tool grid), `calculator_more_tools_item:<toolId>`, `calculator_more_tools_view_all`, `calculator_related_article:<id>` (`CalculatorLayout.astro`).
-  - **Homepage** (`index.astro`, `SpreadsheetsToolsRows.astro`): `index_hero_primary_cta`, `index_hero_secondary_cta`, `index_hero_article:<id>`, `index_latest_article_card:<id>`, `index_latest_view_all`, `index_quiz_banner_cta`, `index_about_brief_cta`, `home_tools_row_view_all`, `home_spreadsheets_row_item:<id>`, `home_spreadsheets_row_view_all`.
+  - **Homepage** (`index.astro`, `SpreadsheetsToolsRows.astro`): `index_hero_featured_article`, `index_latest_article_card:<id>`, `index_latest_view_all`, `index_quiz_banner_cta`, `index_about_brief_cta`, `home_tools_row_view_all`, `home_spreadsheets_row_item:<id>`, `home_spreadsheets_row_view_all`.
   - Everything else not yet broken out this way still follows `<page>_<element>` (e.g. `spreadsheets_index_etsy_link`, `articles_index_explore_all_cta`).
 - The header logo and footer logo are deliberately untracked — a logo click is "go home", not a choice between destinations, and it would swamp the nav numbers. In-article table-of-contents anchors are also untracked — they're internal wayfinding within a page a visitor is already on, not a destination choice.
 - Note the ordering trap this fixed: the Etsy handler returns early for every non-Etsy host, so before the second handler existed, `data-cta` on an internal link recorded nothing at all. If you add a third handler, check it doesn't sit behind an early return meant for a different link type.
@@ -384,26 +384,24 @@ The articles hub is statically paginated for SEO/AEO crawlability — there is n
 
 - The featured article is pinned by slug in `src/pages/index.astro`: `const featuredSlug = '50-30-20-budget-rule'`. Do not change unless explicitly told to.
 
-### The hero has a job, and it isn't decoration
+### Hero
 
-It was a headline, a paragraph, and one article tile — no call to action anywhere, on any breakpoint (the header CTA is `display: none` below 860px, so the first tap target on a phone was that article at 428px). It now states the offer, gives two destinations, and backs them with counted facts:
+Two columns: the headline and standfirst on the left, the pinned featured article as one large card on the right. `.hero-inner` is `grid-template-columns: 0.75fr 1fr` with `align-items: center`, collapsing to one column at 960px.
 
-- **The H1 names the product and carries the search terms** ("budget spreadsheets", "Google Sheets", "Excel"). It is the strongest on-page signal after the title tag; a generic line like "A simpler way to manage your personal finances" spends it on nothing. Keep it specific.
-- **Two CTAs, pointing at different surfaces.** Primary to `/spreadsheets/`, secondary to `/tools/`. The secondary deliberately does *not* point at the quiz: the header CTA and the quiz banner further down both already do, and a third link would spend the slot on a destination the page sells twice.
-- **No stat strip under the buttons.** A counted row of facts (templates, tools, review count, "No subscription") was built and removed — four chips directly beneath two buttons read as more chrome stacked on the page's busiest corner. If proof ever goes back into the hero, make it one real review quote rather than a row of counters, and count any figure from the repo at build time rather than typing it in.
-- **`.hero-inner` is `align-items: start`, never `center`.** The text column is far shorter than the article column beside it, so centring split the difference into two equal voids — 318px of nothing across a 513px row.
-- **`.hero-text` keeps the flex default `stretch`.** `align-items: start` shrink-wraps every child to fit-content, which makes the mobile rule widening the buttons to 100% resolve against a fit-content parent and silently do nothing.
-- **The rail is four uniform rows, not a card over a list**, and it carries no visible label. Each row is a small thumbnail, the headline aligned to it, and the read time, divided by hairlines. The pinned featured article takes the first slot but not a different shape — a large featured gradient there out-shouts the H1, which is finding 3 in the review that prompted this. `latest` therefore starts at `rest.slice(3, 9)` so the same headlines don't appear twice on one screen.
-- Headlines clamp to two lines so the rows stay an even stack; the dividers are doing rhythm work that ragged 2-and-4-line rows would undo. On a phone the read time drops beneath the headline instead of holding the right edge, where it cost about a fifth of the column and forced an ellipsis into every row.
-- **The rail has no heading and no eyebrow.** A lavender `.eyebrow` pill sat above it and was removed: any visible label there either competes with the rail's own 16px headlines or reads as chrome, and the top hairline already gives the column its edge. The list keeps an `aria-label` so screen readers still announce it. The hero therefore contributes only the `h1`, so the outline runs `h1` → section `h2`s → card `h3`s with nothing skipped.
+- **This layout was replaced once and restored.** A version with a rewritten H1, two CTA buttons, a counted stat strip, and a four-row article rail ran for a few weeks and was reverted at the owner's request — the original is the wanted design. Don't re-derive the replacement from the reasoning below; if it comes up again, it's a fresh decision, not a regression to fix.
+- Worth knowing what the revert re-accepts, so nobody "discovers" these as bugs: the hero carries **no call to action** at any breakpoint (the header CTA is `display: none` below 860px, so the first tap target on a phone is the featured article), and `align-items: center` leaves dead space above and below the shorter text column. Both are deliberate.
+- **No `font-weight` on `.hero-title` or any other heading class.** Headings take `--weight-semibold` from the shared `h1`–`h6` rule in `global.css`. The pre-revert CSS carried `font-weight: var(--weight-normal)` here; it was dropped during the Manrope switch and must not come back with the layout — that override is the bug that got fixed twice.
+- `latest` is `rest.slice(0, 9)`: the hero shows only the featured article, so the Latest row starts from the top of the remainder.
 
-### Section rhythm
+### Section order
 
-Latest / Free tools / Spreadsheets were four identical label-left grids on one ground, which is what actually read as monotonous — the hero got the blame for a whole-page problem. Spreadsheets now breaks out into a full-bleed `.home-band`, since it is the surface the site sells from.
+Below the hero: **Free tools, then Latest, then Spreadsheets.** Tools lead because they're the cheapest thing a stranger from search will actually try; spreadsheets close because that's the ask.
 
+- Free tools shows six (two rows of three) via `<SpreadsheetsToolsRows only="tools" toolLimit={6} />`. `toolLimit` defaults to 3, so About's bare `<SpreadsheetsToolsRows />` keeps the shorter row. Keep it a multiple of 3 or the last row goes ragged beside the view-all link.
+- Spreadsheets stays in its own full-bleed `.home-band` after the shared rows, which is what keeps it visually last and distinct rather than a fourth identical label-left grid.
 - The band is **`--color-bg-surface`, not `--color-bg-panel`**. The product thumbs are themselves panel-filled and their Best Seller chip is `.badge-overlay` (a surface fill plus a border), so a panel band would swallow both. A white plane on the warm page ground reads as lifted and needs no overrides.
 - `SpreadsheetsToolsRows.astro` takes an `only` prop (`"tools"` / `"spreadsheets"`) so the homepage can wrap one row in that band. About still calls it bare and gets both rows in order.
-- Heading ranks: section headings are `h2`, card titles `h3`.
+- Heading ranks: section headings are `h2`, card titles `h3`. The featured article's title is also `h2`.
 
 ## Typography
 
