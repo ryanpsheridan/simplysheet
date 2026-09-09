@@ -397,7 +397,8 @@ Two columns: the headline and standfirst on the left, the pinned featured articl
 
 Below the hero: **Free tools, then Latest, then Spreadsheets.** Tools lead because they're the cheapest thing a stranger from search will actually try; spreadsheets close because that's the ask.
 
-- Free tools shows six (two rows of three) via `<SpreadsheetsToolsRows only="tools" toolLimit={6} />`. `toolLimit` defaults to 3, so About's bare `<SpreadsheetsToolsRows />` keeps the shorter row. Keep it a multiple of 3 or the last row goes ragged beside the view-all link.
+- Both rows show six (two rows of three): `toolLimit={6}` on the tools call, `templateLimit={6}` on the spreadsheets one. Both props default to 3, so About's bare `<SpreadsheetsToolsRows />` keeps the shorter rows. Keep them multiples of 3 or the last row goes ragged beside the view-all link.
+- Six is currently *every* template in the collection, so the Spreadsheets row and `/spreadsheets/` show the same set. The "All spreadsheets" link stays regardless — the index page carries detail the row doesn't. Add a seventh template and the row silently truncates; bump `templateLimit` to 9 at that point rather than letting one product fall off the homepage unnoticed.
 - Spreadsheets stays in its own full-bleed `.home-band` after the shared rows, which is what keeps it visually last and distinct rather than a fourth identical label-left grid.
 - The band is **`--color-bg-surface`, not `--color-bg-panel`**. The product thumbs are themselves panel-filled and their Best Seller chip is `.badge-overlay` (a surface fill plus a border), so a panel band would swallow both. A white plane on the warm page ground reads as lifted and needs no overrides.
 - `SpreadsheetsToolsRows.astro` takes an `only` prop (`"tools"` / `"spreadsheets"`) so the homepage can wrap one row in that band. About still calls it bare and gets both rows in order.

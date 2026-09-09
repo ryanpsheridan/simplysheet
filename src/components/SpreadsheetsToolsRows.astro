@@ -13,22 +13,23 @@ import ToolThumbCard from './ToolThumbCard.astro';
 // the two rows can't be emitted as one adjacent pair there. About still asks
 // for both and gets them in order.
 //
-// `toolLimit` exists because the homepage leads with tools and shows six of
-// them, while About still wants the shorter three-up row. It defaults to 3 so
-// no existing caller changes behaviour by not passing it. Keep it a multiple of
+// `toolLimit`/`templateLimit` exist because the homepage shows six of each,
+// while About still wants the shorter three-up rows. Both default to 3 so no
+// existing caller changes behaviour by not passing them. Keep them multiples of
 // the 3-column grid, or the last row ends up ragged next to the view-all link.
 interface Props {
 	only?: 'tools' | 'spreadsheets';
 	toolLimit?: number;
+	templateLimit?: number;
 }
 
-const { only, toolLimit = 3 } = Astro.props;
+const { only, toolLimit = 3, templateLimit = 3 } = Astro.props;
 const showTools = only !== 'spreadsheets';
 const showTemplates = only !== 'tools';
 
 const templates = (await getCollection('templates'))
 	.sort((a, b) => a.data.order - b.data.order)
-	.slice(0, 3)
+	.slice(0, templateLimit)
 	.map((t) => ({
 		name: t.data.title.replace(/ for (Google )?Sheets & Excel$/, ''),
 		desc: t.data.description,
