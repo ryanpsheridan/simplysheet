@@ -5,7 +5,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { SITE_TITLE, ETSY_SHOP_URL, withEtsyTracking } from '../consts';
+import { SITE_TITLE, ETSY_SHOP_URL, withEtsyTracking, pageTitle as buildTitle } from '../consts';
 import { intrinsicSize } from '../../scripts/image-size.mjs';
 
 type Props = CollectionEntry<'templates'>['data'] & {
@@ -54,7 +54,12 @@ const platformLabels: Record<string, string> = {
 };
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.simplysheetdesign.com';
-const imageUrl = `${siteUrl}${heroImage}`;
+// Built through `new URL` rather than string concatenation so the product
+// thumbnail filenames — which contain literal spaces — come out
+// percent-encoded. A raw space is not valid in a URL, and this value is
+// consumed by crawlers as the Product schema's `image`, where (unlike an
+// <img src>) nothing re-encodes it on the way out.
+const imageUrl = new URL(heroImage, `${siteUrl}/`).toString();
 
 const darkListingUrl = withEtsyTracking(darkListing);
 const lightListingUrl = withEtsyTracking(lightListing);
@@ -188,7 +193,7 @@ function featureIcon(text: string): string {
 
 <html lang="en">
 	<head>
-		<BaseHead title={`${pageTitle} — ${SITE_TITLE}`} description={pageDescription} image={heroImage} />
+		<BaseHead title={buildTitle(pageTitle)} description={pageDescription} image={heroImage} />
 		<script type="application/ld+json" set:html={JSON.stringify(schema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
@@ -198,7 +203,7 @@ function featureIcon(text: string): string {
 		<Header />
 
 		<main id="main-content" class="template-main">
-			<Breadcrumbs crumbs={[{ label: 'Spreadsheets', href: '/spreadsheets' }, { label: title }]} />
+			<Breadcrumbs crumbs={[{ label: 'Spreadsheets', href: '/spreadsheets/' }, { label: title }]} />
 
 			<section class="product-hero">
 				<div class="product-image">

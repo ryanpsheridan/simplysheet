@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ToolThumbCard from '../../components/ToolThumbCard.astro';
-import { SITE_TITLE } from '../../consts';
+import { pageTitle } from '../../consts';
 import { TOOLS } from '../../data/tools';
 
 const title = 'Free Budgeting Calculators & Tools';
@@ -33,7 +33,7 @@ const itemListSchema = {
 };
 ---
 
-<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+<BaseLayout title={pageTitle(title)} description={description}>
 	<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
 	<main id="main-content">

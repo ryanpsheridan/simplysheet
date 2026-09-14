@@ -16,6 +16,14 @@ const metaTitle = 'Sinking Funds Tracker — Google Sheets & Excel';
 const metaDescription = 'Track sinking funds for car repairs, holidays, insurance, and more, each with its own target and progress bar. Google Sheets or Excel, no subscriptions.';
 const intro = "This is the same spreadsheet as the Savings Goals Tracker, built for the sinking fund method specifically: one tab per fund, a target amount and date, and a running progress bar so you always know what's covered and what still needs money.";
 
+// Not a `templates` collection entry, so there is no frontmatter to supply
+// the props the collection schema would otherwise default. Neither value is
+// read for a page outside the collection (`order` only sorts the grid this
+// page is deliberately absent from), but TemplateLayout's Props type
+// requires both.
+const tags: string[] = [];
+const order = 99;
+
 const sku = '2026SFT';
 const price = 9.99;
 const platforms = ['google-sheets', 'excel'];
@@ -100,6 +108,8 @@ const reviews = [
 	faq={faq}
 	reviews={reviews}
 	id="sinking-funds-tracker"
+	tags={tags}
+	order={order}
 >
 	<h2>Who this sinking funds tracker is for</h2>
 	<p>This is for anyone who keeps getting caught off guard by expenses that were never actually a surprise. Car registration, holiday shopping, an annual insurance premium, a planned vacation: you know these are coming, you just never set money aside for them ahead of time, so they land as a crisis instead of a line item.</p>

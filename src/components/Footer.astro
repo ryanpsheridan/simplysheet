@@ -151,6 +151,10 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 		color: var(--color-text-secondary);
 		text-decoration: none;
 		transition: color 0.15s;
+		/* fit-content so the hit area added at touch widths (below) tracks the
+		   label rather than spanning the whole column. Costs no height here,
+		   which keeps the desktop footer exactly as it was. */
+		width: fit-content;
 	}
 	.footer-col a:hover {
 		color: var(--color-text);
@@ -180,6 +184,20 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 		.footer-nav {
 			gap: var(--space-lg);
 			flex-wrap: wrap;
+		}
+		/* Below the desktop breakpoint the footer is the densest cluster of
+		   links on the page and every one of them is a thumb target, so the
+		   rows open up to a 44px pitch here rather than site-wide — on a
+		   pointer device the tighter list reads better and mis-clicks cost
+		   nothing. */
+		.footer-col a {
+			display: flex;
+			align-items: center;
+			min-height: 2.75rem;
+			padding-block: 0;
+		}
+		.footer-col ul {
+			gap: 0;
 		}
 	}
 

@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
-import { SITE_TITLE, ETSY_SHOP_URL, withEtsyTracking } from '../../consts';
+import { SITE_TITLE, ETSY_SHOP_URL, withEtsyTracking, pageTitle } from '../../consts';
 
 const title = 'Budget Templates for Google Sheets & Excel';
 const description = 'Ready-made spreadsheet templates to track your budget, pay off debt, and hit savings goals. Available for Google Sheets and Microsoft Excel.';
@@ -32,7 +32,7 @@ const itemListSchema = {
 };
 ---
 
-<BaseLayout title={`${title} — ${SITE_TITLE}`} description={description}>
+<BaseLayout title={pageTitle(title)} description={description}>
 	<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
 	<main id="main-content" class="templates-page">

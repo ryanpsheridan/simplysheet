@@ -29,3 +29,19 @@ export function withEtsyTracking(url: string): string {
 	tracked.searchParams.set('utm_medium', 'referral');
 	return tracked.toString();
 }
+
+// Builds the <title>, appending the site name only when the result still fits
+// the ~60 characters Google renders before truncating.
+//
+// Every layout used to append " — Simply Sheets" unconditionally, which costs
+// 16 characters. That is free on a short title and actively harmful on a long
+// one: the suffix pushes the page's own keywords past the cutoff, so the
+// result is an ellipsis where the brand was meant to be. Dropping it on the
+// long ones loses little, since Google commonly appends the site name to the
+// SERP entry itself regardless of what the tag says.
+export const TITLE_MAX = 60;
+
+export function pageTitle(title: string): string {
+	const withBrand = `${title} — ${SITE_TITLE}`;
+	return withBrand.length <= TITLE_MAX ? withBrand : title;
+}

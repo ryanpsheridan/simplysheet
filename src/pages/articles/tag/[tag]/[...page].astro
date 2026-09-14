@@ -6,7 +6,7 @@ import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
 import TopicFilterTabs from '../../../../components/TopicFilterTabs.astro';
 import ArticleGrid from '../../../../components/ArticleGrid.astro';
 import Pagination from '../../../../components/Pagination.astro';
-import { ALL_TAGS, ARTICLES_PAGE_SIZE as PAGE_SIZE, TAG_MAP, SITE_TITLE } from '../../../../consts';
+import { ALL_TAGS, ARTICLES_PAGE_SIZE as PAGE_SIZE, TAG_MAP, SITE_TITLE, pageTitle as buildTitle } from '../../../../consts';
 
 type ArticleWithReadTime = CollectionEntry<'articles'> & { readTime: number };
 
@@ -53,8 +53,8 @@ const manifest = allArticles
 	});
 
 const pageTitle = page.currentPage === 1
-	? `${tagLabel} Articles, Tips & Guides — ${SITE_TITLE}`
-	: `${tagLabel} Articles, Tips & Guides — Page ${page.currentPage} — ${SITE_TITLE}`;
+	? buildTitle(`${tagLabel} Articles, Tips & Guides`)
+	: buildTitle(`${tagLabel} Articles, Tips & Guides — Page ${page.currentPage}`);
 const pageDescription = `Guides and practical advice on ${tagLabel.toLowerCase()} — straightforward writing to help you manage your money without the stress.`;
 
 const crumbs = page.currentPage === 1

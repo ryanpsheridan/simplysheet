@@ -122,4 +122,19 @@ const hasNext = currentPage < lastPage;
 		opacity: 0.5;
 		cursor: default;
 	}
+
+	/* The pills are 36px, which is fine under a cursor and under the 44px
+	   minimum for a thumb. Growing the box rather than the type keeps the
+	   pager looking identical — the number and the arrow glyph stay the size
+	   they were, they just sit in a larger hit area. */
+	@media (max-width: 768px) {
+		.pagination-page {
+			min-width: 2.75rem;
+			height: 2.75rem;
+		}
+		.pagination-arrow {
+			width: 2.75rem;
+			height: 2.75rem;
+		}
+	}
 </style>

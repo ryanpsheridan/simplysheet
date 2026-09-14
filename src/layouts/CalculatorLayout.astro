@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ProductPromo from '../components/ProductPromo.astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, pageTitle } from '../consts';
 import { TOOLS } from '../data/tools';
 
 function slugifyFaq(text: string): string {
@@ -127,7 +127,7 @@ const faqSchema = faq.length ? {
 
 <html lang="en">
 	<head>
-		<BaseHead title={`${metaTitle} — ${SITE_TITLE}`} description={description} />
+		<BaseHead title={pageTitle(metaTitle)} description={description} />
 		<script type="application/ld+json" set:html={JSON.stringify(appSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
@@ -138,7 +138,7 @@ const faqSchema = faq.length ? {
 		<div class="reading-progress" id="reading-progress"></div>
 
 		<main id="main-content" class="calc-main">
-			<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools' }, { label: breadcrumbLabel }]} />
+			<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools/' }, { label: breadcrumbLabel }]} />
 			<div class="calc-grid">
 				<div class="toc-rail">
 					<nav class="toc" aria-label="Table of contents">

@@ -6,7 +6,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TopicFilterTabs from '../../components/TopicFilterTabs.astro';
 import ArticleGrid from '../../components/ArticleGrid.astro';
 import Pagination from '../../components/Pagination.astro';
-import { ALL_TAGS, ARTICLES_PAGE_SIZE as PAGE_SIZE, ETSY_SHOP_URL, SITE_TITLE, TAG_MAP, withEtsyTracking } from '../../consts';
+import { ALL_TAGS, ARTICLES_PAGE_SIZE as PAGE_SIZE, ETSY_SHOP_URL, SITE_TITLE, TAG_MAP, withEtsyTracking, pageTitle as buildTitle } from '../../consts';
 
 type ArticleWithReadTime = CollectionEntry<'articles'> & { readTime: number };
 
@@ -43,8 +43,8 @@ const manifest = [...allArticles]
 	});
 
 const pageTitle = page.currentPage === 1
-	? `Budgeting & Personal Finance Articles — ${SITE_TITLE}`
-	: `Budgeting & Personal Finance Articles — Page ${page.currentPage} — ${SITE_TITLE}`;
+	? buildTitle('Budgeting & Personal Finance Articles')
+	: buildTitle(`Budgeting & Personal Finance Articles — Page ${page.currentPage}`);
 const pageDescription = page.currentPage === 1
 	? 'Straightforward writing about budgeting, spreadsheets, and managing your money without the stress.'
 	: `More budgeting and money management articles — page ${page.currentPage} of ${page.lastPage}.`;

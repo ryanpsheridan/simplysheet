@@ -4,6 +4,33 @@ import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import rehypeImageAttrs from './scripts/rehype-image-attrs.mjs';
+import { readdirSync, readFileSync } from 'node:fs';
+import path from 'node:path';
+
+const BUILD_TIME = new Date().toISOString();
+
+// Article publish/update dates, read straight from frontmatter so the sitemap
+// can carry a real <lastmod> per article. This deliberately does not go
+// through the content collection: `getCollection` is only available inside a
+// page/component, not in the config file where the sitemap integration is
+// configured. The two fields are simple scalars on the first line they appear
+// on, so a full YAML parser would be more machinery than the job needs.
+const ARTICLE_DIR = path.join(import.meta.dirname, 'src/content/articles');
+const articleLastmod = new Map(
+	readdirSync(ARTICLE_DIR)
+		.filter((f) => /\.mdx?$/.test(f))
+		.map((/** @type {string} */ file) => {
+			const src = readFileSync(path.join(ARTICLE_DIR, file), 'utf8');
+			const frontmatter = src.split(/^---$/m)[1] ?? '';
+			const read = (/** @type {string} */ key) =>
+				frontmatter.match(new RegExp(`^${key}:\\s*['"]?([^'"\n]+?)['"]?\\s*$`, 'm'))?.[1];
+			const raw = read('updatedDate') ?? read('pubDate');
+			const date = raw ? new Date(raw) : null;
+			const slug = file.replace(/\.mdx?$/, '');
+			const valid = date && !Number.isNaN(date.valueOf());
+			return [`/articles/${slug}/`, valid ? date.toISOString() : BUILD_TIME];
+		}),
+);
 
 export default defineConfig({
 	site: 'https://www.simplysheetdesign.com',
@@ -35,6 +62,16 @@ export default defineConfig({
 		mdx(),
 		sitemap({
 			filter: (page) => !page.includes('/style-guide') && !page.endsWith('/rss.xml'),
+			// Without this the sitemap carries bare <loc> entries and nothing
+			// else, so every URL looks equally stale to a crawler deciding what
+			// to re-fetch. Article dates come from frontmatter (updatedDate if
+			// an article has been revised, otherwise pubDate); every other route
+			// is generated from source that has no publish date of its own, so
+			// it takes the build time.
+			serialize: (item) => ({
+				...item,
+				lastmod: articleLastmod.get(new URL(item.url).pathname) ?? BUILD_TIME,
+			}),
 		}),
 	],
 	// With no adapter, these compile to meta-refresh HTML stubs rather than
