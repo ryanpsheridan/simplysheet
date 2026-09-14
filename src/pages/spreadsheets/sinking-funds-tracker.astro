@@ -1,0 +1,119 @@
+---
+import TemplateLayout from '../../layouts/TemplateLayout.astro';
+
+// This page is deliberately NOT part of the `templates` content collection.
+// It sells the exact same product as /spreadsheets/savings-goals-tracker/
+// (same SKU, same Etsy listing, same spreadsheet file) under sinking-fund
+// framing and search terms. Keeping it out of src/content/templates/ means
+// it never appears as a second tile in the /spreadsheets/ grid, the
+// homepage row, or the "More spreadsheets" cross-sell grid on other product
+// pages — it exists only as a landing page reachable by direct link, so it
+// never competes with or duplicates the real catalog entry.
+
+const title = 'Sinking Funds Tracker for Google Sheets & Excel';
+const description = 'Set up a sinking fund for every predictable irregular expense: car repairs, holidays, annual insurance, vacations. Log contributions and watch each fund fill up on one dashboard.';
+const metaTitle = 'Sinking Funds Tracker — Google Sheets & Excel';
+const metaDescription = 'Track sinking funds for car repairs, holidays, insurance, and more, each with its own target and progress bar. Google Sheets or Excel, no subscriptions.';
+const intro = "This is the same spreadsheet as the Savings Goals Tracker, built for the sinking fund method specifically: one tab per fund, a target amount and date, and a running progress bar so you always know what's covered and what still needs money.";
+
+const sku = '2026SFT';
+const price = 9.99;
+const platforms = ['google-sheets', 'excel'];
+const darkListing = 'https://simplysheetdesign.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets';
+const lightListing = 'https://simplysheetdesign.etsy.com/listing/4483665538/sinking-funds-tracker-google-sheets';
+const heroImage = '/images/featured budget thumbnail-savings goals tracker-right-positioned-v2.png';
+const lightImage = '/images/featured budget thumbnail-savings goals tracker-light-theme-right-positioned-v2.png';
+
+const features = [
+	'One tab per sinking fund',
+	'Visual progress bars for each fund',
+	'Contribution logging with running totals',
+	'Target amount and target date tracking',
+	'Overview dashboard for every fund at once',
+	'Works with Google Sheets and Microsoft Excel',
+];
+
+const howItWorks = [
+	{
+		heading: 'How it works',
+		body: 'The spreadsheet has two tabs: <strong>Dashboard</strong> and <strong>Transaction Log</strong>. On the Dashboard, each row is one sinking fund: car repairs, holiday shopping, annual insurance, whatever you name it. Enter the fund name, target amount, any starting balance, an optional target date, and pick a color.',
+	},
+	{
+		heading: 'Logging contributions',
+		body: 'Every deposit goes in the <strong>Transaction Log</strong> tab: date, which fund, amount, and an optional note. The Dashboard updates automatically. Your total saved, remaining amount, percentage, and progress bar all recalculate without you touching a formula.',
+	},
+	{
+		heading: 'What the Dashboard shows',
+		body: 'Each fund gets a progress bar, a percentage toward target, and a status that switches from "In progress" to "Funded" once you hit 100%. The remaining column shows exactly how much more you need to set aside, so a fund never quietly stalls without you noticing.',
+	},
+	{
+		heading: 'Available in dark and light themes',
+		body: 'Both themes are functionally identical. Use the toggle above to switch between them.',
+	},
+];
+
+const relatedArticles = ['sinking-funds-explained', 'emergency-fund-sizing'];
+
+const faq = [
+	{
+		question: 'Is a sinking funds tracker different from a savings goals tracker?',
+		answer: "Not in the spreadsheet itself. A sinking fund is just a savings goal with a specific purpose and a rough date attached, so the same tracker covers both. This page uses sinking fund language because that's the term for the predictable, irregular expenses (car repairs, holidays, annual insurance) this tracker was actually built to handle.",
+	},
+	{
+		question: 'How many sinking funds should I set up?',
+		answer: 'Start with two or three that cover your biggest predictable annual expenses, often car costs, holidays, and insurance premiums. The template comfortably handles eight or more once the habit sticks, but funding too many at once usually means each one moves slower than you would like.',
+	},
+	{
+		question: 'Do I need a separate bank account for each fund?',
+		answer: 'No. One savings account plus this spreadsheet does the same job as a dozen sub-accounts. The tracker is what keeps the boundaries clear, not the bank.',
+	},
+	{
+		question: 'What is the difference between a sinking fund and an emergency fund?',
+		answer: 'A sinking fund is for a known expense with a rough date and amount: car insurance, holiday gifts, a vacation. An emergency fund is for the unknown: job loss, medical bills, a sudden repair. Keeping them separate is what stops a predictable expense from raiding money set aside for a real emergency.',
+	},
+];
+
+const reviews = [
+	{
+		name: 'Brianna',
+		text: "This product is a great way to see where your savings are going. The progress bar is a nice touch and will motivate me. I'm glad I found this shop and this resource!",
+	},
+];
+---
+
+<TemplateLayout
+	title={title}
+	description={description}
+	metaTitle={metaTitle}
+	metaDescription={metaDescription}
+	intro={intro}
+	sku={sku}
+	price={price}
+	platforms={platforms}
+	darkListing={darkListing}
+	lightListing={lightListing}
+	heroImage={heroImage}
+	lightImage={lightImage}
+	features={features}
+	howItWorks={howItWorks}
+	relatedArticles={relatedArticles}
+	faq={faq}
+	reviews={reviews}
+	id="sinking-funds-tracker"
+>
+	<h2>Who this sinking funds tracker is for</h2>
+	<p>This is for anyone who keeps getting caught off guard by expenses that were never actually a surprise. Car registration, holiday shopping, an annual insurance premium, a planned vacation: you know these are coming, you just never set money aside for them ahead of time, so they land as a crisis instead of a line item.</p>
+	<p>A sinking fund fixes that by spreading the cost across the months before it arrives. This tracker is where you set the target, log what you have put toward it, and see at a glance whether you are on pace. <a href="/articles/sinking-funds-explained/">What is a sinking fund</a> covers why this specific method works better than lumping irregular costs into your regular monthly budget.</p>
+
+	<h2>What you need before you start</h2>
+	<p>Per fund: a name, a target amount, and how many months you have until you need it. That last part is what turns a vague goal into a number you can actually check against your budget. The <a href="/tools/sinking-fund-calculator/">sinking fund calculator</a> does that division for you, and if you are not sure whether a given expense even belongs in a sinking fund rather than your emergency fund or your regular budget, the <a href="/tools/sinking-fund-assessment/">sinking fund assessment</a> sorts it out in five questions.</p>
+
+	<h2>Common sinking funds people set up</h2>
+	<p>Car repairs and registration, annual or semi-annual insurance premiums, holiday gifts, travel, back-to-school costs, home maintenance, and medical deductibles are the usual candidates. Anything with a known season and a rough price tag qualifies. Most people find their first three or four funds by scanning the last twelve months of spending for the expenses that blindsided them.</p>
+
+	<h2>Using it in Google Sheets or Excel</h2>
+	<p>The same file works in both, so pick whichever you already use. Google Sheets syncs to your phone, which matters when you want to log a contribution the moment you make it rather than waiting until you're back at a computer. Copy the file before entering anything, as with any template.</p>
+
+	<h2>Keeping it going</h2>
+	<p>Check it monthly, when you log a contribution. Two questions: does the total match your real account balance, and is the target date still realistic. A fund that has quietly fallen behind is worth adjusting, either with a bigger monthly contribution or a later date, rather than leaving it to surprise you again when the bill actually comes due.</p>
+</TemplateLayout>
