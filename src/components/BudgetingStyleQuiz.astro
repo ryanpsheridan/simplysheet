@@ -3,20 +3,6 @@ const id = `quiz-${Math.random().toString(36).slice(2, 8)}`;
 const TOTAL_QUESTIONS = 7;
 ---
 
-{/* Loaded non-render-blocking: media="print" keeps it out of the critical
-    path, and the onload flip applies it once fetched. This font is 369 KB and
-    supplies the single icon shown in the result panel, which nobody reaches
-    until they have answered every question — so it must not delay first paint.
-    The <noscript> copy keeps it working without JavaScript. */}
-<link
-	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
-	rel="stylesheet"
-	media="print"
-	onload="this.media='all'"
-/>
-<noscript>
-	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
-</noscript>
 
 <div class="quiz" id={id}>
 	<div class="quiz-questions" id={`${id}-questions`}>
@@ -149,13 +135,8 @@ const TOTAL_QUESTIONS = 7;
 		margin-bottom: var(--space-md);
 		background: var(--color-bg-surface);
 	}
-	:global(.quiz-result-icon .material-symbols-rounded) {
-		font-family: 'Material Symbols Rounded';
-		font-weight: normal;
-		font-style: normal;
-		font-size: 28px;
-		line-height: 1;
-		color: var(--color-text-heading);
+	:global(.quiz-result-icon svg) {
+		display: block;
 	}
 	.quiz-result-label {
 		font-size: var(--text-small);
@@ -221,6 +202,24 @@ const TOTAL_QUESTIONS = 7;
 </style>
 
 <script is:inline define:vars={{ id }}>
+	// The result panel shows exactly one icon, chosen from these four. They are
+	// inline SVG in the same stroked idiom the rest of the site uses, keyed by
+	// the same names the `styles` objects below already carry. This replaced a
+	// ~369 KB Material Symbols webfont fetched from fonts.googleapis.com to
+	// render a single glyph nobody sees until they have answered every
+	// question — a bad trade on a site read mostly on phones.
+	var ICONS = {
+		event_note: '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="13" y2="18"/>',
+		savings: '<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+		shopping_bag: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+		visibility_off: '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>',
+	};
+
+	function iconSvg(name, color) {
+		return '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="' + color +
+			'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+			(ICONS[name] || '') + '</svg>';
+	}
 (function () {
 	var root = document.getElementById(id);
 	if (!root) return;
@@ -395,9 +394,8 @@ const TOTAL_QUESTIONS = 7;
 		});
 
 		var s = styles[winner];
-		iconEl.innerHTML = '<span class="material-symbols-rounded">' + s.icon + '</span>';
+		iconEl.innerHTML = iconSvg(s.icon, s.color);
 		iconEl.style.background = s.iconBg;
-		iconEl.querySelector('.material-symbols-rounded').style.color = s.color;
 		styleEl.textContent = 'Your Budgeting Style: ' + s.name;
 		descEl.textContent = s.desc;
 		tipEl.innerHTML = s.tip.replace(/^Tip:\s*/, '');
