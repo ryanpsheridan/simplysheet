@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEntry } from 'astro:content';
 import { pageTitle } from '../consts';
-import { TOOLS } from '../data/tools';
 
 // A 404 is a recovery surface, not a sitemap: the three destinations here are
 // the ones a visitor with reasonable intent actually wants. The homepage is the
@@ -27,8 +26,6 @@ const product = template
 			url: `/spreadsheets/${featuredSlug}/`,
 		}
 	: null;
-
-const toolCount = TOOLS.length;
 
 const quickLinks = [
 	{ id: 'articles', label: 'All articles', href: '/articles/' },
@@ -115,8 +112,8 @@ const description =
 					<div class="nf-card-text">
 						<h3 class="nf-card-title">Free budgeting tools</h3>
 						<p class="nf-card-desc">
-							{toolCount} calculators and assessments covering paycheck planning, the 50/30/20 split,
-							debt payoff, sinking funds, and splitting bills.
+							Calculators and assessments covering paycheck planning, the 50/30/20 split, debt
+							payoff, sinking funds, and splitting bills.
 						</p>
 					</div>
 				</a>
