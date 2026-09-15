@@ -1,44 +1,350 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_TITLE } from '../consts';
+import { getEntry } from 'astro:content';
+import { pageTitle } from '../consts';
+import { TOOLS } from '../data/tools';
+
+// A 404 is a recovery surface, not a sitemap: the three destinations here are
+// the ones a visitor with reasonable intent actually wants. The homepage is the
+// reset (and doubles as a mini-directory), the tools hub catches mistyped or
+// retired calculator URLs without guessing which calculator was meant, and the
+// best-selling template is the one link that recovers a near-lost visitor into
+// a real purchase path.
+//
+// The product card reads its name, description, badge, and image straight from
+// the templates collection, the same way ProductPromo does, so this page can
+// never drift out of sync with the product page it points at. `midImage` is the
+// full, uncropped mockup meant to be centered — the right-positioned hero crop
+// is reserved for the single hero on the product's own page.
+const featuredSlug = 'budget-spreadsheet';
+const template = await getEntry('templates', featuredSlug);
+const product = template
+	? {
+			name: template.data.title.replace(/ for (Google )?Sheets & Excel$/, ''),
+			desc: template.data.description,
+			badge: template.data.badge,
+			image: template.data.midImage,
+			url: `/spreadsheets/${featuredSlug}/`,
+		}
+	: null;
+
+const toolCount = TOOLS.length;
+
+const quickLinks = [
+	{ id: 'articles', label: 'All articles', href: '/articles/' },
+	{ id: 'spreadsheets', label: 'All spreadsheets', href: '/spreadsheets/' },
+	{ id: 'quiz', label: 'Budgeting style quiz', href: '/quiz/budgeting-style/' },
+	{ id: 'about', label: 'About', href: '/about/' },
+];
+
+const description =
+	"That page doesn't exist or has moved. Head back to the homepage, browse the free budgeting calculators, or take a look at the budget spreadsheet.";
 ---
 
-<BaseLayout title={`Page not found — ${SITE_TITLE}`} description="The page you're looking for doesn't exist or has been moved.">
-	<main id="main-content">
-		<div class="not-found">
-			<h1>Page not found</h1>
-			<p>The page you're looking for doesn't exist or has been moved.</p>
-			<div class="not-found-links">
-				<a href="/" class="btn btn-primary">Go home</a>
-				<a href="/articles/" class="btn btn-secondary">Browse articles</a>
+<BaseLayout title={pageTitle('Page not found')} description={description} noindex>
+	<main id="main-content" class="nf">
+		<section class="nf-hero">
+			{/* Same hairline-chart vocabulary the tool illustrations use: a trend
+			    line that climbs, loses a node, and picks back up on the other side.
+			    Decorative, so it stays out of the accessibility tree. */}
+			<svg
+				class="nf-glyph"
+				viewBox="0 0 320 180"
+				fill="none"
+				stroke="currentColor"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+				focusable="false"
+			>
+				<line x1="34" y1="150" x2="286" y2="150" stroke-width="1" opacity="0.2" />
+				<line x1="34" y1="36" x2="34" y2="150" stroke-width="1" opacity="0.2" />
+				<line x1="34" y1="60" x2="286" y2="60" stroke-width="1" stroke-dasharray="4 4" opacity="0.14" />
+				<line x1="34" y1="105" x2="286" y2="105" stroke-width="1" stroke-dasharray="4 4" opacity="0.14" />
+				<path d="M34 132 C 58 126, 84 114, 110 96" stroke-width="2" opacity="0.9" />
+				<path d="M117.5 93.3 L144.6 83.7" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4" />
+				<path d="M165.4 76.3 L192.5 66.7" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4" />
+				<path d="M200 64 C 226 57, 252 48, 280 41" stroke-width="2" opacity="0.9" />
+				<circle cx="155" cy="80" r="11" stroke-width="1.5" opacity="0.35" />
+				<circle cx="110" cy="96" r="6" opacity="0.15" fill="currentColor" stroke="none" />
+				<circle cx="110" cy="96" r="2.2" fill="currentColor" stroke="none" />
+				<circle cx="200" cy="64" r="5" opacity="0.15" fill="currentColor" stroke="none" />
+				<circle cx="200" cy="64" r="2" fill="currentColor" stroke="none" />
+				<circle cx="280" cy="41" r="9" opacity="0.22" fill="currentColor" stroke="none" />
+				<circle cx="280" cy="41" r="3.2" fill="currentColor" stroke="none" />
+			</svg>
+
+			<span class="badge nf-code">Error 404</span>
+			<h1 class="nf-title">This page went unaccounted for.</h1>
+			<p class="nf-lede">
+				The link may be broken, or the page may have moved since you last saw it. Everything else is
+				right where you left it, so here is where most people head next.
+			</p>
+			<a href="/" class="btn btn-primary btn-arrow nf-home" data-cta="not_found_home_cta">
+				Back to the homepage
+			</a>
+		</section>
+
+		<section class="nf-picks" aria-labelledby="nf-picks-heading">
+			<h2 id="nf-picks-heading" class="nf-picks-heading">Where most people go next</h2>
+			<div class="nf-cards">
+				<a href="/tools/" class="nf-card" data-cta="not_found_card:tools">
+					<div class="nf-card-art">
+						<svg
+							viewBox="0 0 240 160"
+							fill="none"
+							stroke="currentColor"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							aria-hidden="true"
+							focusable="false"
+						>
+							<line x1="32" y1="126" x2="208" y2="126" stroke-width="1" opacity="0.2" />
+							<line x1="48" y1="126" x2="48" y2="92" stroke-width="4" opacity="0.4" />
+							<line x1="68" y1="126" x2="68" y2="70" stroke-width="4" opacity="0.6" />
+							<line x1="88" y1="126" x2="88" y2="48" stroke-width="4" opacity="0.9" />
+							<circle cx="88" cy="48" r="7" opacity="0.18" fill="currentColor" stroke="none" />
+							<circle cx="88" cy="48" r="2.6" fill="currentColor" stroke="none" />
+							<circle cx="168" cy="86" r="34" stroke-width="1.5" opacity="0.22" />
+							<path d="M168 52 A 34 34 0 0 1 189.9 112" stroke-width="3" opacity="0.85" />
+							<circle cx="168" cy="86" r="3" fill="currentColor" stroke="none" />
+							<circle cx="189.9" cy="112" r="6" opacity="0.18" fill="currentColor" stroke="none" />
+							<circle cx="189.9" cy="112" r="2.2" fill="currentColor" stroke="none" />
+						</svg>
+					</div>
+					<div class="nf-card-text">
+						<h3 class="nf-card-title">Free budgeting tools</h3>
+						<p class="nf-card-desc">
+							{toolCount} calculators and assessments covering paycheck planning, the 50/30/20 split,
+							debt payoff, sinking funds, and splitting bills.
+						</p>
+					</div>
+				</a>
+
+				{product && (
+					<a href={product.url} class="nf-card" data-cta={`not_found_card:${featuredSlug}`}>
+						<div class="nf-card-art nf-card-art--product">
+							<img
+								src={product.image}
+								alt={`${product.name} preview`}
+								width="600"
+								height="400"
+								loading="lazy"
+							/>
+							{product.badge && <span class="badge badge-overlay">{product.badge}</span>}
+						</div>
+						<div class="nf-card-text">
+							<h3 class="nf-card-title">{product.name}</h3>
+							<p class="nf-card-desc">{product.desc}</p>
+						</div>
+					</a>
+				)}
 			</div>
-		</div>
+		</section>
+
+		<section class="nf-more" aria-labelledby="nf-more-heading">
+			<h2 id="nf-more-heading" class="nf-more-heading">Or jump straight to</h2>
+			<ul class="nf-more-links">
+				{quickLinks.map((link) => (
+					<li>
+						<a href={link.href} class="nf-more-link" data-cta={`not_found_quick_link:${link.id}`}>
+							{link.label} <span class="arrow">&rarr;</span>
+						</a>
+					</li>
+				))}
+			</ul>
+		</section>
 	</main>
 </BaseLayout>
 
 <style>
-	.not-found {
-		max-width: var(--max-width-narrow);
+	/* One centred column for the whole page, a little wider than
+	   --max-width-narrow so the two destination cards get room to sit side by
+	   side without stranding them inside the full 80rem grid. */
+	.nf {
+		max-width: 48rem;
 		margin: 0 auto;
-		padding: clamp(6rem, 16vw, 10rem) var(--space-md);
+		padding: clamp(2.5rem, 8vw, 4.5rem) var(--space-md) var(--space-section);
+	}
+
+	.nf-hero {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		text-align: center;
 	}
 
-	.not-found h1 {
+	.nf-glyph {
+		display: block;
+		width: min(100%, 20rem);
+		height: auto;
+		color: var(--color-text);
+		margin-bottom: var(--space-sm);
+	}
+
+	/* Layout only. The chip's look belongs to the global .badge — restating
+	   any of it here would silently outrank it and fork the chip. */
+	.nf-code {
+		margin-bottom: var(--space-sm);
+	}
+
+	.nf-title {
 		font-size: var(--text-display);
+		line-height: var(--leading-display);
 		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--space-xs);
+		margin: 0 0 var(--space-sm);
+		text-wrap: balance;
 	}
 
-	.not-found p {
+	.nf-lede {
+		max-width: 34rem;
 		font-size: var(--text-body-lg);
+		line-height: var(--leading-body);
+		letter-spacing: var(--tracking-body);
 		color: var(--color-text-secondary);
-		margin-bottom: var(--space-lg);
+		margin: 0 0 var(--space-md);
 	}
 
-	.not-found-links {
+	.nf-home {
+		align-self: center;
+	}
+
+	.nf-picks {
+		margin-top: clamp(2.5rem, 7vw, 4rem);
+	}
+
+	/* The page's own chrome stays centred with the hero; only the card bodies
+	   go back to left-aligned, because that is reading text. */
+	.nf-picks-heading {
+		font-size: var(--text-h3);
+		text-align: center;
+		margin: 0 0 var(--space-md);
+	}
+
+	.nf-cards {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-md);
+	}
+
+	.nf-card {
 		display: flex;
-		gap: var(--space-sm);
+		flex-direction: column;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.nf-card-art {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		background: var(--color-bg-panel);
+		padding: var(--space-md);
+		color: var(--color-text);
+		margin-bottom: var(--space-sm);
+		transition: background var(--duration-fast) var(--ease-out);
+	}
+
+	.nf-card-art svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	/* The centred, uncropped product mockup — never the right-positioned hero
+	   crop, which only reads correctly pinned flush to its container's right
+	   edge on the product page itself. */
+	.nf-card-art--product {
+		display: flex;
+		align-items: center;
 		justify-content: center;
+		padding: 0.75rem 1.5rem;
+	}
+
+	.nf-card-art--product img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		object-position: center;
+	}
+
+	@media (hover: hover) {
+		.nf-card:hover .nf-card-art {
+			background: var(--color-bg-emphasis);
+		}
+	}
+
+	.nf-card-title {
+		font-size: var(--text-body);
+		line-height: 1.35;
+		margin: 0 0 var(--space-2xs);
+		color: var(--color-text);
+	}
+
+	.nf-card-desc {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-snug);
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.nf-more {
+		margin-top: clamp(2.5rem, 7vw, 4rem);
+		padding-top: var(--space-lg);
+		border-top: 1px solid var(--color-border);
+		text-align: center;
+	}
+
+	.nf-more-heading {
+		font-size: var(--text-small);
+		letter-spacing: var(--tracking-normal);
+		color: var(--color-text-muted);
+		margin: 0 0 var(--space-xs);
+	}
+
+	.nf-more-links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0 var(--space-md);
+	}
+
+	/* Vertical padding rather than a height: it keeps each link a comfortable
+	   tap target on a phone without boxing the label. */
+	.nf-more-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2xs);
+		padding: 0.625rem 0;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		letter-spacing: var(--tracking-snug);
+		color: var(--color-link);
+		text-decoration: none;
+		transition: color var(--duration-fast) var(--ease-out);
+	}
+
+	.nf-more-link:hover {
+		color: var(--color-link-hover);
+	}
+
+	@media (max-width: 600px) {
+		.nf-glyph {
+			width: min(100%, 15rem);
+		}
+		.nf-cards {
+			grid-template-columns: 1fr;
+			gap: var(--space-lg);
+		}
 	}
 </style>
