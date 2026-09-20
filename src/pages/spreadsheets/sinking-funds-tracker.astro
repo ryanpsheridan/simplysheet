@@ -14,7 +14,7 @@ const title = 'Sinking Funds Tracker for Google Sheets & Excel';
 const description = 'Set up a sinking fund for every predictable irregular expense: car repairs, holidays, annual insurance, vacations. Log contributions and watch each fund fill up on one dashboard.';
 const metaTitle = 'Sinking Funds Tracker — Google Sheets & Excel';
 const metaDescription = 'Track sinking funds for car repairs, holidays, insurance, and more, each with its own target and progress bar. Google Sheets or Excel, no subscriptions.';
-const intro = "This is the same spreadsheet as the Savings Goals Tracker, built for the sinking fund method specifically: one tab per fund, a target amount and date, and a running progress bar so you always know what's covered and what still needs money.";
+const intro = "This is the same spreadsheet as the Savings Goals Tracker, built for the sinking fund method specifically: a target amount and date for each fund, and a running progress bar so you always know what's covered and what still needs money.";
 
 // Not a `templates` collection entry, so there is no frontmatter to supply
 // the props the collection schema would otherwise default. Neither value is
@@ -33,9 +33,9 @@ const heroImage = '/images/featured budget thumbnail-savings goals tracker-right
 const lightImage = '/images/featured budget thumbnail-savings goals tracker-light-theme-right-positioned-v2.png';
 
 const features = [
-	'One tab per sinking fund',
+	'Track multiple sinking funds simultaneously',
 	'Visual progress bars for each fund',
-	'Deposit log with a running total per fund',
+	'Contribution logging with running totals',
 	'Target amount and target date tracking',
 	'Overview dashboard for every fund at once',
 	'Works with Google Sheets and Microsoft Excel',
@@ -48,11 +48,15 @@ const howItWorks = [
 	},
 	{
 		heading: 'Logging contributions',
-		body: 'Deposits go in the <strong>Transaction Log</strong> tab with a date, the fund, an amount, and an optional note. The Dashboard picks it up automatically: total saved, remaining amount, percentage, and progress bar all update on their own.',
+		body: 'Every deposit or withdrawal goes in the <strong>Transaction Log</strong> tab: date, which fund, amount, type (deposit or withdrawal), and an optional note. The Dashboard picks it up automatically: total saved, remaining amount, percentage, and progress bar all update on their own.',
 	},
 	{
 		heading: 'What the Dashboard shows',
 		body: 'Each fund gets a progress bar, a percentage toward target, and a status that switches from "In progress" to "Funded" once you hit 100%. The remaining column shows exactly how much more you need to set aside, so a fund never quietly stalls without you noticing.',
+	},
+	{
+		heading: 'What you can track',
+		body: 'Car repairs, holiday shopping, annual insurance, vacations, home maintenance, any predictable irregular expense with a dollar amount. Each fund operates independently with its own balance, progress, and transaction history.',
 	},
 	{
 		heading: 'Available in dark and light themes',
