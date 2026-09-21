@@ -143,6 +143,7 @@ Each article has a unique two-tone palette: a dark, saturated gradient backgroun
 | `where-is-my-money-going` | #0A2472 → #1E3A8A (blue) | #7C4DFF, #B39DDB, #536DFE (violet/blue) | #050E33 |
 | `budget-biweekly-paycheck` | #3A1900 → #8A4A00 (amber/orange) | #26C6DA, #80DEEA, #00E0D0 (cyan/teal) | #2A1400 |
 | `track-expenses-without-burnout` | #0A2E4D → #146B9C (blue) | #FFB74D, #FFE0B2, #FFD54F (amber/gold) | #04182A |
+| `sinking-fund-vs-emergency-fund` | #02291F → #0F9268 (emerald) | #FF7043, #FFCCBC, #FF5722 (coral) | #011A13 |
 
 ## SVG Construction Rules
 
