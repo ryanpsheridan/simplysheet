@@ -58,7 +58,7 @@ bundles:
     image: "/images/featured bundle thumbnail-budget-spreadsheet-and-savings-goals-tracker.png"
 faq:
   - question: "What kind of savings goals can I track?"
-    answer: "Anything — emergency fund, vacation, car down payment, holiday gifts, home repairs. Each goal gets its own progress bar and contribution log."
+    answer: "Anything: emergency fund, vacation, car down payment, holiday gifts, home repairs. Each goal gets its own progress bar and contribution log."
   - question: "Can I use this as a sinking funds tracker?"
     answer: "Yes. A sinking fund is just a savings goal with a specific purpose and target date, and that's exactly what this tracks. Set up a fund for car repairs, holidays, annual insurance, or anything else, and log deposits toward each one separately."
   - question: "Can I set up automatic contribution amounts?"

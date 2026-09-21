@@ -4,7 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import SpreadsheetsToolsRows from '../components/SpreadsheetsToolsRows.astro';
 import { SITE_TITLE } from '../consts';
 
-const description = 'The story behind Simply Sheets — how six years of personal budgeting and 12 years of design experience turned into a spreadsheet business on Etsy.';
+const description = 'The story behind Simply Sheets: how six years of personal budgeting and 12 years of design experience turned into a spreadsheet business on Etsy.';
 
 // Names the person behind the site, matching the `founder` already declared on
 // the homepage Organization, so the two references describe the same entity.
@@ -36,7 +36,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<BaseLayout title={`About ${SITE_TITLE} — The Story Behind the Templates`} description={description}>
+<BaseLayout title={`About ${SITE_TITLE}: The Story Behind the Templates`} description={description}>
 	<script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 	<main id="main-content">

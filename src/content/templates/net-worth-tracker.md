@@ -53,7 +53,7 @@ tags: ["net-worth"]
 order: 5
 faq:
   - question: "What counts as an asset?"
-    answer: "Anything you own with monetary value — checking and savings accounts, investments, retirement accounts, property, vehicles. The tracker has categories for each type."
+    answer: "Anything you own with monetary value: checking and savings accounts, investments, retirement accounts, property, vehicles. The tracker has categories for each type."
   - question: "How often should I update it?"
     answer: "Monthly is ideal. Update your balances at the end of each month and the tracker builds a historical view of your net worth trajectory."
   - question: "Can I track joint net worth with a partner?"

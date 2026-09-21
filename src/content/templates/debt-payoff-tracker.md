@@ -60,11 +60,11 @@ bundles:
     image: "/images/featured bundle thumbnail-budget-spreadsheet-and-debt-tracker.png"
 faq:
   - question: "Can I track different types of debt?"
-    answer: "Yes — credit cards, student loans, car payments, personal loans, medical debt. Any balance with a payment schedule works."
+    answer: "Yes: credit cards, student loans, car payments, personal loans, medical debt. Any balance with a payment schedule works."
   - question: "Does it calculate interest?"
     answer: "The tracker logs interest charges as part of your payment history so you can see exactly how much goes to principal vs. interest over time."
   - question: "How many debts can I track?"
-    answer: "The template supports 30+ individual debts — more than enough for most people to track every credit card, loan, and balance in one place."
+    answer: "The template supports 30+ individual debts, more than enough for most people to track every credit card, loan, and balance in one place."
 ---
 
 ## Who this debt payoff tracker is for

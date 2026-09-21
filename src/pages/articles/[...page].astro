@@ -44,10 +44,10 @@ const manifest = [...allArticles]
 
 const pageTitle = page.currentPage === 1
 	? buildTitle('Budgeting & Personal Finance Articles')
-	: buildTitle(`Budgeting & Personal Finance Articles — Page ${page.currentPage}`);
+	: buildTitle(`Budgeting & Personal Finance Articles: Page ${page.currentPage}`);
 const pageDescription = page.currentPage === 1
 	? 'Straightforward writing about budgeting, spreadsheets, and managing your money without the stress.'
-	: `More budgeting and money management articles — page ${page.currentPage} of ${page.lastPage}.`;
+	: `More budgeting and money management articles, page ${page.currentPage} of ${page.lastPage}.`;
 
 const crumbs = page.currentPage === 1
 	? [{ label: 'Articles' }]

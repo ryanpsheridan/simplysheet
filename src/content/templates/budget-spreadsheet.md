@@ -73,13 +73,13 @@ bundles:
     image: "/images/featured bundle thumbnail-budget-spreadsheet-and-savings-goals-tracker.png"
 faq:
   - question: "Does this work with Google Sheets and Excel?"
-    answer: "Yes. You get both versions — a Google Sheets file you can copy directly into your Drive, and an Excel (.xlsx) file you can download and use offline."
+    answer: "Yes. You get both versions: a Google Sheets file you can copy directly into your Drive, and an Excel (.xlsx) file you can download and use offline."
   - question: "Can I customize the budget categories?"
     answer: "Absolutely. The template comes with common categories pre-filled, but you can rename, add, or remove any category to match how you actually spend."
   - question: "How is this different from a budgeting app?"
-    answer: "You own your data — no subscriptions, no ads, no company shutting down. Spreadsheets give you full control and visibility into every formula and calculation."
+    answer: "You own your data, with no subscriptions, no ads, no company shutting down. Spreadsheets give you full control and visibility into every formula and calculation."
   - question: "Do I need to know how to use spreadsheets?"
-    answer: "No. The template is ready to use out of the box. Just enter your income and start logging expenses — the formulas and progress bars handle everything else."
+    answer: "No. The template is ready to use out of the box. Just enter your income and start logging expenses. The formulas and progress bars handle everything else."
 reviews:
   - name: "Melissa"
     text: "Overall, exactly what I was looking for. The fact it came in both google sheets and excel was great, the instructions were clear, and the fact that it was set as a dark mode was good. All the features I wanted with none of the complicated or bloated functionality"

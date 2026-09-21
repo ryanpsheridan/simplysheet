@@ -33,7 +33,7 @@ export function withEtsyTracking(url: string): string {
 // Builds the <title>, appending the site name only when the result still fits
 // the ~60 characters Google renders before truncating.
 //
-// Every layout used to append " — Simply Sheets" unconditionally, which costs
+// Every layout used to append " | Simply Sheets" unconditionally, which costs
 // 16 characters. That is free on a short title and actively harmful on a long
 // one: the suffix pushes the page's own keywords past the cutoff, so the
 // result is an ellipsis where the brand was meant to be. Dropping it on the
@@ -42,6 +42,6 @@ export function withEtsyTracking(url: string): string {
 export const TITLE_MAX = 60;
 
 export function pageTitle(title: string): string {
-	const withBrand = `${title} — ${SITE_TITLE}`;
+	const withBrand = `${title} | ${SITE_TITLE}`;
 	return withBrand.length <= TITLE_MAX ? withBrand : title;
 }

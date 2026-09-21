@@ -54,8 +54,8 @@ const manifest = allArticles
 
 const pageTitle = page.currentPage === 1
 	? buildTitle(`${tagLabel} Articles, Tips & Guides`)
-	: buildTitle(`${tagLabel} Articles, Tips & Guides — Page ${page.currentPage}`);
-const pageDescription = `Guides and practical advice on ${tagLabel.toLowerCase()} — straightforward writing to help you manage your money without the stress.`;
+	: buildTitle(`${tagLabel} Articles, Tips & Guides: Page ${page.currentPage}`);
+const pageDescription = `Guides and practical advice on ${tagLabel.toLowerCase()}, with straightforward writing to help you manage your money without the stress.`;
 
 const crumbs = page.currentPage === 1
 	? [{ label: 'Articles', href: '/articles/' }, { label: tagLabel }]
