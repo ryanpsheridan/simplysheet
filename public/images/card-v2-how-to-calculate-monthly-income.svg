@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C2340"/>
+      <stop offset="100%" stop-color="#1D6FB8"/>
+    </linearGradient>
+    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="65"/>
+    </filter>
+    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+    <filter id="blurM" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="540" fill="url(#bg)"/>
+
+  <circle cx="110" cy="470" r="236" fill="#C6FF00" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="820" cy="140" r="168" fill="#F4FF81" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
+  <circle cx="560" cy="40" r="86" fill="#76FF03" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
+  <circle cx="900" cy="500" r="210" fill="#06121F" opacity="0.45" filter="url(#blurXL)"/>
+
+  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
+
+  <!-- Motif: paydays arriving in pairs, with one trio. -->
+  <g filter="url(#blurM)">
+    <circle cx="250" cy="200" r="26" fill="#FFFFFF" opacity="0.22"/>
+    <circle cx="316" cy="200" r="26" fill="#FFFFFF" opacity="0.22"/>
+    <circle cx="560" cy="300" r="34" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.3"/>
+    <circle cx="640" cy="300" r="34" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.3"/>
+    <circle cx="720" cy="300" r="34" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.3"/>
+    <circle cx="420" cy="410" r="18" fill="#FFFFFF" opacity="0.14"/>
+    <circle cx="468" cy="410" r="18" fill="#FFFFFF" opacity="0.14"/>
+  </g>
+
+  <!-- Wireframe overlay: Full Horizontal Bleed. Seven months of income as
+       bars on a shared floor; two taller three-paycheck months; the dashed
+       line is the true monthly average the article teaches you to find. -->
+  <g stroke="#FFFFFF" stroke-width="0.75" opacity="0.15">
+    <line x1="144" y1="108" x2="144" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="108" x2="368" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="108" x2="592" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="108" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="108" x2="960" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="216" x2="960" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="324" x2="960" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="0" y1="432" x2="960" y2="432" vector-effect="non-scaling-stroke"/>
+  </g>
+
+  <line x1="0" y1="432" x2="960" y2="432" stroke="#FFFFFF" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+  <line x1="0" y1="216" x2="960" y2="216" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="4,4" opacity="0.4" vector-effect="non-scaling-stroke"/>
+
+  <g stroke="#FFFFFF" stroke-width="1" opacity="0.5" stroke-linecap="round">
+    <line x1="144" y1="432" x2="144" y2="270" vector-effect="non-scaling-stroke"/>
+    <line x1="256" y1="432" x2="256" y2="270" vector-effect="non-scaling-stroke"/>
+    <line x1="480" y1="432" x2="480" y2="270" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="432" x2="592" y2="270" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="432" x2="816" y2="270" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g stroke="#FFFFFF" stroke-width="1.5" opacity="0.92" stroke-linecap="round">
+    <line x1="368" y1="432" x2="368" y2="162" vector-effect="non-scaling-stroke"/>
+    <line x1="704" y1="432" x2="704" y2="162" vector-effect="non-scaling-stroke"/>
+  </g>
+
+  <g fill="#FFFFFF">
+    <circle cx="144" cy="270" r="5" opacity="0.25"/>
+    <circle cx="144" cy="270" r="1.6" opacity="0.8"/>
+    <circle cx="256" cy="270" r="5" opacity="0.25"/>
+    <circle cx="256" cy="270" r="1.6" opacity="0.8"/>
+    <circle cx="480" cy="270" r="5" opacity="0.25"/>
+    <circle cx="480" cy="270" r="1.6" opacity="0.8"/>
+    <circle cx="592" cy="270" r="5" opacity="0.25"/>
+    <circle cx="592" cy="270" r="1.6" opacity="0.8"/>
+    <circle cx="816" cy="270" r="5" opacity="0.25"/>
+    <circle cx="816" cy="270" r="1.6" opacity="0.8"/>
+    <circle cx="368" cy="162" r="6" opacity="0.3"/>
+    <circle cx="368" cy="162" r="2" opacity="1"/>
+    <circle cx="704" cy="162" r="6" opacity="0.3"/>
+    <circle cx="704" cy="162" r="2" opacity="1"/>
+  </g>
+</svg>

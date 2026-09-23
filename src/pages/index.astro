@@ -13,7 +13,7 @@ const allArticles = (await getCollection('articles'))
 		return { ...article, readTime };
 	});
 
-const featuredSlug = '50-30-20-budget-rule';
+const featuredSlug = 'how-to-split-bills-with-different-incomes';
 const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
 const rest = allArticles.filter((a) => a.id !== featured.id);
 
