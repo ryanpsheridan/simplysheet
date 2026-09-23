@@ -31,16 +31,16 @@ howItWorks:
     body: >-
       Every deposit or withdrawal goes in the <strong>Transaction Log</strong> tab: date, which
       fund, amount, type (deposit or withdrawal), and an optional note. The Dashboard updates
-      automatically — your total saved, remaining amount, percentage, and progress bar all
+      automatically: your total saved, remaining amount, percentage, and progress bar all
       recalculate.
   - heading: "What the Dashboard shows"
     body: >-
       Each fund gets a visual progress bar, a percentage toward your goal, and a status that
       switches from "In progress" to "Funded" once you reach 100%. The remaining column shows
-      exactly how much more you need — it will never display a negative number.
+      exactly how much more you need, and it will never display a negative number.
   - heading: "What you can track"
     body: >-
-      Emergency funds, vacation savings, car repairs, holiday shopping, down payments — any goal
+      Emergency funds, vacation savings, car repairs, holiday shopping, down payments: any goal
       with a dollar amount. Each fund operates independently with its own balance, progress, and
       transaction history.
   - heading: "Available in dark and light themes"

@@ -21,7 +21,7 @@ howItWorks:
   - heading: "How it works"
     body: >-
       The spreadsheet has three tabs: <strong>Dashboard</strong>, <strong>History Log</strong>,
-      and a hidden Data tab for color settings. The Dashboard is split into two sides — assets
+      and a hidden Data tab for color settings. The Dashboard is split into two sides: assets
       on the left, liabilities on the right.
   - heading: "Setting up assets"
     body: >-
@@ -31,8 +31,8 @@ howItWorks:
       total and groups them by category.
   - heading: "Setting up liabilities"
     body: >-
-      Same structure on the right side. Enter each liability — mortgage, car loan, student loan,
-      credit card balance — with its current outstanding amount and category. Percentage of
+      Same structure on the right side. Enter each liability (mortgage, car loan, student loan,
+      credit card balance) with its current outstanding amount and category. Percentage of
       total and group totals calculate automatically.
   - heading: "Tracking over time"
     body: >-
@@ -43,7 +43,7 @@ howItWorks:
   - heading: "Summary cards"
     body: >-
       At the top of the Dashboard, summary cards show total assets, total liabilities, net
-      worth, and the change since last month — all updated automatically as you adjust values.
+      worth, and the change since last month, all updated automatically as you adjust values.
   - heading: "Available in dark and light themes"
     body: >-
       Both themes are functionally identical. Use the toggle above to switch between them.

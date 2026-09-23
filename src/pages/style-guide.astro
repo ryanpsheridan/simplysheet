@@ -139,12 +139,12 @@ const toolThumbnails = [
 		<section class="guide-section">
 			<h2 class="section-title">Font Weights</h2>
 			<div class="weight-list">
-				<p style="font-weight: var(--weight-normal)">400 Normal — The quick brown fox jumps over the lazy dog</p>
-				<p style="font-weight: var(--weight-medium)">500 Medium — The quick brown fox jumps over the lazy dog</p>
-				<p style="font-weight: var(--weight-semibold)">600 Semibold — The quick brown fox jumps over the lazy dog</p>
-				<p style="font-weight: var(--weight-bold)">700 Bold — The quick brown fox jumps over the lazy dog</p>
+				<p style="font-weight: var(--weight-normal)">400 Normal: The quick brown fox jumps over the lazy dog</p>
+				<p style="font-weight: var(--weight-medium)">500 Medium: The quick brown fox jumps over the lazy dog</p>
+				<p style="font-weight: var(--weight-semibold)">600 Semibold: The quick brown fox jumps over the lazy dog</p>
+				<p style="font-weight: var(--weight-bold)">700 Bold: The quick brown fox jumps over the lazy dog</p>
 			</div>
-			<p class="section-desc">Headings sit at 500. Semibold is a rarely-needed emphasis step, not the heading default — reach for a larger size or tighter tracking before reaching for more weight.</p>
+			<p class="section-desc">Headings sit at 500. Semibold is a rarely-needed emphasis step, not the heading default. Reach for a larger size or tighter tracking before reaching for more weight.</p>
 		</section>
 
 		<!-- ============ EYEBROWS ============ -->
@@ -183,7 +183,7 @@ const toolThumbnails = [
 				<a href="#buttons" class="btn btn-primary btn-arrow">Primary</a>
 				<a href="#buttons" class="btn btn-secondary btn-arrow">Secondary</a>
 			</div>
-			<p class="section-desc"><code>.btn-arrow</code> adds an inverted disc inside the pill's right edge — the detail that makes a button read as a destination rather than a form control. Each variant's badge is its own inverse, so a dark button gets a light disc and a light one gets a dark disc.</p>
+			<p class="section-desc"><code>.btn-arrow</code> adds an inverted disc inside the pill's right edge, the detail that makes a button read as a destination rather than a form control. Each variant's badge is its own inverse, so a dark button gets a light disc and a light one gets a dark disc.</p>
 		</section>
 
 		<!-- ============ SPACING ============ -->
@@ -223,7 +223,7 @@ const toolThumbnails = [
 				<li>
 					<a href="#" class="article-card">
 						<h3 class="article-title">How to budget when your income changes every month</h3>
-						<p class="article-desc">A straightforward approach to budgeting on irregular income — freelancers, gig workers, commission earners.</p>
+						<p class="article-desc">A straightforward approach to budgeting on irregular income: freelancers, gig workers, commission earners.</p>
 						<p class="article-date"><FormattedDate date={new Date('2026-06-23')} /></p>
 					</a>
 				</li>
@@ -239,8 +239,8 @@ const toolThumbnails = [
 
 		<!-- ============ CARDS: EDITORIAL (HOMEPAGE) ============ -->
 		<section class="guide-section">
-			<h2 class="section-title">Article Card — Editorial</h2>
-			<p class="section-desc">Used on the homepage. Thumbnail image on top with text below — no containing card or border. Uses the <code>cardImage</code> SVG.</p>
+			<h2 class="section-title">Article Card: Editorial</h2>
+			<p class="section-desc">Used on the homepage. Thumbnail image on top with text below, no containing card or border. Uses the <code>cardImage</code> SVG.</p>
 			<div class="card-demo-grid card-demo-3col">
 				{sampleArticles.map((article) => (
 					<a href={`/articles/${article.id}/`} class="editorial-card">
@@ -270,7 +270,7 @@ const toolThumbnails = [
 
 		<!-- ============ CARDS: CONTAINED (ARTICLES INDEX) ============ -->
 		<section class="guide-section">
-			<h2 class="section-title">Article Card — Contained</h2>
+			<h2 class="section-title">Article Card: Contained</h2>
 			<p class="section-desc">Used on the articles index page. Thumbnail + text inside a bordered card with subtle hover shadow. Uses <code>cardImage</code> SVG.</p>
 			<div class="card-demo-grid card-demo-3col">
 				{sampleArticles.map((article) => (
@@ -304,8 +304,8 @@ const toolThumbnails = [
 
 		<!-- ============ CALCULATOR THUMBNAILS ============ -->
 		<section class="guide-section">
-			<h2 class="section-title">Calculator Thumbnail — Line Art</h2>
-			<p class="section-desc">Bespoke illustrations built from the same grid-snapped hairline language as the article wireframes — dashed secondary paths, compound node markers, no gradient or color. Used on the homepage "Free tools" row and the tools index page via the shared <code>ToolThumbCard</code> component.</p>
+			<h2 class="section-title">Calculator Thumbnail: Line Art</h2>
+			<p class="section-desc">Bespoke illustrations built from the same grid-snapped hairline language as the article wireframes: dashed secondary paths, compound node markers, no gradient or color. Used on the homepage "Free tools" row and the tools index page via the shared <code>ToolThumbCard</code> component.</p>
 			<div class="calc-thumb-grid">
 				{TOOLS.map((tool) => (
 					<ToolThumbCard tool={tool} />
@@ -315,7 +315,7 @@ const toolThumbnails = [
 
 		<!-- ============ CARDS: PRODUCT / TEMPLATE ============ -->
 		<section class="guide-section">
-			<h2 class="section-title">Product Card — Template</h2>
+			<h2 class="section-title">Product Card: Template</h2>
 			<p class="section-desc">Used for spreadsheet templates on the homepage and article pages. Bordered card with optional badge.</p>
 			<div class="card-demo-grid card-demo-2col">
 				{templates.map((t) => (
@@ -354,7 +354,7 @@ const toolThumbnails = [
 
 			<div class="prose">
 				<h2>How do you budget when your income changes every month</h2>
-				<p>Start with your baseline — the lowest amount you've earned in the past six months. Build your budget around that number, not your average and definitely not your best month.</p>
+				<p>Start with your baseline: the lowest amount you've earned in the past six months. Build your budget around that number, not your average and definitely not your best month.</p>
 				<h3>List your non-negotiable expenses first</h3>
 				<p>Rent, utilities, groceries, insurance, minimum debt payments. These get funded before anything else. Write them down with <strong>real numbers</strong> from last month, not estimates.</p>
 				<blockquote>The point isn't to predict your income. It's to stop pretending it's predictable and plan around that reality instead.</blockquote>
@@ -381,7 +381,7 @@ const toolThumbnails = [
 				</div>
 				<div class="radius-demo" style="border-radius: var(--radius-full)">
 					<code>--radius-full</code>
-					<span>999px — buttons &amp; pills</span>
+					<span>999px: buttons &amp; pills</span>
 				</div>
 			</div>
 		</section>
@@ -416,7 +416,7 @@ const toolThumbnails = [
 			<h2 class="section-title">Archive</h2>
 			<p class="section-desc">Deprecated card styles kept for reference.</p>
 
-			<h3 class="archive-label">Article Card — Gradient Overlay</h3>
+			<h3 class="archive-label">Article Card: Gradient Overlay</h3>
 			<p class="section-desc">Hero gradient as full-bleed background with a centered white text overlay. Uses the abstract <code>image</code> SVG. Previously used on the homepage.</p>
 			<div class="card-demo-grid card-demo-3col">
 				{sampleArticles.map((article) => (
@@ -439,8 +439,8 @@ const toolThumbnails = [
 				))}
 			</div>
 
-			<h3 class="archive-label">Tool Thumbnails — UI Preview</h3>
-			<p class="section-desc">Article-style mesh background (palette matched to each tool's related article) with the tool's own UI cropped into the bottom-right. Explored for the tools index cards and the "More free tools" list; not shipped — those surfaces kept the icon treatment.</p>
+			<h3 class="archive-label">Tool Thumbnails: UI Preview</h3>
+			<p class="section-desc">Article-style mesh background (palette matched to each tool's related article) with the tool's own UI cropped into the bottom-right. Explored for the tools index cards and the "More free tools" list; not shipped. Those surfaces kept the icon treatment.</p>
 			<div class="card-demo-grid card-demo-3col">
 				{toolThumbnails.map((t) => (
 					<figure class="tool-thumb-demo">

@@ -144,6 +144,7 @@ Each article has a unique two-tone palette: a dark, saturated gradient backgroun
 | `budget-biweekly-paycheck` | #3A1900 → #8A4A00 (amber/orange) | #26C6DA, #80DEEA, #00E0D0 (cyan/teal) | #2A1400 |
 | `track-expenses-without-burnout` | #0A2E4D → #146B9C (blue) | #FFB74D, #FFE0B2, #FFD54F (amber/gold) | #04182A |
 | `sinking-fund-vs-emergency-fund` | #02291F → #0F9268 (emerald) | #FF7043, #FFCCBC, #FF5722 (coral) | #011A13 |
+| `how-to-calculate-monthly-income` | #0C2340 → #1D6FB8 (blue) | #C6FF00, #F4FF81, #76FF03 (lime) | #06121F |
 
 ## SVG Construction Rules
 
@@ -384,7 +385,7 @@ The articles hub is statically paginated for SEO/AEO crawlability — there is n
 
 ## Homepage
 
-- The featured article is pinned by slug in `src/pages/index.astro`: `const featuredSlug = '50-30-20-budget-rule'`. Do not change unless explicitly told to.
+- The featured article is pinned by slug in `src/pages/index.astro` (`const featuredSlug = '...'`), currently `how-to-split-bills-with-different-incomes`. The owner has approved choosing whichever article performs best for that spot, so it can be changed when Search Console data supports a better pick. Base the choice on data (impressions, position, and which product the article funnels to), not preference, and update this line when it changes.
 
 ### Hero
 

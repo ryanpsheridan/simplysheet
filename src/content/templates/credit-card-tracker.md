@@ -27,13 +27,13 @@ howItWorks:
   - heading: "Utilization tracking"
     body: >-
       A utilization threshold dropdown at the top sets when a card gets flagged. The default is
-      30% — the standard benchmark for maintaining a healthy credit score. Each card shows its
+      30%, the standard benchmark for maintaining a healthy credit score. Each card shows its
       individual utilization percentage, and the Dashboard shows your overall utilization across
       all cards.
   - heading: "Tracking payments"
     body: >-
       Every payment goes in the <strong>Payment Log</strong> tab: date, which card, amount, and
-      an optional note. The Dashboard updates automatically — available credit, utilization
+      an optional note. The Dashboard updates automatically: available credit, utilization
       percentage, and status all recalculate.
   - heading: "What the Dashboard shows"
     body: >-

@@ -27,8 +27,8 @@ howItWorks:
   - heading: "Avalanche vs. snowball"
     body: >-
       A dropdown at the top lets you switch between two payoff strategies.
-      <strong>Avalanche</strong> ranks debts by highest interest rate first — saves the most
-      money over time. <strong>Snowball</strong> ranks by smallest balance first — builds
+      <strong>Avalanche</strong> ranks debts by highest interest rate first, which saves the most
+      money over time. <strong>Snowball</strong> ranks by smallest balance first, which builds
       momentum with quick wins. The priority column updates automatically when you switch. Not
       sure which strategy is right for you? Read our
       <a href="/articles/debt-snowball-vs-avalanche/">guide to snowball vs. avalanche methods</a>
@@ -38,7 +38,7 @@ howItWorks:
   - heading: "Tracking payments"
     body: >-
       Every payment goes in the <strong>Payment Log</strong> tab: date, which debt, amount, and
-      an optional note. Once saved, the Dashboard updates automatically — paid total, remaining
+      an optional note. Once saved, the Dashboard updates automatically: paid total, remaining
       balance, percentage complete, progress bar, and status all recalculate.
   - heading: "What the Dashboard shows"
     body: >-

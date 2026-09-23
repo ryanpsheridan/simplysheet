@@ -20,7 +20,7 @@ features:
 howItWorks:
   - heading: "How it works"
     body: >-
-      Enter both partner names in the overview section — they'll populate dynamically throughout
+      Enter both partner names in the overview section, and they'll populate dynamically throughout
       the sheet. Set your budget period, date range, and currency, then add categories across
       five sections: <strong>Income</strong>, <strong>Bills</strong>, <strong>Expenses</strong>,
       <strong>Debt</strong>, and <strong>Savings</strong>. Each category gets an expected amount
@@ -34,12 +34,12 @@ howItWorks:
   - heading: "What you'll see"
     body: >-
       Progress bars track spending against your expected amounts in real time. The overview
-      shows combined income, total spending, and how much is left — broken down so both
+      shows combined income, total spending, and how much is left, broken down so both
       partners can see where the money is going.
   - heading: "Built-in categories"
     body: >-
-      Pre-filled with common categories for couples — joint bills, shared expenses, individual
-      spending — but fully customizable. Add or remove rows to match how you actually split
+      Pre-filled with common categories for couples (joint bills, shared expenses, individual
+      spending), but fully customizable. Add or remove rows to match how you actually split
       things.
   - heading: "Available in dark and light themes"
     body: >-

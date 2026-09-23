@@ -79,19 +79,19 @@ const firstQuestionCategories = [
           <div class="sfc-stats">
             <div class="sfc-stat">
               <span class="sfc-stat-label sfc-stat-label--primary">Save each month</span>
-              <span class="sfc-stat-value sfc-stat-value--primary" id={`${id}-monthly`}>—</span>
+              <span class="sfc-stat-value sfc-stat-value--primary" id={`${id}-monthly`}>–</span>
             </div>
             <div class="sfc-stat">
               <span class="sfc-stat-label">Months remaining</span>
-              <span class="sfc-stat-value" id={`${id}-mcount`}>—</span>
+              <span class="sfc-stat-value" id={`${id}-mcount`}>–</span>
             </div>
             <div class="sfc-stat">
               <span class="sfc-stat-label">Weekly equivalent</span>
-              <span class="sfc-stat-value" id={`${id}-weekly`}>—</span>
+              <span class="sfc-stat-value" id={`${id}-weekly`}>–</span>
             </div>
             <div class="sfc-stat">
               <span class="sfc-stat-label">Every two weeks</span>
-              <span class="sfc-stat-value" id={`${id}-biweekly`}>—</span>
+              <span class="sfc-stat-value" id={`${id}-biweekly`}>–</span>
             </div>
           </div>
 
@@ -552,8 +552,8 @@ const firstQuestionCategories = [
       hint: '',
       type: 'yn',
       opts: [
-        { text: 'Yes — I have a date or timeframe in mind' },
-        { text: 'No — it\'s open-ended' }
+        { text: 'Yes, I have a date or timeframe in mind' },
+        { text: 'No, it\'s open-ended' }
       ]
     },
     {
@@ -561,8 +561,8 @@ const firstQuestionCategories = [
       hint: '',
       type: 'yn',
       opts: [
-        { text: 'Yes — I knew this expense was coming' },
-        { text: 'No — it came up unexpectedly' }
+        { text: 'Yes, I knew this expense was coming' },
+        { text: 'No, it came up unexpectedly' }
       ]
     },
     {
@@ -570,8 +570,8 @@ const firstQuestionCategories = [
       hint: '',
       type: 'yn',
       opts: [
-        { text: 'Yes — it would be a stretch' },
-        { text: 'No — I could handle it in one month' }
+        { text: 'Yes, it would be a stretch' },
+        { text: 'No, I could handle it in one month' }
       ]
     },
     {
@@ -579,8 +579,8 @@ const firstQuestionCategories = [
       hint: 'Examples that qualify: Christmas, annual insurance, vacation, new tires.\nExamples that don\'t: rent, groceries, utilities.',
       type: 'yn',
       opts: [
-        { text: 'Yes — it\'s infrequent or annual' },
-        { text: 'No — it\'s a regular monthly cost' }
+        { text: 'Yes, it\'s infrequent or annual' },
+        { text: 'No, it\'s a regular monthly cost' }
       ]
     }
   ];
@@ -609,7 +609,7 @@ const firstQuestionCategories = [
       iconBg: 'var(--color-accent-critical-bg)',
       iconColor: 'var(--color-accent-critical)',
       title: 'This sounds more like an emergency fund expense',
-      body: 'Sinking funds work best for expenses you can anticipate. This one sounds like it came up unexpectedly — which is exactly what an emergency fund is designed for.',
+      body: 'Sinking funds work best for expenses you can anticipate. This one sounds like it came up unexpectedly, which is exactly what an emergency fund is designed for.',
       links: 'Learn more about how much to keep in an <a href="/articles/emergency-fund-sizing/">emergency fund</a>.'
     },
     monthly: {
@@ -625,7 +625,7 @@ const firstQuestionCategories = [
   /* ——— Tips ——— */
 
   var CATEGORY_TIPS = {
-    'Christmas': 'This type of annual expense is exactly what sinking funds are designed for — a small monthly amount means December never feels like a financial sprint.',
+    'Christmas': 'This type of annual expense is exactly what sinking funds are designed for. A small monthly amount means December never feels like a financial sprint.',
     'Vacation': 'Starting early gives you maximum flexibility. If plans change, you can easily redirect these savings toward another goal.',
     'Annual Insurance': 'Some insurers offer a discount for paying annually. A sinking fund makes that the easy choice.',
     'Car Maintenance': 'Spreading vehicle costs across many months means a repair bill never has to blow up a monthly budget.',
@@ -637,7 +637,7 @@ const firstQuestionCategories = [
     if (months < 3) return 'With a short timeline, saving consistently now is key. Consider whether the target date can flex if the monthly amount feels high.';
     if (monthly > 500) return 'If this monthly amount feels high, extending the target date by a few months can make it much more manageable.';
     if (months > 12) return 'Starting this early gives you real flexibility. Even if circumstances change, you\'ll have a comfortable cushion built up.';
-    return 'Setting up a recurring transfer right after payday makes this feel automatic — you save before you have a chance to spend.';
+    return 'Setting up a recurring transfer right after payday makes this feel automatic: you save before you have a chance to spend.';
   }
 
   /* ——— Recommendation logic ——— */
@@ -783,10 +783,10 @@ const firstQuestionCategories = [
   // reads as a live preview that fills in, rather than a form to submit.
   function resetResults() {
     if (!monthlyEl) return;
-    monthlyEl.textContent  = '—';
-    mcountEl.textContent   = '—';
-    weeklyEl.textContent   = '—';
-    biweeklyEl.textContent = '—';
+    monthlyEl.textContent  = '–';
+    mcountEl.textContent   = '–';
+    weeklyEl.textContent   = '–';
+    biweeklyEl.textContent = '–';
     tipEl.textContent      = '';
   }
 
