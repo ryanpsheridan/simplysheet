@@ -2,8 +2,8 @@
 title: 'Where Is My Money Going? How to Find Out'
 description: "Wondering where your money is actually going each month? Here's the simplest way to find out, and what to do once you know."
 pubDate: 'Jun 23 2026'
-image: '/images/card-v2-where-is-money-going.svg'
-cardImage: '/images/card-v2-where-is-money-going.svg'
+image: '/images/card-v3-where-is-money-going.svg'
+cardImage: '/images/card-v3-where-is-money-going.svg'
 tags: ['expense-tracking']
 faq:
   - question: 'How long do I need to track my spending before I see useful patterns?'

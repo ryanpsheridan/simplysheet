@@ -1,4 +1,7 @@
-// Rasterizes public/images/card-v2-*.svg to matching .png files.
+// Rasterizes the live article cards (public/images/card-v3-*.svg, written by
+// generate-article-cards.mjs just before this in `prebuild`) and the default
+// OG image to matching .png files. The archived card-v2-*.svg set keeps the
+// PNGs it already has; nothing links to them any more.
 // Social platforms (Facebook, iMessage, Slack, etc.) don't render SVG for
 // og:image/twitter:image previews, so BaseHead.astro points those tags at
 // the PNG counterpart instead of the on-page SVG.
@@ -10,18 +13,22 @@ const imagesDir = path.resolve(import.meta.dirname, '../public/images');
 
 const files = await readdir(imagesDir);
 const svgs = files.filter(
-	(f) => (f.startsWith('card-v2-') || f === 'og-default.svg') && f.endsWith('.svg'),
+	(f) => (f.startsWith('card-v3-') || f === 'og-default.svg') && f.endsWith('.svg'),
 );
 
-// These renders are flat gradients plus a grain overlay, which a full RGBA PNG
-// stores very inefficiently — the default encode runs 850 KB–1 MB each. A
-// quantized palette cuts that by ~75% with no visible difference, since the
-// grain masks any banding. They are never loaded by a visitor (og:image is
-// fetched by social crawlers only), so this is deploy weight, not page weight.
-const PNG_OPTIONS = { palette: true, quality: 90, effort: 10 };
+// Two encodes, chosen by what the image is made of. og-default.svg is a dark
+// mesh with a grain overlay, which a full RGBA PNG stores very inefficiently
+// (850 KB–1 MB); a quantized palette cuts that by ~75% and the grain masks any
+// banding. The v3 article cards are clean gradients with no grain, where the
+// opposite holds: lossless full colour comes out smaller (~70 KB) than the
+// palette encode and avoids the blocky quantization a palette leaves in their
+// lightest corners. These are never loaded by a visitor (og:image is fetched
+// by social crawlers only), so this is deploy weight, not page weight.
+const GRAIN_PNG = { palette: true, quality: 90, effort: 10 };
+const CLEAN_PNG = { compressionLevel: 9, effort: 10 };
 
 for (const svg of svgs) {
 	const pngName = svg.replace(/\.svg$/, '.png');
-	await sharp(path.join(imagesDir, svg)).png(PNG_OPTIONS).toFile(path.join(imagesDir, pngName));
+	await sharp(path.join(imagesDir, svg)).png(svg.startsWith('card-v3-') ? CLEAN_PNG : GRAIN_PNG).toFile(path.join(imagesDir, pngName));
 	console.log(`Generated ${pngName}`);
 }

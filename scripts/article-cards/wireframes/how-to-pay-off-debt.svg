@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" color="#081122">
+  <!-- Wireframe for card-v3-how-to-pay-off-debt.svg. Draw in currentColor only; the
+       generator (scripts/generate-article-cards.mjs) supplies the color,
+       the background, and the areaFade gradient. -->
+  <!-- Wireframe overlay: Full Vertical Bleed, staircase debt payoff to zero -->
+  <g stroke="currentColor" stroke-width="0.75" opacity="0.15">
+    <line x1="144" y1="0" x2="144" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="368" y1="0" x2="368" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="592" y1="0" x2="592" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="816" y1="0" x2="816" y2="540" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="108" x2="816" y2="108" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="216" x2="816" y2="216" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="324" x2="816" y2="324" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="816" y2="432" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g stroke="currentColor" fill="none">
+    <line x1="144" y1="0" x2="144" y2="540" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+    <line x1="144" y1="432" x2="816" y2="432" stroke-width="1" opacity="0.4" vector-effect="non-scaling-stroke"/>
+  </g>
+  <path d="M144,162 L256,162 L256,216 L368,216 L368,270 L480,270 L480,324 L592,324 L592,378 L704,378 L704,432 L816,432 L144,432 Z" fill="url(#areaFade)"/>
+  <path d="M144,162 L256,162 L256,216 L368,216 L368,270 L480,270 L480,324 L592,324 L592,378 L704,378 L704,432 L816,432" stroke="currentColor" stroke-width="1.5" opacity="0.95" fill="none" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <g fill="currentColor">
+    <circle cx="144" cy="162" r="6" opacity="0.3"/>
+    <circle cx="144" cy="162" r="2" opacity="1"/>
+    <circle cx="816" cy="432" r="7" opacity="0.32"/>
+    <circle cx="816" cy="432" r="2.2" opacity="1"/>
+  </g>
+</svg>
