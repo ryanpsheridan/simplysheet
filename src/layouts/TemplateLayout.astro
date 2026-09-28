@@ -353,7 +353,7 @@ function featureIcon(text: string): string {
 								rel="noopener noreferrer"
 								data-cta={`template_reviews_cta:${id}`}
 							>
-								See all Etsy reviews <span class="arrow">&rarr;</span>
+								See all Etsy reviews <svg class="arrow external-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
 							</a>
 						)}
 					</div>
@@ -379,7 +379,7 @@ function featureIcon(text: string): string {
 							rel="noopener noreferrer"
 							data-cta={`template_reviews_cta:${id}`}
 						>
-							See all Etsy reviews <span class="arrow">&rarr;</span>
+							See all Etsy reviews <svg class="arrow external-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
 						</a>
 					)}
 				</section>
@@ -837,19 +837,9 @@ function featureIcon(text: string): string {
 		border-top: 1px solid var(--color-border);
 	}
 
-	/* Full width on mobile, hugging its text from 600px up — the same shape
-	   the calculator product links take sitewide. */
+	/* Hugs its label at every width, like every button on the site. */
 	.product-cta-footer .btn {
-		display: flex;
-		align-items: center;
-		justify-content: center;
 		gap: 0.5rem;
-	}
-
-	@media (min-width: 600px) {
-		.product-cta-footer .btn {
-			display: inline-flex;
-		}
 	}
 
 	/* ——— Bundles ——— */

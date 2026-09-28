@@ -104,8 +104,8 @@ const firstQuestionCategories = [
     )}
 
     {mode === 'assessment' && (
-      <a href="/tools/sinking-fund-calculator/" class="btn btn-primary sfc-cta" id={`${id}-calc-cta`}>
-        Calculate your monthly savings <span class="arrow">&rarr;</span>
+      <a href="/tools/sinking-fund-calculator/" class="btn btn-primary btn-arrow sfc-cta" id={`${id}-calc-cta`}>
+        Calculate your monthly savings
       </a>
     )}
 
@@ -116,7 +116,7 @@ const firstQuestionCategories = [
 </div>
 <div class="calc-cta-divider"></div>
 <a href="/spreadsheets/savings-goals-tracker/" class="calc-product-link" data-cta="calc_product_link:savings-goals-tracker">
-  Track your savings progress <span class="arrow">&rarr;</span>
+  Track your savings progress
 </a>
 
 <style>
@@ -421,7 +421,6 @@ const firstQuestionCategories = [
   /* ——— CTA + retake ——— */
 
   .sfc-cta {
-    width: 100%;
     margin-bottom: var(--space-sm);
   }
   .sfc-cta[hidden] {

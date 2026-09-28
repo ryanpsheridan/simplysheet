@@ -595,9 +595,10 @@ p {
    Shared by every calculator and assessment component, so the button below
    each tool looks identical everywhere. Defined globally (not in each
    component's scoped <style>) because nine components were carrying
-   byte-identical copies of it. Secondary/outline treatment: full width on
-   mobile so it's an easy tap target, hugging its text and left aligned from
-   the tablet breakpoint up. */
+   byte-identical copies of it. Secondary/outline treatment, hugging its
+   label and left aligned at every width (it was full width on phones; no
+   button on the site stretches now). Its trailing arrow is the shared mask
+   arrow, see "Arrow" below. */
 
 .calc-cta-divider {
 	margin-top: var(--space-lg);
@@ -608,7 +609,6 @@ p {
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
-	width: 100%;
 	margin-top: var(--space-md);
 	margin-bottom: var(--space-lg);
 	padding: 0.625rem 1.25rem;
@@ -631,19 +631,6 @@ p {
 }
 .calc-product-link[hidden] {
 	display: none;
-}
-.calc-product-link .arrow {
-	display: inline-block;
-	transition: transform 0.15s ease;
-}
-.calc-product-link:hover .arrow {
-	transform: translateX(2px);
-}
-
-@media (min-width: 768px) {
-	.calc-product-link {
-		width: auto;
-	}
 }
 
 /* ——— Two-up product promos in article prose ———
@@ -730,15 +717,12 @@ p {
 	align-self: flex-start;
 	margin-top: var(--space-md);
 }
+/* The CTA keeps hugging its label on a phone (.product-cta's align-self:
+   flex-start above); only the thumbnail and text stack. */
 @media (max-width: 600px) {
 	.product-row {
 		grid-template-columns: 1fr;
 		gap: var(--space-sm);
-	}
-	.product-cta {
-		align-self: flex-start;
-		width: 100%;
-		justify-content: center;
 	}
 }
 
@@ -1213,71 +1197,40 @@ hr {
 	background: var(--color-bg-panel);
 }
 
-/* ——— Arrow badge ———
+/* ——— Arrow ———
 
-   An inverted disc pinned inside the pill's right edge: the detail that makes
-   a button read as a destination rather than a form control.
+   One plain trailing arrow for anything that takes you to another page on
+   the site: .btn-arrow on a button, and .calc-product-link below every tool.
+   No container. It used to sit in an inverted disc inside the pill's right
+   edge; that was removed as heavier than the job needs. External links (Etsy)
+   carry the up-right external glyph instead, and buttons that act in place
+   (form steps, toggles) or go back carry no arrow at all.
 
-   The arrow is a background image rather than a text glyph because an arrow
-   character in a webfont is a fallback lottery — a substituted glyph lands
-   visibly off-centre and off-weight at this size. Its stroke color has to be
-   baked into the data URI, so there are exactly two: one for a dark badge and
-   one for a light one. Every variant resolves to one or the other, so two is
-   the whole set rather than an arbitrary pair. */
+   Drawn as a mask filled with currentColor, not a text glyph: an arrow
+   character in a webfont is a fallback lottery and lands off-centre and
+   off-weight at this size, and a mask takes each variant's own text colour
+   (ink on outline, white on primary, both on hover) with no per-variant
+   wiring. */
 
 :root {
-	--glyph-arrow-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FBFAF9' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E");
-	--glyph-arrow-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23081122' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E");
+	--glyph-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
 }
 
-.btn-arrow {
-	padding-right: var(--space-xs);
-	gap: var(--space-sm);
-}
-
-.btn-arrow::after {
+.btn-arrow::after,
+.calc-product-link::after {
 	content: '';
 	flex-shrink: 0;
-	width: 2rem;
-	height: 2rem;
-	border-radius: 50%;
-	background:
-		var(--badge-glyph, var(--glyph-arrow-light)) center / 0.875rem 0.875rem no-repeat,
-		var(--badge-bg, var(--color-btn));
+	width: 1em;
+	height: 1em;
+	background-color: currentColor;
+	-webkit-mask: var(--glyph-arrow) center / contain no-repeat;
+	mask: var(--glyph-arrow) center / contain no-repeat;
 	transition: transform var(--duration-base) var(--ease-out);
 }
 
-.btn-sm.btn-arrow::after {
-	width: 1.625rem;
-	height: 1.625rem;
-	background-size: 0.75rem 0.75rem;
-}
-
-.btn-arrow:hover::after {
-	transform: translate(2px, -2px);
-}
-
-/* Each variant's badge is its own inverse: a dark button gets a light badge
-   with a dark arrow, a light or brand button gets a dark badge with a light
-   arrow. Variants that set nothing fall back to ink-on-page, which is correct
-   on any light surface. */
-.btn-primary {
-	--badge-bg: var(--color-bg);
-	--badge-glyph: var(--glyph-arrow-dark);
-}
-
-.btn-brand,
-.btn-secondary,
-.btn-ghost {
-	--badge-bg: var(--color-btn);
-	--badge-glyph: var(--glyph-arrow-light);
-}
-
-/* The outline variant fills with ink on hover, so its badge has to invert
-   with it or the arrow vanishes into the new background. */
-.btn-secondary:hover {
-	--badge-bg: var(--color-bg);
-	--badge-glyph: var(--glyph-arrow-dark);
+.btn-arrow:hover::after,
+.calc-product-link:hover::after {
+	transform: translateX(3px);
 }
 
 /* ——— Arrow nudge ——— */
