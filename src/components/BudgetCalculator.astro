@@ -7,7 +7,7 @@ const { simplified = false } = Astro.props;
 const id = `calc-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<div class="calc" id={id} data-simplified={simplified ? 'true' : 'false'}>
+<div class="calc tool-frame" id={id} data-simplified={simplified ? 'true' : 'false'}>
 	<div class="calc-input-group">
 		<label class="calc-label" for={`${id}-income`}>Monthly take-home income</label>
 		<div class="calc-field">

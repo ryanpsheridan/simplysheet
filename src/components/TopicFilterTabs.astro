@@ -29,7 +29,7 @@ const { tags, activeSlug, centered = false } = Astro.props;
 		display: none;
 	}
 	/* Centered (inside PageHero): wraps onto centered lines wherever there is
-	   room, so no tab is ever clipped. Only on a phone does it go back to one
+	   room, so no tab is ever clipped. On a phone it becomes one left-aligned
 	   scrolling row (see the 600px block). */
 	.filter-tabs--centered {
 		align-self: stretch;
@@ -64,19 +64,14 @@ const { tags, activeSlug, centered = false } = Astro.props;
 	}
 
 	@media (max-width: 600px) {
-		/* One scrolling row. Auto margins, not justify-content: center: a
-		   centered flex row that overflows clips its first tabs off the left
-		   edge, out of scroll reach, while auto margins collapse to zero when
-		   the row overflows so it scrolls from its first tab. */
+		/* One scrolling row, starting at the left edge like the rest of the
+		   hero, which left-aligns on a phone whenever it has breadcrumbs (and
+		   the tabs only ever appear under a breadcrumbed hero). Never
+		   justify-content: center here: a centered row that overflows clips its
+		   first tabs off the left edge, out of scroll reach. */
 		.filter-tabs--centered {
 			flex-wrap: nowrap;
 			justify-content: flex-start;
-		}
-		.filter-tabs--centered > :first-child {
-			margin-left: auto;
-		}
-		.filter-tabs--centered > :last-child {
-			margin-right: auto;
 		}
 		.filter-tabs {
 			margin-left: calc(-1 * var(--space-md));

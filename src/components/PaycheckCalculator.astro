@@ -15,7 +15,7 @@ const id = `bwcalc-${Math.random().toString(36).slice(2, 8)}`;
 const initial = PAY_FREQUENCIES[defaultFrequency];
 ---
 
-<div class="calc" id={id} data-freq={defaultFrequency}>
+<div class="calc tool-frame" id={id} data-freq={defaultFrequency}>
 	<div class="calc-form-grid">
 		{showFrequencyToggle && (
 			<div class="calc-freq-group">

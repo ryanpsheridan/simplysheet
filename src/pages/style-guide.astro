@@ -9,6 +9,7 @@ import ProductGrid from '../components/ProductGrid.astro';
 import ToolCard from '../components/ToolCard.astro';
 import Faq from '../components/Faq.astro';
 import CtaBanner from '../components/CtaBanner.astro';
+import EmergencyFundCalculator from '../components/EmergencyFundCalculator.astro';
 import TagPills from '../components/TagPills.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, TAG_MAP } from '../consts';
@@ -211,7 +212,7 @@ const toolThumbnails = [
 				<p class="guide-note">A page is a stack of full-bleed <code>.band</code> sections, each with a <code>.band-inner</code> held to <code>--max-width-content</code>. Bands alternate the page ground with <code>.band--surface</code>; that alternation, not rules, separates chapters. <code>.band--flush-top</code> continues the band above it (a grid under a <code>PageHero</code>). The <code>main</code> element that holds bands takes <code>.band-main</code>.</p>
 
 				<h3 class="guide-label">PageHero</h3>
-				<p class="guide-note">The centered opener on every top-level page, over the faint rings: <code>size="hero"</code> on the homepage, <code>size="page"</code> everywhere else. Breadcrumbs center inside it. Slots: <code>before</code> (badge, glyph), default (buttons, filter tabs), <code>after</code> (the homepage stage). See the top of any hub page.</p>
+				<p class="guide-note">The centered opener on every top-level page, over the faint rings: <code>size="hero"</code> on the homepage, <code>size="page"</code> everywhere else. Breadcrumbs center inside it; with breadcrumbs, the whole hero left-aligns below 600px. Slots: <code>before</code> (badge, glyph), default (buttons, filter tabs), <code>after</code> (the homepage stage). See the top of any hub page.</p>
 
 				<h3 class="guide-label">SectionHead</h3>
 				<div class="demo">
@@ -285,6 +286,12 @@ const toolThumbnails = [
 				</div>
 				<div class="demo demo--narrow">
 					<Faq items={faqStackSample} title="Stack layout" schema={false} id="faq-demo-stack" />
+				</div>
+
+				<h3 class="guide-label">Tool frame</h3>
+				<p class="guide-note">Every calculator and assessment carries <code>.tool-frame</code> on its own root, so it is contained the same way in an article and on its tool page: a border, a thin panel rim drawn with an inset shadow, and the tool on a white sheet inside. The product link below it stays outside the frame. The live Emergency Fund Calculator:</p>
+				<div class="demo demo--narrow">
+					<EmergencyFundCalculator />
 				</div>
 
 				<h3 class="guide-label">CtaBanner</h3>

@@ -14,6 +14,11 @@ import Breadcrumbs from './Breadcrumbs.astro';
 //
 // No `font-weight` on the title: it takes --weight-semibold from the shared
 // h1-h6 rule, like every heading.
+//
+// With `crumbs`, the hero left-aligns below 600px: a breadcrumb trail reads as
+// a path from the left edge, and a centered trail over a centered title on a
+// narrow screen left the page's own chrome floating. Heroes without crumbs
+// (the homepage, the 404) stay centered at every width.
 interface Crumb {
 	label: string;
 	href?: string;
@@ -29,7 +34,7 @@ interface Props {
 const { title, desc, size = 'page', crumbs } = Astro.props;
 ---
 
-<section class:list={['page-hero', `page-hero--${size}`]}>
+<section class:list={['page-hero', `page-hero--${size}`, { 'page-hero--has-crumbs': Boolean(crumbs) }]}>
 	<div class="rings" aria-hidden="true"></div>
 	<div class="page-hero-inner">
 		{crumbs && <Breadcrumbs crumbs={crumbs} centered />}
@@ -87,5 +92,12 @@ const { title, desc, size = 'page', crumbs } = Astro.props;
 		font-size: var(--text-body-lg);
 		letter-spacing: var(--tracking-body);
 		margin-bottom: var(--space-lg);
+	}
+
+	@media (max-width: 600px) {
+		.page-hero--has-crumbs .page-hero-inner {
+			text-align: left;
+			align-items: flex-start;
+		}
 	}
 </style>
