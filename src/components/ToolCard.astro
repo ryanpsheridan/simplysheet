@@ -1,0 +1,126 @@
+---
+import { toolId, type Tool } from '../data/tools';
+
+// The one tool card, in two shapes:
+//
+//   card  the tool's line illustration on the ink stage, then name, kind
+//         badge, and description. Grids: tools index, About.
+//   row   a hairline-divided list row: name and description left, kind badge
+//         right. Lists: the homepage tools section, "More free tools" on
+//         calculator pages. Rows carry `data-tool` so a page can pair the
+//         list with a preview stage (the homepage does).
+//
+// It replaces ToolThumbCard (grid) and CalculatorLayout's hand-written
+// icon-disc list, which drew the same tool three different ways.
+interface Props {
+	tool: Tool;
+	variant?: 'card' | 'row';
+	/** The full data-cta value. Defaults to `tool_thumb_card:<toolId>`, the id
+	    the grid cards have always carried, so GA4 history stays continuous. */
+	cta?: string;
+	level?: 'h2' | 'h3';
+	active?: boolean;
+}
+
+const { tool, variant = 'card', level = 'h3', active = false } = Astro.props;
+const id = toolId(tool);
+const cta = Astro.props.cta ?? `tool_thumb_card:${id}`;
+const kind = tool.group === 'assessment' ? 'Assessment' : 'Calculator';
+const Title = level;
+---
+
+{variant === 'card' ? (
+	<a href={tool.url} class="card card--tool" data-cta={cta}>
+		<div class="card-media card-media--art">
+			<svg viewBox="0 0 240 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={tool.illustration} />
+		</div>
+		<div class="card-body">
+			<Title class="card-title">{tool.name}</Title>
+			<p class="card-desc">{tool.desc}</p>
+		</div>
+	</a>
+) : (
+	<a href={tool.url} class:list={['tool-row', { 'is-active': active }]} data-tool={id} data-cta={cta}>
+		<span class="tool-row-text">
+			<Title class="tool-row-name">{tool.name}</Title>
+			<span class="tool-row-desc">{tool.desc}</span>
+		</span>
+		<span class="badge tool-row-kind">{kind}</span>
+	</a>
+)}
+
+<style>
+	.card--tool {
+		--card-lines: 2;
+	}
+
+	.tool-row {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--space-md);
+		padding: var(--space-md) var(--space-2xs);
+		border-bottom: 1px solid var(--color-border);
+		text-decoration: none;
+		color: inherit;
+	}
+	.tool-row:hover {
+		color: inherit;
+	}
+	.tool-row-text {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2xs);
+		min-width: 0;
+	}
+	/* A heading element for the outline, sized as a row label. */
+	.tool-row-name {
+		font-size: var(--text-h4);
+		line-height: var(--leading-snug);
+		color: var(--color-text);
+		margin: 0;
+	}
+	.tool-row-desc {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+	}
+	/* Layout only; the look is .badge. */
+	.tool-row-kind {
+		flex-shrink: 0;
+		margin-top: 0.125rem;
+	}
+	/* The arrow marks the row the paired stage is showing, and the row under
+	   the pointer everywhere else. */
+	.tool-row-name::after {
+		content: '';
+		display: inline-block;
+		width: 0.875rem;
+		height: 0.875rem;
+		margin-left: 0.4rem;
+		vertical-align: -0.05em;
+		background: var(--glyph-arrow-dark) center / contain no-repeat;
+		opacity: 0;
+		transform: translate(-3px, 3px);
+		transition:
+			opacity var(--duration-fast) var(--ease-out),
+			transform var(--duration-base) var(--ease-out);
+	}
+	.tool-row.is-active .tool-row-name::after,
+	.tool-row:hover .tool-row-name::after,
+	.tool-row:focus-visible .tool-row-name::after {
+		opacity: 1;
+		transform: none;
+	}
+
+	@media (max-width: 600px) {
+		.tool-row {
+			flex-direction: column;
+			gap: var(--space-xs);
+		}
+		.tool-row-kind {
+			order: -1;
+			margin-top: 0;
+		}
+	}
+</style>

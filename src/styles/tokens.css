@@ -108,7 +108,12 @@
   --font-body: "DM Sans Variable", system-ui, -apple-system, sans-serif;
   --font-logo: "Aspekta Variable", system-ui, -apple-system, sans-serif;
 
+  /* Hero is the homepage headline only; display is every other page hero;
+     section is the h2 that opens a band. Three steps, so a page never has two
+     competing headline sizes above the fold. */
+  --text-hero:      clamp(2.5rem, 4.2vw + 0.75rem, 4.25rem);
   --text-display:   clamp(2.5rem, 3.5vw + 0.75rem, 3rem);
+  --text-section:   clamp(2rem, 2.4vw + 1.1rem, 2.75rem);
   --text-h1:        2.25rem;
   --text-h2:        1.5rem;
   --text-h3:        1.25rem;
@@ -146,6 +151,7 @@
   /* Tracking. Large type set at default tracking reads loose and generic;
      pulling it in is most of what separates a display headline from a big
      paragraph. Small uppercase type needs the opposite treatment. */
+  --tracking-hero:    -0.035em;  /* --text-hero only; 60px+ needs more pull */
   --tracking-tight:   -0.024em;  /* display */
   --tracking-snug:    -0.02em;   /* h1–h4, buttons */
   --tracking-heading: var(--tracking-snug);
@@ -166,9 +172,19 @@
 
   --space-section: clamp(3rem, 8vw, 5rem);
 
+  /* Vertical padding of a full-bleed band (.band in global.css). Longer than
+     --space-section on purpose: generous air between chapters is most of what
+     makes the band pages read as calm, and it is what separates one band
+     from the next now that alternating fills do that job instead of rules. */
+  --space-band:    clamp(4.5rem, 10vw, 8rem);
+
   /* ——— Layout ——— */
 
   --max-width:         80rem;     /* 1280px */
+  /* Content width inside a band: narrower than the header's --max-width so
+     grids and section heads sit inside the logo-to-CTA span, not flush with
+     it. */
+  --max-width-content: 72rem;     /* 1152px */
   --max-width-narrow:  42rem;     /*  672px */
 
   /* Clearance below the header bar, for sticky rails and for
@@ -188,6 +204,37 @@
   --radius-lg: 1rem;      /* 16px */
   --radius-xl: 1.5rem;    /* 24px */
   --radius-full: 999px;
+
+  /* Cards and their media. Every card on the site (article, product, tool)
+     uses --radius-card; media inset inside a framed card uses --radius-inset
+     so the two corners stay concentric (outer radius minus the inset gap).
+     Stages and banners, the largest surfaces, use --radius-xl. */
+  --radius-card:  var(--radius-lg);
+  --radius-inset: calc(var(--radius-lg) - var(--space-xs));
+
+  /* ——— Gradients ———
+
+     Built only from the two brand tints, so every gradient on the site is the
+     same sky/lavender family as the brand button. Text never sits on
+     --gradient-glow or --gradient-media; --gradient-brand carries ink text
+     only (the tints are AA against --color-text and nothing lighter). */
+  --gradient-glow:
+    radial-gradient(60% 70% at 50% 100%, rgba(176, 224, 255, 0.55), transparent 70%),
+    radial-gradient(40% 50% at 12% 20%, rgba(218, 214, 255, 0.55), transparent 70%),
+    radial-gradient(40% 50% at 88% 20%, rgba(176, 224, 255, 0.4), transparent 70%),
+    var(--color-bg-panel);
+  --gradient-media:
+    radial-gradient(70% 80% at 50% 110%, rgba(176, 224, 255, 0.35), transparent 70%),
+    var(--color-bg-panel);
+  --gradient-brand:
+    radial-gradient(35% 60% at 15% 110%, rgba(255, 255, 255, 0.8), transparent 70%),
+    radial-gradient(30% 55% at 85% -10%, rgba(255, 255, 255, 0.7), transparent 70%),
+    linear-gradient(120deg, var(--tint-sky) 0%, #C9DCFF 50%, var(--tint-lavender) 100%);
+  /* The dark stage behind tool illustrations: ink with two faint tint glows. */
+  --gradient-ink:
+    radial-gradient(60% 60% at 80% 10%, rgba(176, 224, 255, 0.18), transparent 70%),
+    radial-gradient(50% 50% at 10% 100%, rgba(218, 214, 255, 0.14), transparent 70%),
+    var(--color-bg-inverse);
 
   /* ——— Elevation ——— */
 

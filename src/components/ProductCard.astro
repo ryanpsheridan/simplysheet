@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { templateName } from '../consts';
+
+// The one product card: a framed card with the uncropped midImage centered on
+// the tint field, an optional overlay badge, a name, and a description.
+//
+// Pass `template` (a templates collection entry) and everything is read from
+// it, so the card can never drift from the product page. Any field can be
+// overridden, which is how the template page's bundle cards (Etsy links with
+// their own image) reuse it. Extra attributes (data-*, target, rel, class)
+// pass straight through to the <a>.
+//
+// Inside a `.card-grid--bento`, `span` sets the card's column span of 12.
+interface Props {
+	template?: CollectionEntry<'templates'>;
+	href?: string;
+	image?: string;
+	name?: string;
+	desc?: string | false;
+	badge?: string;
+	/** Trailing action line, e.g. "View on Etsy". */
+	linkLabel?: string;
+	/** The full data-cta value. */
+	cta: string;
+	level?: 'h2' | 'h3';
+	span?: string | number;
+	class?: string;
+	[attr: string]: unknown;
+}
+
+const {
+	template,
+	href,
+	image,
+	name,
+	desc,
+	badge,
+	linkLabel,
+	cta,
+	level = 'h3',
+	span,
+	class: className,
+	...rest
+} = Astro.props;
+
+const d = template?.data;
+const url = href ?? (template ? `/spreadsheets/${template.id}/` : '#');
+const title = name ?? (d ? templateName(d.title) : '');
+const src = image ?? d?.midImage;
+const text = desc === false ? undefined : (desc ?? d?.description);
+const chip = badge ?? d?.badge;
+const Title = level;
+---
+
+<a
+	href={url}
+	class:list={['card', 'card--framed', 'card--product', className]}
+	style={span ? `--span: ${span}` : undefined}
+	data-cta={cta}
+	{...rest}
+>
+	<div class="card-media card-media--contain">
+		{src && <img src={src} alt={`${title} preview`} width="2000" height="1200" loading="lazy" />}
+		{chip && <span class="badge badge-overlay">{chip}</span>}
+	</div>
+	<div class="card-body">
+		<Title class="card-title">{title}</Title>
+		{text && <p class="card-desc">{text}</p>}
+		{linkLabel && <span class="card-link">{linkLabel} <span class="arrow">&rarr;</span></span>}
+	</div>
+</a>

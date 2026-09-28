@@ -5,6 +5,11 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import Faq from '../components/Faq.astro';
+import { toArticleCard } from '../utils/articles';
 import { SITE_TITLE, ETSY_SHOP_URL, withEtsyTracking, pageTitle as buildTitle } from '../consts';
 import { intrinsicSize } from '../../scripts/image-size.mjs';
 
@@ -39,8 +44,9 @@ const howToSizes = new Map(
 const allArticles = await getCollection('articles');
 const linkedArticles = relatedArticles
 	.map((slug: string) => allArticles.find((a) => a.id === slug))
-	.filter(Boolean)
-	.slice(0, 4);
+	.filter((a): a is NonNullable<typeof a> => Boolean(a))
+	.slice(0, 4)
+	.map(toArticleCard);
 
 const allTemplates = await getCollection('templates');
 const otherTemplates = allTemplates
@@ -144,16 +150,6 @@ const breadcrumbSchema = {
 	],
 };
 
-const faqSchema = faq?.length ? {
-	'@context': 'https://schema.org',
-	'@type': 'FAQPage',
-	mainEntity: faq.map(({ question, answer }: { question: string; answer: string }) => ({
-		'@type': 'Question',
-		name: question,
-		acceptedAnswer: { '@type': 'Answer', text: answer },
-	})),
-} : null;
-
 const templateId = Math.random().toString(36).slice(2, 10);
 
 function featureIcon(text: string): string {
@@ -196,7 +192,6 @@ function featureIcon(text: string): string {
 		<BaseHead title={buildTitle(pageTitle)} description={pageDescription} image={heroImage} />
 		<script type="application/ld+json" set:html={JSON.stringify(schema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 	</head>
 	<body>
 		<a href="#main-content" class="skip-link">Skip to content</a>
@@ -311,27 +306,21 @@ function featureIcon(text: string): string {
 			{bundles && bundles.length > 0 && (
 				<section class="product-bundles">
 					<h2>Save with a bundle</h2>
-					<div class="bundles-grid">
+					<div class="card-grid card-grid--2">
 						{bundles.map((b: { name: string; darkUrl: string; lightUrl: string; image?: string }) => (
-							<a
+							<ProductCard
 								href={withEtsyTracking(b.darkUrl)}
+								image={b.image}
+								name={b.name}
+								desc={false}
+								linkLabel="View on Etsy"
 								class="bundle-card"
 								data-dark-url={withEtsyTracking(b.darkUrl)}
 								data-light-url={withEtsyTracking(b.lightUrl)}
 								target="_blank"
 								rel="noopener noreferrer"
-								data-cta={`template_bundle_cta:${id}:${b.name}`}
-							>
-								{b.image && (
-									<div class="bundle-thumb">
-										<img src={b.image} alt={`${b.name} preview`} width="600" height="400" loading="lazy" />
-									</div>
-								)}
-								<span class="bundle-text">
-									<span class="bundle-name">{b.name}</span>
-									<span class="bundle-link">View on Etsy <span class="arrow">&rarr;</span></span>
-								</span>
-							</a>
+								cta={`template_bundle_cta:${id}:${b.name}`}
+							/>
 						))}
 					</div>
 				</section>
@@ -401,57 +390,24 @@ function featureIcon(text: string): string {
 					<div class="product-extras-inner">
 						{linkedArticles.length > 0 && (
 							<div class="product-articles">
-								<h2>Related articles</h2>
-								<ul class="product-articles-list">
-									{linkedArticles.map((a: any) => (
-										<li>
-											<a href={`/articles/${a.id}/`} data-cta={`template_related_article:${a.id}`}>{a.data.title}</a>
-										</li>
-									))}
-								</ul>
-							</div>
-						)}
-
-						{faq && faq.length > 0 && (
-							<div class="faq">
-								<h2 class="faq-heading">Frequently asked questions</h2>
-								<div class="faq-list">
-									{faq.map(({ question, answer }: { question: string; answer: string }) => (
-										<details class="faq-item">
-											<summary class="faq-q">
-												<span>{question}</span>
-												<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-													<polyline points="6 9 12 15 18 9" />
-												</svg>
-											</summary>
-											<div class="faq-a-wrap">
-												<p class="faq-a">{answer}</p>
-											</div>
-										</details>
+								<h2 class="content-block-title">Related articles</h2>
+								<div class="card-list">
+									{linkedArticles.map((a) => (
+										<ArticleCard article={a} variant="compact" cta={`template_related_article:${a.id}`} />
 									))}
 								</div>
 							</div>
 						)}
 
+						{faq && faq.length > 0 && <Faq items={faq} />}
 					</div>
 				</section>
 			)}
 
 			{otherTemplates.length > 0 && (
 				<section class="other-templates">
-					<h2>More spreadsheets</h2>
-					<div class="other-templates-grid">
-						{otherTemplates.map((t) => (
-							<a href={`/spreadsheets/${t.id}/`} class="template-card" data-cta={`template_more_spreadsheets_card:${t.id}`}>
-								<div class="template-thumb">
-									<img src={t.data.midImage} alt={`${t.data.title} preview`} width="600" height="400" loading="lazy" />
-									{t.data.badge && <span class="badge badge-overlay">{t.data.badge}</span>}
-								</div>
-								<h3 class="template-name">{t.data.title.replace(/ for (Google )?Sheets & Excel$/, '')}</h3>
-								<p class="template-desc">{t.data.description}</p>
-							</a>
-						))}
-					</div>
+					<h2 class="content-block-title">More spreadsheets</h2>
+					<ProductGrid templates={otherTemplates} ctaPrefix="template_more_spreadsheets_card" />
 				</section>
 			)}
 		</main>
@@ -482,25 +438,6 @@ function featureIcon(text: string): string {
 					});
 				});
 			}
-
-			document.querySelectorAll('.faq-item').forEach((details) => {
-				const summary = details.querySelector('summary');
-				const wrap = details.querySelector('.faq-a-wrap');
-				if (!summary || !wrap) return;
-
-				summary.addEventListener('click', (e) => {
-					e.preventDefault();
-					if (details.open) {
-						wrap.style.gridTemplateRows = '0fr';
-						wrap.addEventListener('transitionend', () => {
-							details.open = false;
-							wrap.style.gridTemplateRows = '';
-						}, { once: true });
-					} else {
-						details.open = true;
-					}
-				});
-			});
 		</script>
 
 		{reviews && reviews.length > 1 && (
@@ -618,9 +555,12 @@ function featureIcon(text: string): string {
 	.product-image {
 		position: relative;
 		aspect-ratio: 10 / 9;
-		border-radius: var(--radius-md);
+		/* Card radius and the same tint field as every other product media
+		   box, so the hero reads as the big version of the cards that link
+		   here. The right-pinned crop rule below is unchanged. */
+		border-radius: var(--radius-card);
 		overflow: hidden;
-		background: var(--color-bg-panel);
+		background: var(--gradient-media);
 		padding: 1.5rem 0 1.5rem 1.5rem;
 	}
 
@@ -925,74 +865,10 @@ function featureIcon(text: string): string {
 		margin-bottom: var(--space-md);
 	}
 
-	.bundles-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: var(--space-md);
-	}
+	/* Bundles are ProductCards like every other product on the site (framed,
+	   tint-field media). The theme toggle finds them by .bundle-card and swaps
+	   their href from the data-dark-url/data-light-url pair. */
 
-	/* Same treatment as .template-card in the "More spreadsheets" grid further
-	   down this very page — a panel-filled thumbnail sitting directly on the
-	   page, with its label underneath. There is no card chrome.
-
-	   The card wrapper this replaced put three surfaces in conflict: a white
-	   card, a panel image well inside it, and the warm page behind, with a
-	   border under the thumbnail redrawing the edge the tone change already
-	   drew. It read as a grey block with a white strip stuck to the bottom,
-	   and it was the only product surface on the site wearing a card at all. */
-	.bundle-card {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-sm);
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.bundle-thumb {
-		width: 100%;
-		aspect-ratio: 3 / 2;
-		border-radius: var(--radius-md);
-		background: var(--color-bg-panel);
-		padding: 0.75rem 1.5rem;
-		overflow: hidden;
-		transition: background 0.15s ease;
-	}
-
-	.bundle-thumb img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-		object-position: center;
-	}
-
-	/* Hover darkens the thumbnail's container, matching the template and tool
-	   cards. Pointer devices only. */
-	@media (hover: hover) {
-		.bundle-card:hover .bundle-thumb {
-			background: var(--color-bg-emphasis);
-		}
-	}
-
-	.bundle-text {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--space-sm);
-	}
-
-	.bundle-name {
-		font-size: var(--text-body);
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-	}
-
-	.bundle-link {
-		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-		color: var(--color-link);
-		white-space: nowrap;
-	}
 
 	/* ——— Related articles + FAQ panel (full-bleed) ——— */
 
@@ -1022,115 +898,11 @@ function featureIcon(text: string): string {
 		margin: 0 auto;
 	}
 
-	.product-articles + .faq {
+	/* The FAQ is a child component, so this reaches it with :global. */
+	.product-articles + :global(.faq) {
 		margin-top: var(--space-lg);
 		padding-top: var(--space-lg);
 		border-top: 1px solid var(--color-border);
-	}
-
-	.product-articles h2 {
-		font-size: var(--text-h2);
-		margin-bottom: var(--space-md);
-	}
-
-
-	.product-articles-list {
-		list-style: none;
-		padding: 0;
-	}
-
-	/* Matches `.faq-q` exactly: --space-md rows under a --space-md heading gap.
-	   These two lists sit one above the other in the same block, so the
-	   tighter --space-sm rhythm this used read as an inconsistency rather
-	   than a distinction. The first row keeps its top padding for the same
-	   reason — the FAQ below has one, and removing it here was what made the
-	   gap under the heading look roughly half the FAQ's. */
-	.product-articles-list li {
-		padding: var(--space-md) 0;
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.product-articles-list li:last-child {
-		border-bottom: none;
-		padding-bottom: 0;
-	}
-
-	.product-articles-list a {
-		font-size: var(--text-body);
-		text-decoration: none;
-	}
-
-	.product-articles-list a:hover {
-		text-decoration: underline;
-	}
-
-	/* ——— FAQ (matches article layout) ——— */
-
-	.faq-heading {
-		font-size: var(--text-h2);
-		margin-bottom: var(--space-md);
-	}
-
-	.faq-list {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.faq-item {
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.faq-item:last-child {
-		border-bottom: none;
-	}
-
-	.faq-q {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--space-sm);
-		width: 100%;
-		padding: var(--space-md) 0;
-		font-size: var(--text-body);
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-		cursor: pointer;
-		list-style: none;
-		transition: color 0.15s;
-	}
-
-	.faq-q::-webkit-details-marker { display: none; }
-	.faq-q::marker { display: none; content: ''; }
-
-	.faq-arrow {
-		flex-shrink: 0;
-		transition: transform 300ms ease;
-	}
-
-	.faq-item[open] .faq-arrow {
-		transform: rotate(180deg);
-	}
-
-	.faq-a-wrap {
-		display: grid;
-		grid-template-rows: 0fr;
-		transition: grid-template-rows 300ms ease;
-	}
-
-	.faq-item[open] .faq-a-wrap {
-		grid-template-rows: 1fr;
-	}
-
-	.faq-a-wrap > .faq-a {
-		overflow: hidden;
-	}
-
-	.faq-a {
-		font-size: var(--text-read);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-		padding-bottom: var(--space-md);
 	}
 
 	/* ——— Reviews ——— */
@@ -1310,70 +1082,6 @@ function featureIcon(text: string): string {
 		padding-top: var(--space-lg);
 	}
 
-	.other-templates h2 {
-		font-size: var(--text-h2);
-		margin-bottom: var(--space-md);
-	}
-
-	.other-templates-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-md);
-	}
-
-	.template-card {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-sm);
-		text-decoration: none;
-		color: inherit;
-	}
-	/* Hover darkens the thumbnail's gray container (matches the tool
-	   thumbnail cards), leaving the name/badge text untouched. */
-	@media (hover: hover) {
-		.template-card:hover .template-thumb {
-			background: var(--color-bg-emphasis);
-		}
-	}
-
-	.template-thumb {
-		position: relative;
-		width: 100%;
-		aspect-ratio: 3 / 2;
-		border-radius: var(--radius-md);
-		overflow: hidden;
-		background: var(--color-bg-panel);
-		padding: 0.75rem 1.5rem;
-		transition: background 0.15s ease;
-	}
-	.template-thumb img {
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-		object-position: center;
-		border-radius: var(--radius-sm);
-		display: block;
-	}
-
-	/* Look and placement come from .badge .badge-overlay. */
-
-	.template-name {
-		font-size: var(--text-body);
-		color: var(--color-text);
-		margin: 0;
-	}
-
-	.template-desc {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		line-height: var(--leading-snug);
-		margin: 0;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
 	/* ——— Responsive ——— */
 
 	@media (max-width: 960px) {
@@ -1414,12 +1122,6 @@ function featureIcon(text: string): string {
 		.feature-icon .check-icon {
 			width: 16px;
 			height: 16px;
-		}
-		.bundles-grid {
-			grid-template-columns: 1fr;
-		}
-		.other-templates-grid {
-			grid-template-columns: 1fr;
 		}
 	}
 </style>

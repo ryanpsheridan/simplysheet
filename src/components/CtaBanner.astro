@@ -1,0 +1,64 @@
+---
+// The closing call to action on a page: a centered card on the brand
+// gradient, one heading, one line, one button. Ink text only, because the
+// brand tints are AA against --color-text and nothing lighter.
+//
+// Place it inside a band (`<section class="band"><CtaBanner .../></section>`);
+// the banner sets its own width.
+interface Props {
+	title: string;
+	desc?: string;
+	href: string;
+	label: string;
+	/** data-cta for the button. */
+	cta: string;
+	/** Opens in a new tab with an external-link glyph instead of the arrow disc. */
+	external?: boolean;
+	level?: 'h2' | 'h3';
+}
+
+const { title, desc, href, label, cta, external = false, level = 'h2' } = Astro.props;
+const Title = level;
+---
+
+<div class="cta-banner">
+	<Title class="cta-banner-title">{title}</Title>
+	{desc && <p class="cta-banner-desc">{desc}</p>}
+	{external ? (
+		<a href={href} class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" data-cta={cta}>
+			{label}
+			<svg class="arrow external-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+		</a>
+	) : (
+		<a href={href} class="btn btn-primary btn-lg btn-arrow" data-cta={cta}>{label}</a>
+	)}
+</div>
+
+<style>
+	.cta-banner {
+		max-width: 64rem;
+		margin: 0 auto;
+		padding: clamp(3rem, 7vw, 5.5rem) var(--space-md);
+		border-radius: var(--radius-xl);
+		background: var(--gradient-brand);
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.cta-banner-title {
+		font-size: var(--text-section);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		color: var(--color-text);
+		margin: 0 0 var(--space-sm);
+		text-wrap: balance;
+	}
+	.cta-banner-desc {
+		font-size: var(--text-read);
+		line-height: var(--leading-normal);
+		color: var(--color-text);
+		max-width: 32rem;
+		margin: 0 0 var(--space-lg);
+	}
+</style>

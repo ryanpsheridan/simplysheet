@@ -1,46 +1,29 @@
 ---
 import type { GetStaticPaths, Page } from 'astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import ProductGrid from '../../components/ProductGrid.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
 import TopicFilterTabs from '../../components/TopicFilterTabs.astro';
 import ArticleGrid from '../../components/ArticleGrid.astro';
 import Pagination from '../../components/Pagination.astro';
-import { ALL_TAGS, ARTICLES_PAGE_SIZE as PAGE_SIZE, ETSY_SHOP_URL, SITE_TITLE, TAG_MAP, withEtsyTracking, pageTitle as buildTitle } from '../../consts';
-
-type ArticleWithReadTime = CollectionEntry<'articles'> & { readTime: number };
+import { ALL_TAGS, ARTICLES_PAGE_SIZE as PAGE_SIZE, ETSY_SHOP_URL, withEtsyTracking, pageTitle as buildTitle } from '../../consts';
+import { getSortedArticles, toArticleCard, type ArticleCardData } from '../../utils/articles';
 
 export const getStaticPaths = (async ({ paginate }) => {
-	const articles = (await getCollection('articles'))
-		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-		.map((article) => {
-			const wordCount = article.body?.split(/\s+/).filter(Boolean).length ?? 0;
-			const readTime = Math.max(1, Math.ceil(wordCount / 200));
-			return { ...article, readTime };
-		});
+	const articles = (await getSortedArticles()).map(toArticleCard);
 	return paginate(articles, { pageSize: PAGE_SIZE });
 }) satisfies GetStaticPaths;
 
-const { page } = Astro.props as { page: Page<ArticleWithReadTime> };
+const { page } = Astro.props as { page: Page<ArticleCardData> };
 
 const allArticles = await getCollection('articles');
 const usedTags = new Set(allArticles.flatMap((a) => a.data.tags ?? []));
 const visibleTags = ALL_TAGS.filter((t) => usedTags.has(t.slug));
 
-const manifest = [...allArticles]
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.map((article) => {
-		const wordCount = article.body?.split(/\s+/).filter(Boolean).length ?? 0;
-		return {
-			id: article.id,
-			title: article.data.title,
-			desc: article.data.description,
-			tags: article.data.tags ?? [],
-			date: article.data.pubDate.valueOf(),
-			image: article.data.cardImage ?? article.data.image,
-			readTime: Math.max(1, Math.ceil(wordCount / 200)),
-		};
-	});
+const all = (await getSortedArticles()).map(toArticleCard);
 
 const pageTitle = page.currentPage === 1
 	? buildTitle('Budgeting & Personal Finance Articles')
@@ -68,178 +51,61 @@ const itemListSchema = {
 		'@type': 'ListItem',
 		position: (page.currentPage - 1) * PAGE_SIZE + i + 1,
 		url: new URL(`/articles/${article.id}/`, Astro.site).toString(),
-		name: article.data.title,
+		name: article.title,
 	})),
 };
 
-const templates = [
-	{
-		name: 'Budget Template',
-		desc: 'Track income and daily expenses with real-time progress indicators that show where you stand each month.',
-		url: withEtsyTracking('https://simplysheetdesign.etsy.com/listing/1854773368/budget-spreadsheet-for-google-excel'),
-		image: '/images/featured budget thumbnail- budget template-v2.png',
-		badge: 'Best Seller',
-	},
-	{
-		name: 'Couples Budget Spreadsheet',
-		desc: 'Split bills, track shared and personal expenses, and manage savings together. Built for two incomes.',
-		url: withEtsyTracking('https://simplysheetdesign.etsy.com/listing/4396395102/couples-budget-spreadsheet-google-sheets'),
-		image: '/images/featured budget thumbnail-couples-v2.png',
-	},
-	{
-		name: 'Debt Payoff Tracker',
-		desc: 'See your total debt, log payments, and watch your balances drop month by month with clear visual progress.',
-		url: withEtsyTracking('https://simplysheetdesign.etsy.com/listing/4485879930/debt-payoff-tracker-for-google-sheets'),
-		image: '/images/featured budget thumbnail-debt-tracker-v2.png',
-	},
-	{
-		name: 'Savings Goals Tracker',
-		desc: 'Set multiple savings goals, automate contributions, and track your progress toward each one.',
-		url: withEtsyTracking('https://simplysheetdesign.etsy.com/listing/4483664616/sinking-funds-tracker-google-sheets'),
-		image: '/images/featured budget thumbnail-savings goals tracker-v2.png',
-	},
-];
+// Four products under the grid, in the site's own order. They link to the
+// internal template pages like every other product card (each page carries
+// its own tracked Etsy CTA); the banner below is the one direct Etsy link.
+const templates = (await getCollection('templates'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.slice(0, 4);
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
 	<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
 
-	<main id="main-content" class="articles-page">
-		<Breadcrumbs crumbs={crumbs} />
-		<div class="articles-header">
-			<h1>Articles</h1>
-		</div>
+	<main id="main-content" class="band-main">
+		<PageHero
+			title="Articles"
+			desc="Straightforward writing about budgeting, spreadsheets, and managing your money without the stress."
+			crumbs={crumbs}
+		>
+			<TopicFilterTabs tags={visibleTags} activeSlug="all" centered />
+		</PageHero>
 
-		<TopicFilterTabs tags={visibleTags} activeSlug="all" />
-
-		<div class="articles-main">
-			<ArticleGrid articles={page.data} manifest={manifest} tagMap={TAG_MAP} />
-		</div>
-
-		<Pagination currentPage={page.currentPage} lastPage={page.lastPage} basePath="/articles" />
-
-		<section class="resources">
-			<h2 class="resources-heading">More resources</h2>
-			<div class="resources-grid">
-				{templates.map((t) => (
-					<a href={t.url} class="resource-card" target="_blank" rel="noopener noreferrer" data-cta={`articles_index_resource_card:${t.name}`}>
-						<div class="resource-thumb">
-							<img src={t.image} alt={`${t.name} preview`} width="600" height="400" loading="lazy" />
-						</div>
-						{t.badge && <span class="badge resource-badge">{t.badge}</span>}
-						<h3 class="resource-name">{t.name}</h3>
-						<p class="resource-desc">{t.desc}</p>
-					</a>
-				))}
+		<section class="band band--flush-top">
+			<div class="band-inner">
+				<ArticleGrid articles={page.data} all={all} />
+				<Pagination currentPage={page.currentPage} lastPage={page.lastPage} basePath="/articles" />
 			</div>
-			<div class="resources-cta-wrap">
-				<a href={withEtsyTracking(ETSY_SHOP_URL)} class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-cta="articles_index_explore_all_cta">Explore all on Etsy <svg class="arrow external-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg></a>
+		</section>
+
+		<section class="band band--surface" aria-labelledby="resources-heading">
+			<div class="band-inner">
+				<SectionHead
+					id="resources-heading"
+					title="Spreadsheets to put the reading to work"
+					desc="The templates these articles are built around, for Google Sheets and Excel."
+					href="/spreadsheets/"
+					linkLabel="All spreadsheets"
+					cta="articles_index_all_spreadsheets"
+				/>
+				<ProductGrid templates={templates} columns={4} ctaPrefix="articles_index_product_card" />
 			</div>
+		</section>
+
+		<section class="band">
+			<CtaBanner
+				title="Browse the whole shop"
+				desc="Every template and bundle, in dark and light themes, on Etsy."
+				href={withEtsyTracking(ETSY_SHOP_URL)}
+				label="Explore all on Etsy"
+				cta="articles_index_explore_all_cta"
+				external
+			/>
 		</section>
 	</main>
 </BaseLayout>
-
-<style>
-	.articles-page {
-		max-width: calc(var(--max-width) + var(--space-md) * 2);
-		padding: var(--space-xl) var(--space-md) var(--space-2xl);
-	}
-
-	.articles-header {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: var(--space-md);
-		margin-bottom: var(--space-lg);
-	}
-
-	h1 {
-		margin-bottom: 0;
-	}
-
-	.articles-main {
-		min-width: 0;
-	}
-
-	/* ——— Resources section ——— */
-
-	.resources {
-		margin-top: var(--space-2xl);
-		padding-top: var(--space-xl);
-		border-top: 1px solid var(--color-border);
-	}
-	.resources-heading {
-		font-size: var(--text-h2);
-		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--space-lg);
-	}
-	.resources-grid {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: var(--space-md);
-		margin-bottom: var(--space-lg);
-	}
-	.resource-card {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-sm);
-		text-decoration: none;
-		color: inherit;
-	}
-	/* Hover darkens the thumbnail's gray container (matches the tool
-	   thumbnail cards), leaving the name/badge text untouched. */
-	@media (hover: hover) {
-		.resource-card:hover .resource-thumb {
-			background: var(--color-bg-emphasis);
-		}
-	}
-	.resource-thumb {
-		position: relative;
-		width: 100%;
-		aspect-ratio: 3 / 2;
-		border-radius: var(--radius-md);
-		overflow: hidden;
-		background: var(--color-bg-panel);
-		padding: 0.75rem 1.5rem;
-		transition: background 0.15s ease;
-	}
-	.resource-thumb img {
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-		object-position: center;
-		border-radius: var(--radius-sm);
-		display: block;
-	}
-	/* Look comes from .badge. Astro scoping outranks it, so only layout here. */
-	.resource-badge {
-		align-self: flex-start;
-	}
-	.resource-name {
-		font-size: var(--text-body);
-		color: var(--color-text);
-		margin: 0;
-	}
-	.resource-desc {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		line-height: var(--leading-snug);
-		margin: 0;
-	}
-	.resources-cta-wrap {
-		text-align: center;
-	}
-
-	@media (max-width: 960px) {
-		.resources-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	@media (max-width: 600px) {
-		.resources-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

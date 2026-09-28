@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProductCard from './ProductCard.astro';
+
+// A grid of ProductCards for a list of templates.
+//
+//   bento  12-column grid whose spans alternate narrow/wide, wide/narrow,
+//          half/half, so a row never reads as three identical boxes. Tuned
+//          for six products; a seventh and beyond fall back to half width,
+//          so revisit BENTO_SPANS when the catalogue grows.
+//   grid   plain equal columns (3 by default, `columns` 2 or 4).
+//
+// Each card's data-cta is `${ctaPrefix}:${template.id}`.
+interface Props {
+	templates: CollectionEntry<'templates'>[];
+	ctaPrefix: string;
+	layout?: 'bento' | 'grid';
+	columns?: 2 | 3 | 4;
+	level?: 'h2' | 'h3';
+}
+
+const { templates, ctaPrefix, layout = 'grid', columns = 3, level = 'h3' } = Astro.props;
+
+const BENTO_SPANS = [5, 7, 7, 5, 6, 6];
+---
+
+<div
+	class:list={[
+		'card-grid',
+		{ 'card-grid--bento': layout === 'bento' },
+		{ 'card-grid--2': layout === 'grid' && columns === 2 },
+		{ 'card-grid--4': layout === 'grid' && columns === 4 },
+	]}
+>
+	{templates.map((t, i) => (
+		<ProductCard
+			template={t}
+			level={level}
+			span={layout === 'bento' ? (BENTO_SPANS[i] ?? 6) : undefined}
+			cta={`${ctaPrefix}:${t.id}`}
+		/>
+	))}
+</div>

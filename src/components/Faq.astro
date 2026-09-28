@@ -1,0 +1,245 @@
+---
+// The one FAQ. Renders the accordion and its FAQPage JSON-LD together, so a
+// page can never show questions that aren't marked up, or mark up questions
+// it doesn't show. It replaced four copies (homepage, article, calculator,
+// and template layouts), each with its own markup, styles, and script.
+//
+//   stack  heading over the list, for a narrow reading column. Pass
+//          class="content-block" to get the closing-chapter rule and air.
+//   split  sticky heading and intro left, list right, for a full-width band.
+//
+// Each item gets an id slugged from its question, so a link to
+// /page/#that-question opens it on arrival.
+interface FaqItem {
+	question: string;
+	answer: string;
+}
+
+interface Props {
+	items: FaqItem[];
+	title?: string;
+	/** Intro line under the title (split layout). */
+	desc?: string;
+	layout?: 'stack' | 'split';
+	/** Answers contain trusted inline HTML (links). Calculator pages use this. */
+	html?: boolean;
+	/** Emit FAQPage JSON-LD. On by default. */
+	schema?: boolean;
+	id?: string;
+	class?: string;
+}
+
+const {
+	items,
+	title = 'Frequently asked questions',
+	desc,
+	layout = 'stack',
+	html = false,
+	schema = true,
+	id = 'faq',
+	class: className,
+} = Astro.props;
+
+const slug = (text: string) =>
+	text
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/(^-|-$)/g, '');
+
+const faqSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: items.map(({ question, answer }) => ({
+		'@type': 'Question',
+		name: question,
+		acceptedAnswer: { '@type': 'Answer', text: answer },
+	})),
+};
+const headingId = `${id}-heading`;
+---
+
+{items.length > 0 && (
+	<section class:list={['faq', `faq--${layout}`, className]} id={id} aria-labelledby={headingId}>
+		{schema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+		<div class="faq-intro">
+			<h2 id={headingId} class="faq-title">{title}</h2>
+			{desc && <p class="faq-desc">{desc}</p>}
+		</div>
+		<div class="faq-list">
+			{items.map(({ question, answer }) => (
+				<details class="faq-item" id={slug(question)}>
+					<summary class="faq-q">
+						<span>{question}</span>
+						<span class="faq-icon" aria-hidden="true"></span>
+					</summary>
+					<div class="faq-a-wrap">
+						{html ? <p class="faq-a" set:html={answer} /> : <p class="faq-a">{answer}</p>}
+					</div>
+				</details>
+			))}
+		</div>
+	</section>
+)}
+
+<script>
+	// Open an item linked by hash, and animate collapse. Opening is instant
+	// (the grid-rows transition runs on its own); closing has to wait for the
+	// transition before `open` is removed, or the content vanishes first.
+	if (location.hash) {
+		const linked = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+		if (linked instanceof HTMLDetailsElement && linked.classList.contains('faq-item')) linked.open = true;
+	}
+
+	document.querySelectorAll<HTMLDetailsElement>('.faq-item').forEach((details) => {
+		const summary = details.querySelector('summary');
+		const wrap = details.querySelector<HTMLElement>('.faq-a-wrap');
+		if (!summary || !wrap) return;
+
+		summary.addEventListener('click', (e) => {
+			e.preventDefault();
+			if (details.open) {
+				wrap.style.gridTemplateRows = '0fr';
+				wrap.addEventListener(
+					'transitionend',
+					() => {
+						details.open = false;
+						wrap.style.gridTemplateRows = '';
+					},
+					{ once: true },
+				);
+			} else {
+				details.open = true;
+			}
+		});
+	});
+</script>
+
+<style>
+	.faq-title {
+		font-size: var(--text-h2);
+		margin: 0 0 var(--space-md);
+	}
+	.faq-desc {
+		font-size: var(--text-read);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.faq--split {
+		display: grid;
+		grid-template-columns: 1fr 1.5fr;
+		gap: var(--space-xl);
+		align-items: start;
+	}
+	.faq--split .faq-intro {
+		position: sticky;
+		top: calc(var(--header-offset) + var(--space-md));
+	}
+	.faq--split .faq-title {
+		font-size: var(--text-section);
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--space-sm);
+		text-wrap: balance;
+	}
+
+	.faq-list {
+		border-top: 1px solid var(--color-border);
+	}
+	.faq-item {
+		border-bottom: 1px solid var(--color-border);
+		scroll-margin-top: var(--header-offset);
+	}
+	.faq-q {
+		list-style: none;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: var(--space-md);
+		padding: var(--space-md) 0;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		letter-spacing: var(--tracking-snug);
+		color: var(--color-text);
+		cursor: pointer;
+	}
+	.faq-q::-webkit-details-marker {
+		display: none;
+	}
+	.faq-q::marker {
+		content: '';
+	}
+
+	/* A ring with a plus that turns to a cross when open. The ring is an
+	   inset shadow, not a border, for the same reason as the header's menu
+	   button: a border would shift the centered bars by its own width. */
+	.faq-icon {
+		position: relative;
+		flex-shrink: 0;
+		width: 1.75rem;
+		height: 1.75rem;
+		border-radius: 50%;
+		box-shadow: inset 0 0 0 1px var(--color-border);
+		transition:
+			transform var(--duration-base) var(--ease-out),
+			background-color var(--duration-fast) var(--ease-out);
+	}
+	.faq-icon::before,
+	.faq-icon::after {
+		content: '';
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 0.625rem;
+		height: 1.5px;
+		background: var(--color-text);
+		transform: translate(-50%, -50%);
+	}
+	.faq-icon::after {
+		transform: translate(-50%, -50%) rotate(90deg);
+	}
+	.faq-item[open] .faq-icon {
+		transform: rotate(45deg);
+		background: var(--color-bg-panel);
+	}
+	@media (hover: hover) {
+		.faq-q:hover .faq-icon {
+			background: var(--color-bg-panel);
+		}
+	}
+
+	.faq-a-wrap {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 300ms ease;
+	}
+	.faq-item[open] .faq-a-wrap {
+		grid-template-rows: 1fr;
+	}
+	.faq-a-wrap > .faq-a {
+		overflow: hidden;
+	}
+	.faq-a {
+		font-size: var(--text-read);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0;
+		padding: 0 var(--space-xl) var(--space-md) 0;
+	}
+
+	@media (max-width: 960px) {
+		.faq--split {
+			grid-template-columns: 1fr;
+			gap: var(--space-lg);
+		}
+		.faq--split .faq-intro {
+			position: static;
+		}
+	}
+	@media (max-width: 600px) {
+		.faq-a {
+			padding-right: 0;
+		}
+	}
+</style>

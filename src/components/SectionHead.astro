@@ -1,0 +1,83 @@
+---
+// The heading that opens a band: an h2 in --text-section, with an optional
+// description and "View all" style text link.
+//
+//   split   title left, description and link right (collapses at 960px)
+//   center  everything stacked and centered
+interface Props {
+	title: string;
+	desc?: string;
+	href?: string;
+	linkLabel?: string;
+	/** data-cta for the link. */
+	cta?: string;
+	align?: 'split' | 'center';
+	id?: string;
+	level?: 'h1' | 'h2';
+}
+
+const { title, desc, href, linkLabel, cta, align = 'split', id, level = 'h2' } = Astro.props;
+const Title = level;
+const hasAside = Boolean(desc || href);
+---
+
+<header class:list={['section-head', `section-head--${align}`]}>
+	<Title id={id} class="section-title">{title}</Title>
+	{hasAside && (
+		<div class="section-head-aside">
+			{desc && <p class="section-desc">{desc}</p>}
+			{href && (
+				<a href={href} class="text-link" data-cta={cta}>{linkLabel} <span class="arrow">&rarr;</span></a>
+			)}
+		</div>
+	)}
+</header>
+
+<style>
+	.section-head {
+		display: grid;
+		grid-template-columns: 1.1fr 1fr;
+		gap: var(--space-lg);
+		align-items: end;
+		margin-bottom: clamp(2.5rem, 5vw, 4rem);
+	}
+	.section-head--center {
+		grid-template-columns: 1fr;
+		justify-items: center;
+		text-align: center;
+		gap: var(--space-sm);
+	}
+	/* No font-weight: headings take --weight-semibold from the shared rule. */
+	.section-title {
+		font-size: var(--text-section);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		margin: 0;
+		max-width: 16em;
+		text-wrap: balance;
+	}
+	.section-head-aside {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-sm);
+	}
+	.section-head--center .section-head-aside {
+		align-items: center;
+	}
+	.section-desc {
+		font-size: var(--text-read);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0;
+		max-width: 30rem;
+		text-wrap: pretty;
+	}
+
+	@media (max-width: 960px) {
+		.section-head {
+			grid-template-columns: 1fr;
+			gap: var(--space-sm);
+		}
+	}
+</style>

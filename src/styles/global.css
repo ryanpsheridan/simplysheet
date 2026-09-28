@@ -228,36 +228,6 @@ p {
 	white-space: nowrap;
 }
 
-/* ——— Article thumbnail hover ———
-
-   Tool and product thumbnails darken their panel container on hover
-   (--color-bg-panel → --color-bg-emphasis). An article thumbnail is a
-   full-bleed image with no container showing, so the equivalent gesture is to
-   darken the image itself. The step is deliberately larger than the 2% fill
-   change the panel thumbnails use: brightness() scales linearly, so on a dark
-   saturated gradient the same ratio moves far fewer absolute levels and a
-   subtle value reads as no hover at all.
-
-   Covers the About page's rows and the articles index / tag archive list
-   (the homepage's article cards carry their own hover in index.astro). The
-   list is
-   also emitted by ArticleGrid's client-rendered search results, which is why
-   this lives here rather than in a component's scoped styles.
-
-   The product variant of .home-row-thumb is excluded — it darkens its own
-   container already, and doing both would double the effect. */
-.home-row-thumb:not(.home-row-thumb--product) img,
-.article-list-thumb img {
-	transition: filter 0.15s ease;
-}
-
-@media (hover: hover) {
-	.home-row-item:hover .home-row-thumb:not(.home-row-thumb--product) img,
-	.article-list-item:hover .article-list-thumb img {
-		filter: brightness(0.85);
-	}
-}
-
 /* Floating on a product thumbnail rather than sitting in text flow. The
    thumbnail box is already --color-bg-panel, so an emphasis fill would nearly
    vanish against it — this one lifts off the image with a surface fill and a
@@ -500,10 +470,12 @@ p {
 	/* A floor, not a fixed ratio — the panel takes the row's height whenever
 	   the text column is taller, and only falls back to this when it isn't. */
 	min-height: 11rem;
-	border-radius: var(--radius-md);
-	background: var(--color-bg-panel);
+	/* Same media treatment as .card-media--contain: card radius, the soft
+	   tint field, a gentle zoom on hover. */
+	border-radius: var(--radius-card);
+	background: var(--gradient-media);
+	padding: var(--space-sm);
 	overflow: hidden;
-	transition: background 0.15s ease;
 }
 .article-promo-thumb img {
 	width: 100%;
@@ -511,10 +483,11 @@ p {
 	object-fit: contain;
 	object-position: center;
 	display: block;
+	transition: transform var(--duration-slow) var(--ease-out);
 }
 @media (hover: hover) {
-	.article-promo-thumb:hover {
-		background: var(--color-bg-emphasis);
+	.article-promo-thumb:hover img {
+		transform: scale(1.025);
 	}
 }
 .article-promo-content {
@@ -635,70 +608,15 @@ p {
 	}
 }
 
-/* ——— Inline product cards (used in article prose) ——— */
+/* ——— Two-up product promos in article prose ———
+   Wraps a pair of <ProductPromo /> (default "card" variant), which render the
+   shared ProductCard. Only the grid lives here; the card is the card. */
 
 .product-cards {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: var(--space-md);
 	margin: var(--space-lg) 0;
-}
-.product-card {
-	display: flex;
-	flex-direction: column;
-	background: var(--color-bg-surface);
-	border: 1px solid var(--color-border);
-	border-radius: var(--radius-md);
-	text-decoration: none;
-	overflow: hidden;
-	transition: border-color 0.15s, background 0.15s;
-}
-@media (hover: hover) {
-	.product-card:hover {
-		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
-	}
-}
-.product-card-thumb {
-	/* Matches the midImage source assets' native ratio (1999x1215) so
-	   object-fit: cover shows the full laptop mockup with no side crop. */
-	aspect-ratio: 1999 / 1215;
-	background: var(--color-bg-panel);
-	overflow: hidden;
-	transition: background 0.15s ease;
-}
-.product-card-thumb img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	display: block;
-	border-radius: 0;
-}
-@media (hover: hover) {
-	.product-card:hover .product-card-thumb {
-		background: var(--color-bg-emphasis);
-	}
-}
-/* Look comes from .badge; this only places it in the card. */
-.product-card-badge {
-	align-self: flex-start;
-	margin: var(--space-md) var(--space-md) 0;
-}
-.product-card-name {
-	font-size: var(--text-body);
-	color: var(--color-text);
-	margin: 0 0 var(--space-xs);
-	padding: var(--space-xs) var(--space-md) 0;
-}
-.product-card:not(:has(.product-card-badge)) .product-card-name {
-	padding-top: var(--space-md);
-}
-.product-card-desc {
-	font-size: var(--text-small);
-	color: var(--color-text-secondary);
-	line-height: var(--leading-snug);
-	margin: 0;
-	padding: 0 var(--space-md) var(--space-md);
 }
 @media (max-width: 600px) {
 	.product-cards {
@@ -727,10 +645,11 @@ p {
 	display: block;
 	width: 100%;
 	aspect-ratio: 10 / 9;
-	border-radius: var(--radius-md);
-	background: var(--color-bg-panel);
+	/* Same media treatment as .card-media--contain. */
+	border-radius: var(--radius-card);
+	background: var(--gradient-media);
+	padding: var(--space-sm);
 	overflow: hidden;
-	transition: background 0.15s ease;
 }
 .product-thumb img {
 	width: 100%;
@@ -738,10 +657,11 @@ p {
 	object-fit: contain;
 	object-position: center;
 	display: block;
+	transition: transform var(--duration-slow) var(--ease-out);
 }
 @media (hover: hover) {
-	.product-thumb:hover {
-		background: var(--color-bg-emphasis);
+	.product-thumb:hover img {
+		transform: scale(1.025);
 	}
 }
 .product-content {
@@ -789,134 +709,378 @@ hr {
 	border-top: 1px solid var(--color-border);
 }
 
-/* ——— Home rows (label left / items right) ———
-   Shared by the homepage (Latest / Spreadsheets / Free tools) and the About
-   page (Spreadsheets / Free tools via SpreadsheetsToolsRows.astro). */
+/* ================================================================
+   DESIGN SYSTEM: LAYOUT AND CARD PRIMITIVES
+   ================================================================
 
-.home-rows {
-	padding: var(--space-lg) var(--space-md) var(--space-section);
+   Everything a page is assembled from. Components in src/components emit
+   these classes (SectionHead, PageHero, ArticleCard, ProductCard, ToolCard,
+   Faq, CtaBanner); pages arrange components inside bands. A new page should
+   need no new card, grid, or section CSS of its own. If it seems to, add a
+   modifier here instead, so the next page gets it for free.
+
+   The card rules are global rather than scoped to their components for two
+   reasons: ArticleGrid clones server-rendered cards on the client, and cards
+   render inside `.prose` (the two-up product promos), whose element rules
+   would outrank single-class selectors. Text parts are therefore written as
+   `.card .card-x` (0,2,0), which beats `.prose p` / `.prose h3` (0,1,1). */
+
+/* ——— Bands ———
+   A full-bleed horizontal section. Pages alternate the page ground with a
+   raised surface band; that alternation, not dividers, is what separates
+   chapters. `.band-inner` holds content to --max-width-content. */
+
+.band {
+	position: relative;
+	padding: var(--space-band) var(--space-md);
 }
-.home-rows-inner {
-	max-width: var(--max-width);
-	margin: 0 auto;
+.band--surface {
+	background: var(--color-bg-surface);
+	border-block: 1px solid var(--color-border-hairline);
 }
-.home-row {
-	display: grid;
-	grid-template-columns: 12rem 1fr;
-	gap: var(--space-xl);
-	padding: var(--space-lg) 0;
-	border-top: 1px solid var(--color-border);
-}
-.home-row:first-child {
-	border-top: none;
+/* For a band that directly continues the one above it (a grid under a page
+   hero, say), where full band air would read as a gap. */
+.band--flush-top {
 	padding-top: 0;
 }
-.home-row-heading {
-	font-size: var(--text-h3);
-	margin: 0;
+.band-inner {
+	max-width: var(--max-width-content);
+	margin: 0 auto;
 }
-.home-row-items {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 2rem;
+/* Main elements that hold bands opt out of the global `main` width and
+   padding, since every band carries its own. */
+.band-main {
+	max-width: none;
+	padding: 0;
+	overflow-x: clip;
 }
-.home-row-item {
+
+/* ——— Rings ———
+   The faint concentric rings behind page heroes. Decorative only: a masked
+   repeating gradient, positioned by its parent (which needs
+   `position: relative` and `isolation: isolate`). */
+
+.rings {
+	position: absolute;
+	inset: -20% -10% auto;
+	height: 60rem;
+	z-index: -1;
+	pointer-events: none;
+	background: repeating-radial-gradient(
+		circle at 50% 42%,
+		transparent 0 5.5rem,
+		rgba(var(--shadow-rgb), 0.045) 5.5rem calc(5.5rem + 1px),
+		transparent calc(5.5rem + 1px) 7rem
+	);
+	-webkit-mask-image: radial-gradient(ellipse 55% 50% at 50% 42%, #000 20%, transparent 75%);
+	mask-image: radial-gradient(ellipse 55% 50% at 50% 42%, #000 20%, transparent 75%);
+}
+
+/* ——— Text link ———
+   The quiet "All articles →" style link that sits in a section head or
+   under a list. A button would outweigh the heading it belongs to. */
+
+.text-link {
+	font-family: var(--font-sans);
+	font-size: var(--text-small);
+	font-weight: var(--weight-medium);
+	color: var(--color-text);
+	text-decoration: none;
+	border-bottom: 1px solid var(--color-border-strong);
+	padding-bottom: 2px;
+	transition: border-color var(--duration-fast) var(--ease-out);
+}
+.text-link:hover {
+	color: var(--color-text);
+	border-color: var(--color-text);
+}
+
+/* ——— Cards ———
+
+   One anatomy for every card on the site:
+
+     .card                      the link, a flex column
+       .card-media              16:9 media box, --radius-card
+         [--contain]            product mockup on the tint field, centered
+         [--art]                tool line art on the ink stage
+       .card-body
+         .card-title / .card-desc / .card-meta / .card-link
+
+   Modifiers on .card:
+     --framed   raised white card with a hairline edge; media inset inside it
+     --row      media beside the body instead of above it (stacks at 600px) */
+
+.card {
+	position: relative;
 	display: flex;
 	flex-direction: column;
-	gap: var(--space-sm);
+	min-width: 0;
 	text-decoration: none;
 	color: inherit;
-	transition: opacity 0.15s ease;
 }
-.home-row-thumb {
+.card:hover {
+	color: inherit;
+}
+
+.card .card-media {
 	position: relative;
-	width: 100%;
 	aspect-ratio: 16 / 9;
-	border-radius: var(--radius-md);
+	border-radius: var(--radius-card);
 	overflow: hidden;
+	background: var(--color-bg-panel);
+	isolation: isolate;
 }
-.home-row-thumb img {
+/* A hairline inside the media edge. The v3 article cards are light, and on a
+   white surface band a light image with no edge dissolves into the card. */
+.card .card-media::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	box-shadow: inset 0 0 0 1px rgba(var(--shadow-rgb), 0.06);
+	pointer-events: none;
+}
+.card .card-media > img {
 	display: block;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	border-radius: var(--radius-md);
-}
-.home-row-text {
-	min-width: 0;
-}
-.home-row-title {
-	font-size: var(--text-body);
-	line-height: 1.35;
-	margin: 0 0 var(--space-2xs);
-	color: var(--color-text);
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-}
-.home-row-meta {
-	font-size: var(--text-xs);
-	color: var(--color-text-muted);
-}
-.home-row-viewall {
-	display: flex;
-	align-items: flex-start;
+	border-radius: 0;
+	transition: transform var(--duration-slow) var(--ease-out);
 }
 
-/* Product variant — pre-cropped hero images pinned flush-right (no right
-   padding, object-fit: contain). Never center these or add right padding. */
-.home-row-thumb--product {
-	background: var(--color-bg-panel);
-	padding: 0.75rem 1.5rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+/* Product mockups: the uncropped midImage, centered, on the tint field.
+   Never the right-positioned hero crop (see CLAUDE.md). */
+.card .card-media--contain {
+	background: var(--gradient-media);
+	padding: var(--space-md) var(--space-lg);
 }
-.home-row-thumb--product img {
+.card .card-media--contain > img {
 	object-fit: contain;
 	object-position: center;
 }
-@media (hover: hover) {
-	.home-row-item:hover .home-row-thumb--product {
-		background: var(--color-bg-emphasis);
-	}
+.card .card-media--contain::after {
+	content: none;
 }
-.home-row-desc {
-	font-size: var(--text-small);
-	color: var(--color-text-secondary);
+
+/* Tool illustrations: white line art on the ink stage, over a faint grid. */
+.card .card-media--art {
+	background: var(--gradient-ink);
+	color: #FFFFFF;
+	padding: var(--space-md) var(--space-lg);
+}
+.card .card-media--art::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+	background-size: 2rem 2rem;
+	background-position: center;
+	-webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 80%);
+	mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 80%);
+}
+.card .card-media--art > svg {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.card .card-body {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-2xs);
+	padding-top: var(--space-sm);
+	min-width: 0;
+}
+.card .card-title {
+	font-size: var(--text-h4);
 	line-height: var(--leading-snug);
-	margin: var(--space-2xs) 0 0;
+	color: var(--color-text);
+	margin: 0;
+}
+.card .card-desc {
+	font-size: var(--text-small);
+	line-height: var(--leading-normal);
+	color: var(--color-text-secondary);
+	margin: 0;
 	display: -webkit-box;
-	-webkit-line-clamp: 2;
+	-webkit-line-clamp: var(--card-lines, 3);
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
-.home-row-placeholder {
-	color: var(--color-border);
+.card .card-meta {
+	font-family: var(--font-sans);
+	font-size: var(--text-xs);
+	color: var(--color-text-muted);
+	margin-top: var(--space-2xs);
 }
-/* Placement and look both come from .badge .badge-overlay now. Kept as a
-   name the markup can still hook if this row ever needs an offset of its
-   own. */
+.card .card-link {
+	font-family: var(--font-sans);
+	font-size: var(--text-small);
+	font-weight: var(--weight-medium);
+	color: var(--color-text);
+	margin-top: var(--space-xs);
+}
+/* TagPills carries its own bottom margin for standalone use; inside a card
+   the body's gap already spaces it. */
+.card .tag-pills {
+	margin-bottom: var(--space-2xs);
+}
 
-@media (max-width: 960px) {
-	.home-row-items {
-		grid-template-columns: repeat(2, 1fr);
+/* Framed: a raised white card. The media is inset by --space-xs so its
+   corner radius (--radius-inset) stays concentric with the card's. */
+.card--framed {
+	background: var(--color-bg-surface);
+	border: 1px solid var(--color-border-hairline);
+	border-radius: var(--radius-card);
+	overflow: hidden;
+	transition:
+		border-color var(--duration-fast) var(--ease-out),
+		box-shadow var(--duration-base) var(--ease-out);
+}
+.card--framed > .card-media {
+	margin: var(--space-xs) var(--space-xs) 0;
+	border-radius: var(--radius-inset);
+}
+.card--framed > .card-body {
+	flex: 1;
+	padding: var(--space-md);
+}
+
+/* Row: media beside the body. --card-media-width sets the media's share. */
+.card--row {
+	flex-direction: row;
+	align-items: center;
+	gap: var(--space-md);
+}
+.card--row > .card-media {
+	flex: 0 0 var(--card-media-width, 40%);
+}
+.card--row > .card-body {
+	padding-top: 0;
+}
+.card--framed.card--row > .card-media {
+	margin: var(--space-xs) 0 var(--space-xs) var(--space-xs);
+}
+.card--framed.card--row > .card-body {
+	padding: var(--space-md) var(--space-lg) var(--space-md) 0;
+}
+
+@media (hover: hover) {
+	.card:hover .card-media > img,
+	.card:hover .card-media--art > svg {
+		transform: scale(1.025);
+	}
+	.card--framed:hover {
+		border-color: var(--color-border);
+		box-shadow: var(--shadow-md);
 	}
 }
-@media (max-width: 768px) {
-	.home-row {
-		grid-template-columns: 1fr;
-		gap: var(--space-sm);
+
+@media (max-width: 600px) {
+	.card--row {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0;
+	}
+	.card--row > .card-media {
+		flex-basis: auto;
+	}
+	.card--row > .card-body {
+		padding-top: var(--space-sm);
+	}
+	.card--framed.card--row > .card-media {
+		margin: var(--space-xs) var(--space-xs) 0;
+	}
+	.card--framed.card--row > .card-body {
+		padding: var(--space-md);
+	}
+}
+
+/* ——— Card grids ———
+   Three columns by default, two at 960px, one at 600px. `--2` and `--4`
+   change the desktop count only.
+
+   `--bento` is the 12-column product grid: each card sets `--span` (ProductCard's
+   `span` prop), and every card's media shares one fixed height, so a narrow
+   and a wide card in the same row stay level. */
+
+.card-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--space-lg) var(--space-md);
+}
+.card-grid--2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.card-grid--4 {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.card-grid--bento {
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: var(--space-sm);
+}
+.card-grid--bento > .card {
+	grid-column: span var(--span, 6);
+}
+.card-grid--bento .card-media {
+	aspect-ratio: auto;
+	height: clamp(13rem, 22vw, 19rem);
+}
+
+@media (max-width: 960px) {
+	.card-grid,
+	.card-grid--4 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.card-grid--bento > .card {
+		grid-column: span 6;
 	}
 }
 @media (max-width: 600px) {
-	.home-row-items {
-		grid-template-columns: 1fr;
+	.card-grid,
+	.card-grid--2,
+	.card-grid--4 {
+		grid-template-columns: minmax(0, 1fr);
 	}
-	.home-row-item .home-row-title {
-		font-size: 1.25rem;
+	.card-grid--bento > .card {
+		grid-column: span 12;
 	}
+}
+
+/* ——— Content blocks ———
+   The closing chapters of a reading page (FAQ, related articles, more tools,
+   recommended products): a rule, air, and one heading size, identical on
+   articles, calculators, and anywhere else a narrow column needs them. */
+
+.content-block {
+	margin-top: var(--space-2xl);
+	padding-top: var(--space-lg);
+	border-top: 1px solid var(--color-border);
+	scroll-margin-top: var(--header-offset);
+}
+.content-block-title {
+	font-size: var(--text-h2);
+	margin-bottom: var(--space-md);
+}
+.content-block-foot {
+	margin: var(--space-md) 0 0;
+}
+
+/* A vertical stack of cards in a narrow column, e.g. compact related
+   articles. */
+.card-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-md);
 }
 
 /* ——— Buttons ——— */

@@ -17,6 +17,20 @@ export const TAG_MAP: Record<string, string> = Object.fromEntries(
 
 export const ARTICLES_PAGE_SIZE = 12;
 
+// Template titles carry their platform suffix for search ("Budget Spreadsheet
+// for Google Sheets & Excel"), which is noise on a card that already sits in a
+// spreadsheets context. Every card and promo shortens it through this one
+// function; it was copy-pasted as an inline regex in seven places before.
+export function templateName(title: string): string {
+	return title.replace(/ for (Google )?Sheets & Excel$/, '');
+}
+
+// Words at ~200 per minute, never less than one. Used for every "N min read".
+export function readTime(body: string | undefined): number {
+	const words = body?.split(/\s+/).filter(Boolean).length ?? 0;
+	return Math.max(1, Math.ceil(words / 200));
+}
+
 export const ETSY_SHOP_URL = 'https://simplysheetdesign.etsy.com';
 
 // Every user-clickable Etsy link must use the simplysheetdesign.etsy.com

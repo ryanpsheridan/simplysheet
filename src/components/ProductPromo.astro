@@ -1,5 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
+import ProductCard from './ProductCard.astro';
+import { templateName } from '../consts';
 
 interface Props {
 	slug: string;
@@ -15,7 +17,7 @@ if (!template) {
 }
 
 const { title, description, badge, midImage } = template.data;
-const name = title.replace(/ for (Google )?Sheets & Excel$/, '');
+const name = templateName(title);
 const url = `/spreadsheets/${slug}/`;
 const alt = `${name} preview`;
 const image = midImage;
@@ -43,16 +45,9 @@ const image = midImage;
 	</div>
 )}
 
-{variant === 'card' && (
-	<a href={url} class="product-card" data-cta={`product_promo_card:${slug}`}>
-		<div class="product-card-thumb">
-			<img src={image} alt={alt} width="600" height="400" loading="lazy" />
-		</div>
-		{badge && <span class="badge product-card-badge">{badge}</span>}
-		<h3 class="product-card-name">{name}</h3>
-		<p class="product-card-desc">{description}</p>
-	</a>
-)}
+{/* The shared product card, so an in-article pair matches every other
+    product card on the site. Sits inside a `.product-cards` two-up grid. */}
+{variant === 'card' && <ProductCard template={template} cta={`product_promo_card:${slug}`} />}
 
 {variant === 'mini' && (
 	<aside class="promo-mini">

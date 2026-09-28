@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import ToolThumbCard from '../../components/ToolThumbCard.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import ToolCard from '../../components/ToolCard.astro';
 import { pageTitle } from '../../consts';
 import { TOOLS } from '../../data/tools';
 
@@ -36,86 +37,29 @@ const itemListSchema = {
 <BaseLayout title={pageTitle(title)} description={description}>
 	<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
-	<main id="main-content">
-		<Breadcrumbs crumbs={[{ label: 'Tools' }]} />
-		<header class="tools-header">
-			<h1>Free tools</h1>
-			<p class="tools-intro">Free calculators and assessments to help you make clearer decisions about your money.</p>
-		</header>
+	<main id="main-content" class="band-main">
+		<PageHero
+			title="Free tools"
+			desc="Free calculators and assessments to help you make clearer decisions about your money. They run in your browser, with no email or sign-up."
+			crumbs={[{ label: 'Tools' }]}
+		/>
 
-		<div class="tools-rows">
-			<div class="tools-row">
-				<div class="tools-row-label">
-					<h2 class="tools-row-heading">Calculators</h2>
-				</div>
-				<div class="tools-row-items">
-					{calculators.map((tool) => (
-						<ToolThumbCard tool={tool} />
-					))}
+		<section class="band band--flush-top" aria-labelledby="calculators-heading">
+			<div class="band-inner">
+				<SectionHead id="calculators-heading" title="Calculators" desc="Run your own numbers: budget splits, paychecks, debt payoff, savings targets, and splitting bills." />
+				<div class="card-grid">
+					{calculators.map((tool) => <ToolCard tool={tool} />)}
 				</div>
 			</div>
+		</section>
 
-			<div class="tools-row">
-				<div class="tools-row-label">
-					<h2 class="tools-row-heading">Assessments</h2>
-				</div>
-				<div class="tools-row-items">
-					{assessments.map((tool) => (
-						<ToolThumbCard tool={tool} />
-					))}
+		<section class="band band--surface" aria-labelledby="assessments-heading">
+			<div class="band-inner">
+				<SectionHead id="assessments-heading" title="Assessments" desc="A few quick questions, and a straight answer about where you stand." />
+				<div class="card-grid">
+					{assessments.map((tool) => <ToolCard tool={tool} />)}
 				</div>
 			</div>
-		</div>
+		</section>
 	</main>
 </BaseLayout>
-
-<style>
-	.tools-header {
-		margin-bottom: var(--space-lg);
-	}
-	.tools-header h1 {
-		font-size: var(--text-h1);
-	}
-	.tools-intro {
-		font-size: var(--text-body);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-	}
-
-	.tools-row {
-		display: grid;
-		grid-template-columns: 12rem 1fr;
-		gap: var(--space-xl);
-		padding: var(--space-lg) 0;
-		border-top: 1px solid var(--color-border);
-	}
-	.tools-row-heading {
-		font-size: var(--text-h3);
-		margin: 0;
-	}
-	.tools-row-items {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		row-gap: 3rem;
-		column-gap: 2rem;
-	}
-
-	@media (max-width: 960px) {
-		.tools-row-items {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	@media (max-width: 768px) {
-		.tools-row {
-			grid-template-columns: 1fr;
-			gap: var(--space-sm);
-		}
-	}
-
-	@media (max-width: 600px) {
-		.tools-row-items {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

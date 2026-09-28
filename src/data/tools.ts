@@ -8,6 +8,12 @@ export interface Tool {
 	group: 'calculator' | 'assessment';
 }
 
+// The last path segment of a tool's URL, used as its id in `data-cta` values
+// (`tool_thumb_card:<id>`, `index_tools_item:<id>`, ...).
+export function toolId(tool: Pick<Tool, 'url'>): string {
+	return tool.url.replace(/\/$/, '').split('/').pop() ?? tool.url;
+}
+
 export const TOOLS: Tool[] = [
 	{
 		name: '50/30/20 Budget Calculator',

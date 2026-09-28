@@ -2,12 +2,14 @@
 interface Props {
 	tags: { slug: string; label: string }[];
 	activeSlug: string;
+	/** Center the row (inside PageHero). Still scrolls when it overflows. */
+	centered?: boolean;
 }
 
-const { tags, activeSlug } = Astro.props;
+const { tags, activeSlug, centered = false } = Astro.props;
 ---
 
-<nav class="filter-tabs" aria-label="Filter articles by topic">
+<nav class:list={['filter-tabs', { 'filter-tabs--centered': centered }]} aria-label="Filter articles by topic">
 	<a href="/articles/" class={`filter-tab ${activeSlug === 'all' ? 'active' : ''}`} data-cta="topic_filter_tab:all">All articles</a>
 	{tags.map((tag) => (
 		<a href={`/articles/tag/${tag.slug}/`} class={`filter-tab ${activeSlug === tag.slug ? 'active' : ''}`} data-cta={`topic_filter_tab:${tag.slug}`}>{tag.label}</a>
@@ -26,6 +28,17 @@ const { tags, activeSlug } = Astro.props;
 	.filter-tabs::-webkit-scrollbar {
 		display: none;
 	}
+	/* Centered (inside PageHero): wraps onto centered lines wherever there is
+	   room, so no tab is ever clipped. Only on a phone does it go back to one
+	   scrolling row (see the 600px block). */
+	.filter-tabs--centered {
+		align-self: stretch;
+		flex-wrap: wrap;
+		justify-content: center;
+		margin-top: var(--space-md);
+		margin-bottom: 0;
+	}
+
 	/* Same fill and text tone as .badge — these are the same kind of chip, just
 	   at a larger tap-target size, so they should not read as washed out next
 	   to the tag pills on the cards below them. Size stays as it was. */
@@ -51,6 +64,20 @@ const { tags, activeSlug } = Astro.props;
 	}
 
 	@media (max-width: 600px) {
+		/* One scrolling row. Auto margins, not justify-content: center: a
+		   centered flex row that overflows clips its first tabs off the left
+		   edge, out of scroll reach, while auto margins collapse to zero when
+		   the row overflows so it scrolls from its first tab. */
+		.filter-tabs--centered {
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+		}
+		.filter-tabs--centered > :first-child {
+			margin-left: auto;
+		}
+		.filter-tabs--centered > :last-child {
+			margin-right: auto;
+		}
 		.filter-tabs {
 			margin-left: calc(-1 * var(--space-md));
 			margin-right: calc(-1 * var(--space-md));

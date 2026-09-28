@@ -1,8 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
-import SpreadsheetsToolsRows from '../components/SpreadsheetsToolsRows.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { getCollection } from 'astro:content';
 import { SITE_TITLE } from '../consts';
+import { TOOLS } from '../data/tools';
+
+// Three of each under the story, in the site's own order. The data-cta ids
+// predate the homepage redesign (they were the shared homepage/About rows);
+// they are kept so About's click history doesn't split.
+const templates = (await getCollection('templates'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.slice(0, 3);
+const tools = TOOLS.slice(0, 3);
 
 const description = 'The story behind Simply Sheets: how six years of personal budgeting and 12 years of design experience turned into a spreadsheet business on Etsy.';
 
@@ -39,14 +51,15 @@ const breadcrumbSchema = {
 <BaseLayout title={`About ${SITE_TITLE}: The Story Behind the Templates`} description={description}>
 	<script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-	<main id="main-content">
-		<Breadcrumbs crumbs={[{ label: 'About' }]} />
-		<article>
-			<header class="about-header">
-				<h1>About</h1>
-			</header>
+	<main id="main-content" class="band-main">
+		<PageHero
+			title="About"
+			desc="How six years of budgeting in a spreadsheet, and a career in design, turned into Simply Sheets."
+			crumbs={[{ label: 'About' }]}
+		/>
 
-			<div class="prose">
+		<article class="band band--flush-top">
+			<div class="prose about-story">
 				<h2>It all started with a spreadsheet</h2>
 				<p>About six years ago, I sat down to budget for the first time. I didn't download an app or sign up for a service. I opened a blank Google Sheet and started typing. The formulas were basic. The layout was rough. But it worked, because I actually used it.</p>
 				<p>The single biggest thing that made budgeting stick for me was tracking my expenses daily. Not weekly, not monthly: daily. Actually seeing how much I spent on restaurants, coffee, golf, entertainment, and everything else gave me a kind of clarity I'd never had before. I could see exactly how much was going to each category, and that visibility alone changed my relationship with money.</p>
@@ -73,39 +86,44 @@ const breadcrumbSchema = {
 				<p>That's what this site is about. Straightforward articles, practical advice, and <a href="/spreadsheets/">spreadsheets that work</a>. I built all of this because budgeting changed my life, and I believe the right tools can do the same for someone else.</p>
 			</div>
 		</article>
-	</main>
 
-	<section class="home-rows about-rows">
-		<div class="home-rows-inner">
-			<SpreadsheetsToolsRows />
-		</div>
-	</section>
+		<section class="band band--surface" aria-labelledby="about-tools-heading">
+			<div class="band-inner">
+				<SectionHead
+					id="about-tools-heading"
+					title="Free tools"
+					href="/tools/"
+					linkLabel="All tools"
+					cta="home_tools_row_view_all"
+				/>
+				<div class="card-grid">
+					{tools.map((tool) => <ToolCard tool={tool} />)}
+				</div>
+			</div>
+		</section>
+
+		<section class="band" aria-labelledby="about-spreadsheets-heading">
+			<div class="band-inner">
+				<SectionHead
+					id="about-spreadsheets-heading"
+					title="Spreadsheets"
+					href="/spreadsheets/"
+					linkLabel="All spreadsheets"
+					cta="home_spreadsheets_row_view_all"
+				/>
+				<ProductGrid templates={templates} ctaPrefix="home_spreadsheets_row_item" />
+			</div>
+		</section>
+	</main>
 </BaseLayout>
 
 <style>
-	/* Center the story column (breadcrumb + article) at the same narrow width
-	   it had before, rather than pinning it to the left of the wider main. */
-	main {
-		max-width: calc(var(--max-width-narrow) + var(--space-md) * 2);
-	}
-	article {
+	/* The story keeps a reading measure inside its band. */
+	.about-story {
 		max-width: var(--max-width-narrow);
 		margin-inline: auto;
 	}
-
-	.about-header {
-		margin-bottom: var(--space-lg);
-	}
-
-	.about-header h1 {
-		font-size: var(--text-h1);
-	}
-
-	/* Separate the shared Spreadsheets / Free tools rows from the story above
-	   with a max-width-contained hairline divider (matching the site's other
-	   dividers, which never span the full viewport). */
-	.about-rows .home-rows-inner {
-		border-top: 1px solid var(--color-border);
-		padding-top: var(--space-xl);
+	.about-story > :global(h2:first-child) {
+		margin-top: 0;
 	}
 </style>

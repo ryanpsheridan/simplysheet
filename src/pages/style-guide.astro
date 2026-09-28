@@ -1,978 +1,580 @@
 ---
+import { readFileSync, readdirSync } from 'node:fs';
+import path from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import ToolThumbCard from '../components/ToolThumbCard.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import ToolCard from '../components/ToolCard.astro';
+import Faq from '../components/Faq.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import TagPills from '../components/TagPills.astro';
 import { getCollection } from 'astro:content';
-import { SITE_TITLE } from '../consts';
-import { TOOLS } from '../data/tools';
+import { SITE_TITLE, TAG_MAP } from '../consts';
+import { TOOLS, toolId } from '../data/tools';
+import { getSortedArticles, toArticleCard } from '../utils/articles';
 
-const allArticles = (await getCollection('articles'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const sampleArticles = allArticles.slice(0, 3).map((a) => {
-	const wordCount = a.body?.split(/\s+/).filter(Boolean).length ?? 0;
-	const readTime = Math.max(1, Math.ceil(wordCount / 200));
-	return { ...a, readTime };
-});
+// A living reference that renders the real components, never look-alike demo
+// markup, so it cannot drift from the site. Token values are read from
+// tokens.css at build time for the same reason: the hex under each swatch
+// used to be a hand-typed string, and three of them had gone stale.
 
-const templates = (await getCollection('templates'))
-	.sort((a, b) => a.data.order - b.data.order)
-	.slice(0, 2)
-	.map((t) => ({
-		name: t.data.title.replace(/ for (Google )?Sheets & Excel$/, ''),
-		desc: t.data.description,
-		url: `/spreadsheets/${t.id}/`,
-		image: t.data.midImage,
-		badge: t.data.badge,
-	}));
+const tokensCss = readFileSync(path.resolve('src/styles/tokens.css'), 'utf8');
+const rootBlock = tokensCss.slice(0, tokensCss.indexOf('@media'));
+const tokenValue = (name: string) =>
+	rootBlock.match(new RegExp(`${name}:\\s*([^;]+);`))?.[1].trim().replace(/\s+/g, ' ') ?? '';
 
-const TAG_MAP: Record<string, string> = {
-	'expense-tracking': 'Expense Tracking',
-	'couples-budgeting': 'Couples Budgeting',
-	'debt-payoff': 'Debt Payoff',
-	'savings-goals': 'Savings Goals',
-	'irregular-income': 'Irregular Income',
-	'net-worth': 'Net Worth',
-	'budgeting-styles': 'Budgeting Styles',
-};
+const colorTokens = [
+	['--color-text', 'Text'],
+	['--color-text-secondary', 'Text secondary'],
+	['--color-text-muted', 'Text muted'],
+	['--color-link', 'Link'],
+	['--color-btn', 'Button'],
+	['--color-btn-hover', 'Button hover'],
+	['--color-bg', 'Page'],
+	['--color-bg-surface', 'Surface'],
+	['--color-bg-panel', 'Panel'],
+	['--color-bg-emphasis', 'Emphasis'],
+	['--color-bg-inverse', 'Inverse'],
+	['--color-border-hairline', 'Border hairline'],
+	['--color-border', 'Border'],
+	['--color-border-strong', 'Border strong'],
+	['--tint-sky', 'Brand sky'],
+	['--tint-lavender', 'Brand lavender'],
+].map(([token, label]) => ({ token, label, value: tokenValue(token) }));
 
-/* Keep these hexes in sync with src/styles/tokens.css — the swatch renders
-   from the token, but the caption underneath is this literal string, so a
-   stale value here silently misreports the palette. */
-const colors = [
-	{ token: '--color-text',            label: 'Text',            hex: '#081122' },
-	{ token: '--color-text-secondary',  label: 'Text Secondary',  hex: '#575D68' },
-	{ token: '--color-text-muted',      label: 'Text Muted',      hex: '#666B75' },
-	{ token: '--color-link',            label: 'Link',            hex: '#3F4553' },
-	{ token: '--color-link-hover',      label: 'Link Hover',      hex: '#081122' },
-	{ token: '--color-btn',             label: 'Button',          hex: '#081122' },
-	{ token: '--color-btn-hover',       label: 'Button Hover',    hex: '#030812' },
-	{ token: '--color-bg',              label: 'Background',      hex: '#FBFAF9' },
-	{ token: '--color-bg-surface',      label: 'Surface',         hex: '#FFFFFF' },
-	{ token: '--color-bg-panel',        label: 'Panel',           hex: '#F4F2EE' },
-	{ token: '--color-bg-emphasis',     label: 'Emphasis',        hex: '#EFEDE8' },
-	{ token: '--color-bg-inverse',      label: 'Inverse',         hex: '#081122' },
-	{ token: '--color-border-hairline', label: 'Border Hairline', hex: '#E7E4DE' },
-	{ token: '--color-border',          label: 'Border',          hex: '#DCD8D1' },
-	{ token: '--color-border-strong',   label: 'Border Strong',   hex: '#C6C2B9' },
+const gradientTokens = [
+	['--gradient-glow', 'Glow', 'The homepage showcase stage.'],
+	['--gradient-media', 'Media', 'Behind every product mockup.'],
+	['--gradient-brand', 'Brand', 'CtaBanner. Ink text only.'],
+	['--gradient-ink', 'Ink', 'Tool illustration stages.'],
 ];
 
 const typeScale = [
-	{ token: '--text-display', label: 'Display',  sample: 'Practical budgeting help' },
-	{ token: '--text-h1',      label: 'H1',       sample: 'Page heading' },
-	{ token: '--text-h2',      label: 'H2',       sample: 'Section heading' },
-	{ token: '--text-h3',      label: 'H3',       sample: 'Subsection heading' },
-	{ token: '--text-body-lg', label: 'Body Lg',  sample: 'Introductory paragraph text at a comfortable reading size.' },
-	{ token: '--text-body',    label: 'Body',     sample: 'Standard paragraph text for articles and general content.' },
-	{ token: '--text-small',   label: 'Small',    sample: 'Captions, labels, metadata' },
-	{ token: '--text-xs',      label: 'XS',       sample: 'Fine print, timestamps' },
+	['--text-hero', 'Hero', 'A simpler way to budget'],
+	['--text-display', 'Display', 'Page hero title'],
+	['--text-section', 'Section', 'Band heading'],
+	['--text-h1', 'H1', 'Page heading'],
+	['--text-h2', 'H2', 'Content block heading'],
+	['--text-h3', 'H3', 'Subsection heading'],
+	['--text-h4', 'H4', 'Card title'],
+	['--text-body-lg', 'Body lg', 'Standfirst under a hero headline.'],
+	['--text-read', 'Read', 'Reading copy. 16px, 18px on a phone.'],
+	['--text-body', 'Body', 'UI text: buttons, nav, labels.'],
+	['--text-small', 'Small', 'Card descriptions and captions'],
+	['--text-xs', 'XS', 'Meta, read time, fine print'],
 ];
 
-const spacingScale = [
-	{ token: '--space-2xs', label: '2xs', px: '4' },
-	{ token: '--space-xs',  label: 'xs',  px: '8' },
-	{ token: '--space-sm',  label: 'sm',  px: '16' },
-	{ token: '--space-md',  label: 'md',  px: '24' },
-	{ token: '--space-lg',  label: 'lg',  px: '40' },
-	{ token: '--space-xl',  label: 'xl',  px: '64' },
-	{ token: '--space-2xl', label: '2xl', px: '96' },
+const spacingScale = ['--space-2xs', '--space-xs', '--space-sm', '--space-md', '--space-lg', '--space-xl', '--space-2xl'];
+
+const radii = [
+	['--radius-sm', 'Code, skip link'],
+	['--radius-md', 'Prose images'],
+	['--radius-card', 'Every card and card media'],
+	['--radius-inset', 'Media inset in a framed card'],
+	['--radius-xl', 'Stages and banners'],
+	['--radius-full', 'Buttons, badges, pills'],
 ];
 
-// Explored but not shipped: tool thumbnails (article-style mesh background with
-// the tool's own UI cropped into the bottom-right). The tools index and
-// "More free tools" lists kept the icon treatment; these are kept for reference.
+const articles = (await getSortedArticles()).map(toArticleCard);
+const [featuredSample, ...restSamples] = articles;
+const gridSamples = restSamples.slice(0, 3);
+const compactSamples = restSamples.slice(3, 6);
+
+const templates = (await getCollection('templates')).sort((a, b) => a.data.order - b.data.order);
+
+const faqSplitSample = [
+	{ question: 'What does the stack layout look like?', answer: 'Heading over the list, for a narrow reading column. Articles, calculators, and template pages use it.' },
+	{ question: 'And the split layout?', answer: 'A sticky heading and intro on the left and the list on the right, for a full-width band. The homepage uses it.' },
+];
+const faqStackSample = [
+	{ question: 'Where does the stack layout go?', answer: 'Under an article, a calculator, or a template page, usually with class="content-block".' },
+	{ question: 'Can answers contain links?', answer: 'Yes, with the html prop. Calculator pages pass it because their answers link to articles.' },
+];
+
+// Current article cards (v3) and the archived dark mesh set (v2), straight
+// from public/images, so every file that exists is shown.
+const imagesDir = path.resolve('public/images');
+const listCards = (prefix: string) =>
+	readdirSync(imagesDir)
+		.filter((f) => f.startsWith(prefix) && f.endsWith('.svg'))
+		.sort()
+		.map((f) => ({ file: f, src: `/images/${f}`, name: f.replace(prefix, '').replace(/\.svg$/, '') }));
+const v3Cards = listCards('card-v3-');
+const v2Cards = listCards('card-v2-');
+
+// Explored but not shipped: tool thumbnails with the tool's UI cropped into a
+// mesh background.
 const toolThumbnails = [
-	{ name: '50/30/20 Budget Calculator',            src: '/images/tool-thumb-50-30-20-budget-calculator.svg' },
+	{ name: '50/30/20 Budget Calculator', src: '/images/tool-thumb-50-30-20-budget-calculator.svg' },
 	{ name: 'Biweekly & Weekly Paycheck Calculator', src: '/images/tool-thumb-biweekly-paycheck-calculator.svg' },
-	{ name: 'Debt Strategy Comparison',              src: '/images/tool-thumb-debt-snowball-vs-avalanche-calculator.svg' },
-	{ name: 'Emergency Fund Calculator',             src: '/images/tool-thumb-emergency-fund-calculator.svg' },
-	{ name: 'Sinking Fund Calculator',               src: '/images/tool-thumb-sinking-fund-calculator.svg' },
-	{ name: 'Expense Tracking Readiness',            src: '/images/tool-thumb-expense-tracking-readiness.svg' },
-	{ name: 'Sinking Fund Assessment',               src: '/images/tool-thumb-sinking-fund-assessment.svg' },
-	{ name: 'Find Your Budgeting Style',             src: '/images/tool-thumb-budgeting-style-quiz.svg' },
+	{ name: 'Debt Strategy Comparison', src: '/images/tool-thumb-debt-snowball-vs-avalanche-calculator.svg' },
+	{ name: 'Emergency Fund Calculator', src: '/images/tool-thumb-emergency-fund-calculator.svg' },
+	{ name: 'Sinking Fund Calculator', src: '/images/tool-thumb-sinking-fund-calculator.svg' },
+	{ name: 'Expense Tracking Readiness', src: '/images/tool-thumb-expense-tracking-readiness.svg' },
+	{ name: 'Sinking Fund Assessment', src: '/images/tool-thumb-sinking-fund-assessment.svg' },
+	{ name: 'Find Your Budgeting Style', src: '/images/tool-thumb-budgeting-style-quiz.svg' },
 ];
 ---
 
 <BaseLayout title={`Style Guide | ${SITE_TITLE}`} description="Living reference for Simply Sheets components, tokens, and patterns." noindex>
-	<main id="main-content" class="guide">
+	<main id="main-content" class="band-main guide">
 
-		<header class="guide-header">
-			<h1>Style Guide</h1>
-			<p class="guide-intro">Living reference for every component, token, and pattern in the design system.</p>
+		<header class="band guide-header">
+			<div class="band-inner">
+				<h1>Style guide</h1>
+				<p class="guide-lede">The design system as it actually renders. Everything below is the real component or the real token, so this page cannot drift from the site. Pages are assembled from bands, section heads, and cards; a new page should need no new card or grid CSS of its own.</p>
+				<nav class="guide-toc" aria-label="Style guide sections">
+					<a href="#foundations">Foundations</a>
+					<a href="#components">Components</a>
+					<a href="#article-cards">Article thumbnails</a>
+					<a href="#archive">Archive</a>
+				</nav>
+			</div>
 		</header>
 
-		<!-- ============ COLORS ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Colors</h2>
-			<div class="color-grid">
-				{colors.map((c) => (
-					<div class="color-card">
-						<div class="color-swatch" style={`background-color: var(${c.token})`} />
-						<div class="color-info">
-							<span class="color-label">{c.label}</span>
-							<code class="color-token">{c.token}</code>
-							<span class="color-hex">{c.hex}</span>
+		<!-- ================= FOUNDATIONS ================= -->
+		<section class="band band--surface" id="foundations">
+			<div class="band-inner">
+				<SectionHead title="Foundations" desc="Tokens from src/styles/tokens.css. Use a token, never a literal, in any component." />
+
+				<h3 class="guide-label">Color</h3>
+				<div class="swatches">
+					{colorTokens.map((c) => (
+						<div class="swatch">
+							<div class="swatch-chip" style={`background: var(${c.token})`}></div>
+							<span class="swatch-name">{c.label}</span>
+							<code>{c.token}</code>
+							<span class="swatch-value">{c.value}</span>
 						</div>
+					))}
+				</div>
+
+				<h3 class="guide-label">Gradients</h3>
+				<div class="swatches swatches--wide">
+					{gradientTokens.map(([token, label, use]) => (
+						<div class="swatch">
+							<div class="swatch-chip swatch-chip--tall" style={`background: var(${token})`}></div>
+							<span class="swatch-name">{label}</span>
+							<code>{token}</code>
+							<span class="swatch-value">{use}</span>
+						</div>
+					))}
+				</div>
+
+				<h3 class="guide-label">Type</h3>
+				<p class="guide-note">Manrope for headings and UI, DM Sans for reading copy. Every heading is <code>--weight-semibold</code> from the shared rule; hierarchy comes from size and tracking.</p>
+				<div class="type-list">
+					{typeScale.map(([token, label, sample]) => (
+						<div class="type-row">
+							<div class="type-meta"><span>{label}</span><code>{token}</code></div>
+							<div class:list={['type-sample', { 'type-sample--heading': !['--text-body-lg', '--text-read', '--text-body', '--text-small', '--text-xs'].includes(token) }]} style={`font-size: var(${token})`}>{sample}</div>
+						</div>
+					))}
+				</div>
+
+				<h3 class="guide-label">Spacing</h3>
+				<div class="spacing-list">
+					{spacingScale.map((token) => (
+						<div class="spacing-row">
+							<code>{token}</code>
+							<span class="spacing-bar" style={`width: var(${token})`}></span>
+							<span class="swatch-value">{tokenValue(token)}</span>
+						</div>
+					))}
+					<div class="spacing-row">
+						<code>--space-band</code>
+						<span class="spacing-bar" style="width: var(--space-band)"></span>
+						<span class="swatch-value">{tokenValue('--space-band')}, a band's vertical padding</span>
 					</div>
-				))}
-			</div>
-		</section>
+				</div>
 
-		<!-- ============ TYPE SCALE ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Type Scale</h2>
-			<div class="type-list">
-				{typeScale.map((t) => (
-					<div class="type-row">
-						<div class="type-meta">
-							<span class="type-label">{t.label}</span>
-							<code class="type-token">{t.token}</code>
+				<h3 class="guide-label">Radius</h3>
+				<div class="radii">
+					{radii.map(([token, use]) => (
+						<div class="radius" style={`border-radius: var(${token})`}>
+							<code>{token}</code>
+							<span>{use}</span>
 						</div>
-						<div class="type-sample" style={`font-size: var(${t.token})`}>
-							{t.sample}
-						</div>
-					</div>
-				))}
-			</div>
-		</section>
-
-		<!-- ============ FONT WEIGHTS ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Font Weights</h2>
-			<div class="weight-list">
-				<p style="font-weight: var(--weight-normal)">400 Normal: The quick brown fox jumps over the lazy dog</p>
-				<p style="font-weight: var(--weight-medium)">500 Medium: The quick brown fox jumps over the lazy dog</p>
-				<p style="font-weight: var(--weight-semibold)">600 Semibold: The quick brown fox jumps over the lazy dog</p>
-				<p style="font-weight: var(--weight-bold)">700 Bold: The quick brown fox jumps over the lazy dog</p>
-			</div>
-			<p class="section-desc">Headings sit at 500. Semibold is a rarely-needed emphasis step, not the heading default. Reach for a larger size or tighter tracking before reaching for more weight.</p>
-		</section>
-
-		<!-- ============ EYEBROWS ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Eyebrows</h2>
-			<p class="section-desc">The overline above a heading. Always paired with <code>.eyebrow-badge</code>, which gives it the same grey pill as <code>.badge</code> (sentence case, not uppercase caps) rather than the tinted all-caps pill this used to be.</p>
-			<div class="eyebrow-demo">
-				<div>
-					<p class="eyebrow eyebrow-badge">Recommended template</p>
-					<h3 class="demo-eyebrow-heading">Every eyebrow site-wide</h3>
-					<p class="section-desc">Used on product promos, the sidebar template link, the template page's reviews label, and the quiz's related-article label. <code>.eyebrow</code> supplies the own-line layout (flex, fit-content); <code>.eyebrow-badge</code> supplies the look.</p>
+					))}
 				</div>
 			</div>
-			<p class="section-desc">Text stays <code>--color-text</code>, matching <code>.badge</code>.</p>
 		</section>
 
-		<!-- ============ BUTTONS ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Buttons</h2>
-			<div class="btn-demo">
-				<a href="#buttons" class="btn btn-primary">Primary</a>
-				<a href="#buttons" class="btn btn-brand">Brand</a>
-				<a href="#buttons" class="btn btn-secondary">Secondary</a>
-				<a href="#buttons" class="btn btn-ghost">Ghost</a>
-			</div>
-			<div class="btn-demo">
-				<a href="#buttons" class="btn btn-primary btn-sm">Small</a>
-				<a href="#buttons" class="btn btn-primary">Default</a>
-				<a href="#buttons" class="btn btn-primary btn-lg">Large</a>
-			</div>
-			<p class="section-desc">Medium weight rather than semibold: at button size on a filled pill, semibold reads heavy, and it would cost the headings some of their authority. Hover and press states are live above.</p>
+		<!-- ================= COMPONENTS ================= -->
+		<section class="band" id="components">
+			<div class="band-inner">
+				<SectionHead title="Components" desc="Every reusable piece, rendered live. Each lives in src/components; the card anatomy and layout primitives live in global.css." />
 
-			<h3 class="demo-eyebrow-heading">Arrow badge</h3>
-			<div class="btn-demo">
-				<a href="#buttons" class="btn btn-brand btn-arrow">Brand</a>
-				<a href="#buttons" class="btn btn-primary btn-arrow">Primary</a>
-				<a href="#buttons" class="btn btn-secondary btn-arrow">Secondary</a>
-			</div>
-			<p class="section-desc"><code>.btn-arrow</code> adds an inverted disc inside the pill's right edge, the detail that makes a button read as a destination rather than a form control. Each variant's badge is its own inverse, so a dark button gets a light disc and a light one gets a dark disc.</p>
-		</section>
+				<h3 class="guide-label">Bands</h3>
+				<p class="guide-note">A page is a stack of full-bleed <code>.band</code> sections, each with a <code>.band-inner</code> held to <code>--max-width-content</code>. Bands alternate the page ground with <code>.band--surface</code>; that alternation, not rules, separates chapters. <code>.band--flush-top</code> continues the band above it (a grid under a <code>PageHero</code>). The <code>main</code> element that holds bands takes <code>.band-main</code>.</p>
 
-		<!-- ============ SPACING ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Spacing Scale</h2>
-			<div class="spacing-list">
-				{spacingScale.map((s) => (
-					<div class="spacing-row">
-						<code class="spacing-token">{s.token}</code>
-						<span class="spacing-px">{s.px}px</span>
-						<div class="spacing-bar" style={`width: var(${s.token})`} />
-					</div>
-				))}
-			</div>
-		</section>
+				<h3 class="guide-label">PageHero</h3>
+				<p class="guide-note">The centered opener on every top-level page, over the faint rings: <code>size="hero"</code> on the homepage, <code>size="page"</code> everywhere else. Breadcrumbs center inside it. Slots: <code>before</code> (badge, glyph), default (buttons, filter tabs), <code>after</code> (the homepage stage). See the top of any hub page.</p>
 
-		<!-- ============ HEADLINE TREATMENTS ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Headline Treatments</h2>
-			<p class="section-desc">Hero headlines use the display size. Section headings use H2.</p>
+				<h3 class="guide-label">SectionHead</h3>
+				<div class="demo">
+					<SectionHead title="Split: title left, the rest right" desc="The default. Collapses to one column at 960px." href="#components" linkLabel="Text link" />
+				</div>
+				<div class="demo">
+					<SectionHead align="center" title="Centered" desc="For a band that introduces a single centered block, like the homepage steps." />
+				</div>
 
-			<div class="headline-demo">
-				<h1 class="demo-display">Practical budgeting help for people who use <span class="accent">Google Sheets and Excel</span></h1>
-			</div>
+				<h3 class="guide-label">Buttons</h3>
+				<div class="demo demo--row">
+					<a href="#components" class="btn btn-primary">Primary</a>
+					<a href="#components" class="btn btn-brand">Brand</a>
+					<a href="#components" class="btn btn-secondary">Secondary</a>
+					<a href="#components" class="btn btn-ghost">Ghost</a>
+				</div>
+				<div class="demo demo--row">
+					<a href="#components" class="btn btn-primary btn-arrow">Primary arrow</a>
+					<a href="#components" class="btn btn-secondary btn-arrow">Secondary arrow</a>
+					<a href="#components" class="btn btn-primary btn-sm">Small</a>
+					<a href="#components" class="btn btn-primary btn-lg">Large</a>
+				</div>
+				<p class="guide-note"><code>.btn-arrow</code> marks a destination rather than a form control. For a quiet "view all" link in a heading or under a list, use <code>.text-link</code> instead: <a href="#components" class="text-link">All articles <span class="arrow">&rarr;</span></a></p>
 
-			<div class="headline-demo">
-				<h2 class="demo-h2">How do you budget when your <span class="accent">income changes every month</span></h2>
-			</div>
-		</section>
+				<h3 class="guide-label">Badges and eyebrows</h3>
+				<div class="demo demo--row">
+					<span class="badge">Best Seller</span>
+					<span class="badge">Google Sheets</span>
+					<TagPills tags={['expense-tracking', 'savings-goals']} tagMap={TAG_MAP} />
+				</div>
+				<div class="demo">
+					<p class="eyebrow eyebrow-badge">Recommended template</p>
+					<p class="guide-note">An eyebrow looks like a badge but owns its own line and editorializes; a badge states a fact. Four eyebrows sitewide, never on a band heading.</p>
+				</div>
 
-		<!-- ============ ARTICLE LIST ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Article List</h2>
-			<p class="section-desc">Articles are displayed as a clean list with thin dividers between items.</p>
+				<h3 class="guide-label">ArticleCard</h3>
+				<p class="guide-note"><code>variant="feature"</code> for the one pinned article, <code>grid</code> for listings, <code>compact</code> for "Related articles" in a reading column. Build the data with <code>toArticleCard()</code>.</p>
+				<div class="demo">
+					<ArticleCard article={featuredSample} variant="feature" cta="style_guide" />
+				</div>
+				<div class="demo card-grid">
+					{gridSamples.map((a) => <ArticleCard article={a} cta="style_guide" />)}
+				</div>
+				<div class="demo demo--narrow card-list">
+					{compactSamples.map((a) => <ArticleCard article={a} variant="compact" cta="style_guide" />)}
+				</div>
 
-			<ul class="article-list">
-				<li>
-					<a href="#" class="article-card">
-						<h3 class="article-title">How to budget when your income changes every month</h3>
-						<p class="article-desc">A straightforward approach to budgeting on irregular income: freelancers, gig workers, commission earners.</p>
-						<p class="article-date"><FormattedDate date={new Date('2026-06-23')} /></p>
-					</a>
-				</li>
-				<li>
-					<a href="#" class="article-card">
-						<h3 class="article-title">The 15-minute weekly budget check-in</h3>
-						<p class="article-desc">You don't need to track every coffee. Once a week, sit down for 15 minutes, enter your totals, and move on.</p>
-						<p class="article-date"><FormattedDate date={new Date('2026-06-16')} /></p>
-					</a>
-				</li>
-			</ul>
-		</section>
+				<h3 class="guide-label">ProductCard and ProductGrid</h3>
+				<p class="guide-note">Always framed, always the uncropped <code>midImage</code> centered on <code>--gradient-media</code>. <code>ProductGrid layout="bento"</code> alternates spans narrow/wide, wide/narrow, half/half; <code>layout="grid"</code> is plain columns. A single card can be built from overrides, as the template page's bundles are.</p>
+				<div class="demo">
+					<ProductGrid templates={templates} layout="bento" ctaPrefix="style_guide" />
+				</div>
+				<div class="demo card-grid card-grid--2">
+					<ProductCard template={templates[0]} cta="style_guide" />
+					<ProductCard href="#components" image={templates[1].data.midImageLight} name="Override example" desc={false} linkLabel="View on Etsy" cta="style_guide" />
+				</div>
 
-		<!-- ============ CARDS: EDITORIAL (HOMEPAGE) ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Article Card: Editorial</h2>
-			<p class="section-desc">Used on the homepage. Thumbnail image on top with text below, no containing card or border. Uses the <code>cardImage</code> SVG.</p>
-			<div class="card-demo-grid card-demo-3col">
-				{sampleArticles.map((article) => (
-					<a href={`/articles/${article.id}/`} class="editorial-card">
-						{(article.data.cardImage || article.data.image) && (
-							<div class="editorial-card-thumb">
-								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-							</div>
-						)}
-						{(article.data.tags ?? []).length > 0 && (
-							<div class="demo-card-tags">
-								{(article.data.tags ?? []).map((tag: string) => (
-									<span class="badge">{TAG_MAP[tag] ?? tag}</span>
-								))}
-							</div>
-						)}
-						<h3 class="editorial-card-title">{article.data.title}</h3>
-						<p class="editorial-card-desc">{article.data.description}</p>
-						<p class="editorial-card-meta">
-							<FormattedDate date={article.data.pubDate} />
-							<span>&middot;</span>
-							<span>{article.readTime} min read</span>
-						</p>
-					</a>
-				))}
+				<h3 class="guide-label">ToolCard</h3>
+				<p class="guide-note"><code>card</code> puts the tool's line art on the ink stage; <code>row</code> is a list row with its kind badge (homepage, "More free tools").</p>
+				<div class="demo card-grid">
+					{TOOLS.slice(0, 3).map((t) => <ToolCard tool={t} cta="style_guide" />)}
+				</div>
+				<div class="demo demo--narrow tool-rows">
+					{TOOLS.slice(3, 6).map((t) => <ToolCard tool={t} variant="row" cta={`style_guide:${toolId(t)}`} />)}
+				</div>
+
+				<h3 class="guide-label">Faq</h3>
+				<p class="guide-note">One component for every FAQ; it also emits the FAQPage JSON-LD (off here with <code>schema={'{false}'}</code>). <code>stack</code> for reading columns, <code>split</code> for bands.</p>
+				<div class="demo">
+					<Faq items={faqSplitSample} layout="split" title="Split layout" desc="Sticky intro on the left." schema={false} id="faq-demo-split" />
+				</div>
+				<div class="demo demo--narrow">
+					<Faq items={faqStackSample} title="Stack layout" schema={false} id="faq-demo-stack" />
+				</div>
+
+				<h3 class="guide-label">CtaBanner</h3>
+				<div class="demo">
+					<CtaBanner title="The closing call to action" desc="One heading, one line, one button, on the brand gradient." href="#components" label="Primary action" cta="style_guide" />
+				</div>
 			</div>
 		</section>
 
-		<!-- ============ CARDS: CONTAINED (ARTICLES INDEX) ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Article Card: Contained</h2>
-			<p class="section-desc">Used on the articles index page. Thumbnail + text inside a bordered card with subtle hover shadow. Uses <code>cardImage</code> SVG.</p>
-			<div class="card-demo-grid card-demo-3col">
-				{sampleArticles.map((article) => (
-					<a href={`/articles/${article.id}/`} class="contained-card">
-						{(article.data.cardImage || article.data.image) && (
-							<div class="contained-card-thumb">
-								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-							</div>
-						)}
-						<div class="contained-card-body">
-							{(article.data.tags ?? []).length > 0 && (
-								<div class="demo-card-tags">
-									{(article.data.tags ?? []).map((tag: string) => (
-										<span class="badge">{TAG_MAP[tag] ?? tag}</span>
-									))}
+		<!-- ================= ARTICLE THUMBNAILS ================= -->
+		<section class="band band--surface" id="article-cards">
+			<div class="band-inner">
+				<SectionHead title="Article thumbnails" desc="The current set (v3). Each is generated by scripts/generate-article-cards.mjs from the article's wireframe and its first tag's hue family: a light tinted field, a white highlight, a tint bloom, faint rings, and the wireframe in ink." />
+				<div class="thumbs">
+					{v3Cards.map((c) => (
+						<figure class="thumb">
+							<img src={c.src} alt={`${c.name} article card`} width="960" height="540" loading="lazy" />
+							<figcaption>{c.file}</figcaption>
+						</figure>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- ================= ARCHIVE ================= -->
+		<section class="band" id="archive">
+			<div class="band-inner">
+				<SectionHead title="Archive" desc="Retired styles kept for reference and possible reuse. Nothing on the live site links to these." />
+
+				<h3 class="guide-label">Article thumbnails: dark mesh (v2)</h3>
+				<p class="guide-note">The previous article cards: a saturated per-article gradient, four blurred glows, grain, a soft ring motif, and the same wireframe in white. Replaced by v3; the files stay in <code>public/images/card-v2-*.svg</code>, and the wireframes were lifted from them unchanged.</p>
+				<div class="thumbs">
+					{v2Cards.map((c) => (
+						<figure class="thumb">
+							<img src={c.src} alt={`${c.name} archived article card`} width="960" height="540" loading="lazy" />
+							<figcaption>{c.file}</figcaption>
+						</figure>
+					))}
+				</div>
+
+				<h3 class="guide-label">Article card: gradient overlay</h3>
+				<p class="guide-note">A v2 image as a full-bleed background with a white text panel over it. Used on the homepage before the editorial cards.</p>
+				<div class="card-grid">
+					{gridSamples.map((a) => (
+						<a href={`/articles/${a.id}/`} class="gradient-card">
+							{a.image && (
+								<div class="gradient-card-thumb">
+									<img src={a.image.replace('/card-v3-', '/card-v2-')} alt={a.title} width="960" height="540" loading="lazy" />
 								</div>
 							)}
-							<h3 class="contained-card-title">{article.data.title}</h3>
-							<p class="contained-card-desc">{article.data.description}</p>
-							<p class="contained-card-meta">
-								<FormattedDate date={article.data.pubDate} />
-								<span>&middot;</span>
-								<span>{article.readTime} min read</span>
-							</p>
-						</div>
-					</a>
-				))}
-			</div>
-		</section>
-
-
-		<!-- ============ CALCULATOR THUMBNAILS ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Calculator Thumbnail: Line Art</h2>
-			<p class="section-desc">Bespoke illustrations built from the same grid-snapped hairline language as the article wireframes: dashed secondary paths, compound node markers, no gradient or color. Used on the homepage "Free tools" row and the tools index page via the shared <code>ToolThumbCard</code> component.</p>
-			<div class="calc-thumb-grid">
-				{TOOLS.map((tool) => (
-					<ToolThumbCard tool={tool} />
-				))}
-			</div>
-		</section>
-
-		<!-- ============ CARDS: PRODUCT / TEMPLATE ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Product Card: Template</h2>
-			<p class="section-desc">Used for spreadsheet templates on the homepage and article pages. Bordered card with optional badge.</p>
-			<div class="card-demo-grid card-demo-2col">
-				{templates.map((t) => (
-					<a href={t.url} class="template-demo-card">
-						<div class="template-demo-thumb">
-							{t.image && <img src={t.image} alt={`${t.name} preview`} width="600" height="400" loading="lazy" />}
-						</div>
-						{t.badge && <span class="badge template-demo-badge">{t.badge}</span>}
-						<h3 class="template-demo-name">{t.name}</h3>
-						<p class="template-demo-desc">{t.desc}</p>
-					</a>
-				))}
-			</div>
-		</section>
-
-		<!-- ============ BUTTONS ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Buttons</h2>
-			<p class="section-desc">Pill-shaped buttons with three variants. Used for CTAs and actions.</p>
-			<div class="button-row">
-				<button class="btn btn-primary">Primary button</button>
-				<button class="btn btn-secondary">Secondary button</button>
-				<button class="btn btn-ghost">Ghost button</button>
-			</div>
-			<div class="button-row" style="margin-top: var(--space-sm)">
-				<button class="btn btn-primary btn-sm">Small primary</button>
-				<button class="btn btn-secondary btn-sm">Small secondary</button>
-				<button class="btn btn-ghost btn-sm">Small ghost</button>
-			</div>
-		</section>
-
-		<!-- ============ PROSE ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Prose / Article Body</h2>
-			<p class="section-desc">How long-form article content renders. Applied via the <code>.prose</code> class.</p>
-
-			<div class="prose">
-				<h2>How do you budget when your income changes every month</h2>
-				<p>Start with your baseline: the lowest amount you've earned in the past six months. Build your budget around that number, not your average and definitely not your best month.</p>
-				<h3>List your non-negotiable expenses first</h3>
-				<p>Rent, utilities, groceries, insurance, minimum debt payments. These get funded before anything else. Write them down with <strong>real numbers</strong> from last month, not estimates.</p>
-				<blockquote>The point isn't to predict your income. It's to stop pretending it's predictable and plan around that reality instead.</blockquote>
-				<ul>
-					<li>An unordered list item</li>
-					<li>Another list item with enough text to wrap onto a second line so you can check the spacing</li>
-					<li>A third item</li>
-				</ul>
-				<p>A paragraph with <code>inline code</code> and an <a href="#">inline link</a> styled naturally within the reading flow.</p>
-			</div>
-		</section>
-
-		<!-- ============ BORDER RADII ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Border Radii</h2>
-			<div class="radii-row">
-				<div class="radius-demo" style="border-radius: var(--radius-sm)">
-					<code>--radius-sm</code>
-					<span>2px</span>
-				</div>
-				<div class="radius-demo" style="border-radius: var(--radius-md)">
-					<code>--radius-md</code>
-					<span>4px</span>
-				</div>
-				<div class="radius-demo" style="border-radius: var(--radius-full)">
-					<code>--radius-full</code>
-					<span>999px: buttons &amp; pills</span>
-				</div>
-			</div>
-		</section>
-
-		<!-- ============ DIVIDERS ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Dividers</h2>
-			<p class="section-desc">Thin 1px lines separate content sections instead of alternating background colors.</p>
-			<div class="divider-demo">
-				<div class="divider-sample">
-					<p>Content above divider</p>
-					<hr />
-					<p>Content below divider</p>
-				</div>
-			</div>
-		</section>
-
-		<!-- ============ NAVIGATION ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Navigation</h2>
-			<p class="section-desc">Hamburger menu with a slide-out panel from the right. Site title on the left, menu icon on the right.</p>
-		</section>
-
-		<!-- ============ FOOTER ============ -->
-		<section class="guide-section">
-			<h2 class="section-title">Footer</h2>
-			<p class="section-desc">Minimal footer with a top divider line and muted copyright text.</p>
-		</section>
-
-		<!-- ============ ARCHIVE ============ -->
-		<section class="guide-section archive-section">
-			<h2 class="section-title">Archive</h2>
-			<p class="section-desc">Deprecated card styles kept for reference.</p>
-
-			<h3 class="archive-label">Article Card: Gradient Overlay</h3>
-			<p class="section-desc">Hero gradient as full-bleed background with a centered white text overlay. Uses the abstract <code>image</code> SVG. Previously used on the homepage.</p>
-			<div class="card-demo-grid card-demo-3col">
-				{sampleArticles.map((article) => (
-					<a href={`/articles/${article.id}/`} class="gradient-card">
-						{article.data.image && (
-							<div class="gradient-card-thumb">
-								<img src={article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
+							<div class="gradient-card-body">
+								<h4 class="gradient-card-title">{a.title}</h4>
+								<p class="gradient-card-desc">{a.desc}</p>
+								<p class="gradient-card-meta">{a.readTime} min read</p>
 							</div>
-						)}
-						<div class="gradient-card-body">
-							<h3 class="gradient-card-title">{article.data.title}</h3>
-							<p class="gradient-card-desc">{article.data.description}</p>
-							<p class="gradient-card-meta">
-								<FormattedDate date={article.data.pubDate} />
-								<span>&middot;</span>
-								<span>5 min read</span>
-							</p>
-						</div>
-					</a>
-				))}
-			</div>
+						</a>
+					))}
+				</div>
 
-			<h3 class="archive-label">Tool Thumbnails: UI Preview</h3>
-			<p class="section-desc">Article-style mesh background (palette matched to each tool's related article) with the tool's own UI cropped into the bottom-right. Explored for the tools index cards and the "More free tools" list; not shipped. Those surfaces kept the icon treatment.</p>
-			<div class="card-demo-grid card-demo-3col">
-				{toolThumbnails.map((t) => (
-					<figure class="tool-thumb-demo">
-						<img src={t.src} alt={`${t.name} thumbnail preview`} width="960" height="540" loading="lazy" />
-						<figcaption>{t.name}</figcaption>
-					</figure>
-				))}
+				<h3 class="guide-label">Tool thumbnails: UI preview</h3>
+				<p class="guide-note">A mesh background with the tool's own UI cropped into the corner. Explored for the tools index; not shipped.</p>
+				<div class="thumbs">
+					{toolThumbnails.map((t) => (
+						<figure class="thumb">
+							<img src={t.src} alt={`${t.name} thumbnail preview`} width="960" height="540" loading="lazy" />
+							<figcaption>{t.name}</figcaption>
+						</figure>
+					))}
+				</div>
 			</div>
 		</section>
-
 	</main>
 </BaseLayout>
 
 <style>
-	/* ——— Guide layout ——— */
-
-	.guide {
-		max-width: calc(var(--max-width) + var(--space-md) * 2);
-		margin: 0 auto;
-		/* This wrapper became <main> for the landmark and the skip-link target.
-		   The global `main` rule adds section padding, which this page does not
-		   want — .guide-header and each section carry their own. */
-		padding: 0;
-	}
+	/* Only this page's documentation chrome. Every demo above is a real
+	   component styled by its own rules. */
 
 	.guide-header {
-		padding: var(--space-xl) var(--space-md) var(--space-lg);
+		padding-bottom: var(--space-xl);
 	}
-
 	.guide-header h1 {
-		font-size: var(--text-h1);
-		margin-bottom: var(--space-xs);
+		font-size: var(--text-display);
+		letter-spacing: var(--tracking-tight);
+		margin-bottom: var(--space-sm);
 	}
-
-	.guide-intro {
-		font-size: var(--text-body);
+	.guide-lede {
+		font-size: var(--text-body-lg);
+		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
-		max-width: 50ch;
+		max-width: 44rem;
+		margin: 0 0 var(--space-md);
+	}
+	.guide-toc {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+	}
+	.guide-toc a {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		color: var(--color-text);
+		text-decoration: none;
+		padding: 0.4rem 0.9rem;
+		border-radius: var(--radius-full);
+		box-shadow: inset 0 0 0 1px var(--color-border);
+	}
+	.guide-toc a:hover {
+		background: var(--color-bg-panel);
 	}
 
-	.guide-section {
-		padding: var(--space-xl) var(--space-md) var(--space-md);
-		border-top: 1px solid var(--color-border);
+	.guide-label {
+		font-size: var(--text-h3);
+		margin: var(--space-xl) 0 var(--space-sm);
 	}
-
-	.section-title {
-		font-size: var(--text-h2);
-		margin-bottom: var(--space-2xs);
-	}
-
-	.section-desc {
+	.guide-note {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
 		color: var(--color-text-secondary);
-		margin-bottom: var(--space-md);
-		max-width: 60ch;
+		max-width: 46rem;
+		margin: 0 0 var(--space-md);
 	}
-
-	.section-desc code {
-		padding: 2px 6px;
+	.guide-note code,
+	.swatch code,
+	.type-meta code,
+	.spacing-row code,
+	.radius code {
+		font-size: 0.8125rem;
+		padding: 1px 5px;
 		background: var(--color-bg-panel);
 		border-radius: var(--radius-sm);
-		font-size: 0.9em;
 	}
 
-	/* ——— Colors ——— */
-
-	.color-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
-		gap: var(--space-sm);
+	.demo {
+		margin-bottom: var(--space-lg);
 	}
-
-	.color-card {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		overflow: hidden;
-	}
-
-	.color-swatch {
-		height: 4.5rem;
-	}
-
-	.color-info {
-		padding: var(--space-xs);
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-	}
-
-	.color-label {
-		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-	}
-
-	.color-token {
-		font-size: 0.7rem;
-		color: var(--color-text-muted);
-		background: none;
-		padding: 0;
-	}
-
-	.color-hex {
-		font-size: 0.75rem;
-		color: var(--color-text-muted);
-		font-family: monospace;
-	}
-
-	/* ——— Type scale ——— */
-
-	.type-list {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-md);
-	}
-
-	.type-row {
-		border-bottom: 1px solid var(--color-border);
-		padding-bottom: var(--space-md);
-	}
-
-	.type-row:last-child {
-		border-bottom: none;
-	}
-
-	.type-meta {
-		display: flex;
-		align-items: baseline;
-		gap: var(--space-sm);
-		margin-bottom: var(--space-xs);
-	}
-
-	.type-label {
-		font-size: var(--text-small);
-		font-weight: var(--weight-normal);
-		color: var(--color-text-secondary);
-		min-width: 5rem;
-	}
-
-	.type-token {
-		font-size: 0.75rem;
-		color: var(--color-text-muted);
-		background: none;
-		padding: 0;
-	}
-
-	.type-sample {
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-	}
-
-	/* ——— Font weights ——— */
-
-	.weight-list {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-sm);
-	}
-
-	.weight-list p {
-		font-size: var(--text-body-lg);
-		color: var(--color-text);
-		margin-bottom: 0;
-	}
-
-	/* ——— Eyebrows & buttons ——— */
-
-	.eyebrow-demo {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-		gap: var(--space-lg);
-		margin-bottom: var(--space-md);
-	}
-
-	.eyebrow-demo > div > .section-desc:last-child {
-		margin-bottom: 0;
-	}
-
-	.demo-eyebrow-heading {
-		font-size: var(--text-h3);
-		margin-bottom: var(--space-xs);
-	}
-
-	.btn-demo {
+	.demo--row {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		gap: var(--space-sm);
-		margin-bottom: var(--space-md);
+	}
+	.demo--narrow {
+		max-width: var(--max-width-narrow);
+	}
+	.tool-rows {
+		border-top: 1px solid var(--color-border);
 	}
 
-	/* ——— Spacing ——— */
+	/* ——— Swatches ——— */
+
+	.swatches {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+		gap: var(--space-md);
+	}
+	.swatches--wide {
+		grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+	}
+	.swatch {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2xs);
+		font-size: var(--text-xs);
+	}
+	.swatch-chip {
+		height: 4rem;
+		border-radius: var(--radius-card);
+		box-shadow: inset 0 0 0 1px rgba(var(--shadow-rgb), 0.08);
+		margin-bottom: var(--space-2xs);
+	}
+	.swatch-chip--tall {
+		height: 7rem;
+	}
+	.swatch-name {
+		font-family: var(--font-sans);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+	}
+	.swatch-value {
+		color: var(--color-text-muted);
+		font-size: var(--text-xs);
+	}
+
+	/* ——— Type, spacing, radius ——— */
+
+	.type-list {
+		border-top: 1px solid var(--color-border);
+	}
+	.type-row {
+		display: grid;
+		grid-template-columns: 11rem 1fr;
+		gap: var(--space-md);
+		align-items: baseline;
+		padding: var(--space-sm) 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+	.type-meta {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2xs);
+		font-family: var(--font-sans);
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+	}
+	.type-sample {
+		line-height: var(--leading-snug);
+		min-width: 0;
+		overflow-wrap: anywhere;
+	}
+	.type-sample--heading {
+		font-family: var(--font-heading);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		line-height: var(--leading-tight);
+	}
 
 	.spacing-list {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-xs);
 	}
-
 	.spacing-row {
-		display: flex;
-		align-items: center;
+		display: grid;
+		grid-template-columns: 9rem auto 1fr;
 		gap: var(--space-sm);
+		align-items: center;
 	}
-
-	.spacing-token {
-		font-size: 0.75rem;
-		color: var(--color-text-muted);
-		min-width: 8rem;
-		text-align: right;
-		background: none;
-		padding: 0;
-	}
-
-	.spacing-px {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		min-width: 3rem;
-	}
-
 	.spacing-bar {
+		display: block;
 		height: 0.75rem;
-		background: var(--color-link);
-		border-radius: var(--radius-sm);
-		opacity: 0.7;
+		border-radius: var(--radius-full);
+		background: var(--tint-sky);
 	}
 
-	/* ——— Headline treatments ——— */
-
-	.headline-demo {
-		padding: var(--space-lg) 0;
-		border-bottom: 1px solid var(--color-border);
+	.radii {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+		gap: var(--space-md);
 	}
-
-	.headline-demo:last-child {
-		border-bottom: none;
-	}
-
-	.demo-display {
-		font-size: var(--text-display);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-	}
-
-	.demo-h2 {
-		font-size: var(--text-h2);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-	}
-
-	.accent {
-		color: var(--color-link);
-	}
-
-	/* ——— Article list ——— */
-
-	.article-list {
-		list-style: none;
-		padding: 0;
+	.radius {
 		display: flex;
 		flex-direction: column;
-		max-width: var(--max-width);
-	}
-
-	.article-list li {
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.article-list li:last-child {
-		border-bottom: none;
-	}
-
-	.article-card {
-		display: block;
-		padding: var(--space-md) 0;
-		text-decoration: none;
-		transition: opacity 0.15s;
-	}
-
-	.article-card:hover {
-		opacity: 0.7;
-	}
-
-	.article-title {
-		font-size: var(--text-h3);
-		color: var(--color-text);
-		margin-bottom: var(--space-2xs);
-	}
-
-	.article-desc {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		margin-bottom: var(--space-xs);
-		line-height: var(--leading-snug);
-	}
-
-	.article-date {
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-		margin: 0;
-	}
-
-	/* ——— Divider demo ——— */
-
-	.divider-demo {
-		max-width: var(--max-width-narrow);
-	}
-
-	.divider-sample p {
-		padding: var(--space-sm) 0;
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
-
-	/* ——— Prose section ——— */
-
-	.guide-section .prose {
-		max-width: var(--max-width-narrow);
-		padding: var(--space-md);
-		background: var(--color-bg-panel);
-		border-radius: var(--radius-md);
-	}
-
-	/* ——— Border radii ——— */
-
-	.radii-row {
-		display: flex;
-		gap: var(--space-lg);
-		flex-wrap: wrap;
-	}
-
-	.radius-demo {
-		width: 10rem;
-		height: 7rem;
-		border: 1px solid var(--color-border);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
 		gap: var(--space-2xs);
-	}
-
-	.radius-demo code {
-		font-size: 0.75rem;
-		color: var(--color-text-secondary);
-		background: none;
-		padding: 0;
-	}
-
-	.radius-demo span {
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-	}
-
-	/* ——— Card demo grids ——— */
-
-	.card-demo-grid {
-		display: grid;
-		gap: var(--space-md);
-	}
-	.card-demo-3col {
-		grid-template-columns: repeat(3, 1fr);
-	}
-	.card-demo-2col {
-		grid-template-columns: repeat(2, 1fr);
-	}
-	@media (max-width: 960px) {
-		.card-demo-3col { grid-template-columns: 1fr; }
-	}
-	@media (max-width: 600px) {
-		.card-demo-2col { grid-template-columns: 1fr; }
-	}
-
-	/* ——— Calculator thumbnail (ToolThumbCard demo grid) ——— */
-
-	.calc-thumb-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-md);
-	}
-	@media (max-width: 900px) {
-		.calc-thumb-grid { grid-template-columns: repeat(2, 1fr); }
-	}
-	@media (max-width: 600px) {
-		.calc-thumb-grid { grid-template-columns: 1fr; }
-	}
-
-	.demo-card-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.375rem;
-		margin-bottom: var(--space-xs);
-	}
-	/* The demo cards render the real .badge, so there is no lookalike here to
-	   drift out of sync with it. */
-
-	/* ——— Editorial card (homepage style) ——— */
-
-	.editorial-card {
-		display: flex;
-		flex-direction: column;
-		text-decoration: none;
-	}
-	.editorial-card-thumb {
-		border-radius: var(--radius-md);
-		overflow: hidden;
-		margin-bottom: var(--space-sm);
-		background: var(--color-bg-panel);
-		padding: 1.5rem;
-		transition: background 0.15s ease;
-	}
-	.editorial-card-thumb img {
-		display: block;
-		width: 100%;
-		height: auto;
-	}
-	.editorial-card:hover .editorial-card-thumb {
-		background: var(--color-bg-emphasis);
-	}
-	.editorial-card-title {
-		font-size: var(--text-h3);
-		color: var(--color-text);
-		line-height: var(--leading-snug);
-		margin-bottom: var(--space-xs);
-		text-decoration: underline transparent;
-		text-underline-offset: 3px;
-		transition: text-decoration-color 100ms ease;
-	}
-	.editorial-card:hover .editorial-card-title {
-		text-decoration-color: var(--color-text);
-	}
-	.editorial-card-desc {
-		font-size: var(--text-small);
-		line-height: var(--leading-snug);
-		color: var(--color-text-secondary);
-		margin: 0 0 var(--space-xs);
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-	.editorial-card-meta {
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-		margin: 0;
-		margin-top: auto;
-		display: flex;
-		align-items: center;
-		gap: 0.375rem;
-	}
-
-	/* ——— Contained card (articles index style) ——— */
-
-	.contained-card {
-		display: flex;
-		flex-direction: column;
-		text-decoration: none;
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		overflow: hidden;
-		background: var(--color-bg-surface);
-		transition: border-color 0.15s, background 0.15s;
-	}
-	.contained-card:hover {
-		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
-	}
-	.contained-card-thumb {
-		overflow: hidden;
-	}
-	.contained-card-thumb img {
-		display: block;
-		width: 100%;
-		height: auto;
-	}
-	.contained-card-body {
 		padding: var(--space-md);
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-	}
-	.contained-card-title {
-		font-size: var(--text-h3);
-		color: var(--color-text);
-		line-height: var(--leading-snug);
-		margin-bottom: var(--space-xs);
-		text-decoration: underline transparent;
-		text-underline-offset: 3px;
-		transition: text-decoration-color 100ms ease;
-	}
-	.contained-card:hover .contained-card-title {
-		text-decoration-color: var(--color-text);
-	}
-	.contained-card-desc {
-		font-size: var(--text-small);
-		line-height: var(--leading-snug);
+		min-height: 6rem;
+		background: var(--color-bg-panel);
+		box-shadow: inset 0 0 0 1px var(--color-border);
+		font-size: var(--text-xs);
 		color: var(--color-text-secondary);
-		margin: 0 0 var(--space-xs);
-	}
-	.contained-card-meta {
-		font-size: var(--text-small);
-		color: var(--color-text-muted);
-		margin: 0;
-		margin-top: auto;
-		display: flex;
-		align-items: center;
-		gap: 0.375rem;
 	}
 
-	/* ——— Gradient overlay card (legacy homepage) ——— */
+	/* ——— Thumbnail galleries ——— */
+
+	.thumbs {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--space-md);
+	}
+	.thumb {
+		margin: 0;
+	}
+	.thumb img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-card);
+		box-shadow: inset 0 0 0 1px rgba(var(--shadow-rgb), 0.06);
+	}
+	.thumb figcaption {
+		font-family: var(--font-sans);
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
+		margin-top: var(--space-2xs);
+		overflow-wrap: anywhere;
+	}
+
+	/* ——— Archived: gradient overlay card ——— */
 
 	.gradient-card {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
 		position: relative;
+		display: flex;
+		min-height: 20rem;
 		text-decoration: none;
 		border-radius: 0.75rem;
 		overflow: hidden;
-		transition: box-shadow 0.2s ease;
-		min-height: 20rem;
-	}
-	.gradient-card:hover {
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 	}
 	.gradient-card-thumb {
 		position: absolute;
 		inset: 0;
-		z-index: 0;
 	}
 	.gradient-card-thumb img {
 		display: block;
@@ -982,20 +584,17 @@ const toolThumbnails = [
 	}
 	.gradient-card-body {
 		position: relative;
-		z-index: 1;
-		background: var(--color-bg-surface);
-		border-radius: var(--radius-md);
-		padding: var(--space-md);
-		margin: var(--space-md);
 		display: flex;
 		flex-direction: column;
-		width: calc(100% - var(--space-md) * 2);
 		flex: 1;
+		margin: var(--space-md);
+		padding: var(--space-md);
+		background: var(--color-bg-surface);
+		border-radius: var(--radius-md);
 	}
 	.gradient-card-title {
 		font-size: var(--text-h3);
 		color: var(--color-text);
-		line-height: var(--leading-snug);
 		margin-bottom: var(--space-xs);
 	}
 	.gradient-card-desc {
@@ -1003,114 +602,31 @@ const toolThumbnails = [
 		line-height: var(--leading-snug);
 		color: var(--color-text-secondary);
 		margin: 0 0 var(--space-xs);
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
 	}
 	.gradient-card-meta {
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
-		margin: 0;
-		margin-top: auto;
-		display: flex;
-		align-items: center;
-		gap: 0.375rem;
+		margin: auto 0 0;
 	}
 
-	/* ——— Archive ——— */
-
-	.archive-section {
-		opacity: 0.6;
-		transition: opacity 0.2s;
+	@media (max-width: 960px) {
+		.thumbs {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
-	.archive-section:hover {
-		opacity: 1;
-	}
-	.archive-label {
-		font-size: var(--text-body);
-		margin-bottom: var(--space-xs);
-		margin-top: var(--space-md);
-	}
-
-	.tool-thumb-demo {
-		margin: 0;
-	}
-	.tool-thumb-demo img {
-		display: block;
-		width: 100%;
-		height: auto;
-		border-radius: var(--radius-md);
-	}
-	.tool-thumb-demo figcaption {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		margin-top: var(--space-2xs);
-	}
-
-	/* ——— Template / product card demo ——— */
-
-	.template-demo-card {
-		display: flex;
-		flex-direction: column;
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		text-decoration: none;
-		overflow: hidden;
-		transition: border-color 0.15s, background 0.15s;
-	}
-	.template-demo-card:hover {
-		border-color: var(--color-text-muted);
-		background: var(--color-bg-panel);
-	}
-	.template-demo-thumb {
-		aspect-ratio: 3 / 2;
-		background: var(--color-bg-panel);
-		overflow: hidden;
-	}
-	.template-demo-thumb img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
-	}
-	/* Look comes from .badge. Astro scoping outranks it, so only layout here. */
-	.template-demo-badge {
-		align-self: flex-start;
-		margin: var(--space-md) var(--space-md) 0;
-	}
-	.template-demo-name {
-		font-size: var(--text-body);
-		color: var(--color-text);
-		margin-bottom: var(--space-xs);
-		padding: var(--space-xs) var(--space-md) 0;
-	}
-	.template-demo-card:not(:has(.template-demo-badge)) .template-demo-name {
-		padding-top: var(--space-md);
-	}
-	.template-demo-desc {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		line-height: var(--leading-snug);
-		margin: 0;
-		padding: 0 var(--space-md) var(--space-md);
-	}
-
-	/* ——— Buttons ——— */
-
-	.button-row {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-sm);
-		align-items: center;
-	}
-
-	/* ——— Responsive ——— */
-
-	@media (max-width: 640px) {
-		.color-grid {
-			grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+	@media (max-width: 600px) {
+		.thumbs {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.type-row {
+			grid-template-columns: 1fr;
+			gap: var(--space-2xs);
+		}
+		.spacing-row {
+			grid-template-columns: 7rem auto;
+		}
+		.spacing-row .swatch-value {
+			grid-column: 1 / -1;
 		}
 	}
 </style>

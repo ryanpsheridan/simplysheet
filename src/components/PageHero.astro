@@ -1,0 +1,91 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+
+// The centered hero every top-level page opens with, over the faint
+// concentric rings.
+//
+//   size="hero"  the homepage only: --text-hero headline, larger standfirst
+//   size="page"  every other page: --text-display headline
+//
+// Slots:
+//   before   above the title (a badge, the 404 glyph)
+//   default  below the standfirst (buttons, a proof line, filter tabs)
+//   after    full-width content under the hero copy (the homepage stage)
+//
+// No `font-weight` on the title: it takes --weight-semibold from the shared
+// h1-h6 rule, like every heading.
+interface Crumb {
+	label: string;
+	href?: string;
+}
+
+interface Props {
+	title: string;
+	desc?: string;
+	size?: 'hero' | 'page';
+	crumbs?: Crumb[];
+}
+
+const { title, desc, size = 'page', crumbs } = Astro.props;
+---
+
+<section class:list={['page-hero', `page-hero--${size}`]}>
+	<div class="rings" aria-hidden="true"></div>
+	<div class="page-hero-inner">
+		{crumbs && <Breadcrumbs crumbs={crumbs} centered />}
+		<slot name="before" />
+		<h1 class="page-hero-title">{title}</h1>
+		{desc && <p class="page-hero-desc">{desc}</p>}
+		<slot />
+	</div>
+	<slot name="after" />
+</section>
+
+<style>
+	.page-hero {
+		position: relative;
+		isolation: isolate;
+		padding: clamp(3rem, 7vw, 5.5rem) var(--space-md) clamp(3rem, 6vw, 4.5rem);
+	}
+	.page-hero--hero {
+		padding: clamp(4.5rem, 9vw, 7.5rem) var(--space-md) clamp(4rem, 8vw, 6rem);
+	}
+	.page-hero-inner {
+		max-width: 48rem;
+		margin: 0 auto;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.page-hero--hero .page-hero-inner {
+		max-width: 60rem;
+	}
+
+	.page-hero-title {
+		font-size: var(--text-display);
+		line-height: var(--leading-display);
+		letter-spacing: var(--tracking-tight);
+		margin: 0 0 var(--space-sm);
+		text-wrap: balance;
+	}
+	.page-hero--hero .page-hero-title {
+		font-size: var(--text-hero);
+		letter-spacing: var(--tracking-hero);
+		margin-bottom: var(--space-md);
+	}
+
+	.page-hero-desc {
+		font-size: var(--text-read);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0;
+		max-width: 36rem;
+		text-wrap: pretty;
+	}
+	.page-hero--hero .page-hero-desc {
+		font-size: var(--text-body-lg);
+		letter-spacing: var(--tracking-body);
+		margin-bottom: var(--space-lg);
+	}
+</style>

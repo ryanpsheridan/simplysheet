@@ -1,0 +1,99 @@
+---
+import TagPills from './TagPills.astro';
+import { TAG_MAP } from '../consts';
+import type { ArticleCardData } from '../utils/articles';
+
+// The one article card. Build `article` with toArticleCard() from
+// src/utils/articles.ts; styling is the shared card anatomy in global.css.
+//
+//   grid     thumbnail over tags, title, optional description, read time
+//   feature  framed and side by side, for the one pinned article on a page
+//   compact  small thumbnail beside title and read time, for "Related
+//            articles" in a narrow reading column
+//
+// ArticleGrid renders these on the server and clones them for search, so
+// there is no second, hand-written copy of this markup anywhere.
+interface Props {
+	article: ArticleCardData;
+	variant?: 'grid' | 'feature' | 'compact';
+	/** The full data-cta value, e.g. `articles_grid_item:${id}`. */
+	cta: string;
+	/** Heading level for the title. h2 on listing pages whose h1 is the page title. */
+	level?: 'h2' | 'h3';
+	/** Show the description. On by default for grid and feature. */
+	desc?: boolean;
+	eager?: boolean;
+}
+
+const { article, variant = 'grid', cta, level = 'h3', eager = false } = Astro.props;
+const showDesc = Astro.props.desc ?? variant !== 'compact';
+const Title = level;
+---
+
+<a
+	href={`/articles/${article.id}/`}
+	class:list={[
+		'card',
+		'card--article',
+		`card--article-${variant}`,
+		{ 'card--framed': variant === 'feature', 'card--row': variant !== 'grid' },
+	]}
+	data-cta={cta}
+	data-title={article.title}
+	data-desc={article.desc}
+	data-date={article.date}
+>
+	{article.image && (
+		<div class="card-media">
+			<img
+				src={article.image}
+				alt={article.title}
+				width="960"
+				height="540"
+				loading={eager ? 'eager' : 'lazy'}
+				fetchpriority={eager ? 'high' : undefined}
+			/>
+		</div>
+	)}
+	<div class="card-body">
+		{variant !== 'compact' && <TagPills tags={article.tags} tagMap={TAG_MAP} />}
+		<Title class="card-title">{article.title}</Title>
+		{showDesc && <p class="card-desc">{article.desc}</p>}
+		<span class="card-meta">{article.readTime} min read</span>
+	</div>
+</a>
+
+<style>
+	/* Variant sizing only. Everything else is the shared anatomy. */
+	.card--article-feature {
+		--card-media-width: 55%;
+	}
+	.card--article-feature .card-title {
+		font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+	}
+	.card--article-feature .card-desc {
+		font-size: var(--text-read);
+	}
+
+	.card--article-compact {
+		--card-media-width: 8.5rem;
+	}
+	/* Stays a row on a phone: a compact card is a list item, and stacking it
+	   would turn four related links into four full-width thumbnails. */
+	@media (max-width: 600px) {
+		.card--article-compact {
+			flex-direction: row;
+			align-items: center;
+			gap: var(--space-sm);
+			--card-media-width: 6.5rem;
+		}
+		.card--article-compact > .card-media {
+			flex: 0 0 var(--card-media-width);
+		}
+		.card--article-compact > .card-body {
+			padding-top: 0;
+		}
+	}
+</style>

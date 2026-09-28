@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import BaseHead from '../components/BaseHead.astro';
@@ -10,14 +9,12 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ProductPromo from '../components/ProductPromo.astro';
 import TagPills from '../components/TagPills.astro';
 import AudioNarration from '../components/AudioNarration.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Faq from '../components/Faq.astro';
+import Toc from '../components/Toc.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
 import { SITE_TITLE, TAG_MAP, pageTitle } from '../consts';
-
-function slugifyFaq(text: string): string {
-	return text
-		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/(^-|-$)/g, '');
-}
+import { getRelatedArticles, toArticleCard } from '../utils/articles';
 
 interface Heading {
 	depth: number;
@@ -49,13 +46,7 @@ const audioSrc = id && existsSync(path.resolve('public/audio', `${id}.mp3`))
 
 const tocHeadings = headings.filter((h) => h.depth === 2);
 
-const allArticles = await getCollection('articles');
-const others = allArticles
-	.filter((a) => a.id !== id)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const tagMatched = others.filter((a) => a.data.tags?.some((t) => tags.includes(t)));
-const untagged = others.filter((a) => !tagMatched.includes(a));
-const related = [...tagMatched, ...untagged].slice(0, 4);
+const related = (await getRelatedArticles(tags, id)).map(toArticleCard);
 
 // Structured data uses the rasterized PNG (same swap BaseHead makes for
 // og:image) so image-aware crawlers get a format they can actually render.
@@ -115,16 +106,6 @@ const breadcrumbSchema = {
 	],
 };
 
-const faqSchema = faq?.length ? {
-	'@context': 'https://schema.org',
-	'@type': 'FAQPage',
-	mainEntity: faq.map(({ question, answer }: { question: string; answer: string }) => ({
-		'@type': 'Question',
-		name: question,
-		acceptedAnswer: { '@type': 'Answer', text: answer },
-	})),
-} : null;
-
 const articleUrl = Astro.url.toString();
 const emailShareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`Check out this article: ${articleUrl}`)}`;
 
@@ -161,28 +142,19 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		<BaseHead title={pageTitle(title)} description={description} image={cardImage || image} type="article" pubDate={pubDate} updatedDate={updatedDate} />
 		<script type="application/ld+json" set:html={JSON.stringify(schema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 	</head>
 	<body>
 		<a href="#main-content" class="skip-link">Skip to content</a>
 		<Header />
-		<div class="reading-progress" id="reading-progress"></div>
+		<ReadingProgress />
 
 		<main id="main-content" class:list={['article-main', { 'has-toc': tocHeadings.length > 1 }]}>
 			<Breadcrumbs crumbs={[{ label: 'Articles', href: '/articles/' }, { label: title }]} />
 			<div class="article-grid">
 				{tocHeadings.length > 1 && (
-					<div class="toc-rail">
-						<nav class="toc" aria-label="Table of contents">
-							<p class="toc-heading">On this page</p>
-							<ul class="toc-list">
-								{tocHeadings.map((h) => (
-									<li><a href={`#${h.slug}`} data-toc-slug={h.slug}>{h.text}</a></li>
-								))}
-							</ul>
-						</nav>
+					<Toc entries={tocHeadings.map((h) => ({ slug: h.slug, text: h.text }))}>
 						<ProductPromo slug={recommendedSlugs[0]} variant="mini" />
-					</div>
+					</Toc>
 				)}
 
 				<article>
@@ -228,40 +200,19 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 			</div>
 
 			{related.length > 0 && (
-				<aside class="related">
-					<h2 class="related-heading">Related articles</h2>
-					<ul class="related-list">
+				<aside class="related content-block" aria-labelledby="related-heading">
+					<h2 id="related-heading" class="content-block-title">Related articles</h2>
+					<div class="card-list">
 						{related.map((r) => (
-							<li>
-								<a href={`/articles/${r.id}/`} data-cta={`article_related_link:${r.id}`}>{r.data.title}</a>
-							</li>
+							<ArticleCard article={r} variant="compact" cta={`article_related_link:${r.id}`} />
 						))}
-					</ul>
+					</div>
 				</aside>
 			)}
 
-			{faq && faq.length > 0 && (
-				<section class="faq" id="faq">
-					<h2 class="faq-heading">Frequently asked questions</h2>
-					<div class="faq-list">
-						{faq.map(({ question, answer }: { question: string; answer: string }) => (
-							<details class="faq-item" id={slugifyFaq(question)}>
-								<summary class="faq-q">
-									<span>{question}</span>
-									<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-										<polyline points="6 9 12 15 18 9" />
-									</svg>
-								</summary>
-								<div class="faq-a-wrap">
-									<p class="faq-a">{answer}</p>
-								</div>
-							</details>
-						))}
-					</div>
-				</section>
-			)}
+			{faq && faq.length > 0 && <Faq items={faq} class="content-block" />}
 
-			<section class="recommended-products">
+			<section class="recommended-products content-block" aria-label="Recommended spreadsheets">
 				{recommendedSlugs.map((slug) => (
 					<ProductPromo slug={slug} variant="row" />
 				))}
@@ -270,30 +221,6 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		<Footer />
 
 		<script>
-			if (location.hash) {
-				const linkedFaq = document.getElementById(location.hash.slice(1));
-				if (linkedFaq && linkedFaq.classList.contains('faq-item')) (linkedFaq as HTMLDetailsElement).open = true;
-			}
-
-			document.querySelectorAll<HTMLDetailsElement>('.faq-item').forEach((details) => {
-				const summary = details.querySelector('summary');
-				const wrap = details.querySelector<HTMLElement>('.faq-a-wrap');
-				if (!summary || !wrap) return;
-
-				summary.addEventListener('click', (e) => {
-					e.preventDefault();
-					if (details.open) {
-						wrap.style.gridTemplateRows = '0fr';
-						wrap.addEventListener('transitionend', () => {
-							details.open = false;
-							wrap.style.gridTemplateRows = '';
-						}, { once: true });
-					} else {
-						details.open = true;
-					}
-				});
-			});
-
 			const shareBtn = document.getElementById('share-btn');
 			shareBtn?.addEventListener('click', async () => {
 				const url = window.location.href;
@@ -313,45 +240,6 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 					}
 				}
 			});
-
-			const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc-list a[data-toc-slug]'));
-			if (tocLinks.length > 0) {
-				const headingEls = tocLinks
-					.map((link) => document.getElementById(link.dataset.tocSlug!))
-					.filter((el): el is HTMLElement => el !== null);
-
-				let currentActive: HTMLAnchorElement | null = null;
-
-				function setActive(link: HTMLAnchorElement | null) {
-					if (link === currentActive) return;
-					currentActive?.classList.remove('active');
-					link?.classList.add('active');
-					currentActive = link;
-				}
-
-				const TOC_SCROLL_OFFSET = 96;
-				let tocTicking = false;
-
-				function updateActiveToc() {
-					let current = tocLinks[0];
-					for (let i = 0; i < headingEls.length; i++) {
-						if (headingEls[i].getBoundingClientRect().top <= TOC_SCROLL_OFFSET) {
-							current = tocLinks[i];
-						}
-					}
-					setActive(current);
-					tocTicking = false;
-				}
-
-				window.addEventListener('scroll', () => {
-					if (!tocTicking) {
-						requestAnimationFrame(updateActiveToc);
-						tocTicking = true;
-					}
-				}, { passive: true });
-
-				updateActiveToc();
-			}
 
 			/* :not(.calc-table) is load-bearing. Calculator tables opt out of
 			   scrolling on purpose — they set display:table + table-layout:fixed so
@@ -392,62 +280,30 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 				table.addEventListener('scroll', updateOverflow, { passive: true });
 			});
 
-			const progressBar = document.getElementById('reading-progress');
-			if (progressBar) {
-				let pTicking = false;
-				window.addEventListener('scroll', () => {
-					if (!pTicking) {
-						requestAnimationFrame(() => {
-							const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-							const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
-							progressBar.style.width = `${Math.min(progress, 100)}%`;
-							pTicking = false;
-						});
-						pTicking = true;
-					}
-				}, { passive: true });
-			}
 		</script>
 	</body>
 </html>
 
 <style>
-	/* ——— Reading progress bar ——— */
-
-	/* Pinned to the top of the safe area rather than the top of the viewport:
-	   the header floats and no longer touches the top, so a page-level
-	   indicator belongs at the very top — but under edge-to-edge rendering
-	   "the very top" is behind the status bar, where the rail is invisible.
-	   The inset is 0px in a normal browser tab. */
-	.reading-progress {
-		position: fixed;
-		top: env(safe-area-inset-top, 0px);
-		left: 0;
-		height: 3px;
-		background: var(--color-text-heading);
-		width: 0%;
-		z-index: 51;
-		transition: width 50ms linear;
-		display: none;
-	}
-
-	@media (max-width: 960px) {
-		.reading-progress {
-			display: block;
-		}
-		.toc-rail {
-			display: none;
-		}
-	}
-
 	/* ——— Article hero image ——— */
 
+	/* Card radius and the same inner hairline as .card-media, so the article's
+	   own image matches the card that linked to it. */
 	.article-hero-img {
 		position: relative;
 		aspect-ratio: 16 / 9;
 		margin-bottom: var(--space-lg);
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-card);
 		overflow: hidden;
+	}
+
+	.article-hero-img::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		box-shadow: inset 0 0 0 1px rgba(var(--shadow-rgb), 0.06);
+		pointer-events: none;
 	}
 
 	.article-hero-img img {
@@ -455,7 +311,6 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		border-radius: var(--radius-md);
 	}
 
 
@@ -552,51 +407,10 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 		}
 	}
 
-	/* ——— Table of contents ——— */
-
-	.toc-rail {
-		margin-bottom: calc(var(--space-lg) + 3rem);
-	}
-
-	.toc-heading {
-		font-size: 0.875rem;
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-		margin: 0 0 var(--space-sm);
-	}
-
-	.toc-list {
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		margin: 0;
-		padding: 0;
-		border-left: 1px solid var(--color-border);
-	}
-
-	.toc-list a {
-		display: block;
-		padding: 0.375rem 0 0.375rem var(--space-sm);
-		margin-left: -1px;
-		border-left: 2px solid transparent;
-		font-size: 0.875rem;
-		line-height: var(--leading-snug);
-		color: var(--color-text-muted);
-		text-decoration: none;
-		transition: color 0.15s, border-color 0.15s;
-	}
-
-	.toc-list a:hover {
-		color: var(--color-text);
-	}
-
-	.toc-list a.active {
-		color: var(--color-text-heading);
-		font-weight: var(--weight-normal);
-		border-left-color: var(--color-text-heading);
-	}
-
-	/* ——— Table of contents — sticky left rail on wide viewports ——— */
+	/* ——— Table of contents: left rail on wide viewports ———
+	   The Toc component makes itself sticky; this places it in the grid and
+	   lines the closing blocks up under the reading column. Those blocks are
+	   rendered by child components (Faq), so the selectors are :global. */
 
 	@media (min-width: 1100px) {
 		.has-toc .article-grid {
@@ -606,153 +420,10 @@ const recommendedSlugs = (uniqueProductIds.length >= 2 ? uniqueProductIds : ['bu
 			align-items: start;
 		}
 
-		.has-toc .toc-rail {
-			position: sticky;
-			top: var(--header-offset);
-			margin-bottom: 0;
-		}
-
-		.has-toc .related,
-		.has-toc .faq,
-		.has-toc .recommended-products {
+		.has-toc :global(.content-block) {
 			max-width: var(--max-width-narrow);
 			margin-left: calc(var(--toc-rail-width) + var(--toc-gap));
 			margin-right: auto;
 		}
-	}
-
-	/* ——— FAQ section ——— */
-
-	.faq {
-		margin-top: var(--space-2xl);
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
-	}
-
-	.faq-heading {
-		font-size: var(--text-h2);
-		margin-bottom: var(--space-md);
-	}
-
-	.faq-list {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.faq-item {
-		border-bottom: 1px solid var(--color-border);
-		scroll-margin-top: var(--header-offset);
-	}
-
-	.faq-item:last-child {
-		border-bottom: none;
-	}
-
-	.faq-q {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--space-sm);
-		width: 100%;
-		padding: var(--space-md) 0;
-		font-size: var(--text-body);
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-		cursor: pointer;
-		list-style: none;
-		transition: color 0.15s;
-	}
-
-	.faq-q::-webkit-details-marker {
-		display: none;
-	}
-
-	.faq-q::marker {
-		display: none;
-		content: '';
-	}
-
-	.faq-q:hover {
-		color: var(--color-text);
-	}
-
-	.faq-arrow {
-		flex-shrink: 0;
-		transition: transform 300ms ease;
-	}
-
-	.faq-item[open] .faq-arrow {
-		transform: rotate(180deg);
-	}
-
-	.faq-a-wrap {
-		display: grid;
-		grid-template-rows: 0fr;
-		transition: grid-template-rows 300ms ease;
-	}
-
-	.faq-item[open] .faq-a-wrap {
-		grid-template-rows: 1fr;
-	}
-
-	.faq-a-wrap > .faq-a {
-		overflow: hidden;
-	}
-
-	.faq-a {
-		font-size: var(--text-read);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-		padding-bottom: var(--space-md);
-	}
-
-	/* ——— Recommended products ——— */
-
-	.recommended-products {
-		margin-top: var(--space-2xl);
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
-	}
-
-	/* ——— Related articles ——— */
-
-	.related {
-		margin-top: var(--space-2xl);
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
-	}
-
-	.related-heading {
-		font-size: var(--text-h3);
-		margin-bottom: var(--space-sm);
-	}
-
-	.related-list {
-		list-style: none;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0;
-	}
-	.related-list li {
-		padding: var(--space-sm) 0;
-		border-bottom: 1px solid var(--color-border);
-	}
-	.related-list li:last-child {
-		border-bottom: none;
-		padding-bottom: 0;
-	}
-	.related-list li:first-child {
-		padding-top: 0;
-	}
-
-	.related-list a {
-		font-size: var(--text-body);
-		text-decoration: none;
-	}
-
-	.related-list a:hover {
-		text-decoration: underline;
 	}
 </style>

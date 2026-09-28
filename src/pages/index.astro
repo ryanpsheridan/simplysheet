@@ -1,36 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import TagPills from '../components/TagPills.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import ToolCard from '../components/ToolCard.astro';
+import Faq from '../components/Faq.astro';
+import CtaBanner from '../components/CtaBanner.astro';
 import { getCollection } from 'astro:content';
-import { SITE_DESCRIPTION, SITE_TITLE, TAG_MAP } from '../consts';
-import { TOOLS } from '../data/tools';
+import { SITE_DESCRIPTION, SITE_TITLE, templateName } from '../consts';
+import { TOOLS, toolId } from '../data/tools';
+import { getSortedArticles, toArticleCard } from '../utils/articles';
 
-const allArticles = (await getCollection('articles'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.map((article) => {
-		const wordCount = article.body?.split(/\s+/).filter(Boolean).length ?? 0;
-		const readTime = Math.max(1, Math.ceil(wordCount / 200));
-		return { ...article, readTime };
-	});
+const allArticles = await getSortedArticles();
 
 const featuredSlug = 'how-to-split-bills-with-different-incomes';
-const featured = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
-const rest = allArticles.filter((a) => a.id !== featured.id);
+const featuredEntry = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
+const featured = toArticleCard(featuredEntry);
 
 // Two rows of three under the featured card. Keep it a multiple of 3.
-const latest = rest.slice(0, 6);
+const latest = allArticles.filter((a) => a.id !== featured.id).slice(0, 6).map(toArticleCard);
 
-const templates = (await getCollection('templates'))
-	.sort((a, b) => a.data.order - b.data.order)
-	.map((t) => ({
-		id: t.id,
-		name: t.data.title.replace(/ for (Google )?Sheets & Excel$/, ''),
-		desc: t.data.description,
-		url: `/spreadsheets/${t.id}/`,
-		image: t.data.midImage,
-		imageLight: t.data.midImageLight,
-		badge: t.data.badge,
-	}));
+const templates = (await getCollection('templates')).sort((a, b) => a.data.order - b.data.order);
 
 // The showcase stage fans three mockups: the best seller in front, flanked by
 // two light-theme products so the pair of themes reads at a glance.
@@ -39,14 +30,7 @@ const stageFront = byId('budget-spreadsheet') ?? templates[0];
 const stageLeft = byId('debt-payoff-tracker');
 const stageRight = byId('savings-goals-tracker');
 
-// Bento spans, in collection order: narrow/wide, wide/narrow, half/half.
-// Six templates fill it exactly; a seventh falls back to a half-width card.
-const bentoSpans = ['5', '7', '7', '5', '6', '6'];
-
-const tools = TOOLS.slice(0, 6).map((tool) => ({
-	...tool,
-	id: tool.url.replace(/\/$/, '').split('/').pop(),
-}));
+const tools = TOOLS.slice(0, 6);
 
 const faq = [
 	{
@@ -70,16 +54,6 @@ const faq = [
 		answer: 'Yes. Every calculator and quiz on the site is free to use, runs in your browser, and asks for no email or sign-up.',
 	},
 ];
-
-const faqSchema = {
-	'@context': 'https://schema.org',
-	'@type': 'FAQPage',
-	mainEntity: faq.map((item) => ({
-		'@type': 'Question',
-		name: item.question,
-		acceptedAnswer: { '@type': 'Answer', text: item.answer },
-	})),
-};
 
 const organizationSchema = {
 	'@context': 'https://schema.org',
@@ -113,73 +87,58 @@ const websiteSchema = {
 <BaseLayout title={`${SITE_TITLE} | Budget Templates, Tools & Money Guides`} description={SITE_DESCRIPTION}>
 	<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-	<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-	<main id="main-content" class="home-main">
+	<main id="main-content" class="band-main">
 
-	{/* ——— Hero ——— */}
-	<section class="hero">
-		<div class="hero-rings" aria-hidden="true"></div>
-		<div class="hero-inner">
-			<h1 class="hero-title">A simpler way to manage your personal finances.</h1>
-			<p class="hero-desc">Budget spreadsheets for Google Sheets and Excel, free calculators, and plain-language guides for paying off debt, saving, and living on an irregular income.</p>
-			<div class="hero-actions">
-				<a href="/spreadsheets/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_hero_cta:spreadsheets">Browse spreadsheets</a>
-				<a href="/tools/" class="btn btn-secondary btn-lg" data-cta="index_hero_cta:tools">Try a free calculator</a>
-			</div>
-			<ul class="hero-proof">
-				<li>Google Sheets + Excel</li>
-				<li>Dark and light themes</li>
-				<li>One-time purchase, no subscription</li>
-			</ul>
+	<PageHero
+		size="hero"
+		title="A simpler way to manage your personal finances."
+		desc="Budget spreadsheets for Google Sheets and Excel, free calculators, and plain-language guides for paying off debt, saving, and living on an irregular income."
+	>
+		<div class="hero-actions">
+			<a href="/spreadsheets/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_hero_cta:spreadsheets">Browse spreadsheets</a>
+			<a href="/tools/" class="btn btn-secondary btn-lg" data-cta="index_hero_cta:tools">Try a free calculator</a>
 		</div>
+		<ul class="hero-proof">
+			<li>Google Sheets + Excel</li>
+			<li>Dark and light themes</li>
+			<li>One-time purchase, no subscription</li>
+		</ul>
 
-		{stageFront?.image && (
-			<a href={stageFront.url} class="stage" data-cta={`index_showcase:${stageFront.id}`} aria-label={`${stageFront.name}: view template`}>
-				{stageLeft?.imageLight && (
-					<img class="stage-img stage-img--left" src={stageLeft.imageLight} alt={`${stageLeft.name} in the light theme`} width="2000" height="1200" loading="lazy" />
+		{stageFront?.data.midImage && (
+			<a slot="after" href={`/spreadsheets/${stageFront.id}/`} class="stage" data-cta={`index_showcase:${stageFront.id}`} aria-label={`${templateName(stageFront.data.title)}: view template`}>
+				{stageLeft?.data.midImageLight && (
+					<img class="stage-img stage-img--left" src={stageLeft.data.midImageLight} alt={`${templateName(stageLeft.data.title)} in the light theme`} width="2000" height="1200" loading="lazy" />
 				)}
-				{stageRight?.imageLight && (
-					<img class="stage-img stage-img--right" src={stageRight.imageLight} alt={`${stageRight.name} in the light theme`} width="2000" height="1200" loading="lazy" />
+				{stageRight?.data.midImageLight && (
+					<img class="stage-img stage-img--right" src={stageRight.data.midImageLight} alt={`${templateName(stageRight.data.title)} in the light theme`} width="2000" height="1200" loading="lazy" />
 				)}
-				<img class="stage-img stage-img--front" src={stageFront.image} alt={`${stageFront.name} in the dark theme`} width="2000" height="1200" fetchpriority="high" />
+				<img class="stage-img stage-img--front" src={stageFront.data.midImage} alt={`${templateName(stageFront.data.title)} in the dark theme`} width="2000" height="1200" fetchpriority="high" />
 			</a>
 		)}
-	</section>
+	</PageHero>
 
-	{/* ——— Spreadsheets bento ——— */}
-	<section class="section" aria-labelledby="spreadsheets-heading">
-		<div class="section-inner">
-			<header class="section-head">
-				<h2 id="spreadsheets-heading" class="section-title">Spreadsheets built for one job each</h2>
-				<div class="section-head-aside">
-					<p class="section-desc">A budget, a debt tracker, a savings tracker, and more. Each one does its job well rather than trying to do everything.</p>
-					<a href="/spreadsheets/" class="text-link" data-cta="index_spreadsheets_view_all">All spreadsheets <span class="arrow">&rarr;</span></a>
-				</div>
-			</header>
-			<div class="bento">
-				{templates.map((t, i) => (
-					<a href={t.url} class="bento-card" style={`--span: ${bentoSpans[i] ?? '6'}`} data-cta={`index_spreadsheets_card:${t.id}`}>
-						<div class="bento-media">
-							{t.image && <img src={t.image} alt={`${t.name} preview`} width="2000" height="1200" loading="lazy" />}
-							{t.badge && <span class="badge badge-overlay">{t.badge}</span>}
-						</div>
-						<div class="bento-body">
-							<h3 class="bento-title">{t.name}</h3>
-							<p class="bento-desc">{t.desc}</p>
-						</div>
-					</a>
-				))}
-			</div>
+	<section class="band" aria-labelledby="spreadsheets-heading">
+		<div class="band-inner">
+			<SectionHead
+				id="spreadsheets-heading"
+				title="Spreadsheets built for one job each"
+				desc="A budget, a debt tracker, a savings tracker, and more. Each one does its job well rather than trying to do everything."
+				href="/spreadsheets/"
+				linkLabel="All spreadsheets"
+				cta="index_spreadsheets_view_all"
+			/>
+			<ProductGrid templates={templates} layout="bento" ctaPrefix="index_spreadsheets_card" />
 		</div>
 	</section>
 
-	{/* ——— How it works ——— */}
-	<section class="section section--surface" aria-labelledby="steps-heading">
-		<div class="section-inner">
-			<header class="section-head section-head--center">
-				<h2 id="steps-heading" class="section-title">Set up in an afternoon.<br />Keep it for years.</h2>
-				<p class="section-desc">No bank logins, no app to learn. A spreadsheet you own, doing the math for you.</p>
-			</header>
+	<section class="band band--surface" aria-labelledby="steps-heading">
+		<div class="band-inner">
+			<SectionHead
+				id="steps-heading"
+				align="center"
+				title="Set up in an afternoon. Keep it for years."
+				desc="No bank logins, no app to learn. A spreadsheet you own, doing the math for you."
+			/>
 			<ol class="steps">
 				<li class="step">
 					<span class="step-num">1</span>
@@ -200,254 +159,92 @@ const websiteSchema = {
 		</div>
 	</section>
 
-	{/* ——— Free tools ——— */}
-	<section class="section" aria-labelledby="tools-heading">
-		<div class="section-inner">
-			<header class="section-head">
-				<h2 id="tools-heading" class="section-title">Free tools for the math you keep putting off</h2>
-				<div class="section-head-aside">
-					<p class="section-desc">Calculators and quick assessments that run in your browser. No email, no sign-up.</p>
-					<a href="/tools/" class="text-link" data-cta="index_tools_view_all">All {TOOLS.length} tools <span class="arrow">&rarr;</span></a>
-				</div>
-			</header>
+	<section class="band" aria-labelledby="tools-heading">
+		<div class="band-inner">
+			<SectionHead
+				id="tools-heading"
+				title="Free tools for the math you keep putting off"
+				desc="Calculators and quick assessments that run in your browser. No email, no sign-up."
+				href="/tools/"
+				linkLabel={`All ${TOOLS.length} tools`}
+				cta="index_tools_view_all"
+			/>
 			<div class="tools">
+				{/* Decorative preview of whichever row has hover or focus. Every row
+				    is a complete link on its own, and below 960px this is dropped. */}
 				<div class="tools-stage" aria-hidden="true">
 					{tools.map((tool, i) => (
-						<svg class:list={['tools-stage-art', { 'is-active': i === 0 }]} data-tool={tool.id} viewBox="0 0 240 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" set:html={tool.illustration} />
+						<svg class:list={['tools-stage-art', { 'is-active': i === 0 }]} data-tool={toolId(tool)} viewBox="0 0 240 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" set:html={tool.illustration} />
 					))}
 				</div>
-				<ul class="tools-list">
+				<div class="tools-list">
 					{tools.map((tool, i) => (
-						<li>
-							<a href={tool.url} class:list={['tools-item', { 'is-active': i === 0 }]} data-tool={tool.id} data-cta={`index_tools_item:${tool.id}`}>
-								<span class="tools-item-text">
-									<span class="tools-item-name">{tool.name}</span>
-									<span class="tools-item-desc">{tool.desc}</span>
-								</span>
-								<span class="badge tools-item-kind">{tool.group === 'assessment' ? 'Assessment' : 'Calculator'}</span>
-							</a>
-						</li>
+						<ToolCard tool={tool} variant="row" active={i === 0} cta={`index_tools_item:${toolId(tool)}`} />
 					))}
-				</ul>
+				</div>
 			</div>
 		</div>
 	</section>
 
-	{/* ——— Articles ——— */}
-	<section class="section section--surface" aria-labelledby="articles-heading">
-		<div class="section-inner">
-			<header class="section-head">
-				<h2 id="articles-heading" class="section-title">Guides that get to the point</h2>
-				<div class="section-head-aside">
-					<p class="section-desc">Straight answers on budgeting, debt, and saving, written by someone who runs these numbers every month.</p>
-					<a href="/articles/" class="text-link" data-cta="index_latest_view_all">All articles <span class="arrow">&rarr;</span></a>
-				</div>
-			</header>
-
-			{featured && (
-				<a href={`/articles/${featured.id}/`} class="feature-card" data-cta="index_featured_article">
-					{(featured.data.cardImage || featured.data.image) && (
-						<div class="feature-card-media">
-							<img src={featured.data.cardImage ?? featured.data.image} alt={featured.data.title} width="960" height="540" loading="lazy" />
-						</div>
-					)}
-					<div class="feature-card-body">
-						<TagPills tags={featured.data.tags} tagMap={TAG_MAP} />
-						<h3 class="feature-card-title">{featured.data.title}</h3>
-						{featured.data.description && <p class="feature-card-desc">{featured.data.description}</p>}
-						<span class="card-meta">{featured.readTime} min read</span>
-					</div>
-				</a>
-			)}
-
-			<div class="article-grid">
+	<section class="band band--surface" aria-labelledby="articles-heading">
+		<div class="band-inner">
+			<SectionHead
+				id="articles-heading"
+				title="Guides that get to the point"
+				desc="Straight answers on budgeting, debt, and saving, written by someone who runs these numbers every month."
+				href="/articles/"
+				linkLabel="All articles"
+				cta="index_latest_view_all"
+			/>
+			<div class="home-featured">
+				<ArticleCard article={featured} variant="feature" cta="index_featured_article" />
+			</div>
+			<div class="card-grid">
 				{latest.map((article) => (
-					<a href={`/articles/${article.id}/`} class="article-card" data-cta={`index_latest_article_card:${article.id}`}>
-						{(article.data.cardImage || article.data.image) && (
-							<div class="article-card-media">
-								<img src={article.data.cardImage ?? article.data.image} alt={article.data.title} width="960" height="540" loading="lazy" />
-							</div>
-						)}
-						<div class="article-card-body">
-							<TagPills tags={article.data.tags} tagMap={TAG_MAP} />
-							<h3 class="article-card-title">{article.data.title}</h3>
-							<span class="card-meta">{article.readTime} min read</span>
-						</div>
-					</a>
+					<ArticleCard article={article} desc={false} cta={`index_latest_article_card:${article.id}`} />
 				))}
 			</div>
 		</div>
 	</section>
 
-	{/* ——— About brief ——— */}
-	<section class="section about-brief" id="about-brief" aria-label="About Simply Sheets">
-		<div class="section-inner about-brief-inner">
+	<section class="band about-brief" id="about-brief" aria-label="About Simply Sheets">
+		<div class="band-inner about-brief-inner">
 			<p class="about-brief-body" id="about-text">I spent years frustrated by complicated budgeting apps that didn't fit my life. After six years of refining my own spreadsheet systems, I realized that clarity comes from simplicity, not extra features. I combined my background in UX design with my passion for personal finance to build the tools I wish I had from the start.</p>
 			<a href="/about/" class="btn btn-secondary about-brief-link" data-cta="index_about_brief_cta">Read the full story <span class="arrow">&rarr;</span></a>
 		</div>
 	</section>
 
-	{/* ——— FAQ ——— */}
-	<section class="section section--surface" aria-labelledby="faq-heading">
-		<div class="section-inner faq">
-			<div class="faq-intro">
-				<h2 id="faq-heading" class="section-title">Questions before you start</h2>
-				<p class="section-desc">The short answers. Each spreadsheet page covers its own template in more detail.</p>
-			</div>
-			<div class="faq-list">
-				{faq.map((item) => (
-					<details class="faq-item">
-						<summary class="faq-q">{item.question}<span class="faq-icon" aria-hidden="true"></span></summary>
-						<p class="faq-a">{item.answer}</p>
-					</details>
-				))}
-			</div>
+	<section class="band band--surface">
+		<div class="band-inner">
+			<Faq
+				layout="split"
+				title="Questions before you start"
+				desc="The short answers. Each spreadsheet page covers its own template in more detail."
+				items={faq}
+			/>
 		</div>
 	</section>
 
-	{/* ——— Closing banner ——— */}
-	<section class="closing">
-		<div class="closing-card">
-			<div class="closing-glow" aria-hidden="true"></div>
-			<h2 class="closing-title">Not sure where to start?</h2>
-			<p class="closing-desc">Seven questions about how you already handle money, and a budgeting style that suits it. No email, no sign-up.</p>
-			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_quiz_banner_cta">Take the 60-second quiz</a>
-		</div>
+	<section class="band">
+		<CtaBanner
+			title="Not sure where to start?"
+			desc="Seven questions about how you already handle money, and a budgeting style that suits it. No email, no sign-up."
+			href="/quiz/budgeting-style/"
+			label="Take the 60-second quiz"
+			cta="index_quiz_banner_cta"
+		/>
 	</section>
 	</main>
 </BaseLayout>
 
 <style>
-	/* The global `main` rule constrains width and adds section padding, which
-	   suits the inner pages but not this one. Homepage sections are full-bleed
-	   and carry their own padding. */
-	.home-main {
-		max-width: none;
-		padding: 0;
-		overflow-x: clip;
-	}
+	/* Only what is unique to the homepage lives here: the hero's actions and
+	   proof line, the showcase stage, the numbered steps, the tools preview
+	   stage, and the about note. Bands, section heads, cards, the FAQ, and the
+	   closing banner are shared components. */
 
-	/* ——— Shared section frame ———
-	   Generous vertical rhythm is most of the look: sections breathe at up to
-	   9rem apart, and alternate between the warm page and a white surface band
-	   so each one reads as its own chapter without needing a divider. */
+	/* ——— Hero actions + proof ——— */
 
-	.section {
-		--home-max: 72rem;
-		padding: clamp(4.5rem, 10vw, 8rem) var(--space-md);
-	}
-	.section--surface {
-		background: var(--color-bg-surface);
-		border-block: 1px solid var(--color-border-hairline);
-	}
-	.section-inner {
-		max-width: var(--home-max);
-		margin: 0 auto;
-	}
-	.section-head {
-		display: grid;
-		grid-template-columns: 1.1fr 1fr;
-		gap: var(--space-lg);
-		align-items: end;
-		margin-bottom: clamp(2.5rem, 5vw, 4rem);
-	}
-	.section-head--center {
-		grid-template-columns: 1fr;
-		justify-items: center;
-		text-align: center;
-		gap: var(--space-sm);
-	}
-	.section-title {
-		font-size: clamp(2rem, 2.4vw + 1.1rem, 2.75rem);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		margin: 0;
-		max-width: 16em;
-		text-wrap: balance;
-	}
-	.section-head-aside {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: var(--space-sm);
-	}
-	.section-desc {
-		font-size: var(--text-read);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-		max-width: 30rem;
-	}
-	.text-link {
-		font-family: var(--font-sans);
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text);
-		text-decoration: none;
-		border-bottom: 1px solid var(--color-border-strong);
-		padding-bottom: 2px;
-		transition: border-color var(--duration-fast) var(--ease-out);
-	}
-	.text-link:hover {
-		border-color: var(--color-text);
-	}
-	.card-meta {
-		font-family: var(--font-sans);
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-	}
-
-	/* ——— Hero ———
-	   Centered and CTA-led. The concentric rings are the one decorative move:
-	   quiet enough to sit behind type, and they frame the headline the way a
-	   target frames its center. No `font-weight` on the title on purpose: it
-	   takes --weight-semibold from the shared h1–h6 rule. */
-
-	.hero {
-		position: relative;
-		padding: clamp(4.5rem, 9vw, 7.5rem) var(--space-md) clamp(4rem, 8vw, 6rem);
-		isolation: isolate;
-	}
-	.hero-rings {
-		position: absolute;
-		inset: -20% -10% auto;
-		height: 60rem;
-		z-index: -1;
-		pointer-events: none;
-		background: repeating-radial-gradient(
-			circle at 50% 42%,
-			transparent 0 5.5rem,
-			rgba(var(--shadow-rgb), 0.045) 5.5rem calc(5.5rem + 1px),
-			transparent calc(5.5rem + 1px) 7rem
-		);
-		-webkit-mask-image: radial-gradient(ellipse 55% 50% at 50% 42%, #000 20%, transparent 75%);
-		mask-image: radial-gradient(ellipse 55% 50% at 50% 42%, #000 20%, transparent 75%);
-	}
-	.hero-inner {
-		max-width: 60rem;
-		margin: 0 auto;
-		text-align: center;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	.hero-title {
-		font-size: clamp(2.5rem, 4.2vw + 0.75rem, 4.25rem);
-		line-height: var(--leading-display);
-		letter-spacing: -0.035em;
-		color: var(--color-text-heading);
-		margin: 0 0 var(--space-md);
-		text-wrap: balance;
-	}
-	.hero-desc {
-		font-size: var(--text-body-lg);
-		line-height: var(--leading-normal);
-		letter-spacing: var(--tracking-body);
-		color: var(--color-text-secondary);
-		margin: 0 0 var(--space-lg);
-		max-width: 36rem;
-		text-wrap: pretty;
-	}
 	.hero-actions {
 		display: flex;
 		flex-wrap: wrap;
@@ -482,21 +279,19 @@ const websiteSchema = {
 	/* ——— Showcase stage ———
 	   Three mockups fanned on one panel: the dark best seller in front, two
 	   light-theme products tucked behind it. All three are the uncropped
-	   midImage assets, centered, per the product-image rule. */
+	   midImage assets, centered, per the product-image rule. The <img> tags
+	   carry width/height attributes, so height: auto is load-bearing: without
+	   it the 1200px attribute wins and the laptops render off the panel. */
 
 	.stage {
 		position: relative;
 		display: block;
-		max-width: 72rem;
+		max-width: var(--max-width-content);
 		margin: clamp(3rem, 6vw, 4.5rem) auto 0;
 		aspect-ratio: 16 / 7.2;
 		border-radius: var(--radius-xl);
 		border: 1px solid var(--color-border-hairline);
-		background:
-			radial-gradient(60% 70% at 50% 100%, rgba(176, 224, 255, 0.55), transparent 70%),
-			radial-gradient(40% 50% at 12% 20%, rgba(218, 214, 255, 0.55), transparent 70%),
-			radial-gradient(40% 50% at 88% 20%, rgba(176, 224, 255, 0.4), transparent 70%),
-			var(--color-bg-panel);
+		background: var(--gradient-glow);
 		overflow: hidden;
 		box-shadow: var(--shadow-lg);
 	}
@@ -529,75 +324,6 @@ const websiteSchema = {
 		.stage:hover .stage-img--right { transform: translateX(8px); }
 	}
 
-	/* ——— Bento ———
-	   Twelve-column grid; each card's span comes from the frontmatter `bentoSpans` list as a
-	   custom property so the narrow/wide rhythm alternates row to row. */
-
-	.bento {
-		display: grid;
-		grid-template-columns: repeat(12, 1fr);
-		gap: var(--space-sm);
-	}
-	.bento-card {
-		grid-column: span var(--span, 6);
-		display: flex;
-		flex-direction: column;
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border-hairline);
-		border-radius: var(--radius-lg);
-		overflow: hidden;
-		text-decoration: none;
-		color: inherit;
-		transition:
-			border-color var(--duration-fast) var(--ease-out),
-			box-shadow var(--duration-base) var(--ease-out);
-	}
-	/* One fixed media height for every card, not an aspect ratio: a narrow
-	   and a wide card share a row, and a ratio would give them different
-	   heights and leave the narrow card's text floating above dead space. */
-	.bento-media {
-		position: relative;
-		height: clamp(13rem, 22vw, 19rem);
-		margin: var(--space-xs) var(--space-xs) 0;
-		border-radius: calc(var(--radius-lg) - var(--space-xs));
-		background:
-			radial-gradient(70% 80% at 50% 110%, rgba(176, 224, 255, 0.35), transparent 70%),
-			var(--color-bg-panel);
-		padding: var(--space-md) var(--space-lg);
-		overflow: hidden;
-	}
-	.bento-media img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-		object-position: center;
-		transition: transform var(--duration-slow) var(--ease-out);
-	}
-	.bento-body {
-		padding: var(--space-md) var(--space-md) var(--space-md);
-	}
-	.bento-title {
-		font-size: var(--text-h4);
-		margin: 0 0 var(--space-2xs);
-	}
-	.bento-desc {
-		font-size: var(--text-small);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-		max-width: 34rem;
-	}
-	@media (hover: hover) {
-		.bento-card:hover {
-			border-color: var(--color-border);
-			box-shadow: var(--shadow-md);
-		}
-		.bento-card:hover .bento-media img {
-			transform: scale(1.025);
-		}
-	}
-
 	/* ——— Steps ——— */
 
 	.steps {
@@ -609,9 +335,8 @@ const websiteSchema = {
 		gap: var(--space-sm);
 	}
 	.step {
-		position: relative;
 		padding: var(--space-lg) var(--space-md) var(--space-md);
-		border-radius: var(--radius-lg);
+		border-radius: var(--radius-card);
 		background: var(--color-bg);
 		border: 1px solid var(--color-border-hairline);
 	}
@@ -642,10 +367,7 @@ const websiteSchema = {
 		margin: 0;
 	}
 
-	/* ——— Tools ———
-	   A list you scan on the right, a stage on the left that previews
-	   whichever row has hover or focus. The stage is decorative: every row is
-	   a complete link on its own, and below 960px the stage is dropped. */
+	/* ——— Tools: list + preview stage ——— */
 
 	.tools {
 		display: grid;
@@ -658,10 +380,7 @@ const websiteSchema = {
 		top: calc(var(--header-offset) + var(--space-md));
 		aspect-ratio: 4 / 3.4;
 		border-radius: var(--radius-xl);
-		background:
-			radial-gradient(60% 60% at 80% 10%, rgba(176, 224, 255, 0.18), transparent 70%),
-			radial-gradient(50% 50% at 10% 100%, rgba(218, 214, 255, 0.14), transparent 70%),
-			var(--color-bg-inverse);
+		background: var(--gradient-ink);
 		color: #FFFFFF;
 		overflow: hidden;
 	}
@@ -693,133 +412,16 @@ const websiteSchema = {
 		transform: none;
 	}
 	.tools-list {
-		list-style: none;
-		margin: 0;
-		padding: 0;
 		border-top: 1px solid var(--color-border);
-	}
-	.tools-item {
-		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
-		gap: var(--space-md);
-		padding: var(--space-md) var(--space-2xs);
-		border-bottom: 1px solid var(--color-border);
-		text-decoration: none;
-		color: inherit;
-		transition: background-color var(--duration-fast) var(--ease-out);
-	}
-	.tools-item-text {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2xs);
-	}
-	.tools-item-name {
-		font-family: var(--font-sans);
-		font-size: var(--text-h4);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-snug);
-		color: var(--color-text);
-	}
-	.tools-item-desc {
-		font-size: var(--text-small);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-	}
-	.tools-item-kind {
-		flex-shrink: 0;
-		margin-top: 0.125rem;
-	}
-	.tools-item.is-active .tools-item-name::after {
-		content: '';
-		display: inline-block;
-		width: 0.875rem;
-		height: 0.875rem;
-		margin-left: 0.4rem;
-		vertical-align: -0.05em;
-		background: var(--glyph-arrow-dark) center / contain no-repeat;
 	}
 
 	/* ——— Articles ——— */
 
-	.feature-card {
-		display: grid;
-		grid-template-columns: 1.25fr 1fr;
-		gap: var(--space-lg);
-		align-items: center;
-		padding: var(--space-xs);
+	.home-featured {
 		margin-bottom: var(--space-lg);
-		border-radius: var(--radius-lg);
-		background: var(--color-bg);
-		border: 1px solid var(--color-border-hairline);
-		text-decoration: none;
-		color: inherit;
-	}
-	.feature-card-media,
-	.article-card-media {
-		aspect-ratio: 16 / 9;
-		overflow: hidden;
-		border-radius: calc(var(--radius-lg) - var(--space-xs));
-	}
-	.article-card-media {
-		border-radius: var(--radius-lg);
-		margin-bottom: var(--space-sm);
-	}
-	.feature-card-media img,
-	.article-card-media img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: filter var(--duration-fast) var(--ease-out), transform var(--duration-slow) var(--ease-out);
-	}
-	.feature-card-body {
-		padding: var(--space-md) var(--space-lg) var(--space-md) 0;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-	}
-	.feature-card-title {
-		font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		margin: var(--space-sm) 0 var(--space-xs);
-	}
-	.feature-card-desc {
-		font-size: var(--text-read);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0 0 var(--space-sm);
-	}
-	.article-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-lg) var(--space-md);
-	}
-	.article-card {
-		display: flex;
-		flex-direction: column;
-		text-decoration: none;
-		color: inherit;
-	}
-	.article-card-body {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-	}
-	.article-card-title {
-		font-size: var(--text-h4);
-		margin: var(--space-xs) 0 var(--space-2xs);
-	}
-	@media (hover: hover) {
-		.feature-card:hover .feature-card-media img,
-		.article-card:hover .article-card-media img {
-			filter: brightness(0.85);
-			transform: scale(1.02);
-		}
 	}
 
-	/* ——— About brief ——— */
+	/* ——— About note ——— */
 
 	.about-brief-inner {
 		max-width: 52rem;
@@ -849,135 +451,9 @@ const websiteSchema = {
 		margin-top: var(--space-lg);
 	}
 
-	/* ——— FAQ ——— */
-
-	.faq {
-		display: grid;
-		grid-template-columns: 1fr 1.5fr;
-		gap: var(--space-xl);
-		align-items: start;
-	}
-	.faq-intro {
-		position: sticky;
-		top: calc(var(--header-offset) + var(--space-md));
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-sm);
-	}
-	.faq-list {
-		border-top: 1px solid var(--color-border);
-	}
-	.faq-item {
-		border-bottom: 1px solid var(--color-border);
-	}
-	.faq-q {
-		list-style: none;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: var(--space-md);
-		padding: var(--space-md) 0;
-		font-family: var(--font-sans);
-		font-size: var(--text-body);
-		font-weight: var(--weight-medium);
-		letter-spacing: var(--tracking-snug);
-		color: var(--color-text);
-		cursor: pointer;
-	}
-	.faq-q::-webkit-details-marker {
-		display: none;
-	}
-	.faq-icon {
-		position: relative;
-		flex-shrink: 0;
-		width: 1.75rem;
-		height: 1.75rem;
-		border-radius: 50%;
-		box-shadow: inset 0 0 0 1px var(--color-border);
-		transition: transform var(--duration-base) var(--ease-out), background-color var(--duration-fast) var(--ease-out);
-	}
-	.faq-icon::before,
-	.faq-icon::after {
-		content: '';
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		width: 0.625rem;
-		height: 1.5px;
-		background: var(--color-text);
-		transform: translate(-50%, -50%);
-	}
-	.faq-icon::after {
-		transform: translate(-50%, -50%) rotate(90deg);
-	}
-	.faq-item[open] .faq-icon {
-		transform: rotate(45deg);
-		background: var(--color-bg-panel);
-	}
-	.faq-a {
-		font-size: var(--text-read);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-		padding: 0 var(--space-xl) var(--space-md) 0;
-	}
-
-	/* ——— Closing banner ———
-	   The sky-to-lavender field from the brand tints, with two soft glows.
-	   Ink text only: the tints are guaranteed AA against --color-text and
-	   nothing lighter. */
-
-	.closing {
-		padding: clamp(4.5rem, 10vw, 8rem) var(--space-md);
-	}
-	.closing-card {
-		position: relative;
-		max-width: 64rem;
-		margin: 0 auto;
-		padding: clamp(3rem, 7vw, 5.5rem) var(--space-md);
-		border-radius: var(--radius-xl);
-		background: linear-gradient(120deg, var(--tint-sky) 0%, #C9DCFF 50%, var(--tint-lavender) 100%);
-		text-align: center;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		overflow: hidden;
-		isolation: isolate;
-	}
-	.closing-glow {
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background:
-			radial-gradient(35% 60% at 15% 110%, rgba(255, 255, 255, 0.8), transparent 70%),
-			radial-gradient(30% 55% at 85% -10%, rgba(255, 255, 255, 0.7), transparent 70%),
-			radial-gradient(25% 45% at 60% 120%, rgba(255, 255, 255, 0.5), transparent 70%);
-	}
-	.closing-title {
-		font-size: clamp(2rem, 2.4vw + 1.1rem, 2.75rem);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
-		margin: 0 0 var(--space-sm);
-	}
-	.closing-desc {
-		font-size: var(--text-read);
-		line-height: var(--leading-normal);
-		color: var(--color-text);
-		max-width: 32rem;
-		margin: 0 0 var(--space-lg);
-	}
-
 	/* ——— Responsive ——— */
 
 	@media (max-width: 960px) {
-		.section-head {
-			grid-template-columns: 1fr;
-			gap: var(--space-sm);
-		}
-		.bento-card {
-			grid-column: span 6;
-		}
 		.steps {
 			grid-template-columns: 1fr;
 		}
@@ -986,26 +462,6 @@ const websiteSchema = {
 		}
 		.tools-stage {
 			display: none;
-		}
-		.tools-item.is-active .tools-item-name::after {
-			content: none;
-		}
-		.feature-card {
-			grid-template-columns: 1fr;
-			gap: 0;
-		}
-		.feature-card-body {
-			padding: var(--space-md) var(--space-sm) var(--space-sm);
-		}
-		.article-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-		.faq {
-			grid-template-columns: 1fr;
-			gap: var(--space-lg);
-		}
-		.faq-intro {
-			position: static;
 		}
 	}
 
@@ -1033,31 +489,12 @@ const websiteSchema = {
 		}
 		.stage-img--left { left: -12%; }
 		.stage-img--right { right: -12%; }
-		.bento-card {
-			grid-column: span 12;
-		}
-		.bento-media {
-			padding: var(--space-sm);
-		}
-		.article-grid {
-			grid-template-columns: 1fr;
-		}
-		.tools-item {
-			flex-direction: column;
-			gap: var(--space-xs);
-		}
-		.tools-item-kind {
-			order: -1;
-		}
-		.faq-a {
-			padding-right: 0;
-		}
 	}
 </style>
 
 <script>
 	// Tools stage: preview whichever row has hover or focus.
-	const rows = document.querySelectorAll<HTMLAnchorElement>('.tools-item');
+	const rows = document.querySelectorAll<HTMLAnchorElement>('.tools-list [data-tool]');
 	const arts = document.querySelectorAll<SVGElement>('.tools-stage-art');
 	function activate(id: string | undefined) {
 		if (!id) return;
@@ -1069,7 +506,7 @@ const websiteSchema = {
 		row.addEventListener('focus', () => activate(row.dataset.tool));
 	});
 
-	// About brief: words light up as the section scrolls into view.
+	// About note: words light up as the section scrolls into view.
 	const textEl = document.getElementById('about-text');
 	if (textEl) {
 		const raw = textEl.textContent || '';

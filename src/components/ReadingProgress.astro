@@ -1,0 +1,50 @@
+---
+// A 3px bar across the top of the screen that fills as the page scrolls.
+// Below 960px only, where the Toc rail is hidden and this is the page-position
+// cue instead. Shared by ArticleLayout and CalculatorLayout.
+---
+
+<div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+
+<script>
+	const bar = document.getElementById('reading-progress');
+	if (bar) {
+		let ticking = false;
+		window.addEventListener(
+			'scroll',
+			() => {
+				if (ticking) return;
+				ticking = true;
+				requestAnimationFrame(() => {
+					const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+					const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+					bar.style.width = `${Math.min(progress, 100)}%`;
+					ticking = false;
+				});
+			},
+			{ passive: true },
+		);
+	}
+</script>
+
+<style>
+	/* Pinned to the top of the safe area rather than the top of the viewport:
+	   under edge-to-edge rendering "the very top" is behind the status bar,
+	   where the bar would be invisible. The inset is 0px in a normal tab. */
+	.reading-progress {
+		position: fixed;
+		top: env(safe-area-inset-top, 0px);
+		left: 0;
+		height: 3px;
+		background: var(--color-text-heading);
+		width: 0%;
+		z-index: 51;
+		transition: width 50ms linear;
+		display: none;
+	}
+	@media (max-width: 960px) {
+		.reading-progress {
+			display: block;
+		}
+	}
+</style>

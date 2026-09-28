@@ -1,0 +1,134 @@
+---
+// The sticky "On this page" rail beside a reading column, with scroll-spy.
+// Anything in the default slot sits under the list (the layouts put a
+// ProductPromo mini link there). Shared by ArticleLayout and
+// CalculatorLayout, which each carried an identical copy of this markup,
+// style, and script before.
+//
+// The parent grid places the rail; this component makes it sticky from
+// 1100px up and hides it below 960px, where the reading progress bar takes
+// over as the page-position cue.
+//
+// Anchors are deliberately untracked (no data-cta): in-page wayfinding, not a
+// destination choice.
+interface Entry {
+	slug: string;
+	text: string;
+}
+
+interface Props {
+	entries: Entry[];
+	heading?: string;
+}
+
+const { entries, heading = 'On this page' } = Astro.props;
+---
+
+<div class="toc-rail">
+	<nav class="toc" aria-label="Table of contents">
+		<p class="toc-heading">{heading}</p>
+		<ul class="toc-list">
+			{entries.map((e) => (
+				<li><a href={`#${e.slug}`} data-toc-slug={e.slug}>{e.text}</a></li>
+			))}
+		</ul>
+	</nav>
+	<slot />
+</div>
+
+<script>
+	const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc-list a[data-toc-slug]'));
+	if (tocLinks.length > 0) {
+		const headingEls = tocLinks
+			.map((link) => document.getElementById(link.dataset.tocSlug!))
+			.filter((el): el is HTMLElement => el !== null);
+
+		let currentActive: HTMLAnchorElement | null = null;
+
+		function setActive(link: HTMLAnchorElement | null) {
+			if (link === currentActive) return;
+			currentActive?.classList.remove('active');
+			link?.classList.add('active');
+			currentActive = link;
+		}
+
+		const TOC_SCROLL_OFFSET = 96;
+		let tocTicking = false;
+
+		function updateActiveToc() {
+			let current = tocLinks[0];
+			for (let i = 0; i < headingEls.length; i++) {
+				if (headingEls[i].getBoundingClientRect().top <= TOC_SCROLL_OFFSET) {
+					current = tocLinks[i];
+				}
+			}
+			setActive(current);
+			tocTicking = false;
+		}
+
+		window.addEventListener(
+			'scroll',
+			() => {
+				if (!tocTicking) {
+					requestAnimationFrame(updateActiveToc);
+					tocTicking = true;
+				}
+			},
+			{ passive: true },
+		);
+
+		updateActiveToc();
+	}
+</script>
+
+<style>
+	.toc-rail {
+		margin-bottom: calc(var(--space-lg) + 1.5rem);
+	}
+	@media (min-width: 1100px) {
+		.toc-rail {
+			position: sticky;
+			top: var(--header-offset);
+			margin-bottom: 0;
+		}
+	}
+	@media (max-width: 960px) {
+		.toc-rail {
+			display: none;
+		}
+	}
+
+	.toc-heading {
+		font-size: 0.875rem;
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
+		margin: 0 0 var(--space-sm);
+	}
+	.toc-list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		margin: 0;
+		padding: 0;
+		border-left: 1px solid var(--color-border);
+	}
+	.toc-list a {
+		display: block;
+		padding: 0.375rem 0 0.375rem var(--space-sm);
+		margin-left: -1px;
+		border-left: 2px solid transparent;
+		font-size: 0.875rem;
+		line-height: var(--leading-snug);
+		color: var(--color-text-muted);
+		text-decoration: none;
+		transition: color 0.15s, border-color 0.15s;
+	}
+	.toc-list a:hover {
+		color: var(--color-text);
+	}
+	.toc-list a.active {
+		color: var(--color-text-heading);
+		font-weight: var(--weight-normal);
+		border-left-color: var(--color-text-heading);
+	}
+</style>

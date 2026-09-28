@@ -1,19 +1,17 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ProductPromo from '../components/ProductPromo.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ToolCard from '../components/ToolCard.astro';
+import Faq from '../components/Faq.astro';
+import Toc from '../components/Toc.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
 import { SITE_TITLE, pageTitle } from '../consts';
-import { TOOLS } from '../data/tools';
-
-function slugifyFaq(text: string): string {
-	return text
-		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/(^-|-$)/g, '');
-}
+import { TOOLS, toolId } from '../data/tools';
+import { getRelatedArticles, toArticleCard } from '../utils/articles';
 
 interface TocEntry {
 	slug: string;
@@ -59,11 +57,7 @@ const relatedTools = relatedToolUrls
 	? relatedToolUrls.map((url) => otherTools.find((t) => t.url === url)).filter((t): t is (typeof TOOLS)[number] => Boolean(t))
 	: otherTools.slice(0, 4);
 
-const allArticles = await getCollection('articles');
-const sorted = allArticles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const tagMatched = sorted.filter((a) => a.data.tags?.some((t) => tags.includes(t)));
-const untagged = sorted.filter((a) => !tagMatched.includes(a));
-const related = [...tagMatched, ...untagged].slice(0, 4);
+const related = (await getRelatedArticles(tags)).map(toArticleCard);
 
 const kindLabel = kind === 'assessment' ? 'Assessment' : 'Calculator';
 const tocEntries: TocEntry[] = [
@@ -114,15 +108,6 @@ const breadcrumbSchema = {
 	],
 };
 
-const faqSchema = faq.length ? {
-	'@context': 'https://schema.org',
-	'@type': 'FAQPage',
-	mainEntity: faq.map(({ question, answer }) => ({
-		'@type': 'Question',
-		name: question,
-		acceptedAnswer: { '@type': 'Answer', text: answer },
-	})),
-} : null;
 ---
 
 <html lang="en">
@@ -130,27 +115,18 @@ const faqSchema = faq.length ? {
 		<BaseHead title={pageTitle(metaTitle)} description={description} />
 		<script type="application/ld+json" set:html={JSON.stringify(appSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 	</head>
 	<body>
 		<a href="#main-content" class="skip-link">Skip to content</a>
 		<Header />
-		<div class="reading-progress" id="reading-progress"></div>
+		<ReadingProgress />
 
 		<main id="main-content" class="calc-main">
 			<Breadcrumbs crumbs={[{ label: 'Tools', href: '/tools/' }, { label: breadcrumbLabel }]} />
 			<div class="calc-grid">
-				<div class="toc-rail">
-					<nav class="toc" aria-label="Table of contents">
-						<p class="toc-heading">On this page</p>
-						<ul class="toc-list">
-							{tocEntries.map((h) => (
-								<li><a href={`#${h.slug}`} data-toc-slug={h.slug}>{h.text}</a></li>
-							))}
-						</ul>
-					</nav>
+				<Toc entries={tocEntries}>
 					<ProductPromo slug={productSlug} variant="mini" />
-				</div>
+				</Toc>
 
 				<article>
 					<header class="calc-header">
@@ -166,57 +142,30 @@ const faqSchema = faq.length ? {
 						<slot />
 					</div>
 
-					{faq.length > 0 && (
-						<section class="faq" id="faq">
-							<h2 class="faq-heading">Frequently asked questions</h2>
-							<div class="faq-list">
-								{faq.map(({ question, answer }) => (
-									<details class="faq-item" id={slugifyFaq(question)}>
-										<summary class="faq-q">
-											<span>{question}</span>
-											<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-												<polyline points="6 9 12 15 18 9" />
-											</svg>
-										</summary>
-										<div class="faq-a-wrap">
-											<p class="faq-a" set:html={answer} />
-										</div>
-									</details>
-								))}
-							</div>
-						</section>
-					)}
+					<Faq items={faq} html class="content-block" />
 
-					<section class="more-tools" id="more-tools">
-						<h2 class="more-tools-heading">More free tools</h2>
-						<div class="more-tools-grid">
+					<section class="content-block" id="more-tools" aria-labelledby="more-tools-heading">
+						<h2 id="more-tools-heading" class="content-block-title">More free tools</h2>
+						<div class="more-tools-list">
 							{relatedTools.map((tool) => (
-								<a href={tool.url} class="more-tool" data-cta={`calculator_more_tools_item:${tool.url.replace(/^\/tools\/|\/$/g, '')}`}>
-									<span class="more-tool-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${tool.icon}</svg>`} />
-									<div class="more-tool-text">
-										<h3 class="more-tool-title">{tool.name}</h3>
-										<p class="more-tool-desc">{tool.desc}</p>
-									</div>
-								</a>
+								<ToolCard tool={tool} variant="row" cta={`calculator_more_tools_item:${toolId(tool)}`} />
 							))}
 						</div>
-						<p class="more-tools-all"><a href="/tools/" data-cta="calculator_more_tools_view_all">View all tools <span class="arrow">&rarr;</span></a></p>
+						<p class="content-block-foot"><a href="/tools/" class="text-link" data-cta="calculator_more_tools_view_all">View all tools <span class="arrow">&rarr;</span></a></p>
 					</section>
 
 					{related.length > 0 && (
-						<aside class="related" id="related-articles">
-							<h2 class="related-heading">Related articles</h2>
-							<ul class="related-list">
+						<aside class="content-block" id="related-articles" aria-labelledby="related-articles-heading">
+							<h2 id="related-articles-heading" class="content-block-title">Related articles</h2>
+							<div class="card-list">
 								{related.map((r) => (
-									<li>
-										<a href={`/articles/${r.id}/`} data-cta={`calculator_related_article:${r.id}`}>{r.data.title}</a>
-									</li>
+									<ArticleCard article={r} variant="compact" cta={`calculator_related_article:${r.id}`} />
 								))}
-							</ul>
+							</div>
 						</aside>
 					)}
 
-					<section class="calc-product">
+					<section class="content-block" aria-label="Recommended spreadsheet">
 						<ProductPromo slug={productSlug} variant="interstitial" label={productLabel} />
 					</section>
 				</article>
@@ -224,118 +173,10 @@ const faqSchema = faq.length ? {
 		</main>
 		<Footer />
 
-		<script>
-			if (location.hash) {
-				const linkedFaq = document.getElementById(location.hash.slice(1));
-				if (linkedFaq && linkedFaq.classList.contains('faq-item')) (linkedFaq as HTMLDetailsElement).open = true;
-			}
-
-			document.querySelectorAll<HTMLDetailsElement>('.faq-item').forEach((details) => {
-				const summary = details.querySelector('summary');
-				const wrap = details.querySelector<HTMLElement>('.faq-a-wrap');
-				if (!summary || !wrap) return;
-
-				summary.addEventListener('click', (e) => {
-					e.preventDefault();
-					if (details.open) {
-						wrap.style.gridTemplateRows = '0fr';
-						wrap.addEventListener('transitionend', () => {
-							details.open = false;
-							wrap.style.gridTemplateRows = '';
-						}, { once: true });
-					} else {
-						details.open = true;
-					}
-				});
-			});
-
-			const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc-list a[data-toc-slug]'));
-			if (tocLinks.length > 0) {
-				const headingEls = tocLinks
-					.map((link) => document.getElementById(link.dataset.tocSlug!))
-					.filter((el): el is HTMLElement => el !== null);
-
-				let currentActive: HTMLAnchorElement | null = null;
-
-				function setActive(link: HTMLAnchorElement | null) {
-					if (link === currentActive) return;
-					currentActive?.classList.remove('active');
-					link?.classList.add('active');
-					currentActive = link;
-				}
-
-				const TOC_SCROLL_OFFSET = 96;
-				let tocTicking = false;
-
-				function updateActiveToc() {
-					let current = tocLinks[0];
-					for (let i = 0; i < headingEls.length; i++) {
-						if (headingEls[i].getBoundingClientRect().top <= TOC_SCROLL_OFFSET) {
-							current = tocLinks[i];
-						}
-					}
-					setActive(current);
-					tocTicking = false;
-				}
-
-				window.addEventListener('scroll', () => {
-					if (!tocTicking) {
-						requestAnimationFrame(updateActiveToc);
-						tocTicking = true;
-					}
-				}, { passive: true });
-
-				updateActiveToc();
-			}
-
-			const progressBar = document.getElementById('reading-progress');
-			if (progressBar) {
-				let pTicking = false;
-				window.addEventListener('scroll', () => {
-					if (!pTicking) {
-						requestAnimationFrame(() => {
-							const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-							const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
-							progressBar.style.width = `${Math.min(progress, 100)}%`;
-							pTicking = false;
-						});
-						pTicking = true;
-					}
-				}, { passive: true });
-			}
-		</script>
 	</body>
 </html>
 
 <style>
-	/* ——— Reading progress bar ——— */
-
-	/* Pinned to the top of the safe area rather than the top of the viewport:
-	   the header floats and no longer touches the top, so a page-level
-	   indicator belongs at the very top — but under edge-to-edge rendering
-	   "the very top" is behind the status bar, where the rail is invisible.
-	   The inset is 0px in a normal browser tab. */
-	.reading-progress {
-		position: fixed;
-		top: env(safe-area-inset-top, 0px);
-		left: 0;
-		height: 3px;
-		background: var(--color-text-heading);
-		width: 0%;
-		z-index: 51;
-		transition: width 50ms linear;
-		display: none;
-	}
-
-	@media (max-width: 960px) {
-		.reading-progress {
-			display: block;
-		}
-		.toc-rail {
-			display: none;
-		}
-	}
-
 	/* ——— Main layout ——— */
 
 	.calc-main {
@@ -365,12 +206,6 @@ const faqSchema = faq.length ? {
 			column-gap: var(--toc-gap);
 			align-items: start;
 		}
-
-		.toc-rail {
-			position: sticky;
-			top: var(--header-offset);
-			margin-bottom: 0;
-		}
 	}
 
 	/* ——— Header ——— */
@@ -393,265 +228,9 @@ const faqSchema = faq.length ? {
 		scroll-margin-top: var(--header-offset);
 	}
 
-	/* ——— Table of contents ——— */
-
-	.toc-rail {
-		margin-bottom: calc(var(--space-lg) + 1.5rem);
-	}
-
-	.toc-heading {
-		font-size: 0.875rem;
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-		margin: 0 0 var(--space-sm);
-	}
-
-	.toc-list {
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		margin: 0;
-		padding: 0;
-		border-left: 1px solid var(--color-border);
-	}
-
-	.toc-list a {
-		display: block;
-		padding: 0.375rem 0 0.375rem var(--space-sm);
-		margin-left: -1px;
-		border-left: 2px solid transparent;
-		font-size: 0.875rem;
-		line-height: var(--leading-snug);
-		color: var(--color-text-muted);
-		text-decoration: none;
-		transition: color 0.15s, border-color 0.15s;
-	}
-
-	.toc-list a:hover {
-		color: var(--color-text);
-	}
-
-	.toc-list a.active {
-		color: var(--color-text-heading);
-		font-weight: var(--weight-normal);
-		border-left-color: var(--color-text-heading);
-	}
-
-	/* ——— FAQ section ——— */
-
-	.faq {
-		margin-top: var(--space-2xl);
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
-		scroll-margin-top: var(--header-offset);
-	}
-
-	.faq-heading {
-		font-size: var(--text-h2);
-		margin-bottom: var(--space-md);
-	}
-
-	.faq-list {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.faq-item {
-		border-bottom: 1px solid var(--color-border);
-		scroll-margin-top: var(--header-offset);
-	}
-
-	.faq-item:last-child {
-		border-bottom: none;
-	}
-
-	.faq-q {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--space-sm);
-		width: 100%;
-		padding: var(--space-md) 0;
-		font-size: var(--text-body);
-		font-weight: var(--weight-normal);
-		color: var(--color-text);
-		cursor: pointer;
-		list-style: none;
-		transition: color 0.15s;
-	}
-
-	.faq-q::-webkit-details-marker {
-		display: none;
-	}
-
-	.faq-q::marker {
-		display: none;
-		content: '';
-	}
-
-	.faq-arrow {
-		flex-shrink: 0;
-		transition: transform 300ms ease;
-	}
-
-	.faq-item[open] .faq-arrow {
-		transform: rotate(180deg);
-	}
-
-	.faq-a-wrap {
-		display: grid;
-		grid-template-rows: 0fr;
-		transition: grid-template-rows 300ms ease;
-	}
-
-	.faq-item[open] .faq-a-wrap {
-		grid-template-rows: 1fr;
-	}
-
-	.faq-a-wrap > .faq-a {
-		overflow: hidden;
-	}
-
-	.faq-a {
-		font-size: var(--text-read);
-		line-height: var(--leading-normal);
-		color: var(--color-text-secondary);
-		margin: 0;
-		padding-bottom: var(--space-md);
-	}
-
 	/* ——— More tools ——— */
 
-	.more-tools {
-		margin-top: var(--space-2xl);
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
-		scroll-margin-top: var(--header-offset);
-	}
-
-	.more-tools-heading {
-		font-size: var(--text-h3);
-		margin-bottom: var(--space-md);
-	}
-
-	.more-tools-grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		row-gap: var(--space-lg);
-		column-gap: var(--space-lg);
-	}
-
-	.more-tool {
-		display: flex;
-		align-items: flex-start;
-		gap: var(--space-sm);
-		text-decoration: none;
-		color: inherit;
-		transition: opacity 0.15s ease;
-	}
-
-	@media (hover: hover) {
-		.more-tool:hover {
-			opacity: 0.7;
-		}
-	}
-
-	.more-tool-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-		width: 2.5rem;
-		height: 2.5rem;
-		border-radius: var(--radius-full);
-		background: var(--color-bg-panel);
-		color: var(--color-text);
-	}
-
-	.more-tool-text {
-		min-width: 0;
-	}
-
-	.more-tool-title {
-		font-size: var(--text-body);
-		line-height: 1.35;
-		margin: 0 0 var(--space-2xs);
-		color: var(--color-text);
-	}
-
-	.more-tool-desc {
-		font-size: var(--text-small);
-		line-height: var(--leading-snug);
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
-
-	.more-tools-all {
-		margin: var(--space-lg) 0 0;
-		font-size: var(--text-small);
-	}
-
-	.more-tools-all a {
-		text-decoration: none;
-	}
-
-	.more-tools-all a:hover {
-		text-decoration: underline;
-	}
-
-	@media (max-width: 600px) {
-		.more-tools-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	/* ——— Related articles ——— */
-
-	.related {
-		margin-top: var(--space-2xl);
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--color-border);
-		scroll-margin-top: var(--header-offset);
-	}
-
-	.related-heading {
-		font-size: var(--text-h3);
-		margin-bottom: var(--space-sm);
-	}
-
-	.related-list {
-		list-style: none;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0;
-	}
-	.related-list li {
-		padding: var(--space-sm) 0;
-		border-bottom: 1px solid var(--color-border);
-	}
-	.related-list li:last-child {
-		border-bottom: none;
-		padding-bottom: 0;
-	}
-	.related-list li:first-child {
-		padding-top: 0;
-	}
-
-	.related-list a {
-		font-size: var(--text-body);
-		text-decoration: none;
-	}
-
-	.related-list a:hover {
-		text-decoration: underline;
-	}
-
-	/* ——— Recommended product ——— */
-
-	.calc-product {
-		margin-top: var(--space-2xl);
-		padding-top: var(--space-lg);
+	.more-tools-list {
 		border-top: 1px solid var(--color-border);
 	}
 </style>
