@@ -238,21 +238,20 @@ p {
    saturated gradient the same ratio moves far fewer absolute levels and a
    subtle value reads as no hover at all.
 
-   Covers all three article card surfaces: the homepage featured card and
-   Latest row, and the articles index / tag archive list. The last of those is
+   Covers the About page's rows and the articles index / tag archive list
+   (the homepage's article cards carry their own hover in index.astro). The
+   list is
    also emitted by ArticleGrid's client-rendered search results, which is why
    this lives here rather than in a component's scoped styles.
 
    The product variant of .home-row-thumb is excluded — it darkens its own
    container already, and doing both would double the effect. */
-.hero-featured-thumb img,
 .home-row-thumb:not(.home-row-thumb--product) img,
 .article-list-thumb img {
 	transition: filter 0.15s ease;
 }
 
 @media (hover: hover) {
-	.hero-featured:hover .hero-featured-thumb img,
 	.home-row-item:hover .home-row-thumb:not(.home-row-thumb--product) img,
 	.article-list-item:hover .article-list-thumb img {
 		filter: brightness(0.85);

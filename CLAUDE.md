@@ -23,7 +23,7 @@ There are two product image assets per template, and they are **not interchangea
   object-fit: contain;
   object-position: center;
   ```
-  Surfaces using this treatment: `.template-thumb` in `TemplateLayout.astro` (the "More spreadsheets" grid) and in `pages/spreadsheets/index.astro`; `.home-row-thumb--product` in `styles/global.css` (via `SpreadsheetsToolsRows.astro`, homepage); `.resource-thumb` in `pages/articles/[...page].astro`; `.article-promo-thumb`, `.product-card-thumb`, and `.product-thumb` in `styles/global.css` (all three `ProductPromo.astro` variants). If a new surface needs a product thumbnail, use `midImage` centered — reach for the right-positioned hero treatment only for that one product-page hero.
+  Surfaces using this treatment: `.template-thumb` in `TemplateLayout.astro` (the "More spreadsheets" grid) and in `pages/spreadsheets/index.astro`; `.home-row-thumb--product` in `styles/global.css` (via `SpreadsheetsToolsRows.astro`, About page); `.stage-img` and `.bento-media` in `pages/index.astro` (homepage showcase and spreadsheets bento); `.resource-thumb` in `pages/articles/[...page].astro`; `.article-promo-thumb`, `.product-card-thumb`, and `.product-thumb` in `styles/global.css` (all three `ProductPromo.astro` variants). If a new surface needs a product thumbnail, use `midImage` centered — reach for the right-positioned hero treatment only for that one product-page hero.
 
 ## SEO — Always Top of Mind
 
@@ -63,7 +63,8 @@ Etsy links are explicitly skipped by the second handler so one click can't be co
   - **Article listing/cards**: `articles_grid_item:<id>` (`ArticleGrid.astro`, both the static and client-rendered paths), `article_related_link:<id>`, `article_share_button`, `article_share_email`.
   - **Template pages** (`TemplateLayout.astro`): `template_hero_cta:<id>`, `template_footer_cta:<id>`, `template_bundle_cta:<id>:<name>`, `template_reviews_cta:<id>`, `template_related_article:<id>`, `template_more_spreadsheets_card:<id>`.
   - **Tool pages**: `tool_thumb_card:<toolId>` (homepage/about tool grid), `calculator_more_tools_item:<toolId>`, `calculator_more_tools_view_all`, `calculator_related_article:<id>` (`CalculatorLayout.astro`).
-  - **Homepage** (`index.astro`, `SpreadsheetsToolsRows.astro`): `index_hero_featured_article`, `index_latest_article_card:<id>`, `index_latest_view_all`, `index_quiz_banner_cta`, `index_about_brief_cta`, `home_tools_row_view_all`, `home_spreadsheets_row_item:<id>`, `home_spreadsheets_row_view_all`.
+  - **Homepage** (`index.astro`): `index_hero_cta:spreadsheets`, `index_hero_cta:tools`, `index_showcase:<templateSlug>`, `index_spreadsheets_card:<templateSlug>`, `index_spreadsheets_view_all`, `index_tools_item:<toolId>`, `index_tools_view_all`, `index_featured_article`, `index_latest_article_card:<id>`, `index_latest_view_all`, `index_about_brief_cta`, `index_quiz_banner_cta`. The redesign retired `index_hero_featured_article` (now `index_featured_article`, since the card is no longer in the hero) and the `home_*_row_*` ids.
+  - **About** (`SpreadsheetsToolsRows.astro`): `home_tools_row_view_all`, `home_spreadsheets_row_item:<id>`, `home_spreadsheets_row_view_all` (names predate the homepage redesign; kept so About's history doesn't split).
   - **404 page** (`404.astro`): `not_found_home_cta`, `not_found_card:<id>` (one per recovery card, `tools` and the featured template's slug), `not_found_quick_link:<id>`. Worth watching as a group: a spike in one destination says what people are actually failing to find.
   - Everything else not yet broken out this way still follows `<page>_<element>` (e.g. `spreadsheets_index_etsy_link`, `articles_index_explore_all_cta`).
 - The header logo and footer logo are deliberately untracked — a logo click is "go home", not a choice between destinations, and it would swamp the nav numbers. In-article table-of-contents anchors are also untracked — they're internal wayfinding within a page a visitor is already on, not a destination choice.
@@ -387,25 +388,26 @@ The articles hub is statically paginated for SEO/AEO crawlability — there is n
 
 - The featured article is pinned by slug in `src/pages/index.astro` (`const featuredSlug = '...'`), currently `how-to-split-bills-with-different-incomes`. The owner has approved choosing whichever article performs best for that spot, so it can be changed when Search Console data supports a better pick. Base the choice on data (impressions, position, and which product the article funnels to), not preference, and update this line when it changes.
 
-### Hero
+### Layout (Cap-inspired redesign)
 
-Two columns: the headline and standfirst on the left, the pinned featured article as one large card on the right. `.hero-inner` is `grid-template-columns: 0.75fr 1fr` with `align-items: center`, collapsing to one column at 960px.
+The homepage was rebuilt as a centered, CTA-led page with long vertical rhythm, modeled on the layouts of cap.so. It replaces the earlier two-column hero (headline left, featured article card right) and the label-left `.home-row` grids. Everything lives in `src/pages/index.astro` with scoped styles; it no longer uses `SpreadsheetsToolsRows.astro` (About still does).
 
-- **This layout was replaced once and restored.** A version with a rewritten H1, two CTA buttons, a counted stat strip, and a four-row article rail ran for a few weeks and was reverted at the owner's request — the original is the wanted design. Don't re-derive the replacement from the reasoning below; if it comes up again, it's a fresh decision, not a regression to fix.
-- Worth knowing what the revert re-accepts, so nobody "discovers" these as bugs: the hero carries **no call to action** at any breakpoint (the header CTA is `display: none` below 860px, so the first tap target on a phone is the featured article), and `align-items: center` leaves dead space above and below the shorter text column. Both are deliberate.
-- **No `font-weight` on `.hero-title` or any other heading class.** Headings take `--weight-semibold` from the shared `h1`–`h6` rule in `global.css`. The pre-revert CSS carried `font-weight: var(--weight-normal)` here; it was dropped during the Manrope switch and must not come back with the layout — that override is the bug that got fixed twice.
-- `latest` is `rest.slice(0, 9)`: the hero shows only the featured article, so the Latest row starts from the top of the remainder.
+Section order, top to bottom:
 
-### Section order
+1. **Hero**: centered H1, standfirst, two CTAs (`btn-primary btn-arrow` to `/spreadsheets/`, `btn-secondary` to `/tools/`), and a three-item proof line with check glyphs. Behind it, `.hero-rings` draws faint concentric rings with a masked `repeating-radial-gradient`, purely decorative. **No `font-weight` on `.hero-title` or any other heading class**; headings take `--weight-semibold` from the shared rule.
+2. **Showcase stage** (`.stage`): one rounded panel with three fanned mockups: the Budget Spreadsheet's dark `midImage` in front, the Debt Payoff and Savings Goals `midImageLight` behind it. All three are the uncropped `midImage` assets, `object-fit: contain; object-position: center`, per the product-image rule. The `<img>` tags carry `width`/`height` attributes, so `.stage-img` needs `height: auto`; without it the 1200px attribute wins and the laptops render off the top of the panel.
+3. **Spreadsheets bento** (`.bento`): a 12-column grid, spans from `bentoSpans` in frontmatter (`5/7`, `7/5`, `6/6`) so row rhythm alternates. `.bento-media` has one fixed height rather than an aspect ratio, so a narrow and a wide card in the same row stay the same height. A seventh template falls back to a half-width card; revisit `bentoSpans` if the count changes.
+4. **How it works**: three numbered step cards on a surface band.
+5. **Free tools**: a dark `--color-bg-inverse` stage on the left that swaps to the illustration of whichever row has hover or focus (small script at the bottom of the page), and a hairline-divided list on the right with a `.badge` for Calculator/Assessment. The stage is `aria-hidden` and dropped below 960px; every row is a complete link on its own.
+6. **Articles**: the pinned featured article as a wide horizontal card, then `latest = rest.slice(0, 6)` in a 3-column grid (keep it a multiple of 3).
+7. **About brief**: centered, with the scroll-lit word effect.
+8. **FAQ**: sticky heading left, `<details>` accordion right. The questions live in a `faq` array in frontmatter, which also emits `FAQPage` JSON-LD. Keep the answers consistent with what the template pages' own FAQs say.
+9. **Closing banner**: a sky-to-lavender gradient card (from `--tint-sky`/`--tint-lavender`) linking to the budgeting-style quiz. Ink text only on it; the tints are only AA against `--color-text`.
 
-Below the hero: **Free tools, then Latest, then Spreadsheets.** Tools lead because they're the cheapest thing a stranger from search will actually try; spreadsheets close because that's the ask.
-
-- Both rows show six (two rows of three): `toolLimit={6}` on the tools call, `templateLimit={6}` on the spreadsheets one. Both props default to 3, so About's bare `<SpreadsheetsToolsRows />` keeps the shorter rows. Keep them multiples of 3 or the last row goes ragged beside the view-all link.
-- Six is currently *every* template in the collection, so the Spreadsheets row and `/spreadsheets/` show the same set. The "All spreadsheets" link stays regardless — the index page carries detail the row doesn't. Add a seventh template and the row silently truncates; bump `templateLimit` to 9 at that point rather than letting one product fall off the homepage unnoticed.
-- Spreadsheets stays in its own full-bleed `.home-band` after the shared rows, which is what keeps it visually last and distinct rather than a fourth identical label-left grid.
-- The band is **`--color-bg-surface`, not `--color-bg-panel`**. The product thumbs are themselves panel-filled and their Best Seller chip is `.badge-overlay` (a surface fill plus a border), so a panel band would swallow both. A white plane on the warm page ground reads as lifted and needs no overrides.
-- `SpreadsheetsToolsRows.astro` takes an `only` prop (`"tools"` / `"spreadsheets"`) so the homepage can wrap one row in that band. About still calls it bare and gets both rows in order.
-- Heading ranks: section headings are `h2`, card titles `h3`. The featured article's title is also `h2`.
+- Sections alternate between the page ground and a `--color-bg-surface` band with hairline borders; that alternation, not dividers, is what separates chapters.
+- Section headers (`.section-head`) put the `h2` left and a short description plus a `.text-link` right, collapsing to one column at 960px.
+- No eyebrows on this page. The Cap reference uses small caps labels above every heading; the site's eyebrow rules (rare, `.eyebrow-badge` only) win.
+- Heading ranks: section headings are `h2`, card titles `h3`.
 
 ## Typography
 
