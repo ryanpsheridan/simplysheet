@@ -4,7 +4,6 @@ import SectionHead from '../components/SectionHead.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import ToolCard from '../components/ToolCard.astro';
-import ToolMock from '../components/ToolMock.astro';
 import Faq from '../components/Faq.astro';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE, templateName } from '../consts';
@@ -23,7 +22,7 @@ const latest = allArticles.filter((a) => a.id !== featured.id).slice(0, 5).map(t
 
 const templates = (await getCollection('templates')).sort((a, b) => a.data.order - b.data.order);
 
-// The hero stage: the best seller's dark mockup, centered on the texture
+// The hero stage: the best seller's dark mockup, centered on the stage's
 // field. The uncropped midImage asset, per the product-image rule.
 const byId = (id: string) => templates.find((t) => t.id === id);
 const stageFront = byId('budget-spreadsheet') ?? templates[0];
@@ -43,7 +42,11 @@ const reviews = REVIEW_PICKS.flatMap(([id, opening]) => {
 	return template && review ? [{ ...review, template }] : [];
 });
 
-const tools = TOOLS.slice(0, 6);
+// The tools section features one tool (its real card thumbnail, name,
+// description, and a button) beside a list of the next six.
+const featuredToolUrl = '/tools/50-30-20-budget-calculator/';
+const featuredTool = TOOLS.find((t) => t.url === featuredToolUrl) ?? TOOLS[0];
+const tools = TOOLS.filter((t) => t !== featuredTool).slice(0, 6);
 
 const steps = [
 	{
@@ -159,9 +162,10 @@ const websiteSchema = {
 		)}
 	</section>
 
-	{/* Intro: one statement and three plain facts */}
+	{/* Intro: the statement on the left, three plain facts as ruled rows on
+	    the right. */}
 	<section class="band intro" aria-labelledby="intro-heading">
-		<div class="band-inner">
+		<div class="band-inner intro-inner">
 			<h2 id="intro-heading" class="intro-title">Budget spreadsheets that actually get used.</h2>
 			<ul class="intro-points">
 				<li>
@@ -255,16 +259,22 @@ const websiteSchema = {
 				cta="index_tools_view_all"
 			/>
 			<div class="tools">
-				{/* Decorative preview of whichever row has hover or focus. Every row
-				    is a complete link on its own, and below 960px this is dropped. */}
-				<div class="tools-stage textured textured--dark" aria-hidden="true">
-					{tools.map((tool, i) => (
-						<ToolMock tool={tool} class:list={['tools-stage-art', { 'is-active': i === 0 }]} data-tool={toolId(tool)} />
-					))}
+				{/* One featured tool: the same thumbnail its card shows on /tools/,
+				    then its name, description, and a button. The button is the
+				    link; the thumbnail is decorative. */}
+				<div class="card tools-feature">
+					<div class="card-media card-media--art" aria-hidden="true">
+						<svg viewBox="0 0 240 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" set:html={featuredTool.illustration} />
+					</div>
+					<div class="card-body tools-feature-body">
+						<h3 class="tools-feature-title">{featuredTool.name}</h3>
+						<p class="tools-feature-desc">{featuredTool.desc}</p>
+						<a href={featuredTool.url} class="btn btn-primary btn-arrow tools-feature-cta" data-cta={`index_tools_featured:${toolId(featuredTool)}`}>{featuredTool.group === 'assessment' ? 'Take the assessment' : 'Try the calculator'}</a>
+					</div>
 				</div>
 				<div class="tools-list">
-					{tools.map((tool, i) => (
-						<ToolCard tool={tool} variant="row" active={i === 0} cta={`index_tools_item:${toolId(tool)}`} />
+					{tools.map((tool) => (
+						<ToolCard tool={tool} variant="row" cta={`index_tools_item:${toolId(tool)}`} />
 					))}
 				</div>
 			</div>
@@ -281,7 +291,6 @@ const websiteSchema = {
 				<a href="/quiz/budgeting-style/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_quiz_banner_cta">Take the 60-second quiz</a>
 			</div>
 			<div class="quiz-card" aria-hidden="true">
-				<span class="window-dots"><i></i><i></i><i></i></span>
 				<p class="quiz-card-count">Question 1 of 7</p>
 				<p class="quiz-card-q">What is the first thing you do after getting paid?</p>
 				<ul class="quiz-card-opts">
@@ -334,10 +343,9 @@ const websiteSchema = {
 		</div>
 	</section>
 
-	{/* Closing: a window card on the textured field */}
+	{/* Closing: a panel card on the textured field */}
 	<section class="closing textured" aria-labelledby="closing-heading">
 		<div class="closing-card">
-			<span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
 			<h2 id="closing-heading" class="closing-title">A budget you own, for good.</h2>
 			<p class="closing-desc">Pay once and keep it. Every template works in Google Sheets and Excel, in a dark or light theme.</p>
 			<div class="closing-actions">
@@ -563,25 +571,34 @@ const websiteSchema = {
 	.intro {
 		padding-top: 0;
 	}
+	/* Two halves of the content column: the statement's first line and the
+	   first rule of the list share one top edge. */
+	.intro-inner {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: clamp(var(--space-lg), 6vw, 6rem);
+		align-items: start;
+	}
 	.intro-title {
 		font-size: var(--text-section);
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
 		max-width: 11em;
-		margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+		margin: 0;
 	}
 	.intro-points {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		display: grid;
-		gap: var(--space-md);
+		border-top: 1px solid var(--color-border-hairline);
 	}
 	.intro-points li {
 		display: flex;
 		align-items: center;
 		gap: var(--space-sm);
-		font-size: 1rem;
+		padding: 1.25rem 0;
+		border-bottom: 1px solid var(--color-border-hairline);
+		font-size: 1.0625rem;
 		color: var(--color-text);
 	}
 	.intro-points svg {
@@ -723,42 +740,37 @@ const websiteSchema = {
 		margin: 0;
 	}
 
-	/* Tools: list + preview stage */
+	/* Tools: a featured tool beside the list */
 
 	.tools {
 		display: grid;
-		grid-template-columns: 1.1fr 1fr;
-		gap: clamp(var(--space-md), 4vw, var(--space-xl));
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: clamp(var(--space-lg), 5vw, 5rem);
 		align-items: start;
 	}
-	.tools-stage {
+	.tools-feature {
 		position: sticky;
 		top: calc(var(--header-offset) + var(--space-md));
-		aspect-ratio: 4 / 3.4;
-		border-radius: var(--radius-xl);
-		background: var(--gradient-ink);
-		overflow: hidden;
 	}
-	.tools-stage::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 1px, transparent 1.4px) 0 0 / 8px 8px;
-		-webkit-mask-image: radial-gradient(circle at 50% 40%, #000 20%, transparent 78%);
-		mask-image: radial-gradient(circle at 50% 40%, #000 20%, transparent 78%);
+	.tools-feature-body {
+		gap: var(--space-xs);
+		padding-top: var(--space-md);
 	}
-	/* Each row's ToolMock, stacked; the script swaps .is-active. :global
-	   because the class lands on the child component's root. */
-	.tools-stage :global(.tools-stage-art) {
-		opacity: 0;
-		transform: translateY(10px);
-		transition:
-			opacity var(--duration-base) var(--ease-out),
-			transform var(--duration-slow) var(--ease-out);
+	.tools-feature-title {
+		font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);
+		line-height: 1.15;
+		letter-spacing: -0.025em;
+		margin: 0;
 	}
-	.tools-stage :global(.tools-stage-art.is-active) {
-		opacity: 1;
-		transform: none;
+	.tools-feature-desc {
+		font-size: var(--text-read);
+		line-height: 1.5;
+		color: var(--color-text-secondary);
+		max-width: 32rem;
+		margin: 0;
+	}
+	.tools-feature-cta {
+		margin-top: var(--space-sm);
 	}
 	.tools-list {
 		border-top: 1px solid var(--color-border-hairline);
@@ -812,13 +824,13 @@ const websiteSchema = {
 		margin: var(--space-md) 0 var(--space-lg);
 	}
 	.quiz-card {
-		padding: var(--space-md) clamp(1.5rem, 3vw, 2.25rem) clamp(1.75rem, 3vw, 2.5rem);
+		padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.25rem);
 		border-radius: var(--radius-xl);
 		background: var(--color-bg-surface);
 		box-shadow: 0 30px 60px -20px rgba(var(--shadow-rgb), 0.25);
 	}
 	.quiz-card-count {
-		margin: var(--space-lg) 0 var(--space-xs);
+		margin: var(--space-xs) 0 var(--space-xs);
 		font-size: 0.875rem;
 		color: var(--color-text-secondary);
 	}
@@ -848,20 +860,6 @@ const websiteSchema = {
 		box-shadow: inset 0 0 0 1px var(--color-text);
 	}
 
-	/* Traffic-light dots: the window card motif shared by the quiz preview
-	   and the closing card. */
-	.window-dots {
-		display: flex;
-		gap: 0.4375rem;
-	}
-	.window-dots i {
-		width: 0.6875rem;
-		height: 0.6875rem;
-		border-radius: 50%;
-		background: #FF5F57;
-	}
-	.window-dots i:nth-child(2) { background: #FEBC2E; }
-	.window-dots i:nth-child(3) { background: #28C840; }
 
 	/* About note */
 
@@ -903,7 +901,7 @@ const websiteSchema = {
 	.closing-card {
 		width: 100%;
 		max-width: 46rem;
-		padding: var(--space-md) clamp(1.5rem, 5vw, 3.5rem) clamp(2.5rem, 5vw, 3.5rem);
+		padding: clamp(2.5rem, 5vw, 3.5rem);
 		border-radius: var(--radius-xl);
 		background: var(--color-bg-panel);
 		box-shadow: 0 30px 80px -30px rgba(var(--shadow-rgb), 0.35);
@@ -913,7 +911,7 @@ const websiteSchema = {
 		line-height: var(--leading-display);
 		letter-spacing: var(--tracking-hero);
 		max-width: 9em;
-		margin: clamp(2rem, 5vw, 3.5rem) 0 var(--space-md);
+		margin: 0 0 var(--space-md);
 		text-wrap: balance;
 	}
 	.closing-desc {
@@ -953,8 +951,11 @@ const websiteSchema = {
 		.tools {
 			grid-template-columns: 1fr;
 		}
-		.tools-stage {
-			display: none;
+		.intro-inner {
+			grid-template-columns: 1fr;
+		}
+		.tools-feature {
+			position: static;
 		}
 		.quiz-inner {
 			grid-template-columns: 1fr;
@@ -995,26 +996,6 @@ const websiteSchema = {
 </style>
 
 <script>
-	// Tools stage: preview whichever row has hover or focus.
-	const rows = document.querySelectorAll<HTMLAnchorElement>('.tools-list [data-tool]');
-	const arts = document.querySelectorAll<HTMLElement>('.tools-stage-art');
-	function activate(id: string | undefined) {
-		if (!id) return;
-		rows.forEach((r) => r.classList.toggle('is-active', r.dataset.tool === id));
-		arts.forEach((a) => a.classList.toggle('is-active', a.dataset.tool === id));
-	}
-	rows.forEach((row) => {
-		row.addEventListener('mouseenter', () => activate(row.dataset.tool));
-		row.addEventListener('focus', () => activate(row.dataset.tool));
-	});
-
-	// Header: the hairline only appears once the page has scrolled, since at
-	// the top it would separate white from white.
-	const shell = document.querySelector<HTMLElement>('.header-shell');
-	const markScrolled = () => shell?.classList.toggle('is-scrolled', window.scrollY > 8);
-	window.addEventListener('scroll', markScrolled, { passive: true });
-	markScrolled();
-
 	// About note: words light up as the section scrolls into view.
 	const textEl = document.getElementById('about-text');
 	if (textEl) {

@@ -1,32 +1,11 @@
-export interface ToolMockSpec {
-	/** Input fields, label and filled-in value. */
-	fields?: { label: string; value: string }[];
-	/** A pill toggle row (e.g. months of coverage), with the selected index. */
-	chips?: { options: string[]; selected: number };
-	/** Assessments: the question and its answer tiles, one selected. */
-	question?: string;
-	options?: string[];
-	selected?: number;
-	/** The hero result card. */
-	result?: { label: string; value: string };
-	/** Supporting label/value rows under the result. */
-	rows?: [string, string][];
-	/** Horizontal bars: `tone` picks a calculator colour token. */
-	bars?: { label: string; value: string; pct: number; tone: 'info' | 'caution' | 'positive' | 'avalanche' | 'snowball' }[];
-}
-
 export interface Tool {
 	name: string;
 	desc: string;
 	url: string;
 	icon: string;
-	/** Large line-art illustration (viewBox 0 0 240 160) for the tool's
-	    thumbnail card (ToolCard variant="card"). */
+	/** Large line-art illustration (viewBox 0 0 240 160): the tool's
+	    thumbnail on its card, and on the homepage when it is the featured tool. */
 	illustration: string;
-	/** A miniature of the tool's UI, drawn by ToolMock on the homepage tools
-	    preview stage only. Sample inputs with their worked outputs, so the
-	    numbers agree with what the real tool would show. */
-	mock: ToolMockSpec;
 	group: 'calculator' | 'assessment';
 }
 
@@ -55,16 +34,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="95" cy="105" r="2" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Monthly take-home pay', value: '$4,800' },
-			],
-			bars: [
-				{ label: 'Needs', value: '$2,400', pct: 50, tone: 'info' },
-				{ label: 'Wants', value: '$1,440', pct: 30, tone: 'caution' },
-				{ label: 'Savings', value: '$960', pct: 20, tone: 'positive' },
-			],
-		},
 	},
 	{
 		name: 'Biweekly Paycheck Calculator',
@@ -88,17 +57,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="165" cy="75" r="1.8" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Paycheck amount', value: '$1,850' },
-				{ label: 'First payday', value: 'Jan 9, 2026' },
-			],
-			result: { label: 'Typical month', value: '$3,700' },
-			rows: [
-				['Three-paycheck months', '$5,550'],
-				['Monthly average', '$4,008'],
-			],
-		},
 	},
 	{
 		name: 'Weekly Paycheck Calculator',
@@ -125,17 +83,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="194" cy="52" r="3" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Paycheck amount', value: '$925' },
-				{ label: 'First payday', value: 'Jan 2, 2026' },
-			],
-			result: { label: 'Typical month', value: '$3,700' },
-			rows: [
-				['Five-paycheck months', '$4,625'],
-				['Monthly average', '$4,008'],
-			],
-		},
 	},
 	{
 		name: 'Semi-Monthly Paycheck Calculator',
@@ -159,16 +106,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="198" cy="134" r="2" opacity="0.35" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Paycheck amount', value: '$2,000' },
-			],
-			result: { label: 'Monthly income', value: '$4,000' },
-			rows: [
-				['Paychecks a year', '24'],
-				['Annual income', '$48,000'],
-			],
-		},
 	},
 	{
 		name: 'Bill Split Calculator',
@@ -187,17 +124,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="155" cy="107" r="3.2" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Your take-home pay', value: '$5,200' },
-				{ label: 'Partner’s take-home pay', value: '$3,400' },
-				{ label: 'Shared bills', value: '$3,000' },
-			],
-			result: { label: 'Your fair share (60%)', value: '$1,814' },
-			rows: [
-				['Partner’s share (40%)', '$1,186'],
-			],
-		},
 	},
 	{
 		name: 'Bill Split Calculator for Groups',
@@ -219,17 +145,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="120" cy="115" r="3.2" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Total bill', value: '$184.00' },
-				{ label: 'People', value: '4' },
-			],
-			chips: { options: ['15%', '18%', '20%', '25%'], selected: 2 },
-			result: { label: 'Each person owes', value: '$55.20' },
-			rows: [
-				['Tip', '$36.80'],
-			],
-		},
 	},
 	{
 		name: 'Debt-Free Date Calculator',
@@ -245,17 +160,6 @@ export const TOOLS: Tool[] = [
 			<path d="M195 118 L199 122 L206 113" stroke-width="1.5" opacity="0.9"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Balance', value: '$12,400' },
-				{ label: 'Interest rate', value: '19.9%' },
-				{ label: 'Monthly payment', value: '$450' },
-			],
-			result: { label: 'Debt-free by', value: 'Nov 2029' },
-			rows: [
-				['Interest paid', '$4,300'],
-			],
-		},
 	},
 	{
 		name: 'Debt Strategy Comparison',
@@ -274,16 +178,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="200" cy="130" r="2" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Extra payment each month', value: '$200' },
-			],
-			bars: [
-				{ label: 'Avalanche', value: '$3,180', pct: 83, tone: 'avalanche' },
-				{ label: 'Snowball', value: '$3,820', pct: 100, tone: 'snowball' },
-			],
-			result: { label: 'Avalanche saves', value: '$640' },
-		},
 	},
 	{
 		name: 'Emergency Fund Calculator',
@@ -307,13 +201,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="185" cy="45" r="1.5" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Essential monthly expenses', value: '$3,200' },
-			],
-			chips: { options: ['3 mo', '6 mo', '9 mo', '12 mo'], selected: 1 },
-			result: { label: 'Emergency fund target', value: '$19,200' },
-		},
 	},
 	{
 		name: 'Sinking Fund Calculator',
@@ -332,16 +219,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="120" cy="35" r="2.5" fill="currentColor" stroke="none"/>
 		`,
 		group: 'calculator',
-		mock: {
-			fields: [
-				{ label: 'Target amount', value: '$2,400' },
-				{ label: 'Target date', value: 'Dec 2027' },
-			],
-			result: { label: 'Save each month', value: '$171' },
-			rows: [
-				['Months to go', '14'],
-			],
-		},
 	},
 	{
 		name: 'Expense Tracking Readiness',
@@ -364,11 +241,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="190" cy="80" r="6" stroke-width="1.5" opacity="0.35" fill="none"/>
 		`,
 		group: 'assessment',
-		mock: {
-			question: 'How many months of spending have you tracked?',
-			options: ['None yet', 'About a month', 'Three months or more'],
-			selected: 2,
-		},
 	},
 	{
 		name: 'Sinking Fund Assessment',
@@ -389,11 +261,6 @@ export const TOOLS: Tool[] = [
 			<circle cx="185" cy="80" r="2.5" fill="currentColor" stroke="none"/>
 		`,
 		group: 'assessment',
-		mock: {
-			question: 'Do you know roughly when this expense will come up?',
-			options: ['Yes, on a set date', 'Sometime this year', 'No idea'],
-			selected: 0,
-		},
 	},
 	{
 		name: 'Find Your Budgeting Style',
@@ -416,10 +283,5 @@ export const TOOLS: Tool[] = [
 			<circle cx="75" cy="80" r="2.5" fill="currentColor" stroke="none"/>
 		`,
 		group: 'assessment',
-		mock: {
-			question: 'What is the first thing you do after getting paid?',
-			options: ['Move money into savings and bills right away', 'Check my deposit, then move on', 'Think about what I want to buy'],
-			selected: 0,
-		},
 	},
 ];

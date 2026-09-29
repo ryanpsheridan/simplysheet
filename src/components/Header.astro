@@ -508,11 +508,12 @@ const MENU_LINKS = [
 	   accessibility tree when not in use, so exactly one "Primary" navigation
 	   landmark is ever exposed. */
 	@media (min-width: 860px) {
-		/* Logo, centered links, CTA: two equal outer tracks keep the links on
-		   the page's true center line whatever the logo and CTA widths. */
+		/* Logo alone on the left; links and CTA grouped on the right, the
+		   links sitting just before the CTA, so most of the bar's content
+		   reads from the right edge. The flexible first track is the spacer. */
 		.site-header {
-			grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-			gap: var(--space-sm);
+			grid-template-columns: minmax(0, 1fr) auto auto;
+			gap: var(--space-lg);
 		}
 
 		.header-cta {
@@ -526,7 +527,7 @@ const MENU_LINKS = [
 			display: block;
 			grid-row: 1;
 			grid-column: 2;
-			justify-self: center;
+			justify-self: end;
 		}
 
 		.desktop-nav ul {
