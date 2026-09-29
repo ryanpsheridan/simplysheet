@@ -2,6 +2,12 @@
 import { getEntry } from 'astro:content';
 import { ETSY_SHOP_URL, withEtsyTracking } from '../consts';
 
+interface Props {
+	/** The editorial theme test adds an oversized wordmark under the footer. */
+	theme?: 'editorial';
+}
+
+const { theme } = Astro.props;
 const year = new Date().getFullYear();
 const budgetSpreadsheet = await getEntry('templates', 'budget-spreadsheet');
 const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon=SAVENOW`);
@@ -55,6 +61,12 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 			<p>&copy; {year} Simply Sheets</p>
 		</div>
 	</div>
+	{theme === 'editorial' && (
+		<div class="footer-wordmark" aria-hidden="true">
+			<img src="/images/logo-svg.svg" alt="" class="footer-wordmark-mark" width="28" height="30" />
+			<span>Simply Sheets</span>
+		</div>
+	)}
 </footer>
 
 <style>

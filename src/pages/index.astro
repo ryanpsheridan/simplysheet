@@ -1,16 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
 import SectionHead from '../components/SectionHead.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import ToolCard from '../components/ToolCard.astro';
 import Faq from '../components/Faq.astro';
-import CtaBanner from '../components/CtaBanner.astro';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE, templateName } from '../consts';
 import { TOOLS, toolId } from '../data/tools';
 import { getSortedArticles, toArticleCard } from '../utils/articles';
+// The editorial theme test. Scoped to this page: see the file's header.
+import '../styles/theme-editorial.css';
 
 const allArticles = await getSortedArticles();
 
@@ -23,14 +23,47 @@ const latest = allArticles.filter((a) => a.id !== featured.id).slice(0, 6).map(t
 
 const templates = (await getCollection('templates')).sort((a, b) => a.data.order - b.data.order);
 
-// The showcase stage fans three mockups: the best seller in front, flanked by
-// two light-theme products so the pair of themes reads at a glance.
+// The hero stage: the best seller's dark mockup in front of a light-theme
+// product. Both are the uncropped midImage assets, centered, per the
+// product-image rule.
 const byId = (id: string) => templates.find((t) => t.id === id);
 const stageFront = byId('budget-spreadsheet') ?? templates[0];
-const stageLeft = byId('debt-payoff-tracker');
-const stageRight = byId('savings-goals-tracker');
+const stageBack = byId('savings-goals-tracker');
+
+// Three real Etsy reviews from the templates collection, one per product,
+// for the charcoal band. Matched on the opening words of the review rather
+// than the name, since several are signed "Etsy buyer"; a pick that no
+// longer matches simply drops out rather than showing a hand-typed quote.
+const REVIEW_PICKS: [string, string][] = [
+	['budget-spreadsheet', 'This budget template was exactly'],
+	['couples-budget-spreadsheet', 'This has been very helpful'],
+	['savings-goals-tracker', 'This product is a great way'],
+];
+const reviews = REVIEW_PICKS.flatMap(([id, opening]) => {
+	const template = byId(id);
+	const review = template?.data.reviews?.find((r) => r.text.startsWith(opening));
+	return template && review ? [{ ...review, template }] : [];
+});
 
 const tools = TOOLS.slice(0, 6);
+
+const steps = [
+	{
+		label: 'Step one',
+		title: 'Pick the sheet that fits',
+		desc: 'Start with the budget, or go straight to debt, savings, net worth, or a shared budget for two.',
+	},
+	{
+		label: 'Step two',
+		title: 'Get your own copy',
+		desc: 'Make your own copy in Google Sheets, or open the Excel file if you would rather work offline.',
+	},
+	{
+		label: 'Step three',
+		title: 'Log as you go',
+		desc: 'Enter your income and spending. Totals, progress bars, and charts update on their own.',
+	},
+];
 
 const faq = [
 	{
@@ -84,39 +117,91 @@ const websiteSchema = {
 };
 ---
 
-<BaseLayout title={`${SITE_TITLE} | Budget Templates, Tools & Money Guides`} description={SITE_DESCRIPTION}>
+<BaseLayout theme="editorial" title={`${SITE_TITLE} | Budget Templates, Tools & Money Guides`} description={SITE_DESCRIPTION}>
 	<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-	<main id="main-content" class="band-main">
+	<main id="main-content" class="band-main home">
 
-	<PageHero
-		size="hero"
-		title="A simpler way to manage your personal finances."
-		desc="Budget spreadsheets for Google Sheets and Excel, free calculators, and plain-language guides for paying off debt, saving, and living on an irregular income."
-	>
-		<div class="hero-actions">
-			<a href="/spreadsheets/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_hero_cta:spreadsheets">Browse spreadsheets</a>
-			<a href="/tools/" class="btn btn-secondary btn-lg" data-cta="index_hero_cta:tools">Try a free calculator</a>
+	{/* Hero: copy left, a textured stage bleeding off the right edge */}
+	<section class="hero" aria-labelledby="hero-title">
+		<div class="hero-copy">
+			<a href="/tools/" class="hero-pill" data-cta="index_hero_pill:tools">
+				<span class="hero-pill-tag">Free</span>
+				{TOOLS.length} calculators, no sign-up
+				<span class="hero-pill-arrow" aria-hidden="true"></span>
+			</a>
+			<h1 id="hero-title" class="hero-title">A simpler way to manage your personal finances.</h1>
+			<p class="hero-desc">Budget spreadsheets for Google Sheets and Excel, free calculators, and plain-language guides for paying off debt, saving, and living on an irregular income.</p>
+			<div class="hero-actions">
+				<a href="/spreadsheets/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_hero_cta:spreadsheets">Browse spreadsheets</a>
+				<a href="/tools/" class="btn btn-secondary btn-lg" data-cta="index_hero_cta:tools">Try a free calculator</a>
+			</div>
+			<p class="hero-note">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.75 2.75L16.5 9"/></svg>
+				Works in Google Sheets and Excel
+			</p>
 		</div>
-		<ul class="hero-proof">
-			<li>Google Sheets + Excel</li>
-			<li>Dark and light themes</li>
-			<li>One-time purchase, no subscription</li>
-		</ul>
 
 		{stageFront?.data.midImage && (
-			<a slot="after" href={`/spreadsheets/${stageFront.id}/`} class="stage" data-cta={`index_showcase:${stageFront.id}`} aria-label={`${templateName(stageFront.data.title)}: view template`}>
-				{stageLeft?.data.midImageLight && (
-					<img class="stage-img stage-img--left" src={stageLeft.data.midImageLight} alt={`${templateName(stageLeft.data.title)} in the light theme`} width="2000" height="1200" loading="lazy" />
-				)}
-				{stageRight?.data.midImageLight && (
-					<img class="stage-img stage-img--right" src={stageRight.data.midImageLight} alt={`${templateName(stageRight.data.title)} in the light theme`} width="2000" height="1200" loading="lazy" />
+			<a href={`/spreadsheets/${stageFront.id}/`} class="hero-stage" data-cta={`index_showcase:${stageFront.id}`} aria-label={`${templateName(stageFront.data.title)}: view template`}>
+				<span class="stage-field stage-field--sky" aria-hidden="true"></span>
+				<span class="stage-field stage-field--ink" aria-hidden="true"></span>
+				<span class="stage-field stage-field--rings" aria-hidden="true"></span>
+				{stageBack?.data.midImageLight && (
+					<img class="stage-img stage-img--back" src={stageBack.data.midImageLight} alt={`${templateName(stageBack.data.title)} in the light theme`} width="2000" height="1200" loading="lazy" />
 				)}
 				<img class="stage-img stage-img--front" src={stageFront.data.midImage} alt={`${templateName(stageFront.data.title)} in the dark theme`} width="2000" height="1200" fetchpriority="high" />
 			</a>
 		)}
-	</PageHero>
+	</section>
 
+	{/* Intro: one statement and three plain facts */}
+	<section class="band intro" aria-labelledby="intro-heading">
+		<div class="band-inner">
+			<h2 id="intro-heading" class="intro-title">Budget spreadsheets that actually get used.</h2>
+			<ul class="intro-points">
+				<li>
+					<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="6" width="22" height="20" rx="2.5"/><path d="M5 12h22M5 19h22M13 12v14"/></svg>
+					<span>Works in <strong>Google Sheets</strong> and <strong>Excel</strong>, online or off</span>
+				</li>
+				<li>
+					<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 5H26v8.5L14.5 25 5 15.5z"/><circle cx="21.5" cy="9.5" r="1.5"/></svg>
+					<span><strong>One-time purchase</strong>, with no subscription and no ads</span>
+				</li>
+				<li>
+					<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="10"/><path d="M16 6a10 10 0 0 0 0 20z" fill="currentColor"/></svg>
+					<span><strong>Dark and light themes</strong> in every template</span>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	{/* Statement into the charcoal review band */}
+	{reviews.length > 0 && (
+		<section class="reviews" aria-labelledby="reviews-heading">
+			<p class="statement" aria-hidden="true">Own the math</p>
+			<div class="band band--inverse reviews-band">
+				<div class="band-inner">
+					<h2 id="reviews-heading" class="reviews-title">From buyers on Etsy</h2>
+					<ul class="reviews-list">
+						{reviews.map((r) => (
+							<li class="review">
+								<blockquote class="review-quote">
+									<p>&ldquo;{r.text}&rdquo;</p>
+								</blockquote>
+								<p class="review-by">
+									<span class="review-name">{r.name}</span>
+									<a href={`/spreadsheets/${r.template.id}/`} class="review-product" data-cta={`index_review_product:${r.template.id}`}>{templateName(r.template.data.title)}</a>
+								</p>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+		</section>
+	)}
+
+	{/* Spreadsheets */}
 	<section class="band" aria-labelledby="spreadsheets-heading">
 		<div class="band-inner">
 			<SectionHead
@@ -131,6 +216,7 @@ const websiteSchema = {
 		</div>
 	</section>
 
+	{/* How it works: three steps on one line */}
 	<section class="band band--surface" aria-labelledby="steps-heading">
 		<div class="band-inner">
 			<SectionHead
@@ -140,35 +226,28 @@ const websiteSchema = {
 				desc="No bank logins, no app to learn. A spreadsheet you own, doing the math for you."
 			/>
 			<ol class="steps">
-				<li class="step">
-					<span class="step-num">1</span>
-					<h3 class="step-title">Pick the sheet that fits</h3>
-					<p class="step-desc">Start with the budget, or go straight to debt, savings, net worth, or a shared budget for two.</p>
-				</li>
-				<li class="step">
-					<span class="step-num">2</span>
-					<h3 class="step-title">Get your own copy</h3>
-					<p class="step-desc">Make your own copy in Google Sheets, or open the Excel file if you would rather work offline.</p>
-				</li>
-				<li class="step">
-					<span class="step-num">3</span>
-					<h3 class="step-title">Log as you go</h3>
-					<p class="step-desc">Enter your income and spending. Totals, progress bars, and charts update on their own.</p>
-				</li>
+				{steps.map((step, i) => (
+					<li class="step" style={`--step-tint: var(${['--tint-sky', '--tint-lavender', '--tint-sand'][i]})`}>
+						<span class="step-label">{step.label}</span>
+						<h3 class="step-title">{step.title}</h3>
+						<p class="step-desc">{step.desc}</p>
+					</li>
+				))}
 			</ol>
 		</div>
 	</section>
 
+	{/* Free tools */}
 	<section class="band" aria-labelledby="tools-heading">
 		<div class="band-inner">
-			<SectionHead
-				id="tools-heading"
-				title="Free tools for the math you keep putting off"
-				desc="Calculators and quick assessments that run in your browser. No email, no sign-up."
-				href="/tools/"
-				linkLabel={`All ${TOOLS.length} tools`}
-				cta="index_tools_view_all"
-			/>
+			<header class="display-head">
+				<p class="kicker">Free tools</p>
+				<h2 id="tools-heading" class="display-title">The math you keep putting off, done in a minute</h2>
+				<div class="display-foot">
+					<p class="display-desc">Calculators and quick assessments that run in your browser. No email, no sign-up.</p>
+					<a href="/tools/" class="text-link" data-cta="index_tools_view_all">All {TOOLS.length} tools <span class="arrow">&rarr;</span></a>
+				</div>
+			</header>
 			<div class="tools">
 				{/* Decorative preview of whichever row has hover or focus. Every row
 				    is a complete link on its own, and below 960px this is dropped. */}
@@ -186,7 +265,31 @@ const websiteSchema = {
 		</div>
 	</section>
 
-	<section class="band band--surface" aria-labelledby="articles-heading">
+	{/* Quiz: the brand field, a big line, and a preview of question one */}
+	<section class="quiz-band" aria-labelledby="quiz-heading">
+		<div class="quiz-inner">
+			<div class="quiz-copy">
+				<p class="kicker">Budgeting style quiz</p>
+				<h2 id="quiz-heading" class="quiz-title">Not sure where to start?</h2>
+				<p class="quiz-desc">Seven questions about how you already handle money, and a budgeting style that suits it. No email, no sign-up.</p>
+				<a href="/quiz/budgeting-style/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_quiz_banner_cta">Take the 60-second quiz</a>
+			</div>
+			<div class="quiz-card" aria-hidden="true">
+				<span class="window-dots"><i></i><i></i><i></i></span>
+				<p class="quiz-card-count">Question 1 of 7</p>
+				<p class="quiz-card-q">What is the first thing you do after getting paid?</p>
+				<ul class="quiz-card-opts">
+					<li>Move money into savings and bills right away</li>
+					<li>Check my deposit, then move on</li>
+					<li>Think about what I want to buy</li>
+					<li>Try not to think about it</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	{/* Articles */}
+	<section class="band" aria-labelledby="articles-heading">
 		<div class="band-inner">
 			<SectionHead
 				id="articles-heading"
@@ -207,14 +310,16 @@ const websiteSchema = {
 		</div>
 	</section>
 
-	<section class="band about-brief" id="about-brief" aria-label="About Simply Sheets">
+	{/* About note, on charcoal */}
+	<section class="band band--inverse about-brief" id="about-brief" aria-label="About Simply Sheets">
 		<div class="band-inner about-brief-inner">
 			<p class="about-brief-body" id="about-text">I spent years frustrated by complicated budgeting apps that didn't fit my life. After six years of refining my own spreadsheet systems, I realized that clarity comes from simplicity, not extra features. I combined my background in UX design with my passion for personal finance to build the tools I wish I had from the start.</p>
-			<a href="/about/" class="btn btn-secondary btn-arrow about-brief-link" data-cta="index_about_brief_cta">Read the full story</a>
+			<a href="/about/" class="btn btn-inverse btn-lg btn-arrow about-brief-link" data-cta="index_about_brief_cta">Read the full story</a>
 		</div>
 	</section>
 
-	<section class="band band--surface">
+	{/* FAQ */}
+	<section class="band">
 		<div class="band-inner">
 			<Faq
 				layout="split"
@@ -225,75 +330,177 @@ const websiteSchema = {
 		</div>
 	</section>
 
-	<section class="band">
-		<CtaBanner
-			title="Not sure where to start?"
-			desc="Seven questions about how you already handle money, and a budgeting style that suits it. No email, no sign-up."
-			href="/quiz/budgeting-style/"
-			label="Take the 60-second quiz"
-			cta="index_quiz_banner_cta"
-		/>
+	{/* Closing: a window card on the textured field */}
+	<section class="closing" aria-labelledby="closing-heading">
+		<div class="closing-card">
+			<span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+			<h2 id="closing-heading" class="closing-title">A budget you own, for good.</h2>
+			<p class="closing-desc">Pay once and keep it. Every template works in Google Sheets and Excel, in a dark or light theme.</p>
+			<div class="closing-actions">
+				<a href="/spreadsheets/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_closing_cta:spreadsheets">Browse spreadsheets</a>
+				<a href="/tools/" class="btn btn-secondary btn-lg" data-cta="index_closing_cta:tools">Try a free calculator</a>
+			</div>
+		</div>
 	</section>
 	</main>
 </BaseLayout>
 
 <style>
-	/* Only what is unique to the homepage lives here: the hero's actions and
-	   proof line, the showcase stage, the numbered steps, the tools preview
-	   stage, and the about note. Bands, section heads, cards, the FAQ, and the
-	   closing banner are shared components. */
+	/* Homepage-only layout. Tokens, buttons, cards, header, and footer for the
+	   editorial theme live in src/styles/theme-editorial.css. */
 
-	/* ——— Hero actions + proof ——— */
+	.home {
+		/* The gutter every full-bleed piece measures from: the content column
+		   is 75rem, centered, never closer than --space-md to the screen edge. */
+		--gutter: max(var(--space-md), calc((100vw - var(--max-width-content)) / 2));
+	}
 
+	/* Shared texture layers for the stages. */
+	.stage-field,
+	.hero-stage::after,
+	.quiz-band::after,
+	.closing::before {
+		pointer-events: none;
+	}
+
+	/* Hero */
+
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+		gap: clamp(var(--space-lg), 5vw, 5rem);
+		align-items: center;
+		padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(4rem, 8vw, 7rem) var(--gutter);
+	}
+	.hero-copy {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		min-width: 0;
+	}
+	.hero-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: var(--space-lg);
+		padding: 0.3125rem 0.75rem 0.3125rem 0.3125rem;
+		border-radius: var(--radius-full);
+		background: var(--color-bg-panel);
+		font-size: 0.875rem;
+		color: var(--color-text);
+		text-decoration: none;
+		transition: background-color var(--duration-fast) var(--ease-out);
+	}
+	.hero-pill:hover {
+		background: var(--color-bg-emphasis);
+		color: var(--color-text);
+	}
+	.hero-pill-tag {
+		padding: 0.1875rem 0.5rem;
+		border-radius: var(--radius-full);
+		background: var(--color-brand);
+		font-size: 0.8125rem;
+		font-weight: var(--weight-medium);
+	}
+	.hero-pill-arrow {
+		width: 0.875rem;
+		height: 0.875rem;
+		background-color: currentColor;
+		-webkit-mask: var(--glyph-arrow) center / contain no-repeat;
+		mask: var(--glyph-arrow) center / contain no-repeat;
+		transition: transform var(--duration-base) var(--ease-out);
+	}
+	.hero-pill:hover .hero-pill-arrow {
+		transform: translateX(2px);
+	}
+	.hero-title {
+		font-size: var(--text-hero);
+		line-height: var(--leading-display);
+		letter-spacing: var(--tracking-hero);
+		margin: 0;
+		max-width: 9.5em;
+		text-wrap: balance;
+	}
+	.hero-desc {
+		font-size: var(--text-lead);
+		line-height: 1.4;
+		letter-spacing: -0.01em;
+		margin: var(--space-md) 0 0;
+		max-width: 30rem;
+	}
 	.hero-actions {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
-		gap: var(--space-sm);
+		gap: var(--space-xs);
+		margin-top: var(--space-lg);
 	}
-	.hero-proof {
-		list-style: none;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: var(--space-xs) var(--space-md);
-		margin: var(--space-md) 0 0;
-		padding: 0;
-		font-family: var(--font-sans);
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-	}
-	.hero-proof li {
+	.hero-note {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.4rem;
-	}
-	.hero-proof li::before {
-		content: '';
-		width: 0.875rem;
-		height: 0.875rem;
-		flex-shrink: 0;
-		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235F646F' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat;
+		gap: 0.5rem;
+		margin: var(--space-md) 0 0;
+		font-size: 0.875rem;
+		color: var(--color-text-secondary);
 	}
 
-	/* ——— Showcase stage ———
-	   Three mockups fanned on one panel: the dark best seller in front, two
-	   light-theme products tucked behind it. All three are the uncropped
-	   midImage assets, centered, per the product-image rule. The <img> tags
-	   carry width/height attributes, so height: auto is load-bearing: without
-	   it the 1200px attribute wins and the laptops render off the panel. */
-
-	.stage {
+	/* The stage: a collage of fields (sky, halftone ink, paper rings) under
+	   two mockups, bleeding off the right edge of the screen. Both mockups
+	   are midImage assets, centered in their boxes. */
+	.hero-stage {
 		position: relative;
 		display: block;
-		max-width: var(--max-width-content);
-		margin: clamp(3rem, 6vw, 4.5rem) auto 0;
-		aspect-ratio: 16 / 7.2;
-		border-radius: var(--radius-xl);
-		border: 1px solid var(--color-border-hairline);
-		background: var(--gradient-glow);
+		aspect-ratio: 1 / 0.92;
+		border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+		background: var(--paper);
 		overflow: hidden;
-		box-shadow: var(--shadow-lg);
+		isolation: isolate;
+	}
+	.hero-stage::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 3;
+		background: var(--grain);
+		opacity: 0.28;
+		mix-blend-mode: multiply;
+	}
+	.stage-field {
+		position: absolute;
+		z-index: 0;
+	}
+	.stage-field--sky {
+		left: 0;
+		top: 10%;
+		width: 46%;
+		height: 62%;
+		background:
+			radial-gradient(80% 60% at 30% 20%, rgba(255, 255, 255, 0.45), transparent 70%),
+			var(--tint-sky);
+	}
+	.stage-field--ink {
+		right: 0;
+		top: 0;
+		width: 60%;
+		height: 56%;
+		background:
+			radial-gradient(circle, rgba(176, 224, 255, 0.55) 1.1px, transparent 1.5px) 0 0 / 7px 7px,
+			radial-gradient(70% 90% at 80% 0%, #3A4A5C, transparent 70%),
+			#232323;
+		-webkit-mask-image: linear-gradient(200deg, #000 35%, rgba(0, 0, 0, 0.85) 60%, rgba(0, 0, 0, 0.6));
+		mask-image: linear-gradient(200deg, #000 35%, rgba(0, 0, 0, 0.85) 60%, rgba(0, 0, 0, 0.6));
+	}
+	.stage-field--rings {
+		right: -12%;
+		bottom: -26%;
+		width: 70%;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: repeating-radial-gradient(
+			circle at 50% 50%,
+			transparent 0 2.25rem,
+			rgba(var(--shadow-rgb), 0.09) 2.25rem calc(2.25rem + 1.5px),
+			transparent calc(2.25rem + 1.5px) 3rem
+		);
 	}
 	.stage-img {
 		position: absolute;
@@ -303,75 +510,228 @@ const websiteSchema = {
 		transition: transform var(--duration-slow) var(--ease-out);
 	}
 	.stage-img--front {
-		width: 62%;
-		left: 19%;
-		bottom: 6%;
 		z-index: 2;
-		filter: drop-shadow(0 24px 40px rgba(var(--shadow-rgb), 0.18));
+		width: 84%;
+		left: 6%;
+		bottom: 9%;
+		filter: drop-shadow(0 28px 40px rgba(var(--shadow-rgb), 0.28));
 	}
-	.stage-img--left,
-	.stage-img--right {
-		width: 44%;
-		bottom: 14%;
+	.stage-img--back {
 		z-index: 1;
-		opacity: 0.95;
+		width: 60%;
+		right: 2%;
+		top: 9%;
+		opacity: 0.96;
 	}
-	.stage-img--left { left: 1%; }
-	.stage-img--right { right: 1%; }
 	@media (hover: hover) {
-		.stage:hover .stage-img--front { transform: translateY(-6px); }
-		.stage:hover .stage-img--left { transform: translateX(-8px); }
-		.stage:hover .stage-img--right { transform: translateX(8px); }
+		.hero-stage:hover .stage-img--front { transform: translateY(-6px); }
+		.hero-stage:hover .stage-img--back { transform: translate(6px, -4px); }
 	}
 
-	/* ——— Steps ——— */
+	/* Intro */
 
-	.steps {
+	.intro {
+		padding-top: 0;
+	}
+	.intro-title {
+		font-size: var(--text-section);
+		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
+		max-width: 11em;
+		margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+	}
+	.intro-points {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-md);
+	}
+	.intro-points li {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		font-size: 1rem;
+		color: var(--color-text);
+	}
+	.intro-points svg {
+		width: 2rem;
+		height: 2rem;
+		flex-shrink: 0;
+	}
+	.intro-points strong {
+		font-weight: var(--weight-semibold);
+	}
+
+	/* Statement + reviews */
+
+	.statement {
+		margin: 0;
+		padding: 0 var(--space-md);
+		font-family: var(--font-heading);
+		font-size: clamp(3.5rem, 11.5vw, 10rem);
+		line-height: 0.9;
+		letter-spacing: -0.05em;
+		text-align: center;
+		color: var(--color-text);
+		/* The descender-free line sits on the band's top edge. */
+		transform: translateY(0.1em);
+	}
+	.reviews-band {
+		padding-block: clamp(4rem, 8vw, 7rem);
+	}
+	.reviews-title {
+		font-size: 1.125rem;
+		font-weight: var(--weight-normal);
+		letter-spacing: -0.01em;
+		text-align: center;
+		color: var(--color-on-inverse-secondary);
+		margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+	}
+	.reviews-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: var(--space-sm);
 	}
-	.step {
-		padding: var(--space-lg) var(--space-md) var(--space-md);
+	.review {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: var(--space-lg);
+		padding: clamp(1.5rem, 2.5vw, 2.25rem);
+		border: 1px solid var(--color-inverse-rule);
 		border-radius: var(--radius-card);
-		background: var(--color-bg);
-		border: 1px solid var(--color-border-hairline);
 	}
-	.step-num {
-		display: inline-grid;
-		place-items: center;
-		width: 2.25rem;
-		height: 2.25rem;
-		margin-bottom: var(--space-md);
-		border-radius: 50%;
-		font-family: var(--font-sans);
-		font-size: var(--text-small);
-		font-weight: var(--weight-semibold);
+	.review-quote {
+		margin: 0;
+	}
+	.review-quote p {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: clamp(1.25rem, 0.9vw + 0.95rem, 1.5rem);
+		line-height: 1.28;
+		letter-spacing: -0.02em;
+		color: var(--color-on-inverse);
+		text-indent: -0.4em;
+	}
+	.review-by {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+		margin: 0;
+		font-size: 0.875rem;
+	}
+	.review-name {
+		color: var(--color-on-inverse);
+	}
+	.review-product {
+		width: fit-content;
+		color: var(--color-on-inverse-muted);
+		text-decoration: underline;
+		text-decoration-color: var(--color-inverse-rule);
+		text-underline-offset: 0.22em;
+	}
+	.review-product:hover {
+		color: var(--color-on-inverse);
+		text-decoration-color: currentColor;
+	}
+
+	/* Steps */
+
+	.steps {
+		position: relative;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--space-md);
+		text-align: center;
+	}
+	/* The line the three labels sit on. */
+	.steps::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 1rem;
+		height: 1px;
+		background: var(--color-border);
+	}
+	.step {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 0 var(--space-sm);
+	}
+	.step-label {
+		display: inline-block;
+		padding: 0.4375rem 0.875rem;
+		border-radius: var(--radius-full);
+		background: var(--step-tint);
+		box-shadow: 0 0 0 8px var(--color-bg-panel);
+		font-size: 0.875rem;
+		font-weight: var(--weight-medium);
+		line-height: 1.2;
 		color: var(--color-text);
-		background: var(--color-bg-surface);
-		box-shadow:
-			inset 0 0 0 1px var(--color-border),
-			0 0 0 6px var(--color-bg-panel);
 	}
 	.step-title {
-		font-size: var(--text-h4);
-		margin: 0 0 var(--space-2xs);
+		font-size: clamp(1.375rem, 1vw + 1rem, 1.625rem);
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+		margin: var(--space-lg) 0 var(--space-xs);
 	}
 	.step-desc {
-		font-size: var(--text-small);
-		line-height: var(--leading-normal);
+		font-size: 1rem;
+		line-height: 1.5;
 		color: var(--color-text-secondary);
+		max-width: 20rem;
 		margin: 0;
 	}
 
-	/* ——— Tools: list + preview stage ——— */
+	/* Display head (tools) */
+
+	.kicker {
+		margin: 0 0 var(--space-sm);
+		font-size: 0.9375rem;
+		color: var(--color-text);
+	}
+	.display-head {
+		margin-bottom: clamp(3rem, 6vw, 5rem);
+	}
+	.display-title {
+		font-size: var(--text-display);
+		line-height: var(--leading-display);
+		letter-spacing: var(--tracking-hero);
+		max-width: 12em;
+		margin: 0;
+		text-wrap: balance;
+	}
+	.display-foot {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-sm) var(--space-lg);
+		margin-top: var(--space-lg);
+	}
+	.display-desc {
+		font-size: var(--text-lead);
+		line-height: 1.4;
+		letter-spacing: -0.01em;
+		max-width: 30rem;
+		margin: 0;
+	}
+
+	/* Tools: list + preview stage */
 
 	.tools {
 		display: grid;
-		grid-template-columns: 1fr 1.1fr;
+		grid-template-columns: 1.1fr 1fr;
 		gap: clamp(var(--space-md), 4vw, var(--space-xl));
 		align-items: start;
 	}
@@ -383,18 +743,24 @@ const websiteSchema = {
 		background: var(--gradient-ink);
 		color: #FFFFFF;
 		overflow: hidden;
+		isolation: isolate;
 	}
 	.tools-stage::before {
 		content: '';
 		position: absolute;
 		inset: 0;
-		background-image:
-			linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-		background-size: 2.5rem 2.5rem;
-		background-position: center;
-		-webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 80%);
-		mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 80%);
+		background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 1px, transparent 1.4px) 0 0 / 8px 8px;
+		-webkit-mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
+		mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
+	}
+	.tools-stage::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: var(--grain);
+		opacity: 0.14;
+		mix-blend-mode: screen;
+		pointer-events: none;
 	}
 	.tools-stage-art {
 		position: absolute;
@@ -412,50 +778,216 @@ const websiteSchema = {
 		transform: none;
 	}
 	.tools-list {
-		border-top: 1px solid var(--color-border);
+		border-top: 1px solid var(--color-border-hairline);
 	}
 
-	/* ——— Articles ——— */
+	/* Quiz band */
+
+	.quiz-band {
+		position: relative;
+		isolation: isolate;
+		padding: var(--space-band) var(--gutter);
+		background:
+			radial-gradient(50% 70% at 90% 0%, rgba(255, 255, 255, 0.5), transparent 70%),
+			radial-gradient(40% 60% at 0% 100%, rgba(218, 214, 255, 0.7), transparent 70%),
+			var(--tint-sky);
+	}
+	.quiz-band::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: var(--grain);
+		opacity: 0.16;
+		mix-blend-mode: multiply;
+	}
+	.quiz-inner {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: clamp(var(--space-lg), 6vw, 6rem);
+		align-items: center;
+		max-width: var(--max-width-content);
+		margin: 0 auto;
+	}
+	.quiz-copy {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.quiz-title {
+		font-size: var(--text-display);
+		line-height: var(--leading-display);
+		letter-spacing: var(--tracking-hero);
+		margin: 0;
+		max-width: 8em;
+	}
+	.quiz-desc {
+		font-size: var(--text-lead);
+		line-height: 1.4;
+		letter-spacing: -0.01em;
+		max-width: 28rem;
+		margin: var(--space-md) 0 var(--space-lg);
+	}
+	.quiz-card {
+		padding: var(--space-md) clamp(1.5rem, 3vw, 2.25rem) clamp(1.75rem, 3vw, 2.5rem);
+		border-radius: var(--radius-xl);
+		background: var(--color-bg-surface);
+		box-shadow: 0 30px 60px -20px rgba(var(--shadow-rgb), 0.25);
+	}
+	.quiz-card-count {
+		margin: var(--space-lg) 0 var(--space-xs);
+		font-size: 0.875rem;
+		color: var(--color-text-secondary);
+	}
+	.quiz-card-q {
+		margin: 0 0 var(--space-md);
+		font-family: var(--font-heading);
+		font-size: clamp(1.375rem, 1vw + 1rem, 1.75rem);
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+	.quiz-card-opts {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: var(--space-xs);
+	}
+	.quiz-card-opts li {
+		padding: 0.8125rem 1rem;
+		border: 1px solid var(--color-border-hairline);
+		border-radius: 0.75rem;
+		font-size: 0.9375rem;
+		background: var(--color-bg-surface);
+	}
+	.quiz-card-opts li:first-child {
+		border-color: var(--color-text);
+		box-shadow: inset 0 0 0 1px var(--color-text);
+	}
+
+	/* Traffic-light dots: the window card motif shared by the quiz preview
+	   and the closing card. */
+	.window-dots {
+		display: flex;
+		gap: 0.4375rem;
+	}
+	.window-dots i {
+		width: 0.6875rem;
+		height: 0.6875rem;
+		border-radius: 50%;
+		background: #FF5F57;
+	}
+	.window-dots i:nth-child(2) { background: #FEBC2E; }
+	.window-dots i:nth-child(3) { background: #28C840; }
+
+	/* Articles */
 
 	.home-featured {
-		margin-bottom: var(--space-lg);
+		margin-bottom: var(--space-xl);
 	}
 
-	/* ——— About note ——— */
+	/* About note */
 
 	.about-brief-inner {
-		max-width: 52rem;
+		max-width: 56rem;
 		text-align: center;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 	}
 	.about-brief-body {
-		font-family: var(--font-sans);
-		font-size: clamp(1.5rem, 1.6vw + 0.9rem, 2.125rem);
-		font-weight: var(--weight-medium);
-		line-height: 1.35;
-		letter-spacing: var(--tracking-tight);
-		color: var(--color-text);
+		font-family: var(--font-heading);
+		font-size: clamp(1.625rem, 2vw + 1rem, 2.625rem);
+		font-weight: var(--weight-normal);
+		line-height: 1.2;
+		letter-spacing: -0.025em;
 		margin: 0;
 		text-wrap: pretty;
 	}
 	:global(.about-brief-body .word) {
-		color: var(--color-border-strong);
+		color: #5A5A56;
 		transition: color 0.15s ease;
 	}
 	:global(.about-brief-body .word.lit) {
-		color: var(--color-text);
+		color: var(--color-on-inverse);
 	}
 	.about-brief-link {
-		margin-top: var(--space-lg);
+		margin-top: var(--space-xl);
 	}
 
-	/* ——— Responsive ——— */
+	/* Closing */
+
+	.closing {
+		position: relative;
+		isolation: isolate;
+		display: grid;
+		place-items: center;
+		padding: clamp(3rem, 8vw, 7rem) var(--space-md);
+		background:
+			radial-gradient(circle, rgba(41, 41, 41, 0.16) 1px, transparent 1.4px) 0 0 / 7px 7px,
+			linear-gradient(90deg, var(--tint-sky) 0 26%, transparent 26% 74%, var(--tint-lavender) 74%),
+			var(--paper);
+	}
+	.closing::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: var(--grain);
+		opacity: 0.25;
+		mix-blend-mode: multiply;
+	}
+	.closing-card {
+		width: 100%;
+		max-width: 46rem;
+		padding: var(--space-md) clamp(1.5rem, 5vw, 3.5rem) clamp(2.5rem, 5vw, 3.5rem);
+		border-radius: var(--radius-xl);
+		background: var(--color-bg-panel);
+		box-shadow: 0 30px 80px -30px rgba(var(--shadow-rgb), 0.35);
+	}
+	.closing-title {
+		font-size: var(--text-display);
+		line-height: var(--leading-display);
+		letter-spacing: var(--tracking-hero);
+		max-width: 9em;
+		margin: clamp(2rem, 5vw, 3.5rem) 0 var(--space-md);
+		text-wrap: balance;
+	}
+	.closing-desc {
+		font-size: var(--text-lead);
+		line-height: 1.4;
+		letter-spacing: -0.01em;
+		max-width: 30rem;
+		margin: 0 0 var(--space-lg);
+	}
+	.closing-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+	}
+
+	/* Responsive */
 
 	@media (max-width: 960px) {
+		.hero {
+			grid-template-columns: 1fr;
+			padding-right: var(--gutter);
+		}
+		.hero-stage {
+			margin-right: calc(-1 * var(--gutter));
+			aspect-ratio: 4 / 3;
+		}
+		.reviews-list {
+			grid-template-columns: 1fr;
+			max-width: 38rem;
+			margin-inline: auto;
+		}
 		.steps {
 			grid-template-columns: 1fr;
+			gap: var(--space-xl);
+		}
+		.steps::before {
+			display: none;
 		}
 		.tools {
 			grid-template-columns: 1fr;
@@ -463,25 +995,30 @@ const websiteSchema = {
 		.tools-stage {
 			display: none;
 		}
+		.quiz-inner {
+			grid-template-columns: 1fr;
+		}
 	}
 
 	@media (max-width: 600px) {
-		.stage {
-			aspect-ratio: 4 / 3;
-			border-radius: var(--radius-lg);
+		.hero-stage {
+			border-radius: var(--radius-lg) 0 0 var(--radius-lg);
 		}
 		.stage-img--front {
-			width: 86%;
-			left: 7%;
-			bottom: 8%;
+			width: 92%;
+			left: 3%;
 		}
-		.stage-img--left,
-		.stage-img--right {
-			width: 58%;
-			bottom: 34%;
+		.intro-points li {
+			align-items: flex-start;
 		}
-		.stage-img--left { left: -12%; }
-		.stage-img--right { right: -12%; }
+		.intro-points svg {
+			width: 1.75rem;
+			height: 1.75rem;
+			margin-top: -0.125rem;
+		}
+		.quiz-card-opts li:nth-child(n + 3) {
+			display: none;
+		}
 	}
 </style>
 
@@ -498,6 +1035,13 @@ const websiteSchema = {
 		row.addEventListener('mouseenter', () => activate(row.dataset.tool));
 		row.addEventListener('focus', () => activate(row.dataset.tool));
 	});
+
+	// Header: the hairline only appears once the page has scrolled, since at
+	// the top it would separate white from white.
+	const shell = document.querySelector<HTMLElement>('.header-shell');
+	const markScrolled = () => shell?.classList.toggle('is-scrolled', window.scrollY > 8);
+	window.addEventListener('scroll', markScrolled, { passive: true });
+	markScrolled();
 
 	// About note: words light up as the section scrolls into view.
 	const textEl = document.getElementById('about-text');

@@ -42,3 +42,19 @@
   font-display: swap;
   src: url('/fonts/AspektaVF.woff2') format('woff2');
 }
+
+/* Inter Variable (opsz + wght). OFL 1.1, The Inter Project Authors.
+ * https://github.com/rsms/inter. Licence shipped alongside at
+ * /fonts/Inter-OFL-LICENSE.txt. Mirrored from @fontsource-variable/inter
+ * (latin, opsz file). Used only by the editorial theme test on the homepage
+ * (src/styles/theme-editorial.css), which preloads it via BaseHead's `theme`
+ * prop. The opsz axis switches to Inter Display's tighter cut at large sizes
+ * on its own (font-optical-sizing: auto), so one file covers body and display. */
+
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/InterVF.woff2') format('woff2');
+}
