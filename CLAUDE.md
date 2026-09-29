@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Astro-based personal finance content site. Articles in `src/content/articles/` (`.md` or `.mdx`). Design tokens in `src/styles/tokens.css`. Google Fonts loaded in `src/components/BaseHead.astro`.
+Astro-based personal finance content site. Articles in `src/content/articles/` (`.md` or `.mdx`). Design tokens in `src/styles/tokens.css`. Fonts are self-hosted (`src/styles/fonts.css`), preloaded in `src/components/BaseHead.astro`.
 
 ## Product Images — Right-Aligned Hero vs. Centered Thumbnails
 
@@ -23,7 +23,7 @@ There are two product image assets per template, and they are **not interchangea
   object-fit: contain;
   object-position: center;
   ```
-  Surfaces using this treatment: `.card-media--contain` in `styles/global.css`, which is every `ProductCard` on the site (homepage bento, `/spreadsheets/`, the template page's "More spreadsheets" and bundle cards, the articles index, About, the 404, and `ProductPromo`'s `card` variant); `.stage-img` in `pages/index.astro` (the homepage showcase); and `.article-promo-thumb` / `.product-thumb` in `styles/global.css` (`ProductPromo`'s `interstitial` and `row` variants). If a new surface needs a product thumbnail, use `ProductCard` (or `midImage` centered): reach for the right-positioned hero treatment only for that one product-page hero.
+  Surfaces using this treatment: `.card-media--contain` in `styles/global.css`, which is every `ProductCard` on the site (the two-column grids on the homepage and `/spreadsheets/`, the template page's "More spreadsheets" and bundle cards, the articles index, About, the 404, and `ProductPromo`'s `card` variant); `.stage-img` in `pages/index.astro` (the homepage hero stage); and `.article-promo-thumb` / `.product-thumb` in `styles/global.css` (`ProductPromo`'s `interstitial` and `row` variants). If a new surface needs a product thumbnail, use `ProductCard` (or `midImage` centered): reach for the right-positioned hero treatment only for that one product-page hero.
 
 ## SEO — Always Top of Mind
 
@@ -39,7 +39,7 @@ The primary goal of this site is organic Google discovery. Every change — new 
 - Article titles and `headline` in schema should be optimized for both SEO (search engines) and AEO (AI engines / answer engines). Use natural question-style or how-to phrasing that matches what people actually search for.
 - Article slugs should match high-volume search phrases when possible (e.g. `how-to-pay-off-debt` instead of `debt-payoff`).
 - The site already has a sitemap (`/sitemap-index.xml`), canonical URLs, and Open Graph tags — these are handled automatically by `BaseHead.astro`.
-- Social crawlers (Facebook, iMessage, Slack, etc.) can't render SVG for link previews, so `BaseHead.astro` points `og:image`/`twitter:image` at a PNG counterpart of the article's SVG (same filename, `.png` instead of `.svg`). `prebuild` runs `scripts/generate-article-cards.mjs` (writes every `card-v3-*.svg`) and then `scripts/generate-og-images.mjs` (rasterizes each to a matching `.png`), so a real build needs no manual step. If you add a new article in this session without running `npm run build`, run both scripts so the SVG and PNG exist for local testing and sharing.
+- Social crawlers (Facebook, iMessage, Slack, etc.) can't render SVG for link previews, so `BaseHead.astro` points `og:image`/`twitter:image` at a PNG counterpart of the article's SVG (same filename, `.png` instead of `.svg`). `prebuild` runs `scripts/generate-article-cards.mjs` (writes every `card-v4-*.svg`) and then `scripts/generate-og-images.mjs` (rasterizes each to a matching `.png`), so a real build needs no manual step. If you add a new article in this session without running `npm run build`, run both scripts so the SVG and PNG exist for local testing and sharing.
 
 ## Click Tracking — `data-cta`
 
@@ -96,12 +96,12 @@ Every time an article is provided, automatically do all of the following:
 
 1. **Create the article file** in `src/content/articles/` as `.md` (or `.mdx` if it embeds a component).
 2. **Draw the article's wireframe** as `scripts/article-cards/wireframes/{slug}.svg`, following the Wireframe Overlay System below, in `currentColor` only. That fragment is the only hand-made part of the card image; see "Article Card Images" below.
-   - **Generate the card**: `node scripts/generate-article-cards.mjs` writes `public/images/card-v3-{slug}.svg` (it also runs in `prebuild`), then `node scripts/generate-og-images.mjs` rasterizes it to the matching PNG that social previews (`og:image`/`twitter:image`) use, since crawlers can't render SVG. Commit the wireframe, the SVG, and the PNG.
+   - **Generate the card**: `node scripts/generate-article-cards.mjs` writes `public/images/card-v4-{slug}.svg` (it also runs in `prebuild`), then `node scripts/generate-og-images.mjs` rasterizes it to the matching PNG that social previews (`og:image`/`twitter:image`) use, since crawlers can't render SVG. Commit the wireframe, the SVG, and the PNG.
    - **Always verify** the result before committing: open or screenshot it and check the wireframe is grid-snapped, themed to the topic, and doesn't cut off mid-canvas, and that it reads well at card size on the homepage and `/articles/`.
 3. **Include the image path in frontmatter (same path for both fields)**:
    ```yaml
-   image: '/images/card-v3-{slug}.svg'
-   cardImage: '/images/card-v3-{slug}.svg'
+   image: '/images/card-v4-{slug}.svg'
+   cardImage: '/images/card-v4-{slug}.svg'
    ```
 4. **Pick the first tag deliberately**: it chooses the card's hue family, and the generator varies the exact hue, angle, and bloom per slug, so no palette needs choosing by hand and none can collide.
 5. **Generate the narration audio**: `GOOGLE_TTS_API_KEY=... node scripts/generate-audio-narration.mjs {slug}` (see "Article Audio Narration" below). The player then shows up automatically — no per-article code needed.
@@ -115,19 +115,19 @@ Every time an article is provided, automatically do all of the following:
 
 ## Article Card Images
 
-Every article has one card image, `public/images/card-v3-{slug}.svg` (960×540), used for both `image` and `cardImage`: the article's own hero, every article card, and (as the PNG) its social preview. The whole look lives in one script, `scripts/generate-article-cards.mjs`; an article contributes only its wireframe and its first tag.
+Every article has one card image, `public/images/card-v4-{slug}.svg` (960×540), used for both `image` and `cardImage`: the article's own hero, every article card, and (as the PNG) its social preview. The whole look lives in one script, `scripts/generate-article-cards.mjs`; an article contributes only its wireframe and its first tag.
 
-- **The look (v3)**: a light field in the tag's hue family (a two-stop gradient corner to corner), a white highlight bloom in one corner and a saturated bloom in the opposite one, the same faint concentric rings as the page heroes in a third corner, and the article's wireframe in ink (`#081122`). No grain, no blur filters. It matches the site chrome instead of sitting on it as a dark tile.
+- **The look (v4)** is the site's print-collage texture, the same as the homepage hero stage and closing card: a warm paper ground (`#ECEAE2`), two colour blocks in the tag's hue family, a halftone dot field printed on the first block (fading along a diagonal), a fine ink dot grid and film grain (`feTurbulence`) over the whole collage, and on top a clean off-white app window (traffic-light dots, 608px wide, running off the bottom edge) holding the article's wireframe in ink (`#292929`). The window is the same motif as the tool mockups and the closing card.
 - **Hue families** (first tag → base hue): `expense-tracking` blue (212°), `couples-budgeting` magenta/pink (330°), `debt-payoff` rose/wine (350°), `savings-goals` green (148°), `irregular-income` amber (34°), `net-worth` teal (176°), `budgeting-styles` violet (256°). A new tag needs an entry in `FAMILY` in the script, or it falls back to a neutral blue.
-- **Per-article variation is derived, not chosen**: hue jitter (±10° inside the family), gradient direction, and bloom/ring corners all come from a hash of the slug. Two articles in a family never render identically, and the output is byte-stable between runs, so `prebuild` never produces a diff.
-- **Wireframes** live in `scripts/article-cards/wireframes/{slug}.svg`: a standalone 960×540 SVG drawn in `currentColor` only (plus `url(#areaFade)` for under-curve fills, which the generator defines in ink). They follow the Wireframe Overlay System below. The existing eighteen were lifted unchanged from the v2 files.
-- **To change the look** for every article at once, edit the generator and rerun it. Never hand-edit a `card-v3-*.svg`; it is overwritten on the next build.
-- **Rasterizing**: `generate-og-images.mjs` renders `card-v3-*.svg` as lossless full-colour PNGs (~70 KB; smaller than a palette encode for these clean gradients and free of its banding). `og-default.svg`, which still has grain, keeps the palette encode.
-- **Archive**: the previous dark mesh cards (`card-v2-*.svg` and their PNGs) stay in `public/images/` and are shown on `/style-guide/` under Archive, alongside the older gradient-overlay card and the unshipped tool UI thumbnails. Nothing live links to them. Their spec (saturated per-article gradient, four blurred glow circles, grain, a blurred ring motif, the wireframe in white, and a per-article palette registry) is retired; if they are ever revived, the files themselves are the reference.
+- **Per-article variation is derived, not chosen**: hue jitter (±10° inside the family), which of three collage layouts the blocks take (side columns, offset corners, top band over a side column), their exact sizes, which side they sit on, the halftone's fade direction, and the grain seed all come from a hash of the slug. Two articles in a family never render identically, and the output is byte-stable between runs, so `prebuild` never produces a diff.
+- **Wireframes** live in `scripts/article-cards/wireframes/{slug}.svg`: a standalone 960×540 SVG drawn in `currentColor` only (plus `url(#areaFade)` for under-curve fills, which the generator defines in ink). They are still authored on the full 960×540 grid below; the generator scales them to 0.78 about the window's centre and clips them to the window, so grid-bleed lines end at the window edge. `vector-effect="non-scaling-stroke"` keeps their line weights through the scale.
+- **To change the look** for every article at once, edit the generator and rerun it. Never hand-edit a `card-v4-*.svg`; it is overwritten on the next build.
+- **Rasterizing**: `generate-og-images.mjs` renders `card-v4-*.svg` (and `og-default.svg`) as palette PNGs (~80 KB); both carry grain, which a full-colour PNG stores very inefficiently.
+- **Archive**: the previous sets stay in `public/images/` and are shown on `/style-guide/` under Archive: v3 (`card-v3-*`, a light tinted gradient with a white highlight, a saturated bloom, faint rings, and the wireframe straight on the field) and v2 (`card-v2-*`, the dark mesh cards). Nothing live links to either. The file prefix moved to v4 so social platforms and browsers fetch the new images rather than serving a cached old one.
 
 ## Wireframe Overlay System
 
-Every article card's content is its wireframe: an ultra-thin vector chart glyph, grid-snapped and themed to the article's topic, drawn in `currentColor` in `scripts/article-cards/wireframes/{slug}.svg` (the generator renders it in ink over the tinted field). It is a hairline drawing, never a fill-heavy illustration. The coordinates, layouts, and weights below are unchanged from the v2 cards; only the colour moved from white to `currentColor`.
+Every article card's content is its wireframe: an ultra-thin vector chart glyph, grid-snapped and themed to the article's topic, drawn in `currentColor` in `scripts/article-cards/wireframes/{slug}.svg` (the generator renders it in ink inside the card's app window). It is a hairline drawing, never a fill-heavy illustration. The coordinates, layouts, and weights below are unchanged from the v2 cards; only the colour moved from white to `currentColor`.
 
 ### Safe zone
 
@@ -311,31 +311,26 @@ The articles hub is statically paginated for SEO/AEO crawlability — there is n
 
 ## Homepage
 
-- The featured article is pinned by slug in `src/pages/index.astro` (`const featuredSlug = '...'`), currently `how-to-split-bills-with-different-incomes`. The owner has approved choosing whichever article performs best for that spot, so it can be changed when Search Console data supports a better pick. Base the choice on data (impressions, position, and which product the article funnels to), not preference, and update this line when it changes.
-
-### Editorial theme test (in progress)
-
-The homepage is currently running a Granola-inspired visual test, opted into with `<BaseLayout theme="editorial">`. BaseLayout puts `theme-editorial` on `<html>`, BaseHead preloads Inter instead of Manrope and DM Sans, and Footer adds an oversized wordmark. Every token and override lives in `src/styles/theme-editorial.css`, which only `index.astro` imports, so no other page changes. The test's rules: one family (Inter Variable with its `opsz` axis, `public/fonts/InterVF.woff2`), regular-weight headings, charcoal `#292929` ink on white with a `#F7F7F2` panel and charcoal bands, much larger band spacing, and grain or halftone texture behind product mockups. Its section labels are plain text (`.kicker`), which departs from the eyebrow rule below on purpose while the look is being evaluated. If the test ships, fold the tokens into `tokens.css` and the overrides into the components they touch; if not, delete the file and the `theme` prop.
-
-While it runs, the homepage layout differs from the "Layout" list below: a two-column hero (copy left, a textured stage bleeding off the right edge), three plain facts, a giant statement over a charcoal band of three real Etsy reviews (picked from the templates collection by their opening words, never hand-typed), the spreadsheets bento, a three-step timeline, a large display head over the tools list, the quiz as a sky band with a static preview of question one, articles, the about note on charcoal, the FAQ, and a closing window card on a textured field. New `data-cta` ids: `index_hero_pill:tools`, `index_review_product:<templateSlug>`, `index_closing_cta:spreadsheets`, `index_closing_cta:tools`. `index_quiz_banner_cta` stays on the quiz button, which still does the same job.
+- The featured article is pinned by slug in `src/pages/index.astro` (`const featuredSlug = '...'`), currently `how-to-split-bills-with-different-incomes`. It leads the homepage article grid as its first card. The owner has approved choosing whichever article performs best for that spot, so it can be changed when Search Console data supports a better pick. Base the choice on data (impressions, position, and which product the article funnels to), not preference, and update this line when it changes.
 
 ### Layout
 
-A centered, CTA-led page with long vertical rhythm, modeled on the layouts of cap.so. It replaced a two-column hero (headline left, featured article right) and label-left row grids. The page is almost entirely shared components (see "Design System"); only the showcase stage, the numbered steps, the tools preview stage, and the about note are homepage-specific markup in `src/pages/index.astro`.
+A Granola-inspired editorial page: big regular-weight type, a lot of air, charcoal bands, and print texture behind product imagery. It replaced a centered cap.so-style layout. Most of it is shared components (see "Design System"); the hero, the reviews band, the steps timeline, the tools preview stage, the quiz band, the about note, and the closing card are homepage-specific markup in `src/pages/index.astro`.
 
 Section order, top to bottom:
 
-1. **`PageHero size="hero"`**: centered H1, standfirst, two CTAs that hug their labels and wrap on a phone (`btn-primary btn-arrow` to `/spreadsheets/`, `btn-secondary` to `/tools/`), a three-item proof line, the faint rings behind it. The hero carries calls to action now; the earlier "no CTA in the hero" decision was superseded by this redesign at the owner's request.
-2. **Showcase stage** (`.stage`, in the hero's `after` slot): three fanned mockups on `--gradient-glow`: the Budget Spreadsheet's dark `midImage` in front, the Debt Payoff and Savings Goals `midImageLight` behind. All `midImage` assets, centered. The `<img>` tags carry `width`/`height`, so `.stage-img` needs `height: auto`; without it the 1200px attribute wins and the laptops render off the panel.
-3. **Spreadsheets**: `SectionHead` + `ProductGrid layout="bento"`.
-4. **How it works**: centered `SectionHead` + three numbered step cards, on a surface band.
-5. **Free tools**: `ToolCard variant="row"` list beside a dark preview stage that shows the illustration of whichever row has hover or focus (script at the bottom of the page). The stage is `aria-hidden` and dropped below 960px.
-6. **Articles**: the pinned featured article as `ArticleCard variant="feature"`, then `latest = rest.slice(0, 6)` as grid cards without descriptions (keep it a multiple of 3). Surface band.
-7. **About note**: centered, with the scroll-lit word effect.
-8. **FAQ**: `Faq layout="split"` on a surface band; it emits the page's FAQPage JSON-LD. Keep the answers consistent with the template pages' own FAQs.
-9. **Closing**: `CtaBanner` to the budgeting-style quiz.
+1. **Hero**: two columns. Left: a pill (`index_hero_pill:tools`), the H1 in `--text-hero`, a standfirst, two CTAs that hug their labels and wrap on a phone (`btn-primary btn-arrow` to `/spreadsheets/`, `btn-secondary` to `/tools/`), and a "Works in Google Sheets and Excel" note. Right: the stage (`.hero-stage.textured`, `index_showcase:<slug>`), the `--texture-field` collage with the Budget Spreadsheet's dark `midImage` centered on it, bleeding off the right edge of the screen. One laptop only: a second mockup behind it was tried and read as unfinished. The `<img>` carries `width`/`height`, so `.stage-img` needs `height: auto`.
+2. **Intro**: a `--text-section` statement and three plain facts with line icons.
+3. **Reviews**: a giant statement ("Own the math", no descenders so it sits flush on the band) over a `band--inverse` of three real Etsy reviews. They are picked from the templates collection by their opening words (`REVIEW_PICKS`), never hand-typed; a pick that stops matching drops out. Each links its product page (`index_review_product:<slug>`).
+4. **Spreadsheets**: `SectionHead` + `ProductGrid columns={2}`, every card the same width.
+5. **How it works**: a centered `SectionHead` and three steps on a line, each with a tinted label chip (sky, lavender, sand), on a surface band.
+6. **Free tools**: `SectionHead size="display" kicker="Free tools"`, then `ToolCard variant="row"` list beside a charcoal preview stage that shows the `ToolMock` of whichever row has hover or focus (script at the bottom of the page). The stage is `aria-hidden` and dropped below 960px. This list-plus-stage layout is homepage-only; don't repeat it elsewhere.
+7. **Quiz band**: a sky field with grain, a `kicker`, a display heading, the quiz CTA (`index_quiz_banner_cta`), and a static, `aria-hidden` preview of question one.
+8. **Articles**: `SectionHead` + an even `.card-grid` of six `ArticleCard`s, the pinned article first, then the five newest (keep the total a multiple of 3). There is no wide "feature" card: it was removed because its image outran half the card and aligned with nothing.
+9. **About note**: centered on `band--inverse`, with the scroll-lit word effect and a `btn-inverse`.
+10. **FAQ**: `Faq layout="split"`; it emits the page's FAQPage JSON-LD. Keep the answers consistent with the template pages' own FAQs.
+11. **Closing**: a window card (traffic-light dots, a display heading, two CTAs: `index_closing_cta:spreadsheets`, `index_closing_cta:tools`) on the `--texture-field` collage.
 
-- No eyebrows on this page: Cap puts small caps labels above every heading, but the site's eyebrow rules (rare, `.eyebrow-badge` only) win.
 - Heading ranks: section headings are `h2`, card titles `h3`.
 
 ## Design System
@@ -344,26 +339,29 @@ Every page is assembled from a small set of shared pieces. The rule: **a new pag
 
 ### Layout primitives (`global.css`)
 
-- **`.band`**: a full-bleed section with `--space-band` vertical padding; `.band--surface` raises it onto `--color-bg-surface` with hairline borders; `.band--flush-top` drops its top padding to continue the band above (a grid right under a `PageHero`). Pages alternate plain and surface bands; that alternation, not rules, is what separates chapters.
-- **`.band-inner`**: holds content to `--max-width-content` (72rem). **`.band-main`** goes on the `<main>` of a band page, neutralizing the global `main` width and padding.
+- **`.band`**: a full-bleed section with `--space-band` vertical padding; `.band--surface` puts it on the warm `--color-bg-panel`; `.band--inverse` is charcoal (`--color-bg-inverse`), with headings and copy on the `--color-on-inverse*` roles; `.band--flush-top` drops its top padding to continue the band above (a grid right under a `PageHero`). Pages alternate plain and surface bands; that alternation, not rules, is what separates chapters.
+- **`.band-inner`**: holds content to `--max-width-content` (75rem). **`.band-main`** goes on the `<main>` of a band page, neutralizing the global `main` width and padding.
 - **`.rings`**: the masked concentric rings behind page heroes.
-- **`.card-grid`** (3 columns, 2 at 960px, 1 at 600px), with `--2`, `--4`, and `--bento` (12 columns; each card's `--span`; every card's media one fixed height so a narrow and a wide card stay level).
+- **`.card-grid`** (3 columns, 2 at 960px, 1 at 600px), with `--2` and `--4`. Every card in a row is the same width: an uneven bento grid was removed at the owner's request, since uneven product cards read as a ranking.
+- **`.textured`** (+ `--dark` on charcoal): lays the `--grain` tile over a decorative field as a multiply (or screen) layer. **`--texture-field`** is the one collage for large stages (sky and lavender blocks either side of paper, under a faint halftone): the homepage hero stage and closing card use it.
+- **`.kicker`**: a plain small sentence-case label above a display heading ("Free tools"). Rare, and only above display-size heads; `.eyebrow-badge` stays the pointer on cards and promos.
 - **`.content-block`** / **`.content-block-title`** / **`.content-block-foot`**: the closing chapters of a reading page (FAQ, related articles, more tools, recommended products): a rule, air, one heading size. Identical on articles, calculators, and template pages. **`.card-list`** stacks cards in a narrow column.
 - **`.text-link`**: the quiet underlined "All articles →" link for section heads and list feet.
 
 ### Card anatomy (`global.css`)
 
-One anatomy for every card: `.card` > `.card-media` (+ `--contain` for product mockups on `--gradient-media`, `--art` for tool line art on `--gradient-ink`) + `.card-body` > `.card-title` / `.card-desc` / `.card-meta` / `.card-link`. Modifiers: `.card--framed` (raised white card, hairline edge, media inset by `--space-xs` with a concentric `--radius-inset`), `.card--row` (media beside the body; stacks at 600px). `--card-lines` sets the description clamp.
+One anatomy for every card: `.card` > `.card-media` (+ `--contain` for product mockups on `--gradient-media`, `--art` for a `ToolMock` on `--gradient-ink`; both carry grain) + `.card-body` > `.card-title` / `.card-desc` / `.card-meta` / `.card-link`. Modifiers: `.card--framed` (raised white card, hairline edge, media inset by `--space-xs` with a concentric `--radius-inset`), `.card--row` (media beside the body; stacks at 600px). `--card-lines` sets the description clamp.
 
 These rules are global, not scoped, on purpose: `ArticleGrid` clones cards on the client, and cards render inside `.prose` (the two-up product promos). Card text rules are written as `.card .card-x` (0,2,0) so they beat `.prose p` / `.prose h3` (0,1,1).
 
 ### Components (`src/components`)
 
 - **`PageHero`**: the centered opener on every top-level page. `size="hero"` (homepage, `--text-hero`) or `"page"` (`--text-display`). Takes `crumbs` (rendered centered via `Breadcrumbs centered`). A hero with crumbs left-aligns all of its content below 600px, trail included, since a breadcrumb reads as a path from the left edge; heroes without crumbs (homepage, 404) stay centered at every width. Slots: `before` (badge, glyph), default (buttons, `TopicFilterTabs centered`), `after` (the homepage stage). Used by the homepage, `/articles/` and tag archives, `/spreadsheets/`, `/tools/`, About, and the 404.
-- **`SectionHead`**: the `h2` that opens a band, in `--text-section`, with optional description and `.text-link`. `align="split"` (default) or `"center"`.
-- **`ArticleCard`**: `variant="grid"` (listings), `"feature"` (the one pinned article; framed row), `"compact"` (small thumbnail row for "Related articles"; stays a row on phones). Build its data with `toArticleCard()` from `src/utils/articles.ts`, which is also where `getSortedArticles()` and `getRelatedArticles()` live.
-- **`ProductCard`** / **`ProductGrid`**: every product card is framed, with the uncropped `midImage` centered on the tint field and an optional `.badge-overlay`. Pass `template` and it reads everything from the collection; any field can be overridden, and extra attributes pass through to the `<a>` (the template page's bundle cards use this for their Etsy links and the theme toggle's `data-dark-url`/`data-light-url`). `ProductGrid` lays out a list of templates as `layout="bento"` (spans 5/7, 7/5, 6/6; tuned for six products, so revisit `BENTO_SPANS` if the catalogue grows) or `"grid"` (`columns` 2/3/4).
-- **`ToolCard`**: `variant="card"` (line art on the ink stage; tools index, About) or `"row"` (list row with a Calculator/Assessment badge; homepage, calculator "More free tools"). Rows carry `data-tool` for pairing with a preview stage.
+- **`SectionHead`**: the `h2` that opens a band: the title, then one row under it with the description on the left and the `.text-link` on the right, both anchored to the content column's edges so the head lines up with the grid below. `align="start"` (default) or `"center"`; `size="section"` (`--text-section`, default) or `"display"` (`--text-display`); optional `kicker`. It used to split title and description into two columns of its own, which aligned with nothing under it; don't bring that back.
+- **`ArticleCard`**: `variant="grid"` (listings, and the homepage, where the pinned article is simply the first card) or `"compact"` (small thumbnail row for "Related articles"; stays a row on phones). Build its data with `toArticleCard()` from `src/utils/articles.ts`, which is also where `getSortedArticles()` and `getRelatedArticles()` live.
+- **`ProductCard`** / **`ProductGrid`**: every product card is framed, with the uncropped `midImage` centered on the tint field and an optional `.badge-overlay`. Pass `template` and it reads everything from the collection; any field can be overridden, and extra attributes pass through to the `<a>` (the template page's bundle cards use this for their Etsy links and the theme toggle's `data-dark-url`/`data-light-url`). `ProductGrid` lays out a list of templates in equal columns (`columns` 2/3/4, default 3); the homepage and `/spreadsheets/` use 2.
+- **`ToolCard`**: `variant="card"` (the tool's `ToolMock` on the charcoal stage; tools index, About) or `"row"` (list row with a Calculator/Assessment badge; homepage, calculator "More free tools"). Rows carry `data-tool` for pairing with a preview stage.
+- **`ToolMock`**: a miniature of a tool's UI (app window, fields, result card, rows, bars, or answer tiles), drawn from the tool's `mock` spec in `src/data/tools.ts`: sample inputs with their worked outputs, so the numbers agree with the real tool. It fills its positioned parent, scales from its width with container units, and runs off the bottom edge. Every new tool needs a `mock` entry. (It replaced the line-art `illustration` field.)
 - **`Faq`**: the only FAQ. Renders the accordion and its FAQPage JSON-LD together (pass `schema={false}` only for demos), slug ids per question so `#question-slug` links open on arrival, animated collapse, a ring-and-plus icon. `layout="stack"` (reading columns; pass `class="content-block"`) or `"split"` (bands). `html` renders answers as trusted HTML (calculator pages).
 - **`CtaBanner`**: the closing call to action on `--gradient-brand`; ink text only. `external` swaps the arrow for the external-link glyph and opens a new tab.
 - **`Toc`** / **`ReadingProgress`**: the sticky "On this page" rail with scroll-spy (default slot under the list for the mini promo) and the phone-width progress bar, shared by the article and calculator layouts.
@@ -373,17 +371,16 @@ Placement rules for a parent that needs to position a child component's root (e.
 
 ## Typography
 
-Two typefaces: **Manrope Variable** (`--font-sans`, aliased as `--font-heading`) for headings and UI text, and **DM Sans Variable** (`--font-body`) for reading copy — plus the "Simply Sheets" wordmark, which stays on the site's older typeface, Aspekta Variable, via a dedicated `--font-logo` token. Hierarchy comes from size, tracking, and leading first, weight second — never from reaching for a third family.
+One family: **Inter Variable** (`--font-sans`, `--font-heading`, and `--font-body` all resolve to it), plus the "Simply Sheets" wordmark, which stays on the site's older typeface, Aspekta Variable, via a dedicated `--font-logo` token. Hierarchy comes from size, tracking, and leading, not weight and never a second family. It replaced Manrope (headings/UI) and DM Sans (body) in the Granola-inspired redesign; Granola's own KMR Melange Grotesk is a commercial face, and Inter is the free stand-in.
 
-- Both are self-hosted: `public/fonts/ManropeVF.woff2` (weights 200–800, ~25 KB) and `public/fonts/DMSansVF.woff2` (weights 300–700, ~36 KB), both mirrored locally from Google Fonts. Their `@font-face` rules live in `src/styles/fonts.css`, which `global.css` imports and Astro inlines into every page; `BaseHead.astro` preloads both files.
-- OFL 1.1 licensed, licences shipped at `public/fonts/Manrope-OFL-LICENSE.txt` and `public/fonts/DMSans-OFL-LICENSE.txt`. Keep them there.
-- The site doesn't load fonts from Google Fonts' own CDN — even though both originate there, they're mirrored into `public/fonts/` and served self-hosted like Aspekta was, for the same reason: the browser finds the file while parsing the HTML instead of after a round trip to a third-party stylesheet. Don't swap this for a `<link>` to `fonts.googleapis.com`.
-- **`--font-body` is applied exactly once**, on `body` in `global.css`. Everything that doesn't explicitly set its own `font-family` — `.prose` paragraphs, card descriptions, FAQ answers, plain `<p>`/`<span>` text — inherits DM Sans from there. Every element that explicitly declares `font-family: var(--font-sans)` or `var(--font-heading)` (buttons, labels, nav, calculator UI, and every `h1`–`h6` via the shared rule below) stays on Manrope regardless of what `body` is set to. When adding a new component, reading-copy text needs no font-family declaration at all — just let it inherit; UI/label text should declare `var(--font-sans)` explicitly the way existing components do.
-- `--font-logo` (`"Aspekta Variable", system-ui, -apple-system, sans-serif`) is used in exactly two places — `.site-logo` in `Header.astro` and `.footer-logo-link` in `Footer.astro` — both wrapping the literal "Simply Sheets" wordmark text next to the SVG mark. Its `@font-face` rule stays in `fonts.css` alongside the other two, and its licence file (`public/fonts/Aspekta-OFL-LICENSE.txt`) stays in place, even though nothing else on the site renders in it. Don't point any other element at `--font-logo`.
-- `scripts/fetch-fonts.mjs` (an earlier, different Inter + DM Sans mirroring script that generated `fonts.css`) was removed when the site first consolidated onto Aspekta — don't reintroduce a generated `fonts.css`, edit it directly.
-- Weight discipline: body sits at `--weight-normal` (400), headings (`h1`–`h6` in `global.css`) at `--weight-semibold` (600) — this is the default for every heading site-wide; don't override it back down to `--weight-medium` on individual heading classes (a `.hero-title`/`.home-row-title`/`.product-name`-style local override was exactly this bug, fixed once already — check any new heading-tag CSS doesn't reintroduce a `font-weight` that fights the shared rule). `--weight-medium` remains the emphasis step for UI text (buttons, nav, labels) that isn't a heading tag. Reaching for `--weight-bold`/700+ is almost always the wrong fix; make the type bigger or tighten its tracking instead.
-- Tracking is a real hierarchy tool here, not a rounding detail: `--tracking-hero` (-0.035em) for `--text-hero` only, `--tracking-tight` (-0.024em) for display and section heads, `--tracking-snug` (-0.02em) for headings and buttons, `--tracking-normal` (0) for body, `--tracking-caps` (0.06em) for uppercase eyebrows. Never set body copy at positive tracking.
-- Three headline steps above the h1–h4 scale: `--text-hero` (the homepage H1 only), `--text-display` (every other page hero), `--text-section` (the `h2` that opens a band, via `SectionHead`, `Faq layout="split"`, and `CtaBanner`). A page never shows two competing headline sizes above the fold.
+- Self-hosted: `public/fonts/InterVF.woff2` (the latin `opsz` + `wght` file from `@fontsource-variable/inter`, weights 100–900, optical size 14–32, ~73 KB). Its `@font-face` rule lives in `src/styles/fonts.css`, which `global.css` imports and Astro inlines into every page; `BaseHead.astro` preloads it. OFL 1.1, licence at `public/fonts/Inter-OFL-LICENSE.txt`; keep it there.
+- The `opsz` axis switches to Inter Display's tighter cut at large sizes by itself (`font-optical-sizing: auto` on `body`), which is why the display tracking values are lighter than a single-cut face would need. `body` also sets `font-feature-settings: "cv11", "ss03"`.
+- The site doesn't load fonts from Google Fonts' CDN: self-hosting lets the browser find the file while parsing the HTML instead of after a round trip to a third-party stylesheet. Don't swap this for a `<link>` to `fonts.googleapis.com`.
+- The three font tokens stay separate names so components can say what a piece of text is (`--font-sans` for UI and labels, `--font-body` on `body` once, inherited by reading copy), even though they currently resolve to one face.
+- `--font-logo` (`"Aspekta Variable", system-ui, -apple-system, sans-serif`) is used in exactly two places, `.site-logo` in `Header.astro` and `.footer-logo-link` in `Footer.astro`. Its licence file (`public/fonts/Aspekta-OFL-LICENSE.txt`) stays in place. Don't point any other element at `--font-logo`.
+- Weight discipline: body and **every heading** (`h1`–`h6` in `global.css`) sit at `--weight-normal` (400). Small titles, where 400 would read as body copy, step up to `--weight-medium` in their own rules: `.card .card-title`, `.tool-row-name`, `.faq-q`. Buttons use 450. Reaching for semibold or bold on a heading is the wrong fix; make it bigger or tighten its tracking.
+- Tracking is a real hierarchy tool: `--tracking-hero` (-0.04em) for hero and display heads, `--tracking-tight` (-0.03em) for section heads, `--tracking-snug` (-0.015em) for headings and buttons, `--tracking-normal` (0) for body, `--tracking-caps` (0.06em) for uppercase labels. Never set body copy at positive tracking.
+- Headline steps above the h1–h4 scale: `--text-hero` (the homepage H1, capped at 88px), `--text-display` (page heroes and display section heads, 72px max), `--text-section` (the `h2` that opens a band, 48px max). Granola runs 113–160px; these are capped lower on purpose, since a content site carries more than one idea per screen. `--text-lead` is the standfirst under a hero or section title.
 
 ### Reading copy vs. UI text
 
@@ -399,9 +396,10 @@ A paragraph inside a component is reading copy even though it lives in a compone
 
 ## Eyebrows
 
-The overline label above a heading is the shared `.eyebrow` class in `global.css`, always paired with `.eyebrow-badge` — the same grey pill as `.badge` (`--color-bg-emphasis` fill, `--radius-full`, sentence case), not the uppercase-caps tinted pill this used to be. Never hand-roll one.
+The overline label above a heading on a card or promo is the shared `.eyebrow` class in `global.css`, always paired with `.eyebrow-badge` — the same grey pill as `.badge` (`--color-bg-emphasis` fill, `--radius-full`, sentence case), not the uppercase-caps tinted pill this used to be. Never hand-roll one.
 
 - This went through two revisions: `.eyebrow` originally rendered a tinted uppercase pill (sky/lavender depending on what the label pointed at); that was replaced with `.eyebrow-plain` (quiet muted caps, no background) as a UI fix; `.eyebrow-plain` was then replaced with `.eyebrow-badge` because the grey `.badge` pill (see "Best Seller") read better than plain caps. `.eyebrow-plain` no longer exists — don't reintroduce it or a bare `.eyebrow` with neither modifier.
+- The one exception is `.kicker` (see "Layout primitives"): a plain label above a display-size section head, from the Granola-inspired redesign. It is not an eyebrow and doesn't replace one; keep it to display heads.
 - `.eyebrow-badge` is applied everywhere `.eyebrow` is: `<p class="eyebrow eyebrow-badge">…</p>`, on all four sitewide call sites (`ProductPromo`'s interstitial and mini labels, the template page's reviews label, the quiz's related-article label).
 - The `--eyebrow-tint` knob (sky vs. lavender) and the two tint tokens (`--tint-sky`, `--tint-lavender`) still exist in `tokens.css` for anything else that needs a light background fill, but `.eyebrow-badge` ignores `--eyebrow-tint` entirely (it sets its own `background: var(--color-bg-emphasis)`), so don't bother passing it to an eyebrow.
 - `.eyebrow-badge` sets `color: var(--color-text)`, `font-size: 0.8125rem`, `font-weight: var(--weight-medium)`, `text-transform: none` — it deliberately mirrors `.badge`'s exact values rather than duplicating a second set of pill constants, so if `.badge`'s look ever changes, update `.eyebrow-badge` to match by hand (there's no shared mixin).
@@ -449,7 +447,7 @@ Three details that are load-bearing:
 
 `.btn` plus one variant, defined in `global.css`. Medium weight, pill radius, `:active` scale.
 
-- Variants: `.btn-primary` (ink fill), `.btn-brand` (the sky-blue highlight field — `--color-brand`, ink text), `.btn-secondary` (outline), `.btn-ghost`. Sizes: `.btn-sm`, default, `.btn-lg`.
+- Variants: `.btn-primary` (charcoal fill), `.btn-secondary` (a soft `--color-bg-emphasis` pill, not an outline, so a pair reads as one quieter choice rather than two competing boxes), `.btn-inverse` (white, for charcoal bands), `.btn-brand` (the sky-blue field, `--color-brand`, ink text), `.btn-ghost`. Sizes: `.btn-sm`, default, `.btn-lg`. Weight 450, no shadows. `.calc-product-link` and the header CTA use the secondary soft pill.
 - `--color-brand` is a **field color, never text.** It is not `--color-accent-info`, which is the link/UI blue that has to pass contrast as text and is far too dark to sit behind ink.
 - **Buttons always hug their label, at every width.** None stretches to fill a phone: no `width: 100%` on a `.btn`, on `.calc-product-link`, or on a CTA wrapper that makes its button a block. The homepage hero's pair used to go full width and stack below 600px, and several CTAs (the calculator product links, the in-article promos' "View template", the template page's footer CTA) did the same; all of that was removed at the owner's request. On a phone, a pair that doesn't fit one row simply wraps onto two lines of hugging buttons. Keep labels short enough to fit one line in a ~340px phone column (two calculator links were shortened for exactly this: a two-line pill reads as a stretched button). Answer tiles in quizzes, assessments, and polls are not buttons in this sense and stay full width.
 - **Arrows only where they tell you something**, and never in a container:
@@ -464,7 +462,8 @@ Three details that are load-bearing:
 
 `Header.astro` is a full-width bar, not a floating pill: sticky in normal flow, flush to the viewport top (never `position: fixed`, which would make every page reserve matching top padding by hand and hide its own first heading if it forgot), translucent white over a `saturate(180%) blur(16px)` backdrop filter, with a single hairline bottom border — no shadow, no rounded corners. `.header-inner` pins the logo/links/CTA row to `--max-width` and centers it, while `.header-shell` itself spans the full viewport width so the border runs edge to edge, Stripe-nav style.
 
-- Desktop (≥860px): logo left, links left-aligned immediately after the logo (`margin-left: var(--space-lg)`), CTA anchored alone on the far right with a spacer track between them — the logo and links read as one cluster, not the links right-aligned against the CTA. Below that the bar is **logo + menu button only** — the CTA is hidden, since the quiz already sits in the dropdown panel and a second pill beside the menu button both squeezed the wordmark and put two competing weights side by side.
+- The bar is white with a transparent bottom border at the top of the page; the header script adds `.is-scrolled` once the page moves and the hairline fades in (at the top it would only separate white from white).
+- Desktop (≥860px): logo left, links centered on the page's true center line (two equal `minmax(0, 1fr)` outer tracks), and the CTA as a soft `btn-secondary` pill on the right, in Granola's pattern. (Links used to sit left, right after the logo.) Below that the bar is **logo + menu button only** — the CTA is hidden, since the quiz already sits in the dropdown panel and a second pill beside the menu button both squeezed the wordmark and put two competing weights side by side.
 - The menu button is a **ring, not a fill**: transparent, a hairline `--color-border` edge, and an ink glyph. It was a solid ink disc, which made it the darkest element on the page sitting on the lightest and read as harsh. Bare bars with no container at all were tried too and dropped — without an edge the glyph stops reading as a control, and it needs a negative margin to sit right, because the 40px box is much wider than the mark inside it. The container still says "this is a button"; the glyph carries the contrast.
 - **The ring is an inset box-shadow, never a `border`.** The two bars are absolutely positioned, so they resolve against the button's padding box — which `box-sizing: border-box` shrinks by the border width. A real 1px border drops the glyph a further 1px off centre, in the X state as well. The shadow draws an identical ring and leaves the geometry exactly as it was when the button was filled.
 - Its `:hover` is behind `@media (hover: hover)`, unlike the fill it replaced. A stuck hover after a tap was nearly invisible as a slightly lighter ink disc; on a ghost control it leaves a filled panel sitting there.
@@ -513,7 +512,7 @@ The debt snowball vs. avalanche comparison (`DebtCalculator.astro`) uses `--colo
 
 Defined in `src/content.config.ts`. Key optional fields:
 
-- `image`: article card SVG path, `/images/card-v3-{slug}.svg` (see "Article Card Images"; same file as `cardImage`)
+- `image`: article card SVG path, `/images/card-v4-{slug}.svg` (see "Article Card Images"; same file as `cardImage`)
 - `cardImage`: same file as `image`; `generate-article-cards.mjs` reads the `{slug}` from it to find the wireframe
 - `tags` — array of tag slugs
 - `faq` — array of `{ question, answer }` objects
@@ -525,22 +524,21 @@ Use CSS variables from `src/styles/tokens.css` for all styling. Key tokens:
 
 - Colors: `--color-text`, `--color-text-secondary`, `--color-bg`, `--color-border`, etc.
 - Spacing: `--space-xs` through `--space-2xl`; `--space-band` is a band's vertical padding
-- Layout: `--max-width` (header, 80rem), `--max-width-content` (band content, 72rem), `--max-width-narrow` (reading column, 42rem)
+- Layout: `--max-width` (header, 75rem), `--max-width-content` (band content, 75rem), `--max-width-narrow` (reading column, 42rem)
 - Radius: `--radius-card` for every card and its media, `--radius-inset` for media inset inside a framed card (concentric with the card), `--radius-xl` for stages and banners, `--radius-full` for pills
-- Gradients, all from the two brand tints: `--gradient-glow` (showcase stage), `--gradient-media` (behind product mockups), `--gradient-brand` (`CtaBanner`, ink text only), `--gradient-ink` (tool illustration stages)
+- Gradients: `--gradient-media` (behind product mockups), `--gradient-brand` (`CtaBanner`, ink text only), `--gradient-ink` (charcoal tool stages); `--gradient-glow` is now unused outside the style guide.
+- Texture: `--grain`, `--halftone`, `--paper`, `--texture-field` (see `.textured` above). Decorative fields only, never behind text.
 - Typography: `--text-body`, `--text-h1` through `--text-h3`, `--text-small`
 - Weights: `--weight-normal`, `--weight-medium`, `--weight-semibold`, `--weight-bold`
 
 ### Surfaces are a layering vocabulary
 
-The neutral ramp is warm on surfaces and cool-navy on ink, not pure grayscale — don't mix a literal `#FFF`/`#000`/mid-gray into it. Three surface tokens, and which one to use is a question about depth, not taste:
+Charcoal ink (`#292929`) on white, with a warm off-white panel. Which surface to use is a question about depth, not taste:
 
-- `--color-bg` (`#FBFAF9`) — the page itself. Full-bleed sections that should read as "the page" use this.
-- `--color-bg-surface` (`#FFFFFF`) — anything raised off the page: cards, the header, overlay panels, chips floating on top of a thumbnail. These read as lifted by being *cleaner* than the warm page behind them rather than by spending a shadow, so a raised element set to `--color-bg` nearly vanishes into its own background.
-- `--color-bg-panel` (`#F4F2EE`) — a recessed band or a filled result card, sunk below the page. `--color-bg-emphasis` is the next step down again.
+- `--color-bg` and `--color-bg-surface` (both `#FFFFFF`): the page, and cards on it. A card reads as raised by its hairline edge, not by colour or shadow.
+- `--color-bg-panel` (`#F7F7F2`): a recessed band (`.band--surface`) or a filled result card. `--color-bg-emphasis` (`#EEEEE7`) is the next step down: chips, the soft secondary button.
+- `--color-bg-inverse` (`#292929`): charcoal bands, with `--color-on-inverse` (white), `--color-on-inverse-secondary` (`#B5B5B0`, 7.07:1), and `--color-on-inverse-muted` (`#A3A39E`, 5.74:1) for text on it.
 
 Borders come in three weights: `--color-border-hairline` for subtle dividers, `--color-border` as the default, `--color-border-strong` for emphasized or hover edges.
 
-Every text role has to clear WCAG AA (4.5:1) against `--color-bg`, `--color-bg-surface`, *and* `--color-bg-panel`. That puts a hard floor around `#707070`, which is why the ramp has no `#999`-class step and why `--color-text-muted` is `#5F646F` rather than something lighter. A previous lighter muted tone (`#8A8A8A`) failed AA on all three. Check any new text color against all three surfaces before shipping it.
-
-The two light roles are darker than mere AA compliance requires — secondary `#515764` (worst case 6.48:1) and muted `#5F646F` (5.31:1) — because the earlier pair (`#575D68`/`#666B75`) passed on paper and still read as washed out against the warm page. Don't darken them further without checking `--color-link`: the ramp is short, and one more step closes the gap between secondary and link enough that emphasis stops reading as distinct from body copy.
+Every text role has to clear WCAG AA (4.5:1) against `--color-bg`, `--color-bg-panel`, *and* `--color-bg-emphasis`: secondary `#5C5C57` is 5.77:1 at worst, muted `#6B6B66` 4.6:1. Granola's own grey (`#72726E`) is 4.49:1 on its own panel and fails, which is why these sit a step darker. Check any new text colour against all three before shipping it.

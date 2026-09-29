@@ -11,12 +11,10 @@ interface Props {
 	type?: 'website' | 'article';
 	pubDate?: Date;
 	updatedDate?: Date;
-	/** A page-level visual theme test (see BaseLayout). Swaps the font preloads. */
-	theme?: 'editorial';
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const { title, description, image = '/images/og-default.svg', noindex, type = 'website', pubDate, updatedDate, theme } = Astro.props;
+const { title, description, image = '/images/og-default.svg', noindex, type = 'website', pubDate, updatedDate } = Astro.props;
 // Social crawlers (Facebook, iMessage, Slack, etc.) don't render SVG for
 // preview images, so swap in the rasterized PNG generated at build time
 // by scripts/generate-og-images.mjs.
@@ -124,7 +122,7 @@ const ogImage = new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString()
 <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<meta name="theme-color" content="#FBFAF9" />
+<meta name="theme-color" content="#FFFFFF" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
 	rel="alternate"
@@ -136,28 +134,12 @@ const ogImage = new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString()
 <meta name="msvalidate.01" content="381616FE7F40C68FCB63685CE836A381" />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-{/* Manrope Variable and DM Sans Variable are both self-hosted — their
-    @font-face rules live in src/styles/fonts.css, which global.css imports
-    and Astro inlines into every page. The browser therefore finds the font
-    files while parsing the HTML, rather than after a render-blocking round
-    trip to a third-party stylesheet. Manrope backs headings/UI text and DM
-    Sans backs reading copy (`body`'s inherited default) — between them they
-    cover nearly all text on the page, so both are worth preloading outright.
-    Licences: OFL 1.1, shipped alongside at /fonts/Manrope-OFL-LICENSE.txt and
-    /fonts/DMSans-OFL-LICENSE.txt.
-
-    Aspekta Variable is also self-hosted (same fonts.css) but only backs the
-    "Simply Sheets" wordmark in Header.astro/Footer.astro, so it isn't
-    preloaded — it's not needed for first paint. Licence: OFL 1.1, shipped
-    alongside at /fonts/Aspekta-OFL-LICENSE.txt. */}
-{theme === 'editorial' ? (
-	<link rel="preload" href="/fonts/InterVF.woff2" as="font" type="font/woff2" crossorigin />
-) : (
-	<>
-		<link rel="preload" href="/fonts/ManropeVF.woff2" as="font" type="font/woff2" crossorigin />
-		<link rel="preload" href="/fonts/DMSansVF.woff2" as="font" type="font/woff2" crossorigin />
-	</>
-)}
+{/* Inter Variable is self-hosted (@font-face in src/styles/fonts.css, which
+    global.css imports and Astro inlines into every page), so the browser
+    finds the file while parsing the HTML. It backs every text role, so it is
+    preloaded outright. Aspekta (the wordmark only) is not needed for first
+    paint. Licences: OFL 1.1, shipped alongside in /fonts/. */}
+<link rel="preload" href="/fonts/InterVF.woff2" as="font" type="font/woff2" crossorigin />
 
 <link rel="canonical" href={canonicalURL} />
 

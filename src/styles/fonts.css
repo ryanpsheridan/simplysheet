@@ -2,37 +2,24 @@
  * page, so the browser discovers the font file while parsing the HTML rather
  * than after a blocking round trip to a third-party stylesheet.
  *
- * Manrope Variable — OFL 1.1, The Manrope Project Authors.
- * https://github.com/sharanda/manrope. Licence shipped alongside at
- * /fonts/Manrope-OFL-LICENSE.txt. Headings and UI text (`--font-sans` /
- * `--font-heading`); one variable file covers the 200–800 range. Preloaded
- * in BaseHead.astro.
+ * Inter Variable (opsz + wght). OFL 1.1, The Inter Project Authors.
+ * https://github.com/rsms/inter. Licence shipped alongside at
+ * /fonts/Inter-OFL-LICENSE.txt. Mirrored from @fontsource-variable/inter
+ * (latin, opsz file). Every text role on the site (`--font-sans`,
+ * `--font-heading`, `--font-body`); the opsz axis switches to Inter Display's
+ * tighter cut at large sizes on its own (font-optical-sizing: auto on body),
+ * so one file covers body and display. Preloaded in BaseHead.astro.
  *
- * DM Sans Variable — OFL 1.1, The DM Sans Project Authors.
- * https://github.com/googlefonts/dm-fonts. Licence shipped alongside at
- * /fonts/DMSans-OFL-LICENSE.txt. Body/reading copy only (`--font-body`,
- * applied on the `body` element in global.css — every element that doesn't
- * explicitly set its own font-family inherits it from there). Preloaded in
- * BaseHead.astro since nearly all reading copy depends on it.
- *
- * Aspekta Variable — OFL 1.1, Ivo Dolenc. https://github.com/ivodolenc/aspekta
+ * Aspekta Variable. OFL 1.1, Ivo Dolenc. https://github.com/ivodolenc/aspekta
  * Licence shipped alongside at /fonts/Aspekta-OFL-LICENSE.txt. Kept only for
  * the site wordmark (`--font-logo`). */
 
 @font-face {
-  font-family: 'Manrope Variable';
+  font-family: 'Inter Variable';
   font-style: normal;
-  font-weight: 200 800;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('/fonts/ManropeVF.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'DM Sans Variable';
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url('/fonts/DMSansVF.woff2') format('woff2');
+  src: url('/fonts/InterVF.woff2') format('woff2');
 }
 
 @font-face {
@@ -41,20 +28,4 @@
   font-weight: 100 900;
   font-display: swap;
   src: url('/fonts/AspektaVF.woff2') format('woff2');
-}
-
-/* Inter Variable (opsz + wght). OFL 1.1, The Inter Project Authors.
- * https://github.com/rsms/inter. Licence shipped alongside at
- * /fonts/Inter-OFL-LICENSE.txt. Mirrored from @fontsource-variable/inter
- * (latin, opsz file). Used only by the editorial theme test on the homepage
- * (src/styles/theme-editorial.css), which preloads it via BaseHead's `theme`
- * prop. The opsz axis switches to Inter Display's tighter cut at large sizes
- * on its own (font-optical-sizing: auto), so one file covers body and display. */
-
-@font-face {
-  font-family: 'Inter Variable';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('/fonts/InterVF.woff2') format('woff2');
 }

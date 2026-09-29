@@ -7,7 +7,6 @@ import type { ArticleCardData } from '../utils/articles';
 // src/utils/articles.ts; styling is the shared card anatomy in global.css.
 //
 //   grid     thumbnail over tags, title, optional description, read time
-//   feature  framed and side by side, for the one pinned article on a page
 //   compact  small thumbnail beside title and read time, for "Related
 //            articles" in a narrow reading column
 //
@@ -15,12 +14,12 @@ import type { ArticleCardData } from '../utils/articles';
 // there is no second, hand-written copy of this markup anywhere.
 interface Props {
 	article: ArticleCardData;
-	variant?: 'grid' | 'feature' | 'compact';
+	variant?: 'grid' | 'compact';
 	/** The full data-cta value, e.g. `articles_grid_item:${id}`. */
 	cta: string;
 	/** Heading level for the title. h2 on listing pages whose h1 is the page title. */
 	level?: 'h2' | 'h3';
-	/** Show the description. On by default for grid and feature. */
+	/** Show the description. On by default for grid. */
 	desc?: boolean;
 	eager?: boolean;
 }
@@ -36,7 +35,7 @@ const Title = level;
 		'card',
 		'card--article',
 		`card--article-${variant}`,
-		{ 'card--framed': variant === 'feature', 'card--row': variant !== 'grid' },
+		{ 'card--row': variant === 'compact' },
 	]}
 	data-cta={cta}
 	data-title={article.title}
@@ -64,19 +63,9 @@ const Title = level;
 </a>
 
 <style>
-	/* Variant sizing only. Everything else is the shared anatomy. */
-	.card--article-feature {
-		--card-media-width: 55%;
-	}
-	.card--article-feature .card-title {
-		font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-	}
-	.card--article-feature .card-desc {
-		font-size: var(--text-read);
-	}
-
+	/* Variant sizing only. Everything else is the shared anatomy. A wide
+	   "feature" row variant for the pinned homepage article was removed:
+	   its image outran half the card and aligned with nothing below it. */
 	.card--article-compact {
 		--card-media-width: 8.5rem;
 	}

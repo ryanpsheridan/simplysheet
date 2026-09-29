@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import ProductCard from '../components/ProductCard.astro';
+import ToolMock from '../components/ToolMock.astro';
+import { TOOLS } from '../data/tools';
 import { getEntry } from 'astro:content';
 import { pageTitle } from '../consts';
 
@@ -79,27 +81,7 @@ const description =
 					    matches the product card beside it. */}
 					<a href="/tools/" class="card card--framed" data-cta="not_found_card:tools">
 						<div class="card-media card-media--art">
-							<svg
-							viewBox="0 0 240 160"
-							fill="none"
-							stroke="currentColor"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
-							focusable="false"
-						>
-							<line x1="32" y1="126" x2="208" y2="126" stroke-width="1" opacity="0.2" />
-							<line x1="48" y1="126" x2="48" y2="92" stroke-width="4" opacity="0.4" />
-							<line x1="68" y1="126" x2="68" y2="70" stroke-width="4" opacity="0.6" />
-							<line x1="88" y1="126" x2="88" y2="48" stroke-width="4" opacity="0.9" />
-							<circle cx="88" cy="48" r="7" opacity="0.18" fill="currentColor" stroke="none" />
-							<circle cx="88" cy="48" r="2.6" fill="currentColor" stroke="none" />
-							<circle cx="168" cy="86" r="34" stroke-width="1.5" opacity="0.22" />
-							<path d="M168 52 A 34 34 0 0 1 189.9 112" stroke-width="3" opacity="0.85" />
-							<circle cx="168" cy="86" r="3" fill="currentColor" stroke="none" />
-							<circle cx="189.9" cy="112" r="6" opacity="0.18" fill="currentColor" stroke="none" />
-							<circle cx="189.9" cy="112" r="2.2" fill="currentColor" stroke="none" />
-						</svg>
+							<ToolMock tool={TOOLS[0]} />
 						</div>
 						<div class="card-body">
 							<h3 class="card-title">Free budgeting tools</h3>

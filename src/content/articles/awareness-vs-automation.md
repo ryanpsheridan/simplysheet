@@ -2,8 +2,8 @@
 title: 'Why Awareness Beats Automation in Budgeting'
 description: 'Budgeting apps automate the data. Spreadsheets tend to build awareness. Here''s why that distinction matters more than which tool you pick.'
 pubDate: 'Jun 25 2026'
-image: '/images/card-v3-awareness-vs-automation.svg'
-cardImage: '/images/card-v3-awareness-vs-automation.svg'
+image: '/images/card-v4-awareness-vs-automation.svg'
+cardImage: '/images/card-v4-awareness-vs-automation.svg'
 tags: ['expense-tracking']
 faq:
   - question: 'Are budgeting apps bad?'

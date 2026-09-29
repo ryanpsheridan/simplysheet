@@ -79,7 +79,7 @@ const MENU_LINKS = [
 
 			{/* Desktop only — see .header-cta below. The quiz is reachable from the
 			    mobile panel, so the bar doesn't carry it twice. */}
-			<a href="/quiz/budgeting-style/" class="btn btn-primary btn-sm header-cta" data-cta="nav_cta">Find Your Budget Style</a>
+			<a href="/quiz/budgeting-style/" class="btn btn-secondary header-cta" data-cta="nav_cta">Find Your Budget Style</a>
 		</header>
 
 		{/* tabindex="-1" makes the panel itself the focus target when it opens —
@@ -115,8 +115,11 @@ const MENU_LINKS = [
 		top: 0;
 		z-index: 50;
 		width: 100%;
-		background: color-mix(in srgb, var(--color-bg-surface) 85%, transparent);
-		border-bottom: 1px solid var(--color-border-hairline);
+		background: color-mix(in srgb, var(--color-bg-surface) 90%, transparent);
+		/* Transparent at the top of the page, where a hairline would only
+		   separate white from white; the script sets .is-scrolled once the
+		   page moves and the rule fades in. */
+		border-bottom: 1px solid transparent;
 		-webkit-backdrop-filter: saturate(180%) blur(16px);
 		backdrop-filter: saturate(180%) blur(16px);
 		/* Clears the status bar / notch when the page is drawn edge to edge —
@@ -124,7 +127,13 @@ const MENU_LINKS = [
 		   Chrome's edge-to-edge default. Both insets resolve to 0px in a normal
 		   browser tab, so this is inert there. */
 		padding-top: env(safe-area-inset-top, 0px);
-		transition: transform var(--duration-base) var(--ease-out);
+		transition:
+			transform var(--duration-base) var(--ease-out),
+			border-color var(--duration-base) var(--ease-out);
+	}
+
+	.header-shell.is-scrolled {
+		border-bottom-color: var(--color-border-hairline);
 	}
 
 	/* Mobile only (see the script's mobileQuery match) — the bar slides out of
@@ -172,7 +181,7 @@ const MENU_LINKS = [
 		grid-template-columns: minmax(0, 1fr) auto;
 		align-items: center;
 		gap: var(--space-xs);
-		padding-block: 0.9rem;
+		padding-block: 0.875rem;
 	}
 
 	.site-logo {
@@ -243,16 +252,16 @@ const MENU_LINKS = [
 	.nav-link {
 		position: relative;
 		font-family: var(--font-heading);
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		color: var(--color-text-secondary);
+		font-size: 0.9375rem;
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
 		text-decoration: none;
 		padding-block: var(--space-xs);
 		transition: color var(--duration-fast) var(--ease-out);
 	}
 
 	.nav-link:hover {
-		color: var(--color-text);
+		color: var(--color-text-secondary);
 	}
 
 	/* The underline is a pseudo-element rather than text-decoration so the
@@ -263,7 +272,7 @@ const MENU_LINKS = [
 		left: 0;
 		right: 0;
 		bottom: 0;
-		height: 1.5px;
+		height: 1px;
 		border-radius: var(--radius-full);
 		background: var(--color-text);
 		transform: scaleX(0);
@@ -432,8 +441,8 @@ const MENU_LINKS = [
 	.menu-item {
 		display: block;
 		font-family: var(--font-heading);
-		font-size: var(--text-body-lg);
-		font-weight: var(--weight-medium);
+		font-size: 1.375rem;
+		font-weight: var(--weight-normal);
 		letter-spacing: var(--tracking-snug);
 		color: var(--color-text);
 		text-decoration: none;
@@ -495,25 +504,29 @@ const MENU_LINKS = [
 	   accessibility tree when not in use, so exactly one "Primary" navigation
 	   landmark is ever exposed. */
 	@media (min-width: 860px) {
+		/* Logo, centered links, CTA: two equal outer tracks keep the links on
+		   the page's true center line whatever the logo and CTA widths. */
 		.site-header {
-			grid-template-columns: auto auto minmax(0, 1fr) auto;
+			grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 			gap: var(--space-sm);
 		}
 
 		.header-cta {
 			display: inline-flex;
-			grid-column: 4;
+			grid-column: 3;
+			font-size: 0.9375rem;
+			padding: 0.5625rem 1.125rem;
 		}
 
-		/* Left-aligned right after the logo, not right-aligned against the CTA —
-		   the logo and links read as one cluster on the left, with the CTA
-		   anchored alone on the right and a spacer track between them. */
 		.desktop-nav {
 			display: block;
 			grid-row: 1;
 			grid-column: 2;
-			justify-self: start;
-			margin-left: var(--space-lg);
+			justify-self: center;
+		}
+
+		.desktop-nav ul {
+			gap: var(--space-lg);
 		}
 
 		.menu-toggle,
@@ -639,6 +652,10 @@ const MENU_LINKS = [
 	const mobileQuery = window.matchMedia('(max-width: 859.98px)');
 
 	if (headerShell) {
+		const markScrolled = () => headerShell.classList.toggle('is-scrolled', window.scrollY > 8);
+		window.addEventListener('scroll', markScrolled, { passive: true });
+		markScrolled();
+
 		let lastY = window.scrollY;
 		let ticking = false;
 

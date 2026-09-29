@@ -4,13 +4,12 @@ import SectionHead from '../components/SectionHead.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import ToolCard from '../components/ToolCard.astro';
+import ToolMock from '../components/ToolMock.astro';
 import Faq from '../components/Faq.astro';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE, templateName } from '../consts';
 import { TOOLS, toolId } from '../data/tools';
 import { getSortedArticles, toArticleCard } from '../utils/articles';
-// The editorial theme test. Scoped to this page: see the file's header.
-import '../styles/theme-editorial.css';
 
 const allArticles = await getSortedArticles();
 
@@ -18,17 +17,16 @@ const featuredSlug = 'how-to-split-bills-with-different-incomes';
 const featuredEntry = allArticles.find((a) => a.id === featuredSlug) ?? allArticles[0];
 const featured = toArticleCard(featuredEntry);
 
-// Two rows of three under the featured card. Keep it a multiple of 3.
-const latest = allArticles.filter((a) => a.id !== featured.id).slice(0, 6).map(toArticleCard);
+// The pinned article leads the grid, then the five newest others: two even
+// rows of three. Keep the total a multiple of 3.
+const latest = allArticles.filter((a) => a.id !== featured.id).slice(0, 5).map(toArticleCard);
 
 const templates = (await getCollection('templates')).sort((a, b) => a.data.order - b.data.order);
 
-// The hero stage: the best seller's dark mockup in front of a light-theme
-// product. Both are the uncropped midImage assets, centered, per the
-// product-image rule.
+// The hero stage: the best seller's dark mockup, centered on the texture
+// field. The uncropped midImage asset, per the product-image rule.
 const byId = (id: string) => templates.find((t) => t.id === id);
 const stageFront = byId('budget-spreadsheet') ?? templates[0];
-const stageBack = byId('savings-goals-tracker');
 
 // Three real Etsy reviews from the templates collection, one per product,
 // for the charcoal band. Matched on the opening words of the review rather
@@ -117,7 +115,7 @@ const websiteSchema = {
 };
 ---
 
-<BaseLayout theme="editorial" title={`${SITE_TITLE} | Budget Templates, Tools & Money Guides`} description={SITE_DESCRIPTION}>
+<BaseLayout title={`${SITE_TITLE} | Budget Templates, Tools & Money Guides`} description={SITE_DESCRIPTION}>
 	<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 	<main id="main-content" class="band-main home">
@@ -143,14 +141,8 @@ const websiteSchema = {
 		</div>
 
 		{stageFront?.data.midImage && (
-			<a href={`/spreadsheets/${stageFront.id}/`} class="hero-stage" data-cta={`index_showcase:${stageFront.id}`} aria-label={`${templateName(stageFront.data.title)}: view template`}>
-				<span class="stage-field stage-field--sky" aria-hidden="true"></span>
-				<span class="stage-field stage-field--ink" aria-hidden="true"></span>
-				<span class="stage-field stage-field--rings" aria-hidden="true"></span>
-				{stageBack?.data.midImageLight && (
-					<img class="stage-img stage-img--back" src={stageBack.data.midImageLight} alt={`${templateName(stageBack.data.title)} in the light theme`} width="2000" height="1200" loading="lazy" />
-				)}
-				<img class="stage-img stage-img--front" src={stageFront.data.midImage} alt={`${templateName(stageFront.data.title)} in the dark theme`} width="2000" height="1200" fetchpriority="high" />
+			<a href={`/spreadsheets/${stageFront.id}/`} class="hero-stage textured" data-cta={`index_showcase:${stageFront.id}`} aria-label={`${templateName(stageFront.data.title)}: view template`}>
+				<img class="stage-img" src={stageFront.data.midImage} alt={`${templateName(stageFront.data.title)} in the dark theme`} width="2000" height="1200" fetchpriority="high" />
 			</a>
 		)}
 	</section>
@@ -212,7 +204,7 @@ const websiteSchema = {
 				linkLabel="All spreadsheets"
 				cta="index_spreadsheets_view_all"
 			/>
-			<ProductGrid templates={templates} layout="bento" ctaPrefix="index_spreadsheets_card" />
+			<ProductGrid templates={templates} columns={2} ctaPrefix="index_spreadsheets_card" />
 		</div>
 	</section>
 
@@ -240,20 +232,22 @@ const websiteSchema = {
 	{/* Free tools */}
 	<section class="band" aria-labelledby="tools-heading">
 		<div class="band-inner">
-			<header class="display-head">
-				<p class="kicker">Free tools</p>
-				<h2 id="tools-heading" class="display-title">The math you keep putting off, done in a minute</h2>
-				<div class="display-foot">
-					<p class="display-desc">Calculators and quick assessments that run in your browser. No email, no sign-up.</p>
-					<a href="/tools/" class="text-link" data-cta="index_tools_view_all">All {TOOLS.length} tools <span class="arrow">&rarr;</span></a>
-				</div>
-			</header>
+			<SectionHead
+				id="tools-heading"
+				size="display"
+				kicker="Free tools"
+				title="The math you keep putting off, done in a minute"
+				desc="Calculators and quick assessments that run in your browser. No email, no sign-up."
+				href="/tools/"
+				linkLabel={`All ${TOOLS.length} tools`}
+				cta="index_tools_view_all"
+			/>
 			<div class="tools">
 				{/* Decorative preview of whichever row has hover or focus. Every row
 				    is a complete link on its own, and below 960px this is dropped. */}
-				<div class="tools-stage" aria-hidden="true">
+				<div class="tools-stage textured textured--dark" aria-hidden="true">
 					{tools.map((tool, i) => (
-						<svg class:list={['tools-stage-art', { 'is-active': i === 0 }]} data-tool={toolId(tool)} viewBox="0 0 240 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" set:html={tool.illustration} />
+						<ToolMock tool={tool} class:list={['tools-stage-art', { 'is-active': i === 0 }]} data-tool={toolId(tool)} />
 					))}
 				</div>
 				<div class="tools-list">
@@ -288,7 +282,7 @@ const websiteSchema = {
 		</div>
 	</section>
 
-	{/* Articles */}
+{/* Articles: the pinned article leads an even grid of six. */}
 	<section class="band" aria-labelledby="articles-heading">
 		<div class="band-inner">
 			<SectionHead
@@ -299,12 +293,10 @@ const websiteSchema = {
 				linkLabel="All articles"
 				cta="index_latest_view_all"
 			/>
-			<div class="home-featured">
-				<ArticleCard article={featured} variant="feature" cta="index_featured_article" />
-			</div>
 			<div class="card-grid">
+				<ArticleCard article={featured} cta="index_featured_article" />
 				{latest.map((article) => (
-					<ArticleCard article={article} desc={false} cta={`index_latest_article_card:${article.id}`} />
+					<ArticleCard article={article} cta={`index_latest_article_card:${article.id}`} />
 				))}
 			</div>
 		</div>
@@ -331,7 +323,7 @@ const websiteSchema = {
 	</section>
 
 	{/* Closing: a window card on the textured field */}
-	<section class="closing" aria-labelledby="closing-heading">
+	<section class="closing textured" aria-labelledby="closing-heading">
 		<div class="closing-card">
 			<span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
 			<h2 id="closing-heading" class="closing-title">A budget you own, for good.</h2>
@@ -346,21 +338,14 @@ const websiteSchema = {
 </BaseLayout>
 
 <style>
-	/* Homepage-only layout. Tokens, buttons, cards, header, and footer for the
-	   editorial theme live in src/styles/theme-editorial.css. */
+	/* Homepage-only layout. Tokens, buttons, cards, bands, and texture are
+	   shared (tokens.css, global.css); only what is unique to this page's
+	   sections lives here. */
 
 	.home {
 		/* The gutter every full-bleed piece measures from: the content column
 		   is 75rem, centered, never closer than --space-md to the screen edge. */
 		--gutter: max(var(--space-md), calc((100vw - var(--max-width-content)) / 2));
-	}
-
-	/* Shared texture layers for the stages. */
-	.stage-field,
-	.hero-stage::after,
-	.quiz-band::after,
-	.closing::before {
-		pointer-events: none;
 	}
 
 	/* Hero */
@@ -443,89 +428,29 @@ const websiteSchema = {
 		color: var(--color-text-secondary);
 	}
 
-	/* The stage: a collage of fields (sky, halftone ink, paper rings) under
-	   two mockups, bleeding off the right edge of the screen. Both mockups
-	   are midImage assets, centered in their boxes. */
+	/* The stage: the texture field (the same collage as the closing card)
+	   with one mockup centered on it, bleeding off the right edge of the
+	   screen. The midImage asset, centered, per the product-image rule. */
 	.hero-stage {
-		position: relative;
-		display: block;
-		aspect-ratio: 1 / 0.92;
+		display: grid;
+		place-items: center;
+		aspect-ratio: 1 / 0.86;
+		padding: 6% 7%;
 		border-radius: var(--radius-xl) 0 0 var(--radius-xl);
-		background: var(--paper);
+		background: var(--texture-field);
 		overflow: hidden;
-		isolation: isolate;
-	}
-	.hero-stage::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		z-index: 3;
-		background: var(--grain);
-		opacity: 0.28;
-		mix-blend-mode: multiply;
-	}
-	.stage-field {
-		position: absolute;
-		z-index: 0;
-	}
-	.stage-field--sky {
-		left: 0;
-		top: 10%;
-		width: 46%;
-		height: 62%;
-		background:
-			radial-gradient(80% 60% at 30% 20%, rgba(255, 255, 255, 0.45), transparent 70%),
-			var(--tint-sky);
-	}
-	.stage-field--ink {
-		right: 0;
-		top: 0;
-		width: 60%;
-		height: 56%;
-		background:
-			radial-gradient(circle, rgba(176, 224, 255, 0.55) 1.1px, transparent 1.5px) 0 0 / 7px 7px,
-			radial-gradient(70% 90% at 80% 0%, #3A4A5C, transparent 70%),
-			#232323;
-		-webkit-mask-image: linear-gradient(200deg, #000 35%, rgba(0, 0, 0, 0.85) 60%, rgba(0, 0, 0, 0.6));
-		mask-image: linear-gradient(200deg, #000 35%, rgba(0, 0, 0, 0.85) 60%, rgba(0, 0, 0, 0.6));
-	}
-	.stage-field--rings {
-		right: -12%;
-		bottom: -26%;
-		width: 70%;
-		aspect-ratio: 1;
-		border-radius: 50%;
-		background: repeating-radial-gradient(
-			circle at 50% 50%,
-			transparent 0 2.25rem,
-			rgba(var(--shadow-rgb), 0.09) 2.25rem calc(2.25rem + 1.5px),
-			transparent calc(2.25rem + 1.5px) 3rem
-		);
 	}
 	.stage-img {
-		position: absolute;
+		display: block;
+		width: 100%;
 		height: auto;
 		object-fit: contain;
 		object-position: center;
+		filter: drop-shadow(0 28px 40px rgba(var(--shadow-rgb), 0.3));
 		transition: transform var(--duration-slow) var(--ease-out);
 	}
-	.stage-img--front {
-		z-index: 2;
-		width: 84%;
-		left: 6%;
-		bottom: 9%;
-		filter: drop-shadow(0 28px 40px rgba(var(--shadow-rgb), 0.28));
-	}
-	.stage-img--back {
-		z-index: 1;
-		width: 60%;
-		right: 2%;
-		top: 9%;
-		opacity: 0.96;
-	}
 	@media (hover: hover) {
-		.hero-stage:hover .stage-img--front { transform: translateY(-6px); }
-		.hero-stage:hover .stage-img--back { transform: translate(6px, -4px); }
+		.hero-stage:hover .stage-img { transform: translateY(-6px); }
 	}
 
 	/* Intro */
@@ -693,40 +618,6 @@ const websiteSchema = {
 		margin: 0;
 	}
 
-	/* Display head (tools) */
-
-	.kicker {
-		margin: 0 0 var(--space-sm);
-		font-size: 0.9375rem;
-		color: var(--color-text);
-	}
-	.display-head {
-		margin-bottom: clamp(3rem, 6vw, 5rem);
-	}
-	.display-title {
-		font-size: var(--text-display);
-		line-height: var(--leading-display);
-		letter-spacing: var(--tracking-hero);
-		max-width: 12em;
-		margin: 0;
-		text-wrap: balance;
-	}
-	.display-foot {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: var(--space-sm) var(--space-lg);
-		margin-top: var(--space-lg);
-	}
-	.display-desc {
-		font-size: var(--text-lead);
-		line-height: 1.4;
-		letter-spacing: -0.01em;
-		max-width: 30rem;
-		margin: 0;
-	}
-
 	/* Tools: list + preview stage */
 
 	.tools {
@@ -741,39 +632,26 @@ const websiteSchema = {
 		aspect-ratio: 4 / 3.4;
 		border-radius: var(--radius-xl);
 		background: var(--gradient-ink);
-		color: #FFFFFF;
 		overflow: hidden;
-		isolation: isolate;
 	}
 	.tools-stage::before {
 		content: '';
 		position: absolute;
 		inset: 0;
 		background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 1px, transparent 1.4px) 0 0 / 8px 8px;
-		-webkit-mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
-		mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
+		-webkit-mask-image: radial-gradient(circle at 50% 40%, #000 20%, transparent 78%);
+		mask-image: radial-gradient(circle at 50% 40%, #000 20%, transparent 78%);
 	}
-	.tools-stage::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: var(--grain);
-		opacity: 0.14;
-		mix-blend-mode: screen;
-		pointer-events: none;
-	}
-	.tools-stage-art {
-		position: absolute;
-		inset: 12%;
-		width: 76%;
-		height: 76%;
+	/* Each row's ToolMock, stacked; the script swaps .is-active. :global
+	   because the class lands on the child component's root. */
+	.tools-stage :global(.tools-stage-art) {
 		opacity: 0;
-		transform: translateY(8px);
+		transform: translateY(10px);
 		transition:
 			opacity var(--duration-base) var(--ease-out),
 			transform var(--duration-slow) var(--ease-out);
 	}
-	.tools-stage-art.is-active {
+	.tools-stage :global(.tools-stage-art.is-active) {
 		opacity: 1;
 		transform: none;
 	}
@@ -880,12 +758,6 @@ const websiteSchema = {
 	.window-dots i:nth-child(2) { background: #FEBC2E; }
 	.window-dots i:nth-child(3) { background: #28C840; }
 
-	/* Articles */
-
-	.home-featured {
-		margin-bottom: var(--space-xl);
-	}
-
 	/* About note */
 
 	.about-brief-inner {
@@ -918,24 +790,10 @@ const websiteSchema = {
 	/* Closing */
 
 	.closing {
-		position: relative;
-		isolation: isolate;
 		display: grid;
 		place-items: center;
 		padding: clamp(3rem, 8vw, 7rem) var(--space-md);
-		background:
-			radial-gradient(circle, rgba(41, 41, 41, 0.16) 1px, transparent 1.4px) 0 0 / 7px 7px,
-			linear-gradient(90deg, var(--tint-sky) 0 26%, transparent 26% 74%, var(--tint-lavender) 74%),
-			var(--paper);
-	}
-	.closing::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background: var(--grain);
-		opacity: 0.25;
-		mix-blend-mode: multiply;
+		background: var(--texture-field);
 	}
 	.closing-card {
 		width: 100%;
@@ -1025,7 +883,7 @@ const websiteSchema = {
 <script>
 	// Tools stage: preview whichever row has hover or focus.
 	const rows = document.querySelectorAll<HTMLAnchorElement>('.tools-list [data-tool]');
-	const arts = document.querySelectorAll<SVGElement>('.tools-stage-art');
+	const arts = document.querySelectorAll<HTMLElement>('.tools-stage-art');
 	function activate(id: string | undefined) {
 		if (!id) return;
 		rows.forEach((r) => r.classList.toggle('is-active', r.dataset.tool === id));

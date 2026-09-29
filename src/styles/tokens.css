@@ -1,52 +1,50 @@
 :root {
   /* ——— Colors ——— */
 
-  /* The neutral ramp is warm on surfaces and cool-navy on ink, rather than
-     pure grayscale. It is deliberately compressed at the dark end: every text
-     role has to clear WCAG AA (4.5:1) against both --color-bg and
-     --color-bg-panel, which puts a hard floor around #707070. The old
-     #8A8A8A muted tone sat below that floor and failed AA.
+  /* A neutral charcoal ink (#292929) on white, with a warm off-white panel
+     (#F7F7F2) and charcoal bands, after the Granola-inspired redesign. Every
+     text role clears WCAG AA (4.5:1) against --color-bg, --color-bg-panel,
+     and --color-bg-emphasis: secondary #5C5C57 is 5.77:1 at worst, muted
+     #6B6B66 is 4.6:1. The grey Granola itself uses (#72726E) is 4.49:1 on
+     its own panel, which misses AA, so these sit a step darker. Check any new
+     text colour against all three before shipping it. */
 
-     Both light roles were darkened one step (secondary #575D68 -> #515764,
-     muted #666B75 -> #5F646F) because the lighter pair read as washed out
-     against this warm page even though both already passed. Worst-case
-     contrast across bg, surface, and panel is now 6.48:1 for secondary and
-     5.31:1 for muted, up from 5.92 and 4.79. Going further was tried and
-     rejected: the ramp is short, and another step closed the gap between
-     secondary and --color-link enough that emphasis stopped reading as
-     distinct from body copy. */
+  --color-text:           #292929;
+  --color-text-heading:   #292929;
+  --color-text-secondary: #5C5C57;
+  --color-text-muted:     #6B6B66;
 
-  --color-text:           #081122;
-  --color-text-heading:   #081122;
-  --color-text-secondary: #515764;
-  --color-text-muted:     #5F646F;
+  /* Links stay monochrome, a step between secondary and text: dark enough
+     to read as emphasis, light enough to tell apart from body copy without
+     spending a hue on it. */
+  --color-link:           #3A3A37;
+  --color-link-hover:     #292929;
 
-  /* Links stay monochrome. The ramp has no step between secondary (#575D68)
-     and text (#081122), so this one is interpolated to sit between them —
-     dark enough to read as emphasis, light enough to distinguish from body
-     copy without spending a hue on it. */
-  --color-link:           #3F4553;
-  --color-link-hover:     #081122;
-
-  /* Surfaces are a layering vocabulary: `bg` is the page, `panel` recesses a
-     band out of it, `surface` lifts a card back up. A card reads as raised by
-     being cleaner (pure white) than the warm off-white page behind it, rather
-     than by leaning on a shadow. */
-  --color-bg:             #FBFAF9;
+  /* Surfaces: `bg` is the page and `surface` a card on it, both white, so a
+     card reads as raised by its hairline edge, not by colour or shadow.
+     `panel` recesses a band or a result card below the page (warm
+     off-white); `emphasis` is the next step down (chips, soft buttons). */
+  --color-bg:             #FFFFFF;
   --color-bg-surface:     #FFFFFF;
-  --color-bg-panel:       #F4F2EE;
-  --color-bg-emphasis:    #EFEDE8;
-  --color-bg-inverse:     #081122;
+  --color-bg-panel:       #F7F7F2;
+  --color-bg-emphasis:    #EEEEE7;
+  --color-bg-inverse:     #292929;
 
-  --color-btn:            #081122;
-  /* Lighter than the base, not darker. The old #030812 sat *below* near-black
-     ink, so a filled primary button had no perceptible hover at all. This is a
-     dark slate in the same navy family — 13.85:1 with white, well clear of AA. */
-  --color-btn-hover:      #232D3E;
+  /* Text on the charcoal bands: body 14.5:1, secondary 7.07:1, muted
+     5.74:1. The rule between cards on charcoal is a translucent white. */
+  --color-on-inverse:           #FFFFFF;
+  --color-on-inverse-secondary: #B5B5B0;
+  --color-on-inverse-muted:     #A3A39E;
+  --color-inverse-rule:         rgba(255, 255, 255, 0.16);
 
-  --color-border:         #DCD8D1;
-  --color-border-hairline: #E7E4DE;
-  --color-border-strong:  #C6C2B9;
+  --color-btn:            #292929;
+  /* Lighter than the base, not darker: a darker hover on near-black ink has
+     no perceptible change. 10.9:1 with white, well clear of AA. */
+  --color-btn-hover:      #3F3F3C;
+
+  --color-border:         #DDDDD7;
+  --color-border-hairline: #EAEAE4;
+  --color-border-strong:  #C4C4BD;
 
   /* ——— Accent colors (semantic, used sparingly on calculators/assessments) ——— */
 
@@ -83,6 +81,7 @@
      muted text. */
   --tint-sky:      #B0E0FF;   /* 14.2:1 with --color-text */
   --tint-lavender: #DAD6FF;   /* 15.1:1 with --color-text */
+  --tint-sand:     #EFE4B4;   /* third field tint (step chips) */
 
   /* The brand highlight: a field color, never text. Sky rather than the site's
      existing --color-accent-info, which is a link/UI blue that has to work as
@@ -93,27 +92,23 @@
 
   /* ——— Typography ——— */
 
-  /* Two families: Manrope for headings and UI text, DM Sans for reading
-     copy. `--font-sans` is the UI/heading face — `--font-heading` aliases it,
-     and it's also what components reach for directly (buttons, labels,
-     calculator text, nav). `--font-body` is DM Sans and is applied once, on
-     `body` in global.css; anything that doesn't explicitly set its own
-     font-family (paragraphs, prose, list items) inherits DM Sans from there,
-     while every element with an explicit `--font-sans`/`--font-heading`
-     declaration stays on Manrope regardless. `--font-logo` stays pinned to
-     the site's original sitewide face so the "Simply Sheets" wordmark in
-     Header.astro/Footer.astro doesn't move when either family changes. */
-  --font-sans: "Manrope Variable", system-ui, -apple-system, sans-serif;
+  /* One family, Inter Variable, for every text role: `--font-sans`,
+     `--font-heading`, and `--font-body` all resolve to it (the three names
+     stay so components can say what a piece of text is). Its opsz axis moves
+     to the tighter display cut at large sizes by itself. `--font-logo` stays
+     pinned to Aspekta, so the "Simply Sheets" wordmark in Header.astro and
+     Footer.astro doesn't move when the text face changes. */
+  --font-sans: "Inter Variable", system-ui, -apple-system, sans-serif;
   --font-heading: var(--font-sans);
-  --font-body: "DM Sans Variable", system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-sans);
   --font-logo: "Aspekta Variable", system-ui, -apple-system, sans-serif;
 
   /* Hero is the homepage headline only; display is every other page hero;
      section is the h2 that opens a band. Three steps, so a page never has two
      competing headline sizes above the fold. */
-  --text-hero:      clamp(2.5rem, 4.2vw + 0.75rem, 4.25rem);
-  --text-display:   clamp(2.5rem, 3.5vw + 0.75rem, 3rem);
-  --text-section:   clamp(2rem, 2.4vw + 1.1rem, 2.75rem);
+  --text-hero:      clamp(2.875rem, 5.4vw + 0.5rem, 5.5rem);
+  --text-display:   clamp(2.5rem, 4.4vw + 0.5rem, 4.5rem);
+  --text-section:   clamp(2rem, 2.6vw + 0.75rem, 3rem);
   --text-h1:        2.25rem;
   --text-h2:        1.5rem;
   --text-h3:        1.25rem;
@@ -131,11 +126,13 @@
      1.125rem }` before this existed, which is why the template page's FAQ
      answers were the one set that never got the bump. */
   --text-read:      1rem;
+  /* A standfirst: the paragraph under a hero or section title. */
+  --text-lead:      clamp(1.1875rem, 0.6vw + 1rem, 1.375rem);
 
   /* Leading. Tighter as type gets larger — a display headline at 1.2 has
      caverns between its lines, while a label at 1.2 is cramped. */
-  --leading-display: 1.08;
-  --leading-tight:   1.12;
+  --leading-display: 0.98;
+  --leading-tight:   1.04;
   --leading-snug:    1.25;
   --leading-body:    1.5;
   --leading-normal:  var(--leading-body);
@@ -151,9 +148,9 @@
   /* Tracking. Large type set at default tracking reads loose and generic;
      pulling it in is most of what separates a display headline from a big
      paragraph. Small uppercase type needs the opposite treatment. */
-  --tracking-hero:    -0.035em;  /* --text-hero only; 60px+ needs more pull */
-  --tracking-tight:   -0.024em;  /* display */
-  --tracking-snug:    -0.02em;   /* h1–h4, buttons */
+  --tracking-hero:    -0.04em;  /* --text-hero only; 60px+ needs more pull */
+  --tracking-tight:   -0.03em;  /* display */
+  --tracking-snug:    -0.015em;   /* h1–h4, buttons */
   --tracking-heading: var(--tracking-snug);
   --tracking-body:    -0.01em;   /* lead paragraphs at 20px+ */
   --tracking-normal:  0;         /* body at 16px and below */
@@ -176,15 +173,15 @@
      --space-section on purpose: generous air between chapters is most of what
      makes the band pages read as calm, and it is what separates one band
      from the next now that alternating fills do that job instead of rules. */
-  --space-band:    clamp(4.5rem, 10vw, 8rem);
+  --space-band:    clamp(5rem, 12vw, 10rem);
 
   /* ——— Layout ——— */
 
-  --max-width:         80rem;     /* 1280px */
+  --max-width:         75rem;     /* 1280px */
   /* Content width inside a band: narrower than the header's --max-width so
      grids and section heads sit inside the logo-to-CTA span, not flush with
      it. */
-  --max-width-content: 72rem;     /* 1152px */
+  --max-width-content: 75rem;     /* 1152px */
   --max-width-narrow:  42rem;     /*  672px */
 
   /* Clearance below the header bar, for sticky rails and for
@@ -201,8 +198,8 @@
   /* The two large steps exist for floating surfaces — the header bar and its
      mobile panel — where the site's usual near-square corners read as a box
      stuck to the page rather than a card hovering over it. */
-  --radius-lg: 1rem;      /* 16px */
-  --radius-xl: 1.5rem;    /* 24px */
+  --radius-lg: 0.875rem;      /* 16px */
+  --radius-xl: 1.25rem;    /* 24px */
   --radius-full: 999px;
 
   /* Cards and their media. Every card on the site (article, product, tool)
@@ -224,17 +221,35 @@
     radial-gradient(40% 50% at 88% 20%, rgba(176, 224, 255, 0.4), transparent 70%),
     var(--color-bg-panel);
   --gradient-media:
-    radial-gradient(70% 80% at 50% 110%, rgba(176, 224, 255, 0.35), transparent 70%),
+    radial-gradient(70% 80% at 50% 115%, rgba(176, 224, 255, 0.45), transparent 70%),
     var(--color-bg-panel);
   --gradient-brand:
     radial-gradient(35% 60% at 15% 110%, rgba(255, 255, 255, 0.8), transparent 70%),
     radial-gradient(30% 55% at 85% -10%, rgba(255, 255, 255, 0.7), transparent 70%),
     linear-gradient(120deg, var(--tint-sky) 0%, #C9DCFF 50%, var(--tint-lavender) 100%);
-  /* The dark stage behind tool illustrations: ink with two faint tint glows. */
+  /* The dark stage behind tool mockups: charcoal with a faint sky glow. */
   --gradient-ink:
-    radial-gradient(60% 60% at 80% 10%, rgba(176, 224, 255, 0.18), transparent 70%),
-    radial-gradient(50% 50% at 10% 100%, rgba(218, 214, 255, 0.14), transparent 70%),
+    radial-gradient(60% 60% at 80% 10%, rgba(176, 224, 255, 0.14), transparent 70%),
     var(--color-bg-inverse);
+
+  /* Texture
+
+     Print-like texture for decorative fields, never behind text. --grain is
+     an SVG turbulence tile, laid over a field as a multiply layer (or screen
+     on charcoal) at 15 to 30 percent. --halftone is a dot grid. --paper is
+     the warm ground they sit on.
+
+     --texture-field is the one collage used for every large stage: sky and
+     lavender blocks either side of paper, under a faint halftone. The
+     homepage hero stage and the closing card both use it; add .textured
+     to the element to get the grain on top. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --halftone: radial-gradient(circle, rgba(41, 41, 41, 0.16) 1px, transparent 1.4px) 0 0 / 7px 7px;
+  --paper: #ECEAE2;
+  --texture-field:
+    var(--halftone),
+    linear-gradient(90deg, var(--tint-sky) 0 26%, transparent 26% 74%, var(--tint-lavender) 74%),
+    var(--paper);
 
   /* ——— Elevation ——— */
 
@@ -242,7 +257,7 @@
      a wider ambient one for the lift. One 10px blur at 6% reads as a gray
      smudge; two layers at 4% read as a surface above another surface. Kept
      neutral (the ink RGB) so elevation never picks up a hue. */
-  --shadow-rgb: 8, 17, 34;
+  --shadow-rgb: 41, 41, 41;
 
   --shadow-xs: 0 1px 2px rgba(var(--shadow-rgb), 0.04);
   --shadow-sm:

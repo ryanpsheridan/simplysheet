@@ -34,6 +34,10 @@ body {
 	color: var(--color-text);
 	background: var(--color-bg);
 	-webkit-font-smoothing: antialiased;
+	/* Inter's opsz axis moves to its tighter display cut at large sizes on
+	   its own. cv11 is the single-storey a; ss03 rounds the quotes. */
+	font-optical-sizing: auto;
+	font-feature-settings: "cv11", "ss03";
 	overflow-x: hidden;
 }
 
@@ -104,13 +108,14 @@ main {
 	padding: var(--space-xl) var(--space-md);
 }
 
-/* Medium, not normal and not semibold. At these sizes semibold reads as
-   shouting, but 400 leaves a heading looking like a big paragraph — medium is
-   the step that lets size and tracking carry the hierarchy on their own. */
+/* Regular weight. Hierarchy comes from size, tracking, and leading alone:
+   a heading 24px and up at 400 reads as editorial, and semibold at display
+   sizes shouts. Small titles (card titles, list rows, FAQ questions) step up
+   to medium in their own rules, so a 17px title doesn't read as body copy. */
 h1, h2, h3, h4, h5, h6 {
 	margin: 0 0 0.5rem 0;
 	font-family: var(--font-heading);
-	font-weight: var(--weight-semibold);
+	font-weight: var(--weight-normal);
 	color: var(--color-text-heading);
 	line-height: var(--leading-tight);
 	letter-spacing: var(--tracking-heading);
@@ -219,7 +224,7 @@ p {
 .badge {
 	display: inline-block;
 	font-size: 0.8125rem;
-	font-weight: var(--weight-medium);
+	font-weight: var(--weight-normal);
 	line-height: 1;
 	color: var(--color-text);
 	background: var(--color-bg-emphasis);
@@ -237,7 +242,7 @@ p {
 	left: 0.75rem;
 	bottom: 0.75rem;
 	background: var(--color-bg-surface);
-	border: 1px solid var(--color-border);
+	border: 1px solid var(--color-border-hairline);
 }
 
 .prose {
@@ -560,7 +565,7 @@ p {
    .calc / .quiz / ... class), never a wrapper added by a page.
 
    The same construction as the product cards: a hairline edge, a thin rim
-   (--frame-rim, the --space-xs inset the bento media uses), and the tool on a
+   (--frame-rim, the --space-xs inset the framed card media uses), and the tool on a
    clean white sheet inside it. The rim is an inset shadow rather than a
    second element, so no component needed new markup; its inner corners land
    on --radius-card minus the rim, which is exactly --radius-inset.
@@ -617,16 +622,16 @@ p {
 	font-weight: var(--weight-normal);
 	line-height: 1;
 	gap: 0.375rem;
-	color: var(--color-btn);
-	background: transparent;
-	border: 1px solid var(--color-btn);
+	color: var(--color-text);
+	background: var(--color-bg-emphasis);
+	border: 1px solid transparent;
 	border-radius: var(--radius-full);
 	text-decoration: none;
 	transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 .calc-product-link:hover {
-	color: white;
-	background: var(--color-btn);
+	color: var(--color-text);
+	background: #E4E4DC;
 	text-decoration: none;
 }
 .calc-product-link[hidden] {
@@ -757,8 +762,15 @@ hr {
 	padding: var(--space-band) var(--space-md);
 }
 .band--surface {
-	background: var(--color-bg-surface);
-	border-block: 1px solid var(--color-border-hairline);
+	background: var(--color-bg-panel);
+}
+/* Charcoal. Headings and copy inside take the on-inverse roles. */
+.band--inverse {
+	background: var(--color-bg-inverse);
+	color: var(--color-on-inverse);
+}
+.band--inverse :is(h1, h2, h3, h4) {
+	color: var(--color-on-inverse);
 }
 /* For a band that directly continues the one above it (a grid under a page
    hero, say), where full band air would read as a gap. */
@@ -805,16 +817,54 @@ hr {
 .text-link {
 	font-family: var(--font-sans);
 	font-size: var(--text-small);
-	font-weight: var(--weight-medium);
+	font-weight: var(--weight-normal);
 	color: var(--color-text);
 	text-decoration: none;
-	border-bottom: 1px solid var(--color-border-strong);
+	border-bottom: 1px solid var(--color-text);
 	padding-bottom: 2px;
 	transition: border-color var(--duration-fast) var(--ease-out);
 }
 .text-link:hover {
 	color: var(--color-text);
-	border-color: var(--color-text);
+	border-color: transparent;
+}
+
+/* ——— Kicker ———
+   A plain small label above a display heading ("Free tools"). Sentence case,
+   no pill. Rare: for sections that open with a display-size heading, where
+   a pill would compete. Eyebrows (.eyebrow-badge) remain the pointer on
+   cards and promos. */
+
+.kicker {
+	margin: 0 0 var(--space-sm);
+	font-family: var(--font-sans);
+	font-size: 0.9375rem;
+	color: var(--color-text);
+}
+
+/* ——— Texture ———
+   Grain over a decorative field. The element needs position (relative is
+   set here) and its content sits above the layer via isolation. Charcoal
+   fields use .textured--dark, which screens the grain in instead. */
+
+.textured {
+	position: relative;
+	isolation: isolate;
+}
+.textured::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	border-radius: inherit;
+	background: var(--grain);
+	opacity: 0.26;
+	mix-blend-mode: multiply;
+	pointer-events: none;
+}
+.textured--dark::after {
+	mix-blend-mode: screen;
+	opacity: 0.12;
 }
 
 /* ——— Cards ———
@@ -881,34 +931,34 @@ hr {
 	object-fit: contain;
 	object-position: center;
 }
-.card .card-media--contain::after {
-	content: none;
+.card .card-media--contain::after,
+.card .card-media--art::after {
+	inset: 0;
+	z-index: -1;
+	box-shadow: none;
+	background: var(--grain);
+	opacity: 0.22;
+	mix-blend-mode: multiply;
+}
+.card .card-media--art::after {
+	mix-blend-mode: screen;
+	opacity: 0.12;
 }
 
-/* Tool illustrations: white line art on the ink stage, over a faint grid. */
+/* Tool mockups: a miniature of the tool's UI (ToolMock, which positions
+   itself) on the charcoal stage, over a faint halftone that fades out from
+   the center. */
 .card .card-media--art {
 	background: var(--gradient-ink);
 	color: #FFFFFF;
-	padding: var(--space-md) var(--space-lg);
 }
 .card .card-media--art::before {
 	content: '';
 	position: absolute;
 	inset: 0;
-	background-image:
-		linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-	background-size: 2rem 2rem;
-	background-position: center;
-	-webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 80%);
-	mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 80%);
-}
-.card .card-media--art > svg {
-	position: relative;
-	display: block;
-	width: 100%;
-	height: 100%;
-	transition: transform var(--duration-slow) var(--ease-out);
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 1px, transparent 1.4px) 0 0 / 8px 8px;
+	-webkit-mask-image: radial-gradient(circle at 50% 40%, #000 20%, transparent 78%);
+	mask-image: radial-gradient(circle at 50% 40%, #000 20%, transparent 78%);
 }
 
 .card .card-body {
@@ -920,13 +970,15 @@ hr {
 	min-width: 0;
 }
 .card .card-title {
-	font-size: var(--text-h4);
+	font-size: 1.125rem;
+	font-weight: var(--weight-medium);
 	line-height: var(--leading-snug);
+	letter-spacing: -0.01em;
 	color: var(--color-text);
 	margin: 0;
 }
 .card .card-desc {
-	font-size: var(--text-small);
+	font-size: 0.9375rem;
 	line-height: var(--leading-normal);
 	color: var(--color-text-secondary);
 	margin: 0;
@@ -994,13 +1046,11 @@ hr {
 }
 
 @media (hover: hover) {
-	.card:hover .card-media > img,
-	.card:hover .card-media--art > svg {
+	.card:hover .card-media > img {
 		transform: scale(1.025);
 	}
 	.card--framed:hover {
-		border-color: var(--color-border);
-		box-shadow: var(--shadow-md);
+		border-color: var(--color-border-strong);
 	}
 }
 
@@ -1028,9 +1078,7 @@ hr {
    Three columns by default, two at 960px, one at 600px. `--2` and `--4`
    change the desktop count only.
 
-   `--bento` is the 12-column product grid: each card sets `--span` (ProductCard's
-   `span` prop), and every card's media shares one fixed height, so a narrow
-   and a wide card in the same row stay level. */
+   Every card in a row is the same width; there is no uneven layout. */
 
 .card-grid {
 	display: grid;
@@ -1043,25 +1091,11 @@ hr {
 .card-grid--4 {
 	grid-template-columns: repeat(4, minmax(0, 1fr));
 }
-.card-grid--bento {
-	grid-template-columns: repeat(12, minmax(0, 1fr));
-	gap: var(--space-sm);
-}
-.card-grid--bento > .card {
-	grid-column: span var(--span, 6);
-}
-.card-grid--bento .card-media {
-	aspect-ratio: auto;
-	height: clamp(13rem, 22vw, 19rem);
-}
 
 @media (max-width: 960px) {
 	.card-grid,
 	.card-grid--4 {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-	.card-grid--bento > .card {
-		grid-column: span 6;
 	}
 }
 @media (max-width: 600px) {
@@ -1069,9 +1103,6 @@ hr {
 	.card-grid--2,
 	.card-grid--4 {
 		grid-template-columns: minmax(0, 1fr);
-	}
-	.card-grid--bento > .card {
-		grid-column: span 12;
 	}
 }
 
@@ -1116,10 +1147,10 @@ hr {
 	justify-content: center;
 	font-family: var(--font-heading);
 	font-size: var(--text-small);
-	font-weight: var(--weight-medium);
+	font-weight: 450;
 	line-height: 1.5;
-	letter-spacing: var(--tracking-snug);
-	padding: 0.625rem 1.25rem;
+	letter-spacing: -0.01em;
+	padding: 0.75rem 1.375rem;
 	border-radius: var(--radius-full);
 	border: 1px solid transparent;
 	cursor: pointer;
@@ -1144,33 +1175,45 @@ hr {
 }
 
 .btn-lg {
-	font-size: var(--text-body);
-	padding: 0.875rem 1.75rem;
+	font-size: 1.0625rem;
+	padding: 0.9375rem 1.75rem;
 }
 
 .btn-primary {
 	background: var(--color-btn);
 	color: white;
 	border-color: var(--color-btn);
-	box-shadow: var(--shadow-xs);
 }
 
 .btn-primary:hover {
 	background: var(--color-btn-hover);
 	border-color: var(--color-btn-hover);
 	color: white;
-	box-shadow: var(--shadow-sm);
 }
 
+/* A soft filled pill, not an outline: beside a primary it reads as the
+   quieter of two choices instead of a second competing box. */
 .btn-secondary {
-	background: transparent;
-	color: var(--color-btn);
-	border-color: var(--color-btn);
+	background: var(--color-bg-emphasis);
+	color: var(--color-text);
+	border-color: transparent;
 }
 
 .btn-secondary:hover {
-	background: var(--color-btn);
-	color: white;
+	background: #E4E4DC;
+	color: var(--color-text);
+}
+
+/* The primary button on a charcoal band. */
+.btn-inverse {
+	background: var(--color-on-inverse);
+	color: var(--color-text);
+	border-color: transparent;
+}
+
+.btn-inverse:hover {
+	background: #E9E9E4;
+	color: var(--color-text);
 }
 
 /* The highlight button. --color-brand is a field color and never text, so

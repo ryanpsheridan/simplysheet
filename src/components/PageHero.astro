@@ -12,7 +12,7 @@ import Breadcrumbs from './Breadcrumbs.astro';
 //   default  below the standfirst (buttons, a proof line, filter tabs)
 //   after    full-width content under the hero copy (the homepage stage)
 //
-// No `font-weight` on the title: it takes --weight-semibold from the shared
+// No `font-weight` on the title: it takes the regular weight from the shared
 // h1-h6 rule, like every heading.
 //
 // With `crumbs`, the hero left-aligns below 600px: a breadcrumb trail reads as
@@ -81,16 +81,15 @@ const { title, desc, size = 'page', crumbs } = Astro.props;
 	}
 
 	.page-hero-desc {
-		font-size: var(--text-read);
-		line-height: var(--leading-normal);
+		font-size: var(--text-lead);
+		line-height: 1.4;
+		letter-spacing: -0.01em;
 		color: var(--color-text-secondary);
 		margin: 0;
 		max-width: 36rem;
 		text-wrap: pretty;
 	}
 	.page-hero--hero .page-hero-desc {
-		font-size: var(--text-body-lg);
-		letter-spacing: var(--tracking-body);
 		margin-bottom: var(--space-lg);
 	}
 

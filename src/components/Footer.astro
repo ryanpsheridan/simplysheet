@@ -2,12 +2,6 @@
 import { getEntry } from 'astro:content';
 import { ETSY_SHOP_URL, withEtsyTracking } from '../consts';
 
-interface Props {
-	/** The editorial theme test adds an oversized wordmark under the footer. */
-	theme?: 'editorial';
-}
-
-const { theme } = Astro.props;
 const year = new Date().getFullYear();
 const budgetSpreadsheet = await getEntry('templates', 'budget-spreadsheet');
 const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon=SAVENOW`);
@@ -61,41 +55,36 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 			<p>&copy; {year} Simply Sheets</p>
 		</div>
 	</div>
-	{theme === 'editorial' && (
-		<div class="footer-wordmark" aria-hidden="true">
-			<img src="/images/logo-svg.svg" alt="" class="footer-wordmark-mark" width="28" height="30" />
-			<span>Simply Sheets</span>
-		</div>
-	)}
 </footer>
 
 <style>
 	footer {
-		border-top: 1px solid var(--color-border);
+		border-top: 1px solid var(--color-border-hairline);
 		padding: var(--space-xl) var(--space-md) var(--space-lg);
-		background: var(--color-bg-panel);
+		background: var(--color-bg);
 	}
 
 	.footer-promo-bar {
-		max-width: var(--max-width);
+		max-width: var(--max-width-content);
 		margin: calc(var(--space-xl) * -1) auto var(--space-xl);
 		padding: var(--space-sm) 0;
-		border-bottom: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border-hairline);
 		text-align: center;
 		font-size: var(--text-small);
-		color: var(--color-text);
+		color: var(--color-text-secondary);
 		font-weight: var(--weight-normal);
 	}
 	.footer-promo-link {
-		color: var(--color-accent-info);
+		color: var(--color-text);
 		font-weight: var(--weight-normal);
 		text-decoration: underline;
+		text-underline-offset: 0.2em;
 	}
 	.footer-promo-link:hover {
 		color: var(--color-text);
 	}
 	.footer-inner {
-		max-width: var(--max-width);
+		max-width: var(--max-width-content);
 		margin: 0 auto;
 	}
 
@@ -105,8 +94,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 		display: flex;
 		justify-content: space-between;
 		gap: var(--space-xl);
-		padding-bottom: var(--space-lg);
-		border-bottom: 1px solid var(--color-border);
+		padding-bottom: var(--space-xl);
 	}
 
 	/* ——— Brand column ——— */
@@ -135,33 +123,40 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 	}
 	.footer-tagline {
 		margin-top: var(--space-xs);
+		max-width: 16rem;
 		font-size: var(--text-small);
-		color: var(--color-text-muted);
+		color: var(--color-text-secondary);
 	}
 
 	/* ——— Nav columns ——— */
 
 	.footer-nav {
 		display: flex;
-		gap: var(--space-xl);
+		gap: clamp(var(--space-lg), 6vw, 6rem);
 	}
 	.footer-col ul {
 		list-style: none;
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-2xs);
+		gap: 0.625rem;
 	}
+	/* Link columns in Granola's pattern: a 22px regular heading over small
+	   underlined links. */
 	.footer-heading {
-		font-size: var(--text-small);
+		font-family: var(--font-heading);
+		font-size: 1.375rem;
 		font-weight: var(--weight-normal);
+		letter-spacing: -0.015em;
 		color: var(--color-text);
-		margin-bottom: var(--space-xs);
+		margin-bottom: var(--space-sm);
 	}
 	.footer-col a {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		text-decoration: none;
+		font-size: 0.875rem;
+		color: var(--color-text);
+		text-decoration: underline;
+		text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+		text-underline-offset: 0.22em;
 		transition: color 0.15s;
 		/* fit-content so the hit area added at touch widths (below) tracks the
 		   label rather than spanning the whole column. Costs no height here,
@@ -169,7 +164,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 		width: fit-content;
 	}
 	.footer-col a:hover {
-		color: var(--color-text);
+		text-decoration-color: currentColor;
 	}
 	.footer-view-all {
 		margin-top: var(--space-2xs);
@@ -179,6 +174,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 
 	.footer-bottom {
 		padding-top: var(--space-md);
+		border-top: 1px solid var(--color-border-hairline);
 	}
 	.footer-bottom p {
 		font-size: var(--text-small);

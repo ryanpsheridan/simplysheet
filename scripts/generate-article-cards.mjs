@@ -1,4 +1,4 @@
-// Builds every article's card image (public/images/card-v3-{name}.svg) from
+// Builds every article's card image (public/images/card-v4-{name}.svg) from
 // two inputs, so the style lives in exactly one place:
 //
 //   1. the article's wireframe, scripts/article-cards/wireframes/{name}.svg,
@@ -7,15 +7,18 @@
 //   2. the article's first tag, which picks a hue family below.
 //
 // {name} comes from the article's `cardImage` frontmatter
-// (/images/card-v3-{name}.svg). Everything else is derived: the exact hue,
-// gradient angle, and bloom/ring placement are jittered from a hash of the
-// name, so two articles in the same family never render identically and the
-// output is byte-for-byte stable between runs (no diff churn in prebuild).
+// (/images/card-v4-{name}.svg). Everything else is derived from a hash of the
+// name: the exact hue, which collage layout the colour blocks take, their
+// sizes, and where the halftone sits. Two articles in a family never render
+// identically, and the output is byte-for-byte stable between runs (no diff
+// churn in prebuild).
 //
-// The v3 look matches the site chrome rather than fighting it: a light tinted
-// field, one white highlight bloom, one saturated bloom, the same faint
-// concentric rings as the homepage hero, and the wireframe in ink. The older
-// dark mesh cards (card-v2-*.svg) are left untouched and archived on
+// The v4 look is the site's print-collage texture (the homepage hero stage
+// and closing card): a warm paper ground, two colour blocks in the tag's hue
+// family, a halftone printed on one of them, and film grain over the lot.
+// The wireframe sits in ink on a clean off-white app window (traffic-light
+// dots, running off the bottom edge), the same window the tool mockups use.
+// Earlier sets (card-v3-*, card-v2-*) are left untouched and archived on
 // /style-guide/.
 //
 // Runs in `prebuild`, before generate-og-images.mjs rasterizes the result.
@@ -28,7 +31,19 @@ const articlesDir = path.join(root, 'src/content/articles');
 const wireframesDir = path.join(root, 'scripts/article-cards/wireframes');
 const imagesDir = path.join(root, 'public/images');
 
-const INK = '#081122';
+const INK = '#292929';
+const PAPER = '#ECEAE2';
+const WINDOW = '#FBFBF8';
+
+// The app window the wireframe sits in: 63% of the canvas wide, so a band of
+// the collage shows on every side of it at card size, and running off the
+// bottom edge. Wireframes are drawn on the full 960x540 grid (CLAUDE.md,
+// "Wireframe Overlay System"); they are scaled into the window here, about
+// a centre a little below the canvas's own so they clear the window's dots.
+// Strokes carry vector-effect="non-scaling-stroke", so line weights survive.
+const WIN = { x: 176, y: 88, w: 608, h: 480 };
+const WF_SCALE = 0.78;
+const WF_CY = 300;
 
 // Base hue (degrees) per tag. Same families as the old per-article registry,
 // so articles in one category still read as related.
@@ -94,80 +109,97 @@ function buildCard(name, tag, wireframe) {
 	const base = FAMILY[tag] ?? FALLBACK_HUE;
 	const hue = base + (rand() - 0.5) * 20; // ±10° within the family
 
-	const light = hsl(hue, 70, 95);
-	const deep = hsl(hue + 8, 62, 86);
-	const bloom = hsl(hue - 6, 85, 74);
+	// Two blocks: a saturated tint and a paler neighbour 25° round the wheel,
+	// and a deep shade of the first for its halftone dots.
+	const blockA = hsl(hue, 72, 80);
+	const blockB = hsl(hue + 25, 52, 87);
+	const dots = hsl(hue, 55, 38);
 
-	// Gradient runs corner to corner in one of four directions.
-	const dirs = [
-		['0%', '0%', '100%', '100%'],
-		['100%', '0%', '0%', '100%'],
-		['0%', '100%', '100%', '0%'],
-		['100%', '100%', '0%', '0%'],
-	];
-	const [x1, y1, x2, y2] = dirs[Math.floor(rand() * 4)];
-
-	// Highlight and bloom sit in opposite corners, rings in a third, so the
-	// field reads across the whole canvas rather than pooling in the middle.
-	const corners = [
-		[0, 0],
-		[960, 0],
-		[960, 540],
-		[0, 540],
-	];
-	const start = Math.floor(rand() * 4);
-	const [hx, hy] = corners[start];
-	const [bx, by] = corners[(start + 2) % 4];
-	const [rx, ry] = corners[(start + 1 + Math.floor(rand() * 2) * 2) % 4];
-	const jitter = () => (rand() - 0.5) * 160;
-
-	const rings = [];
-	for (let r = 70; r <= 1000; r += 64) {
-		rings.push(`    <circle cx="${rx}" cy="${ry}" r="${r}"/>`);
+	// Three collage layouts, like the closing card's columns. Sizes jitter
+	// within each so no two cards in a layout share an edge.
+	const j = (lo, hi) => Math.round(lo + rand() * (hi - lo));
+	const layout = Math.floor(rand() * 3);
+	let a, b;
+	if (layout === 0) {
+		// Side columns.
+		const wa = j(170, 260);
+		const wb = j(150, 240);
+		a = [0, 0, wa, 540];
+		b = [960 - wb, 0, wb, 540];
+	} else if (layout === 1) {
+		// Offset corners: a large block top left, a smaller one bottom right.
+		const wa = j(420, 560);
+		const ha = j(260, 340);
+		a = [0, 0, wa, ha];
+		b = [j(560, 680), ha, 960, 540 - ha];
+	} else {
+		// A top band over a side column.
+		const ha = j(150, 210);
+		const wb = j(170, 240);
+		a = [0, 0, 960, ha];
+		b = [rand() < 0.5 ? 0 : 960 - wb, ha, wb, 540 - ha];
 	}
+	// Which side of a mirrored layout the blocks sit on.
+	if (layout !== 2 && rand() < 0.5) {
+		a = [960 - a[0] - a[2], a[1], a[2], a[3]];
+		b = [960 - b[0] - b[2], b[1], b[2], b[3]];
+	}
+	const rect = ([x, y, w, h], fill, extra = '') =>
+		`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"${extra}/>`;
+
+	// The halftone fades across block A along a random diagonal.
+	const fadeFrom = rand() < 0.5 ? ['0', '0', '1', '1'] : ['1', '0', '0', '1'];
 
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
   <!-- Generated by scripts/generate-article-cards.mjs from
        scripts/article-cards/wireframes/${name}.svg (tag: ${tag ?? 'none'}). Edit those, not this. -->
   <defs>
-    <linearGradient id="bg" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">
-      <stop offset="0%" stop-color="${light}"/>
-      <stop offset="100%" stop-color="${deep}"/>
+    <pattern id="halftone" width="9" height="9" patternUnits="userSpaceOnUse">
+      <circle cx="4.5" cy="4.5" r="1.8" fill="${dots}"/>
+    </pattern>
+    <pattern id="fineDots" width="7" height="7" patternUnits="userSpaceOnUse">
+      <circle cx="3.5" cy="3.5" r="0.9" fill="${INK}" fill-opacity="0.16"/>
+    </pattern>
+    <linearGradient id="halftoneFade" x1="${fadeFrom[0]}" y1="${fadeFrom[1]}" x2="${fadeFrom[2]}" y2="${fadeFrom[3]}">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.05"/>
     </linearGradient>
-    <radialGradient id="highlight" cx="${r1(hx + jitter())}" cy="${r1(hy)}" r="560" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="bloom" cx="${r1(bx + jitter())}" cy="${r1(by)}" r="520" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="${bloom}" stop-opacity="0.75"/>
-      <stop offset="100%" stop-color="${bloom}" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="ringFade" cx="${rx}" cy="${ry}" r="720" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <mask id="ringMask">
-      <rect width="960" height="540" fill="url(#ringFade)"/>
+    <mask id="halftoneMask">
+      ${rect(a, 'url(#halftoneFade)')}
     </mask>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="${hash(name) % 997}" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 0.16  0 0 0 0 0.16  0 0 0 0 0.16  0 0 0 0.32 0"/>
+    </filter>
+    <clipPath id="window">
+      <rect x="${WIN.x}" y="${WIN.y}" width="${WIN.w}" height="${WIN.h}" rx="20"/>
+    </clipPath>
     <linearGradient id="areaFade" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="${INK}" stop-opacity="0.12"/>
       <stop offset="100%" stop-color="${INK}" stop-opacity="0"/>
     </linearGradient>
   </defs>
 
-  <rect width="960" height="540" fill="url(#bg)"/>
-  <rect width="960" height="540" fill="url(#bloom)"/>
-  <rect width="960" height="540" fill="url(#highlight)"/>
+  <rect width="960" height="540" fill="${PAPER}"/>
+  ${rect(a, blockA)}
+  ${rect(b, blockB)}
+  <rect width="960" height="540" fill="url(#halftone)" mask="url(#halftoneMask)" opacity="0.7"/>
+  <rect width="960" height="540" fill="url(#fineDots)"/>
+  <rect width="960" height="540" filter="url(#grain)"/>
 
-  <g fill="none" stroke="${INK}" stroke-width="1" opacity="0.1" mask="url(#ringMask)">
-${rings.join('\n')}
-  </g>
+  <rect x="${WIN.x}" y="${WIN.y + 8}" width="${WIN.w}" height="${WIN.h}" rx="20" fill="${INK}" opacity="0.14"/>
+  <rect x="${WIN.x}" y="${WIN.y}" width="${WIN.w}" height="${WIN.h}" rx="20" fill="${WINDOW}"/>
+  <circle cx="${WIN.x + 24}" cy="${WIN.y + 22}" r="5" fill="#FF5F57"/>
+  <circle cx="${WIN.x + 40}" cy="${WIN.y + 22}" r="5" fill="#FEBC2E"/>
+  <circle cx="${WIN.x + 56}" cy="${WIN.y + 22}" r="5" fill="#28C840"/>
 
-  <g color="${INK}">
+  <g color="${INK}" clip-path="url(#window)">
+    <g transform="translate(480 ${WF_CY}) scale(${WF_SCALE}) translate(-480 -270)">
 ${wireframe
 	.split('\n')
-	.map((line) => '  ' + line.replace(/^\s{0,2}/, ''))
+	.map((line) => '    ' + line.replace(/^\s{0,2}/, ''))
 	.join('\n')}
+    </g>
   </g>
 </svg>
 `;
@@ -178,9 +210,9 @@ let count = 0;
 for (const file of files) {
 	const data = frontmatter(await readFile(path.join(articlesDir, file), 'utf8'));
 	const image = data.cardImage ?? data.image;
-	const m = typeof image === 'string' && image.match(/\/card-v3-(.+)\.svg$/);
+	const m = typeof image === 'string' && image.match(/\/card-v4-(.+)\.svg$/);
 	if (!m) {
-		console.warn(`skip ${file}: cardImage is not a card-v3 image (${image})`);
+		console.warn(`skip ${file}: cardImage is not a card-v4 image (${image})`);
 		continue;
 	}
 	const name = m[1];
@@ -191,7 +223,7 @@ for (const file of files) {
 		throw new Error(`${file}: missing wireframe scripts/article-cards/wireframes/${name}.svg`);
 	}
 	const tag = Array.isArray(data.tags) ? data.tags[0] : undefined;
-	await writeFile(path.join(imagesDir, `card-v3-${name}.svg`), buildCard(name, tag, wireframe));
+	await writeFile(path.join(imagesDir, `card-v4-${name}.svg`), buildCard(name, tag, wireframe));
 	count++;
 }
 console.log(`Generated ${count} article card(s)`);

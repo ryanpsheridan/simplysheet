@@ -7,26 +7,21 @@ interface Props {
 	title: string;
 	description: string;
 	noindex?: boolean;
-	/** Opt-in visual theme, set on <html> as `theme-<name>`. `editorial` is the
-	    Granola-inspired test running on the homepage only: its tokens and
-	    overrides live in src/styles/theme-editorial.css, which that page
-	    imports, so every other page is untouched. */
-	theme?: 'editorial';
 }
 
-const { title, description, noindex, theme } = Astro.props;
+const { title, description, noindex } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class={theme ? `theme-${theme}` : undefined}>
+<html lang="en">
 	<head>
-		<BaseHead title={title} description={description} noindex={noindex} theme={theme} />
+		<BaseHead title={title} description={description} noindex={noindex} />
 	</head>
 	<body>
 		<a href="#main-content" class="skip-link">Skip to content</a>
 		<Header />
 		<slot />
-		<Footer theme={theme} />
+		<Footer />
 		<script>
 			// Smooth scroll is a motion effect, so honour the OS-level request
 			// for less of it. Lenis has no built-in reduced-motion handling, and
