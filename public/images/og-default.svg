@@ -1,32 +1,24 @@
 <svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+  <!-- The default social preview (og:image) for pages without their own
+       card: the logo mark on a panel card over the site's print collage
+       (the texture-field token in tokens.css: sky and lavender blocks either side of
+       paper, a faint halftone, grain). Rasterized to og-default.png by
+       scripts/generate-og-images.mjs. -->
   <defs>
-    <linearGradient id="bg" x1="10%" y1="0%" x2="90%" y2="100%">
-      <stop offset="0%" stop-color="#0A1D52"/>
-      <stop offset="100%" stop-color="#2A60EE"/>
-    </linearGradient>
-    <filter id="blurXL" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur stdDeviation="65"/>
-    </filter>
-    <filter id="blurL" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur stdDeviation="38"/>
-    </filter>
-    <filter id="grain">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
-      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+    <pattern id="halftone" width="7" height="7" patternUnits="userSpaceOnUse">
+      <circle cx="3.5" cy="3.5" r="1" fill="#292929" fill-opacity="0.16"/>
+    </pattern>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="7" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 0.16  0 0 0 0 0.16  0 0 0 0 0.16  0 0 0 0.3 0"/>
     </filter>
   </defs>
-
-  <rect width="960" height="540" fill="url(#bg)"/>
-
-  <circle cx="180" cy="120" r="230" fill="#4FC3F7" opacity="0.7" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
-  <circle cx="820" cy="430" r="175" fill="#B3E5FC" opacity="0.5" filter="url(#blurXL)" style="mix-blend-mode:screen"/>
-  <circle cx="700" cy="90" r="90" fill="#18FFFF" opacity="0.32" filter="url(#blurL)" style="mix-blend-mode:screen"/>
-  <circle cx="120" cy="470" r="200" fill="#050F30" opacity="0.45" filter="url(#blurXL)"/>
-
-  <rect width="960" height="540" filter="url(#grain)" style="mix-blend-mode:overlay" opacity="0.4"/>
-
-  <!-- Simply Sheet Design logo mark, centered (source: logo-svg.svg, 173x154 viewBox) -->
-  <g transform="translate(357.5, 161) scale(1.417)" fill="#FFFFFF" fill-opacity="0.96">
-    <path d="M150.958 108.619C148.828 133.019 129.006 152.237 104.116 153.809H66.3994V108.619H150.958ZM84.5586 58.5293C82.4284 82.9296 62.607 102.148 37.7168 103.72H0V58.5293H84.5586ZM172.594 93.6602H88.5938C91.6922 69.0322 112.254 50.8172 137.041 50.1562L172.571 50.0879L172.594 93.6602ZM106.205 43.5723H22.2051C25.3035 18.9441 45.8533 0.729059 70.6523 0.0683594L106.182 0L106.205 43.5723Z"/>
-  </g>
+  <rect width="960" height="540" fill="#ECEAE2"/>
+  <rect width="250" height="540" fill="#B0E0FF"/>
+  <rect x="710" width="250" height="540" fill="#DAD6FF"/>
+  <rect width="960" height="540" fill="url(#halftone)"/>
+  <rect width="960" height="540" filter="url(#grain)"/>
+  <rect x="300" y="128" width="360" height="292" rx="24" fill="#292929" opacity="0.14"/>
+  <rect x="300" y="120" width="360" height="292" rx="24" fill="#F7F7F2"/>
+  <path d="M150.958 108.619C148.828 133.019 129.006 152.237 104.116 153.809H66.3994V108.619H150.958ZM84.5586 58.5293C82.4284 82.9296 62.607 102.148 37.7168 103.72H0V58.5293H84.5586ZM172.594 93.6602H88.5938C91.6922 69.0322 112.254 50.8172 137.041 50.1562L172.571 50.0879L172.594 93.6602ZM106.205 43.5723H22.2051C25.3035 18.9441 45.8533 0.729059 70.6523 0.0683594L106.182 0L106.205 43.5723Z" fill="#2A60EE" transform="translate(376.2, 173.6) scale(1.2)"/>
 </svg>

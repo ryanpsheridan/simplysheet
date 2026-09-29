@@ -258,7 +258,7 @@ function featureIcon(text: string): string {
 									{features.map((f: string) => (
 										<li>
 											<span class="feature-icon">
-												<svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={featureIcon(f)} />
+												<svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={featureIcon(f)} />
 											</span>
 											<span>{f}</span>
 										</li>
@@ -749,10 +749,11 @@ function featureIcon(text: string): string {
 		color: var(--color-text);
 	}
 
-	/* Same fill as the sky eyebrow. The tint is only guaranteed against the
-	   primary text role, so the glyph is --color-text and not the link slate
-	   the icon used inline: 13.4:1 rather than 6.8:1, and well past the 3:1
-	   WCAG 1.4.11 asks of a meaningful graphic. */
+	/* The brand's warm chip fill (the same --color-bg-emphasis as badges and
+	   the soft secondary button) with the glyph in charcoal ink at a hairline
+	   weight, like the homepage's line icons. It was a sky-blue disc from the
+	   previous brand. Ink on emphasis is 12.5:1, far past the 3:1 WCAG 1.4.11
+	   asks of a meaningful graphic. */
 	.feature-icon {
 		display: flex;
 		align-items: center;
@@ -761,7 +762,7 @@ function featureIcon(text: string): string {
 		width: 2.5rem;
 		height: 2.5rem;
 		border-radius: 50%;
-		background: var(--tint-sky);
+		background: var(--color-bg-emphasis);
 		color: var(--color-text);
 	}
 

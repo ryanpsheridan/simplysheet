@@ -1,10 +1,9 @@
 ---
 import { toolId, type Tool } from '../data/tools';
-import ToolMock from './ToolMock.astro';
 
 // The one tool card, in two shapes:
 //
-//   card  a miniature of the tool's UI (ToolMock) on the ink stage, then name, kind
+//   card  the tool's line illustration on the ink stage, then name, kind
 //         badge, and description. Grids: tools index, About.
 //   row   a hairline-divided list row: name and description left, kind badge
 //         right. Lists: the homepage tools section, "More free tools" on
@@ -33,7 +32,7 @@ const Title = level;
 {variant === 'card' ? (
 	<a href={tool.url} class="card card--tool" data-cta={cta}>
 		<div class="card-media card-media--art">
-			<ToolMock tool={tool} />
+			<svg viewBox="0 0 240 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={tool.illustration} />
 		</div>
 		<div class="card-body">
 			<Title class="card-title">{tool.name}</Title>

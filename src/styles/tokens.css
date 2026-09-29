@@ -28,6 +28,7 @@
   --color-bg-surface:     #FFFFFF;
   --color-bg-panel:       #F7F7F2;
   --color-bg-emphasis:    #EEEEE7;
+  --color-bg-emphasis-hover: #E4E4DC;  /* soft buttons and chips on hover */
   --color-bg-inverse:     #292929;
 
   /* Text on the charcoal bands: body 14.5:1, secondary 7.07:1, muted
@@ -36,6 +37,9 @@
   --color-on-inverse-secondary: #B5B5B0;
   --color-on-inverse-muted:     #A3A39E;
   --color-inverse-rule:         rgba(255, 255, 255, 0.16);
+  /* Not a text role: the unlit words of the homepage's scroll-lit note. */
+  --color-on-inverse-dim:       #5A5A56;
+  --color-on-inverse-hover:     #E9E9E4;  /* white buttons on charcoal, hovered */
 
   --color-btn:            #292929;
   /* Lighter than the base, not darker: a darker hover on near-black ink has

@@ -37,9 +37,6 @@
 
   <rect x="176" y="96" width="608" height="480" rx="20" fill="#292929" opacity="0.14"/>
   <rect x="176" y="88" width="608" height="480" rx="20" fill="#FBFBF8"/>
-  <circle cx="200" cy="110" r="5" fill="#FF5F57"/>
-  <circle cx="216" cy="110" r="5" fill="#FEBC2E"/>
-  <circle cx="232" cy="110" r="5" fill="#28C840"/>
 
   <g color="#292929" clip-path="url(#window)">
     <g transform="translate(480 300) scale(0.78) translate(-480 -270)">

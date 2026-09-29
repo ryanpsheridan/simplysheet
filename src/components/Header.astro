@@ -162,7 +162,11 @@ const MENU_LINKS = [
 	   bar, so it spans the bar's full width regardless of the bar's padding. */
 	.header-inner {
 		position: relative;
-		max-width: var(--max-width);
+		/* The gutter sits inside this box, so the cap adds it back: the logo
+		   and CTA land on the same 75rem content edges as every band, footer,
+		   and `main` (which is sized the same way). Capping at a bare
+		   --max-width left the bar's content 48px narrower than the page. */
+		max-width: calc(var(--max-width) + var(--space-md) * 2);
 		margin-inline: auto;
 		padding-left: max(var(--space-md), env(safe-area-inset-left, 0px));
 		padding-right: max(var(--space-md), env(safe-area-inset-right, 0px));

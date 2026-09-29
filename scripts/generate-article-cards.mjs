@@ -16,8 +16,9 @@
 // The v4 look is the site's print-collage texture (the homepage hero stage
 // and closing card): a warm paper ground, two colour blocks in the tag's hue
 // family, a halftone printed on one of them, and film grain over the lot.
-// The wireframe sits in ink on a clean off-white app window (traffic-light
-// dots, running off the bottom edge), the same window the tool mockups use.
+// The wireframe sits in ink on a clean off-white panel running off the
+// bottom edge, like a crop of a screen. (It had traffic-light dots, which
+// were dropped: on every thumbnail they read as chrome, not content.)
 // Earlier sets (card-v3-*, card-v2-*) are left untouched and archived on
 // /style-guide/.
 //
@@ -35,11 +36,12 @@ const INK = '#292929';
 const PAPER = '#ECEAE2';
 const WINDOW = '#FBFBF8';
 
-// The app window the wireframe sits in: 63% of the canvas wide, so a band of
+// The panel the wireframe sits in: 63% of the canvas wide, so a band of
 // the collage shows on every side of it at card size, and running off the
 // bottom edge. Wireframes are drawn on the full 960x540 grid (CLAUDE.md,
 // "Wireframe Overlay System"); they are scaled into the window here, about
-// a centre a little below the canvas's own so they clear the window's dots.
+// a centre a little below the canvas's own, which balances the panel's
+// open top edge against the crop at the bottom.
 // Strokes carry vector-effect="non-scaling-stroke", so line weights survive.
 const WIN = { x: 176, y: 88, w: 608, h: 480 };
 const WF_SCALE = 0.78;
@@ -189,9 +191,6 @@ function buildCard(name, tag, wireframe) {
 
   <rect x="${WIN.x}" y="${WIN.y + 8}" width="${WIN.w}" height="${WIN.h}" rx="20" fill="${INK}" opacity="0.14"/>
   <rect x="${WIN.x}" y="${WIN.y}" width="${WIN.w}" height="${WIN.h}" rx="20" fill="${WINDOW}"/>
-  <circle cx="${WIN.x + 24}" cy="${WIN.y + 22}" r="5" fill="#FF5F57"/>
-  <circle cx="${WIN.x + 40}" cy="${WIN.y + 22}" r="5" fill="#FEBC2E"/>
-  <circle cx="${WIN.x + 56}" cy="${WIN.y + 22}" r="5" fill="#28C840"/>
 
   <g color="${INK}" clip-path="url(#window)">
     <g transform="translate(480 ${WF_CY}) scale(${WF_SCALE}) translate(-480 -270)">

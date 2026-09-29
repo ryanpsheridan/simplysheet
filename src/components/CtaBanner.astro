@@ -1,7 +1,8 @@
 ---
-// The closing call to action on a page: a centered card on the brand
-// gradient, one heading, one line, one button. Ink text only, because the
-// brand tints are AA against --color-text and nothing lighter.
+// The closing call to action on a page: a warm panel card on the textured
+// collage field (--texture-field, the same as the homepage's closing card),
+// one heading, one line, one button. The text sits on the panel, never on
+// the texture.
 //
 // Place it inside a band (`<section class="band"><CtaBanner .../></section>`);
 // the banner sets its own width.
@@ -21,7 +22,8 @@ const { title, desc, href, label, cta, external = false, level = 'h2' } = Astro.
 const Title = level;
 ---
 
-<div class="cta-banner">
+<div class="cta-banner textured">
+<div class="cta-banner-card">
 	<Title class="cta-banner-title">{title}</Title>
 	{desc && <p class="cta-banner-desc">{desc}</p>}
 	{external ? (
@@ -33,14 +35,25 @@ const Title = level;
 		<a href={href} class="btn btn-primary btn-lg btn-arrow" data-cta={cta}>{label}</a>
 	)}
 </div>
+</div>
 
 <style>
 	.cta-banner {
-		max-width: 64rem;
+		max-width: var(--max-width-content);
 		margin: 0 auto;
-		padding: clamp(3rem, 7vw, 5.5rem) var(--space-md);
+		padding: clamp(2.5rem, 7vw, 5.5rem) var(--space-md);
 		border-radius: var(--radius-xl);
-		background: var(--gradient-brand);
+		background: var(--texture-field);
+		display: grid;
+		place-items: center;
+	}
+	.cta-banner-card {
+		width: 100%;
+		max-width: 40rem;
+		padding: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 5vw, 3rem);
+		border-radius: var(--radius-xl);
+		background: var(--color-bg-panel);
+		box-shadow: 0 30px 80px -30px rgba(var(--shadow-rgb), 0.35);
 		text-align: center;
 		display: flex;
 		flex-direction: column;
@@ -55,9 +68,9 @@ const Title = level;
 		text-wrap: balance;
 	}
 	.cta-banner-desc {
-		font-size: var(--text-read);
-		line-height: var(--leading-normal);
-		color: var(--color-text);
+		font-size: var(--text-lead);
+		line-height: 1.4;
+		color: var(--color-text-secondary);
 		max-width: 32rem;
 		margin: 0 0 var(--space-lg);
 	}
