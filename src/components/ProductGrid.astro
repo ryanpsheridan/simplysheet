@@ -1,9 +1,14 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import ProductCard from './ProductCard.astro';
+import CardRail from './CardRail.astro';
 
-// A grid of ProductCards for a list of templates, in equal columns: 3 by
-// default, `columns` 2 or 4. Every card in a row is the same width. A bento
+// ProductCards for a list of templates, in one of two layouts:
+//
+//   grid  equal columns: 3 by default, `columns` 2 or 4. Every card in a row
+//         is the same width.
+//   rail  a CardRail: one row running off the right edge of the screen, with
+//         previous/next buttons (`label` names it, `railCta` tags them). A bento
 // layout (alternating narrow and wide spans) used to live here and was
 // dropped: uneven cards read as a ranking of the products, which they aren't.
 //
@@ -11,12 +16,25 @@ import ProductCard from './ProductCard.astro';
 interface Props {
 	templates: CollectionEntry<'templates'>[];
 	ctaPrefix: string;
+	layout?: 'grid' | 'rail';
 	columns?: 2 | 3 | 4;
 	level?: 'h2' | 'h3';
+	/** rail only: accessible name for the row. */
+	label?: string;
+	/** rail only: data-cta prefix for the previous/next buttons. */
+	railCta?: string;
 }
 
-const { templates, ctaPrefix, columns = 3, level = 'h3' } = Astro.props;
+const { templates, ctaPrefix, layout = 'grid', columns = 3, level = 'h3', label = 'Spreadsheets', railCta } = Astro.props;
 ---
+
+{layout === 'rail' ? (
+	<CardRail label={label} cta={railCta}>
+		{templates.map((t) => (
+			<ProductCard template={t} level={level} cta={`${ctaPrefix}:${t.id}`} />
+		))}
+	</CardRail>
+) : (
 
 <div
 	class:list={[
@@ -29,3 +47,4 @@ const { templates, ctaPrefix, columns = 3, level = 'h3' } = Astro.props;
 		<ProductCard template={t} level={level} cta={`${ctaPrefix}:${t.id}`} />
 	))}
 </div>
+)}

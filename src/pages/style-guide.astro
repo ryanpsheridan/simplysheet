@@ -73,7 +73,7 @@ const radii = [
 	['--radius-sm', 'Code, skip link'],
 	['--radius-md', 'Prose images'],
 	['--radius-card', 'Every card and card media'],
-	['--radius-inset', 'Media inset in a framed card'],
+	['--radius-inset', 'Inner corner inside a rimmed frame (.tool-frame)'],
 	['--radius-xl', 'Stages and banners'],
 	['--radius-full', 'Buttons, badges, pills'],
 ];
@@ -260,7 +260,7 @@ const toolThumbnails = [
 				</div>
 
 				<h3 class="guide-label">ProductCard and ProductGrid</h3>
-				<p class="guide-note">Always framed, always the uncropped <code>midImage</code> centered on <code>--gradient-media</code>. <code>ProductGrid</code> lays cards out in equal columns (<code>columns</code> 2, 3, or 4); every card in a row is the same width. A single card can be built from overrides, as the template page's bundles are.</p>
+				<p class="guide-note">No container: the image, then the content below it. Always the uncropped <code>midImage</code> centered on <code>--gradient-media</code>. <code>ProductGrid</code> lays cards out in equal columns (<code>columns</code> 2, 3, or 4); every card in a row is the same width. A single card can be built from overrides, as the template page's bundles are.</p>
 				<div class="demo">
 					<ProductGrid templates={templates} columns={2} ctaPrefix="style_guide" />
 				</div>

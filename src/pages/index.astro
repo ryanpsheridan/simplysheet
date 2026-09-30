@@ -123,7 +123,7 @@ const websiteSchema = {
 	<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 	<main id="main-content" class="band-main home">
 
-	{/* Hero: copy left, a textured stage bleeding off the right edge */}
+	{/* Hero: copy left, the laptop on a textured stage right */}
 	<section class="hero" aria-labelledby="hero-title">
 		<div class="hero-copy">
 			<a href="/tools/" class="hero-pill" data-cta="index_hero_pill:tools">
@@ -147,17 +147,6 @@ const websiteSchema = {
 			<a href={`/spreadsheets/${stageFront.id}/`} class="hero-stage textured" data-cta={`index_showcase:${stageFront.id}`} aria-label={`${templateName(stageFront.data.title)}: view template`}>
 				<span class="stage-rings" aria-hidden="true"></span>
 				<img class="stage-img" src={stageFront.data.midImage} alt={`${templateName(stageFront.data.title)} in the dark theme`} width="2000" height="1200" fetchpriority="high" />
-				{/* Two floating cards, like Granola's call window over its app:
-				    what the sheet does (a category's progress bar, a month's
-				    savings), not claims about anyone's results. Decorative. */}
-				<span class="stage-chip stage-chip--progress" aria-hidden="true">
-					<span class="chip-row"><span>Groceries</span><span>$412 of $500</span></span>
-					<span class="chip-bar"><span style="width: 82%"></span></span>
-				</span>
-				<span class="stage-chip stage-chip--saved" aria-hidden="true">
-					<span class="chip-label">Saved this month</span>
-					<span class="chip-value">$850</span>
-				</span>
 			</a>
 		)}
 	</section>
@@ -220,7 +209,7 @@ const websiteSchema = {
 				linkLabel="All spreadsheets"
 				cta="index_spreadsheets_view_all"
 			/>
-			<ProductGrid templates={templates} columns={2} ctaPrefix="index_spreadsheets_card" />
+			<ProductGrid templates={templates} layout="rail" label="Spreadsheets" railCta="index_spreadsheets_rail" ctaPrefix="index_spreadsheets_card" />
 		</div>
 	</section>
 
@@ -448,24 +437,19 @@ const websiteSchema = {
 		color: var(--color-text-secondary);
 	}
 
-	/* The stage: an atmospheric field (a sky bloom low left, a lavender bloom
-	   high right, on the warm panel) with the site's concentric rings behind
-	   the laptop, a halftone rising from the bottom, and grain over all of
-	   it. Contained in the content column, so its right edge lines up with
-	   the nav's CTA and every grid below. One laptop, the midImage asset,
-	   centered, per the product-image rule; two small cards float over its
-	   corners. */
+	/* The stage: a flat warm panel with the site's concentric rings behind
+	   the laptop, a halftone rising from the bottom, and light grain. No
+	   colour blooms or floating cards: an earlier version had both, and the
+	   owner asked for the laptop alone. Contained in the content column, so
+	   its right edge lines up with the nav's CTA. One laptop, the midImage
+	   asset, centered, per the product-image rule. */
 	.hero-stage {
 		display: grid;
 		place-items: center;
 		aspect-ratio: 1 / 0.9;
 		padding: 6% 4%;
 		border-radius: var(--radius-xl);
-		background:
-			radial-gradient(75% 70% at 8% 100%, var(--tint-sky), transparent 72%),
-			radial-gradient(70% 65% at 100% 0%, var(--tint-lavender), transparent 72%),
-			radial-gradient(45% 45% at 50% 50%, rgba(255, 255, 255, 0.8), transparent 75%),
-			var(--color-bg-panel);
+		background: var(--color-bg-panel);
 	}
 	/* Lighter grain than the shared .textured layer: at full strength it
 	   greys the blooms. */
@@ -508,62 +492,8 @@ const websiteSchema = {
 		filter: drop-shadow(0 28px 40px rgba(var(--shadow-rgb), 0.3));
 		transition: transform var(--duration-slow) var(--ease-out);
 	}
-	.stage-chip {
-		position: absolute;
-		z-index: 2;
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		padding: 0.875rem 1rem;
-		border-radius: 0.875rem;
-		background: var(--color-bg-surface);
-		box-shadow: 0 18px 40px -16px rgba(var(--shadow-rgb), 0.35);
-		font-size: 0.8125rem;
-		color: var(--color-text);
-		transition: transform var(--duration-slow) var(--ease-out);
-	}
-	.stage-chip--progress {
-		top: 15%;
-		left: 3%;
-		width: min(15rem, 44%);
-	}
-	.stage-chip--saved {
-		right: 3%;
-		bottom: 13%;
-		gap: 0.125rem;
-	}
-	.chip-row {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-	}
-	.chip-row span:last-child,
-	.chip-label {
-		color: var(--color-text-secondary);
-	}
-	.chip-bar {
-		display: block;
-		height: 0.375rem;
-		border-radius: var(--radius-full);
-		background: var(--color-bg-emphasis);
-		overflow: hidden;
-	}
-	.chip-bar span {
-		display: block;
-		height: 100%;
-		border-radius: inherit;
-		background: var(--color-accent-info);
-	}
-	.chip-value {
-		font-size: 1.625rem;
-		letter-spacing: -0.03em;
-		line-height: 1.1;
-		font-variant-numeric: tabular-nums;
-	}
 	@media (hover: hover) {
 		.hero-stage:hover .stage-img { transform: translateY(-6px); }
-		.hero-stage:hover .stage-chip--progress { transform: translate(-4px, -4px); }
-		.hero-stage:hover .stage-chip--saved { transform: translate(4px, 4px); }
 	}
 
 	/* Intro */
@@ -782,10 +712,7 @@ const websiteSchema = {
 		position: relative;
 		isolation: isolate;
 		padding: var(--space-band) var(--gutter);
-		background:
-			radial-gradient(50% 70% at 90% 0%, rgba(255, 255, 255, 0.5), transparent 70%),
-			radial-gradient(40% 60% at 0% 100%, rgba(218, 214, 255, 0.7), transparent 70%),
-			var(--tint-sky);
+		background: var(--tint-sky);
 	}
 	.quiz-band::after {
 		content: '';
@@ -966,20 +893,6 @@ const websiteSchema = {
 		.hero-stage {
 			border-radius: var(--radius-lg);
 			padding: 10% 5%;
-		}
-		.stage-chip {
-			padding: 0.625rem 0.75rem;
-			font-size: 0.75rem;
-		}
-		.stage-chip--progress {
-			top: 6%;
-			width: 58%;
-		}
-		.stage-chip--saved {
-			bottom: 6%;
-		}
-		.chip-value {
-			font-size: 1.25rem;
 		}
 		.intro-points li {
 			align-items: flex-start;

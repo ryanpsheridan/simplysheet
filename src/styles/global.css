@@ -565,7 +565,7 @@ p {
    .calc / .quiz / ... class), never a wrapper added by a page.
 
    The same construction as the product cards: a hairline edge, a thin rim
-   (--frame-rim, the --space-xs inset the framed card media uses), and the tool on a
+   (--frame-rim, a --space-xs inset), and the tool on a
    clean white sheet inside it. The rim is an inset shadow rather than a
    second element, so no component needed new markup; its inner corners land
    on --radius-card minus the rim, which is exactly --radius-inset.
@@ -879,7 +879,6 @@ hr {
          .card-title / .card-desc / .card-meta / .card-link
 
    Modifiers on .card:
-     --framed   raised white card with a hairline edge; media inset inside it
      --row      media beside the body instead of above it (stacks at 600px) */
 
 .card {
@@ -1015,25 +1014,10 @@ hr {
 	margin-bottom: var(--space-2xs);
 }
 
-/* Framed: a raised white card. The media is inset by --space-xs so its
-   corner radius (--radius-inset) stays concentric with the card's. */
-.card--framed {
-	background: var(--color-bg-surface);
-	border: 1px solid var(--color-border-hairline);
-	border-radius: var(--radius-card);
-	overflow: hidden;
-	transition:
-		border-color var(--duration-fast) var(--ease-out),
-		box-shadow var(--duration-base) var(--ease-out);
-}
-.card--framed > .card-media {
-	margin: var(--space-xs) var(--space-xs) 0;
-	border-radius: var(--radius-inset);
-}
-.card--framed > .card-body {
-	flex: 1;
-	padding: var(--space-md);
-}
+/* No framed variant. Every card is its media and the content under it,
+   with no container around the pair: a bordered white box (.card--framed)
+   was removed sitewide at the owner's request, since the frame added a
+   second edge around an image that already has one. */
 
 /* Row: media beside the body. --card-media-width sets the media's share. */
 .card--row {
@@ -1047,20 +1031,11 @@ hr {
 .card--row > .card-body {
 	padding-top: 0;
 }
-.card--framed.card--row > .card-media {
-	margin: var(--space-xs) 0 var(--space-xs) var(--space-xs);
-}
-.card--framed.card--row > .card-body {
-	padding: var(--space-md) var(--space-lg) var(--space-md) 0;
-}
 
 @media (hover: hover) {
 	.card:hover .card-media > img,
 	.card:hover .card-media--art > svg {
 		transform: scale(1.025);
-	}
-	.card--framed:hover {
-		border-color: var(--color-border-strong);
 	}
 }
 
@@ -1075,12 +1050,6 @@ hr {
 	}
 	.card--row > .card-body {
 		padding-top: var(--space-sm);
-	}
-	.card--framed.card--row > .card-media {
-		margin: var(--space-xs) var(--space-xs) 0;
-	}
-	.card--framed.card--row > .card-body {
-		padding: var(--space-md);
 	}
 }
 
@@ -1114,6 +1083,70 @@ hr {
 	.card-grid--4 {
 		grid-template-columns: minmax(0, 1fr);
 	}
+}
+
+/* ——— Card rail ———
+   CardRail.astro: one row of cards that starts on the content column's left
+   edge and runs off the right edge of the screen, so the next card peeks in.
+   Used inside a .band-inner. The track's right margin pulls it out to the
+   viewport edge (the column is centered, so that is half the difference
+   between the viewport and the column), and the same amount comes back as
+   end padding so the last card can still scroll level with the column's
+   right edge. */
+
+.card-rail {
+	--rail-card: min(36rem, 80vw);
+	--rail-bleed: calc(50vw - 50%);
+}
+.card-rail-track {
+	display: flex;
+	gap: var(--space-md);
+	margin-right: calc(-1 * var(--rail-bleed));
+	padding-right: var(--rail-bleed);
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+}
+.card-rail-track::-webkit-scrollbar {
+	display: none;
+}
+.card-rail-track:focus-visible {
+	outline: 2px solid var(--color-text);
+	outline-offset: 4px;
+	border-radius: var(--radius-card);
+}
+.card-rail-track > * {
+	flex: 0 0 var(--rail-card);
+	scroll-snap-align: start;
+}
+.card-rail-controls {
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--space-xs);
+	margin-top: var(--space-lg);
+}
+.card-rail-btn {
+	display: grid;
+	place-items: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: var(--color-bg-emphasis);
+	color: var(--color-text);
+	cursor: pointer;
+	transition:
+		background-color var(--duration-fast) var(--ease-out),
+		opacity var(--duration-fast) var(--ease-out);
+}
+.card-rail-btn:hover:not(:disabled) {
+	background: var(--color-bg-emphasis-hover);
+}
+.card-rail-btn:disabled {
+	opacity: 0.4;
+	cursor: default;
 }
 
 /* ——— Content blocks ———

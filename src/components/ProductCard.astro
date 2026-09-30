@@ -2,8 +2,8 @@
 import type { CollectionEntry } from 'astro:content';
 import { templateName } from '../consts';
 
-// The one product card: a framed card with the uncropped midImage centered on
-// the tint field, an optional overlay badge, a name, and a description.
+// The one product card: the uncropped midImage centered on the flat panel
+// field, with no container around the card, an optional overlay badge, a name, and a description.
 //
 // Pass `template` (a templates collection entry) and everything is read from
 // it, so the card can never drift from the product page. Any field can be
@@ -52,7 +52,7 @@ const Title = level;
 
 <a
 	href={url}
-	class:list={['card', 'card--framed', 'card--product', className]}
+	class:list={['card', 'card--product', className]}
 	data-cta={cta}
 	{...rest}
 >
