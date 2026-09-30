@@ -1100,21 +1100,28 @@ hr {
 /* ——— Card rail ———
    CardRail.astro: one row of cards that starts on the content column's left
    edge and runs off the right edge of the screen, so the next card peeks in.
-   Used inside a .band-inner. The track's right margin pulls it out to the
-   viewport edge (the column is centered, so that is half the difference
-   between the viewport and the column), and the same amount comes back as
-   end padding so the last card can still scroll level with the column's
-   right edge. */
+   Used inside a .band-inner. The track is full-bleed on both sides: its
+   negative margins pull it out to the viewport edges (the column is
+   centered, so each is half the difference between the viewport and the
+   column), and the same amount comes back as padding, so at rest the cards
+   still start on the column's edge. Scrolled cards travel all the way to
+   the screen's left edge instead of being clipped at the column, and
+   scroll-padding keeps every snap point level with the column. */
 
 .card-rail {
 	--rail-card: min(36rem, 80vw);
-	--rail-bleed: calc(50vw - 50%);
+	/* The page gutter: how far the column sits from each screen edge. Not
+	   calc(50vw - 50%): a percentage in scroll-padding resolves against the
+	   scrolling box, not the column, so it came out as zero there and the
+	   first card snapped flush to the screen edge. */
+	--rail-bleed: max(var(--space-md), calc((100vw - var(--max-width-content)) / 2));
 }
 .card-rail-track {
 	display: flex;
 	gap: var(--space-md);
-	margin-right: calc(-1 * var(--rail-bleed));
-	padding-right: var(--rail-bleed);
+	margin-inline: calc(-1 * var(--rail-bleed));
+	padding-inline: var(--rail-bleed);
+	scroll-padding-inline: var(--rail-bleed);
 	overflow-x: auto;
 	overscroll-behavior-x: contain;
 	scroll-snap-type: x mandatory;
