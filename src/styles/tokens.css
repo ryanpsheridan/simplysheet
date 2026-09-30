@@ -29,6 +29,10 @@
   --color-bg-panel:       #F7F7F2;
   --color-bg-emphasis:    #EEEEE7;
   --color-bg-emphasis-hover: #E4E4DC;  /* soft buttons and chips on hover */
+  /* The field every calculator, assessment, and poll sits on (.tool-frame).
+     Declared here, on :root, so it resolves to the panel colour once and
+     keeps it, even though .tool-frame re-points --color-bg-panel inside. */
+  --color-bg-tool:        var(--color-bg-panel);
   --color-bg-inverse:     #292929;
 
   /* Text on the charcoal bands: body 14.5:1, secondary 7.07:1, muted
@@ -213,7 +217,7 @@
   --radius-full: 999px;
 
   /* Cards and their media. Every card on the site (article, product, tool)
-     uses --radius-card; an inner corner inside a rimmed frame (.tool-frame) uses --radius-inset
+     uses --radius-card; --radius-inset (card radius minus --space-xs) is for an inner corner nested inside a card-radius shape, though none currently needs it
      so the two corners stay concentric (outer radius minus the inset gap).
      Stages and banners, the largest surfaces, use --radius-xl. */
   --radius-card:  var(--radius-lg);

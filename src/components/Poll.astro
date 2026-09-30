@@ -14,7 +14,7 @@ const { pollId, question, options } = Astro.props;
 const id = `poll-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<div class="poll" id={id}>
+<div class="poll tool-frame" id={id}>
 	<h3 class="poll-question">{question}</h3>
 	<p class="poll-votes" id={`${id}-votes`} hidden></p>
 	<div class="poll-options" id={`${id}-options`}>
@@ -32,17 +32,14 @@ const id = `poll-${Math.random().toString(36).slice(2, 8)}`;
 </div>
 
 <style>
+	/* The look (field, padding, radius) is .tool-frame, like every
+	   calculator and assessment; only the spacing around it is local. */
 	.poll {
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		padding: var(--space-md);
 		margin: var(--space-lg) 0;
-		background: var(--color-bg-panel);
 	}
 
 	.poll-question {
 		font-size: var(--text-h3);
-		font-weight: var(--weight-semibold);
 		color: var(--color-text-heading);
 		margin: 0 0 var(--space-sm);
 	}

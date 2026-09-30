@@ -559,40 +559,41 @@ p {
 }
 
 /* ——— Tool frame ———
-   The container every calculator and assessment sits in, so a tool reads as
-   its own object rather than more article text, in an article and on its tool
-   page alike. It is the root class of each tool component (next to its own
-   .calc / .quiz / ... class), never a wrapper added by a page.
+   The container every calculator, assessment, and poll sits in, so a tool
+   reads as its own object rather than more article text, in an article and
+   on its tool page alike. It is the root class of each tool component (next
+   to its own .calc / .quiz / .poll ... class), never a wrapper added by a
+   page.
 
-   The same construction as the product cards: a hairline edge, a thin rim
-   (--frame-rim, a --space-xs inset), and the tool on a
-   clean white sheet inside it. The rim is an inset shadow rather than a
-   second element, so no component needed new markup; its inner corners land
-   on --radius-card minus the rim, which is exactly --radius-inset.
+   One flat warm field with rounded corners: no border, no rim, no shadow.
+   (It was a white sheet inside a thin warm rim with a hairline edge and a
+   drop shadow, which the owner found odd once cards lost their frames.) The
+   inputs and answer tiles stay white, so they lift off the field.
+
+   Inside, --color-bg-panel is re-pointed to white. Every tool draws its
+   result card (.calc-highlight and kin) and its tracks in the panel colour,
+   which would vanish on a panel-coloured field; flipping the token turns
+   them into white cards instead, with no component edited. The field itself
+   paints with --color-bg-tool, resolved on :root, so the flip doesn't reach
+   it.
 
    The product CTA below each tool (.calc-cta-divider + .calc-product-link)
    stays outside the frame on purpose: it is a way out of the tool, not part
    of it. */
 
 .tool-frame {
-	--frame-rim: var(--space-xs);
-	--frame-pad: clamp(1rem, 3vw, 2rem);
-	padding: calc(var(--frame-rim) + var(--frame-pad));
-	background: var(--color-bg-surface);
-	border: 1px solid var(--color-border);
-	border-radius: var(--radius-card);
-	box-shadow:
-		inset 0 0 0 var(--frame-rim) var(--color-bg-panel),
-		var(--shadow-md);
+	--color-bg-panel: var(--color-bg-surface);
+	padding: clamp(1.5rem, 4vw, 2.5rem);
+	background: var(--color-bg-tool);
+	border-radius: var(--radius-xl);
 }
 
-/* A phone column is ~340px, so the frame gives back what it can: a thinner
-   rim and a tighter sheet, keeping multi-row tools (DebtFreeDateCalculator)
-   usable inside it. */
+/* A phone column is ~340px, so the field gives back what it can, keeping
+   multi-row tools (DebtFreeDateCalculator) usable inside it. */
 @media (max-width: 600px) {
 	.tool-frame {
-		--frame-rim: 0.375rem;
-		--frame-pad: 0.875rem;
+		padding: 1.25rem 1rem;
+		border-radius: var(--radius-lg);
 	}
 }
 
