@@ -772,6 +772,18 @@ hr {
 .band--inverse :is(h1, h2, h3, h4) {
 	color: var(--color-on-inverse);
 }
+/* Forest: the same roles as .band--inverse on the deep green field. It
+   re-points the on-inverse tokens, so anything built for a charcoal band
+   (secondary and muted text, the translucent card rule) works unchanged. */
+.band--forest {
+	--color-on-inverse-secondary: var(--color-on-forest-secondary);
+	--color-on-inverse-muted: var(--color-on-forest-secondary);
+	background: var(--color-forest);
+	color: var(--color-on-inverse);
+}
+.band--forest :is(h1, h2, h3, h4) {
+	color: var(--color-on-inverse);
+}
 /* For a band that directly continues the one above it (a grid under a page
    hero, say), where full band air would read as a gap. */
 .band--flush-top {

@@ -173,11 +173,11 @@ const websiteSchema = {
 		</div>
 	</section>
 
-	{/* Statement into the charcoal review band */}
+	{/* Statement into the forest review band */}
 	{reviews.length > 0 && (
 		<section class="reviews" aria-labelledby="reviews-heading">
 			<p class="statement" aria-hidden="true">Own the math</p>
-			<div class="band band--inverse reviews-band">
+			<div class="band band--forest reviews-band">
 				<div class="band-inner">
 					<h2 id="reviews-heading" class="reviews-title">From buyers on Etsy</h2>
 					<ul class="reviews-list">
@@ -550,7 +550,8 @@ const websiteSchema = {
 		line-height: 0.9;
 		letter-spacing: -0.05em;
 		text-align: center;
-		color: var(--color-text);
+		/* Forest, the colour of the band it sits on. */
+		color: var(--color-forest);
 		/* The descender-free line sits on the band's top edge. */
 		transform: translateY(0.1em);
 	}
