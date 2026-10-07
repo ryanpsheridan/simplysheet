@@ -2,8 +2,8 @@
 title: "How to Make a Budget Work on a Fixed Income"
 description: "Budgeting on a fixed income isn't about finding extra money that isn't there. It's about understanding where your money already goes and what's actually flexible."
 pubDate: 'Jun 28 2026'
-image: '/images/card-v4-fixed-income.svg'
-cardImage: '/images/card-v4-fixed-income.svg'
+image: '/images/article-how-to-make-a-budget-work-on-a-fixed-income.jpg'
+cardImage: '/images/article-how-to-make-a-budget-work-on-a-fixed-income.jpg'
 tags: ["expense-tracking"]
 faq:
   - question: "How is budgeting on a fixed income different from typical budgeting advice?"

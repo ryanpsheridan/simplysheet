@@ -39,7 +39,7 @@ The primary goal of this site is organic Google discovery. Every change — new 
 - Article titles and `headline` in schema should be optimized for both SEO (search engines) and AEO (AI engines / answer engines). Use natural question-style or how-to phrasing that matches what people actually search for.
 - Article slugs should match high-volume search phrases when possible (e.g. `how-to-pay-off-debt` instead of `debt-payoff`).
 - The site already has a sitemap (`/sitemap-index.xml`), canonical URLs, and Open Graph tags — these are handled automatically by `BaseHead.astro`.
-- Social crawlers (Facebook, iMessage, Slack, etc.) can't render SVG for link previews, so `BaseHead.astro` points `og:image`/`twitter:image` at a PNG counterpart of the article's SVG (same filename, `.png` instead of `.svg`). `prebuild` runs `scripts/generate-article-cards.mjs` (writes every `card-v4-*.svg`) and then `scripts/generate-og-images.mjs` (rasterizes each to a matching `.png`), so a real build needs no manual step. If you add a new article in this session without running `npm run build`, run both scripts so the SVG and PNG exist for local testing and sharing.
+- Social crawlers (Facebook, iMessage, Slack, etc.) can't render SVG for link previews, so `BaseHead.astro` points `og:image`/`twitter:image` at a PNG counterpart when an article's image is an SVG (`.svg` swapped for `.png`). Article photos are JPEGs, which crawlers read as they are, so they need no counterpart. `prebuild` runs `scripts/generate-og-images.mjs`, which still rasterizes `og-default.svg` and the archived `card-v4-*.svg` set.
 
 ## Click Tracking — `data-cta`
 
@@ -95,15 +95,14 @@ Every user-clickable link to Etsy, anywhere on the site, must follow these rules
 Every time an article is provided, automatically do all of the following:
 
 1. **Create the article file** in `src/content/articles/` as `.md` (or `.mdx` if it embeds a component).
-2. **Draw the article's wireframe** as `scripts/article-cards/wireframes/{slug}.svg`, following the Wireframe Overlay System below, in `currentColor` only. That fragment is the only hand-made part of the card image; see "Article Card Images" below.
-   - **Generate the card**: `node scripts/generate-article-cards.mjs` writes `public/images/card-v4-{slug}.svg` (it also runs in `prebuild`), then `node scripts/generate-og-images.mjs` rasterizes it to the matching PNG that social previews (`og:image`/`twitter:image`) use, since crawlers can't render SVG. Commit the wireframe, the SVG, and the PNG.
-   - **Always verify** the result before committing: open or screenshot it and check the wireframe is grid-snapped, themed to the topic, and doesn't cut off mid-canvas, and that it reads well at card size on the homepage and `/articles/`.
+2. **Choose the article's photo** from Unsplash (see "Article Card Images" below), add its entry to `src/data/article-photos.json`, and run `node scripts/generate-article-photos.mjs` to write `public/images/article-{slug}.jpg`. Commit the manifest and the JPEG.
+   - **Always verify** the crop before committing: open or screenshot it and check it reads well at card size on the homepage and `/articles/`, and in the article's own 16:9 hero.
 3. **Include the image path in frontmatter (same path for both fields)**:
    ```yaml
-   image: '/images/card-v4-{slug}.svg'
-   cardImage: '/images/card-v4-{slug}.svg'
+   image: '/images/article-{slug}.jpg'
+   cardImage: '/images/article-{slug}.jpg'
    ```
-4. **Pick the first tag deliberately**: it chooses the card's hue family, and the generator varies the exact hue, angle, and bloom per slug, so no palette needs choosing by hand and none can collide.
+4. **Pick the first tag deliberately**: it drives the related-articles ordering and the product cards at the bottom (it no longer sets a card colour).
 5. **Generate the narration audio**: `GOOGLE_TTS_API_KEY=... node scripts/generate-audio-narration.mjs {slug}` (see "Article Audio Narration" below). The player then shows up automatically — no per-article code needed.
 6. **Verify all internal article links** actually exist by cross-referencing slugs in `src/content/articles/`. Remove or unlink any references to articles that don't exist.
 7. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
@@ -115,19 +114,20 @@ Every time an article is provided, automatically do all of the following:
 
 ## Article Card Images
 
-Every article has one card image, `public/images/card-v4-{slug}.svg` (960×540), used for both `image` and `cardImage`: the article's own hero, every article card, and (as the PNG) its social preview. The whole look lives in one script, `scripts/generate-article-cards.mjs`; an article contributes only its wireframe and its first tag.
+Every article has one thumbnail, `public/images/article-{slug}.jpg` (1280×720, 16:9), used for both `image` and `cardImage`: the article's own hero, every article card, and its social preview (a JPEG, so `BaseHead.astro` uses it directly). It is a photograph from Unsplash.
 
-- **The look (v4)** is the site's print-collage texture, the same family as the homepage's closing card: a warm paper ground (`#ECEAE2`), two colour blocks in the tag's hue family, a halftone dot field printed on the first block (fading along a diagonal), a fine ink dot grid and film grain (`feTurbulence`) over the whole collage, and on top a clean off-white panel (608px wide, running off the bottom edge like a crop of a screen) holding the article's wireframe in ink (`#292929`). No traffic-light dots: on every thumbnail they read as chrome, and the owner asked for them off.
-- **Hue families** (first tag → base hue): `expense-tracking` blue (212°), `couples-budgeting` magenta/pink (330°), `debt-payoff` rose/wine (350°), `savings-goals` green (148°), `irregular-income` amber (34°), `net-worth` teal (176°), `budgeting-styles` violet (256°). A new tag needs an entry in `FAMILY` in the script, or it falls back to a neutral blue.
-- **Per-article variation is derived, not chosen**: hue jitter (±10° inside the family), which of three collage layouts the blocks take (side columns, offset corners, top band over a side column), their exact sizes, which side they sit on, the halftone's fade direction, and the grain seed all come from a hash of the slug. Two articles in a family never render identically, and the output is byte-stable between runs, so `prebuild` never produces a diff.
-- **Wireframes** live in `scripts/article-cards/wireframes/{slug}.svg`: a standalone 960×540 SVG drawn in `currentColor` only (plus `url(#areaFade)` for under-curve fills, which the generator defines in ink). They are still authored on the full 960×540 grid below; the generator scales them to 0.78 about the window's centre and clips them to the window, so grid-bleed lines end at the window edge. `vector-effect="non-scaling-stroke"` keeps their line weights through the scale.
-- **To change the look** for every article at once, edit the generator and rerun it. Never hand-edit a `card-v4-*.svg`; it is overwritten on the next build.
-- **Rasterizing**: `generate-og-images.mjs` renders `card-v4-*.svg` (and `og-default.svg`) as palette PNGs (~80 KB); both carry grain, which a full-colour PNG stores very inefficiently.
-- **Archive**: the previous sets stay in `public/images/` and are shown on `/style-guide/` under Archive: v3 (`card-v3-*`, a light tinted gradient with a white highlight, a saturated bloom, faint rings, and the wireframe straight on the field) and v2 (`card-v2-*`, the dark mesh cards). Nothing live links to either. The file prefix moved to v4 so social platforms and browsers fetch the new images rather than serving a cached old one.
+- **Style**: warm, muted home scenes (a notebook on a wooden desk, mugs in low sun, a kitchen table) and quiet abstract textures (sand ripples, stacked stones, yarn, a kintsugi bowl) over literal finance imagery. No coins, piggy banks, or stock-photo handshakes. Pick something that rhymes with the article's idea (four colourful cups for the four budgeting styles, a cracked-and-mended bowl for why budgets fail) and avoid cold, saturated blues that clash with the site's warm palette.
+- **Picking**: search with the Unsplash connector, look at the actual candidates (contact sheet of the 640px crops) rather than judging by the alt text, and prefer a subject that survives a 16:9 crop and a 400px-wide card.
+- **Pipeline**: `src/data/article-photos.json` maps each article id to its Unsplash `photo` (the id in `images.unsplash.com/photo-{id}`), `page` (the `unsplash.com/photos/{id}` page), and the `photographer`/`username` credit. `node scripts/generate-article-photos.mjs` fetches whatever is missing (`--force` refetches all), crops to 16:9 with Unsplash's entropy crop, recompresses to mozjpeg q80, and writes the JPEG. Photos are self-hosted: nothing on the live site loads from Unsplash. The credit is recorded but not shown on article pages; it is listed with each photo on `/style-guide/`.
+- **Network**: the script needs `images.unsplash.com` reachable (add it under the cloud environment's Allowed domains). It shells out to `curl`, which honours the environment's proxy.
+- **Alt text** is the article title, as before.
+- **Archive**: the generated print-collage cards (`card-v4-*`), their wireframes (`scripts/article-cards/wireframes/`), and the earlier v3 and v2 sets stay in the repo and are shown on `/style-guide/` under Archive. `generate-article-cards.mjs` reads each article's `cardImage` to find its wireframe, so it only runs for an article that still points at a `card-v4-*.svg`; it is no longer part of `prebuild`. To bring the collage back for an article, point its `image`/`cardImage` at `/images/card-v4-{name}.svg` and rerun it.
 
-## Wireframe Overlay System
+## Wireframe Overlay System (archived)
 
-Every article card's content is its wireframe: an ultra-thin vector chart glyph, grid-snapped and themed to the article's topic, drawn in `currentColor` in `scripts/article-cards/wireframes/{slug}.svg` (the generator renders it in ink inside the card's panel). It is a hairline drawing, never a fill-heavy illustration. The coordinates, layouts, and weights below are unchanged from the v2 cards; only the colour moved from white to `currentColor`.
+This system drew the retired v4 collage cards (see "Article Card Images"); it is kept for reference and for regenerating them. New articles do not need a wireframe.
+
+Every article card's content was its wireframe: an ultra-thin vector chart glyph, grid-snapped and themed to the article's topic, drawn in `currentColor` in `scripts/article-cards/wireframes/{slug}.svg` (the generator renders it in ink inside the card's panel). It is a hairline drawing, never a fill-heavy illustration. The coordinates, layouts, and weights below are unchanged from the v2 cards; only the colour moved from white to `currentColor`.
 
 ### Safe zone
 
@@ -515,8 +515,8 @@ The debt snowball vs. avalanche comparison (`DebtCalculator.astro`) uses `--colo
 
 Defined in `src/content.config.ts`. Key optional fields:
 
-- `image`: article card SVG path, `/images/card-v4-{slug}.svg` (see "Article Card Images"; same file as `cardImage`)
-- `cardImage`: same file as `image`; `generate-article-cards.mjs` reads the `{slug}` from it to find the wireframe
+- `image`: article photo path, `/images/article-{slug}.jpg` (see "Article Card Images"; same file as `cardImage`)
+- `cardImage`: same file as `image`
 - `tags` — array of tag slugs
 - `faq` — array of `{ question, answer }` objects
 - `relatedProduct` — `{ name, url }` (currently unused in layout)

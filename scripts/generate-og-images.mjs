@@ -1,6 +1,6 @@
-// Rasterizes the live article cards (public/images/card-v4-*.svg, written by
-// generate-article-cards.mjs just before this in `prebuild`) and the default
-// OG image to matching .png files. The archived card-v3-*.svg and
+// Rasterizes the default OG image and the archived article cards
+// (public/images/card-v4-*.svg, from generate-article-cards.mjs) to matching
+// .png files. Live article thumbnails are JPEG photos and need no PNG. The archived card-v3-*.svg and
 // card-v2-*.svg sets keep the PNGs they already have; nothing links to them.
 // Social platforms (Facebook, iMessage, Slack, etc.) don't render SVG for
 // og:image/twitter:image previews, so BaseHead.astro points those tags at

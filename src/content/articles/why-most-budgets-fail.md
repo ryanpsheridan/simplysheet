@@ -2,8 +2,8 @@
 title: 'Why Most Budgets Fail (and How to Fix Yours)'
 description: "Most budgets don't fail from lack of discipline. They fail because the system doesn't fit how you actually manage money. Here's what goes wrong and what works."
 pubDate: 'Jun 26 2026'
-image: '/images/card-v4-why-most-budgets-fail.svg'
-cardImage: '/images/card-v4-why-most-budgets-fail.svg'
+image: '/images/article-why-most-budgets-fail.jpg'
+cardImage: '/images/article-why-most-budgets-fail.jpg'
 tags: ['expense-tracking']
 faq:
   - question: "Why do most budgets get abandoned within a few months?"
