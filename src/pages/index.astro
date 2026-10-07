@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 import SectionHead from '../components/SectionHead.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import ProductGrid from '../components/ProductGrid.astro';
@@ -22,10 +23,7 @@ const latest = allArticles.filter((a) => a.id !== featured.id).slice(0, 5).map(t
 
 const templates = (await getCollection('templates')).sort((a, b) => a.data.order - b.data.order);
 
-// The hero stage: the best seller's dark mockup, centered on the stage's
-// field. The uncropped midImage asset, per the product-image rule.
 const byId = (id: string) => templates.find((t) => t.id === id);
-const stageFront = byId('budget-spreadsheet') ?? templates[0];
 
 // Three real Etsy reviews from the templates collection, one per product,
 // for the charcoal band. Matched on the opening words of the review rather
@@ -123,28 +121,41 @@ const websiteSchema = {
 	<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 	<main id="main-content" class="band-main home">
 
-	{/* Hero: copy left, the laptop on a textured stage right */}
-	<section class="hero" aria-labelledby="hero-title">
-		<div class="hero-copy">
-			<a href="/tools/" class="hero-pill" data-cta="index_hero_pill:tools">
-				<span class="hero-pill-tag">Free</span>
-				{TOOLS.length} calculators, no sign-up
-				<span class="hero-pill-arrow" aria-hidden="true"></span>
-			</a>
-			<h1 id="hero-title" class="hero-title">A simpler way to manage your personal finances.</h1>
-			<p class="hero-desc">Budget spreadsheets for Google Sheets and Excel, free calculators, and plain-language guides for paying off debt, saving, and living on an irregular income.</p>
-			<div class="hero-actions">
-				<a href="/spreadsheets/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_hero_cta:spreadsheets">Browse spreadsheets</a>
-				<a href="/tools/" class="btn btn-secondary btn-lg" data-cta="index_hero_cta:tools">Try a free calculator</a>
+	{/* Hero: centered over the faint rings, no image. */}
+	<PageHero
+		size="hero"
+		title="A simpler way to manage your personal finances."
+		desc="Budget spreadsheets for Google Sheets and Excel, free calculators, and plain-language guides for paying off debt, saving, and living on an irregular income."
+	>
+		<a slot="before" href="/tools/" class="hero-pill" data-cta="index_hero_pill:tools">
+			<span class="hero-pill-tag">Free</span>
+			{TOOLS.length} calculators, no sign-up
+			<span class="hero-pill-arrow" aria-hidden="true"></span>
+		</a>
+		<div class="hero-actions">
+			<a href="/spreadsheets/" class="btn btn-primary btn-lg btn-arrow" data-cta="index_hero_cta:spreadsheets">Browse spreadsheets</a>
+			<a href="/tools/" class="btn btn-secondary btn-lg" data-cta="index_hero_cta:tools">Try a free calculator</a>
+		</div>
+	</PageHero>
+
+	{/* Articles: straight under the hero. The pinned article leads an even grid of six. */}
+	<section class="band" aria-labelledby="articles-heading">
+		<div class="band-inner">
+			<SectionHead
+				id="articles-heading"
+				title="Guides that get to the point"
+				desc="Straight answers on budgeting, debt, and saving, written by someone who runs these numbers every month."
+				href="/articles/"
+				linkLabel="All articles"
+				cta="index_latest_view_all"
+			/>
+			<div class="card-grid">
+				<ArticleCard article={featured} cta="index_featured_article" />
+				{latest.map((article) => (
+					<ArticleCard article={article} cta={`index_latest_article_card:${article.id}`} />
+				))}
 			</div>
 		</div>
-
-		{stageFront?.data.midImage && (
-			<a href={`/spreadsheets/${stageFront.id}/`} class="hero-stage textured" data-cta={`index_showcase:${stageFront.id}`} aria-label={`${templateName(stageFront.data.title)}: view template`}>
-				<span class="stage-rings" aria-hidden="true"></span>
-				<img class="stage-img" src={stageFront.data.midImage} alt={`${templateName(stageFront.data.title)} in the dark theme`} width="2000" height="1200" fetchpriority="high" />
-			</a>
-		)}
 	</section>
 
 	{/* Intro: the statement on the left, three plain facts as ruled rows on
@@ -288,26 +299,6 @@ const websiteSchema = {
 		</div>
 	</section>
 
-{/* Articles: the pinned article leads an even grid of six. */}
-	<section class="band" aria-labelledby="articles-heading">
-		<div class="band-inner">
-			<SectionHead
-				id="articles-heading"
-				title="Guides that get to the point"
-				desc="Straight answers on budgeting, debt, and saving, written by someone who runs these numbers every month."
-				href="/articles/"
-				linkLabel="All articles"
-				cta="index_latest_view_all"
-			/>
-			<div class="card-grid">
-				<ArticleCard article={featured} cta="index_featured_article" />
-				{latest.map((article) => (
-					<ArticleCard article={article} cta={`index_latest_article_card:${article.id}`} />
-				))}
-			</div>
-		</div>
-	</section>
-
 	{/* About note, on charcoal */}
 	<section class="band band--inverse about-brief" id="about-brief" aria-label="About Simply Sheets">
 		<div class="band-inner about-brief-inner">
@@ -353,26 +344,14 @@ const websiteSchema = {
 		--gutter: max(var(--space-md), calc((100vw - var(--max-width-content)) / 2));
 	}
 
-	/* Hero */
+	/* Hero: PageHero supplies the centered copy and the rings; only the pill
+	   above the headline and the button row below it are local. */
 
-	.hero {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-		gap: clamp(var(--space-lg), 4vw, 4.5rem);
-		align-items: center;
-		padding: clamp(2.5rem, 6vw, 5rem) var(--gutter) clamp(4rem, 8vw, 7rem);
-	}
-	.hero-copy {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		min-width: 0;
-	}
 	.hero-pill {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
-		margin-bottom: 2rem;
+		margin-bottom: var(--space-lg);
 		padding: 0.3125rem 0.75rem 0.3125rem 0.3125rem;
 		border-radius: var(--radius-full);
 		background: var(--color-bg-panel);
@@ -403,84 +382,16 @@ const websiteSchema = {
 	.hero-pill:hover .hero-pill-arrow {
 		transform: translateX(2px);
 	}
-	.hero-title {
-		font-size: var(--text-hero);
-		line-height: var(--leading-display);
-		letter-spacing: var(--tracking-hero);
-		margin: 0;
-		max-width: 10em;
-		text-wrap: balance;
-	}
-	.hero-desc {
-		font-size: var(--text-lead);
-		line-height: 1.45;
-		letter-spacing: -0.01em;
-		margin: 1.5rem 0 0;
-		max-width: 32rem;
+	/* The articles band follows straight away and brings its own top padding,
+	   so the hero doesn't add its own air underneath. */
+	.home :global(.page-hero--hero) {
+		padding-bottom: 0;
 	}
 	.hero-actions {
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
 		gap: var(--space-xs);
-		margin-top: var(--space-lg);
-	}
-	/* The stage: a flat warm panel with the site's concentric rings behind
-	   the laptop, a halftone rising from the bottom, and light grain. No
-	   colour blooms or floating cards: an earlier version had both, and the
-	   owner asked for the laptop alone. Contained in the content column, so
-	   its right edge lines up with the nav's CTA. One laptop, the midImage
-	   asset, centered, per the product-image rule. */
-	.hero-stage {
-		display: grid;
-		place-items: center;
-		aspect-ratio: 1 / 0.9;
-		padding: 6% 4%;
-		border-radius: var(--radius-xl);
-		background: var(--color-bg-panel);
-	}
-	/* Lighter grain than the shared .textured layer: at full strength it
-	   greys the blooms. */
-	.hero-stage.textured::after {
-		opacity: 0.16;
-	}
-	/* Halftone rising from the bottom edge, fading out by mid-height. */
-	.hero-stage::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		border-radius: inherit;
-		background: var(--halftone);
-		-webkit-mask-image: linear-gradient(to top, #000, transparent 60%);
-		mask-image: linear-gradient(to top, #000, transparent 60%);
-		pointer-events: none;
-	}
-	.stage-rings {
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		border-radius: inherit;
-		background: repeating-radial-gradient(
-			circle at 50% 52%,
-			transparent 0 3rem,
-			rgba(var(--shadow-rgb), 0.07) 3rem calc(3rem + 1px),
-			transparent calc(3rem + 1px) 3.75rem
-		);
-		-webkit-mask-image: radial-gradient(circle at 50% 52%, #000 25%, transparent 70%);
-		mask-image: radial-gradient(circle at 50% 52%, #000 25%, transparent 70%);
-		pointer-events: none;
-	}
-	.stage-img {
-		display: block;
-		width: 100%;
-		height: auto;
-		object-fit: contain;
-		object-position: center;
-		filter: drop-shadow(0 28px 40px rgba(var(--shadow-rgb), 0.3));
-		transition: transform var(--duration-slow) var(--ease-out);
-	}
-	@media (hover: hover) {
-		.hero-stage:hover .stage-img { transform: translateY(-6px); }
 	}
 
 	/* Intro */
@@ -844,29 +755,7 @@ const websiteSchema = {
 
 	/* Responsive */
 
-	/* Two columns need room: below this the copy column is too narrow for the
-	   headline (it wraps to four lines and the buttons stack), so the hero
-	   stacks instead, copy over a wide stage. */
-	@media (max-width: 1100px) {
-		.hero {
-			grid-template-columns: 1fr;
-			gap: var(--space-xl);
-		}
-		.hero-title {
-			max-width: 12em;
-		}
-		.hero-stage {
-			aspect-ratio: 16 / 9;
-		}
-		.stage-img {
-			max-width: 36rem;
-		}
-	}
-
 	@media (max-width: 960px) {
-		.hero-stage {
-			aspect-ratio: 4 / 3;
-		}
 		.reviews-list {
 			grid-template-columns: 1fr;
 			max-width: 38rem;
@@ -894,10 +783,6 @@ const websiteSchema = {
 	}
 
 	@media (max-width: 600px) {
-		.hero-stage {
-			border-radius: var(--radius-lg);
-			padding: 10% 5%;
-		}
 		.intro-points li {
 			align-items: flex-start;
 		}
