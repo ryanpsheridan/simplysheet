@@ -158,35 +158,30 @@ const websiteSchema = {
 		</div>
 	</section>
 
-	{/* Intro: the statement on the left, three plain facts as ruled rows on
-	    the right. */}
-	<section class="band intro" aria-labelledby="intro-heading">
-		<div class="band-inner intro-inner">
-			<h2 id="intro-heading" class="intro-title">Budget spreadsheets that actually get used.</h2>
-			<ul class="intro-points">
-				<li>
-					<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="6" width="22" height="20" rx="2.5"/><path d="M5 12h22M5 19h22M13 12v14"/></svg>
-					<span>Works in <strong>Google Sheets</strong> and <strong>Excel</strong>, online or off</span>
-				</li>
-				<li>
-					<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 5H26v8.5L14.5 25 5 15.5z"/><circle cx="21.5" cy="9.5" r="1.5"/></svg>
-					<span><strong>One-time purchase</strong>, with no subscription and no ads</span>
-				</li>
-				<li>
-					<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="10"/><path d="M16 6a10 10 0 0 0 0 20z" fill="currentColor"/></svg>
-					<span><strong>Dark and light themes</strong> in every template</span>
-				</li>
-			</ul>
-		</div>
-	</section>
-
-	{/* Statement into the forest review band */}
-	{reviews.length > 0 && (
-		<section class="reviews" aria-labelledby="reviews-heading">
-			<p class="statement" aria-hidden="true">Own the math</p>
-			<div class="band band--forest reviews-band">
-				<div class="band-inner">
-					<h2 id="reviews-heading" class="reviews-title">From buyers on Etsy</h2>
+	{/* Proof: the statement and three plain facts, then three real Etsy reviews,
+	    as one forest band. */}
+	<section class="band band--forest proof" aria-labelledby="proof-heading">
+		<div class="band-inner">
+			<div class="proof-intro">
+				<h2 id="proof-heading" class="proof-title">Budget spreadsheets that actually get used.</h2>
+				<ul class="proof-points">
+					<li>
+						<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="6" width="22" height="20" rx="2.5"/><path d="M5 12h22M5 19h22M13 12v14"/></svg>
+						<span>Works in <strong>Google Sheets</strong> and <strong>Excel</strong>, online or off</span>
+					</li>
+					<li>
+						<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 5H26v8.5L14.5 25 5 15.5z"/><circle cx="21.5" cy="9.5" r="1.5"/></svg>
+						<span><strong>One-time purchase</strong>, with no subscription and no ads</span>
+					</li>
+					<li>
+						<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="10"/><path d="M16 6a10 10 0 0 0 0 20z" fill="currentColor"/></svg>
+						<span><strong>Dark and light themes</strong> in every template</span>
+					</li>
+				</ul>
+			</div>
+			{reviews.length > 0 && (
+				<div class="proof-reviews">
+					<h3 class="reviews-title">From buyers on Etsy</h3>
 					<ul class="reviews-list">
 						{reviews.map((r) => (
 							<li class="review">
@@ -201,9 +196,9 @@ const websiteSchema = {
 						))}
 					</ul>
 				</div>
-			</div>
-		</section>
-	)}
+			)}
+		</div>
+	</section>
 
 	{/* Spreadsheets */}
 	<section class="band" aria-labelledby="spreadsheets-heading">
@@ -394,75 +389,55 @@ const websiteSchema = {
 		gap: var(--space-xs);
 	}
 
-	/* Intro */
+	/* Proof: the statement and facts, then the reviews, on one forest band.
+	   Two halves up top (the statement's first line and the first rule of the
+	   list share one top edge), the quotes in a row beneath. */
 
-	.intro {
-		padding-top: 0;
-	}
-	/* Two halves of the content column: the statement's first line and the
-	   first rule of the list share one top edge. */
-	.intro-inner {
+	.proof-intro {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 		gap: clamp(var(--space-lg), 6vw, 6rem);
 		align-items: start;
 	}
-	.intro-title {
+	.proof-title {
 		font-size: var(--text-section);
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
 		max-width: 11em;
 		margin: 0;
 	}
-	.intro-points {
+	.proof-points {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		border-top: 1px solid var(--color-border-hairline);
+		border-top: 1px solid var(--color-inverse-rule);
 	}
-	.intro-points li {
+	.proof-points li {
 		display: flex;
 		align-items: center;
 		gap: var(--space-sm);
 		padding: 1.25rem 0;
-		border-bottom: 1px solid var(--color-border-hairline);
+		border-bottom: 1px solid var(--color-inverse-rule);
 		font-size: 1.0625rem;
-		color: var(--color-text);
+		color: var(--color-on-inverse);
 	}
-	.intro-points svg {
+	.proof-points svg {
 		width: 2rem;
 		height: 2rem;
 		flex-shrink: 0;
 	}
-	.intro-points strong {
+	.proof-points strong {
 		font-weight: var(--weight-semibold);
 	}
-
-	/* Statement + reviews */
-
-	.statement {
-		margin: 0;
-		padding: 0 var(--space-md);
-		font-family: var(--font-heading);
-		font-size: clamp(3.5rem, 11.5vw, 10rem);
-		line-height: 0.9;
-		letter-spacing: -0.05em;
-		text-align: center;
-		/* Forest, the colour of the band it sits on. */
-		color: var(--color-forest);
-		/* The descender-free line sits on the band's top edge. */
-		transform: translateY(0.1em);
-	}
-	.reviews-band {
-		padding-block: clamp(4rem, 8vw, 7rem);
+	.proof-reviews {
+		margin-top: clamp(3.5rem, 7vw, 6rem);
 	}
 	.reviews-title {
 		font-size: 1.125rem;
 		font-weight: var(--weight-normal);
 		letter-spacing: -0.01em;
-		text-align: center;
 		color: var(--color-on-inverse-secondary);
-		margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+		margin: 0 0 var(--space-md);
 	}
 	.reviews-list {
 		list-style: none;
@@ -758,8 +733,6 @@ const websiteSchema = {
 	@media (max-width: 960px) {
 		.reviews-list {
 			grid-template-columns: 1fr;
-			max-width: 38rem;
-			margin-inline: auto;
 		}
 		.steps {
 			grid-template-columns: 1fr;
@@ -771,7 +744,7 @@ const websiteSchema = {
 		.tools {
 			grid-template-columns: 1fr;
 		}
-		.intro-inner {
+		.proof-intro {
 			grid-template-columns: 1fr;
 		}
 		.tools-feature {
@@ -783,10 +756,10 @@ const websiteSchema = {
 	}
 
 	@media (max-width: 600px) {
-		.intro-points li {
+		.proof-points li {
 			align-items: flex-start;
 		}
-		.intro-points svg {
+		.proof-points svg {
 			width: 1.75rem;
 			height: 1.75rem;
 			margin-top: -0.125rem;
