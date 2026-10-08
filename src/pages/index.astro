@@ -40,11 +40,11 @@ const reviews = REVIEW_PICKS.flatMap(([id, opening]) => {
 	return template && review ? [{ ...review, template }] : [];
 });
 
-// The tools section features one tool (its real card thumbnail, name,
-// description, and a button) beside a list of the next five.
+// The tools section is an even grid of six: the pinned tool first, then the
+// next five. Keep the total a multiple of 3.
 const featuredToolUrl = '/tools/50-30-20-budget-calculator/';
 const featuredTool = TOOLS.find((t) => t.url === featuredToolUrl) ?? TOOLS[0];
-const tools = TOOLS.filter((t) => t !== featuredTool).slice(0, 5);
+const tools = [featuredTool, ...TOOLS.filter((t) => t !== featuredTool).slice(0, 5)];
 
 const steps = [
 	{
@@ -247,25 +247,10 @@ const websiteSchema = {
 				linkLabel={`All ${TOOLS.length} tools`}
 				cta="index_tools_view_all"
 			/>
-			<div class="tools">
-				{/* One featured tool: the same thumbnail its card shows on /tools/,
-				    then its name, description, and a button. The button is the
-				    link; the thumbnail is decorative. */}
-				<div class="card tools-feature">
-					<div class="card-media card-media--art" aria-hidden="true">
-						<svg viewBox="0 0 240 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" set:html={featuredTool.illustration} />
-					</div>
-					<div class="card-body tools-feature-body">
-						<h3 class="tools-feature-title">{featuredTool.name}</h3>
-						<p class="tools-feature-desc">{featuredTool.desc}</p>
-						<a href={featuredTool.url} class="btn btn-primary btn-arrow tools-feature-cta" data-cta={`index_tools_featured:${toolId(featuredTool)}`}>{featuredTool.group === 'assessment' ? 'Take the assessment' : 'Try the calculator'}</a>
-					</div>
-				</div>
-				<div class="tools-list">
-					{tools.map((tool) => (
-						<ToolCard tool={tool} variant="row" cta={`index_tools_item:${toolId(tool)}`} />
-					))}
-				</div>
+			<div class="card-grid">
+				{tools.map((tool) => (
+					<ToolCard tool={tool} cta={tool === featuredTool ? `index_tools_featured:${toolId(tool)}` : `index_tools_item:${toolId(tool)}`} />
+				))}
 			</div>
 		</div>
 	</section>
@@ -542,50 +527,6 @@ const websiteSchema = {
 		margin: 0;
 	}
 
-	/* Tools: a featured tool beside the list */
-
-	.tools {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-		gap: clamp(var(--space-lg), 5vw, 5rem);
-		align-items: start;
-	}
-	.tools-feature {
-		position: sticky;
-		top: calc(var(--header-offset) + var(--space-md));
-	}
-	.tools-feature-body {
-		gap: var(--space-xs);
-		padding-top: var(--space-md);
-	}
-	.tools-feature-title {
-		font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);
-		line-height: 1.15;
-		letter-spacing: -0.025em;
-		margin: 0;
-	}
-	.tools-feature-desc {
-		font-size: var(--text-read);
-		line-height: 1.5;
-		color: var(--color-text-secondary);
-		max-width: 32rem;
-		margin: 0;
-	}
-	.tools-feature-cta {
-		margin-top: var(--space-sm);
-	}
-	.tools-list {
-		border-top: 1px solid var(--color-border-hairline);
-	}
-	/* Two lines of description per row keeps the list as tall as the featured
-	   card beside it. */
-	.tools-list :global(.tool-row-desc) {
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
-		overflow: hidden;
-	}
-
 	/* Quiz band */
 
 	.quiz-band {
@@ -747,14 +688,8 @@ const websiteSchema = {
 		.steps::before {
 			display: none;
 		}
-		.tools {
-			grid-template-columns: 1fr;
-		}
 		.proof-intro {
 			grid-template-columns: 1fr;
-		}
-		.tools-feature {
-			position: static;
 		}
 		.quiz-inner {
 			grid-template-columns: 1fr;
