@@ -41,10 +41,10 @@ const reviews = REVIEW_PICKS.flatMap(([id, opening]) => {
 });
 
 // The tools section features one tool (its real card thumbnail, name,
-// description, and a button) beside a list of the next six.
+// description, and a button) beside a list of the next five.
 const featuredToolUrl = '/tools/50-30-20-budget-calculator/';
 const featuredTool = TOOLS.find((t) => t.url === featuredToolUrl) ?? TOOLS[0];
-const tools = TOOLS.filter((t) => t !== featuredTool).slice(0, 6);
+const tools = TOOLS.filter((t) => t !== featuredTool).slice(0, 5);
 
 const steps = [
 	{
@@ -241,8 +241,6 @@ const websiteSchema = {
 		<div class="band-inner">
 			<SectionHead
 				id="tools-heading"
-				size="display"
-				kicker="Free tools"
 				title="The math you keep putting off, done in a minute"
 				desc="Calculators and quick assessments that run in your browser. No email, no sign-up."
 				href="/tools/"
@@ -578,6 +576,14 @@ const websiteSchema = {
 	}
 	.tools-list {
 		border-top: 1px solid var(--color-border-hairline);
+	}
+	/* Two lines of description per row keeps the list as tall as the featured
+	   card beside it. */
+	.tools-list :global(.tool-row-desc) {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
 	}
 
 	/* Quiz band */
