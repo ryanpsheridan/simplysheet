@@ -29,6 +29,9 @@ Goal: one single-image (or video) pin every two days at 9:00 am CT, posted throu
 - Savings goals and sinking funds: 1035898420480430070
 - Finance Calculators: 1035898420480430074
 - Debt payoff trackers and tips: pass the name
+- Couples budgeting and shared finances: pass the name (couples budget, bill split, couples articles)
+- Budgeting tips and habits: pass the name (tracking, why budgets fail, income articles)
+- Net worth tracking: pass the name (net worth tracker pins)
 
 ## Guardrails
 - Never touch Etsy listings. Never edit or delete other posts.
