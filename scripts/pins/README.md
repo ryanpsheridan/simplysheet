@@ -19,7 +19,7 @@ Goal: one single-image (or video) pin every two days at 9:00 am CT, posted throu
 6. Add the entry to `queue.json` and push.
 
 ## Styles
-Five monochromatic themes: forest (main, the default), sky, charcoal, sand, lavender (set `"theme"` in the spec). Use forest for about half of all pins and rotate the other four across the rest, never the same non-forest theme twice in a row. Layouts: `calc`, `compare`, `cover` (article photo on top, themed panel below).
+Five monochromatic themes: forest (main, the default), sky, charcoal, sand, lavender (set `"theme"` in the spec). Use forest for about half of all pins and rotate the other four across the rest, never the same theme twice in a row overall, and never the same theme twice in a row within a board. Check `queue.json` (each entry records its board and theme) before choosing a theme, and record the board and theme for every new pin. Layouts: `calc`, `compare`, `cover` (article photo on top, themed panel below).
 
 ## Pin fields
 - Title: keyword-first and plain, under 100 characters.
