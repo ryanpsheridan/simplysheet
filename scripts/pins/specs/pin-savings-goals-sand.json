@@ -1,0 +1,9 @@
+{
+ "slug": "pin-savings-goals-sand",
+ "layout": "product",
+ "theme": "sand",
+ "image": "scripts/pins/assets/mockups/savings-dark.png",
+ "headline": "Every savings goal gets its own progress bar",
+ "lede": "A dashboard shows total saved and what is still needed. A log tracks deposits and withdrawals.",
+ "caption": "Track every goal. Save with purpose."
+}

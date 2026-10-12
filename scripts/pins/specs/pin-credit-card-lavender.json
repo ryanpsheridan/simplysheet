@@ -1,0 +1,9 @@
+{
+ "slug": "pin-credit-card-lavender",
+ "layout": "product",
+ "theme": "lavender",
+ "image": "scripts/pins/assets/mockups/creditcard-dark.png",
+ "headline": "Every card, balance, and due date in one view",
+ "lede": "A dashboard for your cards and a payment log for what you paid.",
+ "caption": "Stop guessing what you owe."
+}

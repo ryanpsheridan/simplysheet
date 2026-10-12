@@ -7,6 +7,7 @@ Output: public/images/pins/<slug>.png (and <slug>.mp4 with --video)
 Spec layouts:
   calc     headline, lede, card_title, fields[{label,value}], result{label,value,rows[{label,value}]}, caption
   compare  headline, lede, columns[{name, tint: sky|lavender|sand, rows[{k,v}]}]
+  product  headline, lede, image (mockup path), caption
 Themes: forest (default, the main brand look), sky, charcoal, sand, lavender, paper (old light look). Set "theme" in the spec.
 Rules: sentence case, no all-caps, no em dashes, headlines balanced (no widows).
 """
@@ -56,12 +57,12 @@ h1{{text-wrap:balance;font-family:Aspekta,InterV,sans-serif;font-weight:500;lett
 
 
 THEMES = {
- "forest": ".pin{background:#26352C;color:#fff}h1{color:#fff}.lede{color:#B3C2B6}.frame{background:#30443A}.frame h2{color:#fff}.lab{color:#fff}.inp,.res{color:#26352C}.inp{border-color:#fff}.inp.on{border-color:#B0E0FF}.res{border-color:#fff}.cap{color:#fff}.cap span{color:#B3C2B6}.brand{color:#fff}.col{border-color:#fff}",
+ "forest": ".plat{color:#B3C2B6}.pin{--fr:#30443A;background:#26352C;color:#fff}h1{color:#fff}.lede{color:#B3C2B6}.frame{background:#30443A}.frame h2{color:#fff}.lab{color:#fff}.inp,.res{color:#26352C}.inp{border-color:#fff}.inp.on{border-color:#B0E0FF}.res{border-color:#fff}.cap{color:#fff}.cap span{color:#B3C2B6}.brand{color:#fff}.col{border-color:#fff}",
  "paper": "",
- "sky": ".pin{background:#B0E0FF}.frame{background:rgba(255,255,255,.55)}.inp{border-color:#fff}.res{border-color:#fff}.cap span,.lede{color:#3F4A44}",
- "charcoal": ".pin{background:#292929;color:#fff}h1{color:#fff}.lede{color:#B5B5B0}.frame{background:#353535}.frame h2{color:#fff}.lab{color:#fff}.inp,.res{color:#26352C}.inp{border-color:#fff}.inp.on{border-color:#B0E0FF}.res{border-color:#fff}.cap{color:#fff}.cap span{color:#B5B5B0}.brand{color:#fff}",
- "lavender": ".pin{background:#DAD6FF}.frame{background:#C9C3F2}.lede{color:#46425F}.cap span{color:#46425F}.inp{border-color:#fff}.res{border-color:#fff}",
- "sand": ".pin{background:#F1E7C0}.frame{background:#E6D9A6}.lede{color:#4E4A3A}.cap span{color:#4E4A3A}.inp{border-color:#fff}.res{border-color:#fff}",
+ "sky": ".pin{--fr:rgba(255,255,255,.55);background:#B0E0FF}.frame{background:rgba(255,255,255,.55)}.inp{border-color:#fff}.res{border-color:#fff}.cap span,.lede{color:#3F4A44}",
+ "charcoal": ".plat{color:#B5B5B0}.pin{--fr:#353535;background:#292929;color:#fff}h1{color:#fff}.lede{color:#B5B5B0}.frame{background:#353535}.frame h2{color:#fff}.lab{color:#fff}.inp,.res{color:#26352C}.inp{border-color:#fff}.inp.on{border-color:#B0E0FF}.res{border-color:#fff}.cap{color:#fff}.cap span{color:#B5B5B0}.brand{color:#fff}",
+ "lavender": ".pin{--fr:#C9C3F2;background:#DAD6FF}.frame{background:#C9C3F2}.lede{color:#46425F}.cap span{color:#46425F}.inp{border-color:#fff}.res{border-color:#fff}",
+ "sand": ".pin{--fr:#E6D9A6;background:#F1E7C0}.frame{background:#E6D9A6}.lede{color:#4E4A3A}.cap span{color:#4E4A3A}.inp{border-color:#fff}.res{border-color:#fff}",
 }
 
 def esc(s): return (s.replace("&", "&amp;").replace("<", "&lt;"))
@@ -75,6 +76,13 @@ def build(spec, animate=False):
                 f".pn{{flex:1;display:flex;flex-direction:column;padding:64px 80px 72px}}.pn h1{{font-size:88px;line-height:96px}}.pn .lede{{font-size:38px;line-height:50px}}{THEMES.get(spec.get('theme','forest'),'')}</style>"
                 f"<div class='pin' id='pin'><div class='ph'></div><div class='pn'><h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div>"
                 f"<div class='brand'><img src='file://{LOGO}'><span>Simply Sheets</span></div></div></div>")
+    if spec["layout"] == "product":
+        img = os.path.join(ROOT, spec["image"])
+        return (f"<style>{CSS}.shot{{margin-top:48px;border-radius:40px;padding:0 20px;flex:1;background:var(--fr,var(--emph));align-items:center;display:flex;justify-content:center}}.shot img{{width:100%;display:block}}"
+                f".cap{{margin:44px 0 0;font-size:36px;line-height:48px;font-family:Aspekta,InterV,sans-serif;font-weight:500;letter-spacing:-.02em}}.plat{{margin-top:12px;font-size:28px;color:var(--ink2)}}.brand{{margin-top:48px}}.pin .plat{{margin-bottom:0}}{THEMES.get(spec.get('theme','forest'),'')}</style>"
+                f"<div class='pin' id='pin'><h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div>"
+                f"<div class='shot'><img src='file://{img}'></div><div class='cap'>{esc(spec['caption'])}</div><div class='plat'>Google Sheets and Excel</div>"
+                f"<div class='brand'><img src='file://{LOGO}'><span>Simply Sheets</span></div></div>")
     h = [f"<style>{CSS}{extra}{THEMES.get(spec.get("theme","forest"),"")}</style><div class='pin' id='pin'>",
          f"<h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div><div class='body'>"]
     if spec["layout"] == "calc":

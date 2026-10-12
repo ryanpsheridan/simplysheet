@@ -1,0 +1,9 @@
+{
+ "slug": "pin-debt-payoff-sky",
+ "layout": "product",
+ "theme": "sky",
+ "image": "scripts/pins/assets/mockups/debt-dark.png",
+ "headline": "Snowball or avalanche, one dropdown",
+ "lede": "Switch your payoff method any time. The dashboard shows total debt, what is left, and overall progress.",
+ "caption": "See every debt. Track every dollar."
+}
