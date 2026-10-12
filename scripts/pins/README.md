@@ -36,6 +36,9 @@ Five monochromatic themes: forest (main, the default), sky, charcoal, sand, lave
 - Budgeting tips and habits: 1035898420480430152 (tracking, why budgets fail, income articles)
 - Net worth tracking: 1035898420480430153 (net worth tracker pins)
 
+## Board coverage
+Every week, each of the seven boards gets at least one pin: Monthly budget templates, Couples budgeting and shared finances, Savings goals and sinking funds, Finance Calculators, Debt payoff trackers and tips, Net worth tracking, Budgeting tips and habits. Calculator pins go to Finance Calculators unless a topic board fits better (couples, savings, debt). Check `queue.json` boards before choosing.
+
 ## Guardrails
 - Never touch Etsy listings. Never edit or delete other posts.
 - Carousels do not publish as carousels through Metricool, so every pin is one image or one video.
