@@ -7,6 +7,7 @@ Output: public/images/pins/<slug>.png (and <slug>.mp4 with --video)
 Spec layouts:
   calc     headline, lede, card_title, fields[{label,value}], result{label,value,rows[{label,value}]}, caption
   compare  headline, lede, columns[{name, tint: sky|lavender|sand, rows[{k,v}]}]
+Themes: forest (default, the main brand look), sky, charcoal, sand, lavender, paper (old light look). Set "theme" in the spec.
 Rules: sentence case, no all-caps, no em dashes, headlines balanced (no widows).
 """
 import json, os, re, subprocess, sys, shutil
@@ -55,6 +56,8 @@ h1{{text-wrap:balance;font-family:Aspekta,InterV,sans-serif;font-weight:500;lett
 
 
 THEMES = {
+ "forest": ".pin{background:#26352C;color:#fff}h1{color:#fff}.lede{color:#B3C2B6}.frame{background:#30443A}.frame h2{color:#fff}.lab{color:#fff}.inp,.res{color:#26352C}.inp{border-color:#fff}.inp.on{border-color:#B0E0FF}.res{border-color:#fff}.cap{color:#fff}.cap span{color:#B3C2B6}.brand{color:#fff}.col{border-color:#fff}",
+ "paper": "",
  "sky": ".pin{background:#B0E0FF}.frame{background:rgba(255,255,255,.55)}.inp{border-color:#fff}.res{border-color:#fff}.cap span,.lede{color:#3F4A44}",
  "charcoal": ".pin{background:#292929;color:#fff}h1{color:#fff}.lede{color:#B5B5B0}.frame{background:#353535}.frame h2{color:#fff}.lab{color:#fff}.inp,.res{color:#26352C}.inp{border-color:#fff}.inp.on{border-color:#B0E0FF}.res{border-color:#fff}.cap{color:#fff}.cap span{color:#B5B5B0}.brand{color:#fff}",
  "lavender": ".pin{background:#DAD6FF}.frame{background:#C9C3F2}.lede{color:#46425F}.cap span{color:#46425F}.inp{border-color:#fff}.res{border-color:#fff}",
@@ -69,10 +72,10 @@ def build(spec, animate=False):
     if spec["layout"] == "cover":
         photo = os.path.join(ROOT, spec["photo"])
         return (f"<style>{CSS}.pin{{padding:0}}.ph{{height:{spec.get('photo_height',860)}px;background:url('file://{photo}') center/cover}}"
-                f".pn{{flex:1;display:flex;flex-direction:column;padding:64px 80px 72px}}.pn h1{{font-size:88px;line-height:96px}}.pn .lede{{font-size:38px;line-height:50px}}{THEMES.get(spec.get('theme',''),'')}</style>"
+                f".pn{{flex:1;display:flex;flex-direction:column;padding:64px 80px 72px}}.pn h1{{font-size:88px;line-height:96px}}.pn .lede{{font-size:38px;line-height:50px}}{THEMES.get(spec.get('theme','forest'),'')}</style>"
                 f"<div class='pin' id='pin'><div class='ph'></div><div class='pn'><h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div>"
                 f"<div class='brand'><img src='file://{LOGO}'><span>Simply Sheets</span></div></div></div>")
-    h = [f"<style>{CSS}{extra}{THEMES.get(spec.get("theme",""),"")}</style><div class='pin' id='pin'>",
+    h = [f"<style>{CSS}{extra}{THEMES.get(spec.get("theme","forest"),"")}</style><div class='pin' id='pin'>",
          f"<h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div><div class='body'>"]
     if spec["layout"] == "calc":
         h.append(f"<div class='frame'><h2>{esc(spec['card_title'])}</h2>")

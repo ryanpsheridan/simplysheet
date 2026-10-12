@@ -18,6 +18,9 @@ Goal: one single-image (or video) pin every two days at 9:00 am CT, posted throu
 5. Create the Metricool post (`createScheduledPost`, provider pinterest, `autoPublish: true`, `draft: false`, 9:00 am CT, a free date two days after the last queued pin).
 6. Add the entry to `queue.json` and push.
 
+## Styles
+Five monochromatic themes: forest (main, the default), sky, charcoal, sand, lavender (set `"theme"` in the spec). Use forest for about half of all pins and rotate the other four across the rest, never the same non-forest theme twice in a row. Layouts: `calc`, `compare`, `cover` (article photo on top, themed panel below).
+
 ## Pin fields
 - Title: keyword-first and plain, under 100 characters.
 - Description: carries the story, 2 to 4 sentences, real numbers only. No em dashes, no exclamation marks, no "perfect for" or "designed for", no "not just X".
