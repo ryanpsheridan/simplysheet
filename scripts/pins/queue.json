@@ -1,0 +1,12 @@
+{
+ "note": "Pinterest content log. Each entry is one single-image (or video) pin scheduled via Metricool. Check here before creating new pins so nothing repeats. Cadence: one pin every two days at 9:00 am CT.",
+ "pins": [
+  {"date":"2026-10-14","slug":"budget-spreadsheet-pin-2","type":"product","source":"budget-spreadsheet","status":"scheduled"},
+  {"date":"2026-10-16","slug":"budget-spreadsheet-pin-3","type":"product","source":"budget-spreadsheet","status":"scheduled"},
+  {"date":"2026-10-18","slug":"sinking-fund-vs-emergency-fund-pin-2-v2","type":"article","source":"sinking-fund-vs-emergency-fund","status":"scheduled"},
+  {"date":"2026-10-20","slug":"pin-50-30-20-calculator","type":"calculator","source":"50-30-20-budget-calculator","status":"draft"},
+  {"date":"2026-10-22","slug":"pin-biweekly-paycheck-calculator","type":"calculator","source":"biweekly-paycheck-calculator","status":"draft"},
+  {"date":"2026-10-24","slug":"pin-split-bills-by-income","type":"calculator","source":"bill-split-calculator","status":"draft"},
+  {"date":"2026-10-26","slug":"pin-sinking-fund-calculator.mp4","type":"calculator-video","source":"sinking-fund-calculator","status":"draft"}
+ ]
+}

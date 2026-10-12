@@ -1,0 +1,28 @@
+{
+ "slug": "pin-50-30-20-calculator",
+ "layout": "calc",
+ "headline": "Split one paycheck three ways",
+ "lede": "Needs, wants, and savings, based on your monthly pay.",
+ "card_title": "50/30/20 budget calculator",
+ "fields": [
+  {
+   "label": "Monthly take-home pay",
+   "value": "$4,500"
+  }
+ ],
+ "result": {
+  "label": "Needs (50%)",
+  "value": "$2,250",
+  "rows": [
+   {
+    "label": "Wants (30%)",
+    "value": "$1,350"
+   },
+   {
+    "label": "Savings and debt (20%)",
+    "value": "$900"
+   }
+  ]
+ },
+ "caption": "Try your own number in the free calculator."
+}

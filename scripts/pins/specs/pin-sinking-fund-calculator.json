@@ -1,0 +1,29 @@
+{
+ "slug": "pin-sinking-fund-calculator",
+ "layout": "calc",
+ "headline": "Turn the bill into a monthly number",
+ "lede": "Total cost divided by months remaining.",
+ "card_title": "Sinking fund calculator",
+ "fields": [
+  {
+   "label": "Target amount",
+   "value": "$900"
+  },
+  {
+   "label": "Target month",
+   "value": "July 2027"
+  }
+ ],
+ "result": {
+  "label": "Save each month",
+  "value": "$100",
+  "rows": [
+   {
+    "label": "Months remaining",
+    "value": "9"
+   }
+  ]
+ },
+ "caption": "A $900 insurance premium, due in nine months.",
+ "video_seconds": 8
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "pin-split-bills-by-income",
+ "layout": "calc",
+ "headline": "Split bills by income, not down the middle",
+ "lede": "Each person covers the same share of the bills as they earn of the total.",
+ "card_title": "Bill split calculator",
+ "fields": [
+  {
+   "label": "Your take-home pay",
+   "value": "$4,500"
+  },
+  {
+   "label": "Partner's take-home pay",
+   "value": "$2,500"
+  },
+  {
+   "label": "Shared bills",
+   "value": "$3,000"
+  }
+ ],
+ "result": {
+  "label": "You pay (64%)",
+  "value": "$1,929",
+  "rows": [
+   {
+    "label": "Partner pays (36%)",
+    "value": "$1,071"
+   },
+   {
+    "label": "An even split would be",
+    "value": "$1,500 each"
+   }
+  ]
+ },
+ "caption": ""
+}
