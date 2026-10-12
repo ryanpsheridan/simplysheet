@@ -57,7 +57,7 @@ h1{{text-wrap:balance;font-family:Aspekta,InterV,sans-serif;font-weight:500;lett
 THEMES = {
  "sky": ".pin{background:#B0E0FF}.frame{background:rgba(255,255,255,.55)}.inp{border-color:#fff}.res{border-color:#fff}.cap span,.lede{color:#3F4A44}",
  "charcoal": ".pin{background:#292929;color:#fff}h1{color:#fff}.lede{color:#B5B5B0}.frame{background:#353535}.frame h2{color:#fff}.lab{color:#fff}.inp,.res{color:#26352C}.inp{border-color:#fff}.inp.on{border-color:#B0E0FF}.res{border-color:#fff}.cap{color:#fff}.cap span{color:#B5B5B0}.brand{color:#fff}",
- "sand": ".pin{background:#F1E7C0}.frame{background:#DAD6FF}.lede{color:#4E4A3A}.cap span{color:#4E4A3A}.inp{border-color:#fff}.res{border-color:#fff}",
+ "sand": ".pin{background:#F1E7C0}.frame{background:#E6D9A6}.lede{color:#4E4A3A}.cap span{color:#4E4A3A}.inp{border-color:#fff}.res{border-color:#fff}",
 }
 
 def esc(s): return (s.replace("&", "&amp;").replace("<", "&lt;"))
