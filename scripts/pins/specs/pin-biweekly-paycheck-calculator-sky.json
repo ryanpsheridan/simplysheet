@@ -1,0 +1,29 @@
+{
+ "slug": "pin-biweekly-paycheck-calculator-sky",
+ "layout": "calc",
+ "headline": "Your biweekly paycheck is worth more than two a month",
+ "lede": "Multiply one paycheck by 26, then divide by 12.",
+ "card_title": "Biweekly paycheck calculator",
+ "fields": [
+  {
+   "label": "Take-home pay, every two weeks",
+   "value": "$1,850"
+  }
+ ],
+ "result": {
+  "label": "Average per month",
+  "value": "$4,008.33",
+  "rows": [
+   {
+    "label": "Doubling one paycheck",
+    "value": "$3,700"
+   },
+   {
+    "label": "Missing from the shortcut",
+    "value": "$308 a month"
+   }
+  ]
+ },
+ "caption": "Two months a year have three paychecks. Plan for them in the free calculator.",
+ "theme": "sky"
+}

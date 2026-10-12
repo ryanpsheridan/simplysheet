@@ -6,49 +6,63 @@
    "slug": "budget-spreadsheet-pin-2",
    "type": "product",
    "source": "budget-spreadsheet",
-   "status": "scheduled"
+   "status": "scheduled",
+   "board": "Monthly budget templates",
+   "theme": "forest-ish"
   },
   {
    "date": "2026-10-16",
    "slug": "budget-spreadsheet-pin-3",
    "type": "product",
    "source": "budget-spreadsheet",
-   "status": "scheduled"
+   "status": "scheduled",
+   "board": "Monthly budget templates",
+   "theme": "forest-ish"
   },
   {
    "date": "2026-10-18",
    "slug": "sinking-fund-vs-emergency-fund-pin-2-v2",
    "type": "article",
    "source": "sinking-fund-vs-emergency-fund",
-   "status": "scheduled"
+   "status": "scheduled",
+   "board": "Savings goals and sinking funds",
+   "theme": "paper"
   },
   {
    "date": "2026-10-20",
-   "slug": "pin-50-30-20-calculator",
+   "slug": "pin-50-30-20-calculator-forest",
    "type": "calculator",
    "source": "50-30-20-budget-calculator",
-   "status": "draft-awaiting-approval"
+   "status": "scheduled",
+   "board": "Finance Calculators",
+   "theme": "forest"
   },
   {
    "date": "2026-10-22",
-   "slug": "pin-biweekly-paycheck-calculator",
+   "slug": "pin-biweekly-paycheck-calculator-sky",
    "type": "calculator",
    "source": "biweekly-paycheck-calculator",
-   "status": "draft-awaiting-approval"
+   "status": "scheduled",
+   "board": "Finance Calculators",
+   "theme": "sky"
   },
   {
    "date": "2026-10-24",
-   "slug": "pin-split-bills-by-income",
+   "slug": "pin-split-bills-by-income-sand",
    "type": "calculator",
    "source": "bill-split-calculator",
-   "status": "draft-awaiting-approval"
+   "status": "scheduled",
+   "board": "Couples budgeting and shared finances",
+   "theme": "sand"
   },
   {
    "date": "2026-10-26",
-   "slug": "pin-sinking-fund-calculator.mp4",
+   "slug": "pin-sinking-fund-calculator-lavender.mp4",
    "type": "calculator-video",
    "source": "sinking-fund-calculator",
-   "status": "draft-awaiting-approval"
+   "status": "scheduled",
+   "board": "Savings goals and sinking funds",
+   "theme": "lavender"
   }
  ]
 }
