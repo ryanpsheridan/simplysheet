@@ -6,7 +6,9 @@ Goal: one single-image (or video) pin every two days at 9:00 am CT, posted throu
 - Calculators: `src/data/tools.ts` lists them. Use the worked examples in the matching article or tool page, or plain arithmetic from the stated rule. Never invent product features or numbers.
 - Articles: `src/content/articles/`. Turn one idea into one image: a comparison, a worked example, a short set of steps. Put the rest of the story in the pin title and description.
 - Products: `src/content/templates/` (Etsy listings, dark and light). The link must match the theme shown in the image. Laptop mockups always use the dark frame.
-- Mix: roughly one product or feature pin for every two content pins. Use animation (video) for calculators when typing a number and showing a result tells the story.
+- Mix rule: in every run of six pins, three are product pins, two are calculator or tool pins, one is an article pin. Product pins alternate between a feature or how-it-works angle (one real feature, one image) and a product overview, and rotate through all six templates (budget, couples, debt payoff, savings goals, net worth, credit card) rather than repeating one. Use animation (video) for calculators when typing a number and showing a result tells the story.
+- Product pin assets: read-only access to the Etsy repo `ryanpsheridan/etsy` (mockups in `brand/assets/mockups`, screenshots in `assets/screenshots/<product>/`, copy rules in `listings/MESSAGING.md`). Never write to that repo or touch Etsy listings. Never invent product features: describe only what the screenshots, listing copy and template pages show. Laptop mockups always use the dark frame. Link to the listing whose theme (dark or light) matches the image.
+- Review: each week, adjust the mix toward whichever pin type earns the most outbound clicks (see the Monday stats email), keeping at least one of each type per six pins.
 
 ## Making a pin
 1. Write `scripts/pins/specs/<slug>.json` (layouts `calc` and `compare`, see `make_pin.py`). Add `--video` for an mp4 of a `calc` spec.
