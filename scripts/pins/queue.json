@@ -1,68 +1,131 @@
 {
- "note": "Pinterest content log. Each entry is one single-image (or video) pin scheduled via Metricool. Check here before creating new pins so nothing repeats. Cadence: one pin every two days at 9:00 am CT.",
- "pins": [
-  {
-   "date": "2026-10-14",
-   "slug": "budget-spreadsheet-pin-2",
-   "type": "product",
-   "source": "budget-spreadsheet",
-   "status": "scheduled",
-   "board": "Monthly budget templates",
-   "theme": "forest-ish"
-  },
-  {
-   "date": "2026-10-16",
-   "slug": "budget-spreadsheet-pin-3",
-   "type": "product",
-   "source": "budget-spreadsheet",
-   "status": "scheduled",
-   "board": "Monthly budget templates",
-   "theme": "forest-ish"
-  },
-  {
-   "date": "2026-10-18",
-   "slug": "sinking-fund-vs-emergency-fund-pin-2-v2",
-   "type": "article",
-   "source": "sinking-fund-vs-emergency-fund",
-   "status": "scheduled",
-   "board": "Savings goals and sinking funds",
-   "theme": "paper"
-  },
-  {
-   "date": "2026-10-20",
-   "slug": "pin-50-30-20-calculator-forest",
-   "type": "calculator",
-   "source": "50-30-20-budget-calculator",
-   "status": "scheduled",
-   "board": "Finance Calculators",
-   "theme": "forest"
-  },
-  {
-   "date": "2026-10-22",
-   "slug": "pin-biweekly-paycheck-calculator-sky",
-   "type": "calculator",
-   "source": "biweekly-paycheck-calculator",
-   "status": "scheduled",
-   "board": "Finance Calculators",
-   "theme": "sky"
-  },
-  {
-   "date": "2026-10-24",
-   "slug": "pin-split-bills-by-income-sand",
-   "type": "calculator",
-   "source": "bill-split-calculator",
-   "status": "scheduled",
-   "board": "Couples budgeting and shared finances",
-   "theme": "sand"
-  },
-  {
-   "date": "2026-10-26",
-   "slug": "pin-sinking-fund-calculator-lavender.mp4",
-   "type": "calculator-video",
-   "source": "sinking-fund-calculator",
-   "status": "scheduled",
-   "board": "Savings goals and sinking funds",
-   "theme": "lavender"
-  }
- ]
+  "note": "Pinterest content log. Each entry is one single-image (or video) pin scheduled via Metricool. Check here before creating new pins so nothing repeats. Cadence: one pin every day at 9:00 am CT.",
+  "pins": [
+    {
+      "date": "2026-10-13",
+      "slug": "pin-debt-payoff-sky",
+      "type": "product",
+      "source": "debt-payoff-tracker",
+      "status": "scheduled",
+      "board": "Debt payoff trackers and tips",
+      "theme": "sky"
+    },
+    {
+      "date": "2026-10-14",
+      "slug": "budget-spreadsheet-pin-2",
+      "type": "product",
+      "source": "budget-spreadsheet",
+      "status": "scheduled",
+      "board": "Monthly budget templates",
+      "theme": "forest-ish"
+    },
+    {
+      "date": "2026-10-15",
+      "slug": "pin-couples-budget-lavender",
+      "type": "product",
+      "source": "couples-budget-spreadsheet",
+      "status": "scheduled",
+      "board": "Couples budgeting and shared finances",
+      "theme": "lavender"
+    },
+    {
+      "date": "2026-10-16",
+      "slug": "budget-spreadsheet-pin-3",
+      "type": "product",
+      "source": "budget-spreadsheet",
+      "status": "scheduled",
+      "board": "Monthly budget templates",
+      "theme": "forest-ish"
+    },
+    {
+      "date": "2026-10-17",
+      "slug": "pin-savings-goals-sand",
+      "type": "product",
+      "source": "savings-goals-tracker",
+      "status": "scheduled",
+      "board": "Savings goals and sinking funds",
+      "theme": "sand"
+    },
+    {
+      "date": "2026-10-18",
+      "slug": "sinking-fund-vs-emergency-fund-pin-2-v2",
+      "type": "article",
+      "source": "sinking-fund-vs-emergency-fund",
+      "status": "scheduled",
+      "board": "Savings goals and sinking funds",
+      "theme": "paper"
+    },
+    {
+      "date": "2026-10-19",
+      "slug": "pin-net-worth-charcoal",
+      "type": "product",
+      "source": "net-worth-tracker",
+      "status": "scheduled",
+      "board": "Net worth tracking",
+      "theme": "charcoal"
+    },
+    {
+      "date": "2026-10-20",
+      "slug": "pin-50-30-20-calculator-forest",
+      "type": "calculator",
+      "source": "50-30-20-budget-calculator",
+      "status": "scheduled",
+      "board": "Finance Calculators",
+      "theme": "forest"
+    },
+    {
+      "date": "2026-10-21",
+      "slug": "pin-credit-card-lavender",
+      "type": "product",
+      "source": "credit-card-tracker",
+      "status": "scheduled",
+      "board": "Debt payoff trackers and tips",
+      "theme": "lavender"
+    },
+    {
+      "date": "2026-10-22",
+      "slug": "pin-biweekly-paycheck-calculator-sky",
+      "type": "calculator",
+      "source": "biweekly-paycheck-calculator",
+      "status": "scheduled",
+      "board": "Finance Calculators",
+      "theme": "sky"
+    },
+    {
+      "date": "2026-10-23",
+      "slug": "pin-why-budgets-fail-charcoal",
+      "type": "article",
+      "source": "why-most-budgets-fail",
+      "status": "scheduled",
+      "board": "Budgeting tips and habits",
+      "theme": "charcoal"
+    },
+    {
+      "date": "2026-10-24",
+      "slug": "pin-split-bills-by-income-sand",
+      "type": "calculator",
+      "source": "bill-split-calculator",
+      "status": "scheduled",
+      "board": "Couples budgeting and shared finances",
+      "theme": "sand"
+    },
+    {
+      "date": "2026-10-25",
+      "slug": "pin-track-expenses-burnout-forest",
+      "type": "article",
+      "source": "track-expenses-without-burnout",
+      "status": "scheduled",
+      "board": "Budgeting tips and habits",
+      "theme": "forest"
+    },
+    {
+      "date": "2026-10-26",
+      "slug": "pin-sinking-fund-calculator-lavender.mp4",
+      "type": "calculator-video",
+      "source": "sinking-fund-calculator",
+      "status": "scheduled",
+      "board": "Savings goals and sinking funds",
+      "theme": "lavender"
+    }
+  ]
 }
