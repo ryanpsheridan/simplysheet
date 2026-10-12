@@ -14,7 +14,7 @@ from playwright.sync_api import sync_playwright
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "public", "images", "pins")
+OUT = os.environ.get("PIN_OUT") or os.path.join(ROOT, "public", "images", "pins")
 FONTS = os.path.join(ROOT, "public", "fonts")
 LOGO = os.path.join(HERE, "assets", "logo.svg")
 
@@ -53,12 +53,19 @@ h1{{text-wrap:balance;font-family:Aspekta,InterV,sans-serif;font-weight:500;lett
 .v{{font-size:32px;line-height:40px;font-weight:500;letter-spacing:-.015em}}
 """
 
+
+THEMES = {
+ "sky": ".pin{background:#B0E0FF}.frame{background:rgba(255,255,255,.55)}.inp{border-color:#fff}.res{border-color:#fff}.cap span,.lede{color:#3F4A44}",
+ "charcoal": ".pin{background:#292929;color:#fff}h1{color:#fff}.lede{color:#B5B5B0}.frame{background:#353535}.frame h2{color:#fff}.lab{color:#fff}.inp,.res{color:#26352C}.inp{border-color:#fff}.inp.on{border-color:#B0E0FF}.res{border-color:#fff}.cap{color:#fff}.cap span{color:#B5B5B0}.brand{color:#fff}",
+ "sand": ".pin{background:#F1E7C0}.frame{background:#DAD6FF}.lede{color:#4E4A3A}.cap span{color:#4E4A3A}.inp{border-color:#fff}.res{border-color:#fff}",
+}
+
 def esc(s): return (s.replace("&", "&amp;").replace("<", "&lt;"))
 
 def build(spec, animate=False):
     compact = spec["layout"] == "calc" and len(spec["fields"]) > 2
     extra = ".inp{height:64px;font-size:34px}.fld{margin-bottom:14px}.lab{font-size:26px;margin-bottom:8px}.frame{padding:32px 40px}.frame h2{margin-bottom:16px}.res{padding:22px 32px;margin-top:20px}.res .big{font-size:84px;line-height:90px}.res .r2{margin-top:16px;padding-top:16px}.body{margin-top:40px}" if compact else ""
-    h = [f"<style>{CSS}{extra}</style><div class='pin' id='pin'>",
+    h = [f"<style>{CSS}{extra}{THEMES.get(spec.get("theme",""),"")}</style><div class='pin' id='pin'>",
          f"<h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div><div class='body'>"]
     if spec["layout"] == "calc":
         h.append(f"<div class='frame'><h2>{esc(spec['card_title'])}</h2>")
