@@ -66,6 +66,12 @@ def esc(s): return (s.replace("&", "&amp;").replace("<", "&lt;"))
 def build(spec, animate=False):
     compact = spec["layout"] == "calc" and len(spec["fields"]) > 2
     extra = ".inp{height:64px;font-size:34px}.fld{margin-bottom:14px}.lab{font-size:26px;margin-bottom:8px}.frame{padding:32px 40px}.frame h2{margin-bottom:16px}.res{padding:22px 32px;margin-top:20px}.res .big{font-size:84px;line-height:90px}.res .r2{margin-top:16px;padding-top:16px}.body{margin-top:40px}" if compact else ""
+    if spec["layout"] == "cover":
+        photo = os.path.join(ROOT, spec["photo"])
+        return (f"<style>{CSS}.pin{{padding:0}}.ph{{height:{spec.get('photo_height',860)}px;background:url('file://{photo}') center/cover}}"
+                f".pn{{flex:1;display:flex;flex-direction:column;padding:64px 80px 72px}}.pn h1{{font-size:88px;line-height:96px}}.pn .lede{{font-size:38px;line-height:50px}}{THEMES.get(spec.get('theme',''),'')}</style>"
+                f"<div class='pin' id='pin'><div class='ph'></div><div class='pn'><h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div>"
+                f"<div class='brand'><img src='file://{LOGO}'><span>Simply Sheets</span></div></div></div>")
     h = [f"<style>{CSS}{extra}{THEMES.get(spec.get("theme",""),"")}</style><div class='pin' id='pin'>",
          f"<h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div><div class='body'>"]
     if spec["layout"] == "calc":
