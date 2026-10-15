@@ -9,6 +9,7 @@ import ToolCard from '../components/ToolCard.astro';
 import Faq from '../components/Faq.astro';
 import Toc from '../components/Toc.astro';
 import ReadingProgress from '../components/ReadingProgress.astro';
+import TableScroll from '../components/TableScroll.astro';
 import { SITE_TITLE, pageTitle } from '../consts';
 import { TOOLS, toolId } from '../data/tools';
 import { getRelatedArticles, toArticleCard } from '../utils/articles';
@@ -172,7 +173,7 @@ const breadcrumbSchema = {
 			</div>
 		</main>
 		<Footer />
-
+		<TableScroll />
 	</body>
 </html>
 

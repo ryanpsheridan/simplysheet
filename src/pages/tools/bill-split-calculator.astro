@@ -8,6 +8,7 @@ const description = "Splitting bills 50/50 isn't fair when incomes differ. Enter
 
 const toc = [
 	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'split-by-income', text: 'How to split bills based on income' },
 	{ slug: 'even-vs-proportional', text: '50/50 vs. splitting by income' },
 	{ slug: 'what-counts', text: 'What counts as a shared bill' },
 	{ slug: 'making-it-work', text: 'Making the split work in practice' },
@@ -48,10 +49,10 @@ const faq = [
 	productSlug="couples-budget-spreadsheet"
 	productLabel="Split bills fairly in one shared sheet"
 	relatedToolUrls={[
+		'/tools/group-bill-split-calculator/',
 		'/tools/50-30-20-budget-calculator/',
 		'/tools/emergency-fund-calculator/',
 		'/tools/sinking-fund-calculator/',
-		'/tools/expense-tracking-readiness/',
 	]}
 >
 	<Fragment slot="intro">When two people earn different amounts, an even 50/50 split can quietly leave the lower earner with much less breathing room. Enter both take-home incomes and your total shared bills, and the calculator shows two versions side by side: a flat 50/50 split and a split weighted by income, so you can pick the one that actually feels fair.</Fragment>
@@ -61,6 +62,22 @@ const faq = [
 	<h2 id="how-it-works">How this calculator works</h2>
 	<p>The calculator takes three numbers: each partner's monthly take-home pay and the total you spend on shared bills each month. From those it works out two things. First, a flat 50/50 split, where each person pays half of the shared bills regardless of income. Second, a proportional split, where each person covers the same share of the bills as their share of your combined income.</p>
 	<p>Take-home pay means what actually reaches each account after taxes, retirement, and insurance. Using gross salary throws off the ratio, because payroll deductions rarely line up the same way for two different people. If you're not sure how much of your income is really free after essentials, the <a href="/tools/50-30-20-budget-calculator/">50/30/20 budget calculator</a> is a good companion.</p>
+
+	<h2 id="split-by-income">How do you split bills based on income?</h2>
+	<p>Add both take-home incomes together, then divide each person's income by that total to get their share. Each person pays that percentage of the shared bills. Here's how it plays out when one partner brings home $5,000 a month, the other $3,000, and shared bills come to $3,200:</p>
+	<table>
+		<thead>
+			<tr><th></th><th>Partner A</th><th>Partner B</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>Take-home pay</td><td>$5,000</td><td>$3,000</td></tr>
+			<tr><td>Share of income</td><td>62.5%</td><td>37.5%</td></tr>
+			<tr><td>Pays toward bills</td><td>$2,000</td><td>$1,200</td></tr>
+			<tr><td>Pay kept, split by income</td><td>60%</td><td>60%</td></tr>
+			<tr><td>Pay kept, split 50/50</td><td>68%</td><td>47%</td></tr>
+		</tbody>
+	</table>
+	<p>Splitting by income leaves both people with $3,000 and $1,800, the same 60% of their own pay. Splitting evenly leaves the lower earner with $1,400, less than half. That's the whole case for a proportional split in two rows, and it's what the calculator above works out from your own numbers.</p>
 
 	<h2 id="even-vs-proportional">50/50 vs. splitting by income</h2>
 	<p>A 50/50 split is the default a lot of couples reach for because it looks even. And when two incomes are close, it more or less is. The trouble starts when incomes are far apart. Half the rent is a small slice of a large paycheck and a large slice of a small one, so the person earning less ends up with far less money left for everything else, even though you both paid the same dollar amount.</p>

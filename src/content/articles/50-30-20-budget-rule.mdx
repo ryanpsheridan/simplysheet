@@ -103,6 +103,20 @@ Two incomes, shared expenses, and different spending habits make a single shared
 
 None of this means the rule is broken. It means it's a flexible starting framework, not a rigid law, and adjusting it to fit your actual life is part of using it well.
 
+## How do you make a 50/30/20 budget spreadsheet?
+
+A 50/30/20 spreadsheet needs only three parts: your monthly take-home pay in one cell, a target for each bucket worked out from it, and a running total of what you've actually spent in each bucket. Put your income in cell B1, headings in row 2, and the three buckets in rows 3 to 5, like this:
+
+| Bucket | Target formula | Actual spending | Difference |
+|---|---|---|---|
+| Needs | `=B1*0.5` | `=SUMIF(Expenses!C:C,"Needs",Expenses!D:D)` | `=B3-C3` |
+| Wants | `=B1*0.3` | `=SUMIF(Expenses!C:C,"Wants",Expenses!D:D)` | `=B4-C4` |
+| Savings & debt | `=B1*0.2` | `=SUMIF(Expenses!C:C,"Savings",Expenses!D:D)` | `=B5-C5` |
+
+On a second tab named Expenses, log each purchase with its date, a description, its bucket (Needs, Wants, or Savings), and the amount. The actual-spending column adds up each bucket as you go, and the difference column shows how much room is left. If you want a different ratio, change the three percentages in the target column and everything else follows.
+
+That's enough to work, and it's how many people start. Where a homemade sheet tends to run out of steam is the month-to-month part: copying tabs, keeping categories consistent, and seeing a trend across the year.
+
 ## How does this connect to actually tracking my spending?
 
 The 50/30/20 rule tells you the target. It doesn't tell you whether you're actually hitting it, and that's where most people's budgets quietly fall apart. Knowing the numbers in theory and seeing them show up in your real spending are two different things.

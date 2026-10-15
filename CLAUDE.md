@@ -442,7 +442,7 @@ Eyebrows are deliberately rare — four places sitewide. They're visually identi
 
 ## Table Scroll Affordance
 
-`ArticleLayout` wraps every `.prose table` in a `.table-scroll-wrap` and appends an edge shadow plus a "Swipe to scroll" hint — at **every** viewport width, since the script doesn't check one.
+`TableScroll.astro` (included by both `ArticleLayout` and `CalculatorLayout`, so a table in a tool page's content sections gets the same treatment) wraps every `.prose table` in a `.table-scroll-wrap` and appends the scroll rail described below, at **every** viewport width, since the script doesn't check one.
 
 Their CSS therefore has to live outside the `max-width: 600px` block, and visibility is gated on state classes the script sets only when the table genuinely overflows. When those styles were scoped to the mobile block, the hint had no styles at all on desktop and rendered as a stray, permanently visible line of text in the middle of the article. If you touch this, check a desktop article with a table before shipping.
 

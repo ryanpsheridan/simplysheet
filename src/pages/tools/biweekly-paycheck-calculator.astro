@@ -5,10 +5,11 @@ import PaycheckFrequencyNav from '../../components/PaycheckFrequencyNav.astro';
 
 const title = 'Biweekly Paycheck Calculator';
 const metaTitle = 'Biweekly Paycheck Calculator: 3-Paycheck Months';
-const description = 'Paid every two weeks? Find your two 3-paycheck months, see a steady monthly average, and build a budget around real numbers. Free, instant results.';
+const description = 'Paid every two weeks? Convert biweekly pay to monthly, find your two 3-paycheck months, and build a budget around real numbers. Free, instant results.';
 
 const toc = [
 	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'biweekly-to-monthly', text: 'Converting biweekly pay to monthly' },
 	{ slug: 'three-paycheck-months', text: 'Why some months have three paychecks' },
 	{ slug: 'average-vs-typical', text: 'Average vs. typical month' },
 	{ slug: 'extra-paycheck', text: 'What to do with an extra paycheck' },
@@ -22,6 +23,10 @@ const faq = [
 	{
 		question: 'Which months will have three paychecks?',
 		answer: 'It depends entirely on your payday schedule, not the calendar alone. Find your first payday of the year, then count forward in 14-day steps. Any month containing three of those paydays is a three-paycheck month. As a shortcut: if your first payday of a month lands on the 1st or 2nd, that month will almost always contain a third paycheck.',
+	},
+	{
+		question: 'How do I convert biweekly pay to monthly income?',
+		answer: 'Multiply your biweekly paycheck by 26 to get your annual income, then divide by 12. A $2,000 paycheck works out to $52,000 a year, or about $4,333 a month. Doubling the paycheck instead gives $4,000, which is your typical two-paycheck month but understates your real monthly average by about $333.',
 	},
 	{
 		question: 'Should I use gross pay or take-home pay in this calculator?',
@@ -64,6 +69,10 @@ const faq = [
 	<h2 id="how-it-works">How this calculator works</h2>
 	<p>The calculator takes one number, your take-home pay per paycheck, and turns it into the figures that matter for a monthly budget. Your typical month is two paychecks. Your three-paycheck months add one more check on top of that. And your monthly average spreads all 26 paychecks evenly across 12 months, which is the steadiest number to plan around.</p>
 	<p>Take-home pay means what actually lands in your account after taxes, retirement contributions, and insurance. If you enter your gross salary the results will look better than your real life, which is exactly how budgets end up failing in week one.</p>
+
+	<h2 id="biweekly-to-monthly">How do you convert biweekly pay to monthly?</h2>
+	<p>Multiply one paycheck by 26, the number of paychecks in a year, then divide by 12. That gives your true monthly average. On a $2,000 paycheck, that's $52,000 a year and about $4,333 a month. The shortcut is to multiply a paycheck by 2.17, which lands on the same number.</p>
+	<p>The common mistake is doubling the paycheck. Two checks is what most months actually deposit, so $4,000 is a fine number to spend against, but as a monthly income figure it leaves out two full paychecks a year. That gap matters on a rent or loan application that asks for monthly income, which is why the calculator shows both numbers. The same conversion works for hourly or salaried pay once you know your take-home per check, and <a href="/tools/weekly-paycheck-calculator/">weekly pay</a> uses 52 instead of 26.</p>
 
 	<h2 id="three-paycheck-months">Why some months have three paychecks</h2>
 	<p>A biweekly schedule pays you every 14 days, but calendar months are longer than 28 days. That mismatch slowly pushes your paydays earlier in each month until, twice a year, a third payday squeezes in before the month ends.</p>
