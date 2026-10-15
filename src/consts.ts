@@ -59,3 +59,13 @@ export function pageTitle(title: string): string {
 	const withBrand = `${title} | ${SITE_TITLE}`;
 	return withBrand.length <= TITLE_MAX ? withBrand : title;
 }
+
+// The address the Privacy and Terms pages give for questions and privacy
+// requests (access, deletion, and the like). Empty, they point people to the
+// Etsy shop's messages instead. Set a real inbox here, ideally a dedicated
+// one rather than a personal address.
+export const CONTACT_EMAIL = '';
+
+// Shown as "Last updated" on /privacy/ and /terms/. Bump it whenever either
+// page's substance changes.
+export const LEGAL_UPDATED = new Date('2026-10-15');

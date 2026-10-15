@@ -53,6 +53,35 @@ const ogImage = new URL(image.replace(/\.svg$/i, '.png'), Astro.site).toString()
 <script is:inline>
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
+	// Google Consent Mode v2. The site runs no ads, so the ad signals are
+	// denied everywhere. Analytics cookies default to granted, except in the
+	// EEA, UK and Switzerland, where they wait for the cookie banner
+	// (CookieConsent.astro). Google matches the region by the visitor's IP,
+	// so this default holds even if the banner's own timezone check misses an
+	// EU visitor. Until consent, GA sends cookieless pings only.
+	gtag('consent', 'default', {
+		ad_storage: 'denied',
+		ad_user_data: 'denied',
+		ad_personalization: 'denied',
+		analytics_storage: 'granted',
+	});
+	gtag('consent', 'default', {
+		analytics_storage: 'denied',
+		region: ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH'],
+		wait_for_update: 500,
+	});
+	// A choice made in the banner or footer "Cookie settings" applies
+	// everywhere, so a US visitor can opt out too. Global Privacy Control
+	// counts as a decline until the visitor says otherwise.
+	try {
+		var consent = localStorage.getItem('ss-consent');
+		if (!consent && navigator.globalPrivacyControl) consent = 'denied';
+		if (consent === 'granted' || consent === 'denied') {
+			gtag('consent', 'update', { analytics_storage: consent });
+		}
+	} catch (e) {
+		// Storage blocked: the regional defaults above stand.
+	}
 	gtag('js', new Date());
 	gtag('config', 'G-3CSDE2XWTG');
 </script>

@@ -1,0 +1,162 @@
+---
+// The cookie banner for visitors in the EEA, UK and Switzerland, where
+// Google Analytics cookies need consent first. BaseHead.astro sets the
+// Consent Mode defaults (denied there, by IP); this asks, stores the answer
+// in localStorage ('ss-consent'), and pushes it to gtag.
+//
+// Who sees it unprompted is decided by timezone, which costs no request. A
+// miss either way stays compliant: an EU visitor on a non-European timezone
+// keeps Google's IP-based "denied" default (no cookies, just no banner), and
+// anyone else who sees it can simply choose. Any visitor can reopen it from
+// the footer's "Cookie settings" button ([data-cookie-settings]).
+//
+// The two buttons are deliberately untracked (no data-cta): recording a
+// consent choice through the analytics it controls would be backwards.
+---
+
+<div class="cookie-consent" id="cookie-consent" role="dialog" aria-modal="false" aria-labelledby="cookie-consent-title" aria-describedby="cookie-consent-desc" hidden>
+	<p class="cookie-consent-title" id="cookie-consent-title">Cookies</p>
+	<p class="cookie-consent-desc" id="cookie-consent-desc">
+		We use Google Analytics cookies to see which articles and tools people find useful. Nothing is used for ads. <a href="/privacy/#cookies">Privacy policy</a>
+	</p>
+	<div class="cookie-consent-actions">
+		<button type="button" class="btn btn-secondary btn-sm" data-consent="denied">Decline</button>
+		<button type="button" class="btn btn-primary btn-sm" data-consent="granted">Accept</button>
+	</div>
+</div>
+
+<script>
+	const KEY = 'ss-consent';
+	const banner = document.getElementById('cookie-consent');
+
+	// Timezones covering the EEA, UK and Switzerland. Europe/* also takes in a
+	// few non-EU zones (Istanbul, Moscow); showing them a banner is harmless.
+	const EU_ATLANTIC = ['Atlantic/Azores', 'Atlantic/Canary', 'Atlantic/Madeira', 'Atlantic/Reykjavik', 'Atlantic/Faroe'];
+
+	function inConsentRegion() {
+		try {
+			const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+			return tz.startsWith('Europe/') || EU_ATLANTIC.includes(tz);
+		} catch {
+			return false;
+		}
+	}
+
+	function readChoice() {
+		try {
+			return localStorage.getItem(KEY);
+		} catch {
+			return null;
+		}
+	}
+
+	// Declining after accepting has to remove what was already set, not just
+	// stop setting more. GA's cookies live on the registrable domain, so try
+	// each parent of the hostname.
+	function clearAnalyticsCookies() {
+		const names = document.cookie
+			.split(';')
+			.map((c) => c.split('=')[0].trim())
+			.filter((n) => n === '_ga' || n.startsWith('_ga_') || n === '_gid');
+		const parts = location.hostname.split('.');
+		const domains = [''];
+		for (let i = 0; i < parts.length - 1; i++) domains.push('; domain=.' + parts.slice(i).join('.'));
+		for (const name of names) {
+			for (const d of domains) {
+				document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d}`;
+			}
+		}
+	}
+
+	function show() {
+		if (!banner) return;
+		banner.hidden = false;
+		banner.querySelector<HTMLButtonElement>('[data-consent="granted"]')?.focus({ preventScroll: true });
+	}
+
+	function hide() {
+		if (banner) banner.hidden = true;
+	}
+
+	function choose(value: 'granted' | 'denied') {
+		try {
+			localStorage.setItem(KEY, value);
+		} catch {
+			// Storage blocked: the choice holds for this page view only.
+		}
+		const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+		w.gtag?.('consent', 'update', { analytics_storage: value });
+		if (value === 'denied') clearAnalyticsCookies();
+		hide();
+	}
+
+	banner?.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach((btn) => {
+		btn.addEventListener('click', () => choose(btn.dataset.consent as 'granted' | 'denied'));
+	});
+
+	banner?.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && readChoice()) hide();
+	});
+
+	document.querySelectorAll('[data-cookie-settings]').forEach((el) => {
+		el.addEventListener('click', show);
+	});
+
+	if (!readChoice() && inConsentRegion()) {
+		// Don't steal focus on load: the visitor came for the page.
+		if (banner) banner.hidden = false;
+	}
+</script>
+
+<style>
+	.cookie-consent {
+		position: fixed;
+		z-index: 60;
+		left: max(var(--space-md), env(safe-area-inset-left));
+		bottom: max(var(--space-md), env(safe-area-inset-bottom));
+		width: min(24rem, calc(100vw - 2 * var(--space-md)));
+		padding: var(--space-md);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-xl);
+		/* The one floating surface on the site: it sits over arbitrary
+		   content, so it needs lift that a hairline alone can't give. */
+		box-shadow: var(--shadow-lg);
+	}
+	.cookie-consent[hidden] {
+		display: none;
+	}
+	.cookie-consent-title {
+		font-size: var(--text-body);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+		margin: 0 0 var(--space-2xs);
+	}
+	.cookie-consent-desc {
+		font-size: var(--text-small);
+		line-height: var(--leading-normal);
+		color: var(--color-text-secondary);
+		margin: 0 0 var(--space-sm);
+	}
+	.cookie-consent-desc a {
+		color: var(--color-text);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+	/* Equal-weight sizes for both answers, as EU guidance expects; the pair
+	   wraps rather than stretching on a narrow phone. */
+	.cookie-consent-actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: var(--space-xs);
+	}
+
+	@media (max-width: 600px) {
+		.cookie-consent {
+			left: max(var(--space-sm), env(safe-area-inset-left));
+			bottom: max(var(--space-sm), env(safe-area-inset-bottom));
+			width: calc(100vw - 2 * var(--space-sm));
+		}
+	}
+</style>

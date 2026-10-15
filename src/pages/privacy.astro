@@ -1,0 +1,94 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_EMAIL, ETSY_SHOP_URL, withEtsyTracking } from '../consts';
+
+// Keep this page in step with what the site actually does. If you add a
+// script, cookie, form, or third-party service, update the matching section
+// (and LEGAL_UPDATED in consts.ts) in the same change.
+const etsyUrl = withEtsyTracking(ETSY_SHOP_URL);
+---
+
+<LegalLayout
+	title="Privacy Policy"
+	metaTitle="Privacy and Cookie Policy | Simply Sheets"
+	description="How Simply Sheets handles visitor data: what Google Analytics measures, which cookies and browser storage the site uses, and how to opt out or make a privacy request."
+>
+	<p>Simply Sheets (simplysheetdesign.com) is a small personal finance site run by Ryan Sheridan in Texas, United States. This policy explains what information the site collects when you visit, why, and the choices you have. In privacy law terms, Simply Sheets is the "controller" of that information.</p>
+	<p>The short version: there are no accounts, no sign-up forms, no newsletter, and no advertising. The site measures how pages are used with Google Analytics, and only with your consent if you're in the European Economic Area, the UK, or Switzerland. Purchases happen on Etsy, not here.</p>
+
+	<h2 id="what-we-collect">What the site collects</h2>
+
+	<h3>Usage analytics (Google Analytics 4)</h3>
+	<p>Google Analytics tells us which articles, calculators, and spreadsheet pages people find useful. It records things like the pages you view, the links and buttons you click (including clicks through to Etsy), how you arrived (for example, a search engine or another site), your approximate location at the city or country level, and your device, browser, and screen size. It identifies a returning browser with a random ID stored in a cookie, not with your name or email.</p>
+	<p>Google Analytics 4 does not log or store IP addresses. We have no advertising features turned on, so this data is not used to show you ads or shared with Google's ad products. We keep analytics data for up to 14 months.</p>
+	<p>If you're in the EEA, UK, or Switzerland, Google Analytics sets no cookies until you click Accept in the cookie banner. Before then, and if you decline, it sends only cookieless signals that can't recognise you between visits.</p>
+
+	<h3>Site performance (Vercel Speed Insights)</h3>
+	<p>The site is hosted by Vercel, which measures how quickly pages load (Core Web Vitals) using anonymous, aggregated data. Speed Insights uses no cookies and does not identify you.</p>
+
+	<h3>Hosting logs</h3>
+	<p>Like any web host, Vercel briefly processes your IP address and browser details to deliver pages and protect the site from abuse. These logs are kept only for a short time and aren't used to identify visitors.</p>
+
+	<h3>Reader polls</h3>
+	<p>Some articles include a one-question poll. When you vote, your browser creates a random ID so you can only vote once. That ID and your answer are stored with Upstash (our database provider) for up to one year, and your vote is added to the anonymous totals. Nothing about the vote is linked to you.</p>
+
+	<h3>What the site does not collect</h3>
+	<p>No names, email addresses, payment details, or account information. Numbers you type into the calculators stay in your browser and are never sent anywhere.</p>
+
+	<h2 id="cookies">Cookies and browser storage</h2>
+	<p>These are the only cookies and browser storage items the site uses:</p>
+	<ul>
+		<li><code>_ga</code> and <code>_ga_&lt;ID&gt;</code> (cookies, Google Analytics): distinguish returning visitors and sessions. They last up to 2 years and are only set with consent in the EEA, UK, and Switzerland.</li>
+		<li><code>ss-consent</code> (local storage): remembers whether you accepted or declined analytics cookies, so the banner doesn't ask again.</li>
+		<li><code>ss-poll-voter</code>, <code>ss-poll-vote-&lt;poll&gt;</code>, <code>ss-poll-counts-&lt;poll&gt;</code> (local storage): remember that you voted in a poll and show you the results. Only set if you vote.</li>
+	</ul>
+	<p>You can change your choice at any time with the <button type="button" class="legal-inline-btn" data-cookie-settings>Cookie settings</button> button, which is also in the footer of every page. Declining removes the Google Analytics cookies from this site. The site also respects the Global Privacy Control signal: if your browser sends it, analytics cookies stay off unless you choose otherwise. You can also block or delete cookies in your browser settings, or install <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google's opt-out add-on</a>.</p>
+
+	<h2 id="why">Why we use it (legal basis)</h2>
+	<p>For visitors in the EEA, UK, and Switzerland, analytics cookies rely on your consent, which you can withdraw at any time. Hosting logs, performance measurement, and poll storage rely on our legitimate interest in running a secure, working site, or are strictly necessary for a feature you chose to use.</p>
+
+	<h2 id="sharing">Who it's shared with</h2>
+	<p>We don't sell or rent personal information, and we don't share it for advertising. The only companies that process data for the site are its service providers:</p>
+	<ul>
+		<li>Google LLC (Google Analytics), under <a href="https://business.safety.google/adsprocessorterms/" rel="noopener">Google's data processing terms</a>.</li>
+		<li>Vercel Inc. (hosting and Speed Insights).</li>
+		<li>Upstash Inc. (poll storage).</li>
+	</ul>
+	<p>Each is based in, or may process data in, the United States. Google is certified under the EU-U.S. Data Privacy Framework and its UK and Swiss extensions; transfers to the other providers rely on the safeguards in their data processing terms, such as the European Commission's Standard Contractual Clauses.</p>
+
+	<h2 id="etsy">Buying on Etsy</h2>
+	<p>Spreadsheets are sold through the <a href={etsyUrl} data-cta="privacy_etsy_link">Simply Sheets Etsy shop</a>. When you follow a link to Etsy, the link tells Etsy you came from this site. Anything you do on Etsy, including your purchase, order details, and messages, is handled under <a href="https://www.etsy.com/legal/privacy/" rel="noopener">Etsy's Privacy Policy</a>. As the seller, we receive the order information Etsy shares with sellers and use it only to fulfil and support your order.</p>
+
+	<h2 id="your-rights">Your rights</h2>
+	<p>Wherever you live, you can ask what information we hold about you, and ask us to correct or delete it. In practice the site holds very little that can be tied to a person, but we'll help with any request.</p>
+	<p>If you're in the EEA, UK, or Switzerland, you also have the right to access, correct, erase, restrict, or object to the processing of your personal data, to data portability, and to withdraw consent at any time. You can complain to your local data protection authority (in the UK, the <a href="https://ico.org.uk/make-a-complaint/" rel="noopener">Information Commissioner's Office</a>), though we'd appreciate the chance to sort it out first.</p>
+	<p>If you're in California or another U.S. state with a privacy law, you have the right to know, delete, and correct personal information, and to opt out of its sale or sharing. We don't sell or share personal information for targeted advertising.</p>
+
+	<h2 id="children">Children</h2>
+	<p>The site is written for adults and isn't directed at children under 16. We don't knowingly collect information from children.</p>
+
+	<h2 id="changes">Changes to this policy</h2>
+	<p>If the site's use of data changes, this page will be updated and the date at the top will change.</p>
+
+	<h2 id="contact">Contact</h2>
+	{CONTACT_EMAIL ? (
+		<p>For questions or privacy requests, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. We'll reply within 30 days.</p>
+	) : (
+		<p>For questions or privacy requests, send a message through the <a href={etsyUrl} data-cta="privacy_contact_etsy">Simply Sheets Etsy shop</a>. We'll reply within 30 days.</p>
+	)}
+</LegalLayout>
+
+<style>
+	/* Reads as a link in running text; it's a button because it opens the
+	   cookie banner rather than going anywhere. */
+	.legal-inline-btn {
+		font: inherit;
+		color: inherit;
+		background: none;
+		border: 0;
+		padding: 0;
+		cursor: pointer;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+</style>

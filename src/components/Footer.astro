@@ -1,6 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
 import { ETSY_SHOP_URL, withEtsyTracking } from '../consts';
+import CookieConsent from './CookieConsent.astro';
 
 const year = new Date().getFullYear();
 const budgetSpreadsheet = await getEntry('templates', 'budget-spreadsheet');
@@ -9,7 +10,7 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 
 <footer>
 	<p class="footer-promo-bar">
-		New to budgeting? Start with our best-selling <a href={promoUrl} class="footer-promo-link" data-cta="footer_promo_banner">Budget Spreadsheet</a> on Etsy and save 30% this week.
+		New to budgeting? Start with our best-selling <a href={promoUrl} class="footer-promo-link" data-cta="footer_promo_banner">Budget Spreadsheet</a> on Etsy and save 30%.
 	</p>
 	<div class="footer-inner">
 		<div class="footer-top">
@@ -53,8 +54,15 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 
 		<div class="footer-bottom">
 			<p>&copy; {year} Simply Sheets</p>
+			<ul class="footer-legal">
+				<li><a href="/privacy/" data-cta="footer_link:privacy">Privacy</a></li>
+				<li><a href="/terms/" data-cta="footer_link:terms">Terms</a></li>
+				<li><button type="button" class="footer-cookie-btn" data-cookie-settings>Cookie settings</button></li>
+			</ul>
+			<p class="footer-disclaimer">Articles and calculators are for education only and aren't financial, tax, or legal advice.</p>
 		</div>
 	</div>
+	<CookieConsent />
 </footer>
 
 <style>
@@ -175,11 +183,46 @@ const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon
 	.footer-bottom {
 		padding-top: var(--space-md);
 		border-top: 1px solid var(--color-border-hairline);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: var(--space-xs) var(--space-md);
 	}
 	.footer-bottom p {
 		font-size: var(--text-small);
 		color: var(--color-text-muted);
 		margin: 0;
+	}
+	.footer-legal {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-md);
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	/* The button reopens the cookie banner, so it is a button, but it sits in
+	   a row of links and has to read as one of them. */
+	.footer-legal a,
+	.footer-cookie-btn {
+		font: inherit;
+		font-size: var(--text-small);
+		color: var(--color-text-muted);
+		background: none;
+		border: 0;
+		padding: 0;
+		cursor: pointer;
+		text-decoration: underline;
+		text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+		text-underline-offset: 0.22em;
+	}
+	.footer-legal a:hover,
+	.footer-cookie-btn:hover {
+		color: var(--color-text);
+		text-decoration-color: currentColor;
+	}
+	.footer-bottom .footer-disclaimer {
+		flex-basis: 100%;
 	}
 
 	/* ——— Responsive ——— */

@@ -1,0 +1,56 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_EMAIL, ETSY_SHOP_URL, withEtsyTracking } from '../consts';
+
+const etsyUrl = withEtsyTracking(ETSY_SHOP_URL);
+---
+
+<LegalLayout
+	title="Terms of Use"
+	metaTitle="Terms of Use and Disclaimer | Simply Sheets"
+	description="The terms for using Simply Sheets: educational content that isn't financial advice, how calculator results should be read, and how spreadsheet purchases work through Etsy."
+>
+	<p>These terms cover your use of simplysheetdesign.com ("the site"), run by Ryan Sheridan in Texas, United States, as Simply Sheets. By using the site you agree to them. If you don't agree, please don't use the site.</p>
+
+	<h2 id="not-financial-advice">Not financial advice</h2>
+	<p>Everything on the site, including articles, calculators, assessments, quizzes, and spreadsheet templates, is general information for educational purposes. It isn't financial, investment, tax, or legal advice, and it doesn't take your personal situation into account. Simply Sheets isn't a financial adviser, and using the site doesn't create an advisory relationship.</p>
+	<p>Before making a significant financial decision, consider talking to a qualified professional who can look at your full circumstances.</p>
+
+	<h2 id="calculators">Calculators and examples</h2>
+	<p>Calculator results are estimates based on the numbers you enter and simplified assumptions, such as fixed interest rates and regular payments. Real outcomes depend on things the calculators can't see, like lender terms, fees, taxes, and changes over time. Examples and figures in articles are illustrations, not predictions or guarantees. We work to keep everything accurate and current, but we can't promise it's error-free.</p>
+
+	<h2 id="purchases">Buying spreadsheets</h2>
+	<p>Spreadsheet templates are sold through the <a href={etsyUrl} data-cta="terms_etsy_link">Simply Sheets Etsy shop</a>. Every purchase, including payment, delivery, refunds, and disputes, is governed by Etsy's terms and the shop's own policies shown on Etsy, not by this site. Prices, discounts, and coupon codes mentioned on the site are set on Etsy and may change; the price shown at Etsy checkout is the one that applies.</p>
+	<p>What you can do with a template you buy (for example, personal use versus resale or sharing) is described in its Etsy listing.</p>
+
+	<h2 id="content">Content and copyright</h2>
+	<p>The articles, tools, illustrations, photos, audio narration, and design of the site belong to Simply Sheets or its licensors and are protected by copyright. You're welcome to read, print, and share links to pages for personal use. Please don't copy, republish, or sell substantial parts of the site, or use it to train or feed automated systems, without permission. Short quotes with a link back are fine.</p>
+
+	<h2 id="acceptable-use">Using the site</h2>
+	<p>Please don't interfere with the site's operation, try to get around its security, scrape it at a volume that strains it, or manipulate reader polls.</p>
+
+	<h2 id="links">Links to other sites</h2>
+	<p>The site links to other websites, including Etsy and sources cited in articles. We don't control those sites and aren't responsible for their content, policies, or practices.</p>
+
+	<h2 id="disclaimer">No warranty</h2>
+	<p>The site is provided "as is" and "as available," without warranties of any kind, express or implied, including accuracy, completeness, fitness for a particular purpose, or uninterrupted availability.</p>
+
+	<h2 id="liability">Limitation of liability</h2>
+	<p>To the fullest extent the law allows, Simply Sheets won't be liable for any indirect, incidental, or consequential losses, or for any financial loss, arising from your use of the site or reliance on its content or calculators. Nothing in these terms limits liability that can't be limited by law, or your rights as a consumer under the laws of the country you live in.</p>
+
+	<h2 id="governing-law">Governing law</h2>
+	<p>These terms are governed by the laws of the State of Texas, United States, without regard to its conflict of law rules. If you live in the EEA, UK, or Switzerland, you also keep the protection of the mandatory consumer laws where you live.</p>
+
+	<h2 id="privacy">Privacy</h2>
+	<p>How the site handles data is explained in the <a href="/privacy/" data-cta="terms_privacy_link">Privacy Policy</a>.</p>
+
+	<h2 id="changes">Changes to these terms</h2>
+	<p>We may update these terms from time to time. The date at the top shows when they last changed, and continuing to use the site after a change means you accept the updated terms.</p>
+
+	<h2 id="contact">Contact</h2>
+	{CONTACT_EMAIL ? (
+		<p>Questions about these terms? Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+	) : (
+		<p>Questions about these terms? Send a message through the <a href={etsyUrl} data-cta="terms_contact_etsy">Simply Sheets Etsy shop</a>.</p>
+	)}
+</LegalLayout>
