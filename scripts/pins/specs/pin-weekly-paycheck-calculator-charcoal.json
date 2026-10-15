@@ -1,0 +1,14 @@
+{
+ "slug": "pin-weekly-paycheck-calculator-charcoal",
+ "layout": "calc",
+ "theme": "charcoal",
+ "headline": "Four months a year bring five weekly paychecks",
+ "lede": "Enter one paycheck to see a typical month, a five-paycheck month, and a steady average.",
+ "card_title": "Weekly paycheck calculator",
+ "fields": [{"label": "Take-home pay per week", "value": "$950"}],
+ "result": {"label": "Steady monthly average", "value": "$4,116.67", "rows": [
+  {"label": "Typical month (4 paychecks)", "value": "$3,800"},
+  {"label": "Five-paycheck month", "value": "$4,750"},
+  {"label": "Per year (52 paychecks)", "value": "$49,400"}]},
+ "caption": ""
+}
