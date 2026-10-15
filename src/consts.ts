@@ -64,7 +64,7 @@ export function pageTitle(title: string): string {
 // requests (access, deletion, and the like). Empty, they point people to the
 // Etsy shop's messages instead. Set a real inbox here, ideally a dedicated
 // one rather than a personal address.
-export const CONTACT_EMAIL = '';
+export const CONTACT_EMAIL = 'simplysheetdesign@gmail.com';
 
 // Shown as "Last updated" on /privacy/ and /terms/. Bump it whenever either
 // page's substance changes.

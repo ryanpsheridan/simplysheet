@@ -5,12 +5,12 @@ import CookieConsent from './CookieConsent.astro';
 
 const year = new Date().getFullYear();
 const budgetSpreadsheet = await getEntry('templates', 'budget-spreadsheet');
-const promoUrl = withEtsyTracking(`${budgetSpreadsheet!.data.darkListing}?coupon=SAVENOW`);
+const promoUrl = withEtsyTracking(budgetSpreadsheet!.data.darkListing);
 ---
 
 <footer>
 	<p class="footer-promo-bar">
-		New to budgeting? Start with our best-selling <a href={promoUrl} class="footer-promo-link" data-cta="footer_promo_banner">Budget Spreadsheet</a> on Etsy and save 30%.
+		New to budgeting? Start with our best-selling <a href={promoUrl} class="footer-promo-link" data-cta="footer_promo_banner">Budget Spreadsheet</a> on Etsy.
 	</p>
 	<div class="footer-inner">
 		<div class="footer-top">
