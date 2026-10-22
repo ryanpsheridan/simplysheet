@@ -1,6 +1,6 @@
 # Pinterest posting playbook
 
-Goal: one single-image (or video) pin every day at 6:00 am CT, posted through Metricool (blogId 7380070, Pinterest account simplysheetdesign, timezone America/Chicago). `queue.json` logs every pin so nothing repeats.
+Goal: one single-image (or video) pin every three days at 6:00 am CT, posted through Metricool (blogId 7380070, Pinterest account simplysheetdesign, timezone America/Chicago). `queue.json` logs every pin so nothing repeats.
 
 ## Content sources (use real facts only)
 - Calculators: `src/data/tools.ts` lists them. Use the worked examples in the matching article or tool page, or plain arithmetic from the stated rule. Never invent product features or numbers.
@@ -15,7 +15,7 @@ Goal: one single-image (or video) pin every day at 6:00 am CT, posted through Me
 2. `python3 scripts/pins/make_pin.py scripts/pins/specs/<slug>.json` writes `public/images/pins/<slug>.png`. Use `CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome` if needed.
 3. Look at the PNG. Check: no widow words in headlines, nothing overlapping, math correct, sentence case, no all-caps, no em dashes.
 4. Commit and push to `main`. Metricool can fetch the file right away from `https://raw.githubusercontent.com/ryanpsheridan/simplysheet/main/public/images/pins/<file>` (the site deploy can lag, so use this URL).
-5. Create the Metricool post (`createScheduledPost`, provider pinterest, `autoPublish: true`, `draft: false`, 6:00 am CT, the next free day after the last queued pin).
+5. Create the Metricool post (`createScheduledPost`, provider pinterest, `autoPublish: true`, `draft: false`, 6:00 am CT, three days after the last queued pin).
 6. Add the entry to `queue.json` and push.
 
 ## Styles
@@ -37,7 +37,7 @@ Five monochromatic themes: forest (main, the default), sky, charcoal, sand, lave
 - Net worth tracking: 1035898420480430153 (net worth tracker pins)
 
 ## Board coverage
-Every week, each of the seven boards gets at least one pin: Monthly budget templates, Couples budgeting and shared finances, Savings goals and sinking funds, Finance Calculators, Debt payoff trackers and tips, Net worth tracking, Budgeting tips and habits. Calculator pins go to Finance Calculators unless a topic board fits better (couples, savings, debt). Check `queue.json` boards before choosing.
+Over each two-week stretch, each of the seven boards gets at least one pin: Monthly budget templates, Couples budgeting and shared finances, Savings goals and sinking funds, Finance Calculators, Debt payoff trackers and tips, Net worth tracking, Budgeting tips and habits. Calculator pins go to Finance Calculators unless a topic board fits better (couples, savings, debt). Check `queue.json` boards before choosing.
 
 ## Guardrails
 - Never touch Etsy listings. Never edit or delete other posts.
