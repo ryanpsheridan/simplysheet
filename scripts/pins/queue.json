@@ -135,6 +135,33 @@
       "status": "scheduled",
       "board": "Budgeting tips and habits",
       "theme": "forest"
+    },
+    {
+      "date": "2026-11-06",
+      "slug": "pin-budget-expense-log-sky",
+      "type": "product",
+      "source": "budget-spreadsheet",
+      "status": "scheduled",
+      "board": "Monthly budget templates",
+      "theme": "sky"
+    },
+    {
+      "date": "2026-11-09",
+      "slug": "pin-net-worth-snapshot-forest",
+      "type": "product",
+      "source": "net-worth-tracker",
+      "status": "scheduled",
+      "board": "Net worth tracking",
+      "theme": "forest"
+    },
+    {
+      "date": "2026-11-12",
+      "slug": "pin-debt-payment-log-sand",
+      "type": "product",
+      "source": "debt-payoff-tracker",
+      "status": "scheduled",
+      "board": "Debt payoff trackers and tips",
+      "theme": "sand"
     }
   ]
 }
