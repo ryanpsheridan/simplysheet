@@ -1,0 +1,9 @@
+{
+ "slug": "pin-budget-expense-log-sky",
+ "layout": "product",
+ "theme": "sky",
+ "image": "scripts/pins/assets/mockups/budget-dark.png",
+ "headline": "Log an expense, watch the bar fill",
+ "lede": "Each entry takes four fields: amount, category, date and an optional note. The progress bars update as you spend.",
+ "caption": "One tab. Every dollar."
+}

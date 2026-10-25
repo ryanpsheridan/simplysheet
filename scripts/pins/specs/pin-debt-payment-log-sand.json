@@ -1,0 +1,9 @@
+{
+ "slug": "pin-debt-payment-log-sand",
+ "layout": "product",
+ "theme": "sand",
+ "image": "scripts/pins/assets/mockups/debt-dark.png",
+ "headline": "Log a payment, watch the balance drop",
+ "lede": "Enter the date, the debt and the amount. The dashboard updates what you have paid, what is left and the percent complete.",
+ "caption": "See every debt. Track every dollar."
+}
