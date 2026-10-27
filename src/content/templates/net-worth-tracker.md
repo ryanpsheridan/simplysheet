@@ -13,7 +13,7 @@ midImageLight: "/images/featured budget thumbnail-net worth tracker-light-theme-
 features:
   - "Track all assets and liabilities in one place"
   - "Monthly net worth snapshots"
-  - "Visual trend chart showing growth over time"
+  - "Bar chart of every asset and liability"
   - "Categories for bank accounts, investments, property, and debt"
   - "Automatic net worth calculation"
   - "Works with Google Sheets and Microsoft Excel"
@@ -74,7 +74,7 @@ Every account, both sides. Assets are current accounts, savings, brokerage, reti
 
 Collecting them the first time takes an hour or so, and it is the hardest part. After that it is a quarterly update of numbers you already know where to find. Write down where each figure comes from as you go, because the annoying part of the second snapshot is remembering which of three retirement accounts you pulled which number from.
 
-Two valuations need a rule rather than a lookup. Property is worth setting once from a recent estimate and revisiting yearly, not monthly, since a home value that jumps around on estimates makes your net worth chart mostly noise. Vehicles depreciate steadily, so either update them yearly or leave them out entirely. Leaving them out is defensible and produces a more stable number.
+Two valuations need a rule rather than a lookup. Property is worth setting once from a recent estimate and revisiting yearly, not monthly, since a home value that jumps around on estimates makes your net worth history mostly noise. Vehicles depreciate steadily, so either update them yearly or leave them out entirely. Leaving them out is defensible and produces a more stable number.
 
 ## Using it in Google Sheets or Excel
 
@@ -94,7 +94,7 @@ Be consistent rather than precise. If you value the house optimistically, do it 
 
 The History Log is where the value actually accumulates. Each entry records total assets, total liabilities, and net worth at a point in time, and the Dashboard shows the change since last month.
 
-Monthly is the documented cadence and quarterly is the one most people sustain. Either works. What does not work is skipping a year and then trying to reconstruct where you stood, because the past values are gone and the chart has a hole in it. Put a recurring reminder in your calendar the day you buy this, and log the number even in the months it went down.
+Monthly is the documented cadence and quarterly is the one most people sustain. Either works. What does not work is skipping a year and then trying to reconstruct where you stood, because the past values are gone and the history has a hole in it. Put a recurring reminder in your calendar the day you buy this, and log the number even in the months it went down.
 
 It will go down sometimes. Markets fall, cars depreciate, and a month with a large planned purchase shows up as a decline. A log with only the good months in it is worse than no log, because it will tell you a trend that is not true.
 
