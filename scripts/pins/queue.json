@@ -1,5 +1,5 @@
 {
-  "note": "Pinterest content log. Each entry is one single-image (or video) pin scheduled via Metricool. Check here before creating new pins so nothing repeats. Cadence: one pin every day at 6:00 am CT.",
+  "note": "Pinterest content log. Each entry is one single-image (or video) pin scheduled via Metricool. Check here before creating new pins so nothing repeats. Cadence: one pin every three days at 6:00 am CT.",
   "pins": [
     {
       "date": "2026-10-13",
@@ -101,16 +101,7 @@
       "theme": "sky"
     },
     {
-      "date": "2026-10-23",
-      "slug": "pin-why-budgets-fail-charcoal",
-      "type": "article",
-      "source": "why-most-budgets-fail",
-      "status": "scheduled",
-      "board": "Budgeting tips and habits",
-      "theme": "charcoal"
-    },
-    {
-      "date": "2026-10-24",
+      "date": "2026-10-25",
       "slug": "pin-split-bills-by-income-sand",
       "type": "calculator",
       "source": "bill-split-calculator",
@@ -119,7 +110,25 @@
       "theme": "sand"
     },
     {
-      "date": "2026-10-25",
+      "date": "2026-10-28",
+      "slug": "pin-why-budgets-fail-charcoal",
+      "type": "article",
+      "source": "why-most-budgets-fail",
+      "status": "scheduled",
+      "board": "Budgeting tips and habits",
+      "theme": "charcoal"
+    },
+    {
+      "date": "2026-10-31",
+      "slug": "pin-sinking-fund-calculator-lavender.mp4",
+      "type": "calculator-video",
+      "source": "sinking-fund-calculator",
+      "status": "scheduled",
+      "board": "Savings goals and sinking funds",
+      "theme": "lavender"
+    },
+    {
+      "date": "2026-11-03",
       "slug": "pin-track-expenses-burnout-forest",
       "type": "article",
       "source": "track-expenses-without-burnout",
@@ -128,13 +137,31 @@
       "theme": "forest"
     },
     {
-      "date": "2026-10-26",
-      "slug": "pin-sinking-fund-calculator-lavender.mp4",
-      "type": "calculator-video",
-      "source": "sinking-fund-calculator",
+      "date": "2026-11-06",
+      "slug": "pin-budget-expense-log-sky",
+      "type": "product",
+      "source": "budget-spreadsheet",
       "status": "scheduled",
-      "board": "Savings goals and sinking funds",
-      "theme": "lavender"
+      "board": "Monthly budget templates",
+      "theme": "sky"
+    },
+    {
+      "date": "2026-11-09",
+      "slug": "pin-net-worth-snapshot-forest",
+      "type": "product",
+      "source": "net-worth-tracker",
+      "status": "scheduled",
+      "board": "Net worth tracking",
+      "theme": "forest"
+    },
+    {
+      "date": "2026-11-12",
+      "slug": "pin-debt-payment-log-sand",
+      "type": "product",
+      "source": "debt-payoff-tracker",
+      "status": "scheduled",
+      "board": "Debt payoff trackers and tips",
+      "theme": "sand"
     }
   ]
 }

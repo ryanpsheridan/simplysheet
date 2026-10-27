@@ -1,0 +1,9 @@
+{
+ "slug": "pin-net-worth-snapshot-forest",
+ "layout": "product",
+ "theme": "forest",
+ "image": "scripts/pins/assets/mockups/networth-dark.png",
+ "headline": "Assets on one side, debts on the other",
+ "lede": "Summary cards show total assets, total liabilities and net worth. Log a snapshot each month to see the change.",
+ "caption": "Know your worth. Track your wealth."
+}
