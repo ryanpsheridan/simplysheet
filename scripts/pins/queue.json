@@ -162,6 +162,33 @@
       "status": "scheduled",
       "board": "Debt payoff trackers and tips",
       "theme": "sand"
+    },
+    {
+      "date": "2026-11-15",
+      "slug": "pin-emergency-fund-calculator-forest.mp4",
+      "type": "calculator-video",
+      "source": "emergency-fund-calculator",
+      "status": "scheduled",
+      "board": "Savings goals and sinking funds",
+      "theme": "forest"
+    },
+    {
+      "date": "2026-11-18",
+      "slug": "pin-couples-partner-tag-lavender",
+      "type": "product",
+      "source": "couples-budget-spreadsheet",
+      "status": "scheduled",
+      "board": "Couples budgeting and shared finances",
+      "theme": "lavender"
+    },
+    {
+      "date": "2026-11-21",
+      "slug": "pin-semi-monthly-paycheck-calculator-sand",
+      "type": "calculator",
+      "source": "semi-monthly-paycheck-calculator",
+      "status": "scheduled",
+      "board": "Finance Calculators",
+      "theme": "sand"
     }
   ]
 }
