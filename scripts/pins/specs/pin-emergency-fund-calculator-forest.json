@@ -1,0 +1,19 @@
+{
+ "slug": "pin-emergency-fund-calculator-forest",
+ "layout": "calc",
+ "headline": "How much should your emergency fund be?",
+ "lede": "Essential monthly expenses times the months you want covered.",
+ "card_title": "Emergency fund calculator",
+ "fields": [
+  {"label": "Essential monthly expenses", "value": "$3,000"},
+  {"label": "Months of coverage", "value": "6 months"}
+ ],
+ "result": {
+  "label": "Emergency fund target",
+  "value": "$18,000",
+  "rows": [{"label": "Math", "value": "$3,000 × 6"}]
+ },
+ "caption": "Choose 3, 6, 9 or 12 months in the free calculator.",
+ "video_seconds": 8,
+ "theme": "forest"
+}

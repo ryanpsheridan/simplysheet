@@ -1,0 +1,17 @@
+{
+ "slug": "pin-semi-monthly-paycheck-calculator-sand",
+ "layout": "calc",
+ "headline": "Paid twice a month? Here is your year",
+ "lede": "Two paychecks a month, 24 a year.",
+ "card_title": "Semi-monthly paycheck calculator",
+ "fields": [
+  {"label": "Take-home pay per paycheck", "value": "$1,800"}
+ ],
+ "result": {
+  "label": "Per month",
+  "value": "$3,600",
+  "rows": [{"label": "Per year (24 paychecks)", "value": "$43,200"}]
+ },
+ "caption": "Try your own number in the free calculator.",
+ "theme": "sand"
+}
