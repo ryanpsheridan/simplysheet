@@ -1,0 +1,33 @@
+{
+ "slug": "pin-three-paycheck-months-forest",
+ "layout": "calc",
+ "headline": "Which months have 3 paychecks in 2027?",
+ "lede": "Paid every other Friday from Jan 1? You get 27 this year.",
+ "card_title": "Three-paycheck months calculator",
+ "fields": [
+  {
+   "label": "Pay schedule",
+   "value": "Every other Friday"
+  },
+  {
+   "label": "First 2027 payday",
+   "value": "Fri, Jan 1"
+  }
+ ],
+ "result": {
+  "label": "Three-paycheck months in 2027",
+  "value": "Jan, Jul, Dec",
+  "rows": [
+   {
+    "label": "Paychecks in 2027",
+    "value": "27"
+   },
+   {
+    "label": "Extra checks at $2,000 each",
+    "value": "$6,000"
+   }
+  ]
+ },
+ "caption": "Enter any payday in the free calculator to find your months.",
+ "theme": "forest"
+}
