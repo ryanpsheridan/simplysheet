@@ -49,18 +49,25 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 		<span class="calc-highlight-math" data-role="math"></span>
 	</div>
 
-	<ol class="tp-grid" data-role="grid" aria-label="Paydays by month">
-		{monthNames.map((m) => (
-			<li class="tp-month">
-				<span class="tp-month-head">
-					<span class="tp-month-name">{m}</span>
-					<span class="tp-month-count"></span>
-				</span>
-				<span class="tp-month-days"></span>
-			</li>
-		))}
-	</ol>
-	<p class="tp-note">Extra-paycheck months are filled in. If a payday lands on a bank holiday, your employer may pay a day early, which can move it into the month before.</p>
+	<div class="tp-section">
+		<p class="tp-section-label" id={`${id}-strip-label`}>Paydays by month <span class="tp-key"><i class="tp-dot" aria-hidden="true"></i> one payday</span></p>
+		<ol class="tp-strip" aria-labelledby={`${id}-strip-label`}>
+			{monthNames.map((m) => (
+				<li class="tp-col">
+					<span class="tp-dots" aria-hidden="true"></span>
+					<span class="tp-col-name">{m}</span>
+					<span class="sr-only tp-col-sr"></span>
+				</li>
+			))}
+		</ol>
+	</div>
+
+	<div class="tp-section" data-role="dates-wrap">
+		<p class="tp-section-label">Extra-paycheck dates</p>
+		<ul class="tp-dates" data-role="dates"></ul>
+	</div>
+
+	<p class="tp-note">If a payday lands on a bank holiday, your employer may pay a day early, which can move it into the month before.</p>
 </div>
 <div class="calc-cta-divider"></div>
 <a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link" data-cta="calc_product_link:budget-spreadsheet">Plan the extra checks in a budget</a>
@@ -209,56 +216,120 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 		display: none;
 	}
 
-	/* ——— Month grid ——— */
+	/* ——— Year strip: one dot per payday, so the count reads without
+	   numbers. Extra-paycheck months get the positive tint and ink dots. ——— */
 
-	.tp-grid {
-		display: grid;
-		grid-template-columns: repeat(6, minmax(0, 1fr));
-		gap: var(--space-xs);
-		list-style: none;
-		margin: var(--space-md) 0 0;
-		padding: 0;
+	.tp-section {
+		margin-top: var(--space-lg);
 	}
-	.tp-month {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-		margin: 0;
-		padding: var(--space-xs) var(--space-sm);
-		background: var(--color-bg-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-sm);
-		font-variant-numeric: tabular-nums;
+	.tp-section[hidden] {
+		display: none;
 	}
-	.tp-month::before {
-		content: none;
-	}
-	.tp-month-head {
+	.tp-section-label {
 		display: flex;
 		justify-content: space-between;
-		align-items: baseline;
-		gap: var(--space-2xs);
-	}
-	.tp-month-name {
+		align-items: center;
+		gap: var(--space-sm);
 		font-size: var(--text-small);
 		font-weight: var(--weight-medium);
 		color: var(--color-text);
+		margin: 0 0 var(--space-xs);
 	}
-	.tp-month-count {
-		font-size: var(--text-small);
+	.tp-key {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: var(--text-xs);
+		font-weight: var(--weight-normal);
 		color: var(--color-text-secondary);
 	}
-	.tp-month-days {
+	.tp-strip {
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		gap: 4px;
+		list-style: none;
+		margin: 0;
+		padding: var(--space-sm) var(--space-xs);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+	}
+	.tp-col {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-xs);
+		margin: 0;
+		padding: var(--space-xs) 0;
+		border-radius: var(--radius-sm);
+	}
+	.tp-col::before {
+		content: none;
+	}
+	.tp-dots {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 4px;
+	}
+	/* Dots and date rows are injected by the script, so they carry no scope
+	   attribute: reach them with :global() under a scoped parent. */
+	.tp-key .tp-dot,
+	.tp-dots :global(.tp-dot) {
+		display: block;
+		width: 8px;
+		height: 8px;
+		border-radius: var(--radius-full);
+		background: var(--color-border-strong);
+	}
+	.tp-col-name {
 		font-size: var(--text-xs);
 		color: var(--color-text-secondary);
-		line-height: var(--leading-snug);
 	}
-	.tp-month.is-extra {
+	.tp-col.is-extra {
 		background: var(--color-accent-positive-bg);
-		border-color: var(--color-accent-positive);
 	}
-	.tp-month.is-extra .tp-month-count {
+	.tp-col.is-extra :global(.tp-dot) {
+		background: var(--color-text);
+	}
+	.tp-col.is-extra .tp-col-name {
 		color: var(--color-text);
+		font-weight: var(--weight-medium);
+	}
+
+	/* ——— Extra-paycheck dates: only the months that matter, spelled out ——— */
+
+	.tp-dates {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border-top: 1px solid var(--color-border);
+	}
+	.tp-dates :global(.tp-date-row) {
+		display: grid;
+		grid-template-columns: 7rem 1fr;
+		gap: var(--space-sm);
+		align-items: baseline;
+		margin: 0;
+		padding: var(--space-sm) 0;
+		border-bottom: 1px solid var(--color-border);
+		font-size: var(--text-small);
+		font-variant-numeric: tabular-nums;
+	}
+	.tp-dates :global(.tp-date-row)::before {
+		content: none;
+	}
+	.tp-dates :global(.tp-date-month) {
+		color: var(--color-text);
+		font-weight: var(--weight-medium);
+	}
+	.tp-dates :global(.tp-date) {
+		white-space: nowrap;
+	}
+	.tp-dates :global(.tp-date-days) {
+		color: var(--color-text-secondary);
 	}
 
 	.tp-note {
@@ -276,8 +347,13 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 			grid-template-columns: 1fr;
 			gap: var(--space-sm);
 		}
-		.tp-grid {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+		.tp-strip {
+			grid-template-columns: repeat(6, minmax(0, 1fr));
+			row-gap: var(--space-xs);
+		}
+		.tp-dates :global(.tp-date-row) {
+			grid-template-columns: 1fr;
+			gap: 2px;
 		}
 	}
 </style>
@@ -295,7 +371,9 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 	var labelEl = root.querySelector('[data-role="label"]');
 	var valueEl = root.querySelector('[data-role="value"]');
 	var mathEl = root.querySelector('[data-role="math"]');
-	var tiles = root.querySelectorAll('.tp-month');
+	var cols = root.querySelectorAll('.tp-col');
+	var datesEl = root.querySelector('[data-role="dates"]');
+	var datesWrap = root.querySelector('[data-role="dates-wrap"]');
 	var freqBtns = root.querySelectorAll('[data-freq]');
 	var yearBtns = root.querySelectorAll('[data-year]');
 
@@ -332,11 +410,12 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 		if (parts.length !== 3) {
 			valueEl.textContent = 'Enter a payday';
 			mathEl.textContent = '';
-			tiles.forEach(function (t) {
-				t.classList.remove('is-extra');
-				t.querySelector('.tp-month-count').textContent = '';
-				t.querySelector('.tp-month-days').textContent = '';
+			cols.forEach(function (c) {
+				c.classList.remove('is-extra');
+				c.querySelector('.tp-dots').innerHTML = '';
+				c.querySelector('.tp-col-sr').textContent = '';
 			});
+			datesWrap.hidden = true;
 			return;
 		}
 
@@ -351,19 +430,28 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 		var total = 0;
 		for (; t < end; t += step * DAY) {
 			var d = new Date(t);
-			byMonth[d.getUTCMonth()].push(d.getUTCDate());
+			byMonth[d.getUTCMonth()].push(d);
 			total++;
 		}
 
 		var extras = [];
+		var rows = '';
 		byMonth.forEach(function (days, m) {
-			var tile = tiles[m];
+			var col = cols[m];
 			var isExtra = days.length >= extraCount;
-			tile.classList.toggle('is-extra', isExtra);
-			tile.querySelector('.tp-month-count').innerHTML = days.length + '<span class="sr-only"> paydays</span>';
-			tile.querySelector('.tp-month-days').textContent = days.join(', ');
-			if (isExtra) extras.push(MONTHS[m]);
+			col.classList.toggle('is-extra', isExtra);
+			col.querySelector('.tp-dots').innerHTML = new Array(days.length + 1).join('<i class="tp-dot"></i>');
+			col.querySelector('.tp-col-sr').textContent = ': ' + days.length + ' paydays' + (isExtra ? ', extra-paycheck month' : '');
+			if (isExtra) {
+				extras.push(MONTHS[m]);
+				var dates = days.map(function (d) {
+					return '<span class="tp-date">' + d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }) + '</span>';
+				});
+				rows += '<li class="tp-date-row"><span class="tp-date-month">' + MONTHS[m] + '</span><span class="tp-date-days">' + dates.join(' · ') + '</span></li>';
+			}
 		});
+		datesEl.innerHTML = rows;
+		datesWrap.hidden = !rows;
 
 		valueEl.textContent = extras.length ? listJoin(extras) : 'None this year';
 
