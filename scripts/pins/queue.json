@@ -189,6 +189,15 @@
       "status": "scheduled",
       "board": "Finance Calculators",
       "theme": "sand"
+    },
+    {
+      "date": "2026-11-24",
+      "slug": "pin-three-paycheck-months-forest",
+      "type": "calculator",
+      "source": "three-paycheck-months-calculator",
+      "status": "scheduled",
+      "board": "Finance Calculators",
+      "theme": "forest"
     }
   ]
 }
