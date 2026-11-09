@@ -1,0 +1,71 @@
+---
+import HubLayout from '../../layouts/HubLayout.astro';
+
+const faq = [
+	{
+		question: 'What is the fairest way for couples to split bills?',
+		answer: 'When incomes are close, a 50/50 split is simple and fair. When they are far apart, splitting shared bills in proportion to income is usually fairer, because both partners keep the same share of their own pay. Neither method is wrong; what matters is choosing one together and revisiting it when an income changes.',
+	},
+	{
+		question: 'Should couples combine finances or keep them separate?',
+		answer: 'There are three common setups: fully joint, fully separate, and a hybrid where each partner pays their share into a joint account for shared bills and keeps the rest. The hybrid is the most popular with couples who earn different amounts, since it keeps shared costs fair and personal spending private.',
+	},
+	{
+		question: 'How do you split bills by income?',
+		answer: 'Add both take-home incomes together and divide each person\'s income by the total to get their share. Each person pays that percentage of the shared bills. If one partner earns $5,000 and the other $3,000, they cover 62.5% and 37.5% of the bills.',
+	},
+	{
+		question: 'What should be in a couples budget?',
+		answer: 'Both incomes, the shared bills you split, each person\'s personal spending, and your shared goals such as an emergency fund or a trip. Tag each expense as joint or one partner\'s so the shared total, and who owes what, is always clear.',
+	},
+	{
+		question: 'How often should couples talk about money?',
+		answer: 'A short monthly check-in works for most couples: look at what came in, what went out, and whether the split still feels fair. Ten minutes once a month prevents most of the surprises that turn money into an argument.',
+	},
+];
+---
+
+<HubLayout
+	hub="couples"
+	title="Budgeting for couples"
+	metaTitle="Budgeting for Couples: Split Bills Fairly by Income"
+	description="Everything couples need to budget together: a free calculator to split bills by income, guides to 50/50 vs. proportional splits, and a shared couples budget spreadsheet."
+	lead="How to split bills fairly, decide what stays personal, and run one shared budget without arguing about it. Free calculators, plain-English guides, and the spreadsheet that ties it together."
+	breadcrumbLabel="Budgeting for Couples"
+	primaryToolUrl="/tools/bill-split-calculator/"
+	primaryToolLabel="Split bills by income"
+	templateLabel="See the couples budget"
+	toolUrls={[
+		'/tools/bill-split-calculator/',
+		'/tools/group-bill-split-calculator/',
+		'/tools/50-30-20-budget-calculator/',
+	]}
+	toolsTitle="Run your numbers together"
+	toolsDesc="Free, in your browser, no sign-up. Start with the bill split calculator."
+	guideTitle="How to budget as a couple, in four decisions"
+	articleIds={[
+		'how-to-split-bills-with-different-incomes',
+		'couples-budgeting',
+		'budgeting-styles',
+	]}
+	articlesTitle="Guides for couples"
+	articlesDesc="The reasoning behind each decision, with real numbers."
+	templateSlugs={['couples-budget-spreadsheet', 'budget-spreadsheet']}
+	templatesTitle="Spreadsheets for two"
+	templatesDesc="One-time purchase for Google Sheets and Excel. Yours to keep."
+	faq={faq}
+>
+	<p>Most money arguments between couples aren't about the numbers. They're about decisions that were never actually made out loud: who pays for what, what counts as shared, and whose spending is nobody else's business. Make these four decisions together and the budget mostly runs itself.</p>
+
+	<h3>1. Choose how to split shared bills</h3>
+	<p>The two common choices are 50/50 and splitting in proportion to income. A 50/50 split is fair when you earn about the same. When incomes differ, it takes a much bigger bite out of the lower earner's pay, and a proportional split leaves both partners with the same share of their own money. Put your real numbers into the <a href="/tools/bill-split-calculator/">bill split calculator</a> to see both side by side; it works monthly, every two weeks (fortnightly), or weekly. The reasoning is laid out in full in <a href="/articles/how-to-split-bills-with-different-incomes/">how to split bills with different incomes</a>.</p>
+
+	<h3>2. Decide what counts as shared</h3>
+	<p>Rent or mortgage, utilities, groceries, insurance, and subscriptions you both use usually go in the shared pool. Personal hobbies, solo subscriptions, and debt one partner brought into the relationship usually stay out. Writing the list down is what stops the slow drift of personal costs into the shared total. For trips and dinners with friends, the <a href="/tools/group-bill-split-calculator/">group bill split calculator</a> handles more than two people.</p>
+
+	<h3>3. Pick an account setup</h3>
+	<p>You don't need a joint account to split fairly. The most common setup for couples with different incomes is a hybrid: each partner transfers their share into one shared account that pays the bills, and keeps the rest in their own. It keeps the shared side transparent and leaves each person money that is clearly theirs.</p>
+
+	<h3>4. Set a shared goal and a monthly check-in</h3>
+	<p>A shared goal, an emergency fund, a trip, a down payment, gives the budget a point beyond splitting costs. A ten-minute check-in once a month keeps the split current when an income changes. If you're not sure where to start with the goal, the <a href="/tools/50-30-20-budget-calculator/">50/30/20 calculator</a> shows a sensible savings target for your combined take-home pay, and <a href="/articles/couples-budgeting/">how to budget as a couple without fighting</a> covers the conversation itself. To keep it all in one place, the <a href="/spreadsheets/couples-budget-spreadsheet/">couples budget spreadsheet</a> tags every expense as joint or one partner's, so the shared total and who owes what are always visible.</p>
+</HubLayout>

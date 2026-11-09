@@ -3,16 +3,22 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div class="calc tool-frame" id={id}>
+	<div class="bs-period" role="group" aria-label="How often you're paid">
+		<button type="button" class="calc-split-btn active" data-period="month" aria-pressed="true">Monthly</button>
+		<button type="button" class="calc-split-btn" data-period="fortnight" aria-pressed="false">Every 2 weeks</button>
+		<button type="button" class="calc-split-btn" data-period="week" aria-pressed="false">Weekly</button>
+	</div>
+
 	<div class="calc-form-grid">
 		<div class="calc-input-group">
-			<label class="calc-label" for={`${id}-a`}>Your monthly take-home</label>
+			<label class="calc-label" for={`${id}-a`}>Your take-home <span data-role="per">per month</span></label>
 			<div class="calc-field">
 				<span class="calc-prefix">$</span>
 				<input type="text" id={`${id}-a`} class="calc-input" data-role="income-a" inputmode="decimal" placeholder="0" autocomplete="off" />
 			</div>
 		</div>
 		<div class="calc-input-group">
-			<label class="calc-label" for={`${id}-b`}>Partner's monthly take-home</label>
+			<label class="calc-label" for={`${id}-b`}>Partner's take-home <span data-role="per">per month</span></label>
 			<div class="calc-field">
 				<span class="calc-prefix">$</span>
 				<input type="text" id={`${id}-b`} class="calc-input" data-role="income-b" inputmode="decimal" placeholder="0" autocomplete="off" />
@@ -21,12 +27,12 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 	</div>
 
 	<div class="calc-input-group calc-bills">
-		<label class="calc-label" for={`${id}-bills`}>Total shared monthly bills</label>
+		<label class="calc-label" for={`${id}-bills`}>Total shared bills <span data-role="per">per month</span></label>
 		<div class="calc-field">
 			<span class="calc-prefix">$</span>
 			<input type="text" id={`${id}-bills`} class="calc-input" data-role="bills" inputmode="decimal" placeholder="0" autocomplete="off" />
 		</div>
-		<p class="calc-input-hint">Rent, utilities, groceries, and anything else you cover together. Leave out personal spending.</p>
+		<p class="calc-input-hint">Rent, utilities, groceries, and anything else you cover together. Leave out personal spending. Use the same pay period for all three numbers (every two weeks is the same as fortnightly).</p>
 	</div>
 
 	<table class="calc-table">
@@ -73,6 +79,37 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 	   interactive section is starting. */
 	.calc {
 		margin: calc(var(--space-lg) * 2) 0 var(--space-lg);
+	}
+
+	/* ——— Pay period toggle (same pill as BudgetCalculator's split toggle) ——— */
+
+	.bs-period {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+		margin-bottom: var(--space-md);
+	}
+	.calc-split-btn {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-normal);
+		letter-spacing: 0.2px;
+		color: var(--color-text-secondary);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-full);
+		padding: 0.375rem 0.875rem;
+		cursor: pointer;
+		transition: color 0.15s, border-color 0.15s, background 0.15s;
+	}
+	.calc-split-btn:hover {
+		color: var(--color-text);
+		border-color: var(--color-border-strong);
+	}
+	.calc-split-btn.active {
+		color: var(--color-bg);
+		background: var(--color-bg-inverse);
+		border-color: var(--color-bg-inverse);
 	}
 
 	.calc-form-grid {
@@ -321,6 +358,22 @@ const id = `bscalc-${Math.random().toString(36).slice(2, 8)}`;
 			bPropEl.textContent = '–';
 		}
 	}
+
+	// The split is a ratio, so the math is the same for any pay period as long
+	// as all three numbers use it. The toggle only relabels the fields, so
+	// "fortnightly" searchers see their own wording.
+	var perEls = root.querySelectorAll('[data-role="per"]');
+	var periodBtns = root.querySelectorAll('[data-period]');
+	var periodText = { month: 'per month', fortnight: 'every two weeks', week: 'per week' };
+	periodBtns.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			periodBtns.forEach(function (b) {
+				b.classList.toggle('active', b === btn);
+				b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+			});
+			perEls.forEach(function (el) { el.textContent = periodText[btn.dataset.period]; });
+		});
+	});
 
 	[incomeA, incomeB, billsEl].forEach(function (input) {
 		input.addEventListener('input', function () {

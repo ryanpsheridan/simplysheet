@@ -1,0 +1,77 @@
+---
+import HubLayout from '../../layouts/HubLayout.astro';
+
+const faq = [
+	{
+		question: 'How do you budget when you get paid every two weeks?',
+		answer: 'Build your monthly budget on two paychecks, not your annual pay divided by 12. Assign each bill to the paycheck that arrives before it is due, and treat the two three-paycheck months each year as planned surplus for savings, debt, or irregular bills.',
+	},
+	{
+		question: 'How many paychecks do you get a year if paid biweekly?',
+		answer: 'Usually 26, which is 24 regular paychecks plus two extras that land in your two three-paycheck months. Every 11 years or so a schedule gets 27 paychecks in a calendar year; 2027 is one of those years for anyone paid every other Friday starting January 1.',
+	},
+	{
+		question: 'How do you convert biweekly pay to monthly income?',
+		answer: 'Multiply one paycheck by 26, then divide by 12. A $2,000 biweekly paycheck is $52,000 a year, or about $4,333 a month. Doubling the paycheck gives $4,000, which is what a typical month actually deposits but understates your true monthly average.',
+	},
+	{
+		question: 'Which months have 3 paychecks in 2027?',
+		answer: 'On the every-other-Friday schedule that starts January 1, 2027: January, July, and December. On the schedule that starts January 8, 2027: April and October. Enter your own payday in the three-paycheck months calculator to see yours.',
+	},
+	{
+		question: 'Is biweekly pay the same as semi-monthly pay?',
+		answer: 'No. Biweekly pay arrives every 14 days, 26 times a year, so the dates drift and some months get a third check. Semi-monthly pay arrives on two fixed dates each month, 24 times a year, and never produces a third paycheck.',
+	},
+];
+---
+
+<HubLayout
+	hub="biweekly"
+	title="How to budget a biweekly paycheck"
+	metaTitle="Biweekly Budget: How to Budget Every-Two-Week Pay"
+	description="A complete guide to budgeting biweekly pay: convert paychecks to monthly income, find your 2027 three-paycheck months, and plan every extra check. Free calculators and templates."
+	lead="Getting paid every two weeks doesn't fit a monthly budget, and that's fixable. Find your three-paycheck months, turn paychecks into a monthly number, and give every extra check a job before it lands."
+	breadcrumbLabel="Biweekly Budget"
+	primaryToolUrl="/tools/three-paycheck-months-calculator/"
+	primaryToolLabel="Find your 2027 paycheck months"
+	templateLabel="See the budget spreadsheet"
+	toolUrls={[
+		'/tools/three-paycheck-months-calculator/',
+		'/tools/biweekly-paycheck-calculator/',
+		'/tools/weekly-paycheck-calculator/',
+		'/tools/semi-monthly-paycheck-calculator/',
+		'/tools/emergency-fund-calculator/',
+		'/tools/sinking-fund-calculator/',
+	]}
+	toolsTitle="Paycheck calculators"
+	toolsDesc="Free, in your browser, no sign-up. Start with your three-paycheck months."
+	guideTitle="The two-paycheck budget, step by step"
+	articleIds={[
+		'budget-biweekly-paycheck',
+		'how-to-calculate-monthly-income',
+		'budgeting-with-irregular-income',
+		'sinking-funds-explained',
+		'emergency-fund-sizing',
+		'50-30-20-budget-rule',
+	]}
+	articlesTitle="Guides for biweekly pay"
+	articlesDesc="Paydays, monthly income, and what to do with the extra checks."
+	templateSlugs={['budget-spreadsheet', 'savings-goals-tracker']}
+	templatesTitle="Spreadsheets that fit biweekly pay"
+	templatesDesc="One-time purchase for Google Sheets and Excel. Yours to keep."
+	faq={faq}
+>
+	<p>A biweekly paycheck arrives every 14 days, 26 times a year. Months are longer than 28 days, so your paydays drift earlier through the month until, twice a year, a third one fits in. Most budgeting advice assumes one steady monthly number, which is why biweekly pay can feel tight one month and flush the next. Four steps fix that.</p>
+
+	<h3>1. Find your three-paycheck months</h3>
+	<p>One payday date is all it takes to map the year. The <a href="/tools/three-paycheck-months-calculator/">three-paycheck months calculator</a> lays out every payday by month for 2026 to 2028. Worth knowing now: 2027 starts on a Friday, so anyone paid every other Friday from January 1 gets 27 paychecks and three extra-paycheck months, unless their employer moves the New Year's Day payday back to December 31.</p>
+
+	<h3>2. Build the budget on two paychecks</h3>
+	<p>This is the trick behind "saving two paychecks a year." Make every bill, grocery run, and regular savings transfer fit inside two checks. Then the extra months each bring a full paycheck nothing depends on. The <a href="/tools/biweekly-paycheck-calculator/">biweekly paycheck calculator</a> shows your typical two-paycheck month next to your true monthly average, and <a href="/articles/budget-biweekly-paycheck/">how to budget on a biweekly paycheck</a> walks through assigning each bill to a payday.</p>
+
+	<h3>3. Know your real monthly income</h3>
+	<p>For a rent application or a loan, use paycheck × 26 ÷ 12, not paycheck × 2. On a $2,000 check, that's $4,333 instead of $4,000. <a href="/articles/how-to-calculate-monthly-income/">How to calculate monthly income</a> covers the conversion for every pay schedule, including <a href="/tools/weekly-paycheck-calculator/">weekly</a> and <a href="/tools/semi-monthly-paycheck-calculator/">semi-monthly</a> pay.</p>
+
+	<h3>4. Give every extra paycheck a job</h3>
+	<p>Decide before the month arrives: an emergency fund top-up, an extra debt payment, or a <a href="/articles/sinking-funds-explained/">sinking fund</a> for a once-a-year bill. An unassigned paycheck sitting in checking is gone within a few weeks. A <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> that tracks paychecks as they land makes the extra check visible, so you can watch it go where you planned.</p>
+</HubLayout>

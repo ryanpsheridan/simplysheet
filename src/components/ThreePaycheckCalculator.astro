@@ -1,0 +1,405 @@
+---
+// Finds the months with an extra paycheck (three on a biweekly schedule, five
+// on a weekly one) for any payday and year. Dates are handled as whole days in
+// UTC so a daylight-saving change can never shift a payday by one.
+interface Props {
+	/** Year selected on load. */
+	defaultYear?: number;
+	/** Payday prefilled on load (YYYY-MM-DD). Defaults to a Friday on the
+	    schedule whose 2027 paydays start Jan 1. */
+	defaultPayday?: string;
+}
+
+const { defaultYear = 2027, defaultPayday = '2026-11-06' } = Astro.props;
+const years = [2026, 2027, 2028];
+const id = `tpcalc-${Math.random().toString(36).slice(2, 8)}`;
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+---
+
+<div class="calc tool-frame" id={id}>
+	<div class="calc-form-grid">
+		<div class="calc-input-group">
+			<label class="calc-label" for={`${id}-date`}>Any recent payday</label>
+			<input type="date" id={`${id}-date`} class="calc-date" data-role="date" value={defaultPayday} />
+		</div>
+		<div class="calc-input-group">
+			<label class="calc-label" for={`${id}-pay`}>Take-home per paycheck (optional)</label>
+			<div class="calc-field">
+				<span class="calc-prefix">$</span>
+				<input type="text" id={`${id}-pay`} class="calc-input" data-role="pay" inputmode="decimal" placeholder="0" autocomplete="off" />
+			</div>
+		</div>
+	</div>
+
+	<div class="tp-toggles">
+		<div class="tp-pills" role="group" aria-label="How often you're paid">
+			<button type="button" class="tp-pill active" data-freq="14" aria-pressed="true">Every 2 weeks</button>
+			<button type="button" class="tp-pill" data-freq="7" aria-pressed="false">Weekly</button>
+		</div>
+		<div class="tp-pills" role="group" aria-label="Year">
+			{years.map((y) => (
+				<button type="button" class:list={['tp-pill', { active: y === defaultYear }]} data-year={y} aria-pressed={y === defaultYear ? 'true' : 'false'}>{y}</button>
+			))}
+		</div>
+	</div>
+
+	<div class="calc-highlight" aria-live="polite">
+		<span class="calc-highlight-label" data-role="label">Your three-paycheck months in {defaultYear}</span>
+		<span class="calc-highlight-value" data-role="value">&nbsp;</span>
+		<span class="calc-highlight-math" data-role="math"></span>
+	</div>
+
+	<ol class="tp-grid" data-role="grid" aria-label="Paydays by month">
+		{monthNames.map((m) => (
+			<li class="tp-month">
+				<span class="tp-month-head">
+					<span class="tp-month-name">{m}</span>
+					<span class="tp-month-count"></span>
+				</span>
+				<span class="tp-month-days"></span>
+			</li>
+		))}
+	</ol>
+	<p class="tp-note">Extra-paycheck months are filled in. If a payday lands on a bank holiday, your employer may pay a day early, which can move it into the month before.</p>
+</div>
+<div class="calc-cta-divider"></div>
+<a href="/spreadsheets/budget-spreadsheet/" class="calc-product-link" data-cta="calc_product_link:budget-spreadsheet">Plan the extra checks in a budget</a>
+
+<style>
+	.calc {
+		margin: calc(var(--space-lg) * 2) 0 var(--space-lg);
+	}
+
+	.calc-form-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--space-md);
+	}
+
+	/* ——— Inputs ——— */
+
+	.calc-label {
+		display: block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-normal);
+		color: var(--color-text);
+		margin-bottom: var(--space-xs);
+	}
+	.calc-field,
+	.calc-date {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 2.75rem;
+		box-sizing: border-box;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+		background: var(--color-bg-surface);
+		transition: border-color 0.15s;
+	}
+	.calc-date {
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		color: var(--color-text);
+		padding: 0 0.75rem;
+		outline: none;
+		-webkit-appearance: none;
+		appearance: none;
+	}
+	.calc-field:hover,
+	.calc-date:hover {
+		border-color: var(--color-border-strong);
+	}
+	.calc-field:focus-within,
+	.calc-date:focus {
+		border-color: var(--color-link);
+	}
+	.calc-prefix {
+		padding: 0.625rem 0 0.625rem 0.75rem;
+		font-size: var(--text-body);
+		color: var(--color-text-muted);
+		user-select: none;
+	}
+	.calc-input {
+		flex: 1;
+		min-width: 0;
+		border: none;
+		outline: none;
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		padding: 0.625rem 0.75rem 0.625rem 0.25rem;
+		color: var(--color-text);
+		background: transparent;
+	}
+	.calc-input::placeholder {
+		color: var(--color-text-muted);
+	}
+
+	/* ——— Toggles (same pill as BudgetCalculator's split toggle) ——— */
+
+	.tp-toggles {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: var(--space-sm) var(--space-md);
+		margin-top: var(--space-md);
+	}
+	.tp-pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+	}
+	.tp-pill {
+		font-family: var(--font-sans);
+		font-size: var(--text-small);
+		font-weight: var(--weight-normal);
+		letter-spacing: 0.2px;
+		color: var(--color-text-secondary);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-full);
+		padding: 0.375rem 0.875rem;
+		cursor: pointer;
+		transition: color 0.15s, border-color 0.15s, background 0.15s;
+	}
+	.tp-pill:hover {
+		color: var(--color-text);
+		border-color: var(--color-border-strong);
+	}
+	.tp-pill.active {
+		color: var(--color-bg);
+		background: var(--color-bg-inverse);
+		border-color: var(--color-bg-inverse);
+	}
+
+	/* ——— Hero result ——— */
+
+	.calc-highlight {
+		display: flex;
+		flex-direction: column;
+		margin-top: var(--space-lg);
+		padding: var(--space-md);
+		background: var(--color-bg-panel);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+	}
+	.calc-highlight-label {
+		display: block;
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-highlight-value {
+		display: block;
+		font-size: var(--text-h2);
+		font-weight: var(--weight-normal);
+		letter-spacing: var(--tracking-tight);
+		line-height: var(--leading-snug);
+		color: var(--color-text);
+		margin-bottom: var(--space-2xs);
+	}
+	.calc-highlight-math {
+		display: block;
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+	}
+	.calc-highlight-math:empty {
+		display: none;
+	}
+
+	/* ——— Month grid ——— */
+
+	.tp-grid {
+		display: grid;
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+		gap: var(--space-xs);
+		list-style: none;
+		margin: var(--space-md) 0 0;
+		padding: 0;
+	}
+	.tp-month {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		margin: 0;
+		padding: var(--space-xs) var(--space-sm);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		font-variant-numeric: tabular-nums;
+	}
+	.tp-month::before {
+		content: none;
+	}
+	.tp-month-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: var(--space-2xs);
+	}
+	.tp-month-name {
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+		color: var(--color-text);
+	}
+	.tp-month-count {
+		font-size: var(--text-small);
+		color: var(--color-text-secondary);
+	}
+	.tp-month-days {
+		font-size: var(--text-xs);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-snug);
+	}
+	.tp-month.is-extra {
+		background: var(--color-accent-positive-bg);
+		border-color: var(--color-accent-positive);
+	}
+	.tp-month.is-extra .tp-month-count {
+		color: var(--color-text);
+	}
+
+	.tp-note {
+		font-size: var(--text-xs);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-snug);
+		margin: var(--space-md) 0 0;
+	}
+
+	@media (max-width: 767px) {
+		.calc {
+			margin-top: calc(var(--space-md) * 2);
+		}
+		.calc-form-grid {
+			grid-template-columns: 1fr;
+			gap: var(--space-sm);
+		}
+		.tp-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+</style>
+
+<script is:inline define:vars={{ id, defaultYear }}>
+(function () {
+	var root = document.getElementById(id);
+	if (!root) return;
+
+	var DAY = 86400000;
+	var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+	var dateEl = root.querySelector('[data-role="date"]');
+	var payEl = root.querySelector('[data-role="pay"]');
+	var labelEl = root.querySelector('[data-role="label"]');
+	var valueEl = root.querySelector('[data-role="value"]');
+	var mathEl = root.querySelector('[data-role="math"]');
+	var tiles = root.querySelectorAll('.tp-month');
+	var freqBtns = root.querySelectorAll('[data-freq]');
+	var yearBtns = root.querySelectorAll('[data-year]');
+
+	var step = 14;
+	var year = defaultYear;
+
+	function formatCurrency(n) {
+		return '$' + Math.round(n).toLocaleString('en-US');
+	}
+	function formatInput(val) {
+		var num = val.replace(/[^0-9.]/g, '');
+		var parts = num.split('.');
+		if (parts[0]) parts[0] = parseInt(parts[0], 10).toLocaleString('en-US');
+		return parts.join('.');
+	}
+	function listJoin(items) {
+		if (items.length < 2) return items.join('');
+		return items.slice(0, -1).join(', ') + (items.length > 2 ? ',' : '') + ' and ' + items[items.length - 1];
+	}
+	function select(btns, btn) {
+		btns.forEach(function (b) {
+			b.classList.toggle('active', b === btn);
+			b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+		});
+	}
+
+	function calculate() {
+		var parts = (dateEl.value || '').split('-');
+		var normal = step === 14 ? 2 : 4;
+		var extraCount = normal + 1;
+		var word = step === 14 ? 'three' : 'five';
+		labelEl.textContent = 'Your ' + word + '-paycheck months in ' + year;
+
+		if (parts.length !== 3) {
+			valueEl.textContent = 'Enter a payday';
+			mathEl.textContent = '';
+			tiles.forEach(function (t) {
+				t.classList.remove('is-extra');
+				t.querySelector('.tp-month-count').textContent = '';
+				t.querySelector('.tp-month-days').textContent = '';
+			});
+			return;
+		}
+
+		var anchor = Date.UTC(+parts[0], +parts[1] - 1, +parts[2]);
+		var start = Date.UTC(year, 0, 1);
+		var end = Date.UTC(year + 1, 0, 1);
+		// First payday on or after Jan 1, found by stepping the anchor in whole periods.
+		var k = Math.ceil((start - anchor) / (step * DAY));
+		var t = anchor + k * step * DAY;
+
+		var byMonth = [[], [], [], [], [], [], [], [], [], [], [], []];
+		var total = 0;
+		for (; t < end; t += step * DAY) {
+			var d = new Date(t);
+			byMonth[d.getUTCMonth()].push(d.getUTCDate());
+			total++;
+		}
+
+		var extras = [];
+		byMonth.forEach(function (days, m) {
+			var tile = tiles[m];
+			var isExtra = days.length >= extraCount;
+			tile.classList.toggle('is-extra', isExtra);
+			tile.querySelector('.tp-month-count').innerHTML = days.length + '<span class="sr-only"> paydays</span>';
+			tile.querySelector('.tp-month-days').textContent = days.join(', ');
+			if (isExtra) extras.push(MONTHS[m]);
+		});
+
+		valueEl.textContent = extras.length ? listJoin(extras) : 'None this year';
+
+		var math = total + ' paychecks in ' + year + ', ' + extras.length + ' extra-paycheck month' + (extras.length === 1 ? '' : 's') + '.';
+		var pay = parseFloat(payEl.value.replace(/[^0-9.]/g, '')) || 0;
+		if (pay > 0) {
+			math += ' A budget built on ' + normal + ' checks a month leaves ' + formatCurrency(pay * (total - normal * 12)) + ' unassigned to plan for.';
+		}
+		mathEl.textContent = math;
+	}
+
+	freqBtns.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			select(freqBtns, btn);
+			step = parseInt(btn.dataset.freq, 10);
+			calculate();
+		});
+	});
+	yearBtns.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			select(yearBtns, btn);
+			year = parseInt(btn.dataset.year, 10);
+			calculate();
+		});
+	});
+	dateEl.addEventListener('input', calculate);
+	dateEl.addEventListener('change', calculate);
+	payEl.addEventListener('input', function () {
+		var pos = payEl.selectionStart;
+		var before = payEl.value.length;
+		payEl.value = formatInput(payEl.value);
+		var after = payEl.value.length;
+		payEl.setSelectionRange(pos + (after - before), pos + (after - before));
+		calculate();
+	});
+
+	calculate();
+})();
+</script>

@@ -3,12 +3,13 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import BillSplitCalculator from '../../components/BillSplitCalculator.astro';
 
 const title = 'Monthly Bill Split Calculator for Couples';
-const metaTitle = 'Bill Split Calculator: A Fair Split by Income';
-const description = "Splitting bills 50/50 isn't fair when incomes differ. Enter both take-home incomes and shared bills to see a proportional split instantly. Free, no signup.";
+const metaTitle = 'Split Bills Based on Income Calculator (Free)';
+const description = "Split bills by income in seconds. Enter both take-home pays and your shared bills, monthly, every two weeks, or weekly, and see a fair proportional split next to 50/50. Free, no signup.";
 
 const toc = [
 	{ slug: 'how-it-works', text: 'How this calculator works' },
 	{ slug: 'split-by-income', text: 'How to split bills based on income' },
+	{ slug: 'paid-every-two-weeks', text: "Splitting bills when you're paid every two weeks" },
 	{ slug: 'even-vs-proportional', text: '50/50 vs. splitting by income' },
 	{ slug: 'what-counts', text: 'What counts as a shared bill' },
 	{ slug: 'making-it-work', text: 'Making the split work in practice' },
@@ -30,6 +31,10 @@ const faq = [
 	{
 		question: 'Which bills should we split, and which stay personal?',
 		answer: 'Split the costs you share: rent or mortgage, utilities, groceries, insurance, and subscriptions you both use. Keep individual spending, personal debt, and solo hobbies separate so each person still has money that is clearly their own. The calculator is for the shared pool only.',
+	},
+	{
+		question: 'How do you split bills by income if you are paid fortnightly?',
+		answer: 'Use one pay period for every number. Enter each person\'s fortnightly take-home pay and the shared bills due each fortnight, and the split works exactly the same way: each person pays their share of combined income. If one partner is paid monthly and the other fortnightly, convert the fortnightly pay to monthly first by multiplying it by 26 and dividing by 12.',
 	},
 	{
 		question: 'Do we need a joint account to split bills by income?',
@@ -77,7 +82,24 @@ const faq = [
 			<tr><td>Pay kept, split 50/50</td><td>68%</td><td>47%</td></tr>
 		</tbody>
 	</table>
+	<p>The formula in one line: your share of the bills equals the shared bills × (your income ÷ combined income).</p>
 	<p>Splitting by income leaves both people with $3,000 and $1,800, the same 60% of their own pay. Splitting evenly leaves the lower earner with $1,400, less than half. That's the whole case for a proportional split in two rows, and it's what the calculator above works out from your own numbers.</p>
+
+	<h2 id="paid-every-two-weeks">Splitting bills when you're paid every two weeks</h2>
+	<p>The split is a ratio, so it works for any pay period as long as all three numbers use the same one. Pick "Every 2 weeks" above (the same thing as fortnightly) and enter each pay and the bills due each fortnight. Say one partner takes home $2,241 a fortnight, the other $3,372, and shared bills come to $2,400 a fortnight:</p>
+	<table>
+		<thead>
+			<tr><th></th><th>Partner A</th><th>Partner B</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>Fortnightly take-home</td><td>$2,241</td><td>$3,372</td></tr>
+			<tr><td>Share of income</td><td>39.9%</td><td>60.1%</td></tr>
+			<tr><td>Pays toward bills</td><td>$958</td><td>$1,442</td></tr>
+			<tr><td>Left over, split by income</td><td>$1,283</td><td>$1,930</td></tr>
+			<tr><td>Left over, split 50/50</td><td>$1,041</td><td>$2,172</td></tr>
+		</tbody>
+	</table>
+	<p>Split by income, both partners keep 57% of their own pay. Split evenly, Partner A keeps 46% and Partner B keeps 64%. If your pay periods don't match, say one monthly and one fortnightly, convert to monthly first: multiply fortnightly pay by 26 and divide by 12. The <a href="/tools/biweekly-paycheck-calculator/">biweekly paycheck calculator</a> does that conversion for you, and the <a href="/guides/budgeting-for-couples/">budgeting for couples guide</a> pulls every couples tool and article together in one place.</p>
 
 	<h2 id="even-vs-proportional">50/50 vs. splitting by income</h2>
 	<p>A 50/50 split is the default a lot of couples reach for because it looks even. And when two incomes are close, it more or less is. The trouble starts when incomes are far apart. Half the rent is a small slice of a large paycheck and a large slice of a small one, so the person earning less ends up with far less money left for everything else, even though you both paid the same dollar amount.</p>

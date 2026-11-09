@@ -1,0 +1,181 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ToolCard from '../components/ToolCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import Faq from '../components/Faq.astro';
+import { getCollection } from 'astro:content';
+import { pageTitle } from '../consts';
+import { TOOLS, toolId } from '../data/tools';
+import { toArticleCard } from '../utils/articles';
+
+// A topic hub: one page that gathers every tool, article, and spreadsheet on a
+// subject, with a short guide that explains how they fit together. Built only
+// from shared pieces (PageHero, SectionHead, ToolCard, ArticleCard,
+// ProductGrid, Faq), so a hub needs no CSS of its own beyond the reading
+// column for the guide.
+//
+// Every list is picked by id here, never hand-typed: a renamed article or tool
+// fails the build instead of shipping a broken card.
+//
+// data-cta ids, all suffixed with the hub's own id:
+//   hub_hero_cta:<hub>:tool / :template, hub_tool_card:<hub>:<toolId>,
+//   hub_article_card:<hub>:<articleId>, hub_product_card:<hub>:<slug>
+interface FaqItem {
+	question: string;
+	answer: string;
+}
+
+interface Props {
+	/** Short id used in data-cta values, e.g. `couples`. */
+	hub: string;
+	title: string;
+	metaTitle: string;
+	description: string;
+	lead: string;
+	breadcrumbLabel: string;
+	/** Tool URLs from the TOOLS registry, in display order (a multiple of 3). */
+	toolUrls: string[];
+	/** Article ids, in display order (a multiple of 3). */
+	articleIds: string[];
+	/** Template slugs for the spreadsheet row. */
+	templateSlugs: string[];
+	primaryToolUrl: string;
+	primaryToolLabel: string;
+	templateLabel: string;
+	toolsTitle: string;
+	toolsDesc: string;
+	guideTitle: string;
+	articlesTitle: string;
+	articlesDesc: string;
+	templatesTitle: string;
+	templatesDesc: string;
+	faq: FaqItem[];
+}
+
+const p = Astro.props;
+
+const tools = p.toolUrls.map((url) => {
+	const tool = TOOLS.find((t) => t.url === url);
+	if (!tool) throw new Error(`HubLayout (${p.hub}): no tool at ${url}`);
+	return tool;
+});
+
+const allArticles = await getCollection('articles');
+const articles = p.articleIds.map((id) => {
+	const article = allArticles.find((a) => a.id === id);
+	if (!article) throw new Error(`HubLayout (${p.hub}): no article "${id}"`);
+	return toArticleCard(article);
+});
+
+const allTemplates = await getCollection('templates');
+const templates = p.templateSlugs.map((slug) => {
+	const template = allTemplates.find((t) => t.id === slug);
+	if (!template) throw new Error(`HubLayout (${p.hub}): no template "${slug}"`);
+	return template;
+});
+
+const pageUrl = Astro.url.toString();
+const collectionSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	name: p.title,
+	description: p.description,
+	url: pageUrl,
+	mainEntity: {
+		'@type': 'ItemList',
+		itemListElement: [
+			...tools.map((t) => ({ name: t.name, url: new URL(t.url, Astro.site).toString() })),
+			...articles.map((a) => ({ name: a.title, url: new URL(`/articles/${a.id}/`, Astro.site).toString() })),
+			...templates.map((t) => ({ name: t.data.title, url: new URL(`/spreadsheets/${t.id}/`, Astro.site).toString() })),
+		].map((item, i) => ({ '@type': 'ListItem', position: i + 1, ...item })),
+	},
+};
+const breadcrumbSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).toString() },
+		{ '@type': 'ListItem', position: 2, name: p.breadcrumbLabel, item: pageUrl },
+	],
+};
+---
+
+<BaseLayout title={pageTitle(p.metaTitle)} description={p.description}>
+	<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	<main id="main-content" class="band-main">
+		<PageHero title={p.title} desc={p.lead} crumbs={[{ label: p.breadcrumbLabel }]}>
+			<div class="hub-ctas">
+				<a href={p.primaryToolUrl} class="btn btn-primary btn-arrow" data-cta={`hub_hero_cta:${p.hub}:tool`}>{p.primaryToolLabel}</a>
+				<a href={`/spreadsheets/${p.templateSlugs[0]}/`} class="btn btn-secondary" data-cta={`hub_hero_cta:${p.hub}:template`}>{p.templateLabel}</a>
+			</div>
+		</PageHero>
+
+		<section class="band band--flush-top" aria-labelledby="hub-tools-heading">
+			<div class="band-inner">
+				<SectionHead id="hub-tools-heading" title={p.toolsTitle} desc={p.toolsDesc} href="/tools/" linkLabel="All free tools" cta={`hub_all_tools:${p.hub}`} />
+				<div class="card-grid">
+					{tools.map((tool) => <ToolCard tool={tool} cta={`hub_tool_card:${p.hub}:${toolId(tool)}`} />)}
+				</div>
+			</div>
+		</section>
+
+		<section class="band band--surface" aria-labelledby="hub-guide-heading">
+			<div class="band-inner">
+				<div class="hub-guide prose">
+					<h2 id="hub-guide-heading">{p.guideTitle}</h2>
+					<slot />
+				</div>
+			</div>
+		</section>
+
+		<section class="band" aria-labelledby="hub-articles-heading">
+			<div class="band-inner">
+				<SectionHead id="hub-articles-heading" title={p.articlesTitle} desc={p.articlesDesc} href="/articles/" linkLabel="All articles" cta={`hub_all_articles:${p.hub}`} />
+				<div class="card-grid">
+					{articles.map((article) => <ArticleCard article={article} cta={`hub_article_card:${p.hub}:${article.id}`} />)}
+				</div>
+			</div>
+		</section>
+
+		<section class="band band--surface" aria-labelledby="hub-templates-heading">
+			<div class="band-inner">
+				<SectionHead id="hub-templates-heading" title={p.templatesTitle} desc={p.templatesDesc} href="/spreadsheets/" linkLabel="All spreadsheets" cta={`hub_all_spreadsheets:${p.hub}`} />
+				<ProductGrid templates={templates} columns={2} ctaPrefix={`hub_product_card:${p.hub}`} />
+			</div>
+		</section>
+
+		<section class="band">
+			<div class="band-inner">
+				<Faq items={p.faq} layout="split" />
+			</div>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.hub-ctas {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: var(--space-sm);
+		margin-top: var(--space-lg);
+	}
+	/* The guide is reading copy, so it sits in the narrow reading column
+	   rather than spanning the band. */
+	.hub-guide {
+		max-width: var(--max-width-narrow);
+		margin: 0 auto;
+	}
+	.hub-guide h2 {
+		margin-top: 0;
+	}
+	@media (max-width: 600px) {
+		.hub-ctas {
+			justify-content: flex-start;
+		}
+	}
+</style>

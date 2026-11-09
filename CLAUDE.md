@@ -55,7 +55,8 @@ Etsy links are explicitly skipped by the second handler so one click can't be co
 - **Every distinct surface gets its own `cta_id`, down to the individual item where one exists.** Nav links, footer links, pagination arrows, article/template/tool cards, and product promo CTAs are each tagged per-instance (with a `:<id>` suffix) rather than sharing one generic tag for the whole group — that's what makes "which button" answerable from GA4 instead of just "was any button in this area clicked."
 - Convention in use, grouped by surface:
   - **Header nav**: `nav_link:<id>` (desktop bar), `nav_menu_link:<id>` (mobile panel, kept separate so the two surfaces can be compared), `nav_cta` (header button).
-  - **Footer**: `footer_link:<id>` (per nav item), `footer_promo_banner`, `footer_etsy_link`.
+  - **Footer**: `footer_link:<id>` (per nav item), `footer_promo_banner`, `footer_etsy_link`. The two hub links are `footer_link:guide_couples` and `footer_link:guide_biweekly`.
+  - **Topic hubs** (`HubLayout.astro`, every `/guides/` page; `<hub>` is the page's `hub` prop, `couples` or `biweekly`): `hub_hero_cta:<hub>:tool`, `hub_hero_cta:<hub>:template`, `hub_tool_card:<hub>:<toolId>`, `hub_article_card:<hub>:<articleId>`, `hub_product_card:<hub>:<slug>`, `hub_all_tools:<hub>`, `hub_all_articles:<hub>`, `hub_all_spreadsheets:<hub>`.
   - **Pagination** (`Pagination.astro`): `pagination_prev`, `pagination_page:<n>`, `pagination_next`.
   - **Topic/tag filters** (`TopicFilterTabs.astro`): `topic_filter_tab:<slug>` (`all` for the unfiltered tab).
   - **Product promos** (`ProductPromo.astro`, every variant): `product_promo_cta:<slug>:<variant>`, `product_promo_thumb:<slug>:<variant>`, `product_promo_card:<slug>`, `product_promo_mini:<slug>`.
@@ -320,6 +321,14 @@ The articles hub is statically paginated for SEO/AEO crawlability — there is n
 - `src/components/Pagination.astro` is the reusable numbered pager (prev/next arrows, active page as a filled circle). Takes `currentPage`, `lastPage`, `basePath`.
 - Both listing route types emit `CollectionPage` and `ItemList` JSON-LD for AEO/structured data.
 - If you add a new tag to `ALL_TAGS`, a new archive page is generated automatically at build time — no other wiring needed.
+
+## Topic Hubs (`/guides/`)
+
+Hub pages gather every tool, article, and spreadsheet on one subject behind a short guide, so a topic the site already ranks near has one strong page that links everything together. Added in November 2026 from Search Console data: the couples cluster (bill split, "budget spreadsheet for couples") and the paycheck cluster (biweekly, weekly, semi-monthly, three-paycheck months).
+
+- `/guides/budgeting-for-couples/` and `/guides/biweekly-budget/`, both on `src/layouts/HubLayout.astro`: `PageHero` with two CTAs, a `ToolCard` grid, the guide (the page's default slot, `###` steps under the layout's `h2`, in the reading column on a surface band), an `ArticleCard` grid, a two-column `ProductGrid`, and `Faq layout="split"`. It emits `CollectionPage` (with an `ItemList` of everything linked) and `BreadcrumbList` JSON-LD.
+- Pages pass ids, never card data: `toolUrls` (from `TOOLS`), `articleIds`, `templateSlugs`. An id that stops matching fails the build. Keep tool and article counts a multiple of 3.
+- Linked from the footer's Site column and from the core article and tool pages for each topic. A new hub needs no CSS: copy one of the two pages.
 
 ## Homepage
 

@@ -1,0 +1,90 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import ThreePaycheckCalculator from '../../components/ThreePaycheckCalculator.astro';
+
+const title = 'Three-Paycheck Months Calculator';
+const metaTitle = '3 Paycheck Months in 2027: Find Yours (Calculator)';
+const description = 'Which months have 3 paychecks in 2027? Enter any payday to see your three-paycheck months (or five-paycheck months if paid weekly) for 2026, 2027, and 2028. Free.';
+
+const toc = [
+	{ slug: 'how-it-works', text: 'How this calculator works' },
+	{ slug: 'three-paycheck-months-2027', text: 'Three-paycheck months in 2027' },
+	{ slug: 'five-paycheck-months-2027', text: 'Five-paycheck months in 2027 (weekly pay)' },
+	{ slug: 'budgeting-trick', text: 'The budgeting trick behind extra paychecks' },
+	{ slug: 'plan-the-extra-checks', text: 'How to plan for your extra paychecks' },
+];
+
+const faq = [
+	{
+		question: 'Which months have 3 paychecks in 2027?',
+		answer: 'It depends on your payday schedule. If you are paid every other Friday starting January 1, 2027, your three-paycheck months are January, July, and December. If your Fridays start January 8, 2027, they are April and October. Enter any recent payday in the calculator above to see your own months.',
+	},
+	{
+		question: 'Why does 2027 have 27 paychecks for some people?',
+		answer: 'A year has 365 days, which is 26 two-week periods plus one day (two in a leap year). Every 11 years or so that extra day lets a 27th payday fit inside the calendar year. 2027 starts on a Friday, so anyone paid every other Friday on the January 1 schedule gets 27 paydays. Because January 1 is a bank holiday, many employers pay on December 31, 2026 instead, which brings 2027 back to 26.',
+	},
+	{
+		question: 'How many three-paycheck months are in a year?',
+		answer: 'Two in almost every year if you are paid every two weeks, since 26 paychecks across 12 months leaves two months with a third check. In a 27-paycheck year there are three. Paid weekly, you get four or five months with a fifth paycheck.',
+	},
+	{
+		question: 'Do semi-monthly paychecks ever have three-paycheck months?',
+		answer: 'No. Semi-monthly pay lands on two fixed dates every month, such as the 1st and 15th, so every month has exactly two paychecks and 24 a year. Three-paycheck months only happen on biweekly schedules.',
+	},
+	{
+		question: 'What is the best thing to do with a third paycheck?',
+		answer: 'Give it a job before it arrives. If your budget already runs on two paychecks a month, the third one is fully unassigned, which makes it ideal for an emergency fund top-up, an extra debt payment, or an irregular bill like car insurance or holiday gifts.',
+	},
+];
+---
+
+<CalculatorLayout
+	title={title}
+	metaTitle={metaTitle}
+	description={description}
+	breadcrumbLabel="Three-Paycheck Months Calculator"
+	toc={toc}
+	faq={faq}
+	tags={['expense-tracking', 'irregular-income']}
+	productSlug="budget-spreadsheet"
+	productLabel="Plan your extra paychecks"
+	relatedToolUrls={[
+		'/tools/biweekly-paycheck-calculator/',
+		'/tools/weekly-paycheck-calculator/',
+		'/tools/emergency-fund-calculator/',
+		'/tools/sinking-fund-calculator/',
+	]}
+>
+	<Fragment slot="intro">Paid every two weeks? Twice a year (and in 2027, sometimes three times) a month brings a third paycheck. Enter any recent payday below to see exactly which months they are, with every payday date laid out by month, so you can give those extra checks a job before they arrive.</Fragment>
+
+	<ThreePaycheckCalculator slot="calculator" />
+
+	<h2 id="how-it-works">How this calculator works</h2>
+	<p>A biweekly schedule pays you every 14 days, so one payday is all it takes to map your whole year. The calculator steps forward and back from the date you enter in two-week jumps, counts the paydays that land in each month, and fills in any month with three. Switch to weekly and it does the same in seven-day jumps, looking for months with five paydays instead of four.</p>
+	<p>Add your take-home pay per paycheck and it also shows how much money those extra checks add up to over the year, the amount a two-paycheck budget leaves unassigned. For the full picture of what a typical month, an extra-paycheck month, and your monthly average look like, use the <a href="/tools/biweekly-paycheck-calculator/">biweekly paycheck calculator</a>.</p>
+
+	<h2 id="three-paycheck-months-2027">Which months have three paychecks in 2027?</h2>
+	<p>Most biweekly employers pay on Fridays, and every Friday payday falls on one of two alternating schedules. Here are both for 2027:</p>
+	<table>
+		<thead>
+			<tr><th>Your first 2027 payday</th><th>Three-paycheck months</th><th>Paychecks in 2027</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>Friday, January 1</td><td>January, July, December</td><td>27</td></tr>
+			<tr><td>Thursday, December 31, 2026 (holiday shift)</td><td>July, December</td><td>26</td></tr>
+			<tr><td>Friday, January 8</td><td>April, October</td><td>26</td></tr>
+		</tbody>
+	</table>
+	<p>2027 begins on a Friday, which makes it a rare 27-paycheck year for anyone on the January 1 schedule. The catch is that January 1 is New Year's Day, and many payroll systems move a holiday payday to the business day before. If yours does, that check lands in 2026, January has only two paydays, and 2027 goes back to the usual 26. Check your first pay stub of the year, or just enter your real payday above. For comparison, the two Friday schedules in 2026 produced three-paycheck months in January and July, or May and October.</p>
+
+	<h2 id="five-paycheck-months-2027">Five-paycheck months in 2027 for weekly pay</h2>
+	<p>If you're paid every Friday, 2027 has 53 paydays: five-paycheck months in January, April, July, October, and December. Paid on a different weekday, pick "Weekly" in the calculator and enter any payday to see your own. A weekly budget built on four paychecks a month leaves four or five paychecks a year unassigned, which is a bigger cushion than most people realize. The <a href="/tools/weekly-paycheck-calculator/">weekly paycheck calculator</a> turns that into monthly numbers.</p>
+
+	<h2 id="budgeting-trick">The budgeting trick behind "saving two paychecks a year"</h2>
+	<p>The trick people share is simple: build your monthly budget on two paychecks, not your yearly income divided by 12. Every bill, every grocery run, and every savings transfer has to fit inside those two checks. Do that, and the two three-paycheck months each deliver a full paycheck that nothing is counting on, so you can save it whole.</p>
+	<p>It works because a 26-paycheck year is really 24 checks of regular life plus two checks of slack. Dividing annual pay by 12 quietly spends that slack across every month instead. The two-paycheck budget keeps it together where you can see it. It is the same idea at the heart of <a href="/articles/budget-biweekly-paycheck/">budgeting on a biweekly paycheck</a>, and the <a href="/guides/biweekly-budget/">biweekly pay guide</a> collects every calculator and article on the topic in one place.</p>
+
+	<h2 id="plan-the-extra-checks">How to plan for your extra paychecks</h2>
+	<p>Once you know your months, decide each check's job now, while it's still a date on a calendar. Good jobs are the ones that are hard to fund from a normal month: a lump sum into your emergency fund (the <a href="/tools/emergency-fund-calculator/">emergency fund calculator</a> shows how far one check gets you), an extra payment on your highest-rate debt, or a <a href="/tools/sinking-fund-calculator/">sinking fund</a> for a bill that arrives once a year.</p>
+	<p>The plan that reliably fails is deciding when the money lands. An unassigned paycheck sitting in checking gets absorbed into everyday spending within a few weeks. Write the job down, and track it next to your regular paychecks in a <a href="/spreadsheets/budget-spreadsheet/">budget spreadsheet</a> so you can see it arrive and see it go where you planned.</p>
+</CalculatorLayout>

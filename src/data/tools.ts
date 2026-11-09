@@ -85,6 +85,53 @@ export const TOOLS: Tool[] = [
 		group: 'calculator',
 	},
 	{
+		name: 'Three-Paycheck Months Calculator',
+		desc: 'Enter any payday to see exactly which months bring a third paycheck (or a fifth, if you\'re paid weekly) in 2026, 2027, and 2028.',
+		url: '/tools/three-paycheck-months-calculator/',
+		icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="15" r="1"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/>',
+		illustration: `
+			<rect x="48" y="48" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="57" cy="55" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="57" cy="61" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<rect x="74" y="48" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="83" cy="55" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="83" cy="61" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<rect x="100" y="48" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="109" cy="55" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="109" cy="61" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<rect x="126" y="48" width="18" height="26" rx="3" stroke-width="2" opacity="0.9"/>
+			<circle cx="135" cy="55" r="1.6" fill="currentColor" stroke="none" opacity="1"/>
+			<circle cx="135" cy="61" r="1.6" fill="currentColor" stroke="none" opacity="1"/>
+			<circle cx="135" cy="67" r="1.6" fill="currentColor" stroke="none" opacity="1"/>
+			<rect x="152" y="48" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="161" cy="55" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="161" cy="61" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<rect x="178" y="48" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="187" cy="55" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="187" cy="61" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<rect x="48" y="84" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="57" cy="91" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="57" cy="97" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<rect x="74" y="84" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="83" cy="91" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="83" cy="97" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<rect x="100" y="84" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="109" cy="91" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="109" cy="97" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<rect x="126" y="84" width="18" height="26" rx="3" stroke-width="2" opacity="0.9"/>
+			<circle cx="135" cy="91" r="1.6" fill="currentColor" stroke="none" opacity="1"/>
+			<circle cx="135" cy="97" r="1.6" fill="currentColor" stroke="none" opacity="1"/>
+			<circle cx="135" cy="103" r="1.6" fill="currentColor" stroke="none" opacity="1"/>
+			<rect x="152" y="84" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="161" cy="91" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="161" cy="97" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<rect x="178" y="84" width="18" height="26" rx="3" stroke-width="1" opacity="0.35"/>
+			<circle cx="187" cy="91" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+			<circle cx="187" cy="97" r="1.6" fill="currentColor" stroke="none" opacity="0.5"/>
+		`,
+		group: 'calculator',
+	},
+	{
 		name: 'Semi-Monthly Paycheck Calculator',
 		desc: 'Paid twice a month on fixed dates? See your monthly and annual income from 24 paychecks, and how it differs from biweekly pay.',
 		url: '/tools/semi-monthly-paycheck-calculator/',

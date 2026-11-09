@@ -1,5 +1,6 @@
 ---
 title: "Couples Budget Spreadsheet for Sheets & Excel"
+metaTitle: "Couples Budget Spreadsheet for Google Sheets & Excel"
 description: "Split bills, track shared and personal expenses, and manage savings together. Built for two incomes, one shared financial picture."
 sku: "2025JBS"
 price: 16.99
@@ -57,6 +58,8 @@ faq:
     answer: "Yes. Google Sheets is the easiest option since it's browser-based, so both partners can view and edit the same sheet in real time from any device. The Excel version works too, but sharing requires emailing the file or syncing through OneDrive."
   - question: "Does each person get their own view?"
     answer: "The spreadsheet includes shared categories and individual sections so each partner can track personal spending alongside joint expenses."
+  - question: "Can we use it to split bills based on income?"
+    answer: "Yes. Work out each partner's share with the free bill split calculator, then enter those amounts as each person's expected figures for the shared bills. The tracker shows both partners' spending against them, with every expense tagged to one partner or marked Joint."
   - question: "What if only one person manages the budget?"
     answer: "That works too. The template handles two incomes regardless of who does the data entry."
 reviews:

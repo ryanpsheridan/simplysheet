@@ -1,5 +1,6 @@
 ---
 title: "Credit Card Tracker for Google Sheets & Excel"
+metaTitle: "Credit Card Tracker Spreadsheet for Google Sheets & Excel"
 description: "Track credit card balances, payments, and utilization across all your cards. Stay on top of due dates and keep your credit utilization in check."
 sku: "CCTDARK"
 price: 9.99
@@ -52,6 +53,8 @@ faq:
     answer: "As many as you have. The tracker is designed to handle multiple cards with individual balances, limits, and due dates."
   - question: "Does it calculate credit utilization?"
     answer: "Yes. It shows utilization per card and your overall utilization across all cards, which is one of the biggest factors in your credit score."
+  - question: "What goes in a spreadsheet for keeping track of credit cards?"
+    answer: "One row per card with its name, credit limit, current balance, APR, minimum payment, and due date, plus a payment log. This tracker is laid out exactly that way, and it works out each card's utilization and flags any card over your chosen threshold."
   - question: "Can I use this alongside the Debt Payoff Tracker?"
     answer: "Absolutely. The Credit Card Tracker focuses on utilization and due dates, while the Debt Payoff Tracker focuses on paying down balances over time. They complement each other."
 ---

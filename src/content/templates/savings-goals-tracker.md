@@ -1,7 +1,7 @@
 ---
 title: "Savings Goals Tracker for Sheets & Excel"
 description: "Set multiple savings goals, track contributions, and watch your progress toward each one. Perfect for emergency funds, sinking funds, and any savings target."
-metaTitle: "Savings Goals Tracker for Google Sheets & Excel"
+metaTitle: "Savings Tracker Spreadsheet: Goals for Sheets & Excel"
 metaDescription: "Track multiple savings goals side by side. Set a target amount and date for each one, log deposits, and see it all on one dashboard. Google Sheets or Excel."
 intro: "Set a target amount and date for each goal, an emergency fund, a house down payment, a sinking fund for something predictable, and track them all side by side."
 sku: "2026SFT"
