@@ -1,0 +1,28 @@
+---
+import { pinImageFor, pinterestSaveUrl } from '../utils/pins';
+
+// "Save to Pinterest" as a plain link to Pinterest's save page, styled as the
+// shared .action-btn pill (global.css). The image is the page's own pin when
+// one exists in scripts/pins/queue.json, else `fallbackImage`.
+interface Props {
+	/** Article id or tool slug, matched against the pin queue's `source`. */
+	sourceId: string;
+	fallbackImage: string;
+	description: string;
+	/** Full data-cta value. */
+	cta: string;
+	/** Visible label. "Pinterest" beside Share and Email; spelled out when alone. */
+	label?: string;
+}
+
+const { sourceId, fallbackImage, description, cta, label = 'Pinterest' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const href = pinterestSaveUrl(canonical, pinImageFor(sourceId) ?? fallbackImage, description, Astro.site);
+---
+
+<a href={href} class="action-btn" target="_blank" rel="noopener" aria-label="Save to Pinterest (opens in a new tab)" data-cta={cta}>
+	<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+		<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+	</svg>
+	<span>{label}</span>
+</a>

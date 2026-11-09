@@ -61,7 +61,7 @@ Etsy links are explicitly skipped by the second handler so one click can't be co
   - **Topic/tag filters** (`TopicFilterTabs.astro`): `topic_filter_tab:<slug>` (`all` for the unfiltered tab).
   - **Product promos** (`ProductPromo.astro`, every variant): `product_promo_cta:<slug>:<variant>`, `product_promo_thumb:<slug>:<variant>`, `product_promo_card:<slug>`, `product_promo_mini:<slug>`.
   - **Calculators**: `calc_product_link:<templateSlug>` for the `.calc-product-link` funnel CTA every calculator/assessment carries.
-  - **Article listing/cards**: `articles_grid_item:<id>` (`ArticleGrid.astro`; search results clone the same server-rendered cards, so they carry it too), `article_related_link:<id>`, `article_share_button`, `article_share_email`.
+  - **Article listing/cards**: `articles_grid_item:<id>` (`ArticleGrid.astro`; search results clone the same server-rendered cards, so they carry it too), `article_related_link:<id>`, `article_share_button`, `article_share_email`, `article_pinterest_save`. Tool pages carry `calculator_pinterest_save`.
   - **Articles index extras** (`articles/[...page].astro`): `articles_index_product_card:<slug>` (the four product cards under the grid, which now link to the internal template pages), `articles_index_all_spreadsheets` (their section link), `articles_index_explore_all_cta` (the Etsy banner). This replaced `articles_index_resource_card:<name>`, which linked those cards straight to Etsy and keyed them by display name.
   - **Spreadsheets index** (`spreadsheets/index.astro`): `spreadsheets_index_card:<slug>` (these cards were untracked before the redesign), `spreadsheets_index_etsy_link`.
   - **Template pages** (`TemplateLayout.astro`): `template_hero_cta:<id>`, `template_footer_cta:<id>`, `template_bundle_cta:<id>:<name>`, `template_reviews_cta:<id>`, `template_related_article:<id>`, `template_more_spreadsheets_card:<id>`.
@@ -116,14 +116,13 @@ Every time an article is provided, automatically do all of the following:
    cardImage: '/images/article-{slug}.jpg'
    ```
 4. **Pick the first tag deliberately**: it drives the related-articles ordering and the product cards at the bottom (it no longer sets a card colour).
-5. **Generate the narration audio**: `GOOGLE_TTS_API_KEY=... node scripts/generate-audio-narration.mjs {slug}` (see "Article Audio Narration" below). The player then shows up automatically — no per-article code needed.
-6. **Verify all internal article links** actually exist by cross-referencing slugs in `src/content/articles/`. Remove or unlink any references to articles that don't exist.
-7. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
-8. **Update related articles cross-links**: review existing articles and add natural internal links to/from the new article where topically relevant. Internal cross-linking improves both user navigation and SEO crawlability. The "Related articles" section at the bottom of each page is auto-generated (4 articles, those sharing a tag first), but in-body links between related topics are more valuable.
-9. **Add natural template page links in body text** — where the article's topic connects to a product (e.g. an article about paying off debt mentioning a [debt payoff tracker](/spreadsheets/debt-payoff-tracker/)), weave in 1–2 internal links to the relevant `/spreadsheets/` pages. These should read as helpful tool suggestions, not sales pitches. Always link to the internal template page, never directly to Etsy — the template page has its own Etsy CTA. This creates an article → template page → Etsy funnel that keeps users on-site longer and builds internal link equity. If the link deserves a visual promo card mid-article (not just a plain text link), use the `<ProductPromo />` component — see "Product Promo Component" below. **Never hand-type product card HTML into an article** — that's what caused broken images in the past.
-10. **Consider whether a reader poll fits** — not required for every article, but worth adding when the topic has a natural multi-way choice (a set of styles, methods, or preferences) and the article isn't already using a calculator or assessment. See "Reader Polls" below for how to add one.
-11. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
-12. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://www.simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
+5. **Verify all internal article links** actually exist by cross-referencing slugs in `src/content/articles/`. Remove or unlink any references to articles that don't exist.
+6. **Assign the correct tag** in frontmatter so the product cards at the bottom of the article are relevant.
+7. **Update related articles cross-links**: review existing articles and add natural internal links to/from the new article where topically relevant. Internal cross-linking improves both user navigation and SEO crawlability. The "Related articles" section at the bottom of each page is auto-generated (4 articles, those sharing a tag first), but in-body links between related topics are more valuable.
+8. **Add natural template page links in body text** — where the article's topic connects to a product (e.g. an article about paying off debt mentioning a [debt payoff tracker](/spreadsheets/debt-payoff-tracker/)), weave in 1–2 internal links to the relevant `/spreadsheets/` pages. These should read as helpful tool suggestions, not sales pitches. Always link to the internal template page, never directly to Etsy — the template page has its own Etsy CTA. This creates an article → template page → Etsy funnel that keeps users on-site longer and builds internal link equity. If the link deserves a visual promo card mid-article (not just a plain text link), use the `<ProductPromo />` component — see "Product Promo Component" below. **Never hand-type product card HTML into an article** — that's what caused broken images in the past.
+9. **Consider whether a reader poll fits** — not required for every article, but worth adding when the topic has a natural multi-way choice (a set of styles, methods, or preferences) and the article isn't already using a calculator or assessment. See "Reader Polls" below for how to add one.
+10. **Include `schema` in frontmatter** with `@type: Article`, `headline`, and `description` for structured data.
+11. **After merging to main**, remind the user to submit the new article URL for Google indexing at: https://search.google.com/search-console — use the URL Inspection tool and paste the full article URL (e.g. `https://www.simplysheetdesign.com/articles/{slug}/`), then click **Request Indexing**. If the article also has a standalone tool page, remind them to index that URL too.
 
 ## Article Card Images
 
@@ -288,15 +287,6 @@ The article's `tags` field determines which two Etsy products appear at the bott
 - Placement: put it at a natural pause in the article (e.g. after a comparison table, or as a closing capstone once the article has made its case) rather than immediately after another interactive element like a calculator — stacking two interactive widgets back to back reads as cluttered.
 - Existing polls: `budgeting-style` (in `budgeting-styles.mdx`) and `debt-payoff-method` (in `debt-snowball-vs-avalanche.mdx`) — check these for the pattern before adding a new one.
 
-## Article Audio Narration
-
-Every article gets a "Listen to this article" player automatically. `ArticleLayout.astro` checks whether `public/audio/{article-id}.mp3` exists and, if so, renders `<AudioNarration src="/audio/{article-id}.mp3" />` right after the share/email row, before the article body. This works for both `.md` and `.mdx` articles since it's wired into the shared layout, not imported per-article — never add `<AudioNarration />` manually inside an article body.
-
-- **Generate the MP3 whenever a new article is added**: `GOOGLE_TTS_API_KEY=... node scripts/generate-audio-narration.mjs {slug}`. The key comes from a Google Cloud project with the Cloud Text-to-Speech API enabled (an API key restricted to just that API — see the project's Google Cloud console). Skips generation if the file already exists; pass `--force` to regenerate.
-- The script strips frontmatter, `import` lines, JSX/Astro components (`<BudgetCalculator />`, `<Poll ... />`, `<ProductPromo ... />`, etc. — these are never narrated), markdown tables (read aloud as gibberish, so dropped entirely rather than narrated), images, and markdown formatting, then synthesizes what's left. It unwraps plain HTML tags (e.g. a hand-written `<a href="...">` CTA link) but keeps their inner text.
-- **Voice**: `en-US-Studio-O` at `speakingRate: 1.08`, set as constants at the top of the script. Studio voices sound noticeably better for long-form narration than Neural2/WaveNet but aren't in Google's always-free tier — cost is a few cents per article and only incurred once, at generation time, never per pageview (visitors just stream the static MP3).
-- The player itself (`src/components/AudioNarration.astro`) is a real `<audio>` element under the hood (accurate duration, native seeking) with custom play/pause and a click-and-drag scrub bar — not browser speech synthesis, which was tried first and dropped for inconsistent/robotic voices and no real mid-sentence seeking.
-
 ## Available Tags
 
 Defined once in `ALL_TAGS`/`TAG_MAP` in `src/consts.ts`:
@@ -321,6 +311,13 @@ The articles hub is statically paginated for SEO/AEO crawlability — there is n
 - `src/components/Pagination.astro` is the reusable numbered pager (prev/next arrows, active page as a filled circle). Takes `currentPage`, `lastPage`, `basePath`.
 - Both listing route types emit `CollectionPage` and `ItemList` JSON-LD for AEO/structured data.
 - If you add a new tag to `ALL_TAGS`, a new archive page is generated automatically at build time — no other wiring needed.
+
+## Save to Pinterest
+
+Every article and tool page has a "Pinterest" pill in its action row (`.action-row` / `.action-btn` in `global.css`, shared by `ArticleLayout` and `CalculatorLayout`), from `src/components/PinterestSave.astro`. It is a plain link to Pinterest's save page with the URL, image, and description prefilled: no Pinterest script, no cookies, so nothing to add to the CSP, the consent banner, or `privacy.astro`. Keep it that way; Pinterest's own widget script would need all three.
+
+- The image is the page's own pin when `scripts/pins/queue.json` has a non-product entry whose `source` is the article id or tool slug (`pinImageFor()` in `src/utils/pins.ts`; a video pin uses its PNG still). Otherwise articles fall back to their photo and tools to `og-default.png`. So queueing a pin for a page upgrades its Save image automatically.
+- Article audio narration was removed in November 2026 (component, MP3s, generator script). Don't bring it back without usage data that says people played it.
 
 ## Topic Hubs (`/guides/`)
 

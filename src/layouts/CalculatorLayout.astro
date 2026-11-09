@@ -10,6 +10,7 @@ import Faq from '../components/Faq.astro';
 import Toc from '../components/Toc.astro';
 import ReadingProgress from '../components/ReadingProgress.astro';
 import TableScroll from '../components/TableScroll.astro';
+import PinterestSave from '../components/PinterestSave.astro';
 import { SITE_TITLE, pageTitle } from '../consts';
 import { TOOLS, toolId } from '../data/tools';
 import { getRelatedArticles, toArticleCard } from '../utils/articles';
@@ -135,6 +136,10 @@ const breadcrumbSchema = {
 						<p class="calc-intro"><slot name="intro" /></p>
 					</header>
 
+					<div class="action-row calc-actions">
+						<PinterestSave sourceId={toolId({ url: currentPath })} fallbackImage="/images/og-default.png" description={`${title}. ${description}`} cta="calculator_pinterest_save" label="Save to Pinterest" />
+					</div>
+
 					<div class="calc-embed" id="calculator">
 						<slot name="calculator" />
 					</div>
@@ -217,6 +222,14 @@ const breadcrumbSchema = {
 
 	.calc-header h1 {
 		font-size: var(--text-h1);
+	}
+
+	/* The one pill sits straight under the intro: the rules the article row
+	   draws around three pills just box in a single one here. */
+	.calc-actions {
+		padding: 0;
+		border: 0;
+		margin-top: var(--space-md);
 	}
 
 	.calc-intro {

@@ -1378,3 +1378,54 @@ button:hover > .arrow {
 	white-space: nowrap;
 	border-width: 0;
 }
+
+/* ——— Page actions: the Share / Email / Pinterest pills under an article or
+   tool page title (ArticleLayout, CalculatorLayout). ——— */
+
+.action-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-xs);
+	padding: var(--space-sm) 0;
+	margin-bottom: var(--space-lg);
+	border-top: 1px solid var(--color-border);
+	border-bottom: 1px solid var(--color-border);
+}
+
+.action-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	font-family: var(--font-sans);
+	font-size: var(--text-small);
+	font-weight: var(--weight-normal);
+	/* Reset the UA default line-height (`normal`) that the <button> uses but
+	   the <a> doesn't — without this the two share buttons render at
+	   different heights. */
+	line-height: 1;
+	color: var(--color-text-secondary);
+	background: none;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-full);
+	padding: 0.375rem 0.875rem;
+	cursor: pointer;
+	text-decoration: none;
+	transition: color 0.15s, border-color 0.15s;
+}
+
+.action-btn:hover {
+	color: var(--color-text);
+	border-color: var(--color-text-muted);
+}
+
+/* The pill is 30px tall from its padding, and the two sit 8px apart — two
+   small targets in a row under a thumb. min-height rather than more
+   padding so the label and icon stay exactly where they are and the
+   button just centres itself in a taller box; scoped to touch widths so
+   the desktop row keeps its current proportions. */
+@media (max-width: 768px) {
+	.action-btn {
+		min-height: 2.75rem;
+	}
+}
