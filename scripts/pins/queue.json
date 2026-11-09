@@ -198,6 +198,15 @@
       "status": "scheduled",
       "board": "Finance Calculators",
       "theme": "forest"
+    },
+    {
+      "date": "2026-11-27",
+      "slug": "pin-monthly-income-sky",
+      "type": "article",
+      "source": "how-to-calculate-monthly-income",
+      "status": "scheduled",
+      "board": "Budgeting tips and habits",
+      "theme": "sky"
     }
   ]
 }
