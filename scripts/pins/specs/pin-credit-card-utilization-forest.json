@@ -1,0 +1,9 @@
+{
+ "slug": "pin-credit-card-utilization-forest",
+ "layout": "product",
+ "theme": "forest",
+ "image": "scripts/pins/assets/mockups/creditcard-dark.png",
+ "headline": "See credit utilization card by card",
+ "lede": "Each card gets a utilization bar, its available credit and days until due. Cards over your threshold get flagged, 30% by default.",
+ "caption": "Stop guessing what you owe."
+}

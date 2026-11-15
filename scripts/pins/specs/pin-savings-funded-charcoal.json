@@ -1,0 +1,9 @@
+{
+ "slug": "pin-savings-funded-charcoal",
+ "layout": "product",
+ "theme": "charcoal",
+ "image": "scripts/pins/assets/mockups/savings-dark.png",
+ "headline": "Watch every savings goal reach Funded",
+ "lede": "Each fund shows a progress bar, a percentage and the amount still needed, then flips to Funded at 100%.",
+ "caption": "Track every goal. Save with purpose."
+}
