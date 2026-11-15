@@ -207,6 +207,33 @@
       "status": "scheduled",
       "board": "Budgeting tips and habits",
       "theme": "sky"
+    },
+    {
+      "date": "2026-11-30",
+      "slug": "pin-savings-funded-charcoal",
+      "type": "product",
+      "source": "savings-goals-tracker",
+      "status": "scheduled",
+      "board": "Savings goals and sinking funds",
+      "theme": "charcoal"
+    },
+    {
+      "date": "2026-12-03",
+      "slug": "pin-credit-card-utilization-forest",
+      "type": "product",
+      "source": "credit-card-tracker",
+      "status": "scheduled",
+      "board": "Debt payoff trackers and tips",
+      "theme": "forest"
+    },
+    {
+      "date": "2026-12-06",
+      "slug": "pin-budget-five-sections-lavender",
+      "type": "product",
+      "source": "budget-spreadsheet",
+      "status": "scheduled",
+      "board": "Monthly budget templates",
+      "theme": "lavender"
     }
   ]
 }
