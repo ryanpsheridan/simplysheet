@@ -186,7 +186,7 @@
       "slug": "pin-budget-breakdown-forest",
       "type": "product",
       "source": "budget-spreadsheet",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Monthly budget templates",
       "theme": "forest"
     },
@@ -195,7 +195,7 @@
       "slug": "pin-group-bill-split-charcoal",
       "type": "calculator",
       "source": "group-bill-split-calculator",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Finance Calculators",
       "theme": "charcoal"
     },
@@ -213,7 +213,7 @@
       "slug": "pin-debt-method-switch-forest",
       "type": "product",
       "source": "debt-payoff-tracker",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Debt payoff trackers and tips",
       "theme": "forest"
     },
@@ -222,7 +222,7 @@
       "slug": "pin-where-money-going-lavender",
       "type": "article",
       "source": "where-is-my-money-going",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Budgeting tips and habits",
       "theme": "lavender"
     },
@@ -240,7 +240,7 @@
       "slug": "pin-savings-gift-fund-sand",
       "type": "product",
       "source": "savings-goals-tracker",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Savings goals and sinking funds",
       "theme": "sand"
     },
@@ -249,7 +249,7 @@
       "slug": "pin-snowball-vs-avalanche-charcoal",
       "type": "calculator",
       "source": "debt-snowball-vs-avalanche-calculator",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Finance Calculators",
       "theme": "charcoal"
     },
@@ -267,7 +267,7 @@
       "slug": "pin-net-worth-own-owe-lavender",
       "type": "product",
       "source": "net-worth-tracker",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Net worth tracking",
       "theme": "lavender"
     },
@@ -276,7 +276,7 @@
       "slug": "pin-budgeting-style-quiz-forest",
       "type": "calculator",
       "source": "budgeting-style",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Budgeting tips and habits",
       "theme": "forest"
     },
@@ -294,7 +294,7 @@
       "slug": "pin-pay-off-multiple-debts-sky",
       "type": "article",
       "source": "how-to-pay-off-debt",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Debt payoff trackers and tips",
       "theme": "sky"
     },
@@ -303,7 +303,7 @@
       "slug": "pin-beginner-budget-charcoal",
       "type": "product",
       "source": "beginner-budget",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Monthly budget templates",
       "theme": "charcoal"
     },
@@ -321,7 +321,7 @@
       "slug": "pin-couples-budget-fighting-sky",
       "type": "article",
       "source": "couples-budgeting",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Couples budgeting and shared finances",
       "theme": "sky"
     },
@@ -330,7 +330,7 @@
       "slug": "pin-debt-free-date-forest",
       "type": "calculator",
       "source": "debt-free-date-calculator",
-      "status": "ready",
+      "status": "scheduled",
       "board": "Finance Calculators",
       "theme": "forest"
     },
