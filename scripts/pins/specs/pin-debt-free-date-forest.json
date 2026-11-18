@@ -1,0 +1,48 @@
+{
+ "slug": "pin-debt-free-date-forest",
+ "layout": "calc",
+ "theme": "forest",
+ "headline": "When will you be debt-free?",
+ "lede": "Add a debt and your payment to see how long it takes.",
+ "card_title": "Debt-free date",
+ "fields": [
+  {
+   "label": "Balance",
+   "value": "$4,000"
+  },
+  {
+   "label": "Interest rate (APR)",
+   "value": "22%"
+  },
+  {
+   "label": "Monthly payment",
+   "value": "$250"
+  }
+ ],
+ "result": {
+  "label": "Paid off in",
+  "value": "20 months",
+  "rows": [
+   {
+    "label": "Interest paid",
+    "value": "$777.99"
+   },
+   {
+    "label": "At $150 a month",
+    "value": "37 months"
+   }
+  ]
+ },
+ "caption": "An extra $100 a month saves $763.64 in interest.",
+ "pin": {
+  "date": "2026-12-05",
+  "board": "Finance Calculators",
+  "boardId": "1035898420480430074",
+  "title": "Debt-Free Date Calculator: When Will You Pay It Off?",
+  "description": "A $4,000 card at 22% APR takes 37 months and $1,541.63 in interest at $150 a month. At $250 a month it is gone in 20 months with $777.99 in interest. Enter your own debts in the free calculator to find your debt-free date for 2027 and beyond.",
+  "alt": "Debt-free date calculator: a $4,000 balance at 22% APR with $250 a month is paid off in 20 months with $777.99 in interest.",
+  "link": "https://www.simplysheetdesign.com/tools/debt-free-date-calculator/?utm_source=pinterest&utm_medium=social&utm_campaign=pin-debt-free-date-forest&utm_content=pin-1",
+  "type": "calculator",
+  "source": "debt-free-date-calculator"
+ }
+}

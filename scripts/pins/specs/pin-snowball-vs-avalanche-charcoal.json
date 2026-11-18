@@ -1,0 +1,56 @@
+{
+ "slug": "pin-snowball-vs-avalanche-charcoal",
+ "layout": "compare",
+ "theme": "charcoal",
+ "headline": "Debt snowball vs. avalanche",
+ "lede": "Same goal, a different order. Compare both with your own debts.",
+ "columns": [
+  {
+   "name": "Snowball",
+   "tint": "mono",
+   "rows": [
+    {
+     "k": "Pays first",
+     "v": "Smallest balance"
+    },
+    {
+     "k": "Why people pick it",
+     "v": "Quick wins keep you going"
+    },
+    {
+     "k": "Trade-off",
+     "v": "Usually more interest"
+    }
+   ]
+  },
+  {
+   "name": "Avalanche",
+   "tint": "mono",
+   "rows": [
+    {
+     "k": "Pays first",
+     "v": "Highest interest rate"
+    },
+    {
+     "k": "Why people pick it",
+     "v": "Least interest overall"
+    },
+    {
+     "k": "Trade-off",
+     "v": "First payoff can take longer"
+    }
+   ]
+  }
+ ],
+ "pin": {
+  "date": "2026-11-26",
+  "board": "Finance Calculators",
+  "boardId": "1035898420480430074",
+  "title": "Debt Snowball vs Avalanche Calculator",
+  "description": "Snowball pays the smallest balance first for quick wins. Avalanche pays the highest rate first and costs the least interest. Enter your own debts in the free calculator to see the months and interest each method takes before you commit to a plan for 2027.",
+  "alt": "Comparison pin: debt snowball pays the smallest balance first, debt avalanche pays the highest interest rate first.",
+  "link": "https://www.simplysheetdesign.com/tools/debt-snowball-vs-avalanche-calculator/?utm_source=pinterest&utm_medium=social&utm_campaign=pin-snowball-vs-avalanche-charcoal&utm_content=pin-1",
+  "type": "calculator",
+  "source": "debt-snowball-vs-avalanche-calculator"
+ }
+}

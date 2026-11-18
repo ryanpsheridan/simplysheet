@@ -1,0 +1,20 @@
+{
+ "slug": "pin-debt-method-switch-forest",
+ "layout": "product",
+ "theme": "forest",
+ "image": "scripts/pins/assets/mockups/debt-dark.png",
+ "headline": "Snowball or avalanche, one simple switch",
+ "lede": "Pick a method from one dropdown and the payoff order updates.",
+ "caption": "See every debt. Track every dollar.",
+ "pin": {
+  "date": "2026-11-22",
+  "board": "Debt payoff trackers and tips",
+  "boardId": "1035898420480430072",
+  "title": "Debt Payoff Tracker Spreadsheet: Snowball or Avalanche",
+  "description": "List every debt with its balance, rate and minimum payment, then choose snowball or avalanche from one dropdown. The tracker sets the payoff order, and balances and progress update as you log payments. A clear plan to start the new year. Works in Google Sheets and Excel.",
+  "alt": "Dark debt payoff tracker spreadsheet on a laptop with a balance chart and a list of debts, under the headline Snowball or avalanche, one simple switch.",
+  "link": "https://simplysheetdesign.etsy.com/listing/4485879930?utm_source=pinterest&utm_medium=social&utm_campaign=pin-debt-method-switch-forest&utm_content=pin-1",
+  "type": "product",
+  "source": "debt-payoff-tracker"
+ }
+}

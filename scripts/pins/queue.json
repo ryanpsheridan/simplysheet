@@ -1,5 +1,5 @@
 {
-  "note": "Pinterest content log. Each entry is one single-image (or video) pin scheduled via Metricool. Check here before creating new pins so nothing repeats. Cadence: one pin every three days at 6:00 am CT.",
+  "note": "Pinterest content log. Each entry is one single-image (or video) pin scheduled via Metricool. Check here before creating new pins so nothing repeats. Cadence: one pin a day at 6:00 am CT (owner, Nov 18, 2026; was every three days).",
   "pins": [
     {
       "date": "2026-10-13",
@@ -182,6 +182,24 @@
       "theme": "lavender"
     },
     {
+      "date": "2026-11-19",
+      "slug": "pin-budget-breakdown-forest",
+      "type": "product",
+      "source": "budget-spreadsheet",
+      "status": "ready",
+      "board": "Monthly budget templates",
+      "theme": "forest"
+    },
+    {
+      "date": "2026-11-20",
+      "slug": "pin-group-bill-split-charcoal",
+      "type": "calculator",
+      "source": "group-bill-split-calculator",
+      "status": "ready",
+      "board": "Finance Calculators",
+      "theme": "charcoal"
+    },
+    {
       "date": "2026-11-21",
       "slug": "pin-semi-monthly-paycheck-calculator-sand",
       "type": "calculator",
@@ -189,6 +207,24 @@
       "status": "scheduled",
       "board": "Finance Calculators",
       "theme": "sand"
+    },
+    {
+      "date": "2026-11-22",
+      "slug": "pin-debt-method-switch-forest",
+      "type": "product",
+      "source": "debt-payoff-tracker",
+      "status": "ready",
+      "board": "Debt payoff trackers and tips",
+      "theme": "forest"
+    },
+    {
+      "date": "2026-11-23",
+      "slug": "pin-where-money-going-lavender",
+      "type": "article",
+      "source": "where-is-my-money-going",
+      "status": "ready",
+      "board": "Budgeting tips and habits",
+      "theme": "lavender"
     },
     {
       "date": "2026-11-24",
@@ -200,6 +236,24 @@
       "theme": "forest"
     },
     {
+      "date": "2026-11-25",
+      "slug": "pin-savings-gift-fund-sand",
+      "type": "product",
+      "source": "savings-goals-tracker",
+      "status": "ready",
+      "board": "Savings goals and sinking funds",
+      "theme": "sand"
+    },
+    {
+      "date": "2026-11-26",
+      "slug": "pin-snowball-vs-avalanche-charcoal",
+      "type": "calculator",
+      "source": "debt-snowball-vs-avalanche-calculator",
+      "status": "ready",
+      "board": "Finance Calculators",
+      "theme": "charcoal"
+    },
+    {
       "date": "2026-11-27",
       "slug": "pin-monthly-income-sky",
       "type": "article",
@@ -207,6 +261,24 @@
       "status": "scheduled",
       "board": "Budgeting tips and habits",
       "theme": "sky"
+    },
+    {
+      "date": "2026-11-28",
+      "slug": "pin-net-worth-own-owe-lavender",
+      "type": "product",
+      "source": "net-worth-tracker",
+      "status": "ready",
+      "board": "Net worth tracking",
+      "theme": "lavender"
+    },
+    {
+      "date": "2026-11-29",
+      "slug": "pin-budgeting-style-quiz-forest",
+      "type": "calculator",
+      "source": "budgeting-style",
+      "status": "ready",
+      "board": "Budgeting tips and habits",
+      "theme": "forest"
     },
     {
       "date": "2026-11-30",
@@ -218,12 +290,48 @@
       "theme": "charcoal"
     },
     {
+      "date": "2026-12-01",
+      "slug": "pin-pay-off-multiple-debts-sky",
+      "type": "article",
+      "source": "how-to-pay-off-debt",
+      "status": "ready",
+      "board": "Debt payoff trackers and tips",
+      "theme": "sky"
+    },
+    {
+      "date": "2026-12-02",
+      "slug": "pin-beginner-budget-charcoal",
+      "type": "product",
+      "source": "beginner-budget",
+      "status": "ready",
+      "board": "Monthly budget templates",
+      "theme": "charcoal"
+    },
+    {
       "date": "2026-12-03",
       "slug": "pin-credit-card-utilization-forest",
       "type": "product",
       "source": "credit-card-tracker",
       "status": "scheduled",
       "board": "Debt payoff trackers and tips",
+      "theme": "forest"
+    },
+    {
+      "date": "2026-12-04",
+      "slug": "pin-couples-budget-fighting-sky",
+      "type": "article",
+      "source": "couples-budgeting",
+      "status": "ready",
+      "board": "Couples budgeting and shared finances",
+      "theme": "sky"
+    },
+    {
+      "date": "2026-12-05",
+      "slug": "pin-debt-free-date-forest",
+      "type": "calculator",
+      "source": "debt-free-date-calculator",
+      "status": "ready",
+      "board": "Finance Calculators",
       "theme": "forest"
     },
     {

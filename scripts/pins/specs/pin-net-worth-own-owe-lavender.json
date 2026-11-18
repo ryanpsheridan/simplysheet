@@ -1,0 +1,20 @@
+{
+ "slug": "pin-net-worth-own-owe-lavender",
+ "layout": "product",
+ "theme": "lavender",
+ "image": "scripts/pins/assets/mockups/networth-dark.png",
+ "headline": "Everything you own and owe, in one view",
+ "lede": "Assets and liabilities side by side, with net worth worked out for you.",
+ "caption": "Know your worth. Track your wealth.",
+ "pin": {
+  "date": "2026-11-28",
+  "board": "Net worth tracking",
+  "boardId": "1035898420480430153",
+  "title": "Net Worth Tracker Spreadsheet for Google Sheets and Excel",
+  "description": "List your accounts, investments, property and loans once, then update the values each month. The tracker groups assets and liabilities, calculates your net worth and logs the month-over-month change, so you can see where you stand going into the new year.",
+  "alt": "Dark net worth tracker spreadsheet on a laptop with total assets, liabilities and net worth, under the headline Everything you own and owe, in one view.",
+  "link": "https://simplysheetdesign.etsy.com/listing/4510784687?utm_source=pinterest&utm_medium=social&utm_campaign=pin-net-worth-own-owe-lavender&utm_content=pin-1",
+  "type": "product",
+  "source": "net-worth-tracker"
+ }
+}

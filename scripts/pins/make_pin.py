@@ -65,6 +65,9 @@ THEMES = {
  "sand": ".pin{--fr:#E6D9A6;background:#F1E7C0}.frame{background:#E6D9A6}.lede{color:#4E4A3A}.cap span{color:#4E4A3A}.inp{border-color:#fff}.res{border-color:#fff}",
 }
 
+MONO = {"forest": ("#26352C", "#fff"), "charcoal": ("#292929", "#fff"), "sky": ("#B0E0FF", "#26352C"),
+        "sand": ("#F1E7C0", "#26352C"), "lavender": ("#DAD6FF", "#26352C"), "paper": ("#EEEEE7", "#26352C")}
+
 def esc(s): return (s.replace("&", "&amp;").replace("<", "&lt;"))
 
 def build(spec, animate=False):
@@ -83,6 +86,9 @@ def build(spec, animate=False):
                 f"<div class='pin' id='pin'><h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div>"
                 f"<div class='shot'><img src='file://{img}'></div><div class='cap'>{esc(spec['caption'])}</div><div class='plat'>Google Sheets and Excel</div>"
                 f"<div class='brand'><img src='file://{LOGO}'><span>Simply Sheets</span></div></div>")
+    # Monochrome column heads ("tint": "mono"): the pin's own colour, so a compare pin stays in one hue family.
+    pbg, pfg = MONO.get(spec.get("theme", "forest"), ("#EEEEE7", "#26352C"))
+    extra += f".col{{color:#26352C}}.hd.mono{{background:{pbg};color:{pfg}}}.cols4{{grid-template-columns:1fr 1fr}}"
     h = [f"<style>{CSS}{extra}{THEMES.get(spec.get("theme","forest"),"")}</style><div class='pin' id='pin'>",
          f"<h1>{esc(spec['headline'])}</h1><div class='lede'>{esc(spec['lede'])}</div><div class='body'>"]
     if spec["layout"] == "calc":

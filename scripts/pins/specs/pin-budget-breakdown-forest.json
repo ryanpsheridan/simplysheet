@@ -1,0 +1,20 @@
+{
+ "slug": "pin-budget-breakdown-forest",
+ "layout": "product",
+ "theme": "forest",
+ "image": "scripts/pins/assets/mockups/budget-dark.png",
+ "headline": "See where every dollar goes",
+ "lede": "Expected and actual breakdowns, drawn for you as you log.",
+ "caption": "One tab. Every dollar.",
+ "pin": {
+  "date": "2026-11-19",
+  "board": "Monthly budget templates",
+  "boardId": "1035898420480430069",
+  "title": "Monthly Budget Spreadsheet: See Where Every Dollar Goes",
+  "description": "Plan how you want to split your income, then log what you spend. Two donut charts show your expected breakdown next to your actual one, so you can see where the month really went and adjust before the new year. Works in Google Sheets and Excel.",
+  "alt": "Dark budget spreadsheet on a laptop with income, bills, expenses, savings and debt tables and two donut charts, under the headline See where every dollar goes.",
+  "link": "https://simplysheetdesign.etsy.com/listing/1854773368?utm_source=pinterest&utm_medium=social&utm_campaign=pin-budget-breakdown-forest&utm_content=pin-1",
+  "type": "product",
+  "source": "budget-spreadsheet"
+ }
+}

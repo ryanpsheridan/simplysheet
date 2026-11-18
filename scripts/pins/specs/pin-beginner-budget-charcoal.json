@@ -1,0 +1,20 @@
+{
+ "slug": "pin-beginner-budget-charcoal",
+ "layout": "product",
+ "theme": "charcoal",
+ "image": "scripts/pins/assets/mockups/budget-dark.png",
+ "headline": "Never budgeted before? Start here",
+ "lede": "Everything on one tab, a step-by-step setup guide, and locked formulas.",
+ "caption": "Start simple. Stay on budget.",
+ "pin": {
+  "date": "2026-12-02",
+  "board": "Monthly budget templates",
+  "boardId": "1035898420480430069",
+  "title": "Beginner Budget Spreadsheet for Google Sheets and Excel",
+  "description": "A first budget should not need spreadsheet skills. Everything sits on one tab, a step-by-step setup guide walks you through it, and the formulas are locked, so you only fill in your numbers. A simple way to start the new year. Works in Google Sheets and Excel.",
+  "alt": "Dark beginner budget spreadsheet on a laptop with income, bills, expenses, savings and debt on one tab, under the headline Never budgeted before? Start here.",
+  "link": "https://simplysheetdesign.etsy.com/listing/4433154112?utm_source=pinterest&utm_medium=social&utm_campaign=pin-beginner-budget-charcoal&utm_content=pin-1",
+  "type": "product",
+  "source": "beginner-budget"
+ }
+}

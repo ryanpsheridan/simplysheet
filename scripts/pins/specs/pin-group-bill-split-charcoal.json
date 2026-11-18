@@ -1,0 +1,51 @@
+{
+ "slug": "pin-group-bill-split-charcoal",
+ "layout": "calc",
+ "theme": "charcoal",
+ "headline": "Split a holiday dinner bill in seconds",
+ "lede": "Enter the total, the group size, tax and tip.",
+ "card_title": "Group bill split",
+ "fields": [
+  {
+   "label": "Bill",
+   "value": "$360.00"
+  },
+  {
+   "label": "People",
+   "value": "8"
+  },
+  {
+   "label": "Sales tax",
+   "value": "8.25%"
+  },
+  {
+   "label": "Tip",
+   "value": "18%"
+  }
+ ],
+ "result": {
+  "label": "Each person pays",
+  "value": "$56.81",
+  "rows": [
+   {
+    "label": "Tax",
+    "value": "$29.70"
+   },
+   {
+    "label": "Tip",
+    "value": "$64.80"
+   }
+  ]
+ },
+ "pin": {
+  "date": "2026-11-20",
+  "board": "Finance Calculators",
+  "boardId": "1035898420480430074",
+  "title": "Group Bill Split Calculator: Split Dinner With Tax and Tip",
+  "description": "Holiday dinners and group outings get messy once tax and tip land on the bill. Add them before you split: a $360 bill for 8 people with 8.25% tax and an 18% tip comes to $454.50, or $56.81 each. The free calculator does the math for any group.",
+  "alt": "Group bill split calculator showing a $360 bill, 8 people, 8.25% sales tax and an 18% tip, so each person pays $56.81.",
+  "link": "https://www.simplysheetdesign.com/tools/group-bill-split-calculator/?utm_source=pinterest&utm_medium=social&utm_campaign=pin-group-bill-split-charcoal&utm_content=pin-1",
+  "type": "calculator",
+  "source": "group-bill-split-calculator"
+ }
+}

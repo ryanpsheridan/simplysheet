@@ -1,0 +1,60 @@
+{
+ "slug": "pin-budgeting-style-quiz-forest",
+ "layout": "compare",
+ "theme": "forest",
+ "headline": "What's your budgeting style?",
+ "lede": "A 60-second quiz, and one tip that fits how you handle money.",
+ "columns": [
+  {
+   "name": "Planner",
+   "tint": "mono",
+   "rows": [
+    {
+     "k": "Feels best when",
+     "v": "Every dollar has a plan"
+    }
+   ]
+  },
+  {
+   "name": "Saver",
+   "tint": "mono",
+   "rows": [
+    {
+     "k": "Feels best when",
+     "v": "Savings keep growing"
+    }
+   ]
+  },
+  {
+   "name": "Spender",
+   "tint": "mono",
+   "rows": [
+    {
+     "k": "Feels best when",
+     "v": "Money improves today"
+    }
+   ]
+  },
+  {
+   "name": "Avoider",
+   "tint": "mono",
+   "rows": [
+    {
+     "k": "Feels best when",
+     "v": "Small steps, no stress"
+    }
+   ]
+  }
+ ],
+ "pin": {
+  "date": "2026-11-29",
+  "board": "Budgeting tips and habits",
+  "boardId": "1035898420480430152",
+  "title": "Budgeting Style Quiz: Planner, Saver, Spender or Avoider?",
+  "description": "Knowing how you handle money makes it easier to pick a system that sticks. Take the free 60-second quiz to find your budgeting style and get one tip that fits it, a good place to start before you plan the new year.",
+  "alt": "Quiz pin showing four budgeting styles: planner, saver, spender and avoider.",
+  "link": "https://www.simplysheetdesign.com/quiz/budgeting-style/?utm_source=pinterest&utm_medium=social&utm_campaign=pin-budgeting-style-quiz-forest&utm_content=pin-1",
+  "type": "calculator",
+  "source": "budgeting-style"
+ }
+}

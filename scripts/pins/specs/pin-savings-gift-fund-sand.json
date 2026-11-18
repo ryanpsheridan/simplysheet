@@ -1,0 +1,20 @@
+{
+ "slug": "pin-savings-gift-fund-sand",
+ "layout": "product",
+ "theme": "sand",
+ "image": "scripts/pins/assets/mockups/savings-dark.png",
+ "headline": "Start next year's gift fund now",
+ "lede": "Give every goal its own bar, from holiday gifts to an emergency fund.",
+ "caption": "Track every goal. Save with purpose.",
+ "pin": {
+  "date": "2026-11-25",
+  "board": "Savings goals and sinking funds",
+  "boardId": "1035898420480430070",
+  "title": "Savings Goals Tracker Spreadsheet for Sinking Funds",
+  "description": "Set up a fund for next year's holiday gifts next to your emergency fund, trips and other goals. Each fund gets a target, a progress bar and the amount still needed, and every deposit you log updates it. Works in Google Sheets and Excel.",
+  "alt": "Dark savings goals tracker spreadsheet on a laptop with total saved, still needed and a progress bar for each fund, under the headline Start next year's gift fund now.",
+  "link": "https://simplysheetdesign.etsy.com/listing/4483664616?utm_source=pinterest&utm_medium=social&utm_campaign=pin-savings-gift-fund-sand&utm_content=pin-1",
+  "type": "product",
+  "source": "savings-goals-tracker"
+ }
+}
